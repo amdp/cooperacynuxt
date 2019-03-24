@@ -1,0 +1,36 @@
+{
+  "name": "coo",
+  "version": "0.1.0",
+  "description": "nodecooperacy",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amdp/coo.git"
+  },
+  "author": "amdp",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "3.0.4",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "jsonwebtoken": "^8.5.1",
+    "mysql": "^2.16.0",
+    "mysql2": "^1.6.5",
+    "nodemon": "^1.18.10",
+    "sequelize": "^5.1.0",
+    "vue": "^2.6.10",
+    "vue-router": "^3.0.2"
+  },
+  "bugs": {
+    "url": "https://github.com/amdp/coo/issues"
+  },
+  "homepage": "https://github.com/amdp/coo#readme",
+  "devDependencies": {
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0"
+  }
+}
