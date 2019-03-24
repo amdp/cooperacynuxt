@@ -31,7 +31,7 @@ module.exports = {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: ['@plugins/axios.js'],
+  plugins: ['@plugins/vee.js', '@plugins/axios.js', '@plugins/auth.js'],
 
   /*
   ** Nuxt.js modules
@@ -54,37 +54,23 @@ module.exports = {
     // baseURL: 'http://127.0.0.1:5000'
   },
 
-  proxy: {
-    '/cooperacy': 'http://127.0.0.1:5000'
-  },
+  proxy: { '/cooperacy': 'http://127.0.0.1:5000' },
 
   auth: {
     strategies: {
       local: {
         endpoints: {
-          login: { url: '/user', method: 'post', propertyName: 'token' },
+          login: { url: '/cooperacy/login', method: 'post', propertyName: 'token' },
           logout: false,
-          user: { url: '/user', method: 'get', propertyName: 'data' }
+          user: { url: '/cooperacy/login', method: 'get', propertyName: 'data' }
         },
         tokenRequired: true,
         tokenType: 'Bearer'
       },
-      facebook: {
-        client_id: '',
-        userinfo_endpoint: false,
-        scope: ['public_profile', 'email'],
-        redirect_uri: 'http://localhost:3000/callback'
-      },
-      google: {
-        client_id: '',
-        user: false,
-        redirect_uri: 'http://localhost:3000/callback'
-      }
+      facebook: { client_id: '', userinfo_endpoint: false, scope: ['public_profile', 'email'] },
+      google: { client_id: '', user: false }
     },
-    redirect: {
-      login: '/?login=1',
-      logout: '/'
-    }
+    redirect: { login: '/?login=1', logout: '/' }
   },
   
   /*
@@ -94,6 +80,7 @@ module.exports = {
     /*
     ** You can extend webpack config here
     */
+    vendor: ['vee-validate'],
     extend(config, ctx) {
     }
   }
