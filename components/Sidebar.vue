@@ -38,12 +38,12 @@
       <b-form data-vv-scope="loginFrm">
         <b-form-group description="Let us know your Email." label="Enter your Email" label-for="email">
           <b-form-input id="email" v-model="loginForm.email" v-validate="'required|email'" name="email" type="email"></b-form-input>
-          <!-- <span v-show="errors.has('loginFrm.email')" class="alert_danger">{{errors.first('loginFrm.email')}}</span> -->
+          <span v-show="errors.has('loginFrm.email')" class="alert_danger">{{errors.first('loginFrm.email')}}</span>
         </b-form-group>
         <b-form-group description="Let us know your Password." label="Enter your Password" label-for="pw">
           <b-form-input id="pw" v-model="loginForm.password" v-validate="{ required: true, min: 6 }" name="pw" data-vv-as="Password" type="password">
           </b-form-input>
-          <!-- <span v-show="errors.has('loginFrm.pw')" class="alert_danger">{{errors.first('loginFrm.pw')}}</span> -->
+          <span v-show="errors.has('loginFrm.pw')" class="alert_danger">{{errors.first('loginFrm.pw')}}</span>
         </b-form-group>
           <b-button variant="outline-success" @click="facebook">Facebook</b-button><br />
           <b-button variant="outline-success" @click="login">Login</b-button><br />
