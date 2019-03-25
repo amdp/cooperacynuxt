@@ -31,7 +31,7 @@ module.exports = {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: ['@plugins/vee.js', '@plugins/axios.js', '@plugins/auth.js'],
+  plugins: ['@plugins/vee-validate.js', '@plugins/axios.js', '@plugins/auth.js'],
 
   /*
   ** Nuxt.js modules
@@ -60,9 +60,9 @@ module.exports = {
     strategies: {
       local: {
         endpoints: {
-          login: { url: '/cooperacy/login', method: 'post', propertyName: 'token' },
+          login: { url: '/cooperacy', method: 'post', propertyName: 'token' },
           logout: false,
-          user: { url: '/cooperacy/login', method: 'get', propertyName: 'data' }
+          user: { url: '/cooperacy', method: 'get', propertyName: 'data' }
         },
         tokenRequired: true,
         tokenType: 'Bearer'
@@ -80,7 +80,6 @@ module.exports = {
     /*
     ** You can extend webpack config here
     */
-    vendor: ['vee-validate'],
     extend(config, ctx) {
     }
   }
