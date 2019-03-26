@@ -31,7 +31,7 @@ module.exports = {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: ['@plugins/vee-validate.js', '@plugins/axios.js', '@plugins/auth.js'],
+  plugins: ['@plugins/vee-validate.js'],
 
   /*
   ** Nuxt.js modules
@@ -54,15 +54,15 @@ module.exports = {
     // baseURL: 'http://127.0.0.1:5000'
   },
 
-  proxy: { '/cooperacy': 'http://127.0.0.1:5000' },
+  proxy: { '/serverDB': 'http://127.0.0.1:5000' },
 
   auth: {
     strategies: {
       local: {
         endpoints: {
-          login: { url: '/cooperacy', method: 'post', propertyName: 'token' },
-          logout: false,
-          user: { url: '/cooperacy', method: 'get', propertyName: 'data' }
+          login: { url: 'http://127.0.0.1:5000/login', method: 'post', propertyName: 'token' },
+          logout: { url: 'http://127.0.0.1:5000/serverDB/logout', method: 'post', propertyName: 'token' },
+          user: { url: 'http://127.0.0.1:5000/user', method: 'get', propertyName: 'data' }
         },
         tokenRequired: true,
         tokenType: 'Bearer'
@@ -70,7 +70,7 @@ module.exports = {
       facebook: { client_id: '', userinfo_endpoint: false, scope: ['public_profile', 'email'] },
       google: { client_id: '', user: false }
     },
-    redirect: { login: '/?login=1', logout: '/' }
+    redirect: { login: '/', logout: '/' }
   },
   
   /*

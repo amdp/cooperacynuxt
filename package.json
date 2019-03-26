@@ -23,6 +23,8 @@
   },
   "devDependencies": {
     "@nuxtjs/auth": "^4.5.3",
-    "nodemon": "^1.18.9"
+    "jwt-decode": "^2.2.0",
+    "nodemon": "^1.18.9",
+    "vuex": "^3.1.0"
   }
 }

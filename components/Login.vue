@@ -49,7 +49,7 @@ export default {
   methods: {
     login() {
       axios
-        .post('/cooperacy/login', {
+        .post('/serverDB/login', {
           email: this.formEmail,
           password: this.formPassword
         })
