@@ -9,7 +9,8 @@
         <platform></platform>
       </div>
       <div class="col-2">
-        <!-- <user></user> -->
+        <User />
+        <Getin />
       </div>
     </div>
   </div>
@@ -18,15 +19,17 @@
 <script>
 import Sidebar from '@/components/Sidebar'
 import Platform from '@/components/Platform'
-// import User from '@/components/User'
+import User from '@/components/User'
+import Getin from '@/components/Getin'
 import Navbar from '@/components/Navbar'
 
 export default {
   components: {
     Navbar: Navbar,
-    // User: User,
+    Sidebar: Sidebar,
     Platform: Platform,
-    Sidebar: Sidebar
+    User: User,
+    Getin: Getin
   }
 }
 </script>
