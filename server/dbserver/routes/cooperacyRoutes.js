@@ -6,7 +6,6 @@ const bcrypt = require("bcrypt")
 var cooperacyRouter = express.Router()
 var projectModel = require("../models/projectModel")
 var userModel = require("../models/userModel")
-//var models = require("../models")
 
 cooperacyRouter.use(cors())
 process.env.SECRET_KEY = 'secret'
@@ -92,32 +91,6 @@ cooperacyRouter.post("/register", (req, res) => {
         })
 })
 
-// [POST] /login
-/*cooperacyRouter.post('/login', (req, res, next) => {
-  const { username, password } = req.body
-  const valid = username.length && password === '123'
-
-  if (!valid) {
-    throw new Error('Invalid username or password')
-  }
-
-  const accessToken = jsonwebtoken.sign(
-    {
-      username,
-      picture: 'https://github.com/nuxt.png',
-      name: 'User ' + username,
-      scope: ['test', 'user']
-    },
-    'dummy'
-  )
-
-  res.json({
-    token: {
-      accessToken
-    }
-  })
-})*/
-
 cooperacyRouter.post("/login", (req, res) => {
   userModel.findOne({
       where: {
@@ -160,10 +133,7 @@ cooperacyRouter.post("/login", (req, res) => {
   })
 
   // -- export app --
-  module.exports = {
-    path: '/server/server',
-    handler: cooperacyRouter
-  }
+  module.exports = cooperacyRouter
 
   /*const today = new Date()
   const userData = {
