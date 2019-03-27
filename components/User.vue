@@ -1,6 +1,6 @@
 <template>
-  <div v-if="$auth.loggedIn" id="userbar">
-    <h3 class="text-center diversity">{{ name }}</h3> <b-button @click="$auth.logout()">Logout</b-button>
+  <div v-if="this.$auth.$state.loggedIn" id="userbar">
+    <h3 class="text-center diversity">{{ this.$auth.$state.loggedIn }}</h3> <b-button @click="$auth.logout()">Logout</b-button>
     <table class="table md-6 mx-auto">
       <tbody>
         <tr><td class="diversity">Name</td><td>{{ name }}</td></tr>
@@ -18,7 +18,7 @@ import jwtdecode from 'jwt-decode'
 export default {
   data() {
     if (process.browser) {
-      const token = localStorage.usertoken
+      const token = localStorage.usertoken //token.accessToken old: token
       const decoded = jwtdecode(token)
       return {
         formEmail: '',

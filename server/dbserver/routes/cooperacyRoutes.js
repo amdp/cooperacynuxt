@@ -6,6 +6,7 @@ const bcrypt = require("bcrypt")
 var cooperacyRouter = express.Router()
 var projectModel = require("../models/projectModel")
 var userModel = require("../models/userModel")
+//var models = require("../models")
 
 cooperacyRouter.use(cors())
 process.env.SECRET_KEY = 'secret'
@@ -91,6 +92,32 @@ cooperacyRouter.post("/register", (req, res) => {
         })
 })
 
+// [POST] /login
+/*cooperacyRouter.post('/login', (req, res, next) => {
+  const { username, password } = req.body
+  const valid = username.length && password === '123'
+
+  if (!valid) {
+    throw new Error('Invalid username or password')
+  }
+
+  const accessToken = jsonwebtoken.sign(
+    {
+      username,
+      picture: 'https://github.com/nuxt.png',
+      name: 'User ' + username,
+      scope: ['test', 'user']
+    },
+    'dummy'
+  )
+
+  res.json({
+    token: {
+      accessToken
+    }
+  })
+})*/
+
 cooperacyRouter.post("/login", (req, res) => {
   userModel.findOne({
       where: {
@@ -100,10 +127,12 @@ cooperacyRouter.post("/login", (req, res) => {
       .then(user => {
           if(user){
               if(bcrypt.compareSync(req.body.password, user.password)) {
-                  let token = jwt.sign(user.dataValues, process.env.SECRET_KEY, {
+                  let accessToken = jwt.sign(user.dataValues, process.env.SECRET_KEY, {
                       expiresIn: 1440
                   })
-                  res.send(token)
+                  res.json({
+                    token: {accessToken}
+                  })
               }
           }else{
               res.status(400).json({error: 'User does not exist'})
@@ -123,6 +152,18 @@ cooperacyRouter.post("/login", (req, res) => {
   cooperacyRouter.post('/logout', (req, res, next) => {
     res.json({ status: 'OK' })
   })
+
+  // Error handler
+  cooperacyRouter.use((err, req, res, next) => {
+    console.error(err)
+    res.status(401).send(err + '')
+  })
+
+  // -- export app --
+  module.exports = {
+    path: '/server/server',
+    handler: cooperacyRouter
+  }
 
   /*const today = new Date()
   const userData = {
@@ -204,4 +245,3 @@ cooperacyRouter.post("/login", (req, res) => {
     res.status(401).send(err + '')
   })*/
 
-module.exports = cooperacyRouter
