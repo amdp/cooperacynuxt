@@ -18,7 +18,7 @@ module.exports = {
     ]
   },
 
-  serverMiddleware: ['/serverDB/server'],
+  //serverMiddleware: ['/serverDB/server'],
 
   /*
   ** Customize the progress-bar color
