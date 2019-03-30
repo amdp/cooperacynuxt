@@ -18,10 +18,12 @@ module.exports = {
     ]
   },
 
+  //serverMiddleware: ['/serverDB/server'],
+
   /*
   ** Customize the progress-bar color
   */
-  loading: { color: '#fff' },
+  loading: { color: '#FF9000' },
 
   /*
   ** Global CSS
@@ -31,7 +33,7 @@ module.exports = {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: ['@plugins/axios.js'],
+  plugins: ['@plugins/vee-validate.js'],
 
   /*
   ** Nuxt.js modules
@@ -54,37 +56,21 @@ module.exports = {
     // baseURL: 'http://127.0.0.1:5000'
   },
 
-  proxy: {
-    '/cooperacy': 'http://127.0.0.1:5000'
-  },
+  proxy: { '/serverDB': 'http://127.0.0.1:5000' },
 
   auth: {
     strategies: {
       local: {
         endpoints: {
-          login: { url: '/user', method: 'post', propertyName: 'token' },
-          logout: false,
-          user: { url: '/user', method: 'get', propertyName: 'data' }
+          login: { url: 'http://127.0.0.1:5000/serverDB/login', propertyName: 'token.accessToken' },
+          logout: { url: 'http://127.0.0.1:5000/serverDB/logout', propertyName: 'token.accessToken' },
+          user: { url: 'http://127.0.0.1:5000/serverDB/user', propertyName: false }
         },
-        tokenRequired: true,
-        tokenType: 'Bearer'
+        //tokenRequired: true,
+        //tokenType: 'Bearer'
       },
-      facebook: {
-        client_id: '',
-        userinfo_endpoint: false,
-        scope: ['public_profile', 'email'],
-        redirect_uri: 'http://localhost:3000/callback'
-      },
-      google: {
-        client_id: '',
-        user: false,
-        redirect_uri: 'http://localhost:3000/callback'
-      }
     },
-    redirect: {
-      login: '/?login=1',
-      logout: '/'
-    }
+    redirect: { home: '/', user: '/', logout: '/', callback: '/' }
   },
   
   /*

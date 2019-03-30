@@ -11,7 +11,7 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
 
-app.use("/cooperacy", cooperacyRoute)
+app.use("/serverDB", cooperacyRoute)
 
 app.listen(port, function () {
   console.log("Server is running on port: " + port)

@@ -72,7 +72,7 @@ export default {
   methods: {
     register() {
       axios
-        .post('/cooperacy/register', {
+        .post('/serverDB/register', {
           name: this.formName,
           surname: this.formSurname,
           email: this.formEmail,

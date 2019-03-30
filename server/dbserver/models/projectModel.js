@@ -1,5 +1,15 @@
 const Sequelize = require("sequelize")
-const db = require("../database/db")
+
+const db = {}
+const sequelize = new Sequelize("coo","root","cooperacy", {
+    host: 'localhost',
+    dialect: 'mysql',
+    operatorsAliases: 0,
+    pool: { max: 5, min: 0, acquire: 30000, idle: 10000 }
+})
+
+db.sequelize = sequelize
+db.Sequelize = Sequelize
 
 module.exports = db.sequelize.define(
     'project',
@@ -24,7 +34,8 @@ module.exports = db.sequelize.define(
       F: {type: Sequelize.TINYINT, allowNull: false, defaultValue: 0},
       U: {type: Sequelize.TINYINT, allowNull: false, defaultValue: 0},
       D: {type: Sequelize.TINYINT, allowNull: false, defaultValue: 0}
-    }, {
+    },
+   {
         timestamps: false
     }
 )
