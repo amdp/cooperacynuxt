@@ -10,7 +10,6 @@
         <nuxt />
       </div>
       <div class="col-2">
-        <User v-if="this.$auth.getToken('local')" />
       </div>
     </div>
   </div>
@@ -18,15 +17,11 @@
 
 <script>
 import Navbar from '@/components/Navbar'
-import Sidebar from '@/components/Sidebar'
-import User from '@/components/User'
 
 
 export default {
   components: {
-    Sidebar: Sidebar,
     Navbar: Navbar,
-    User: User
   }
 }
 </script>
