@@ -100,11 +100,11 @@ cooperacyRouter.post("/login", (req, res) => {
       .then(user => {
           if(user){
               if(bcrypt.compareSync(req.body.password, user.password)) {
-                  let accessToken = jwt.sign(user.dataValues, process.env.SECRET_KEY, {
+                  let token = jwt.sign(user.dataValues, process.env.SECRET_KEY, {
                       expiresIn: 1440
                   })
                   res.json({
-                    token: {accessToken}
+                    token
                   })
               }
           }else{

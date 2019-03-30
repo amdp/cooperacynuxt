@@ -64,13 +64,13 @@ module.exports = {
         endpoints: {
           login: { url: 'http://127.0.0.1:5000/serverDB/login', propertyName: 'token.accessToken' },
           logout: { url: 'http://127.0.0.1:5000/serverDB/logout', propertyName: 'token.accessToken' },
-          user: { url: 'http://127.0.0.1:5000/serverDB/user', propertyName: 'data' }
+          user: { url: 'http://127.0.0.1:5000/serverDB/user', propertyName: false }
         },
         //tokenRequired: true,
         //tokenType: 'Bearer'
       },
     },
-    redirect: { home: '/' }
+    redirect: { home: '/', user: '/', logout: '/', callback: '/' }
   },
   
   /*

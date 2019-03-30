@@ -64,15 +64,17 @@ a{color: #777777;}
 a.disabled {  opacity: 0.5; pointer-events: none;  cursor: default; }
 .baset {text-align:justify;font-size:14px;margin-bottom:5px;padding:3px;line-height:20px;font-weight:200;border:1px solid;}
 .site-footer { border-top-color:#d3e0e9; border-top-style:solid; border-top-width:1px; padding:10px;}
-.header-logo { width:375px; height:75px; }
+
 hr.home-hr { border:none; background-color:#666666; width:50px; height:2px!important; }
-.navbarCoperacy {opacity: 0.8; border-bottom: 5px #777777}
 img.page-header { margin-top: 0px; width: 100%; height: auto; vertical-align: top; border:none; }
 .alt-login{ visibility:hidden; margin-left:-35px; }
 .vote-spacer { width:10px; float:left; }
 .label-default { background-color: #ffffff!important; color: #777!important; }
-.comment-content { overflow-wrap: break-word; word-wrap: break-word; -ms-word-break: break-all; word-break: break-word; -ms-hyphens: auto; -moz-hyphens: auto;
--webkit-hyphens: auto; hyphens: auto; }
+.comment-content { overflow-wrap: break-word; word-wrap: break-word; -ms-word-break: break-all; word-break: break-word; -ms-hyphens: auto; -moz-hyphens: auto; -webkit-hyphens: auto; hyphens: auto; }
+
+.navbarrow {margin-top: 100px;}
+.navbar {opacity: 0.8; border-bottom: 1px solid #CCCCCC;}
+.header-logo { width:244px; height:60px; }
 
 @-webkit-keyframes rotating {
     from {     -webkit-transform: rotate(0deg);     -o-transform: rotate(0deg);     transform: rotate(0deg);   }
