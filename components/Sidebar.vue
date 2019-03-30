@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div id="cooperacyMenu" class="collapse navbar-collapse d-flex justify-content-start mt-3">
+    <div id="cooperacyMenu" data-spy="affix" class="collapse navbar-collapse d-flex justify-content-start mt-3">
       <ul class="navbar-nav">
         <li class="navitem dropdown">
           <a href="#" class="nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">THE PROJECT</a>
