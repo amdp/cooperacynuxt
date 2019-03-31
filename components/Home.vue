@@ -2,14 +2,16 @@
   <div>
     <div class="circle mb-5">
       <svg xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" x="0px" y="0px" viewBox="0 0 750 750">
+        <!--ROTATING GROUP-->
         <g id="coocircle">
+          <!--GRADIENTS LOOP-->
             <template v-for="gradient in this.gradients">
               <linearGradient :key="gradient.name" :id="gradient.name" gradientUnits="userSpaceOnUse" :x1="gradient.x1" :y1="gradient.y1" :x2="gradient.x2" :y2="gradient.y2"><stop  offset="0" :style="gradient.color1"/><stop  :offset="gradient.offset" :style="gradient.color2"/><stop  offset="1" :style="gradient.color3"/></linearGradient>
             </template>
-
+          <!--PATHS POSITION LOOP, APPLIES GRADIENTS THROUGH STROKE AND 'URL#..'-->
           <path v-for="value in this.values" :key="value.name" :id="value.name" :class="value.animation" :style="{opacity: value.opacity, 'z-index': '2'}"  fill="none" :stroke="value.stroke" stroke-width="24" stroke-miterlimit="10" :d="value.d" @mouseover="showvalue(values.indexOf(value))" />
         </g>
-
+        <!--VALUES DESCRIPTION LOOP, HIDDEN AND TRIGGERED VIA MOUSEOVER ON PATHS-->
         <template v-for="description in this.descriptions">
           <g :key="description.name" :id="description.name" :style="{display: description.display}">
             <a :href="description.href" class="noline finger">
@@ -19,14 +21,14 @@
             </a>
           </g>
         </template>
-
+        <!--PAYOFF, DISAPPEARS VIA MOUSEOVER ON PATHS-->
         <text id="typo" x="0px" y="0px" transform="matrix(1 0 0 1 132 379)" opacity="0" :display="this.dtypo" style="animation: fade-in 3s forwards;" fill="#555555" font-size="80" class="font-weight-light">COOPERACY</text>
         <text id="payoff" x="0px" y="0px" transform="matrix(1 0 0 1 138 422)" opacity="0" :display="this.dpayoff" style="animation: fade-in 3s 1s forwards;" fill="#555555" font-size="28" stroke="#555555" textLength='475'>LET'S DO IT TOGETHER</text>
       </svg>
     </div>
     <!--END CIRCLE-->
-
-    <div id="homefade" style="opacity:0"><!--FADING AREA-->
+    <!--FADE IN AREA-->
+    <div id="homefade" style="opacity:0">
           <div class="row mb-5 pt-2">
           <div class="col-lg-4 col-xs-12 subheading text-center"><a href="/platform" class="noline transparency space">DISCOVER</a></div>
           <div class="col-lg-4 col-xs-12 subheading text-center"><a href="/cooperation" class="noline understanding space">LEARN</a></div>
@@ -41,28 +43,28 @@
           </p>
           <div class="base text-center"><p class="base text-center mb-3"><a class="ae" href="/register">Join</a> Cooperacy today, 
           or <a class="ai" href="https://www.cooperacy.org/contact">contact us</a> for more information.</p><br></div>
-    </div> <!--END FADING AREA-->
+    </div>
   </div>
 </template>
 
 <style>
-  /* HOME PAGE CIRCLE AND FADING ANIMATIONS */
+  /* HOME PAGE CIRCLE AND FADING ANIMATIONS, SEE ALSO STYLE SPECIFICATION IN SINGLE PREVIOUS ELEMENTS */
   .circle   {margin: 0 auto; height:60vh; position: relative;}
   #coocircle {transform-origin: center center; -webkit-transform-origin: center center; animation: wheel 5s ease-out; }
   @keyframes        wheel { 0% { transform: rotateZ(0deg); } 100% { transform:rotateZ(1080deg); } }
-  #homefade {animation: fadeino 3s forwards; animation-delay: 1s; }
-  .allin {animation: fade-in 4s cubic-bezier(.14,.65,.25,.98) forwards; animation-delay: 2.3s;}
+  /* ACTIVADED AT THE END OF ROTATION */
+  .allin {animation: fade-in 4s cubic-bezier(.14,.65,.25,.98) forwards; animation-delay: 2300ms;}
   @keyframes        fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
+  /* FADE IN AREA, ALSO ACTIVADED AT THE END OF ROTATION */
+  #homefade {animation: fadeino 3s forwards; animation-delay: 1s; }
   @keyframes        fadeino { 0% { opacity: 0; } 100% { opacity: 1; } }
-
 </style>
 
 <script>
   export default {
     data() {
       return {
-        dtypo: '', 
-        dpayoff: '',
+        dtypo: '', dpayoff: '', // TYPO AND PAYOFF DISAPPEAR WHEN HOVERING ON CIRCLE PATHS
         values: [
           {name: 'equivalence', opacity: 0, animation: '', stroke: 'url(#gequivalence)', d: 'M525.0481567,63.1570435  c-45.3894043-21.8797607-96.2866211-34.142334-150.0480957-34.142334 c-53.7633667,0-104.6621704,12.2634277-150.0527802,34.1446533'},
           {name: 'trust', opacity: 0, animation: '', stroke: 'url(#gtrust)', d: 'M712.3186035,297.7496338 c-23.6291504-103.605957-93.7546997-189.5136719-187.2704468-234.5925903'},
@@ -97,23 +99,17 @@
     },
     methods: {
       randomtype() {
-        var randomino = (Math.round(Math.random() * 7))
-        var i
-        if (randomino == 7) { for (i = 0; i < 7; i++) { this.values[i].opacity = '1' }
-        } else { 
-
-          for (i = 0; i < 7; i++) {
-              if (i == randomino) {continue}
-              this.values[i].animation = 'allin'
-          }
-          this.values[randomino].opacity = '1'
+        var i; var randomino = (Math.round(Math.random() * 7)) //random selection of path/color, biased against all colors (7)
+        if (randomino == 7) { for (i = 0; i < 7; i++) { this.values[i].opacity = '1' } //7! all colors in!
+        } else {
+          this.values[randomino].opacity = '1' // if previous fails, just one path/color is visible in the rotation
+          for (i = 0; i < 7; i++) { if (i == randomino) {continue} this.values[i].animation = 'allin'} // at the end all the paths/colors fade in          
         }
       },
       showvalue(v) {
-        var i; for (i = 0; i < 7; i++) {this.descriptions[i].display = 'none'}
-        this.dtypo = 'none'
-        this.dpayoff = 'none'
-        this.descriptions[v].display = 'inline'
+        var i; for (i = 0; i < 7; i++) {this.descriptions[i].display = 'none'} // turns off all descriptions before showing the current, avoiding overlaps
+        this.dtypo = 'none'; this.dpayoff = 'none'; // main payoff disappears
+        this.descriptions[v].display = 'inline' // right description appears
       },
     }
   }
