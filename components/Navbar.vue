@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar p-1˝ fixed-top bg-white navbar-expand-md navbarCooperacy d-flex flex-fill justify-content-center">
       <a class="d-flex flex-fill m-0 noline" href="/">
-        <img class="header-logo" src="../assets/images/wordlogo.png"  />
+        <img class="header-logop" src="@/assets/images/wordlogo.png"  />
       </a>
       <ul class="navbar-nav">
         <li class="navitem dropdown">

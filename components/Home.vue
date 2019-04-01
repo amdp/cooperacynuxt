@@ -29,10 +29,10 @@
     <!--END CIRCLE-->
     <!--FADE IN AREA-->
     <div id="homefade" style="opacity:0">
-          <div class="row mb-5 pt-2">
-          <div class="col-lg-4 col-xs-12 subheading text-center"><a href="/platform" class="noline transparency space">DISCOVER</a></div>
-          <div class="col-lg-4 col-xs-12 subheading text-center"><a href="/cooperation" class="noline understanding space">LEARN</a></div>
-          <div class="col-lg-4 col-xs-12 subheading text-center"><a href="/register" class="noline equivalence space">JOIN</a></div>
+          <div class="row mb-4 p-2">
+            <div class="col-lg-4 col-xs-12 subheading text-center"><a href="/platform" class="noline transparency space">DISCOVER</a></div>
+            <div class="col-lg-4 col-xs-12 subheading text-center"><a href="/cooperation" class="noline understanding space">LEARN</a></div>
+            <div class="col-lg-4 col-xs-12 subheading text-center"><a href="/register" class="noline equivalence space">JOIN</a></div>
           </div>
           <p class="base text-center">Cooperacy is a nonprofit scientific project aiming to spread cooperation amongst humans and in their ecosystem.</p>
           <p class="base text-center mb-2">We're setting up a <a href="/platform" class="ae">platform</a> in which, supported by money, people help each other 
@@ -49,7 +49,7 @@
 
 <style>
   /* HOME PAGE CIRCLE AND FADING ANIMATIONS, SEE ALSO STYLE SPECIFICATION IN SINGLE PREVIOUS ELEMENTS */
-  .circle   {margin: 0 auto; height:60vh; position: relative;}
+  .circle   {margin: 0 auto; height:28vw; position: relative;}
   #coocircle {transform-origin: center center; -webkit-transform-origin: center center; animation: wheel 5s ease-out; }
   @keyframes        wheel { 0% { transform: rotateZ(0deg); } 100% { transform:rotateZ(1080deg); } }
   /* ACTIVADED AT THE END OF ROTATION */
