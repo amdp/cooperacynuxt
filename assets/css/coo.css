@@ -18,9 +18,11 @@ a{color: #777777;}
 .bfreedom {background-color: #4488EE;}
 .bunderstanding {background-color: #AA66DD;}
 .bdiversity {background-color: #FF77CC;}
+.bblack {background-color: #000000;}
 .gray {color: #555555;}
 .lightgray {color: #777777;}
 .graylight {color: #CCCCCC;}
+.white {color: #FFFFFF;}
 .bgray {background-color: #eeeeee;}
 .bwhite {background-color: #ffffff;}
 .ae {text-decoration:none; background-image: linear-gradient(#FF9000 50%,#FFFFFF 50%); background-repeat:repeat-x;
@@ -76,4 +78,5 @@ img.page-header { margin-top: 0px; width: 100%; height: auto; vertical-align: to
 
 .navbarrow {margin-top: 100px;}
 .navbar {opacity: 0.8; border-bottom: 1px solid #CCCCCC;}
+.header-logop { width:244px; height:60px; }
 .header-logo { width:244px; height:60px; }
