@@ -9,10 +9,11 @@
     <div class="row mt-5" v-for="project in projects" :key="project.id">
       <div class="col-12">
         <div class="row">
+          <div class="col-1"></div>
           <div class="col-2">
-            <img :src="'~@/assets/images/projects/' + project.image" width="100px" />
+            <img :src="require('@/assets/images/projects/' + project.image)" width="100px" />
           </div>
-          <div class="col-8">
+          <div class="col-9">
             <div class="row">
               <div class="col-12 space subheading up">{{ project.name }}</div>
             </div>
@@ -20,14 +21,8 @@
               <div class="col-12">{{ project.content }}</div>
             </div>
           </div>
-          <div class="col-2">
-            <div><button @click="editProject(project.name, project.id)" class="btn-sm border-0 gray">Edit</button></div>
-            <div><button @click="deleteProject(project.id)" class="btn-sm border-0 gray">Delete</button></div>
-          </div>
         </div>
-        <div class="row mt-3">
-          <div class="col" v-for="votebar in votebars" :id="votebar.name" :key="votebar.name" :style="{height: '5px', 'background-color': votebar.color, opacity: votebar.opacity}"></div>
-        </div>
+        <votebars />
       </div>
     </div>
 
@@ -37,6 +32,8 @@
 
 <script>
 import axios from 'axios'
+import Votebars from '~/components/Votebars'
+
 export default {
   data() {
     return {
@@ -45,19 +42,13 @@ export default {
       formName: '',
       formContent: '',
       isEdit: false,
-      votebars: [
-        {name: 'evotebar', color: '#FF9000', opacity: '1'},
-        {name: 'tvotebar', color: '#FFDD00', opacity: '1'},
-        {name: 'cvotebar', color: '#88DD33', opacity: '1'},
-        {name: 'ivotebar', color: '#22DDEE', opacity: '1'},
-        {name: 'fvotebar', color: '#4488EE', opacity: '1'},
-        {name: 'uvotebar', color: '#AA66DD', opacity: '1'},
-        {name: 'dvotebar', color: '#FF77CC', opacity: '1'},
-      ],
     }
   },
   mounted() {
     this.getProjects()
+  },
+  components: {
+    Votebars: Votebars,
   },
   methods: {
     getProjects() {
