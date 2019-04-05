@@ -23,7 +23,7 @@
         </template>
         <!--PAYOFF, DISAPPEARS VIA MOUSEOVER ON PATHS-->
         <text id="typo" x="0px" y="0px" transform="matrix(1 0 0 1 132 379)" opacity="0" :display="this.dtypo" style="animation: fade-in 3s forwards;" fill="#555555" font-size="80" class="font-weight-light">COOPERACY</text>
-        <text id="payoff" x="0px" y="0px" transform="matrix(1 0 0 1 138 422)" opacity="0" :display="this.dpayoff" style="animation: fade-in 3s 1s forwards;" fill="#555555" font-size="28" stroke="#555555" textLength='475'>LET'S DO IT TOGETHER</text>
+        <text id="payoff" x="0px" y="0px" transform="matrix(1 0 0 1 138 422)" opacity="0" :display="this.dpayoff" style="animation: fade-in 3s 1s forwards;" fill="#555555" font-size="28" stroke="#555555" textLength='475'>ENTER THE JOURNEY</text>
       </svg>
     </div>
     <!--END CIRCLE-->
@@ -76,7 +76,7 @@
         ],
         descriptions: [
           {name: 'equivalenceD', display: 'none', href: 'http://cooperacy.org/cooperation#equivalence', matrix1: 'matrix(1 0 0 1 157 360)', matrix2: 'matrix(1 0 0 1 225 440)', style: 'display:inline;fill:#555555;stroke:#FF9000;stroke-width:6;stroke-miterlimit:10;', x1: '150', y1: '393', x2: '600', y2: '393', text: 'EVERYONE IS IMPORTANT', value: 'EQUIVALENCE'},
-          {name: 'trustD', display: 'none', href: 'http://cooperacy.org/cooperation#trust', matrix1: 'matrix(1 0 0 1 278 360)', matrix2: 'matrix(1 0 0 1 208 443)', style: 'display:inline;fill:#555555;stroke:#FFDD00;stroke-width:6;stroke-miterlimit:10;', x1: '150', y1: '393', x2: '600', y2: '393', text: 'PEOPLE COUNT ON OTHERS', value: 'TRUST'},
+          {name: 'trustD', display: 'none', href: 'http://cooperacy.org/cooperation#trust', matrix1: 'matrix(1 0 0 1 278 360)', matrix2: 'matrix(1 0 0 1 208 443)', style: 'display:inline;fill:#555555;stroke:#FFD000;stroke-width:6;stroke-miterlimit:10;', x1: '150', y1: '393', x2: '600', y2: '393', text: 'PEOPLE COUNT ON OTHERS', value: 'TRUST'},
           {name: 'careD', display: 'none', href: 'http://cooperacy.org/cooperation#care', matrix1: 'matrix(1 0 0 1 286 360)', matrix2: 'matrix(1 0 0 1 182 443)', style: 'display:inline;fill:#555555;stroke:#88DD33;stroke-width:6;stroke-miterlimit:10;', x1: '150', y1: '393', x2: '600', y2: '393', text: 'PEOPLE CARE FOR EACH OTHER', value: 'CARE'},
           {name: 'transparencyD', display: 'none', href: 'http://cooperacy.org/cooperation#transparency', matrix1: 'matrix(1 0 0 1 132 360)', matrix2: 'matrix(1 0 0 1 194 443)', style: 'display:inline;fill:#555555;stroke:#22DDEE;stroke-width:6;stroke-miterlimit:10;', x1: '150', y1: '393', x2: '600', y2: '393', text: 'PEOPLE WANT TO BE HONEST', value: 'TRANSPARENCY'},
           {name: 'freedomD', display: 'none', href: 'http://cooperacy.org/cooperation#freedom', matrix1: 'matrix(1 0 0 1 222 360)', matrix2: 'matrix(1 0 0 1 184 443)',  style: 'display:inline;fill:#555555;stroke:#4488EE;stroke-width:6;stroke-miterlimit:10;', x1: '150', y1: '393', x2: '600', y2: '393', text: 'PEOPLE FOLLOW THEIR DESIRES', value: 'FREEDOM'},
@@ -85,7 +85,7 @@
         ],
         gradients: [
           {name: "gequivalence", x1: "219", y1: "58", x2: "530", y2: "58", color1: "stop-color:#FF8366", offset: "0.5", color2: "stop-color:#FF9000", color3: "stop-color:#FFB600"},
-          {name: "gtrust", x1: "530", y1: "58", x2: "743", y2: "260", color1: "stop-color:#FFB600", offset: "0.6", color2: "stop-color:#FFDD00", color3: "stop-color:#C3DD19"},
+          {name: "gtrust", x1: "530", y1: "58", x2: "743", y2: "260", color1: "stop-color:#FFB600", offset: "0.6", color2: "stop-color:#FFD000", color3: "stop-color:#C3DD19"},
           {name: "gcare", x1: "742", y1: "290", x2: "670", y2: "590", color1: "stop-color:#C3DD19", offset: "0.5", color2: "stop-color:#88DD33", color3: "stop-color:#55DD90"},
           {name: "gtransparency", x1: "700", y1: "640", x2: "400", y2: "750", color1: "stop-color:#55DD90", offset: "0.5", color2: "stop-color:#22DDEE", color3: "stop-color:#33B2EE"},
           {name: "gfreedom", x1: "350", y1: "750", x2: "100", y2: "640", color1: "stop-color:#33B2EE", offset: "0.5", color2: "stop-color:#4488EE", color3: "stop-color:#7777E5"},
