@@ -13,13 +13,14 @@
           <b-form-textarea id="contentInput" v-model="formContent" size="sm" ></b-form-textarea></b-form-group>
         <b-form-group label-for="imageInput" label="Image:" :description="imageUploadDesc"> 
           <b-form-file id="imageInput" v-model="formImageFile" ref="formImageFile" size="sm" accept="image/*"></b-form-file>
-          <b-button class="btn btrust btn-block mt-3 gray border-0 btn-outline-light" size="sm" @click="imageUpload()">Upload</b-button></b-form-group>
+        </b-form-group>
+        <b-button class="btn bcare btn-block mb-3 gray border-0 btn-outline-light" size="sm" @click="imageUpload()">Upload the image first!</b-button>
         <b-form-group label-for="videoInput" label="Video:" description="Please insert a YouTube video link for the project idea">
           <b-form-input id="videoInput" v-model="formVideo" size="sm" ></b-form-input></b-form-group>
         
         <h5 class="understanding">TECHNICAL</h5>
           <b-form-checkbox id="anonymousInput" v-model="formAnonymous" switch class="m-3">AFTF: this project idea needs collective-intelligence-based Anonymous First Transparency Forever-after methodology.</b-form-checkbox>
-        <b-form-group label-for="parentInput" label="Parent:" description="Please insert eventual parent project id, if not sure leave it blank.">
+        <b-form-group label-for="parentInput" label="Parent:" description="Please insert eventual parent project id, if not sure leave it 1 (Cooperacy).">
           <b-form-input id="parentInput" v-model="formParent" size="sm" ></b-form-input></b-form-group>
         <!-- the parent project id owner will be notified, except for the Cooperacy project -->
         <b-form-group label-for="categoryInput" label="Category:" description="Please choose the project idea category">
@@ -54,6 +55,7 @@ export default {
   },
   computed: { 
     nameInputState() { return this.name.length > 4 ? true : false },
+    budgetInputState() { return this.bodget.length >= 1000 ? true : false },
     categoriesOptions: function () { return this.categories.filter(function (category) {return category.id != 0}) } 
   },
   data() {
@@ -66,13 +68,17 @@ export default {
       formImageFile: '',
       formVideo: '',
       formAnonymous: '',
-      formParent: '',
+      formParent: '1',
       formCategory: '1',
       formStageNofunding: '',
-      formCollected: '',
       formBudget: '',
       formHudget: '',
       imageUploadDesc: 'Please choose an image for the project idea and click "Upload".',
+    }
+  },
+  head () {
+    return {
+      title: 'New Project',
     }
   },
   mounted() {
@@ -84,14 +90,25 @@ export default {
         error => { console.error(error) }
       )
     },
-    addNewProject() { axios.post('/serverDB/projects', { name: this.formName })
+    addNewProject() { 
+      if (this.formStageNofunding) {this.formStageNofunding = 5} else {this.formStageNofunding = 7}
+      axios.post('/serverDB/projects', { 
+        name: this.formName,
+        brief: this.formBrief,
+        content: this.formContent,
+        image: this.formImageFile.name,
+        video: this.formVideo,
+        anonymous: this.formAnonymous,
+        parent: this.formParent,
+        stage: this.formStageNofunding,
+        budget: this.formBudget,
+        hudget: this.formHudget, })
         .then(res => { this.formName = ''; console.log(res) })
         .catch(err => { console.log(err) })
     },
     imageUpload() {
       let formImageData = new FormData()
       formImageData.append('file', this.formImageFile)
-
       axios.post('/serverDB/imageupload',
         formImageData,
          { 

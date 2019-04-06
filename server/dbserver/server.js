@@ -132,7 +132,7 @@ cooperacyRouter.post("/imageupload", function(req, res) {
   console.log('req.files >>>', req.files)
   uploadPath = '../../assets/images/projects/' + req.files.file.name
   req.files.file.mv(uploadPath, function(err) { if (err) { return res.status(500).send(err); }
-    res.send('File uploaded to ')
+  res.send ('file uploaded')
   })
 })
 
