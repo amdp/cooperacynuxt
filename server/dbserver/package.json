@@ -1,7 +1,7 @@
 {
   "name": "coo",
   "version": "0.1.0",
-  "description": "nodecooperacy",
+  "description": "cooperacy node server databases api - use git+https://github.com/amdp/cooperacynuxt.git for full git bundle",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon server.js"
@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/amdp/coo.git"
   },
-  "author": "amdp",
+  "author": "Alessandro Merletti De Palo",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "3.0.4",
@@ -21,16 +21,11 @@
     "mysql": "^2.16.0",
     "mysql2": "^1.6.5",
     "nodemon": "^1.18.10",
-    "sequelize": "^5.1.0",
-    "vue": "^2.6.10",
-    "vue-router": "^3.0.2"
+    "sequelize": "^5.1.0"
   },
   "bugs": {
-    "url": "https://github.com/amdp/coo/issues"
+    "url": "https://github.com/amdp/cooperacynuxt/issues"
   },
-  "homepage": "https://github.com/amdp/coo#readme",
-  "devDependencies": {
-    "webpack": "^4.29.6",
-    "webpack-cli": "^3.3.0"
-  }
+  "homepage": "https://github.com/amdp/cooperacynuxt#readme",
+  "devDependencies": {}
 }
