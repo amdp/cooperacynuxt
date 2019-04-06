@@ -130,9 +130,9 @@ cooperacyRouter.get("/categories", (req, res) => { categoryModel.findAll ()
 cooperacyRouter.post("/imageupload", function(req, res) {
   if (Object.keys(req.files).length == 0) { res.status(400).send('No files were uploaded.'); return }
   console.log('req.files >>>', req.files)
-  uploadPath = '@/assets/images/projects/' + req.files.file.name
-  req.files.file.mv('/assets/images/projects/abubba.png', function(err) { if (err) { return res.status(500).send(err); }
-    res.send('File uploaded to ' + uploadPath)
+  uploadPath = '../../assets/images/projects/' + req.files.file.name
+  req.files.file.mv(uploadPath, function(err) { if (err) { return res.status(500).send(err); }
+    res.send('File uploaded to ')
   })
 })
 

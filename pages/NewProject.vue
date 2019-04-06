@@ -11,10 +11,9 @@
           <b-form-input id="briefInput" v-model="formBrief" size="sm" ></b-form-input></b-form-group>
         <b-form-group label-for="contentInput" label="Content:" description="Please insert a longer description of the project idea">
           <b-form-textarea id="contentInput" v-model="formContent" size="sm" ></b-form-textarea></b-form-group>
-        <b-form-group label-for="imageInput" label="Image:" description="Please upload an image for the project idea. 
-        Once uploaded, keep its name in this field."> 
+        <b-form-group label-for="imageInput" label="Image:" :description="imageUploadDesc"> 
           <b-form-file id="imageInput" v-model="formImageFile" ref="formImageFile" size="sm" accept="image/*"></b-form-file>
-          <b-button class="btn btrust btn-block mt-3 gray border-0" size="sm" @click="imageUpload()">Upload</b-button></b-form-group>
+          <b-button class="btn btrust btn-block mt-3 gray border-0 btn-outline-light" size="sm" @click="imageUpload()">Upload</b-button></b-form-group>
         <b-form-group label-for="videoInput" label="Video:" description="Please insert a YouTube video link for the project idea">
           <b-form-input id="videoInput" v-model="formVideo" size="sm" ></b-form-input></b-form-group>
         
@@ -73,7 +72,7 @@ export default {
       formCollected: '',
       formBudget: '',
       formHudget: '',
-      isEdit: false,
+      imageUploadDesc: 'Please choose an image for the project idea and click "Upload".',
     }
   },
   mounted() {
@@ -92,6 +91,7 @@ export default {
     imageUpload() {
       let formImageData = new FormData()
       formImageData.append('file', this.formImageFile)
+
       axios.post('/serverDB/imageupload',
         formImageData,
          { 
@@ -99,13 +99,14 @@ export default {
                 'Content-Type': 'multipart/form-data'
             }
         })
-        .then(function(){
+        .then(res => {
+          this.imageUploadDesc = 'Image uploaded. Please keep the image name in the textbox above as it is now.'
           console.log('SUCCESS!!');
         })
-        .catch(function(){
-          console.log('FAILURE!!');
+        .catch(err => {
+          this.imageUploadDesc = 'Image failed to upload. Please retry.'
+          console.log('FAILURE :(');
         });
-        console.log(this.formImageData)
     },
   }
 }
