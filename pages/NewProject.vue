@@ -14,7 +14,7 @@
         <b-form-group label-for="imageInput" label="Image:" :description="imageUploadDesc"> 
           <b-form-file id="imageInput" v-model="formImageFile" ref="formImageFile" size="sm" accept="image/*"></b-form-file>
         </b-form-group>
-        <b-button class="btn bcare btn-block mb-3 gray border-0 btn-outline-light" size="sm" @click="imageUpload()">Upload the image first!</b-button>
+        <b-button class="btn bhdiversity btn-block mb-3 white border-0 btn-outline-light" size="sm" @click="imageUpload()">Upload the image first!</b-button>
         <b-form-group label-for="videoInput" label="Video:" description="Please insert a YouTube video link for the project idea">
           <b-form-input id="videoInput" v-model="formVideo" size="sm" ></b-form-input></b-form-group>
         
