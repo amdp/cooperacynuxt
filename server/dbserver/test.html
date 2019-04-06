@@ -44,15 +44,22 @@ Content-type: application/json
   "password": "cicci"
 }
 
+GET http://127.0.0.1:5000/serverDB/projects HTTP/1.1
+Content-type: application/json
 
-
-POST http://127.0.0.1:5000/serverDB/imageupload/ HTTP/1.1
-Content-type: image/png
 
 < test.png
-
 ###-->
 
 
-GET http://127.0.0.1:5000/serverDB/projects HTTP/1.1
-Content-type: application/json
+
+POST http://127.0.0.1:5000/serverDB/imageupload/ HTTP/1.1
+Content-type: multipart/form-data; boundary=----WebKitFormBoundary81biTCbEzd6xZzhR
+
+------WebKitFormBoundary81biTCbEzd6xZzhR
+Content-Disposition: form-data; name="file"; filename="test.png"
+Content-Type: image/png
+
+------WebKitFormBoundary81biTCbEzd6xZzhR
+
+< test.png
