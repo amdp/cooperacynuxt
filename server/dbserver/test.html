@@ -49,7 +49,7 @@ Content-type: application/json
 
 
 < test.png
-###-->
+
 
 
 
@@ -63,3 +63,22 @@ Content-Type: image/png
 ------WebKitFormBoundary81biTCbEzd6xZzhR
 
 < test.png
+
+###-->
+
+POST http://127.0.0.1:5000/serverDB/projects HTTP/1.1
+content-type: application/json
+
+{
+  "parent": null,
+  "category": "1",
+  "stage": "7",
+  "budget": "0",
+  "hudget": "1",
+  "anonymous": "0",
+  "name": "naassa",
+  "brief": "brief",
+  "content": "content",
+  "image": "",
+  "video": "video"
+}

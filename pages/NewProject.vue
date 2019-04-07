@@ -3,18 +3,19 @@
     <div class="col-2"></div>
     <div class="col-8">
       <h2 class="text-center mb-4 diversity">NEW PROJECT IDEA</h2>
-      <b-form @submit.prevent="addNewProject" class="mt-3">
+      <b-form @submit.prevent="addNewProject" class="mt-3 was-validated">
         <br /><h5 class="diversity">DESCRIPTION</h5>
         <b-form-group label-for="nameInput" label="Name:" description="Please insert the project idea name">
-          <b-form-input id="nameInput" v-model="formName" size="sm" ></b-form-input></b-form-group>
+          <b-form-input id="nameInput" v-model="formName" size="sm" required></b-form-input></b-form-group>
         <b-form-group label-for="briefInput" label="Brief:" description="Please insert a one-line description of the project idea">
-          <b-form-input id="briefInput" v-model="formBrief" size="sm" ></b-form-input></b-form-group>
+          <b-form-input id="briefInput" v-model="formBrief" size="sm" required></b-form-input></b-form-group>
         <b-form-group label-for="contentInput" label="Content:" description="Please insert a longer description of the project idea">
           <b-form-textarea id="contentInput" v-model="formContent" size="sm" ></b-form-textarea></b-form-group>
+        <b-form-group label-for="tagsInput" label="Tags:" description="Please insert tags separated by comma">
+          <b-form-input id="tagsInput" v-model="formTags" size="sm" ></b-form-input></b-form-group>
         <b-form-group label-for="imageInput" label="Image:" :description="imageUploadDesc"> 
-          <b-form-file id="imageInput" v-model="formImageFile" ref="formImageFile" size="sm" accept="image/*"></b-form-file>
+          <b-form-file id="imageInput" v-model="formImageFile" ref="formImageFile" size="sm" accept="image/*" @input="imageUpload()"></b-form-file>
         </b-form-group>
-        <b-button class="btn bhdiversity btn-block mb-3 white border-0 btn-outline-light" size="sm" @click="imageUpload()">Upload the image first!</b-button>
         <b-form-group label-for="videoInput" label="Video:" description="Please insert a YouTube video link for the project idea">
           <b-form-input id="videoInput" v-model="formVideo" size="sm" ></b-form-input></b-form-group>
         
@@ -38,6 +39,7 @@
           <b-form-input id="hudgetInput" v-model="formHudget" ></b-form-input></b-form-group>
       
         <b-button type="submit" class="btn btrust btn-block mt-3 gray border-0">ADD A NEW PROJECT IDEA</b-button>
+        <h5 class="text-center mt-5 mb-5 trust" v-if="projectCreated">Project created. Add another one if you like.</h5>
       </b-form>
     </div>
     <div class="col-2"></div>
@@ -47,7 +49,7 @@
 <script>
 import axios from 'axios'
 import Votebars from '~/components/Votebars'
-
+var todayTest = new Date(); todayTest = todayTest.toString()
 
 export default {
   components: {
@@ -62,7 +64,7 @@ export default {
     return {
       categories: [],
       projects: [],
-      formName: '',
+      formName: todayTest,
       formBrief: '',
       formContent: '',
       formImageFile: '',
@@ -71,9 +73,12 @@ export default {
       formParent: '1',
       formCategory: '1',
       formStageNofunding: '',
-      formBudget: '',
-      formHudget: '',
+      formBudget: '1000',
+      formHudget: '2',
+      formTags: '',
+      dbLastProject: '',
       imageUploadDesc: 'Please choose an image for the project idea and click "Upload".',
+      projectCreated: '',
     }
   },
   head () {
@@ -92,6 +97,7 @@ export default {
     },
     addNewProject() { 
       if (this.formStageNofunding) {this.formStageNofunding = 5} else {this.formStageNofunding = 7}
+      if (!this.formAnonymous) {this.formAnonymous = 0}
       axios.post('/serverDB/projects', { 
         name: this.formName,
         brief: this.formBrief,
@@ -103,19 +109,31 @@ export default {
         stage: this.formStageNofunding,
         budget: this.formBudget,
         hudget: this.formHudget, })
-        .then(res => { this.formName = ''; console.log(res) })
+        .then(addedProjectId => { 
+          this.formName = '';
+          if (this.formTags){
+            var i
+            var splittedTags = this.formTags.split(",")
+            for (i=0; i<splittedTags.length; i++) {
+              splittedTags[i] = splittedTags[i].replace(/^[ ]+/gi,'')
+              axios.post('/serverDB/tags', {
+                project: addedProjectId.data.id,
+                tagName: splittedTags[i]
+              })
+              .catch(err => { console.log(err) })
+            }
+          }
+        })
+        .then(this.projectCreated = true)
         .catch(err => { console.log(err) })
     },
-    imageUpload() {
-      let formImageData = new FormData()
-      formImageData.append('file', this.formImageFile)
-      axios.post('/serverDB/imageupload',
-        formImageData,
-         { 
-        headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        })
+    async imageUpload() {
+      //await (typeof this.formImageFile.name !== undefined)
+        console.log('file :' + this.formImageFile.name)
+        let formImageData = new FormData()
+        formImageData.append('file', this.formImageFile)
+        console.log(this.formImageData)
+        axios.post('/serverDB/imageupload', formImageData, { headers: { 'Content-Type': 'multipart/form-data' } })
         .then(res => {
           this.imageUploadDesc = 'Image uploaded. Please keep the image name in the textbox above as it is now.'
           console.log('SUCCESS!!');
@@ -123,7 +141,7 @@ export default {
         .catch(err => {
           this.imageUploadDesc = 'Image failed to upload. Please retry.'
           console.log('FAILURE :(');
-        });
+        })
     },
   }
 }
