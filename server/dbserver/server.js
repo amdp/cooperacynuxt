@@ -52,12 +52,15 @@ cooperacyRouter.post("/projects", (req, res) => {
   const today = new Date()
   const projectData = { id: req.body.id, parent: req.body.parent, category: req.body.category, stage: req.body.stage, collected: req.body.collected, budget: req.body.budget, hudget: req.body.hudget, anonymous: req.body.anonymous, name: req.body.name, brief: req.body.brief, content: req.body.content, image: req.body.image, video: req.body.video, date: today, E: req.body.E, T: req.body.T, C: req.body.C, I: req.body.I, F: req.body.F, U: req.body.U, D: req.body.D }
   projectModel.findOne({ where: { name: req.body.name } })
-    .then(project => {
-      if(!project) {
-        projectModel.create(projectData)
-          .then(project => { res.json({status: project.name + 'added'}) }) 
-          .catch(err => { res.send ('error :' + err) })
-    }else{ res.json({error: "project already exists"}) }
+    .then(project => {if(!project) {
+      projectModel.create(projectData)
+      // now we use a raw query to retieve the id of the project we created, warning: you can use also @@IDENTITY or mysql_insert_id() instead of LAST_INSERT_ID()
+      .then (project => {
+        sequelize.query('SELECT LAST_INSERT_ID() AS lastId', {type: Sequelize.QueryTypes.SELECT})
+        .then(id => {res.json({id: id[0].lastId}) })
+      })
+        .catch(err => { res.send ('error :' + err) })
+      }else{ res.json({error: "project already exists"}) }
   })
   .catch(err => { res.send ('error :' + err) }) 
 })
@@ -127,6 +130,10 @@ cooperacyRouter.get("/categories", (req, res) => { categoryModel.findAll ()
   .then(categories => { res.json(categories) }) .catch(err => { res.send("Error: " + err) })
 })
 
+cooperacyRouter.get("/tags", (req, res) => { categoryModel.findAll ()
+  .then(tags => { res.json(tags) }) .catch(err => { res.send("Error: " + err) })
+})
+
 cooperacyRouter.post("/imageupload", function(req, res) {
   if (Object.keys(req.files).length == 0) { res.status(400).send('No files were uploaded.'); return }
   console.log('req.files >>>', req.files)
@@ -134,6 +141,13 @@ cooperacyRouter.post("/imageupload", function(req, res) {
   req.files.file.mv(uploadPath, function(err) { if (err) { return res.status(500).send(err); }
   res.send ('file uploaded')
   })
+})
+
+cooperacyRouter.post("/tags", (req, res) => { 
+  const tagData = { id: req.body.id, project: req.body.project, tagName: req.body.tagName }
+  tagModel.create(tagData)
+      .then(res => {console.log(res)})
+      .catch(err => { res.send ('error :' + err) })
 })
 
 module.exports = cooperacyRouter
@@ -230,6 +244,17 @@ var categoryModel = db.sequelize.define(
   {
       id: {type: Sequelize.INTEGER, primaryKey: true, autoincrement: true},
       name: {type: Sequelize.CHAR, allowNull: false},
+  }, {
+    timestamps: false
+  }
+)
+
+var tagModel = db.sequelize.define(
+  'tag',
+  {
+      id: {type: Sequelize.INTEGER, primaryKey: true, autoincrement: true},
+      project: {type: Sequelize.INTEGER},
+      tagName: {type: Sequelize.CHAR, allowNull: false},
   }, {
     timestamps: false
   }
