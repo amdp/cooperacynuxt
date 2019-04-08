@@ -1,16 +1,24 @@
 <template>
   <b-navbar toggleable="lg" class="p-1 fixed-top bg-white d-flex flex-fill justify-content-center">
     <b-navbar-brand to="/" v-if="!this.$auth.$state.loggedIn"><img class="headerlogo" src="@/assets/images/wordlogo.png"  /></b-navbar-brand>
-    <b-navbar-brand to="/" v-if="this.$auth.$state.loggedIn" class="d-flex justify-content-center">
-        <img class="userlogo m-2" src="@/assets/images/coo.png"  />
-        <h3 class="diversity">{{stronzone}}</h3>
-        <b-button class="bhunderstanding" @click="$auth.logout()">Logout</b-button>
-        <votebars />
+    <b-navbar-brand to="/" v-if="this.$auth.$state.loggedIn" >
+          <img class="userlogo m-2" src="@/assets/images/coo.png"  />
     </b-navbar-brand>
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
     <b-collapse id="nav-collapse" is-nav>
-      <b-navbar-nav></b-navbar-nav>
+      <b-navbar-nav> 
+        <div class="row">
+          <div class="col d-flex justify-content-center">
+            <h3 class="diversity">{{stronzone}}</h3>
+            <b-button class="bhunderstanding" @click="$auth.logout()">Logout</b-button>
+          </div>
+          <div class="w-100"></div>
+          <div class="col">
+            <votebars />
+          </div>
+        </div>
+      </b-navbar-nav>
 
       <b-navbar-nav class="ml-auto">
         <b-nav-item-dropdown text="THE PROJECT" no-caret right>
