@@ -23,7 +23,7 @@ module.exports = {
   /*
   ** Customize the progress-bar color
   */
-  loading: { color: '#FF9000' },
+  loading: { color: '#FFD000' },
 
   /*
   ** Global CSS
@@ -33,7 +33,7 @@ module.exports = {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: ['@plugins/vee-validate.js'],
+  plugins: [],
 
   /*
   ** Nuxt.js modules

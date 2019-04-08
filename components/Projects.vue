@@ -27,7 +27,7 @@
 
 <script>
 import axios from 'axios'
-import Votebars from '~/components/Votebars'
+import Votebars from '@/components/Votebars'
 
 export default {
   data() {
