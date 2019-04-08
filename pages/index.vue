@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import Home from '~/components/Home'
-import Projects from '~/components/Projects'
+import Home from '@/components/Home'
+import Projects from '@/components/Projects'
 
 
 export default {

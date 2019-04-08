@@ -1,6 +1,12 @@
 <template>
   <b-navbar toggleable="lg" class="p-1 fixed-top bg-white d-flex flex-fill justify-content-center">
-    <b-navbar-brand to="/"><img class="header-logop" src="@/assets/images/wordlogo.png"  /></b-navbar-brand>
+    <b-navbar-brand to="/" v-if="!this.$auth.$state.loggedIn"><img class="headerlogo" src="@/assets/images/wordlogo.png"  /></b-navbar-brand>
+    <b-navbar-brand to="/" v-if="this.$auth.$state.loggedIn" class="d-flex justify-content-center">
+        <img class="userlogo m-2" src="@/assets/images/coo.png"  />
+        <h3 class="diversity">{{this.$auth.$state + stronzone}}</h3>
+        <b-button class="bhunderstanding" @click="$auth.logout()">Logout</b-button>
+        <votebars />
+    </b-navbar-brand>
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
     <b-collapse id="nav-collapse" is-nav>
@@ -30,12 +36,32 @@
         </b-nav-item-dropdown>
         <span> &nbsp;&nbsp;&nbsp;</span>
         <b-nav-item-dropdown text="LOGIN" no-caret right>
-          <b-dropdown-item to="#">ME</b-dropdown-item>
-          <b-dropdown-item to="#">LOGOUT</b-dropdown-item>
+          <user />
         </b-nav-item-dropdown>
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>
 </template>
 
+<script>
+import User from '@/components/User'
+import Votebars from '@/components/Votebars'
+
+
+export default {
+  data() {
+    return {
+    stronzone: ''
+    }
+  },
+  components: {
+    User: User,
+    Votebars: Votebars,
+  },
+  mounted() {
+    this.$auth.fetchUser()
+    this.stronzone = JSON.stringify(this.$auth.$state, undefined, 2)
+  }
+}
+</script>
           

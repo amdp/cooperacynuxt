@@ -48,10 +48,11 @@
 
 <script>
 import axios from 'axios'
-import Votebars from '~/components/Votebars'
+import Votebars from '@/components/Votebars'
 var todayTest = new Date(); todayTest = todayTest.toString()
 
 export default {
+  middleware: ['auth'],
   components: {
     Votebars: Votebars,
   },
