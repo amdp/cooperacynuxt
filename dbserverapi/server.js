@@ -26,29 +26,34 @@ process.env.SECRET_KEY = 'secret'
 /////// ROUTES ///////
 
 /// PROJECT VOTES ///
-cooperacyRouter.get('/pvotes', (req, res) => { pvoteModel.findAll ()
+cooperacyRouter.get(
+  "/pvotes", (req, res) => { pvoteModel.findAll ()
   .then(pvotes => { res.json(pvotes) }) .catch(err => { res.send("Error: " + err) })
 })
 
-cooperacyRouter.post("/pvotes", (req, res) => { if(!req.body.name){ 
+cooperacyRouter.post(
+  "/pvotes", (req, res) => { if(!req.body.name){ 
   res.status(400); res.json({ error: "Bad data" })} else { pvoteModel.create(req.body) 
     .then(() => { res.send("Vote added") }) .catch(err => { res.send("Error: " + err) })
     // this should also add a ++ to projectModel.[votenr]
 }
 })
 
-cooperacyRouter.delete("/pvotes/:id", (req, res) => { pvoteModel.destroy ({ 
+cooperacyRouter.delete(
+  "/pvotes/:id", (req, res) => { pvoteModel.destroy ({ 
   where: { id: req.params.id } }) .then( () => { res.send("Vote removed.") }) .catch(err => { res.send("Error: " + err) })
   // this should also cut via -- to projectModel.[votenr]
   // this should also add the same row to premovedvotes
 })
 
 /// PROJECTS ///
-cooperacyRouter.get("/projects", (req, res) => { projectModel.findAll ()
+cooperacyRouter.get(
+  "/projects", (req, res) => { projectModel.findAll ()
     .then(projects => { res.json(projects) }) .catch(err => { res.send("Error: " + err) })
 })
 
-cooperacyRouter.post("/projects", (req, res) => { 
+cooperacyRouter.post(
+  "/projects", (req, res) => { 
   const today = new Date()
   const projectData = { id: req.body.id, parent: req.body.parent, category: req.body.category, stage: req.body.stage, collected: req.body.collected, budget: req.body.budget, hudget: req.body.hudget, anonymous: req.body.anonymous, name: req.body.name, brief: req.body.brief, content: req.body.content, image: req.body.image, video: req.body.video, date: today, E: req.body.E, T: req.body.T, C: req.body.C, I: req.body.I, F: req.body.F, U: req.body.U, D: req.body.D }
   projectModel.findOne({ where: { name: req.body.name } })
@@ -65,18 +70,21 @@ cooperacyRouter.post("/projects", (req, res) => {
   .catch(err => { res.send ('error :' + err) }) 
 })
 
-cooperacyRouter.delete("/projects/:id", (req, res) => { projectModel.destroy ({ 
+cooperacyRouter.delete(
+  "/projects/:id", (req, res) => { projectModel.destroy ({ 
     where: { id: req.params.id } }) .then( () => { res.send("Project deleted.") }) .catch(err => { res.send("Error: " + err) })
 })
 
-cooperacyRouter.put("/projects/:id", (req, res) => { if(!req.body.name) { 
+cooperacyRouter.put(
+  "/projects/:id", (req, res) => { if(!req.body.name) { 
     res.status(400); res.json({ error: "Bad data" }) } else { projectModel.update( 
       {name: req.body.name}, { where: {id: req.params.id} }) .then( () => { res.send ("Task Updated.") }) .error(err => res.send(err))
   }
 })
 
 /// USERS ///
-cooperacyRouter.post("/register", (req, res) => {
+cooperacyRouter.post(
+  "/register", (req, res) => {
     const today = new Date()
     const userData = { id: req.body.id, name: req.body.name, surname: req.body.surname, email: req.body.email, password: req.body.password, photo: req.body.photo,
       E: req.body.E, T: req.body.T, C: req.body.C, I: req.body.I, F: req.body.F, U: req.body.U, D: req.body.D,
@@ -97,7 +105,8 @@ cooperacyRouter.post("/register", (req, res) => {
         .catch(err => { res.send ('error :' + err) })
 })
 
-cooperacyRouter.post("/login", (req, res) => {
+cooperacyRouter.post(
+  "/login", (req, res) => {
   userModel.findOne({
       where: {
           email: req.body.email
@@ -118,23 +127,46 @@ cooperacyRouter.post("/login", (req, res) => {
       .catch(err => { res.status(400).json({error: err }) })
 })
 
-cooperacyRouter.get('/user', (req, res, next) => { res.json({ user: req.user }) }) // not currently active
+cooperacyRouter.get(
+  "/user", (req, res) => { 
+    userModel.findOne({
+    where: {
+        email: req.body.email
+    }
+})
+    .then(user => {
+        if(user){
+            if(bcrypt.compareSync(req.body.password, user.password)) {
+                let token = jwt.sign(user.dataValues, process.env.SECRET_KEY, {
+                    expiresIn: 1440
+                })
+                res.json({
+                  token
+                })
+            }
+        }else{ res.status(400).json({error: 'User does not exist'}) }
+    })
+    .catch(err => { res.status(400).json({error: err }) }) })
 
-cooperacyRouter.post('/logout', (req, res, next) => { res.json({ status: 'OK' }) })
+cooperacyRouter.post(
+  "/logout", (req, res) => { res.json({ status: 'OK' }) })
 
 cooperacyRouter.use((err, req, res, next) => { console.error(err); res.status(401).send(err + '') })
 
 /// MISCELLANEOUS ///
 
-cooperacyRouter.get("/categories", (req, res) => { categoryModel.findAll ()
+cooperacyRouter.get(
+  "/categories", (req, res) => { categoryModel.findAll ()
   .then(categories => { res.json(categories) }) .catch(err => { res.send("Error: " + err) })
 })
 
-cooperacyRouter.get("/tags", (req, res) => { categoryModel.findAll ()
+cooperacyRouter.get(
+  "/tags", (req, res) => { categoryModel.findAll ()
   .then(tags => { res.json(tags) }) .catch(err => { res.send("Error: " + err) })
 })
 
-cooperacyRouter.post("/imageupload", function(req, res) {
+cooperacyRouter.post(
+  "/imageupload", function(req, res) {
   if (Object.keys(req.files).length == 0) { res.status(400).send('No files were uploaded.'); return }
   console.log('req.files >>>', req.files)
   uploadPath = '../../assets/images/projects/' + req.files.file.name
@@ -143,7 +175,8 @@ cooperacyRouter.post("/imageupload", function(req, res) {
   })
 })
 
-cooperacyRouter.post("/tags", (req, res) => { 
+cooperacyRouter.post(
+  "/tags", (req, res) => { 
   const tagData = { id: req.body.id, project: req.body.project, tagName: req.body.tagName }
   tagModel.create(tagData)
       .then(res => {console.log(res)})

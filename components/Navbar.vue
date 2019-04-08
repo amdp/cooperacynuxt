@@ -3,7 +3,7 @@
     <b-navbar-brand to="/" v-if="!this.$auth.$state.loggedIn"><img class="headerlogo" src="@/assets/images/wordlogo.png"  /></b-navbar-brand>
     <b-navbar-brand to="/" v-if="this.$auth.$state.loggedIn" class="d-flex justify-content-center">
         <img class="userlogo m-2" src="@/assets/images/coo.png"  />
-        <h3 class="diversity">{{this.$auth.$state + stronzone}}</h3>
+        <h3 class="diversity">{{stronzone}}</h3>
         <b-button class="bhunderstanding" @click="$auth.logout()">Logout</b-button>
         <votebars />
     </b-navbar-brand>
