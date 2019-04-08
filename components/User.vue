@@ -7,6 +7,7 @@
         <b-form-group label-for="passwordInput" label="Password:">
           <b-form-input type="password" id="passwordInput" v-model="password" size="sm" required autocomplete="current-password"></b-form-input></b-form-group>
         <b-button type="submit" class="btn bhdiversity white btn-block mt-3 gray border-0">Login</b-button>
+        <b-button class="bhunderstanding" @click="$auth.logout()">Logout</b-button>
       </b-form>
     </div>
     <div>User status: <b-badge>{{ this.$auth.$state.loggedIn ? 'Logged In' : 'Guest' }}</b-badge></div>

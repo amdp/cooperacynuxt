@@ -6,14 +6,15 @@ const bcrypt = require("bcrypt")
 const fileUpload = require('express-fileupload');
 var cooperacyRouter = express.Router()
 // var cooperacyRouter =  require("/routes/cooperacyRouter-file") // if in separate file
-var port = ( process.env.PORT || 5000 )
 var app = express()
+var port = ( process.env.PORT || 5000 )
+app.listen(port, function () { console.log("Server is running on port: " + port) })
 app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(fileUpload())
 app.use("/serverDB", cooperacyRouter)
-app.listen(port, function () { console.log("Server is running on port: " + port) })
+
 
 // MODELS ROUTES HERE, CAN GO INTO SEPARATE FILES, 
 // remember to add express, cors, jwt, bcrypt and remove jwt and bcrypt from here
@@ -119,7 +120,7 @@ cooperacyRouter.post(
                       expiresIn: 1440
                   })
                   res.json({
-                    token
+                      token
                   })
               }
           }else{ res.status(400).json({error: 'User does not exist'}) }
@@ -127,8 +128,8 @@ cooperacyRouter.post(
       .catch(err => { res.status(400).json({error: err }) })
 })
 
-cooperacyRouter.post(
-  "/logout", (req, res) => { res.json({ user: req.user }) })
+cooperacyRouter.get(
+  "/user", (req, res, next) => { console.log(req.user), res.json({ user: req.user }) })
 
 cooperacyRouter.post(
   "/logout", (req, res) => { res.json({ status: 'OK' }) })
@@ -274,3 +275,4 @@ var tagModel = db.sequelize.define(
     timestamps: false
   }
 )
+

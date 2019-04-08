@@ -62,9 +62,9 @@ module.exports = {
     strategies: {
       local: {
         endpoints: {
-          login: { url: 'http://127.0.0.1:5000/serverDB/login', propertyName: 'token.accessToken' },
-          logout: { url: 'http://127.0.0.1:5000/serverDB/logout', propertyName: 'token.accessToken' },
-          user: { url: 'http://127.0.0.1:5000/serverDB/user', propertyName: false }
+          login: { url: 'http://127.0.0.1:5000/serverDB/login', method: 'post', propertyName: 'token' },
+          logout: { url: 'http://127.0.0.1:5000/serverDB/logout', method: 'post' },
+          user: { url: 'http://127.0.0.1:5000/serverDB/user', method: 'get', propertyName: false }
         },
         //tokenRequired: true,
         //tokenType: 'Bearer'
