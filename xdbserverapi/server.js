@@ -127,26 +127,8 @@ cooperacyRouter.post(
       .catch(err => { res.status(400).json({error: err }) })
 })
 
-cooperacyRouter.get(
-  "/user", (req, res) => { 
-    userModel.findOne({
-    where: {
-        email: req.body.email
-    }
-})
-    .then(user => {
-        if(user){
-            if(bcrypt.compareSync(req.body.password, user.password)) {
-                let token = jwt.sign(user.dataValues, process.env.SECRET_KEY, {
-                    expiresIn: 1440
-                })
-                res.json({
-                  token
-                })
-            }
-        }else{ res.status(400).json({error: 'User does not exist'}) }
-    })
-    .catch(err => { res.status(400).json({error: err }) }) })
+cooperacyRouter.post(
+  "/logout", (req, res) => { res.json({ user: req.user }) })
 
 cooperacyRouter.post(
   "/logout", (req, res) => { res.json({ status: 'OK' }) })
