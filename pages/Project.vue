@@ -102,7 +102,7 @@ export default {
   },
   methods: {
     getProjects() {
-      axios.get('/serverDB/projects').then(
+      axios.get('/db/projects').then(
         result => {
           this.projects = result.data
         },
@@ -112,7 +112,7 @@ export default {
       )
     },
     getCategories() {
-      axios.get('/serverDB/categories').then(
+      axios.get('/db/categories').then(
         result => {
           this.categories = result.data
         },
@@ -123,7 +123,7 @@ export default {
     },
     addNewProject() {
       axios
-        .post('/serverDB/projects', { name: this.formName })
+        .post('/db/projects', { name: this.formName })
         .then(res => {
           this.formName = ''
           this.getProjects()
@@ -142,7 +142,7 @@ export default {
 
     updateProject() {
       axios
-        .put(`/serverDB/projects/${this.formId}`, { name: this.formName })
+        .put(`/db/projects/${this.formId}`, { name: this.formName })
         .then(res => {
           this.formName = ''
           this.isEdit = false
@@ -156,7 +156,7 @@ export default {
 
     deleteProject(id) {
       axios
-        .delete(`/serverDB/projects/${id}`)
+        .delete(`/db/projects/${id}`)
         .then(res => {
           this.formName = ''
           this.getProjects()
