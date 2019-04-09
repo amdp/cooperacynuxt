@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     getProjects() {
-      axios.get('/serverDB/projects').then(
+      axios.get('/db/projects').then(
         result => {
           this.projects = result.data
         },

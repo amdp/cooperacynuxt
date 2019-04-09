@@ -19,11 +19,17 @@
     "express": "^4.16.4",
     "express-fileupload": "^1.1.4",
     "jquery": "^3.3.1",
-    "nuxt": "^2.4.0"
-  },
-  "devDependencies": {
+    "jsonwebtoken": "^8.5.1",
+    "bcrypt": "3.0.4",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "mysql": "^2.16.0",
+    "mysql2": "^1.6.5",
+    "nodemon": "^1.18.10",
+    "sequelize": "^5.1.0",
     "@nuxtjs/auth": "^4.5.3",
     "jwt-decode": "^2.2.0",
-    "nodemon": "^1.18.9"
-  }
+    "nuxt": "^2.4.0"
+  },
+  "devDependencies": {}
 }

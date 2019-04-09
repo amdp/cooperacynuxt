@@ -91,7 +91,7 @@ export default {
     this.getCategories()
   },
   methods: {
-    getCategories() { axios.get('/serverDB/categories').then(
+    getCategories() { axios.get('/db/categories').then(
         result => { this.categories = result.data },
         error => { console.error(error) }
       )
@@ -99,7 +99,7 @@ export default {
     addNewProject() { 
       if (this.formStageNofunding) {this.formStageNofunding = 5} else {this.formStageNofunding = 7}
       if (!this.formAnonymous) {this.formAnonymous = 0}
-      axios.post('/serverDB/projects', { 
+      axios.post('/db/projects', { 
         name: this.formName,
         brief: this.formBrief,
         content: this.formContent,
@@ -117,7 +117,7 @@ export default {
             var splittedTags = this.formTags.split(",")
             for (i=0; i<splittedTags.length; i++) {
               splittedTags[i] = splittedTags[i].replace(/^[ ]+/gi,'')
-              axios.post('/serverDB/tags', {
+              axios.post('/db/tags', {
                 project: addedProjectId.data.id,
                 tagName: splittedTags[i]
               })
@@ -134,7 +134,7 @@ export default {
         let formImageData = new FormData()
         formImageData.append('file', this.formImageFile)
         console.log(this.formImageData)
-        axios.post('/serverDB/imageupload', formImageData, { headers: { 'Content-Type': 'multipart/form-data' } })
+        axios.post('/db/imageupload', formImageData, { headers: { 'Content-Type': 'multipart/form-data' } })
         .then(res => {
           this.imageUploadDesc = 'Image uploaded. Please keep the image name in the textbox above as it is now.'
           console.log('SUCCESS!!');

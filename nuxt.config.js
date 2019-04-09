@@ -18,7 +18,7 @@ module.exports = {
     ]
   },
 
-  //serverMiddleware: ['/serverDB/server'],
+  serverMiddleware: ['./db'],
 
   /*
   ** Customize the progress-bar color
@@ -39,9 +39,7 @@ module.exports = {
   ** Nuxt.js modules
   */
   modules: [
-    // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    // Doc: https://bootstrap-vue.js.org/docs/
     'bootstrap-vue/nuxt',
     '@nuxtjs/pwa',
     '@nuxtjs/auth',
@@ -51,26 +49,24 @@ module.exports = {
    ** Axios module configuration
    */
   axios: {
-    // See https://github.com/nuxt-community/axios-module#options
     proxy: true
-    // baseURL: 'http://127.0.0.1:5000'
   },
 
-  proxy: { '/serverDB': 'http://127.0.0.1:5000' },
+  proxy: { '/db': 'http://127.0.0.1:3000' },
 
   auth: {
     strategies: {
       local: {
         endpoints: {
-          login: { url: 'http://127.0.0.1:5000/serverDB/login', method: 'post', propertyName: 'token' },
-          logout: { url: 'http://127.0.0.1:5000/serverDB/logout', method: 'post' },
-          user: { url: 'http://127.0.0.1:5000/serverDB/user', method: 'get', propertyName: false }
+          login: { url: 'http://127.0.0.1:3000/db/login', method: 'post', propertyName: 'token.accessToken' },
+          logout: { url: 'http://127.0.0.1:3000/db/logout', method: 'post' },
+          user: { url: 'http://127.0.0.1:3000/db/user', method: 'get', propertyName: '' }
         },
         //tokenRequired: true,
         //tokenType: 'Bearer'
       },
     },
-    redirect: { home: '/', user: '/', logout: '/', callback: '/' }
+    redirect: { home: '/', user: '/', logout: '/' }
   },
   
   /*
