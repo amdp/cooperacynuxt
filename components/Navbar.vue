@@ -11,7 +11,7 @@
         <div class="row">
           <div class="col d-flex justify-content-center">
             <h3 class="diversity">{{stronzone}}</h3>
-            <b-button class="bhunderstanding" @click="$auth.logout()">Logout</b-button>
+            <b-button v-if="this.$auth.$state.loggedIn" class="bhunderstanding" @click="$auth.logout()">Logout</b-button>
           </div>
           <div class="w-100"></div>
           <div class="col">

@@ -1,38 +1,34 @@
 var express = require("express")
 var bodyParser = require("body-parser")
-var cors = require("cors")
+var cors = require("cors") //
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
 const fileUpload = require('express-fileupload');
-var cooperacyRouter = express.Router()
-// var cooperacyRouter =  require("/routes/cooperacyRouter-file") // if in separate file
+
 var app = express()
-var port = ( process.env.PORT || 5000 )
-app.listen(port, function () { console.log("Server is running on port: " + port) })
-app.use(cors())
+app.use(cors()) //
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(fileUpload())
-app.use("/serverDB", cooperacyRouter)
 
-
-// MODELS ROUTES HERE, CAN GO INTO SEPARATE FILES, 
-// remember to add express, cors, jwt, bcrypt and remove jwt and bcrypt from here
-// then add var cooperacyRouter =  require("/routes/cooperacyRouter-file") here
-cooperacyRouter.use(cors())
 process.env.SECRET_KEY = 'secret'
 
-/////// ROUTES ///////
-/////// ROUTES ///////
-/////// ROUTES ///////
+const Sequelize = require("sequelize"); const db = {};
+const sequelize = new Sequelize("coo","root","cooperacy", { host: 'localhost', dialect: 'mysql', operatorsAliases: 0, 
+  pool: { max: 5, min: 0, acquire: 30000, idle: 10000 } })
+db.sequelize = sequelize; db.Sequelize = Sequelize
+
+/////// REST ///////
+/////// REST ///////
+/////// REST ///////
 
 /// PROJECT VOTES ///
-cooperacyRouter.get(
+app.get(
   "/pvotes", (req, res) => { pvoteModel.findAll ()
   .then(pvotes => { res.json(pvotes) }) .catch(err => { res.send("Error: " + err) })
 })
 
-cooperacyRouter.post(
+app.post(
   "/pvotes", (req, res) => { if(!req.body.name){ 
   res.status(400); res.json({ error: "Bad data" })} else { pvoteModel.create(req.body) 
     .then(() => { res.send("Vote added") }) .catch(err => { res.send("Error: " + err) })
@@ -40,7 +36,7 @@ cooperacyRouter.post(
 }
 })
 
-cooperacyRouter.delete(
+app.delete(
   "/pvotes/:id", (req, res) => { pvoteModel.destroy ({ 
   where: { id: req.params.id } }) .then( () => { res.send("Vote removed.") }) .catch(err => { res.send("Error: " + err) })
   // this should also cut via -- to projectModel.[votenr]
@@ -48,12 +44,12 @@ cooperacyRouter.delete(
 })
 
 /// PROJECTS ///
-cooperacyRouter.get(
+app.get(
   "/projects", (req, res) => { projectModel.findAll ()
     .then(projects => { res.json(projects) }) .catch(err => { res.send("Error: " + err) })
 })
 
-cooperacyRouter.post(
+app.post(
   "/projects", (req, res) => { 
   const today = new Date()
   const projectData = { id: req.body.id, parent: req.body.parent, category: req.body.category, stage: req.body.stage, collected: req.body.collected, budget: req.body.budget, hudget: req.body.hudget, anonymous: req.body.anonymous, name: req.body.name, brief: req.body.brief, content: req.body.content, image: req.body.image, video: req.body.video, date: today, E: req.body.E, T: req.body.T, C: req.body.C, I: req.body.I, F: req.body.F, U: req.body.U, D: req.body.D }
@@ -71,12 +67,12 @@ cooperacyRouter.post(
   .catch(err => { res.send ('error :' + err) }) 
 })
 
-cooperacyRouter.delete(
+app.delete(
   "/projects/:id", (req, res) => { projectModel.destroy ({ 
     where: { id: req.params.id } }) .then( () => { res.send("Project deleted.") }) .catch(err => { res.send("Error: " + err) })
 })
 
-cooperacyRouter.put(
+app.put(
   "/projects/:id", (req, res) => { if(!req.body.name) { 
     res.status(400); res.json({ error: "Bad data" }) } else { projectModel.update( 
       {name: req.body.name}, { where: {id: req.params.id} }) .then( () => { res.send ("Task Updated.") }) .error(err => res.send(err))
@@ -84,7 +80,7 @@ cooperacyRouter.put(
 })
 
 /// USERS ///
-cooperacyRouter.post(
+app.post(
   "/register", (req, res) => {
     const today = new Date()
     const userData = { id: req.body.id, name: req.body.name, surname: req.body.surname, email: req.body.email, password: req.body.password, photo: req.body.photo,
@@ -106,7 +102,7 @@ cooperacyRouter.post(
         .catch(err => { res.send ('error :' + err) })
 })
 
-cooperacyRouter.post(
+app.post(
   "/login", (req, res) => {
   userModel.findOne({
       where: {
@@ -116,11 +112,13 @@ cooperacyRouter.post(
       .then(user => {
           if(user){
               if(bcrypt.compareSync(req.body.password, user.password)) {
-                  let token = jwt.sign(user.dataValues, process.env.SECRET_KEY, {
+                  let accessToken = jwt.sign(user.dataValues, process.env.SECRET_KEY, {
                       expiresIn: 1440
                   })
                   res.json({
-                      token
+                      token: {
+                        accessToken
+                      }
                   })
               }
           }else{ res.status(400).json({error: 'User does not exist'}) }
@@ -128,27 +126,27 @@ cooperacyRouter.post(
       .catch(err => { res.status(400).json({error: err }) })
 })
 
-cooperacyRouter.get(
+app.get(
   "/user", (req, res, next) => { console.log(req.user), res.json({ user: req.user }) })
 
-cooperacyRouter.post(
+app.post(
   "/logout", (req, res) => { res.json({ status: 'OK' }) })
 
-cooperacyRouter.use((err, req, res, next) => { console.error(err); res.status(401).send(err + '') })
+app.use((err, req, res, next) => { console.error(err); res.status(401).send(err + '') })
 
 /// MISCELLANEOUS ///
 
-cooperacyRouter.get(
+app.get(
   "/categories", (req, res) => { categoryModel.findAll ()
   .then(categories => { res.json(categories) }) .catch(err => { res.send("Error: " + err) })
 })
 
-cooperacyRouter.get(
+app.get(
   "/tags", (req, res) => { categoryModel.findAll ()
   .then(tags => { res.json(tags) }) .catch(err => { res.send("Error: " + err) })
 })
 
-cooperacyRouter.post(
+app.post(
   "/imageupload", function(req, res) {
   if (Object.keys(req.files).length == 0) { res.status(400).send('No files were uploaded.'); return }
   console.log('req.files >>>', req.files)
@@ -158,7 +156,7 @@ cooperacyRouter.post(
   })
 })
 
-cooperacyRouter.post(
+app.post(
   "/tags", (req, res) => { 
   const tagData = { id: req.body.id, project: req.body.project, tagName: req.body.tagName }
   tagModel.create(tagData)
@@ -166,20 +164,11 @@ cooperacyRouter.post(
       .catch(err => { res.send ('error :' + err) })
 })
 
-module.exports = cooperacyRouter
-
 
 /// DATABASE MODELS ///
 /// DATABASE MODELS ///
 /// DATABASE MODELS ///
 
-/// MODELS: CAN BE IN SEPARATE FILES, EVERYONE SHOULD START WITH FOLLOWING CONSTANTS: ///
-const Sequelize = require("sequelize"); const db = {};
-const sequelize = new Sequelize("coo","root","cooperacy", { host: 'localhost', dialect: 'mysql', operatorsAliases: 0, 
-  pool: { max: 5, min: 0, acquire: 30000, idle: 10000 } })
-db.sequelize = sequelize; db.Sequelize = Sequelize
-
-/// MODELS START HERE ///
 var projectModel = db.sequelize.define(
   'project',
   {
@@ -276,3 +265,7 @@ var tagModel = db.sequelize.define(
   }
 )
 
+module.exports = {
+  path: '/db',
+  handler: app
+}
