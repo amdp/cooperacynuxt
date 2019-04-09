@@ -61,6 +61,8 @@ module.exports = {
           login: { url: 'http://127.0.0.1:3000/db/login', method: 'post', propertyName: 'token.accessToken' },
           logout: { url: 'http://127.0.0.1:3000/db/logout', method: 'post' },
           user: { url: 'http://127.0.0.1:3000/db/user', method: 'get', propertyName: 'user' }
+        //tokenRequired: true,
+        //tokenType: 'Bearer'
         },
       },
     },

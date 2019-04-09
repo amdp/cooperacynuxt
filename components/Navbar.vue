@@ -10,7 +10,7 @@
       <b-navbar-nav> 
         <div class="row">
           <div class="col d-flex justify-content-center">
-            <h3 class="diversity">{{this.$auth.$state.user.name}}</h3>
+            <h3 v-if="this.$auth.$state.loggedIn" class="diversity">{{this.$auth.$state.user.name}}</h3>
             <b-button v-if="this.$auth.$state.loggedIn" class="bhunderstanding" @click="$auth.logout()">Logout</b-button>
           </div>
           <div class="w-100"></div>
