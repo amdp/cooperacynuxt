@@ -127,7 +127,8 @@ app.post(
 })
 
 app.get(
-  "/user", (req, res, next) => { console.log(req.user), res.json({ user: req.user }) })
+  "/user", (req, res, next) => { console.log(req.user), res.json({ user: req.user}) } )
+  
 
 app.post(
   "/logout", (req, res) => { res.json({ status: 'OK' }) })
