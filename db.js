@@ -127,9 +127,12 @@ app.post(
 })
 
 app.get(
-  "/user", (req, res, next) => { console.log(req.user), res.json({ user: req.user}) } )
+  "/user", (req, res, next) => {
+  req.headers.authorization = req.headers.authorization.slice(7)
+  const user = jwt.decode(req.headers.authorization)
+  res.json({ user })
+})
   
-
 app.post(
   "/logout", (req, res) => { res.json({ status: 'OK' }) })
 
