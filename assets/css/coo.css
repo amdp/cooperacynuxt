@@ -4,45 +4,55 @@ body{font-family: 'Prompt', sans-serif; font-size:14px; font-weight: 300; color:
 a{color: #777777;}
 .circle  {margin: 0 auto;height:60vh;position: relative;margin-top:3vh;}
 
-.equivalence, .hequivalence {color: #FF9000;}     .bequivalence, .bhequivalence {background-color: #FF9000;}
-.trust, .htrust {color: #FFD000;}                 .btrust, .bhtrust {background-color: #FFD000;}
-.care, .hcare {color: #88DD33;}                   .bcare, .bhcare {background-color: #88DD33;}
-.transparency, .htransparency {color: #22DDEE;}   .btransparency, .bhtransparency {background-color: #22DDEE;}
-.freedom, .hfreedom {color: #4488EE;}             .bhfreedom, .bhfreedom {background-color: #4488EE;}
-.understanding, .hunderstanding {color: #AA66DD;} .bunderstanding, .bhunderstanding {background-color: #AA66DD;}
-.diversity, .hdiversity {color: #FF77CC;}         .bdiversity, .bhdiversity {background-color: #FF77CC;}
+:root {
+  --equivalence: #F80;
+  --trust: #FC0;
+  --care: #7D3;
+  --transparency: #0DD;
+  --freedom: #37D;
+  --understanding: #A7D;
+  --diversity: #F7C;
+}
+
+.equivalence, .hequivalence {color: var(--equivalence)}     .bequivalence, .bhequivalence {background-color: var(--equivalence)}
+.trust, .htrust {color: var(--trust)}                 .btrust, .bhtrust {background-color: var(--trust)}
+.care, .hcare {color: var(--care)}                   .bcare, .bhcare {background-color: var(--care)}
+.transparency, .htransparency {color: var(--transparency)}   .btransparency, .bhtransparency {background-color: var(--transparency)}
+.freedom, .hfreedom {color: var(--freedom)}             .bfreedom, .bhfreedom {background-color: var(--freedom)}
+.understanding, .hunderstanding {color: var(--understanding)} .bunderstanding, .bhunderstanding {background-color: var(--understanding)}
+.diversity, .hdiversity {color: var(--diversity)}         .bdiversity, .bhdiversity {background-color: var(--diversity)}
 
 /*h colors have hover*/
-.hequivalence:hover, .bhequivalence:hover {background-color: #FFD000;}
-.htrust:hover, .bhtrust:hover {background-color: #22DDEE;}
-.hcare:hover, .bhcare:hover {background-color: #FF77CC;}
-.htransparency:hover, .bhtransparency:hover {background-color: #FF9000;}
-.hfreedom:hover, .bhfreedom:hover {background-color: #88DD33;}
-.hunderstanding:hover, .bhunderstanding:hover {background-color: #4488EE;}
-.hdiversity:hover, .bhdiversity:hover {background-color: #AA66DD;}
+.hequivalence:hover, .bhequivalence:hover {background-color: var(--trust)}
+.htrust:hover, .bhtrust:hover {background-color: var(--transparency)}
+.hcare:hover, .bhcare:hover {background-color: var(--diversity)}
+.htransparency:hover, .bhtransparency:hover {background-color: var(--equivalence)}
+.hfreedom:hover, .bhfreedom:hover {background-color: var(--care)}
+.hunderstanding:hover, .bhunderstanding:hover {background-color: var(--freedom)}
+.hdiversity:hover, .bhdiversity:hover {background-color: var(--understanding)}
 
 
-.ae {text-decoration:none; background-image: linear-gradient(#FF9000 50%,#FFFFFF 50%); background-repeat:repeat-x;
+.ae {text-decoration:none; background-image: linear-gradient( var(--equivalence) 50%,#FFFFFF 50%); background-repeat:repeat-x;
   background-size: 2px 0.2em; background-position: 0 1.35em; color:#000000; }
-.at {text-decoration:none; background-image: linear-gradient(#FFD000 50%,#FFFFFF 50%); background-repeat:repeat-x;
+.at {text-decoration:none; background-image: linear-gradient( var(--trust) 50%,#FFFFFF 50%); background-repeat:repeat-x;
   background-size: 2px 0.2em; background-position: 0 1.35em; color:#000000; }
-.ac {text-decoration:none; background-image: linear-gradient(#88DD33 50%,#FFFFFF 50%); background-repeat:repeat-x;
+.ac {text-decoration:none; background-image: linear-gradient( var(--care) 50%,#FFFFFF 50%); background-repeat:repeat-x;
   background-size: 2px 0.2em; background-position: 0 1.35em; color:#000000; }
-.ai {text-decoration:none; background-image: linear-gradient(#22DDEE 50%,#FFFFFF 50%); background-repeat:repeat-x;
+.ai {text-decoration:none; background-image: linear-gradient( var(--transparency) 50%,#FFFFFF 50%); background-repeat:repeat-x;
   background-size: 2px 0.2em; background-position: 0 1.35em; color:#000000; }
-.af {text-decoration:none; background-image: linear-gradient(#4488EE 50%,#FFFFFF 50%); background-repeat:repeat-x;
+.af {text-decoration:none; background-image: linear-gradient( var(--freedom) 50%,#FFFFFF 50%); background-repeat:repeat-x;
   background-size: 2px 0.2em; background-position: 0 1.35em; color:#000000; }
-.au {text-decoration:none; background-image: linear-gradient(#AA66DD 50%,#FFFFFF 50%); background-repeat:repeat-x;
+.au {text-decoration:none; background-image: linear-gradient( var(--understanding) 50%,#FFFFFF 50%); background-repeat:repeat-x;
   background-size: 2px 0.2em; background-position: 0 1.35em; color:#000000; }
-.ad {text-decoration:none; background-image: linear-gradient(#FF77CC 50%,#FFFFFF 50%); background-repeat:repeat-x;
+.ad {text-decoration:none; background-image: linear-gradient( var(--diversity) 50%,#FFFFFF 50%); background-repeat:repeat-x;
   background-size: 2px 0.2em; background-position: 0 1.35em; color:#000000; }
-.ae:hover {font-weight:200; text-decoration:none; color:#FF9000; background-image:none;}
-.at:hover {font-weight:200; text-decoration:none; color:#FFD000; background-image:none;}
-.ac:hover {font-weight:200; text-decoration:none; color:#88DD33; background-image:none;}
-.ai:hover {font-weight:200; text-decoration:none; color:#22DDEE; background-image:none;}
-.af:hover {font-weight:200; text-decoration:none; color:#4488EE; background-image:none;}
-.au:hover {font-weight:200; text-decoration:none; color:#AA66DD; background-image:none;}
-.ad:hover {font-weight:200; text-decoration:none; color:#FF77CC; background-image:none;}
+.ae:hover {font-weight:200; text-decoration:none; color: var(--equivalence); background-image:none;}
+.at:hover {font-weight:200; text-decoration:none; color: var(--trust); background-image:none;}
+.ac:hover {font-weight:200; text-decoration:none; color: var(--care); background-image:none;}
+.ai:hover {font-weight:200; text-decoration:none; color: var(--transparency); background-image:none;}
+.af:hover {font-weight:200; text-decoration:none; color: var(--freedom); background-image:none;}
+.au:hover {font-weight:200; text-decoration:none; color: var(--understanding); background-image:none;}
+.ad:hover {font-weight:200; text-decoration:none; color: var(--diversity); background-image:none;}
 .bblack {background-color: #000000;}
 .gray {color: #555555;}
 .lightgray {color: #777777;}
@@ -85,3 +95,5 @@ hr.home-hr { border:none; background-color:#666666; width:50px; height:2px!impor
 .headerlogo { width:244px; height:60px; }
 .userlogo {height:60px;}
 img.page-header { margin-top: 0px; margin-bottom: 60px; width: 100%; height: auto; vertical-align: top; border:none; }
+.votebar {height: 5px;}
+.foot {border-top: 1px solid #CCCCCC;}

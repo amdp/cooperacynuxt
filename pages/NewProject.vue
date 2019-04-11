@@ -78,7 +78,7 @@ export default {
       formHudget: '2',
       formTags: '',
       dbLastProject: '',
-      imageUploadDesc: 'Please choose an image for the project idea and click "Upload".',
+      imageUploadDesc: 'Please choose an image for the project idea',
       projectCreated: '',
     }
   },
@@ -129,7 +129,6 @@ export default {
         .catch(err => { console.log(err) })
     },
     async imageUpload() {
-      //await (typeof this.formImageFile.name !== undefined)
         console.log('file :' + this.formImageFile.name)
         let formImageData = new FormData()
         formImageData.append('file', this.formImageFile)

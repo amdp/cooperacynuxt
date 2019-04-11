@@ -8,19 +8,20 @@
 
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav> 
-        <div class="row">
+        <div v-if="this.$auth.$state.loggedIn" class="row">
           <div class="col d-flex justify-content-center">
-            <h3 v-if="this.$auth.$state.loggedIn" class="diversity">{{this.$auth.$state.user.name}}</h3>
-            <b-button v-if="this.$auth.$state.loggedIn" class="bhunderstanding" @click="$auth.logout()">Logout</b-button>
+            <h3 class="diversity mr-3">{{this.$auth.$state.user.name + ' ' + this.$auth.$state.user.surname}}</h3>
+            <b-nav-item class="au" to="useredit">EDIT</b-nav-item>
           </div>
           <div class="w-100"></div>
-          <div class="col">
-            <votebars />
+          <div class="col"><div class="row dflex justify-content-around aling-items-center">
+            YOUR COLOR CODE: <votebars />
+            </div>
           </div>
         </div>
       </b-navbar-nav>
 
-      <b-navbar-nav class="ml-auto">
+      <b-navbar-nav class="ml-auto mr-4">
         <b-nav-item-dropdown text="THE PROJECT" no-caret right>
           <b-dropdown-item to="aboutyou">ABOUT YOU</b-dropdown-item>
           <b-dropdown-item to="aboutus">ABOUT US</b-dropdown-item>
@@ -43,22 +44,18 @@
             <b-dropdown-item to="news">NEWS</b-dropdown-item>
         </b-nav-item-dropdown>
         <span> &nbsp;&nbsp;&nbsp;</span>
-        <b-nav-item-dropdown text="LOGIN" no-caret right>
-          <user />
-        </b-nav-item-dropdown>
+        <b-nav-item v-if="!this.$auth.$state.loggedIn" to="login">LOGIN</b-nav-item>
+        <b-nav-item v-if="this.$auth.$state.loggedIn" @click="$auth.logout()">LOGOUT</b-nav-item>        
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>
 </template>
 
 <script>
-import User from '@/components/User'
 import Votebars from '@/components/Votebars'
-
 
 export default {
   components: {
-    User: User,
     Votebars: Votebars,
   },
 }
