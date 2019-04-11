@@ -1,12 +1,12 @@
 var express = require("express")
 var bodyParser = require("body-parser")
-var cors = require("cors") //
+var cors = require("cors")
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
 const fileUpload = require('express-fileupload');
 
 var app = express()
-app.use(cors()) //
+app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(fileUpload())
@@ -43,7 +43,10 @@ app.delete(
   // this should also add the same row to premovedvotes
 })
 
-/// PROJECTS ///
+//////////////////////////////////////////////////////////////////////
+///////                        PROJECTS                        ///////
+//////////////////////////////////////////////////////////////////////
+
 app.get(
   "/projects", (req, res) => { projectModel.findAll ()
     .then(projects => { res.json(projects) }) .catch(err => { res.send("Error: " + err) })
@@ -75,20 +78,18 @@ app.delete(
 app.put(
   "/projects/:id", (req, res) => { if(!req.body.name) { 
     res.status(400); res.json({ error: "Bad data" }) } else { projectModel.update( 
-      {name: req.body.name}, { where: {id: req.params.id} }) .then( () => { res.send ("Task Updated.") }) .error(err => res.send(err))
+      {name: req.body.name}, { where: {id: req.params.id} }) .then( () => { res.send ("Project Updated.") }) .error(err => res.send(err))
   }
 })
-
-/// USERS ///
+//////////////////////////////////////////////////////////////////////
+///////                         USERS                          ///////
+//////////////////////////////////////////////////////////////////////
 app.post(
-  "/register", (req, res) => {
+  "/user", (req, res) => {
     const today = new Date()
-    const userData = { id: req.body.id, name: req.body.name, surname: req.body.surname, email: req.body.email, password: req.body.password, photo: req.body.photo,
-      E: req.body.E, T: req.body.T, C: req.body.C, I: req.body.I, F: req.body.F, U: req.body.U, D: req.body.D,
+    const userData = { id: req.body.id, name: req.body.name, surname: req.body.surname, email: req.body.email, image: req.body.image, E: req.body.E, T: req.body.T, C: req.body.C, I: req.body.I, F: req.body.F, U: req.body.U, D: req.body.D,
       active: req.body.active, roles: req.body.roles, remember_token: req.body.remember_token, payment_type: req.body.payment_type, 
-      transaction_id: req.body.transaction_id, transaction_state: req.body.transaction_state, transaction_created_at: today, transaction_updated_at: today,
-      updated: today, created: today
-    }
+      transaction_id: req.body.transaction_id, transaction_state: req.body.transaction_state, transaction_created_at: today, transaction_updated_at: today, updated: today, created: today}
     userModel.findOne({ where: { email: req.body.email } })
         .then(user => { 
           if(!user) {
@@ -102,44 +103,52 @@ app.post(
         .catch(err => { res.send ('error :' + err) })
 })
 
+app.put(
+  "/user", (req, res) => { 
+    const today = new Date()
+    const userData = {name: req.body.name, surname: req.body.surname, email: req.body.email, password: req.body.password, image: req.body.image, updated: today}
+    if(!req.body.name || !req.body.password) { 
+    res.status(400); res.json({ error: "Bad data" }) } else { 
+      console.log(req.body.password)
+      bcrypt.hash(req.body.password, 10, (err, hash) => {
+        userData.password = hash; userModel.update(userData, { where: {id: req.body.id}})
+        .then(user => { console.log(userData.password + req.body.id ), res.json('user updated') }) 
+        .catch(err => { res.send ('error :' + err) })
+      })
+  }
+})
+
 app.post(
   "/login", (req, res) => {
-  userModel.findOne({
-      where: {
-          email: req.body.email
-      }
-  })
-      .then(user => {
-          if(user){
+  userModel.findOne({ where: { email: req.body.email }})
+      .then(user => { 
+        if(user){
               if(bcrypt.compareSync(req.body.password, user.password)) {
-                  let accessToken = jwt.sign(user.dataValues, process.env.SECRET_KEY, {
-                      expiresIn: 1440
-                  })
-                  res.json({
-                      token: {
-                        accessToken
-                      }
-                  })
+                  let accessToken = jwt.sign(user.dataValues, process.env.SECRET_KEY, { expiresIn: 1440 })
+                  res.json({ token: { accessToken } })
               }
           }else{ res.status(400).json({error: 'User does not exist'}) }
       })
       .catch(err => { res.status(400).json({error: err }) })
 })
 
-app.get(
-  "/user", (req, res, next) => {
-  req.headers.authorization = req.headers.authorization.slice(7)
-  const user = jwt.decode(req.headers.authorization)
-  res.json({ user })
-})
-  
 app.post(
   "/logout", (req, res) => { res.json({ status: 'OK' }) })
 
+app.get(
+  "/user", (req, res, next) => {
+  req.headers.authorization = req.headers.authorization.slice(7)
+  let user
+  try { user = jwt.verify(req.headers.authorization, process.env.SECRET_KEY) }
+  catch (err) {console.log(err)}
+  res.json({ user })
+})
+
 app.use((err, req, res, next) => { console.error(err); res.status(401).send(err + '') })
 
-/// MISCELLANEOUS ///
-
+//////////////////////////////////////////////////////////////////////
+///////                      MISCELLANOUS                      ///////
+//////////////////////////////////////////////////////////////////////
 app.get(
   "/categories", (req, res) => { categoryModel.findAll ()
   .then(categories => { res.json(categories) }) .catch(err => { res.send("Error: " + err) })
@@ -154,7 +163,18 @@ app.post(
   "/imageupload", function(req, res) {
   if (Object.keys(req.files).length == 0) { res.status(400).send('No files were uploaded.'); return }
   console.log('req.files >>>', req.files)
-  uploadPath = '../../assets/images/projects/' + req.files.file.name
+  uploadPath = './assets/images/projects/' + req.files.file.name
+  console.log(uploadPath)
+  req.files.file.mv(uploadPath, function(err) { if (err) { return res.status(500).send(err); }
+  res.send ('file uploaded')
+  })
+})
+
+app.post(
+  "/userimageupload", function(req, res) {
+  if (Object.keys(req.files).length == 0) { res.status(400).send('No files were uploaded.'); return }
+  console.log('req.files >>>', req.files)
+  uploadPath = './assets/images/users/' + req.files.file.name
   req.files.file.mv(uploadPath, function(err) { if (err) { return res.status(500).send(err); }
   res.send ('file uploaded')
   })
@@ -209,7 +229,7 @@ var userModel = db.sequelize.define(
       surname: {type: Sequelize.CHAR, allowNull: false},
       email:  {type: Sequelize.CHAR, unique: true, allowNull: false},
       password: {type: Sequelize.CHAR, allowNull: false},
-      photo: { type: Sequelize.CHAR },
+      image: { type: Sequelize.CHAR },
       E: {type: Sequelize.TINYINT, allowNull: false, defaultValue: 4},
       T: {type: Sequelize.TINYINT, allowNull: false, defaultValue: 4},
       C: {type: Sequelize.TINYINT, allowNull: false, defaultValue: 4},
