@@ -14,7 +14,7 @@ app.use(fileUpload())
 process.env.SECRET_KEY = 'secret'
 
 const Sequelize = require("sequelize"); const db = {};
-const sequelize = new Sequelize("coo","root","cooperacy", { host: 'localhost', dialect: 'mysql', operatorsAliases: 0, 
+const sequelize = new Sequelize("coo","cooperacy","c00p3r4t10n", { host: 'localhost', dialect: 'mysql', operatorsAliases: 0, 
   pool: { max: 5, min: 0, acquire: 30000, idle: 10000 } })
 db.sequelize = sequelize; db.Sequelize = Sequelize
 
