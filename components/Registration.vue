@@ -60,7 +60,7 @@ export default {
         let formImageData = new FormData()
         formImageData.append('file', this.formImageFilename)
         axios.post(
-          '/db/userimageupload', formImageData, { headers: { 'Content-Type': 'multipart/form-data' } })
+          '/db/userimage', formImageData, { headers: { 'Content-Type': 'multipart/form-data' } })
         .then(res => {
           this.imageUploadDesc = 'Image uploaded. Please keep the image name in the textbox above as it is now.'
           console.log('SUCCESS!!');

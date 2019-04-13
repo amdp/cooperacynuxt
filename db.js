@@ -3,7 +3,8 @@ var bodyParser = require("body-parser")
 var cors = require("cors")
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
-const fileUpload = require('express-fileupload');
+const fileUpload = require('express-fileupload')
+const fs = require('fs')
 
 var app = express()
 app.use(cors())
@@ -18,30 +19,6 @@ const sequelize = new Sequelize("coo","cooperacy","c00p3r4t10n", { host: 'localh
   pool: { max: 5, min: 0, acquire: 30000, idle: 10000 } })
 db.sequelize = sequelize; db.Sequelize = Sequelize
 
-/////// REST ///////
-/////// REST ///////
-/////// REST ///////
-
-/// PROJECT VOTES ///
-app.get(
-  "/pvotes", (req, res) => { pvoteModel.findAll ()
-  .then(pvotes => { res.json(pvotes) }) .catch(err => { res.send("Error: " + err) })
-})
-
-app.post(
-  "/pvotes", (req, res) => { if(!req.body.name){ 
-  res.status(400); res.json({ error: "Bad data" })} else { pvoteModel.create(req.body) 
-    .then(() => { res.send("Vote added") }) .catch(err => { res.send("Error: " + err) })
-    // this should also add a ++ to projectModel.[votenr]
-}
-})
-
-app.delete(
-  "/pvotes/:id", (req, res) => { pvoteModel.destroy ({ 
-  where: { id: req.params.id } }) .then( () => { res.send("Vote removed.") }) .catch(err => { res.send("Error: " + err) })
-  // this should also cut via -- to projectModel.[votenr]
-  // this should also add the same row to premovedvotes
-})
 
 //////////////////////////////////////////////////////////////////////
 ///////                        PROJECTS                        ///////
@@ -81,6 +58,31 @@ app.put(
       {name: req.body.name}, { where: {id: req.params.id} }) .then( () => { res.send ("Project Updated.") }) .error(err => res.send(err))
   }
 })
+
+//////////////////////////////////////////////////////////////////////
+///////                        PROJECTS                        ///////
+///////                         VOTING                         ///////
+//////////////////////////////////////////////////////////////////////
+app.get(
+  "/pvotes", (req, res) => { pvoteModel.findAll ()
+  .then(pvotes => { res.json(pvotes) }) .catch(err => { res.send("Error: " + err) })
+})
+
+app.post(
+  "/pvotes", (req, res) => { if(!req.body.name){ 
+  res.status(400); res.json({ error: "Bad data" })} else { pvoteModel.create(req.body) 
+    .then(() => { res.send("Vote added") }) .catch(err => { res.send("Error: " + err) })
+    // this should also add a ++ to projectModel.[votenr]
+}
+})
+
+app.delete(
+  "/pvotes/:id", (req, res) => { pvoteModel.destroy ({ 
+  where: { id: req.params.id } }) .then( () => { res.send("Vote removed.") }) .catch(err => { res.send("Error: " + err) })
+  // this should also cut via -- to projectModel.[votenr]
+  // this should also add the same row to premovedvotes
+})
+
 //////////////////////////////////////////////////////////////////////
 ///////                         USERS                          ///////
 //////////////////////////////////////////////////////////////////////
@@ -109,10 +111,9 @@ app.put(
     const userData = {name: req.body.name, surname: req.body.surname, email: req.body.email, password: req.body.password, image: req.body.image, updated: today}
     if(!req.body.name || !req.body.password) { 
     res.status(400); res.json({ error: "Bad data" }) } else { 
-      console.log(req.body.password)
       bcrypt.hash(req.body.password, 10, (err, hash) => {
         userData.password = hash; userModel.update(userData, { where: {id: req.body.id}})
-        .then(user => { console.log(userData.password + req.body.id ), res.json('user updated') }) 
+        .then(user => { res.json('updated: ' + user) }) 
         .catch(err => { res.send ('error :' + err) })
       })
   }
@@ -147,6 +148,11 @@ app.get(
 app.use((err, req, res, next) => { console.error(err); res.status(401).send(err + '') })
 
 //////////////////////////////////////////////////////////////////////
+///////                          USER                          ///////
+///////                         VOTING                         ///////
+//////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////
 ///////                      MISCELLANOUS                      ///////
 //////////////////////////////////////////////////////////////////////
 app.get(
@@ -160,7 +166,7 @@ app.get(
 })
 
 app.post(
-  "/imageupload", function(req, res) {
+  "/projectimage", function(req, res) {
   if (Object.keys(req.files).length == 0) { res.status(400).send('No files were uploaded.'); return }
   console.log('req.files >>>', req.files)
   uploadPath = './assets/images/projects/' + req.files.file.name
@@ -170,28 +176,45 @@ app.post(
   })
 })
 
+app.delete(
+  "/projectimage", (req, res) => { pvoteModel.destroy ({ 
+  where: { id: req.params.id } }) .then( () => { res.send("Vote removed.") }) .catch(err => { res.send("Error: " + err) })
+})
+
 app.post(
-  "/userimageupload", function(req, res) {
+  "/userimage", function(req, res) {
   if (Object.keys(req.files).length == 0) { res.status(400).send('No files were uploaded.'); return }
-  console.log('req.files >>>', req.files)
   uploadPath = './assets/images/users/' + req.files.file.name
   req.files.file.mv(uploadPath, function(err) { if (err) { return res.status(500).send(err); }
   res.send ('file uploaded')
   })
 })
 
+app.delete(
+  "/userimage", (req, res) => { 
+    const path = './assets/images/users/' + req.body.delimage
+    console.log(path)
+    fs.unlinkSync(path)
+    res.json({ status: 'OK' })
+    .catch(err => {res.send(err)})
+})
+
 app.post(
   "/tags", (req, res) => { 
   const tagData = { id: req.body.id, project: req.body.project, tagName: req.body.tagName }
   tagModel.create(tagData)
-      .then(res => {console.log(res)})
-      .catch(err => { res.send ('error :' + err) })
+  .then(res => {console.log(res)})
+  .catch(err => { res.send ('error :' + err) })
 })
 
-
-/// DATABASE MODELS ///
-/// DATABASE MODELS ///
-/// DATABASE MODELS ///
+//////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
+///////                        DATABASE                        ///////
+///////                         MODELS                         ///////
+//////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
 
 var projectModel = db.sequelize.define(
   'project',
