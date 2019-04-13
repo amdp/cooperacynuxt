@@ -1,16 +1,17 @@
 <template>
   <b-navbar toggleable="lg" class="p-1 fixed-top bg-white d-flex flex-fill justify-content-center">
-    <b-navbar-brand to="/" v-if="!this.$auth.$state.loggedIn"><img class="headerlogo" src="@/assets/images/wordlogo.png"  /></b-navbar-brand>
-    <b-navbar-brand to="/" v-if="this.$auth.$state.loggedIn" >
-          <img class="userlogo m-2" src="@/assets/images/coo.png"  />
+    <b-navbar-brand to="/" v-if="!this.$auth.loggedIn"><img class="headerlogo" src="@/assets/images/main/wordlogo.png"  /></b-navbar-brand>
+    <b-navbar-brand to="/" v-if="this.$auth.loggedIn" >
+          <img class="usercoologo m-2" src="@/assets/images/main/coo.png"  />
+          <img class="userlogo m-2 rounded-circle" :src="require('../assets/images/users/' + this.$auth.user.image)">
     </b-navbar-brand>
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav> 
-        <div v-if="this.$auth.$state.loggedIn" class="row">
+        <div v-if="this.$auth.loggedIn" class="row">
           <div class="col d-flex justify-content-center">
-            <h3 class="diversity mr-3">{{this.$auth.$state.user.name + ' ' + this.$auth.$state.user.surname}}</h3>
+            <h3 class="diversity mr-3">{{this.$auth.user.name + ' ' + this.$auth.user.surname}}</h3>
             <b-nav-item class="au" to="useredit">EDIT</b-nav-item>
           </div>
           <div class="w-100"></div>
@@ -44,8 +45,8 @@
             <b-dropdown-item to="news">NEWS</b-dropdown-item>
         </b-nav-item-dropdown>
         <span> &nbsp;&nbsp;&nbsp;</span>
-        <b-nav-item v-if="!this.$auth.$state.loggedIn" to="login">LOGIN</b-nav-item>
-        <b-nav-item v-if="this.$auth.$state.loggedIn" @click="$auth.logout()">LOGOUT</b-nav-item>        
+        <b-nav-item v-if="!this.$auth.loggedIn" to="login">LOGIN</b-nav-item>
+        <b-nav-item v-if="this.$auth.loggedIn" @click="$auth.logout()">LOGOUT</b-nav-item>        
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>

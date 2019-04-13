@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="!this.$auth.$state.loggedIn" class="row">
+    <div v-if="!this.$auth.loggedIn" class="row">
       <div class="col-2"></div>
       <div class="col-4">
         <div class="d-flex justify-content-center">
