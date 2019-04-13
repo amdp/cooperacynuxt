@@ -1,6 +1,7 @@
 const pkg = require('./package')
 
 module.exports = {
+  server: {host: '0.0.0.0'},
   mode: 'universal',
 
   /*
@@ -18,12 +19,12 @@ module.exports = {
     ]
   },
 
-  //serverMiddleware: ['/serverDB/server'],
+  serverMiddleware: ['./db'],
 
   /*
   ** Customize the progress-bar color
   */
-  loading: { color: '#FF9000' },
+  loading: { color: '#FFCC00', failedColor: 'black', height: '3px', continuous: true,  },
 
   /*
   ** Global CSS
@@ -33,15 +34,13 @@ module.exports = {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: ['@plugins/vee-validate.js'],
+  plugins: [],
 
   /*
   ** Nuxt.js modules
   */
   modules: [
-    // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    // Doc: https://bootstrap-vue.js.org/docs/
     'bootstrap-vue/nuxt',
     '@nuxtjs/pwa',
     '@nuxtjs/auth',
@@ -51,26 +50,31 @@ module.exports = {
    ** Axios module configuration
    */
   axios: {
-    // See https://github.com/nuxt-community/axios-module#options
     proxy: true
-    // baseURL: 'http://127.0.0.1:5000'
   },
 
-  proxy: { '/serverDB': 'http://127.0.0.1:5000' },
+  proxy: { '/db': 'http://127.0.0.1:3000' },
 
   auth: {
     strategies: {
       local: {
-        endpoints: {
-          login: { url: 'http://127.0.0.1:5000/serverDB/login', propertyName: 'token.accessToken' },
-          logout: { url: 'http://127.0.0.1:5000/serverDB/logout', propertyName: 'token.accessToken' },
-          user: { url: 'http://127.0.0.1:5000/serverDB/user', propertyName: false }
+        endpoints:  {
+          login:    { url: 'http://127.0.0.1:3000/db/login',  method: 'post', propertyName: 'token.accessToken' },
+          logout:   { url: 'http://127.0.0.1:3000/db/logout', method: 'post' },
+          user:     { url: 'http://127.0.0.1:3000/db/user',   method: 'get',  propertyName: 'user' }
         },
-        //tokenRequired: true,
-        //tokenType: 'Bearer'
       },
+      auth0: { domain: 'nuxt-auth.auth0.com', client_id: 'q8lDHfBLJ-Fsziu7bf351OcYQAIe3UJv' },
+      facebook: {
+        client_id: '1047962248747639',
+        userinfo_endpoint: 'https://graph.facebook.com/v2.12/me?fields=about,name,picture{url},email,birthday',
+        scope: ['public_profile', 'email', 'user_birthday']
+      },
+      google: {  client_id: '1076028425381-hrsenfe0jh4i4hiibsvuedm9ia1st5sc.apps.googleusercontent.com' },
+      github: {  client_id: process.env.GITHUB_CLIENT_ID, client_secret: process.env.GITHUB_CLIENT_SECRET },
+      twitter: { client_id: 'FAJNuxjMTicff6ciDKLiZ4t0D' }
     },
-    redirect: { home: '/', user: '/', logout: '/', callback: '/' }
+    redirect: { home: '/user', login: '/login', user: '/login', logout: '/login' }
   },
   
   /*
