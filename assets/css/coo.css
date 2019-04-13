@@ -1,48 +1,65 @@
-@font-face {font-family: 'Prompt', sans-serif; src: href="https://fonts.googleapis.com/css?family=Prompt:300"}
-body{font-family: 'Prompt', sans-serif; font-size:14px; font-weight: 300; color:#000000; background-color:#ffffff}
+@import url(https://fonts.googleapis.com/css?family=Prompt:300,400,600);
+@font-face {font-family: 'Prompt', sans-serif; src: href="https://fonts.googleapis.com/css?family=Prompt"}
+body{font-family: 'Prompt', sans-serif; font-size:14px; font-weight: 300; color:#777777; background-color:#ffffff}
 a{color: #777777;}
 .circle  {margin: 0 auto;height:60vh;position: relative;margin-top:3vh;}
 
-.equivalence {color: #FF9000;}
-.trust {color: #FFDD00;}
-.care {color: #88DD33;}
-.transparency {color: #22DDEE;}
-.freedom {color: #4488EE;}
-.understanding {color: #AA66DD;}
-.diversity {color: #FF77CC;}
-.bequivalence {background-color: #FF9000;}
-.btrust {background-color: #FFDD00;}
-.bcare {background-color: #88DD33;}
-.btransparency {background-color: #22DDEE;}
-.bfreedom {background-color: #4488EE;}
-.bunderstanding {background-color: #AA66DD;}
-.bdiversity {background-color: #FF77CC;}
+:root {
+  --equivalence: #F80;
+  --trust: #FC0;
+  --care: #7D3;
+  --transparency: #0DD;
+  --freedom: #37D;
+  --understanding: #A7D;
+  --diversity: #F7C;
+}
+
+.equivalence, .hequivalence {color: var(--equivalence)}     .bequivalence, .bhequivalence {background-color: var(--equivalence)}
+.trust, .htrust {color: var(--trust)}                 .btrust, .bhtrust {background-color: var(--trust)}
+.care, .hcare {color: var(--care)}                   .bcare, .bhcare {background-color: var(--care)}
+.transparency, .htransparency {color: var(--transparency)}   .btransparency, .bhtransparency {background-color: var(--transparency)}
+.freedom, .hfreedom {color: var(--freedom)}             .bfreedom, .bhfreedom {background-color: var(--freedom)}
+.understanding, .hunderstanding {color: var(--understanding)} .bunderstanding, .bhunderstanding {background-color: var(--understanding)}
+.diversity, .hdiversity {color: var(--diversity)}         .bdiversity, .bhdiversity {background-color: var(--diversity)}
+
+/*h colors have hover*/
+.hequivalence:hover, .bhequivalence:hover {background-color: var(--trust)}
+.htrust:hover, .bhtrust:hover {background-color: var(--transparency)}
+.hcare:hover, .bhcare:hover {background-color: var(--diversity)}
+.htransparency:hover, .bhtransparency:hover {background-color: var(--equivalence)}
+.hfreedom:hover, .bhfreedom:hover {background-color: var(--care)}
+.hunderstanding:hover, .bhunderstanding:hover {background-color: var(--freedom)}
+.hdiversity:hover, .bhdiversity:hover {background-color: var(--understanding)}
+
+
+.ae {text-decoration:none; background-image: linear-gradient( var(--equivalence) 50%,#FFFFFF 50%); background-repeat:repeat-x;
+  background-size: 2px 0.2em; background-position: 0 1.35em; color:#000000; }
+.at {text-decoration:none; background-image: linear-gradient( var(--trust) 50%,#FFFFFF 50%); background-repeat:repeat-x;
+  background-size: 2px 0.2em; background-position: 0 1.35em; color:#000000; }
+.ac {text-decoration:none; background-image: linear-gradient( var(--care) 50%,#FFFFFF 50%); background-repeat:repeat-x;
+  background-size: 2px 0.2em; background-position: 0 1.35em; color:#000000; }
+.ai {text-decoration:none; background-image: linear-gradient( var(--transparency) 50%,#FFFFFF 50%); background-repeat:repeat-x;
+  background-size: 2px 0.2em; background-position: 0 1.35em; color:#000000; }
+.af {text-decoration:none; background-image: linear-gradient( var(--freedom) 50%,#FFFFFF 50%); background-repeat:repeat-x;
+  background-size: 2px 0.2em; background-position: 0 1.35em; color:#000000; }
+.au {text-decoration:none; background-image: linear-gradient( var(--understanding) 50%,#FFFFFF 50%); background-repeat:repeat-x;
+  background-size: 2px 0.2em; background-position: 0 1.35em; color:#000000; }
+.ad {text-decoration:none; background-image: linear-gradient( var(--diversity) 50%,#FFFFFF 50%); background-repeat:repeat-x;
+  background-size: 2px 0.2em; background-position: 0 1.35em; color:#000000; }
+.ae:hover {font-weight:200; text-decoration:none; color: var(--equivalence); background-image:none;}
+.at:hover {font-weight:200; text-decoration:none; color: var(--trust); background-image:none;}
+.ac:hover {font-weight:200; text-decoration:none; color: var(--care); background-image:none;}
+.ai:hover {font-weight:200; text-decoration:none; color: var(--transparency); background-image:none;}
+.af:hover {font-weight:200; text-decoration:none; color: var(--freedom); background-image:none;}
+.au:hover {font-weight:200; text-decoration:none; color: var(--understanding); background-image:none;}
+.ad:hover {font-weight:200; text-decoration:none; color: var(--diversity); background-image:none;}
+.bblack {background-color: #000000;}
 .gray {color: #555555;}
 .lightgray {color: #777777;}
 .graylight {color: #CCCCCC;}
+.white, .white:hover {color: #FFFFFF;}
 .bgray {background-color: #eeeeee;}
 .bwhite {background-color: #ffffff;}
-.ae {text-decoration:none; background-image: linear-gradient(#FF9000 50%,#FFFFFF 50%); background-repeat:repeat-x;
-  background-size: 2px 0.2em; background-position: 0 1.35em; color:#000000; }
-.at {text-decoration:none; background-image: linear-gradient(#FFDD00 50%,#FFFFFF 50%); background-repeat:repeat-x;
-  background-size: 2px 0.2em; background-position: 0 1.35em; color:#000000; }
-.ac {text-decoration:none; background-image: linear-gradient(#88DD33 50%,#FFFFFF 50%); background-repeat:repeat-x;
-  background-size: 2px 0.2em; background-position: 0 1.35em; color:#000000; }
-.ai {text-decoration:none; background-image: linear-gradient(#22DDEE 50%,#FFFFFF 50%); background-repeat:repeat-x;
-  background-size: 2px 0.2em; background-position: 0 1.35em; color:#000000; }
-.af {text-decoration:none; background-image: linear-gradient(#4488EE 50%,#FFFFFF 50%); background-repeat:repeat-x;
-  background-size: 2px 0.2em; background-position: 0 1.35em; color:#000000; }
-.au {text-decoration:none; background-image: linear-gradient(#AA66DD 50%,#FFFFFF 50%); background-repeat:repeat-x;
-  background-size: 2px 0.2em; background-position: 0 1.35em; color:#000000; }
-.ad {text-decoration:none; background-image: linear-gradient(#FF77CC 50%,#FFFFFF 50%); background-repeat:repeat-x;
-  background-size: 2px 0.2em; background-position: 0 1.35em; color:#000000; }
-.ae:hover {font-weight:200; text-decoration:none; color:#FF9000; background-image:none;}
-.at:hover {font-weight:200; text-decoration:none; color:#FFDD00; background-image:none;}
-.ac:hover {font-weight:200; text-decoration:none; color:#88DD33; background-image:none;}
-.ai:hover {font-weight:200; text-decoration:none; color:#22DDEE; background-image:none;}
-.af:hover {font-weight:200; text-decoration:none; color:#4488EE; background-image:none;}
-.au:hover {font-weight:200; text-decoration:none; color:#AA66DD; background-image:none;}
-.ad:hover {font-weight:200; text-decoration:none; color:#FF77CC; background-image:none;}
 
 .base {text-align:justify;font-size:20px;margin-bottom:10px; line-height: 29px; font-weight:200;}
 .quote {font-size:18px;margin-bottom:10px; line-height: 24px; font-weight:200;}
@@ -66,23 +83,17 @@ a.disabled {  opacity: 0.5; pointer-events: none;  cursor: default; }
 .site-footer { border-top-color:#d3e0e9; border-top-style:solid; border-top-width:1px; padding:10px;}
 
 hr.home-hr { border:none; background-color:#666666; width:50px; height:2px!important; }
-img.page-header { margin-top: 0px; width: 100%; height: auto; vertical-align: top; border:none; }
+
 .alt-login{ visibility:hidden; margin-left:-35px; }
 .vote-spacer { width:10px; float:left; }
 .label-default { background-color: #ffffff!important; color: #777!important; }
-.comment-content { overflow-wrap: break-word; word-wrap: break-word; -ms-word-break: break-all; word-break: break-word; -ms-hyphens: auto; -moz-hyphens: auto; -webkit-hyphens: auto; hyphens: auto; }
+.comment-content { overflow-wrap: break-word; word-wrap: break-word; -ms-word-break: break-all; 
+  word-break: break-word; -ms-hyphens: auto; -moz-hyphens: auto; -webkit-hyphens: auto; hyphens: auto; }
 
 .navbarrow {margin-top: 100px;}
-.navbar {opacity: 0.8; border-bottom: 1px solid #CCCCCC;}
-.header-logo { width:244px; height:60px; }
-
-@-webkit-keyframes rotating {
-    from {     -webkit-transform: rotate(0deg);     -o-transform: rotate(0deg);     transform: rotate(0deg);   }
-    to   {     -webkit-transform: rotate(360deg);   -o-transform: rotate(360deg);   transform: rotate(360deg); }
-  }
-  @keyframes rotating {
-    from { -ms-transform: rotate(0deg);     -moz-transform: rotate(0deg);    -webkit-transform: rotate(0deg);    -o-transform: rotate(0deg);    transform: rotate(0deg);   }
-    to   { -ms-transform: rotate(360deg);   -moz-transform: rotate(360deg);  -webkit-transform: rotate(360deg);  -o-transform: rotate(360deg);  transform: rotate(360deg); }
-  }
-  .rotating {   -webkit-animation: rotating 3s linear infinite;  -moz-animation: rotating 3s linear infinite;  -ms-animation: rotating 3s linear infinite;  -o-animation: rotating 3s linear infinite;   animation: rotating 3s linear infinite;
-  }
+.b-navbar {opacity: 0.8; border-bottom: 1px solid #CCCCCC;} .navbar {opacity: 0.8; border-bottom: 1px solid #CCCCCC;}
+.headerlogo { width:244px; height:60px; }
+.usercoologo {height:60px; width:60px;} .userlogo {height:52px; width:52px; z-index:2; position: relative; right: 80px;}
+img.page-header { margin-top: 0px; margin-bottom: 60px; width: 100%; height: auto; vertical-align: top; border:none; }
+.votebar {height: 5px;}
+.foot {border-top: 1px solid #CCCCCC;}
