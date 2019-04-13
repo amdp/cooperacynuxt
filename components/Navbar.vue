@@ -1,43 +1,64 @@
 <template>
-  <nav class="navbar p-1˝ fixed-top bg-white navbar-expand-md navbarCooperacy d-flex flex-fill justify-content-center">
-      <a class="d-flex flex-fill m-0 noline" href="/">
-        <img class="header-logo" src="../assets/images/wordlogo.png"  />
-      </a>
-      <ul class="navbar-nav">
-        <li class="navitem dropdown">
-          <a href="#" class="nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">THE PROJECT</a>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" href="/aboutyou">ABOUT YOU</a>
-            <a class="dropdown-item" href="./assets/pages/aboutus">ABOUT US</a>
-            <router-link class="nav-link" to="/aboutus">AUT US</router-link>
-            <a class="dropdown-item" href="/platform">THE PLATFORM</a>
-            <a class="dropdown-item" href="/governance">GOVERNANCE</a>
+  <b-navbar toggleable="lg" class="p-1 fixed-top bg-white d-flex flex-fill justify-content-center">
+    <b-navbar-brand to="/" v-if="!this.$auth.loggedIn"><img class="headerlogo" src="@/assets/images/main/wordlogo.png"  /></b-navbar-brand>
+    <b-navbar-brand to="/" v-if="this.$auth.loggedIn" >
+          <img class="usercoologo m-2" src="@/assets/images/main/coo.png"  />
+          <img class="userlogo m-2 rounded-circle" :src="require('../assets/images/users/' + this.$auth.user.image)">
+    </b-navbar-brand>
+    <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+    <b-collapse id="nav-collapse" is-nav>
+      <b-navbar-nav> 
+        <div v-if="this.$auth.loggedIn" class="row">
+          <div class="col d-flex justify-content-center">
+            <h3 class="diversity mr-3">{{this.$auth.user.name + ' ' + this.$auth.user.surname}}</h3>
+            <b-nav-item class="au" to="useredit">EDIT</b-nav-item>
           </div>
-        </li>
-        <li class="dropdown">
-          <a href="#" class="nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">SERVICES</a>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" href="/coorporate">COOPERATION SERVICES</a>
-            <a class="dropdown-item" href="/openecosystem">OPEN SPACE COOPERATION</a>
-            <a class="dropdown-item" href="/overview">COOPERATION OVERVIEW</a>
-            <a class="dropdown-item" href="/cohackathon">COOPERATIVE HACKATHON</a>
-            <a class="dropdown-item" href="/workshops">COOPERATION WORKSHOPS</a>
+          <div class="w-100"></div>
+          <div class="col"><div class="row dflex justify-content-around aling-items-center">
+            YOUR COLOR CODE: <votebars />
+            </div>
           </div>
-        </li>
-        <li class="dropdown">
-          <a href="#" class="nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">SCIENCE</a>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" href="/cooperation">COOPERATION</a>
-            <a class="dropdown-item" href="/integration">INTEGRATION</a>
-            <a class="dropdown-item" href="/cci">COOPERATION CONTEXT INDEX</a>
-            <a class="dropdown-item" href="/science">COOPERACY RESEARCH ASSOCIATION</a>
-            <a class="dropdown-item" href="/news">NEWS</a>
-          </div>
-        </li>
+        </div>
+      </b-navbar-nav>
+
+      <b-navbar-nav class="ml-auto mr-4">
+        <b-nav-item-dropdown text="THE PROJECT" no-caret right>
+          <b-dropdown-item to="aboutyou">ABOUT YOU</b-dropdown-item>
+          <b-dropdown-item to="aboutus">ABOUT US</b-dropdown-item>
+          <b-dropdown-item to="platform">THE PLATFORM</b-dropdown-item>
+          <b-dropdown-item to="governance">GOVERNANCE</b-dropdown-item>
+        </b-nav-item-dropdown>
+
+        <b-nav-item-dropdown text="SERVICES" no-caret right>
+            <b-dropdown-item to="coorporate">COOPERATION SERVICES</b-dropdown-item>
+            <b-dropdown-item to="openecosystem">OPEN SPACE COOPERATION</b-dropdown-item>
+            <b-dropdown-item to="overview">COOPERATION OVERVIEW</b-dropdown-item>
+            <b-dropdown-item to="cohackathon">COOPERATIVE HACKATHON</b-dropdown-item>
+            <b-dropdown-item to="workshops">COOPERATION WORKSHOPS</b-dropdown-item>
+        </b-nav-item-dropdown>
+        <b-nav-item-dropdown text="SCIENCE" no-caret right>
+            <b-dropdown-item to="cooperation">COOPERATION</b-dropdown-item>
+            <b-dropdown-item to="integration">INTEGRATION</b-dropdown-item>
+            <b-dropdown-item to="cci">COOPERATION CONTEXT INDEX</b-dropdown-item>
+            <b-dropdown-item to="science">COOPERACY RESEARCH ASSOCIATION</b-dropdown-item>
+            <b-dropdown-item to="news">NEWS</b-dropdown-item>
+        </b-nav-item-dropdown>
         <span> &nbsp;&nbsp;&nbsp;</span>
-        <li>
-          <a href="#" class="nav-link" role="button" aria-expanded="false">LOGIN</a>
-        </li>
-      </ul>
-  </nav>
+        <b-nav-item v-if="!this.$auth.loggedIn" to="login">LOGIN</b-nav-item>
+        <b-nav-item v-if="this.$auth.loggedIn" @click="$auth.logout()">LOGOUT</b-nav-item>        
+      </b-navbar-nav>
+    </b-collapse>
+  </b-navbar>
 </template>
+
+<script>
+import Votebars from '@/components/Votebars'
+
+export default {
+  components: {
+    Votebars: Votebars,
+  },
+}
+</script>
+          
