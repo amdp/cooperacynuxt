@@ -26,17 +26,32 @@
 </template>
 
 <script>
+import axios from 'axios'
 import Votebars from '@/components/Votebars'
 
 export default {
-  computed: {
-      projects(){return  this.$store.state.projectsvx.projects}
+  data() {
+    return {
+      projects: [],
+    }
   },
   mounted() {
-    this.$store.dispatch('projectsvx/getProjects')
+    this.getProjects()
   },
   components: {
     Votebars: Votebars,
   },
+  methods: {
+    getProjects() {
+      axios.get('/db/projects').then(
+        result => {
+          this.projects = result.data
+        },
+        error => {
+          console.error(error)
+        }
+      )
+    },
+  }
 }
 </script>
