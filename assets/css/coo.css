@@ -7,11 +7,11 @@ a{color: #777777;}
 :root {
   --equivalence: #F80;
   --trust: #FC0;
-  --care: #7D3;
+  --care: #7D0;
   --transparency: #0DD;
-  --freedom: #37D;
-  --understanding: #A7D;
-  --diversity: #F7C;
+  --freedom: #08D;
+  --understanding: #A7E;
+  --diversity: #F7D;
 }
 
 .equivalence, .hequivalence {color: var(--equivalence)}     .bequivalence, .bhequivalence {background-color: var(--equivalence)}

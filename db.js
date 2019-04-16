@@ -119,13 +119,23 @@ app.put(
   }
 })
 
+app.get(
+  "/user", (req, res, next) => {
+  req.headers.authorization = req.headers.authorization.slice(7)
+  try { check = jwt.verify(req.headers.authorization, process.env.SECRET_KEY) }
+  catch (err) {console.log(err)}
+  let id = jwt.decode(req.headers.authorization)
+  userModel.findOne({ where: { id: id.id }})
+  .then(user => { res.json({ user })})
+})
+
 app.post(
   "/login", (req, res) => {
   userModel.findOne({ where: { email: req.body.email }})
       .then(user => { 
         if(user){
-              if(bcrypt.compareSync(req.body.password, user.password)) {
-                  let accessToken = jwt.sign(user.dataValues, process.env.SECRET_KEY, { expiresIn: 1440 })
+              if(bcrypt.compareSync(req.body.password, user.password)) { 
+                  let accessToken = jwt.sign({id: user.id}, process.env.SECRET_KEY, { expiresIn: 1440 })
                   res.json({ token: { accessToken } })
               }
           }else{ res.status(400).json({error: 'User does not exist'}) }
@@ -136,16 +146,7 @@ app.post(
 app.post(
   "/logout", (req, res) => { res.json({ status: 'OK' }) })
 
-app.get(
-  "/user", (req, res, next) => {
-  req.headers.authorization = req.headers.authorization.slice(7)
-  let user
-  try { user = jwt.verify(req.headers.authorization, process.env.SECRET_KEY) }
-  catch (err) {console.log(err)}
-  res.json({ user })
-})
-
-app.use((err, req, res, next) => { console.error(err); res.status(401).send(err + '') })
+//app.use((err, req, res, next) => { console.error(err); res.status(401).send(err + '') }) DELETE THIS?
 
 //////////////////////////////////////////////////////////////////////
 ///////                          USER                          ///////
@@ -206,6 +207,15 @@ app.post(
   .then(res => {console.log(res)})
   .catch(err => { res.send ('error :' + err) })
 })
+
+//////////////////////////////////////////////////////////////////////
+///////                          CCI                           ///////
+//////////////////////////////////////////////////////////////////////
+
+/* app.get(
+  "/projects", (req, res) => { projectModel.findAll ()
+    .then(projects => { res.json(projects) }) .catch(err => { res.send("Error: " + err) })
+}) */
 
 //////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
@@ -311,6 +321,20 @@ var tagModel = db.sequelize.define(
     timestamps: false
   }
 )
+
+/*
+
+var tagModel = db.sequelize.define(
+  'tag',
+  {
+      id: {type: Sequelize.INTEGER, primaryKey: true, autoincrement: true},
+      project: {type: Sequelize.INTEGER},
+      tagName: {type: Sequelize.CHAR, allowNull: false},
+  }, {
+    timestamps: false
+  }
+)
+*/
 
 module.exports = {
   path: '/db',

@@ -14,7 +14,7 @@
               <!-- add insert previous password and relative check -->
             <b-form-group label-for="passwordInput" label="Password:" description="Please insert your NEW password or passphrase">
               <b-form-input id="passwordInput" v-model="formPassword" size="sm" type="password" required autocomplete="current-password"></b-form-input></b-form-group>
-            <b-form-group label-for="imageInput" label="Image:" :description="imageUploadDesc"> 
+            <b-form-group label-for="imageInput" label="Image:" description="Please choose an image for your account"> 
               <b-form-file id="imageInput" v-model="formImageFilename" ref="formImageFile" size="sm" accept="image/*"></b-form-file>
             </b-form-group>
             <b-button type="submit" class="btn bhcare btn-block mt-3 white border-0">UPDATE</b-button>
@@ -37,13 +37,24 @@ export default {
       formEmail: this.$auth.user.email,
       formPassword: '',
       formImageFilename: '',
-      imageUploadDesc: 'Please choose an image for your account',
       id: this.$auth.user.id,
     }
   },
   methods: {
-    useredit() {
-      try {this.imageUpload()} catch(err){console.log(err + ' image not uploaded.')}
+    async useredit() {
+      await new Promise((resolve, reject) => 
+      function (){
+        console.log('step II')
+        if (this.formImageFilename.name) {
+          let formImageData = new FormData()
+          formImageData.append('file', this.formImageFilename)
+          axios.post('/db/userimage', formImageData, { headers: { 'Content-Type': 'multipart/form-data' } })
+          .then(() => { resolve(); })
+          .catch(err => {console.log(err)} )
+        }
+
+      })
+      await new Promise((resolve, reject) => 
       axios.put(
         '/db/user', {
           id: this.id,
@@ -53,24 +64,17 @@ export default {
           password: this.formPassword,
           image: this.formImageFilename.name,
         })
-        .then(res => {
-          // axios.delete('/db/userimage', {data: {delimage: this.$auth.user.image}} )
-          //this.$auth.$storage.setState(this.$auth.$state.user.image, this.formImageFilename.name)
-          console.log(this.$auth.user.image)
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    },
-    async imageUpload() {
-        let formImageData = new FormData()
-        formImageData.append('file', this.formImageFilename)
-        axios.post(
-          '/db/userimage', formImageData, { headers: { 'Content-Type': 'multipart/form-data' } })
-        .then(res => {
-          console.log('SUCCESS!!')
-        })
+        .then(() => { resolve(); })
+      )
+      await new Promise((resolve, reject) => 
+        this.$auth.fetchUser()
         .catch(err => {console.log(err)})
+      )
+      await new Promise((resolve, reject) => 
+      function () {
+        if(this.$auth.user.image){axios.delete('/db/userimage', {data: {delimage: this.$auth.user.image}} )}
+        console.log(this.$auth.user.image + ' deleted')
+      }) 
     },
   }
 }
