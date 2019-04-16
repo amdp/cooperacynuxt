@@ -3,7 +3,7 @@
     <b-navbar-brand to="/" v-if="!this.$auth.loggedIn"><img class="headerlogo" src="@/assets/images/main/wordlogo.png"  /></b-navbar-brand>
     <b-navbar-brand to="/" v-if="this.$auth.loggedIn" >
           <img class="usercoologo m-2" src="@/assets/images/main/coo.png"  />
-          <img class="userlogo m-2 rounded-circle" :src="require('../assets/images/users/' + this.$auth.user.image)">
+          <img v-if="this.$auth.user.image" class="userlogo m-2 rounded-circle" :src="require('../assets/images/users/' + this.$auth.user.image)">
     </b-navbar-brand>
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -11,7 +11,7 @@
       <b-navbar-nav> 
         <div v-if="this.$auth.loggedIn" class="row">
           <div class="col d-flex justify-content-center">
-            <h3 class="diversity mr-3">{{this.$auth.user.name + ' ' + this.$auth.user.surname}}</h3>
+            <h3 class="diversity up base mr-3">{{this.$auth.user.name + ' ' + this.$auth.user.surname}}</h3>
             <b-nav-item class="au" to="useredit">EDIT</b-nav-item>
           </div>
           <div class="w-100"></div>

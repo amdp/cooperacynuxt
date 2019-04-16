@@ -1,3 +1,9 @@
+<!-- src="@/assets/images/main/coo.png" :src="require('@/assets/images/projects/' + project.image)" 
+
+var cci = get.from the database.the array
+console.log(JSON.stringify(cci))
+
+
 <template>
   <div class="mx-auto mt-4 mb-5">
     <div class="row mt-5" v-for="project in projects" :key="project.id">
@@ -39,4 +45,4 @@ export default {
     Votebars: Votebars,
   },
 }
-</script>
+</script> -->
