@@ -4,7 +4,7 @@
       <div class="row"><div class="col-12 d-flex justify-content-center"><p class="care subheading">UPDATE YOUR INFO</p></div></div>
       <div class="row">
         <div class="col-12 d-flex justify-content-center">
-          <b-form @submit.prevent="useredit" class="mt-3 was-validated">
+          <b-form @submit.prevent="userEdit" class="mt-3 was-validated">
             <b-form-group label-for="nameInput" label="Name:" description="Please insert your real name">
               <b-form-input id="nameInput" v-model="formName" size="sm" required></b-form-input></b-form-group>
             <b-form-group label-for="surnameInput" label="Surname:" description="Please insert your real surname">
@@ -41,20 +41,30 @@ export default {
     }
   },
   methods: {
-    async useredit() {
-      await new Promise((resolve, reject) => 
-      function (){
-        console.log('step II')
-        if (this.formImageFilename.name) {
-          let formImageData = new FormData()
-          formImageData.append('file', this.formImageFilename)
-          axios.post('/db/userimage', formImageData, { headers: { 'Content-Type': 'multipart/form-data' } })
-          .then(() => { resolve(); })
-          .catch(err => {console.log(err)} )
-        }
+    userEdit() {
+      //uploads the image
+      if (this.formImageFilename.name) {
+        let formImageData = new FormData()
+        formImageData.append('file', this.formImageFilename)
+        var object = {};
+        formImageData.forEach((value, key) => {object[key] = value});
+        var json = JSON.stringify(object);
 
-      })
-      await new Promise((resolve, reject) => 
+        axios.post('/db/userimage', formImageData, { headers: { 'Content-Type': 'multipart/form-data' } })
+        // once it has uploaded the new image, it deletes the old one 
+        //.then(res=>{this.deleteOldImage()})
+        .then(() => {this.userUpdate()})
+        .catch(err=>{console.log(err)})
+      }else{
+        this.userUpdate() //if no new image has to be inserted, it proceeds to update the user information
+      }
+    },
+    deleteOldImage(){
+      if(this.$auth.user.image){axios.delete('/db/userimage', {data: {delimage: this.$auth.user.image}} )}
+      console.log(this.$auth.user.image + ' deleted')
+      this.userUpdate() // it has deleted the old image so it proceeds to update the user information
+    },
+    userUpdate(){
       axios.put(
         '/db/user', {
           id: this.id,
@@ -62,19 +72,15 @@ export default {
           surname: this.formSurname,
           email: this.formEmail,
           password: this.formPassword,
-          image: this.formImageFilename.name,
         })
-        .then(() => { resolve(); })
-      )
-      await new Promise((resolve, reject) => 
-        this.$auth.fetchUser()
-        .catch(err => {console.log(err)})
-      )
-      await new Promise((resolve, reject) => 
-      function () {
-        if(this.$auth.user.image){axios.delete('/db/userimage', {data: {delimage: this.$auth.user.image}} )}
-        console.log(this.$auth.user.image + ' deleted')
-      }) 
+      .then(() => { console.log('User updated'); this.userReload()}) // reloads the updated user information
+      .catch(err => {console.log(err)} )
+    },
+    userReload(){
+      console.log('User reloading..')
+      this.$auth.fetchUser()
+      .then(() => { console.log('User reloaded')})
+      .catch(err => {console.log(err)} )
     },
   }
 }

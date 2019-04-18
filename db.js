@@ -113,7 +113,7 @@ app.put(
     res.status(400); res.json({ error: "Bad data" }) } else { 
       bcrypt.hash(req.body.password, 10, (err, hash) => {
         userData.password = hash; userModel.update(userData, { where: {id: req.body.id}})
-        .then(user => { res.json('updated: ' + user) }) 
+        .then(user => { console.log('user updated'), res.json('updated: ' + user) }) 
         .catch(err => { res.send ('error :' + err) })
       })
   }
@@ -126,7 +126,8 @@ app.get(
   catch (err) {console.log(err)}
   let id = jwt.decode(req.headers.authorization)
   userModel.findOne({ where: { id: id.id }})
-  .then(user => { res.json({ user })})
+  .then(user => {res.json({ user })})
+  .catch(err => {res.send('error: ' + err)})
 })
 
 app.post(
@@ -169,9 +170,7 @@ app.get(
 app.post(
   "/projectimage", function(req, res) {
   if (Object.keys(req.files).length == 0) { res.status(400).send('No files were uploaded.'); return }
-  console.log('req.files >>>', req.files)
   uploadPath = './assets/images/projects/' + req.files.file.name
-  console.log(uploadPath)
   req.files.file.mv(uploadPath, function(err) { if (err) { return res.status(500).send(err); }
   res.send ('file uploaded')
   })
@@ -184,17 +183,17 @@ app.delete(
 
 app.post(
   "/userimage", function(req, res) {
-  if (Object.keys(req.files).length == 0) { res.status(400).send('No files were uploaded.'); return }
-  uploadPath = './assets/images/users/' + req.files.file.name
-  req.files.file.mv(uploadPath, function(err) { if (err) { return res.status(500).send(err); }
-  res.send ('file uploaded')
+    if (Object.keys(req.files).length == 0) { res.status(400).send('No files were uploaded.'); return }
+    console.log(req.files.file)
+    uploadPath = './asset/images/users/' + req.files.file.name
+    req.files.file.mv(uploadPath, function(err) { if (err) { return res.status(500).send(err) } })
+    res.json({ status: 'OK' })
   })
-})
+    
 
 app.delete(
   "/userimage", (req, res) => { 
     const path = './assets/images/users/' + req.body.delimage
-    console.log(path)
     fs.unlinkSync(path)
     res.json({ status: 'OK' })
     .catch(err => {res.send(err)})
