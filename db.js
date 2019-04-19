@@ -90,15 +90,16 @@ app.delete(
 app.post(
   "/user", (req, res) => {
     const today = new Date()
-    const userData = { id: req.body.id, name: req.body.name, surname: req.body.surname, email: req.body.email, image: req.body.image, E: req.body.E, T: req.body.T, C: req.body.C, I: req.body.I, F: req.body.F, U: req.body.U, D: req.body.D,
-      active: req.body.active, roles: req.body.roles, remember_token: req.body.remember_token, payment_type: req.body.payment_type, 
-      transaction_id: req.body.transaction_id, transaction_state: req.body.transaction_state, transaction_created_at: today, transaction_updated_at: today, updated: today, created: today}
+    const userData = { id: req.body.id, name: req.body.name, surname: req.body.surname, email: req.body.email, E: req.body.E, T: req.body.T, C: req.body.C, I: req.body.I, F: req.body.F, U: req.body.U, D: req.body.D,active: req.body.active, roles: req.body.roles, remember_token: req.body.remember_token, payment_type: req.body.payment_type, transaction_id: req.body.transaction_id, transaction_state: req.body.transaction_state, transaction_created_at: today, transaction_updated_at: today, updated: today, created: today}
     userModel.findOne({ where: { email: req.body.email } })
         .then(user => { 
           if(!user) {
             bcrypt.hash(req.body.password, 10, (err, hash) => {
               userData.password = hash; userModel.create(userData)
-              .then(user => { res.json({status: user.email + 'registered'}) }) 
+              .then (user => {
+                sequelize.query('SELECT LAST_INSERT_ID() AS lastId', {type: Sequelize.QueryTypes.SELECT})
+                .then(id => {res.json({id: id[0].lastId}) })
+              })
               .catch(err => { res.send ('error :' + err) })
             })
           }else{ res.json({error: "user already exists"}) }
@@ -261,7 +262,6 @@ var userModel = db.sequelize.define(
       surname: {type: Sequelize.CHAR, allowNull: false},
       email:  {type: Sequelize.CHAR, unique: true, allowNull: false},
       password: {type: Sequelize.CHAR, allowNull: false},
-      image: { type: Sequelize.CHAR },
       E: {type: Sequelize.TINYINT, allowNull: false, defaultValue: 4},
       T: {type: Sequelize.TINYINT, allowNull: false, defaultValue: 4},
       C: {type: Sequelize.TINYINT, allowNull: false, defaultValue: 4},

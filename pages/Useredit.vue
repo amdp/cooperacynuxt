@@ -42,20 +42,21 @@ export default {
   },
   methods: {
     userEdit() {
-      //uploads the image
-      if (this.formImageFilename.name) {
+      if (!this.formImageFilename.name) {
+        this.userUpdate() //if no new image has to be inserted, we proceed to update the user information
+      }else{
+      //alternatively, we upload the image: the server will name it with user id, resize it and transform it into a png
+      //although the id is in the JWToken amongst the headers, we avoid decoding and append the id in the req.body
+      //remember there is no image or video column/field in the database because we use the id as per the image name
         let formImageData = new FormData()
         formImageData.append('file', this.formImageFilename)
         formImageData.append('id', this.id)
         axios.post('/db/userimage', formImageData, { headers: { 'Content-Type': 'multipart/form-data' } })
         .then(() => {this.userUpdate()})
         .catch(err=>{console.log(err)})
-      }else{
-        this.userUpdate() //if no new image has to be inserted, it proceeds to update the user information
       }
     },
     userUpdate(){
-      let imageName = this.id + this.formImageFilename.name.replace(/.+\./gi,'.')
       axios.put(
         '/db/user', {
           id: this.id,
@@ -63,17 +64,15 @@ export default {
           surname: this.formSurname,
           email: this.formEmail,
           password: this.formPassword,
-          image: this.imageName,
         })
-      .then(() => { console.log('User updated'); this.userReload()}) // reloads the updated user information
+      .then(() => { this.userReload()}) // reloads the updated user information
       .catch(err => {console.log(err)} )
     },
     userReload(){
-      console.log('User reloading..')
       this.$auth.fetchUser()
-      .then(() => { console.log('User reloaded')})
+      .then(() => {})
       .catch(err => {console.log(err)} )
-      location.reload(true)
+      location.reload(true) // reloads the page
     },
   }
 }

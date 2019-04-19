@@ -41,11 +41,12 @@ module.exports = {
   */
   modules: [
     '@nuxtjs/axios',
+    '@nuxtjs/toast',
     'bootstrap-vue/nuxt',
     '@nuxtjs/pwa',
     '@nuxtjs/auth',
   ],
-  
+
   /*
    ** Axios module configuration
    */
