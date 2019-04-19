@@ -1,6 +1,7 @@
 var express = require("express")
 var bodyParser = require("body-parser")
 var cors = require("cors")
+var Jimp = require('jimp');
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
 const fileUpload = require('express-fileupload')
@@ -184,20 +185,19 @@ app.delete(
 app.post(
   "/userimage", function(req, res) {
     if (Object.keys(req.files).length == 0) { res.status(400).send('No files were uploaded.'); return }
-    console.log(req.files.file)
-    uploadPath = './asset/images/users/' + req.files.file.name
+    try {uploadPath = './assets/images/users/' + req.body.id + '.png'} catch (err) {console.log(err)}
     req.files.file.mv(uploadPath, function(err) { if (err) { return res.status(500).send(err) } })
+    console.log(typeof uploadPath)
+    Jimp.read(uploadPath)
+    .then(uploadPath => {
+      return uploadPath
+        .resize(256, 256) // resize
+        .quality(60) // set quality
+        .write(uploadPath); // save
+    })
+    .catch(err => {console.error(err);})
     res.json({ status: 'OK' })
   })
-    
-
-app.delete(
-  "/userimage", (req, res) => { 
-    const path = './assets/images/users/' + req.body.delimage
-    fs.unlinkSync(path)
-    res.json({ status: 'OK' })
-    .catch(err => {res.send(err)})
-})
 
 app.post(
   "/tags", (req, res) => { 
