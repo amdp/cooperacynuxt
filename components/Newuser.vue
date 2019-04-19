@@ -5,17 +5,17 @@
       <div class="row">
         <div class="col-12 d-flex justify-content-center">
           <b-form @submit.prevent="register" class="mt-3 was-validated">
-            <b-form-group label-for="nameInput" label="Name:" description="Please insert your real name">
+            <b-form-group label-for="nameInput" label="Name:" description="Please insert your name">
               <b-form-input id="nameInput" v-model="formName" size="sm" required></b-form-input></b-form-group>
-            <b-form-group label-for="surnameInput" label="Surname:" description="Please insert your real surname">
+            <b-form-group label-for="surnameInput" label="Surname:" description="Please insert your surname">
               <b-form-input id="surnameInput" v-model="formSurname" size="sm" required></b-form-input></b-form-group>
             <b-form-group label-for="emailInput" label="Email:" description="Please insert a valid email: it will be your future username">
               <b-form-input id="emailInput" v-model="formEmail" size="sm" required></b-form-input></b-form-group>
               <!-- add crypt password before sending it -->
             <b-form-group label-for="passwordInput" label="Password:" description="Please insert your password or passphrase">
-              <b-form-input id="passwordInput" v-model="formPassword" size="sm" required></b-form-input></b-form-group>
-            <b-form-group label-for="imageInput" label="Image:" :description="imageUploadDesc"> 
-              <b-form-file id="imageInput" v-model="formImageFilename" ref="formImageFile" size="sm" accept="image/*" @input="imageUpload()"></b-form-file>
+              <b-form-input id="passwordInput" v-model="formPassword" size="sm" type="password" required></b-form-input></b-form-group>
+            <b-form-group label-for="imageInput" label="Image:" description="Please choose an image for your account"> 
+              <b-form-file id="imageInput" v-model="formImageFile" ref="formImageFile" size="sm"></b-form-file>
             </b-form-group>
             <b-button type="submit" class="btn bhcare btn-block mt-3 white border-0">REGISTER</b-button>
           </b-form>
@@ -27,16 +27,16 @@
 
 <script>
 import axios from 'axios'
+import { createHash } from 'crypto';
 
 export default {
   data() {
     return {
-      formName: '',
-      formSurname: '',
-      formEmail: '',
-      formPassword: '',
-      formImageFilename: '',
-      imageUploadDesc: 'Please choose an image for your account',
+      formName: 'q',
+      formSurname: 'q',
+      formEmail: '@qqq.1',
+      formPassword: '111',
+      formImageFile: '',
     }
   },
   methods: {
@@ -47,29 +47,30 @@ export default {
           surname: this.formSurname,
           email: this.formEmail,
           password: this.formPassword,
-          image: this.formImageFilename.name,
         })
         .then(res => {
-          $auth.loginWith('local', { data: { email: this.formEmail, password: this.formPassword }})
+          if (this.formImageFile) {
+          //the res variable in response from the server sends the id of the recently created user
+          this.imageUpload(res.data.id)
+          .then(() => {})
+          .catch(err => console.log(err)  )
+          }else{this.addedToast()}
         })
-        .catch(err => {
-          console.log(err)
-        })
+        .catch(err => {console.log(err)})
     },
-    async imageUpload() {
+    imageUpload(id) {
         let formImageData = new FormData()
-        formImageData.append('file', this.formImageFilename)
-        axios.post(
-          '/db/userimage', formImageData, { headers: { 'Content-Type': 'multipart/form-data' } })
-        .then(res => {
-          this.imageUploadDesc = 'Image uploaded. Please keep the image name in the textbox above as it is now.'
-          console.log('SUCCESS!!');
-        })
-        .catch(err => {
-          this.imageUploadDesc = 'Image failed to upload. Please retry.'
-          console.log('FAILURE :(');
-        })
+        formImageData.append('file', this.formImageFile)
+        formImageData.append('id', id)
+        axios.post( '/db/userimage', formImageData, { headers: { 'Content-Type': 'multipart/form-data' } })
+        .then(() => {this.addedToast()})
+        .catch(err => {console.log(err)})
     },
+    addedToast(){
+      this.$toast.success('New user added.', {duration: 1000, className: 'toasts'})
+      setTimeout(function(){location.href = location.href}, 1200)
+      .catch(err=>{console.log(err)})
+    }
   }
 }
 </script>

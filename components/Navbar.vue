@@ -1,7 +1,7 @@
 <template>
   <b-navbar toggleable="lg" class="p-1 fixed-top bg-white d-flex flex-fill justify-content-center">
     <b-navbar-brand to="/" v-if="!this.$auth.loggedIn"><img class="headerlogo" src="@/assets/images/main/wordlogo.png"  /></b-navbar-brand>
-    <b-navbar-brand to="/" v-if="this.$auth.loggedIn" >
+    <b-navbar-brand to="/user" v-if="this.$auth.loggedIn" >
           <img class="usercoologo m-2" src="@/assets/images/main/coo.png"  />
           <img v-if="userImage" class="userlogo m-2 rounded-circle" :src="userImage">
     </b-navbar-brand>
