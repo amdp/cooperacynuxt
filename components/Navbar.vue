@@ -3,7 +3,7 @@
     <b-navbar-brand to="/" v-if="!this.$auth.loggedIn"><img class="headerlogo" src="@/assets/images/main/wordlogo.png"  /></b-navbar-brand>
     <b-navbar-brand to="/" v-if="this.$auth.loggedIn" >
           <img class="usercoologo m-2" src="@/assets/images/main/coo.png"  />
-          <img v-if="this.$auth.user.image" class="userlogo m-2 rounded-circle" :src="require('../assets/images/users/' + this.$auth.user.image)">
+          <img v-if="userImage" class="userlogo m-2 rounded-circle" :src="userImage">
     </b-navbar-brand>
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -59,6 +59,9 @@ export default {
   components: {
     Votebars: Votebars,
   },
+  computed: {
+    userImage: function () { if (this.$auth.user.id) { return require('../assets/images/users/' + this.$auth.user.id + '.png')}}
+  }
 }
 </script>
           

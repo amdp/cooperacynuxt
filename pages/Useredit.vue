@@ -46,25 +46,16 @@ export default {
       if (this.formImageFilename.name) {
         let formImageData = new FormData()
         formImageData.append('file', this.formImageFilename)
-        var object = {};
-        formImageData.forEach((value, key) => {object[key] = value});
-        var json = JSON.stringify(object);
-
+        formImageData.append('id', this.id)
         axios.post('/db/userimage', formImageData, { headers: { 'Content-Type': 'multipart/form-data' } })
-        // once it has uploaded the new image, it deletes the old one 
-        //.then(res=>{this.deleteOldImage()})
         .then(() => {this.userUpdate()})
         .catch(err=>{console.log(err)})
       }else{
         this.userUpdate() //if no new image has to be inserted, it proceeds to update the user information
       }
     },
-    deleteOldImage(){
-      if(this.$auth.user.image){axios.delete('/db/userimage', {data: {delimage: this.$auth.user.image}} )}
-      console.log(this.$auth.user.image + ' deleted')
-      this.userUpdate() // it has deleted the old image so it proceeds to update the user information
-    },
     userUpdate(){
+      let imageName = this.id + this.formImageFilename.name.replace(/.+\./gi,'.')
       axios.put(
         '/db/user', {
           id: this.id,
@@ -72,6 +63,7 @@ export default {
           surname: this.formSurname,
           email: this.formEmail,
           password: this.formPassword,
+          image: this.imageName,
         })
       .then(() => { console.log('User updated'); this.userReload()}) // reloads the updated user information
       .catch(err => {console.log(err)} )
@@ -81,6 +73,7 @@ export default {
       this.$auth.fetchUser()
       .then(() => { console.log('User reloaded')})
       .catch(err => {console.log(err)} )
+      location.reload(true)
     },
   }
 }
