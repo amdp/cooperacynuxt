@@ -1,6 +1,5 @@
 var express = require("express")
 var bodyParser = require("body-parser")
-var cors = require("cors")
 var Jimp = require('jimp');
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
@@ -8,7 +7,6 @@ const fileUpload = require('express-fileupload')
 const fs = require('fs')
 
 var app = express()
-app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(fileUpload())
@@ -30,27 +28,40 @@ app.get(
     .then(projects => { res.json(projects) }) .catch(err => { res.send("Error: " + err) })
 })
 
-app.post(
-  "/projects", (req, res) => { 
-  const today = new Date()
-  const projectData = { id: req.body.id, parent: req.body.parent, category: req.body.category, stage: req.body.stage, collected: req.body.collected, budget: req.body.budget, hudget: req.body.hudget, anonymous: req.body.anonymous, name: req.body.name, brief: req.body.brief, content: req.body.content, image: req.body.image, video: req.body.video, date: today, E: req.body.E, T: req.body.T, C: req.body.C, I: req.body.I, F: req.body.F, U: req.body.U, D: req.body.D }
-  projectModel.findOne({ where: { name: req.body.name } })
-    .then(project => {if(!project) {
-      projectModel.create(projectData)
-      // now we use a raw query to retieve the id of the project we created, warning: you can use also @@IDENTITY or mysql_insert_id() instead of LAST_INSERT_ID()
-      .then (project => {
-        sequelize.query('SELECT LAST_INSERT_ID() AS lastId', {type: Sequelize.QueryTypes.SELECT})
-        .then(id => {res.json({id: id[0].lastId}) })
-      })
-        .catch(err => { res.send ('error :' + err) })
-      }else{ res.json({error: "project already exists"}) }
-  })
-  .catch(err => { res.send ('error :' + err) }) 
+app.get(
+  "/project/:id", (req, res) => { projectModel.findOne ({where: {id: req.params.id}})
+    .then(project => { res.json(project) }) .catch(err => { res.send("Error: " + err) })
 })
 
-app.delete(
-  "/projects/:id", (req, res) => { projectModel.destroy ({ 
-    where: { id: req.params.id } }) .then( () => { res.send("Project deleted.") }) .catch(err => { res.send("Error: " + err) })
+app.post(
+  "/project/:id", (req, res) => {
+    if (req.params.id != 'new'){
+      sequelize.query(
+        'SELECT * FROM `projects` WHERE `projects`.`name`="' + req.body.name + 
+        '" AND `projects`.`id`=' + req.params.id + ' LIMIT 1;',
+        {type: Sequelize.QueryTypes.SELECT})
+      .then(project => {
+        if(project) {
+          projectModel.update(req.body, { where: {id: req.params.id}})
+          .then(()=>{res.json({id: req.params.id}) })
+        }else{res.json('exists')}
+      })
+      .catch(err => { res.send (err) })
+    }else{
+      projectModel.findOne({ where: { name: req.body.name } })
+      .then(project => {
+        if(!project) {
+          projectModel.create(req.body)
+          .then(()=>{
+            // we use a raw query to retieve the id of the project we created
+            // warning: you can use also @@IDENTITY or mysql_insert_id() instead of LAST_INSERT_ID()
+            sequelize.query('SELECT LAST_INSERT_ID() AS lastId', {type: Sequelize.QueryTypes.SELECT})
+            .then(lastId => {res.json({id: lastId[0].lastId})})
+          })
+          .catch(err => { res.send (err) }) 
+        }else{res.json('exists')}
+      })
+    }
 })
 
 app.put(
@@ -59,6 +70,31 @@ app.put(
       {name: req.body.name}, { where: {id: req.params.id} }) .then( () => { res.send ("Project Updated.") }) .error(err => res.send(err))
   }
 })
+
+app.delete(
+  "/projects/:id", (req, res) => { projectModel.destroy ({ 
+    where: { id: req.params.id } }) .then( () => { res.send("Project deleted.") }) .catch(err => { res.send("Error: " + err) })
+})
+
+app.post(
+  "/projectimage", function(req, res) {
+  if (Object.keys(req.files).length == 0) { res.status(400).send('No files were uploaded.'); return }
+  try {uploadPath = './assets/images/projects/' + req.body.id + '.png'} catch (err) {console.log(err)}
+  req.files.file.mv(uploadPath, function(err) { if (err) { return res.status(500).send(err) } })
+  Jimp.read(uploadPath)
+    .then(uploadPath => {
+      return uploadPath
+        .resize(256, 256) // resize
+        .quality(60) // set quality
+        .write(uploadPath); // save
+    })
+  .then(res.json({ status: 'OK' }))
+  .catch(err => {console.error(err);})
+  
+})
+
+
+    
 
 //////////////////////////////////////////////////////////////////////
 ///////                        PROJECTS                        ///////
@@ -84,18 +120,36 @@ app.delete(
   // this should also add the same row to premovedvotes
 })
 
+
 //////////////////////////////////////////////////////////////////////
 ///////                         USERS                          ///////
 //////////////////////////////////////////////////////////////////////
+
+app.post(
+  "/login", (req, res) => {
+  userModel.findOne({ where: { email: req.body.email }})
+      .then(user => { 
+        if(user){
+              if(bcrypt.compareSync(req.body.password, user.password)) { 
+                  let accessToken = jwt.sign({id: user.id}, process.env.SECRET_KEY, { expiresIn: "20d" })
+                  res.json({ token: { accessToken } })
+              }
+          }else{ res.status(400).json({error: 'User does not exist'}) }
+      })
+      .catch(err => { res.status(400).json({error: err }) })
+})
+
+app.post(
+  "/logout", (req, res) => { res.json({ status: 'OK' }) })
+
 app.post(
   "/user", (req, res) => {
     const today = new Date()
-    const userData = { id: req.body.id, name: req.body.name, surname: req.body.surname, email: req.body.email, E: req.body.E, T: req.body.T, C: req.body.C, I: req.body.I, F: req.body.F, U: req.body.U, D: req.body.D,active: req.body.active, roles: req.body.roles, remember_token: req.body.remember_token, payment_type: req.body.payment_type, transaction_id: req.body.transaction_id, transaction_state: req.body.transaction_state, transaction_created_at: today, transaction_updated_at: today, updated: today, created: today}
     userModel.findOne({ where: { email: req.body.email } })
         .then(user => { 
           if(!user) {
             bcrypt.hash(req.body.password, 10, (err, hash) => {
-              userData.password = hash; userModel.create(userData)
+              req.body.password = hash; userModel.create(req.body)
               .then (user => {
                 sequelize.query('SELECT LAST_INSERT_ID() AS lastId', {type: Sequelize.QueryTypes.SELECT})
                 .then(id => {res.json({id: id[0].lastId}) })
@@ -109,12 +163,10 @@ app.post(
 
 app.put(
   "/user", (req, res) => { 
-    const today = new Date()
-    const userData = {name: req.body.name, surname: req.body.surname, email: req.body.email, password: req.body.password, image: req.body.image, updated: today}
     if(!req.body.name || !req.body.password) { 
     res.status(400); res.json({ error: "Bad data" }) } else { 
       bcrypt.hash(req.body.password, 10, (err, hash) => {
-        userData.password = hash; userModel.update(userData, { where: {id: req.body.id}})
+        req.body.password = hash; userModel.update(req.body, { where: {id: req.body.id}})
         .then(user => { console.log('user updated'), res.json('updated: ' + user) }) 
         .catch(err => { res.send ('error :' + err) })
       })
@@ -133,62 +185,10 @@ app.get(
 })
 
 app.post(
-  "/login", (req, res) => {
-  userModel.findOne({ where: { email: req.body.email }})
-      .then(user => { 
-        if(user){
-              if(bcrypt.compareSync(req.body.password, user.password)) { 
-                  let accessToken = jwt.sign({id: user.id}, process.env.SECRET_KEY, { expiresIn: 1440 })
-                  res.json({ token: { accessToken } })
-              }
-          }else{ res.status(400).json({error: 'User does not exist'}) }
-      })
-      .catch(err => { res.status(400).json({error: err }) })
-})
-
-app.post(
-  "/logout", (req, res) => { res.json({ status: 'OK' }) })
-
-//app.use((err, req, res, next) => { console.error(err); res.status(401).send(err + '') }) DELETE THIS?
-
-//////////////////////////////////////////////////////////////////////
-///////                          USER                          ///////
-///////                         VOTING                         ///////
-//////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////
-///////                      MISCELLANOUS                      ///////
-//////////////////////////////////////////////////////////////////////
-app.get(
-  "/categories", (req, res) => { categoryModel.findAll ()
-  .then(categories => { res.json(categories) }) .catch(err => { res.send("Error: " + err) })
-})
-
-app.get(
-  "/tags", (req, res) => { categoryModel.findAll ()
-  .then(tags => { res.json(tags) }) .catch(err => { res.send("Error: " + err) })
-})
-
-app.post(
-  "/projectimage", function(req, res) {
-  if (Object.keys(req.files).length == 0) { res.status(400).send('No files were uploaded.'); return }
-  uploadPath = './assets/images/projects/' + req.files.file.name
-  req.files.file.mv(uploadPath, function(err) { if (err) { return res.status(500).send(err); }
-  res.send ('file uploaded')
-  })
-})
-
-app.delete(
-  "/projectimage", (req, res) => { pvoteModel.destroy ({ 
-  where: { id: req.params.id } }) .then( () => { res.send("Vote removed.") }) .catch(err => { res.send("Error: " + err) })
-})
-
-app.post(
   "/userimage", function(req, res) {
     if (Object.keys(req.files).length == 0) { res.status(400).send('No files were uploaded.'); return }
     try {uploadPath = './assets/images/users/' + req.body.id + '.png'} catch (err) {console.log(err)}
     req.files.file.mv(uploadPath, function(err) { if (err) { return res.status(500).send(err) } })
-    console.log(typeof uploadPath)
     Jimp.read(uploadPath)
     .then(uploadPath => {
       return uploadPath
@@ -199,12 +199,36 @@ app.post(
     .catch(err => {console.error(err);})
     res.json({ status: 'OK' })
   })
+  
+
+//////////////////////////////////////////////////////////////////////
+///////                          USER                          ///////
+///////                         VOTING                         ///////
+//////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////
+///////                      MISCELLANOUS                      ///////
+//////////////////////////////////////////////////////////////////////
+
+app.get(
+  "/categories", (req, res) => { // we apply a filter to avoid main category = 0
+    sequelize.query( 'SELECT * FROM `categories` WHERE `categories`.`id`!="0"', {type: Sequelize.QueryTypes.SELECT})
+  .then(categories => { res.json(categories) }) .catch(err => { res.send("Error: " + err) })
+})
+
+app.get(
+  "/tags", (req, res) => { tagsModel.findAll () // we apply a filter to avoid main category = 0
+  .then(tags => { res.json(tags) }) .catch(err => { res.send("Error: " + err) })
+})
+
+app.delete(
+  "/projectimage", (req, res) => { pvoteModel.destroy ({ 
+  where: { id: req.params.id } }) .then( () => { res.send("Vote removed.") }) .catch(err => { res.send("Error: " + err) })
+})
 
 app.post(
   "/tags", (req, res) => { 
-  const tagData = { id: req.body.id, project: req.body.project, tagName: req.body.tagName }
-  tagModel.create(tagData)
-  .then(res => {console.log(res)})
+  tagModel.create(req.body)
   .catch(err => { res.send ('error :' + err) })
 })
 

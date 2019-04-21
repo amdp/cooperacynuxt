@@ -1,19 +1,19 @@
 <template>
   <div class="m-0 p-0">
     <home />
-    <projects />
+    <projectslist />
   </div>
 </template>
 
 <script>
 import Home from '@/components/Home'
-import Projects from '@/components/Projects'
+import Projectslist from '@/components/Projectslist'
 
 
 export default {
   components: {
     Home: Home,
-    Projects: Projects,
+    Projectslist: Projectslist,
   }
 }
 </script>

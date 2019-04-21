@@ -1,16 +1,17 @@
 <template>
   <div>
-    <projects />
+    <a href="/projects/new" class="ad">Add a new Project</a>
+    <projectslist />
   </div>
 </template>
 
 <script>
-import Projects from '@/components/Projects'
+import Projectslist from '@/components/Projectslist'
 
 export default {
   middleware: ['auth'],
   components: {
-    Projects: Projects,
+    Projectslist: Projectslist,
   },
 }
 </script>
