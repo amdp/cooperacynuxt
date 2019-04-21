@@ -4,16 +4,15 @@
       <div class="col-12">
         <div class="row">
           <div class="col-1"></div>
-          <div class="col-2" v-if="project.image">
-            <img :src="require('@/assets/images/projects/' + project.image)" width="100px" />
+          <div class="col-2">
+            <img :src="require('@/assets/images/projects/' + project.id + '.png')" width="100px" />
           </div>
-          <div class="col-2" v-else> </div>
           <div class="col-9">
             <div class="row">
-              <div class="col-12 space subheading up" >{{ project.name }}</div>
+              <div class="col-12 space subheading up" ><a :href="'/project/' + project.id" class="ae">{{ project.name }}</a></div>
             </div>
             <div class="row">
-              <div class="col-12">{{ project.content }}</div>
+              <div class="col-12 mt-2">{{ project.content }}</div>
             </div>
           </div>
         </div>
@@ -29,14 +28,8 @@
 import Votebars from '@/components/Votebars'
 
 export default {
-  computed: {
-      projects(){return  this.$store.state.projectsvx.projects}
-  },
-  mounted() {
-    this.$store.dispatch('projectsvx/getProjects')
-  },
-  components: {
-    Votebars: Votebars,
-  },
+  computed: { projects(){return  this.$store.state.projectsvx.projects}, },
+  mounted() { this.$store.dispatch('projectsvx/getProjectsAction') },
+  components: { Votebars: Votebars, },
 }
 </script>

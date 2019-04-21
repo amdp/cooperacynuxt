@@ -53,7 +53,7 @@ module.exports = {
   axios: {
     proxy: true
   },
-
+  
   proxy: { '/db': 'http://127.0.0.1:3000' },
 
   auth: {

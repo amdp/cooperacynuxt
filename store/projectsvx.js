@@ -1,31 +1,46 @@
 import axios from 'axios'
 
 export const state = () => ({
-  projects: null
+  projects: '',
+  project: '',
+  edit: false,
 })
 
 export const getters = {
-  projects: state => {
-    return state.projects
-  }
+  projectsGetter: state => { return state.projects },
+  projectGetter: state => { return state.project },
+  editGetter: state =>  {return state.edit},
 }
 
 export const mutations = {
-  getProjects : (state, payload) => {
+  getProjects: (state, payload) => {
     state.projects = payload
   },
-  saveProject : (state,payload) => {
-    state.projects.push(payload)
+  getProject: (state, payload) => {
+    state.project = payload
+  },
+  editSwitch: (state,payload) => {
+    state.edit = payload
   },
 }
 
+// warning: all actions should use {data} as per response payload, don't change the word "data" between the brackets
 export const actions = {  
-  getProjects : async (context,payload) => {
+  getProjectsAction: async (context,payload) => {
     let {data} = await axios.get('/db/projects')
     context.commit('getProjects',data)
   },
-  saveProject : async (context,payload) => {
-    let { data } = await axios.post('/db/projects')
-    context.commit('saveProject',data)
-  }
+  getProjectAction: async (context,payload) => {
+    let {data} = await axios.get('/db/project/' + payload.id)
+    context.commit('getProject',data)
+  },
+  projectFormAction: async (context,payload) => {
+    let {data} = await axios.post('/db/project/' + payload.id, payload.body)
+    if (data.id){return data.id}
+    else{return data}
+  },
+  editSwitchAction: (context,payload) => {
+    context.commit('editSwitch',payload)
+    return true
+  },
 }
