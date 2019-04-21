@@ -10,7 +10,7 @@
             <b-form-group label-for="surnameInput" label="Surname:" description="Please insert your real surname">
               <b-form-input id="surnameInput" v-model="formSurname" size="sm" required></b-form-input></b-form-group>
             <b-form-group label-for="emailInput" label="Email:" description="Please insert a valid email that will be your username">
-              <b-form-input id="emailInput" v-model="formEmail" size="sm" required autocomplete="email"></b-form-input></b-form-group>
+              <b-form-input id="emailInput" v-model="formEmail" size="sm" autocomplete="email" required></b-form-input></b-form-group>
               <!-- add insert previous password and relative check -->
             <b-form-group label-for="passwordInput" label="Password:" description="Please insert your NEW password or passphrase">
               <b-form-input id="passwordInput" v-model="formPassword" size="sm" type="password" required autocomplete="current-password"></b-form-input></b-form-group>

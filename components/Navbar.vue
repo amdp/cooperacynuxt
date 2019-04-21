@@ -10,13 +10,13 @@
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav> 
         <div v-if="this.$auth.loggedIn" class="row">
-          <div class="col d-flex justify-content-center">
+          <div class="col d-flex justify-content-start">
             <h3 class="diversity up base mr-3">{{this.$auth.user.name + ' ' + this.$auth.user.surname}}</h3>
-            <b-nav-item class="au" to="useredit">EDIT</b-nav-item>
+            <a class="au minimini" to="useredit">EDIT</a>
           </div>
           <div class="w-100"></div>
-          <div class="col"><div class="row dflex justify-content-around aling-items-center">
-            YOUR COLOR CODE: <votebars />
+          <div class="col ml-4 pl-4"><div class="row dflex justify-content-start">
+            <votebars />
             </div>
           </div>
         </div>

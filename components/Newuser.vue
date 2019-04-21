@@ -10,10 +10,10 @@
             <b-form-group label-for="surnameInput" label="Surname:" description="Please insert your surname">
               <b-form-input id="surnameInput" v-model="formSurname" size="sm" required></b-form-input></b-form-group>
             <b-form-group label-for="emailInput" label="Email:" description="Please insert a valid email: it will be your future username">
-              <b-form-input id="emailInput" v-model="formEmail" size="sm" required></b-form-input></b-form-group>
+              <b-form-input id="emailInput" v-model="formEmail" size="sm" autocomplete="email" required></b-form-input></b-form-group>
               <!-- add crypt password before sending it -->
             <b-form-group label-for="passwordInput" label="Password:" description="Please insert your password or passphrase">
-              <b-form-input id="passwordInput" v-model="formPassword" size="sm" type="password" required></b-form-input></b-form-group>
+              <b-form-input id="passwordInput" v-model="formPassword" size="sm" type="password" autocomplete="new-password" required></b-form-input></b-form-group>
             <b-form-group label-for="imageInput" label="Image:" description="Please choose an image for your account"> 
               <b-form-file id="imageInput" v-model="formImageFile" ref="formImageFile" size="sm"></b-form-file>
             </b-form-group>
@@ -27,15 +27,14 @@
 
 <script>
 import axios from 'axios'
-import { createHash } from 'crypto';
 
 export default {
   data() {
     return {
-      formName: 'q',
-      formSurname: 'q',
-      formEmail: '@qqq.1',
-      formPassword: '111',
+      formName: '',
+      formSurname: '',
+      formEmail: '',
+      formPassword: '',
       formImageFile: '',
     }
   },
