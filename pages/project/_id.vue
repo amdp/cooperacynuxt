@@ -22,31 +22,30 @@
             </div>
           </div>
         </div>
-        <votebars />
+        <votes :votesprop="project" :proptype="'project'" />
       </div>
+      <comments :commentprop="project"/>
     </div>
   </div>
 </template>
 
 <script>
-import Votebars from '@/components/Votebars'
 import Projectform from '@/components/Projectform'
+import Votes from '@/components/Votes'
+import Comments from '@/components/Comments'
 
 export default {
   middleware: ['auth'],
   computed: {
-      project(){ return  this.$store.state.projectsvx.project},
+      project(){return  this.$store.state.projectsvx.project},
       edit(){ return  this.$store.state.projectsvx.edit},
   },
-  mounted() {
-    this.$store.dispatch('projectsvx/getProjectAction', {id: this.$route.params.id})
-  },
-  methods: {
-     editSwitch(){this.$store.dispatch('projectsvx/editSwitchAction',true)}
-  },
+  mounted() { return this.$store.dispatch('projectsvx/getProjectAction', {id: this.$route.params.id})},
+  methods: { editSwitch(){this.$store.dispatch('projectsvx/editSwitchAction',true)} },
   components: {
-    Votebars: Votebars,
+    Votes: Votes,
     Projectform: Projectform,
+    Comments: Comments,
   },
 }
 

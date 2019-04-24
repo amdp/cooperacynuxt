@@ -50,7 +50,7 @@ Content-type: application/json
   "oldimage": "mememe.jpg"
 }
 
-###-->
+
 
 POST http://localhost:3000/db/login HTTP/1.1
 Content-type: application/json
@@ -59,3 +59,9 @@ Content-type: application/json
   "email": "qqq@qqq.it",
   "password": "qqq"
 }
+###-->
+
+GET http://127.0.0.1:3000/db/comments HTTP/1.1
+Content-type: application/json
+
+{"id":"1"}

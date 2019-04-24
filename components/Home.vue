@@ -94,7 +94,7 @@
         ]
       }  
     },
-    mounted: function () {
+    mounted() {
         this.randomtype()
     },
     methods: {

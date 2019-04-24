@@ -72,7 +72,7 @@ export default {
       formStageNofunding: this.$store.state.projectsvx.project.stage,
       formBudget: this.$store.state.projectsvx.project.budget,
       formHudget: this.$store.state.projectsvx.project.hudget,
-      formTags: '', // TOBEFIXED #########################################################
+      formTags: '', // ######################################################### FIX NEEDED
     }
   },
   computed: { 
@@ -120,7 +120,7 @@ export default {
         }
         if (this.formImageFile) {
           this.imageUpload(res)
-        }else if(dispatchId=='new'){/*if new and without image, Cooperacy project image is added as standard TOBEDONE #########################################################*/}
+        }else if(dispatchId=='new'){/*if new and without image, Cooperacy project image is added as standard TOBEDONE ######################################################### FIX NEEDED */}
       })  
     },
     imageUpload(id) {
@@ -135,6 +135,7 @@ export default {
       this.$toast.success('Done!', {duration: 1000, className: 'toasts'})
       this.$store.dispatch('projectsvx/editSwitchAction',false)
       // how to effectively reload the page here before vue gets the state change?
+      // ######################################################### FIX NEEDED
       setTimeout(function(){location.href = location.href},1200)
     },
   }
