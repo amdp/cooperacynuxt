@@ -16,7 +16,7 @@
           </div>
           <div class="w-100"></div>
           <div class="col ml-4 pl-4"><div class="row dflex justify-content-start">
-            <votebars />
+            <votes :votesprop="$auth.user" :proptype="'user'" />
             </div>
           </div>
         </div>
@@ -53,11 +53,11 @@
 </template>
 
 <script>
-import Votebars from '@/components/Votebars'
+import Votes from '@/components/Votes'
 
 export default {
   components: {
-    Votebars: Votebars,
+    Votes: Votes,
   },
   computed: {
     userImage: function () { if (this.$auth.user.id) { return require('../assets/images/users/' + this.$auth.user.id + '.png')}}
