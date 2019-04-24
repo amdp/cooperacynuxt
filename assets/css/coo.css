@@ -97,7 +97,7 @@ hr.home-hr { border:none; background-color:#666666; width:50px; height:2px!impor
 .headerlogo { width:244px; height:60px; }
 .usercoologo {height:60px; width:60px;} .userlogo {height:52px; width:52px; z-index:2; position: relative; right: 80px;}
 img.page-header { margin-top: 0px; margin-bottom: 60px; width: 100%; height: auto; vertical-align: top; border:none; }
-.votebar {height: 5px;}
+.vote {height: 4px; cursor: pointer; opacity: 1}
 .foot {border-top: 1px solid #CCCCCC;}
 .currentImage {width:60px;}
 

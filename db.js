@@ -1,12 +1,10 @@
 var express = require("express")
 var bodyParser = require("body-parser")
 var Jimp = require('jimp');
+var app = express()
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
 const fileUpload = require('express-fileupload')
-const fs = require('fs')
-
-var app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(fileUpload())
@@ -18,19 +16,18 @@ const sequelize = new Sequelize("coo","cooperacy","c00p3r4t10n", { host: 'localh
   pool: { max: 5, min: 0, acquire: 30000, idle: 10000 } })
 db.sequelize = sequelize; db.Sequelize = Sequelize
 
-
 //////////////////////////////////////////////////////////////////////
 ///////                        PROJECTS                        ///////
 //////////////////////////////////////////////////////////////////////
 
 app.get(
   "/projects", (req, res) => { projectModel.findAll ()
-    .then(projects => { res.json(projects) }) .catch(err => { res.send("Error: " + err) })
+    .then(projects => { res.json(projects) }) .catch(err => { res.send(err) })
 })
 
 app.get(
   "/project/:id", (req, res) => { projectModel.findOne ({where: {id: req.params.id}})
-    .then(project => { res.json(project) }) .catch(err => { res.send("Error: " + err) })
+    .then(project => { res.json(project) }) .catch(err => { res.send(err) })
 })
 
 app.post(
@@ -73,7 +70,7 @@ app.put(
 
 app.delete(
   "/projects/:id", (req, res) => { projectModel.destroy ({ 
-    where: { id: req.params.id } }) .then( () => { res.send("Project deleted.") }) .catch(err => { res.send("Error: " + err) })
+    where: { id: req.params.id } }) .then( () => { res.send("Project deleted.") }) .catch(err => { res.send(err) })
 })
 
 app.post(
@@ -90,34 +87,31 @@ app.post(
     })
   .then(res.json({ status: 'OK' }))
   .catch(err => {console.error(err);})
-  
 })
 
-
-    
-
 //////////////////////////////////////////////////////////////////////
-///////                        PROJECTS                        ///////
-///////                         VOTING                         ///////
+///////                        COMMENTS                        ///////
 //////////////////////////////////////////////////////////////////////
+
 app.get(
-  "/pvotes", (req, res) => { pvoteModel.findAll ()
-  .then(pvotes => { res.json(pvotes) }) .catch(err => { res.send("Error: " + err) })
-})
+  "/comments", (req, res) =>{commentModel.findAll({where: {'project': req.query.id }})
+    .then(comments => { res.json(comments) }) .catch(err => { res.send(err) })})
 
 app.post(
-  "/pvotes", (req, res) => { if(!req.body.name){ 
-  res.status(400); res.json({ error: "Bad data" })} else { pvoteModel.create(req.body) 
-    .then(() => { res.send("Vote added") }) .catch(err => { res.send("Error: " + err) })
-    // this should also add a ++ to projectModel.[votenr]
-}
-})
-
-app.delete(
-  "/pvotes/:id", (req, res) => { pvoteModel.destroy ({ 
-  where: { id: req.params.id } }) .then( () => { res.send("Vote removed.") }) .catch(err => { res.send("Error: " + err) })
-  // this should also cut via -- to projectModel.[votenr]
-  // this should also add the same row to premovedvotes
+  "/commentimage", function(req, res) {
+  if (Object.keys(req.files).length == 0) { res.status(400).send('No files were uploaded.'); return }
+  try {uploadPath = './assets/images/comments/' + req.body.id + '.png'} catch (err) {console.log(err)}
+  req.files.file.mv(uploadPath, function(err) { if (err) { return res.status(500).send(err) } })
+  Jimp.read(uploadPath)
+    .then(uploadPath => {
+      return uploadPath
+        .resize(256, 256) // resize
+        .quality(60) // set quality
+        .write(uploadPath); // save
+    })
+  .then(res.json({ status: 'OK' }))
+  .catch(err => {console.error(err);})
+  
 })
 
 
@@ -202,9 +196,51 @@ app.post(
   
 
 //////////////////////////////////////////////////////////////////////
-///////                          USER                          ///////
 ///////                         VOTING                         ///////
 //////////////////////////////////////////////////////////////////////
+
+app.post(
+  "/votes", (req, res) => {
+    // checks if the vote is a project vote:
+    if(req.body.project){
+      // checks if the vote already exists:
+     pvoteModel.findOne({where: {user: req.body.user, vote: req.body.vote, project: req.body.project}})
+      .then(vote=>{
+        if(!vote){ 
+          return pvoteModel.create(req.body)
+          .then(()=>{myquery='UPDATE `projects` SET `'+req.body.vote+'` = `'+req.body.vote+'`+1 where `projects`.`id` = '+req.body.project
+            return sequelize.query(myquery)})
+          .then(()=>{return res.send('OK')})
+          .catch(err => { res.send(err) })
+        }else{
+          return removedpvoteModel.create(req.body)
+          .then(()=>{return sequelize.query('UPDATE `projects` SET `'+req.body.vote+'` = `'+req.body.vote+'`-1 where `projects`.`id` = '+req.body.project)})
+          .then(()=>{return pvoteModel.destroy({where: {id: vote.id}})})
+          .then(()=>{return res.send('OK')})
+          .catch(err => { res.send(err) })
+        }
+      })
+      .catch(err => { res.send(err) })
+    }else{
+     cvoteModel.findOne({where: {user: req.body.user, vote: req.body.vote, comment: req.body.comment}})
+      .then(vote=>{
+        if(!vote){
+          return cvoteModel.create(req.body)
+          .then(()=>{myquery='UPDATE `comments` SET `'+req.body.vote+'` = `'+req.body.vote+'`+1 where `comments`.`id` = '+req.body.comment
+            return sequelize.query(myquery)})
+          .then(()=>{return res.send('OK')})
+          .catch(err => { res.send(err) })
+        }else{console.log('trovato '+JSON.stringify(req.body))
+          return removedcvoteModel.create(req.body)
+          .then(()=>{return sequelize.query('UPDATE `comments` SET `'+req.body.vote+'` = `'+req.body.vote+'`-1 where `comments`.`id` = '+req.body.comment)})
+          .then(()=>{return cvoteModel.destroy({where: {id: vote.id}})})
+          .then(()=>{return res.send('OK')})
+          .catch(err => { res.send(err) })
+        }
+      })
+      .catch(err => { res.send(err) })
+    }
+})
 
 //////////////////////////////////////////////////////////////////////
 ///////                      MISCELLANOUS                      ///////
@@ -213,17 +249,17 @@ app.post(
 app.get(
   "/categories", (req, res) => { // we apply a filter to avoid main category = 0
     sequelize.query( 'SELECT * FROM `categories` WHERE `categories`.`id`!="0"', {type: Sequelize.QueryTypes.SELECT})
-  .then(categories => { res.json(categories) }) .catch(err => { res.send("Error: " + err) })
+  .then(categories => { res.json(categories) }) .catch(err => { res.send(err) })
 })
 
 app.get(
   "/tags", (req, res) => { tagsModel.findAll () // we apply a filter to avoid main category = 0
-  .then(tags => { res.json(tags) }) .catch(err => { res.send("Error: " + err) })
+  .then(tags => { res.json(tags) }) .catch(err => { res.send(err) })
 })
 
 app.delete(
   "/projectimage", (req, res) => { pvoteModel.destroy ({ 
-  where: { id: req.params.id } }) .then( () => { res.send("Vote removed.") }) .catch(err => { res.send("Error: " + err) })
+  where: { id: req.params.id } }) .then( () => { res.send("Vote removed.") }) .catch(err => { res.send(err) })
 })
 
 app.post(
@@ -238,7 +274,7 @@ app.post(
 
 /* app.get(
   "/projects", (req, res) => { projectModel.findAll ()
-    .then(projects => { res.json(projects) }) .catch(err => { res.send("Error: " + err) })
+    .then(projects => { res.json(projects) }) .catch(err => { res.send(err) })
 }) */
 
 //////////////////////////////////////////////////////////////////////
@@ -266,6 +302,26 @@ var projectModel = db.sequelize.define(
     content:  {type: Sequelize.CHAR},
     image: { type: Sequelize.CHAR },
     video: { type: Sequelize.CHAR },
+    date: { type: 'DATE', defaultValue: Sequelize.NOW },
+    E: {type: Sequelize.TINYINT, allowNull: false, defaultValue: 0},
+    T: {type: Sequelize.TINYINT, allowNull: false, defaultValue: 0},
+    C: {type: Sequelize.TINYINT, allowNull: false, defaultValue: 0},
+    I: {type: Sequelize.TINYINT, allowNull: false, defaultValue: 0},
+    F: {type: Sequelize.TINYINT, allowNull: false, defaultValue: 0},
+    U: {type: Sequelize.TINYINT, allowNull: false, defaultValue: 0},
+    D: {type: Sequelize.TINYINT, allowNull: false, defaultValue: 0}
+  },
+  {    timestamps: false    },
+)
+
+var commentModel = db.sequelize.define(
+  'comment',
+  {
+    id: {type: Sequelize.INTEGER, primaryKey: true, autoincrement: true},
+    user: {type: Sequelize.INTEGER, allowNull: false},
+    project: {type: Sequelize.INTEGER, allowNull: false},
+    parent: {type: Sequelize.INTEGER, allowNull: true,},
+    content:  {type: Sequelize.CHAR},
     date: { type: 'DATE', defaultValue: Sequelize.NOW },
     E: {type: Sequelize.TINYINT, allowNull: false, defaultValue: 0},
     T: {type: Sequelize.TINYINT, allowNull: false, defaultValue: 0},
@@ -314,23 +370,59 @@ var pvoteModel = db.sequelize.define(
       id: {type: Sequelize.INTEGER, primaryKey: true, autoincrement: true},
       user: {type: Sequelize.INTEGER, allowNull: false},
       project: {type: Sequelize.INTEGER, allowNull: false},
-      vote:  {type: Sequelize.INTEGER, allowNull: false},
+      vote:  {type: Sequelize.CHAR, allowNull: false},
       valid: {type: Sequelize.TINYINT, allowNull: false},
       added: { type: 'DATE', defaultValue: Sequelize.NOW },
       removed: { type: 'DATE', defaultValue: Sequelize.NOW },
   }, {
     timestamps: false,
-    //tableName: 'votesprojects',
+    //tableName: 'pvotes',
   }
 )
 
-var categoryModel = db.sequelize.define(
-  'category',
+var cvoteModel = db.sequelize.define(
+  'cvote',
   {
       id: {type: Sequelize.INTEGER, primaryKey: true, autoincrement: true},
-      name: {type: Sequelize.CHAR, allowNull: false},
+      user: {type: Sequelize.INTEGER, allowNull: false},
+      comment: {type: Sequelize.INTEGER, allowNull: false},
+      vote:  {type: Sequelize.CHAR, allowNull: false},
+      valid: {type: Sequelize.TINYINT, allowNull: false},
+      added: { type: 'DATE', defaultValue: Sequelize.NOW },
+      removed: { type: 'DATE', defaultValue: Sequelize.NOW },
   }, {
-    timestamps: false
+    timestamps: false,
+    //tableName: 'pvotes',
+  }
+)
+
+var removedpvoteModel = db.sequelize.define(
+  'removedpvote',
+  {
+      id: {type: Sequelize.INTEGER, primaryKey: true, autoincrement: true},
+      user: {type: Sequelize.INTEGER, allowNull: false},
+      project: {type: Sequelize.INTEGER, allowNull: false},
+      vote:  {type: Sequelize.CHAR, allowNull: false},
+      valid: {type: Sequelize.TINYINT, allowNull: false},
+      added: { type: 'DATE', defaultValue: Sequelize.NOW },
+      removed: { type: 'DATE', defaultValue: Sequelize.NOW },
+  }, {
+    timestamps: false,
+  }
+)
+
+var removedcvoteModel = db.sequelize.define(
+  'removedcvote',
+  {
+      id: {type: Sequelize.INTEGER, primaryKey: true, autoincrement: true},
+      user: {type: Sequelize.INTEGER, allowNull: false},
+      comment: {type: Sequelize.INTEGER, allowNull: false},
+      vote:  {type: Sequelize.CHAR, allowNull: false},
+      valid: {type: Sequelize.TINYINT, allowNull: false},
+      added: { type: 'DATE', defaultValue: Sequelize.NOW },
+      removed: { type: 'DATE', defaultValue: Sequelize.NOW },
+  }, {
+    timestamps: false,
   }
 )
 
@@ -344,20 +436,6 @@ var tagModel = db.sequelize.define(
     timestamps: false
   }
 )
-
-/*
-
-var tagModel = db.sequelize.define(
-  'tag',
-  {
-      id: {type: Sequelize.INTEGER, primaryKey: true, autoincrement: true},
-      project: {type: Sequelize.INTEGER},
-      tagName: {type: Sequelize.CHAR, allowNull: false},
-  }, {
-    timestamps: false
-  }
-)
-*/
 
 module.exports = {
   path: '/db',
