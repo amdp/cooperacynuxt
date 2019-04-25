@@ -1,22 +1,22 @@
 <template>
   <b-navbar toggleable="lg" class="p-1 fixed-top bg-white d-flex flex-fill justify-content-center">
     <b-navbar-brand to="/" v-if="!this.$auth.loggedIn"><img class="headerlogo" src="@/assets/images/main/wordlogo.png"  /></b-navbar-brand>
-    <b-navbar-brand to="/" v-if="this.$auth.loggedIn" >
+    <b-navbar-brand to="/user" v-if="this.$auth.loggedIn" >
           <img class="usercoologo m-2" src="@/assets/images/main/coo.png"  />
-          <img class="userlogo m-2 rounded-circle" :src="require('../assets/images/users/' + this.$auth.user.image)">
+          <img v-if="userImage" class="userlogo m-2 rounded-circle" :src="userImage">
     </b-navbar-brand>
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav> 
         <div v-if="this.$auth.loggedIn" class="row">
-          <div class="col d-flex justify-content-center">
-            <h3 class="diversity mr-3">{{this.$auth.user.name + ' ' + this.$auth.user.surname}}</h3>
-            <b-nav-item class="au" to="useredit">EDIT</b-nav-item>
+          <div class="col d-flex justify-content-start">
+            <h3 class="diversity up base mr-3">{{this.$auth.user.name + ' ' + this.$auth.user.surname}}</h3>
+            <a class="au minimini" to="useredit">EDIT</a>
           </div>
           <div class="w-100"></div>
-          <div class="col"><div class="row dflex justify-content-around aling-items-center">
-            YOUR COLOR CODE: <votebars />
+          <div class="col ml-4 pl-4"><div class="row dflex justify-content-start">
+            <votebars :votesprop="$auth.user" :proptype="'user'" />
             </div>
           </div>
         </div>
@@ -59,6 +59,9 @@ export default {
   components: {
     Votebars: Votebars,
   },
+  computed: {
+    userImage: function () { if (this.$auth.user.id) { return require('../assets/images/users/' + this.$auth.user.id + '.png')}}
+  }
 }
 </script>
           
