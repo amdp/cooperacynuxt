@@ -23,7 +23,7 @@ console.log(JSON.stringify(cci))
             </div>
           </div>
         </div>
-        <votes />
+        <votebars />
       </div>
     </div>
 
@@ -32,7 +32,7 @@ console.log(JSON.stringify(cci))
 </template>
 
 <script>
-import Votes from '@/components/Votes'
+import Votebars from '@/components/Votebars'
 
 export default {
   computed: {
@@ -42,7 +42,7 @@ export default {
     this.$store.dispatch('projectsvx/getProjects')
   },
   components: {
-    Votes: Votes,
+    Votebars: Votebars,
   },
 }
 </script> -->

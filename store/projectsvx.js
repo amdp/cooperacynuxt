@@ -36,6 +36,7 @@ export const actions = {
   },
   projectFormAction: async (context,payload) => {
     let {data} = await axios.post('/db/project/' + payload.id, payload.body)
+    console.log(' risposta dal server '+JSON.stringify(data))
     if (data.id){return data.id}
     else{return data}
   },
