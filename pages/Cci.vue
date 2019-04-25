@@ -1,3 +1,9 @@
+<!-- src="@/assets/images/main/coo.png" :src="require('@/assets/images/projects/' + project.image)" 
+
+var cci = get.from the database.the array
+console.log(JSON.stringify(cci))
+
+
 <template>
   <div class="mx-auto mt-4 mb-5">
     <div class="row mt-5" v-for="project in projects" :key="project.id">
@@ -26,32 +32,17 @@
 </template>
 
 <script>
-import axios from 'axios'
 import Votebars from '@/components/Votebars'
 
 export default {
-  data() {
-    return {
-      projects: [],
-    }
+  computed: {
+      projects(){return  this.$store.state.projectsvx.projects}
   },
   mounted() {
-    this.getProjects()
+    this.$store.dispatch('projectsvx/getProjects')
   },
   components: {
     Votebars: Votebars,
   },
-  methods: {
-    getProjects() {
-      axios.get('/db/projects').then(
-        result => {
-          this.projects = result.data
-        },
-        error => {
-          console.error(error)
-        }
-      )
-    },
-  }
 }
-</script>
+</script> -->

@@ -41,18 +41,19 @@ module.exports = {
   */
   modules: [
     '@nuxtjs/axios',
+    '@nuxtjs/toast',
     'bootstrap-vue/nuxt',
     '@nuxtjs/pwa',
     '@nuxtjs/auth',
   ],
-  
+
   /*
    ** Axios module configuration
    */
   axios: {
     proxy: true
   },
-
+  
   proxy: { '/db': 'http://127.0.0.1:3000' },
 
   auth: {
