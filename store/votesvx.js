@@ -17,9 +17,10 @@ export const actions = {
       if (payload.body.project){
         if (payload.id){context.dispatch('projectsvx/getProjectAction', {id: payload.id}, {root:true})
         }else{context.dispatch('projectsvx/getProjectsAction', null, {root:true})}
-      }else{
-        context.dispatch('commentsvx/getCommentsAction', {id: payload.id}, {root:true})
-      }
+      }else{context.dispatch('commentsvx/getCommentsAction', {id: payload.id}, {root:true})}
     }
+  },
+  getVoteIntensity : async (context,payload) => {
+    let { data } = await axios.get('/db/votes', payload.body)
   }
 }

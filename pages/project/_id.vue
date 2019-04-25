@@ -22,8 +22,9 @@
             </div>
           </div>
         </div>
-        <votes :votesprop="project" :proptype="'project'" />
+        <votebars :votesprop="project" :proptype="'project'" />
       </div>
+      <b-row class="text-center mt-5"><b-col cols="12" class="subheading space up">COMMENTS AND QUESTIONS</b-col></b-row>
       <comments :commentprop="project"/>
     </div>
   </div>
@@ -31,7 +32,7 @@
 
 <script>
 import Projectform from '@/components/Projectform'
-import Votes from '@/components/Votes'
+import Votebars from '@/components/Votebars'
 import Comments from '@/components/Comments'
 
 export default {
@@ -43,7 +44,7 @@ export default {
   mounted() { return this.$store.dispatch('projectsvx/getProjectAction', {id: this.$route.params.id})},
   methods: { editSwitch(){this.$store.dispatch('projectsvx/editSwitchAction',true)} },
   components: {
-    Votes: Votes,
+    Votebars: Votebars,
     Projectform: Projectform,
     Comments: Comments,
   },

@@ -52,7 +52,7 @@ app.post(
           .then(()=>{
             // we use a raw query to retieve the id of the project we created
             // warning: you can use also @@IDENTITY or mysql_insert_id() instead of LAST_INSERT_ID()
-            sequelize.query('SELECT LAST_INSERT_ID() AS lastId', {type: Sequelize.QueryTypes.SELECT})
+            return sequelize.query('SELECT LAST_INSERT_ID() AS lastId', {type: Sequelize.QueryTypes.SELECT})
             .then(lastId => {res.json({id: lastId[0].lastId})})
           })
           .catch(err => { res.send (err) }) 
@@ -208,13 +208,13 @@ app.post(
       .then(vote=>{
         if(!vote){ 
           return pvoteModel.create(req.body)
-          .then(()=>{myquery='UPDATE `projects` SET `'+req.body.vote+'` = `'+req.body.vote+'`+1 where `projects`.`id` = '+req.body.project
+          .then(()=>{myquery='update `projects` SET `'+req.body.vote+'` = `'+req.body.vote+'`+1 where `projects`.`id` = '+req.body.project
             return sequelize.query(myquery)})
           .then(()=>{return res.send('OK')})
           .catch(err => { res.send(err) })
         }else{
           return removedpvoteModel.create(req.body)
-          .then(()=>{return sequelize.query('UPDATE `projects` SET `'+req.body.vote+'` = `'+req.body.vote+'`-1 where `projects`.`id` = '+req.body.project)})
+          .then(()=>{return sequelize.query('update `projects` SET `'+req.body.vote+'` = `'+req.body.vote+'`-1 where `projects`.`id` = '+req.body.project)})
           .then(()=>{return pvoteModel.destroy({where: {id: vote.id}})})
           .then(()=>{return res.send('OK')})
           .catch(err => { res.send(err) })
@@ -226,13 +226,13 @@ app.post(
       .then(vote=>{
         if(!vote){
           return cvoteModel.create(req.body)
-          .then(()=>{myquery='UPDATE `comments` SET `'+req.body.vote+'` = `'+req.body.vote+'`+1 where `comments`.`id` = '+req.body.comment
+          .then(()=>{myquery='update `comments` SET `'+req.body.vote+'` = `'+req.body.vote+'`+1 where `comments`.`id` = '+req.body.comment
             return sequelize.query(myquery)})
           .then(()=>{return res.send('OK')})
           .catch(err => { res.send(err) })
         }else{console.log('trovato '+JSON.stringify(req.body))
           return removedcvoteModel.create(req.body)
-          .then(()=>{return sequelize.query('UPDATE `comments` SET `'+req.body.vote+'` = `'+req.body.vote+'`-1 where `comments`.`id` = '+req.body.comment)})
+          .then(()=>{return sequelize.query('update `comments` SET `'+req.body.vote+'` = `'+req.body.vote+'`-1 where `comments`.`id` = '+req.body.comment)})
           .then(()=>{return cvoteModel.destroy({where: {id: vote.id}})})
           .then(()=>{return res.send('OK')})
           .catch(err => { res.send(err) })
@@ -302,14 +302,15 @@ var projectModel = db.sequelize.define(
     content:  {type: Sequelize.CHAR},
     image: { type: Sequelize.CHAR },
     video: { type: Sequelize.CHAR },
-    date: { type: 'DATE', defaultValue: Sequelize.NOW },
     E: {type: Sequelize.TINYINT, allowNull: false, defaultValue: 0},
     T: {type: Sequelize.TINYINT, allowNull: false, defaultValue: 0},
     C: {type: Sequelize.TINYINT, allowNull: false, defaultValue: 0},
     I: {type: Sequelize.TINYINT, allowNull: false, defaultValue: 0},
     F: {type: Sequelize.TINYINT, allowNull: false, defaultValue: 0},
     U: {type: Sequelize.TINYINT, allowNull: false, defaultValue: 0},
-    D: {type: Sequelize.TINYINT, allowNull: false, defaultValue: 0}
+    D: {type: Sequelize.TINYINT, allowNull: false, defaultValue: 0},
+    created: { type: 'TIMESTAMP' },
+    updated: { type: 'TIMESTAMP' },
   },
   {    timestamps: false    },
 )
@@ -322,14 +323,15 @@ var commentModel = db.sequelize.define(
     project: {type: Sequelize.INTEGER, allowNull: false},
     parent: {type: Sequelize.INTEGER, allowNull: true,},
     content:  {type: Sequelize.CHAR},
-    date: { type: 'DATE', defaultValue: Sequelize.NOW },
     E: {type: Sequelize.TINYINT, allowNull: false, defaultValue: 0},
     T: {type: Sequelize.TINYINT, allowNull: false, defaultValue: 0},
     C: {type: Sequelize.TINYINT, allowNull: false, defaultValue: 0},
     I: {type: Sequelize.TINYINT, allowNull: false, defaultValue: 0},
     F: {type: Sequelize.TINYINT, allowNull: false, defaultValue: 0},
     U: {type: Sequelize.TINYINT, allowNull: false, defaultValue: 0},
-    D: {type: Sequelize.TINYINT, allowNull: false, defaultValue: 0}
+    D: {type: Sequelize.TINYINT, allowNull: false, defaultValue: 0},
+    created: { type: 'TIMESTAMP' },
+    updated: { type: 'TIMESTAMP' },
   },
   {    timestamps: false    },
 )
@@ -355,10 +357,10 @@ var userModel = db.sequelize.define(
       payment_type: { type: Sequelize.CHAR },
       transaction_id: { type: Sequelize.CHAR },
       transaction_state: { type: Sequelize.CHAR },
-      transaction_created_at: { type: 'DATE', defaultValue: Sequelize.NOW },
-      transaction_updated_at: { type: 'DATE', defaultValue: Sequelize.NOW },
-      created: { type: 'DATE', defaultValue: Sequelize.NOW },
-      updated: { type: 'DATE', defaultValue: Sequelize.NOW }
+      transaction_created_at: { type: 'TIMESTAMP' },
+      transaction_updated_at: { type: 'TIMESTAMP' },
+      created: { type: 'TIMESTAMP' },
+      updated: { type: 'TIMESTAMP' },
   }, {
       timestamps: false
   }
@@ -372,8 +374,8 @@ var pvoteModel = db.sequelize.define(
       project: {type: Sequelize.INTEGER, allowNull: false},
       vote:  {type: Sequelize.CHAR, allowNull: false},
       valid: {type: Sequelize.TINYINT, allowNull: false},
-      added: { type: 'DATE', defaultValue: Sequelize.NOW },
-      removed: { type: 'DATE', defaultValue: Sequelize.NOW },
+      created: { type: 'TIMESTAMP' },
+      updated: { type: 'TIMESTAMP' },
   }, {
     timestamps: false,
     //tableName: 'pvotes',
@@ -388,8 +390,8 @@ var cvoteModel = db.sequelize.define(
       comment: {type: Sequelize.INTEGER, allowNull: false},
       vote:  {type: Sequelize.CHAR, allowNull: false},
       valid: {type: Sequelize.TINYINT, allowNull: false},
-      added: { type: 'DATE', defaultValue: Sequelize.NOW },
-      removed: { type: 'DATE', defaultValue: Sequelize.NOW },
+      created: { type: 'TIMESTAMP' },
+      updated: { type: 'TIMESTAMP' },
   }, {
     timestamps: false,
     //tableName: 'pvotes',
@@ -404,8 +406,8 @@ var removedpvoteModel = db.sequelize.define(
       project: {type: Sequelize.INTEGER, allowNull: false},
       vote:  {type: Sequelize.CHAR, allowNull: false},
       valid: {type: Sequelize.TINYINT, allowNull: false},
-      added: { type: 'DATE', defaultValue: Sequelize.NOW },
-      removed: { type: 'DATE', defaultValue: Sequelize.NOW },
+      created: { type: 'TIMESTAMP' },
+      updated: { type: 'TIMESTAMP' },
   }, {
     timestamps: false,
   }
@@ -419,8 +421,8 @@ var removedcvoteModel = db.sequelize.define(
       comment: {type: Sequelize.INTEGER, allowNull: false},
       vote:  {type: Sequelize.CHAR, allowNull: false},
       valid: {type: Sequelize.TINYINT, allowNull: false},
-      added: { type: 'DATE', defaultValue: Sequelize.NOW },
-      removed: { type: 'DATE', defaultValue: Sequelize.NOW },
+      created: { type: 'TIMESTAMP' },
+      updated: { type: 'TIMESTAMP' },
   }, {
     timestamps: false,
   }
@@ -432,6 +434,8 @@ var tagModel = db.sequelize.define(
       id: {type: Sequelize.INTEGER, primaryKey: true, autoincrement: true},
       project: {type: Sequelize.INTEGER},
       tagName: {type: Sequelize.CHAR, allowNull: false},
+      created: { type: 'TIMESTAMP' },
+      updated: { type: 'TIMESTAMP' },
   }, {
     timestamps: false
   }
