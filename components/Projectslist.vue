@@ -16,7 +16,7 @@
             </div>
           </div>
         </div>
-        <votes :votesprop="project" :proptype="'project'" />
+        <votebars :votesprop="project" :proptype="'project'" />
       </div>
     </div>
 
@@ -25,11 +25,11 @@
 </template>
 
 <script>
-import Votes from '@/components/Votes'
+import Votebars from '@/components/Votebars'
 
 export default {
   computed: { projects(){return  this.$store.state.projectsvx.projects}, },
   mounted() { this.$store.dispatch('projectsvx/getProjectsAction') },
-  components: { Votes: Votes, },
+  components: { Votebars: Votebars, },
 }
 </script>

@@ -1,17 +1,7 @@
 <template>
   <div>
-        <div class="row mt-2" v-if="this.proptype=='user'">
-            <b-table><tr><td v-for="vote in this.votes" :key="vote.userkey" :class="vote.class" :colspan="vote.cols">{{vote.v}}</td></tr>
-            <tr> <!--28 cells-columns to make the votes as long as many columns they span-->
-              <td>&nbsp;&nbsp;&nbsp;</td><td>&nbsp;&nbsp;&nbsp;</td><td>&nbsp;&nbsp;&nbsp;</td><td>&nbsp;&nbsp;&nbsp;</td>
-              <td>&nbsp;&nbsp;&nbsp;</td><td>&nbsp;&nbsp;&nbsp;</td><td>&nbsp;&nbsp;&nbsp;</td><td>&nbsp;&nbsp;&nbsp;</td>
-              <td>&nbsp;&nbsp;&nbsp;</td><td>&nbsp;&nbsp;&nbsp;</td><td>&nbsp;&nbsp;&nbsp;</td><td>&nbsp;&nbsp;&nbsp;</td>
-              <td>&nbsp;&nbsp;&nbsp;</td><td>&nbsp;&nbsp;&nbsp;</td><td>&nbsp;&nbsp;&nbsp;</td><td>&nbsp;&nbsp;&nbsp;</td>
-              <td>&nbsp;&nbsp;&nbsp;</td><td>&nbsp;&nbsp;&nbsp;</td><td>&nbsp;&nbsp;&nbsp;</td><td>&nbsp;&nbsp;&nbsp;</td>
-              <td>&nbsp;&nbsp;&nbsp;</td><td>&nbsp;&nbsp;&nbsp;</td><td>&nbsp;&nbsp;&nbsp;</td><td>&nbsp;&nbsp;&nbsp;</td>
-              <td>&nbsp;&nbsp;&nbsp;</td><td>&nbsp;&nbsp;&nbsp;</td><td>&nbsp;&nbsp;&nbsp;</td><td>&nbsp;&nbsp;&nbsp;</td>
-            </tr></b-table>
-          <!--   <div v-for="vote in this.votes" :key="vote.userkey" :class="vote.class" :style="vote.style"></div> -->
+        <div class="row mx-auto mt-2" v-if="this.proptype=='user'">
+          <div v-for="vote in this.votes" :key="vote.userkey" :class="vote.class" :style="vote.style">{{ vote.v }}</div>
         </div>
         <div class="row mt-2" v-else-if="this.proptype=='project'">
           <div v-for="vote in this.votes" :key="vote.projectkey" :class="vote.class" @click="voteswitch(vote.projectkey)">{{ vote.v }}</div>
@@ -39,18 +29,19 @@ export default {
     votes(){
       let votesif = []; for (let i=0;i<7;i++){
         votesif.push({ // for all votes:
-          class: 'vote col b'+this.$store.state.conditionsvx.conditions[i]+' '+this.$store.state.conditionsvx.conditions[i],
           v:  this.votesprop[this.$store.state.conditionsvx.shortconditions[i]],
         })} // now we already have a 7 elements array so we just add json keys as needed:
-      if (this.proptype == 'user') { for (let i=0;i<7;i++){ 
-       votesif[i].userkey = this.$store.state.conditionsvx.shortconditions[i],
-       votesif[i].style = 'opacity:' + this.opacity[this.$store.state.conditionsvx.shortconditions[i]],
-       votesif[i].cols = this.$auth.user[this.$store.state.conditionsvx.shortconditions[i]] 
+      if (this.proptype == 'user') { for (let i=0;i<7;i++){
+        votesif[i].class = 'uservote b'+this.$store.state.conditionsvx.conditions[i]+' '+this.$store.state.conditionsvx.conditions[i],
+        votesif[i].style = 'width: '+this.$auth.user[this.$store.state.conditionsvx.shortconditions[i]]/28*100 +'%"',
+        votesif[i].userkey = this.$store.state.conditionsvx.shortconditions[i]
       }}
       if (this.proptype == 'project') { for (let i=0;i<7;i++){
+        votesif[i].class = 'vote col b'+this.$store.state.conditionsvx.conditions[i]+' '+this.$store.state.conditionsvx.conditions[i],
         votesif[i].projectkey = this.$store.state.conditionsvx.shortconditions[i]
       }}
       if (this.proptype == 'comment') { for (let i=0;i<7;i++){
+        votesif[i].class = 'vote col b'+this.$store.state.conditionsvx.conditions[i]+' '+this.$store.state.conditionsvx.conditions[i],
         votesif[i].commentkey = this.$store.state.conditionsvx.shortconditions[i]
       }}
       return votesif
