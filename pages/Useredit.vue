@@ -4,17 +4,17 @@
       <div class="row"><div class="col-12 d-flex justify-content-center"><p class="care subheading">UPDATE YOUR INFO</p></div></div>
       <div class="row">
         <div class="col-12 d-flex justify-content-center">
-          <b-form @submit.prevent="useredit" class="mt-3 was-validated">
+          <b-form @submit.prevent="userEdit" class="mt-3 was-validated">
             <b-form-group label-for="nameInput" label="Name:" description="Please insert your real name">
               <b-form-input id="nameInput" v-model="formName" size="sm" required></b-form-input></b-form-group>
             <b-form-group label-for="surnameInput" label="Surname:" description="Please insert your real surname">
               <b-form-input id="surnameInput" v-model="formSurname" size="sm" required></b-form-input></b-form-group>
             <b-form-group label-for="emailInput" label="Email:" description="Please insert a valid email that will be your username">
-              <b-form-input id="emailInput" v-model="formEmail" size="sm" required autocomplete="email"></b-form-input></b-form-group>
+              <b-form-input id="emailInput" v-model="formEmail" size="sm" autocomplete="email" required></b-form-input></b-form-group>
               <!-- add insert previous password and relative check -->
             <b-form-group label-for="passwordInput" label="Password:" description="Please insert your NEW password or passphrase">
               <b-form-input id="passwordInput" v-model="formPassword" size="sm" type="password" required autocomplete="current-password"></b-form-input></b-form-group>
-            <b-form-group label-for="imageInput" label="Image:" :description="imageUploadDesc"> 
+            <b-form-group label-for="imageInput" label="Image:" description="Please choose an image for your account"> 
               <b-form-file id="imageInput" v-model="formImageFilename" ref="formImageFile" size="sm" accept="image/*"></b-form-file>
             </b-form-group>
             <b-button type="submit" class="btn bhcare btn-block mt-3 white border-0">UPDATE</b-button>
@@ -37,13 +37,26 @@ export default {
       formEmail: this.$auth.user.email,
       formPassword: '',
       formImageFilename: '',
-      imageUploadDesc: 'Please choose an image for your account',
       id: this.$auth.user.id,
     }
   },
   methods: {
-    useredit() {
-      try {this.imageUpload()} catch(err){console.log(err + ' image not uploaded.')}
+    userEdit() {
+      if (!this.formImageFilename.name) {
+        this.userUpdate() //if no new image has to be inserted, we proceed to update the user information
+      }else{
+      //alternatively, we upload the image: the server will name it with user id, resize it and transform it into a png
+      //although the id is in the JWToken amongst the headers, we avoid decoding and append the id in the req.body
+      //remember there is no image or video column/field in the database because we use the id as per the image name
+        let formImageData = new FormData()
+        formImageData.append('file', this.formImageFilename)
+        formImageData.append('id', this.id)
+        axios.post('/db/userimage', formImageData, { headers: { 'Content-Type': 'multipart/form-data' } })
+        .then(() => {this.userUpdate()})
+        .catch(err=>{console.log(err)})
+      }
+    },
+    userUpdate(){
       axios.put(
         '/db/user', {
           id: this.id,
@@ -51,26 +64,15 @@ export default {
           surname: this.formSurname,
           email: this.formEmail,
           password: this.formPassword,
-          image: this.formImageFilename.name,
         })
-        .then(res => {
-          // axios.delete('/db/userimage', {data: {delimage: this.$auth.user.image}} )
-          //this.$auth.$storage.setState(this.$auth.$state.user.image, this.formImageFilename.name)
-          console.log(this.$auth.user.image)
-        })
-        .catch(err => {
-          console.log(err)
-        })
+      .then(() => { this.userReload()}) // reloads the updated user information
+      .catch(err => {console.log(err)} )
     },
-    async imageUpload() {
-        let formImageData = new FormData()
-        formImageData.append('file', this.formImageFilename)
-        axios.post(
-          '/db/userimage', formImageData, { headers: { 'Content-Type': 'multipart/form-data' } })
-        .then(res => {
-          console.log('SUCCESS!!')
-        })
-        .catch(err => {console.log(err)})
+    userReload(){
+      this.$auth.fetchUser()
+      .then(() => {})
+      .catch(err => {console.log(err)} )
+      location.reload(true) // reloads the page
     },
   }
 }

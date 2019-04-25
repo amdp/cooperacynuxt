@@ -21,18 +21,18 @@
       </div>
       <div class="col-2"></div>
     </div>
-    <registration />
+    <newuser />
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-import Registration from '@/components/Registration'
+import Newuser from '@/components/Newuser'
 
 export default {
   middleware: ['auth'],
   components: {
-   Registration: Registration,
+   Newuser: Newuser,
   },
   data() {
       return { 
