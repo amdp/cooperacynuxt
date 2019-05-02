@@ -5,6 +5,9 @@ var app = express()
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
 const fileUpload = require('express-fileupload')
+const mysql = require('mysql2');
+const mydb = mysql.createConnection({connectionLimit: 200, host:'localhost', user: 'cooperacy', password: 'c00p3r4t10n', database: 'coo', multipleStatements: true});
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(fileUpload())
@@ -20,14 +23,17 @@ db.sequelize = sequelize; db.Sequelize = Sequelize
 ///////                        PROJECTS                        ///////
 //////////////////////////////////////////////////////////////////////
 
-app.get(
-  "/projects", (req, res) => { projectModel.findAll ()
-    .then(projects => { res.json(projects) }) .catch(err => { res.send(err) })
+app.get(//better to take all the ids and then serve one project at time so that the client updates just the single project 
+"/projects", async (req, res) =>{ 
+  cc=['D','U','F','I','C','T','E']; cclong = ['diversity','understanding','freedom','transparency','care','trust','equivalence']
+  projects = await projectModel.findAll()
+  .catch(err =>{console.log(err)})
+  res.send(projects)
 })
 
 app.get(
-  "/project/:id", (req, res) => { projectModel.findOne ({where: {id: req.params.id}})
-    .then(project => { res.json(project) }) .catch(err => { res.send(err) })
+"/project/:id", (req, res) => { projectModel.findOne ({where: {id: req.params.id}})
+  .then(project => { res.json(project) }) .catch(err => { res.send(err) })
 })
 
 app.post(
@@ -150,7 +156,7 @@ app.post(
               })
               .catch(err => { res.send ('error :' + err) })
             })
-          }else{ res.json({error: "user already exists"}) }
+          }else{ res.send('exists') }
         })
         .catch(err => { res.send ('error :' + err) })
 })
@@ -242,6 +248,13 @@ app.post(
     }
 })
 
+app.get(
+  "/uservotes", (req, res) => {
+    uservotesquery = 'select * from `'+req.query.type+'votes` where `user` = \''+req.query.id+'\';'
+    mydb.promise().query(uservotesquery)
+    .then(([uservotes, fields]) => {res.send(uservotes)})
+  })
+
 //////////////////////////////////////////////////////////////////////
 ///////                      MISCELLANOUS                      ///////
 //////////////////////////////////////////////////////////////////////
@@ -276,6 +289,90 @@ app.post(
   "/projects", (req, res) => { projectModel.findAll ()
     .then(projects => { res.json(projects) }) .catch(err => { res.send(err) })
 }) */
+
+//////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
+///////                         ADMINS                         ///////
+//////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
+
+app.post(
+  "/resetcpvoting", (req, res) => {//###### make it better with array of projects and comments ids instead of max
+    var votestype = ['comment', 'project']
+    for (let i=0;i<votestype.length;i++){
+      querycpids = 'SELECT `id` from `'+votestype[i]+'s`'
+      mydb.promise().query(querycpids)
+      .then(([cpids, fields]) =>{ 
+        for (let j=0;j<cpids.length;j++){
+          queryreset =
+             'select @D:=count(`vote`) from `'+votestype[i].charAt(0)+'votes` where `'+votestype[i]+'` = \'' +cpids[j].id+ '\' AND `vote` = \'D\'; '
+            +'select @U:=count(`vote`) from `'+votestype[i].charAt(0)+'votes` where `'+votestype[i]+'` = \'' +cpids[j].id+ '\' AND `vote` = \'U\'; '
+            +'select @F:=count(`vote`) from `'+votestype[i].charAt(0)+'votes` where `'+votestype[i]+'` = \'' +cpids[j].id+ '\' AND `vote` = \'F\'; '
+            +'select @I:=count(`vote`) from `'+votestype[i].charAt(0)+'votes` where `'+votestype[i]+'` = \'' +cpids[j].id+ '\' AND `vote` = \'I\'; '
+            +'select @C:=count(`vote`) from `'+votestype[i].charAt(0)+'votes` where `'+votestype[i]+'` = \'' +cpids[j].id+ '\' AND `vote` = \'C\'; '
+            +'select @T:=count(`vote`) from `'+votestype[i].charAt(0)+'votes` where `'+votestype[i]+'` = \'' +cpids[j].id+ '\' AND `vote` = \'T\'; '
+            +'select @E:=count(`vote`) from `'+votestype[i].charAt(0)+'votes` where `'+votestype[i]+'` = \'' +cpids[j].id+ '\' AND `vote` = \'E\'; '
+            +'update `'+votestype[i]+'s` set `D` = @D, `U` = @U, `F` = @F, `I` = @I, `C` = @C, `T` = @T, `E` = @E where `'
+            +votestype[i]+'s`.`id` = \'' +cpids[j].id+ '\';'
+          mydb.promise().query(queryreset)
+          .then(([res, fields]) =>{ console.log(' '+JSON.stringify(res))})
+          .catch(err=>{console.log(err)})
+        }
+      })
+      .catch(err=>{console.log(err)})
+    }
+    res.send('OK')
+})
+
+app.post(
+  "/resetvoting", (req, response) => {
+    //user calculation algorithm !!!to be modified, it should become adaptive, also considering how much the user votes!!!
+    //first we select all the users through their id list: 
+    queryids = 'SELECT `id` from `users`';
+    mydb.promise().query(queryids)
+    .then(([usersids,fields]) => {
+      for (let i=0;i<usersids.length;i++){
+        //and then we select all comments per every user (although we could include those to which the user commented thanks to cvotes):
+        querycomments = 
+            'select @D:=COALESCE(sum(`D`),0) from `comments` where `user` = \''+usersids[i].id+'\';'
+          + 'select @U:=COALESCE(sum(`U`),0) from `comments` where `user` = \''+usersids[i].id+'\';'
+          + 'select @F:=COALESCE(sum(`F`),0) from `comments` where `user` = \''+usersids[i].id+'\';'
+          + 'select @I:=COALESCE(sum(`I`),0) from `comments` where `user` = \''+usersids[i].id+'\';'
+          + 'select @C:=COALESCE(sum(`C`),0) from `comments` where `user` = \''+usersids[i].id+'\';'
+          + 'select @T:=COALESCE(sum(`T`),0) from `comments` where `user` = \''+usersids[i].id+'\';'
+          + 'select @E:=COALESCE(sum(`E`),0) from `comments` where `user` = \''+usersids[i].id+'\';'
+          + 'update `users` set `D` = @D, `U` = @U, `F` = @F, `I` = @I, `C` = @C, `T` = @T, `E` = @E where `users`.`id` = \'' +usersids[i].id+ '\';'
+          mydb.promise().query(querycomments)
+        .catch(err=>{console.log(err)})
+      }
+      for (let i=0;i<usersids.length;i++){
+        queryretrieve = 'select `D`,`U`,`F`,`I`,`C`,`T`,`E` from `users` where id = \''+usersids[i].id+'\';'
+        mydb.promise().query(queryretrieve)
+        .then(([[res],fields])=>{
+          cc=['D','U','F','I','C','T','E']; var sum=0; var sum2=0; var sum3=0; var max=0; var res2={}; var res3={}; queryupdate = 'update `users` set ';
+          for(let j=0;j<cc.length;j++){ sum += res[cc[j]]}
+          if(sum==0){for(let j=0;j<cc.length;j++){res[cc[j]] = 4}
+          }else{
+            for(let j=0;j<cc.length;j++){res2[cc[j]]=res[cc[j]]*21/sum} 
+            for(let j=0;j<cc.length;j++){if (max < res2[cc[j]]){max=res2[cc[j]]}}
+            for(let j=0;j<cc.length;j++){res2[cc[j]]=res2[cc[j]]*(1-Math.abs((max-6)/max))}
+            for(let j=0;j<cc.length;j++){sum2 += res2[cc[j]]}
+            for(let j=0;j<cc.length;j++){res3[cc[j]]=Math.abs(6-res2[cc[j]])/7}
+            for(let j=0;j<cc.length;j++){sum3 += res3[cc[j]]}
+            for(let j=0;j<cc.length;j++){res[cc[j]] = Math.round(res3[cc[j]]/sum3*(21-sum2)+res2[cc[j]]+1)}
+          }
+          for(let j=0;j<cc.length;j++){queryupdate = queryupdate + ' `vote` = \''+res[cc[j]]+'\','}
+          queryupdate = queryupdate.substring(0, queryupdate.length-1) + ' where id = \''+usersids[i].id+'\';'
+          mydb.promise().query(queryupdate)
+          .then(([res,fields])=>{//console.log(' '+JSON.stringify(res))
+        })
+          .catch(err=>{console.log(err)})
+          })
+      }
+    })
+    .catch(err=>{console.log(err)})
+    response.send('OK')
+})
 
 //////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
@@ -373,7 +470,6 @@ var pvoteModel = db.sequelize.define(
       user: {type: Sequelize.INTEGER, allowNull: false},
       project: {type: Sequelize.INTEGER, allowNull: false},
       vote:  {type: Sequelize.CHAR, allowNull: false},
-      valid: {type: Sequelize.TINYINT, allowNull: false},
       created: { type: 'TIMESTAMP' },
       updated: { type: 'TIMESTAMP' },
   }, {
@@ -389,7 +485,6 @@ var cvoteModel = db.sequelize.define(
       user: {type: Sequelize.INTEGER, allowNull: false},
       comment: {type: Sequelize.INTEGER, allowNull: false},
       vote:  {type: Sequelize.CHAR, allowNull: false},
-      valid: {type: Sequelize.TINYINT, allowNull: false},
       created: { type: 'TIMESTAMP' },
       updated: { type: 'TIMESTAMP' },
   }, {
@@ -405,7 +500,6 @@ var removedpvoteModel = db.sequelize.define(
       user: {type: Sequelize.INTEGER, allowNull: false},
       project: {type: Sequelize.INTEGER, allowNull: false},
       vote:  {type: Sequelize.CHAR, allowNull: false},
-      valid: {type: Sequelize.TINYINT, allowNull: false},
       created: { type: 'TIMESTAMP' },
       updated: { type: 'TIMESTAMP' },
   }, {
@@ -420,7 +514,6 @@ var removedcvoteModel = db.sequelize.define(
       user: {type: Sequelize.INTEGER, allowNull: false},
       comment: {type: Sequelize.INTEGER, allowNull: false},
       vote:  {type: Sequelize.CHAR, allowNull: false},
-      valid: {type: Sequelize.TINYINT, allowNull: false},
       created: { type: 'TIMESTAMP' },
       updated: { type: 'TIMESTAMP' },
   }, {

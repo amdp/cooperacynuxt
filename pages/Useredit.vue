@@ -26,7 +26,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 
 export default {
   middleware: ['auth'],
@@ -41,7 +40,7 @@ export default {
     }
   },
   methods: {
-    userEdit() {
+    async userEdit() {
       if (!this.formImageFilename.name) {
         this.userUpdate() //if no new image has to be inserted, we proceed to update the user information
       }else{
@@ -51,26 +50,28 @@ export default {
         let formImageData = new FormData()
         formImageData.append('file', this.formImageFilename)
         formImageData.append('id', this.id)
-        axios.post('/db/userimage', formImageData, { headers: { 'Content-Type': 'multipart/form-data' } })
-        .then(() => {this.userUpdate()})
-        .catch(err=>{console.log(err)})
+        let res = await this.$store.dispatch('imageUploadAction', {
+          formImageData: formImageData, 
+          headers: {headers: { 'Content-Type': 'multipart/form-data' }},
+          type: 'user',
+        })
+        .catch(err => {console.log(err)})
+        if (res) {this.userUpdate()}
       }
     },
-    userUpdate(){
-      axios.put(
-        '/db/user', {
-          id: this.id,
-          name: this.formName,
-          surname: this.formSurname,
-          email: this.formEmail,
-          password: this.formPassword,
-        })
-      .then(() => { this.userReload()}) // reloads the updated user information
+    async userUpdate(){
+      var updateUser = await this.$store.dispatch('updateUserAction', { 
+        id: this.id,
+        name: this.formName,
+        surname: this.formSurname,
+        email: this.formEmail,
+        password: this.formPassword,
+      })
       .catch(err => {console.log(err)} )
+      if(updateUser){ this.userReload()} // reloads the updated user information
     },
     userReload(){
       this.$auth.fetchUser()
-      .then(() => {})
       .catch(err => {console.log(err)} )
       location.reload(true) // reloads the page
     },

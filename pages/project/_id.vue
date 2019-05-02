@@ -1,10 +1,10 @@
 
 <template>
   <div class="mx-auto mt-4 mb-5">
-    <div v-if="this.$store.state.projectsvx.edit">
+    <div v-if="this.$store.state.edit">
       <projectform />
     </div>
-    <div class="row mt-5" v-if="this.$store.state.projectsvx.project.name && !this.$store.state.projectsvx.edit" >
+    <div class="row mt-5" v-if="this.$store.state.project.name && !this.$store.state.edit" >
       <div class="col-12">
         <div class="row">
           <div class="col-1"></div>
@@ -38,11 +38,11 @@ import Comments from '@/components/Comments'
 export default {
   middleware: ['auth'],
   computed: {
-      project(){return  this.$store.state.projectsvx.project},
-      edit(){ return  this.$store.state.projectsvx.edit},
+      project(){return  this.$store.state.project},
+      edit(){ return  this.$store.state.edit},
   },
-  mounted() { return this.$store.dispatch('projectsvx/getProjectAction', {id: this.$route.params.id})},
-  methods: { editSwitch(){this.$store.dispatch('projectsvx/editSwitchAction',true)} },
+  mounted() { return this.$store.dispatch('getProjectAction', {id: this.$route.params.id})},
+  methods: { editSwitch(){this.$store.dispatch('editSwitchAction',true)} },
   components: {
     Votebars: Votebars,
     Projectform: Projectform,
