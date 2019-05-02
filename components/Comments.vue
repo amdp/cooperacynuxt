@@ -23,10 +23,10 @@ import Votebars from '@/components/Votebars'
 import Comments from '@/components/Comments'
 
 export default {
-  computed: { comments(){return this.$store.state.commentsvx.comments}},
-  mounted() { this.$store.dispatch('commentsvx/getCommentsAction', {id: this.$route.params.id})},
-  methods:  { up:(comments =>{return comments.filter(comment => { return comment.id === comment.parent })}),
-              sub: function (comments,id){return comments.filter(comment => { return comment.parent === id && comment.id != id })}},
+  computed: { comments(){if (this.$store.state.comments) {return this.$store.state.comments} else{return []}} },
+  mounted() { this.$store.dispatch('getCommentsAction', {id: this.$route.params.id})},
+  methods:  { up:(comments => {return comments.filter(comment => { return comment.id === comment.parent })}),
+              sub:(comments,id) => {return comments.filter(comment => { return comment.parent === id && comment.id != id })}},
   components: { Votebars: Votebars, Comments: Comments, },
 }
 </script>

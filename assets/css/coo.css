@@ -5,13 +5,9 @@ a{color: #777777;}
 .circle  {margin: 0 auto;height:60vh;position: relative;margin-top:3vh;}
 
 :root {
-  --equivalence: #F80;
-  --trust: #FC0;
-  --care: #7D0;
-  --transparency: #0DD;
-  --freedom: #08D;
-  --understanding: #A7E;
-  --diversity: #F7D;
+  --equivalence: #f80;      --trust: #fc0;      --care: #7d0;     --transparency: #0dd;     --freedom: #08D;      --understanding: #a7e; --diversity: #f7d;
+  --mildequivalence: #fb9;  --mildtrust: #fc9;  --mildcare: #bd9; --mildtransparency: #add; --mildfreedom: #7cf;  --mildunderstanding: #baf; --milddiversity: #ebe;
+  --darkequivalence: #baa;  --darktrust: #bba;  --darkcare: #aba; --darktransparency: #9aa; --darkfreedom: #99a;  --darkunderstanding: #a9a; --darkdiversity: #bab;
 }
 
 .equivalence, .hequivalence {color: var(--equivalence)}     .bequivalence, .bhequivalence {background-color: var(--equivalence)}
@@ -74,6 +70,7 @@ a{color: #777777;}
 .roundmodule {border-radius: 90px;}
 .mini {font-size:16px; font-weight:200;}
 .minimini {font-size:10px; font-weight:200;}
+.miniminimini {font-size:8px; font-weight:200;}
 .finger {cursor: pointer;}
 .it {font-style: italic;}
 .bb {font-weight: bold;}
@@ -99,8 +96,9 @@ hr.home-hr { border:none; background-color:#666666; width:50px; height:2px!impor
 img.page-header { margin-top: 0px; margin-bottom: 60px; width: 100%; height: auto; vertical-align: top; border:none; }
 .foot {border-top: 1px solid #CCCCCC;}
 .currentImage {width:60px;}
-.vote {height: 5px; cursor: pointer;}
-.uservote {height: 5px;}
+.vote {height: 5px; cursor: pointer;} .vote:hover .showme {display: block;}
+.uservote {height: 5px;} .uservote:hover .showme {display: block;}
+.showme {display: none}
 
 
 /*not working*/

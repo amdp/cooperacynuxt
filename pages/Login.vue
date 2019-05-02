@@ -26,7 +26,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import Newuser from '@/components/Newuser'
 
 export default {
