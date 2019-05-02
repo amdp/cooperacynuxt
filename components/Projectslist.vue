@@ -26,10 +26,10 @@
 
 <script>
 import Votebars from '@/components/Votebars'
-
+//warning this list can be viewed also by non members so the votes colors should be fixed! #########FIXMEEE
 export default {
-  computed: { projects(){return  this.$store.state.projectsvx.projects}, },
-  mounted() { this.$store.dispatch('projectsvx/getProjectsAction') },
+  mounted() { this.$store.dispatch('getProjectsAction', {userid: this.$auth.user.id}) },
+  computed: { projects(){return  this.$store.state.projects}, },
   components: { Votebars: Votebars, },
 }
 </script>

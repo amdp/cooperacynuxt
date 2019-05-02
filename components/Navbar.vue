@@ -8,8 +8,8 @@
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
     <b-collapse id="nav-collapse" is-nav>
-      <b-navbar-nav> 
-        <div v-if="this.$auth.loggedIn" class="row">
+      <b-navbar-nav class="w-100">
+        <div v-if="this.$auth.loggedIn" class="row w-100">
           <div class="col d-flex justify-content-start">
             <h3 class="diversity up base mr-3">{{this.$auth.user.name + ' ' + this.$auth.user.surname}}</h3>
             <a class="au minimini" to="useredit">EDIT</a>

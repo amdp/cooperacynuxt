@@ -32,16 +32,16 @@
           <div class="row mb-4 p-2">
             <div class="col-lg-4 col-xs-12 subheading text-center"><a href="/platform" class="noline transparency space">DISCOVER</a></div>
             <div class="col-lg-4 col-xs-12 subheading text-center"><a href="/cooperation" class="noline understanding space">LEARN</a></div>
-            <div class="col-lg-4 col-xs-12 subheading text-center"><a href="/register" class="noline equivalence space">JOIN</a></div>
+            <div class="col-lg-4 col-xs-12 subheading text-center"><a href="/login" class="noline equivalence space">JOIN</a></div>
           </div>
           <p class="base text-center">Cooperacy is a nonprofit scientific project aiming to spread cooperation amongst humans and in their ecosystem.</p>
           <p class="base text-center mb-2">We're setting up a <a href="/platform" class="ae">platform</a> in which, supported by money, people help each other 
             to realise what they want for their lives taking decisions together in a productive way.</p>
-          <p class="base text-center mb-3"><a href="/register" class="ae">Joining</a> Cooperacy is entertaining and makes you learn how to develop
+          <p class="base text-center mb-3"><a href="/login" class="ae">Joining</a> Cooperacy is entertaining and makes you learn how to develop
             enjoyable cooperations in your <a href="/aboutyou" class="ad">personal</a> relations, in the <a href="/coorporate" class="af">corporate</a>
             world and at the <a href="/cci" class="au">international</a> level.
           </p>
-          <div class="base text-center"><p class="base text-center mb-3"><a class="ae" href="/register">Join</a> Cooperacy today, 
+          <div class="base text-center"><p class="base text-center mb-3"><a class="ae" href="/login">Join</a> Cooperacy today, 
           or <a class="ai" href="https://www.cooperacy.org/contact">contact us</a> for more information.</p><br></div>
     </div>
   </div>

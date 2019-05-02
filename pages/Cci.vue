@@ -36,10 +36,10 @@ import Votebars from '@/components/Votebars'
 
 export default {
   computed: {
-      projects(){return  this.$store.state.projectsvx.projects}
+      projects(){return  this.$store.state.projects}
   },
   mounted() {
-    this.$store.dispatch('projectsvx/getProjects')
+    this.$store.dispatch('getProjects')
   },
   components: {
     Votebars: Votebars,

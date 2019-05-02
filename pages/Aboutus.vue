@@ -33,7 +33,7 @@
         If you consider our society and its natural ecosystem as a whole living
         organism, being part of Cooperacy means supporting this organism with
         the enjoyment of cooperation.
-        <a class="ae" href="/register">Joining</a> the voluntary pool will let
+        <a class="ae" href="/login">Joining</a> the voluntary pool will let
         you experiment and support a different social ecosystem based on
         cooperation and common enjoyment.<br /><br />
       </p>

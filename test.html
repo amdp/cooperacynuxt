@@ -59,9 +59,15 @@ Content-type: application/json
   "email": "qqq@qqq.it",
   "password": "qqq"
 }
-###-->
 
 GET http://127.0.0.1:3000/db/comments HTTP/1.1
 Content-type: application/json
 
 {"id":"1"}
+
+###-->
+
+POST http://127.0.0.1:3000/db/resetvoting HTTP/1.1
+Content-type: application/json
+
+{}

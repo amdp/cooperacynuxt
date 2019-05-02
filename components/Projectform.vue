@@ -54,39 +54,38 @@
 </template>
 
 <script>
-import axios from 'axios'
 export default {
   middleware: ['auth'],
-  mounted() {   this.$store.dispatch('categoriesvx/getCategoriesAction') },
+  mounted() {   this.$store.dispatch('getCategoriesAction') },
   data() {
     return {
       projects: [],
-      formName: this.$store.state.projectsvx.project.name,
-      formBrief: this.$store.state.projectsvx.project.brief,
-      formContent: this.$store.state.projectsvx.project.content,
+      formName: this.$store.state.project.name,
+      formBrief: this.$store.state.project.brief,
+      formContent: this.$store.state.project.content,
       formImageFile: '', // to be chosen by the user, current image is shown on the side
-      formVideo: this.$store.state.projectsvx.project.video,
-      formAnonymous: this.$store.state.projectsvx.project.anonymous,
-      formParent: this.$store.state.projectsvx.project.parent,
-      formCategory: this.$store.state.projectsvx.project.category,
-      formStageNofunding: this.$store.state.projectsvx.project.stage,
-      formBudget: this.$store.state.projectsvx.project.budget,
-      formHudget: this.$store.state.projectsvx.project.hudget,
+      formVideo: this.$store.state.project.video,
+      formAnonymous: this.$store.state.project.anonymous,
+      formParent: this.$store.state.project.parent,
+      formCategory: this.$store.state.project.category,
+      formStageNofunding: this.$store.state.project.stage,
+      formBudget: this.$store.state.project.budget,
+      formHudget: this.$store.state.project.hudget,
       formTags: '', // ######################################################### FIX NEEDED
     }
   },
   computed: { 
     nameInputState() { return this.name.length > 4 ? true : false },
     budgetInputState() { return this.bodget.length >= 1000 ? true : false },
-    categories(){return  this.$store.state.categoriesvx.categories},
-    projectImage: function () { if (this.$store.state.projectsvx.project.image) { return require('../assets/images/projects/' + this.$store.state.projectsvx.project.id + '.png')}}
+    categories(){return  this.$store.state.categories},
+    projectImage: function () { if (this.$store.state.project.image) { return require('../assets/images/projects/' + this.$store.state.project.id + '.png')}}
   },
   methods: {
     projectForm() { 
       // This function triggers both project creation and updating
       if (!this.formAnonymous) {this.formAnonymous = 0}
       if (this.formStageNofunding) {this.formStageNofunding = 5
-      }else{ this.$store.state.projectsvx.project.stage ? this.$store.state.projectsvx.project.stage : this.formStageNofunding = 7}
+      }else{ this.$store.state.project.stage ? this.$store.state.project.stage : this.formStageNofunding = 7}
       //database request body
       var formBodyRequest = { 
         name: this.formName,
@@ -102,16 +101,16 @@ export default {
       //vuex id, 'new' for new projects, taken from url for updates
       var dispatchId; this.$route.params.id ? dispatchId = this.$route.params.id : dispatchId = 'new'
       //vuex action to the database, the 'res'[ponse] variable brings the recently created or edited project >id< from the server..
-      this.$store.dispatch('projectsvx/projectFormAction', {id: dispatchId, body: formBodyRequest}) 
+      this.$store.dispatch('projectFormAction', {id: dispatchId, body: formBodyRequest}) 
       //in order to use it in the tags table and in the image creation:
-      .then(res => {
+      .then(async res => {
         if (res=='exists'){ return this.$toast.show('Project already exists!', {duration: 1000, className: 'toasts'})}
         if (this.formTags){
           var splittedTags = this.formTags.split(",")
           for (let i=0; i<splittedTags.length; i++) {
             if (splittedTags[i]==''){continue}
             splittedTags[i] = splittedTags[i].replace(/^[ ]+/gi,'') //removes spaces at the beginning of tags
-            axios.post('/db/tags', {
+            let res = await this.$store.dispatch('tagFormAction', {
               project: res,
               tagName: splittedTags[i]
             })
@@ -123,17 +122,21 @@ export default {
         }else if(dispatchId=='new'){/*if new and without image, Cooperacy project image is added as standard TOBEDONE ######################################################### FIX NEEDED */}
       })  
     },
-    imageUpload(id) {
+    async imageUpload(id) {
       let formImageData = new FormData()
       formImageData.append('file', this.formImageFile)
       formImageData.append('id', id)
-      axios.post( '/db/projectimage', formImageData, { headers: { 'Content-Type': 'multipart/form-data' } })
-      .then(res => {this.doneToast()})
-      .catch(err => {console.log(err)})
+      let res = await this.$store.dispatch('imageUploadAction', {
+          formImageData: formImageData, 
+          headers: {headers: { 'Content-Type': 'multipart/form-data' }},
+          type: 'project',
+        })
+        .catch(err => {console.log(err)})
+        if (res) {this.doneToast()}
     },
     doneToast(){
       this.$toast.success('Done!', {duration: 1000, className: 'toasts'})
-      this.$store.dispatch('projectsvx/editSwitchAction',false)
+      this.$store.dispatch('editSwitchAction',false)
       // how to effectively reload the page here before vue gets the state change?
       // ######################################################### FIX NEEDED
       setTimeout(function(){location.href = location.href},1200)

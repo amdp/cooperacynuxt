@@ -1,6 +1,7 @@
 <template>
   <div>
-    <a href="/projects/new" class="ad">Add a new Project</a>
+    <a href="/useredit" class="ad">Edit your information</a><br>
+    <a href="/projects/new" class="af">Add a new Project</a><br>
     <projectslist />
   </div>
 </template>
