@@ -19,80 +19,60 @@ const sequelize = new Sequelize("coo","cooperacy","c00p3r4t10n", { host: 'localh
   pool: { max: 5, min: 0, acquire: 30000, idle: 10000 } })
 db.sequelize = sequelize; db.Sequelize = Sequelize
 
-//////////////////////////////////////////////////////////////////////
-///////                        PROJECTS                        ///////
-//////////////////////////////////////////////////////////////////////
+var cc=['D','U','F','I','C','T','E']; var cclong = ['diversity','understanding','freedom','transparency','care','trust','equivalence']
 
-app.get(//better to take all the ids and then serve one project at time so that the client updates just the single project 
-"/projects", async (req, res) =>{ 
-  cc=['D','U','F','I','C','T','E']; cclong = ['diversity','understanding','freedom','transparency','care','trust','equivalence']
-  projects = await projectModel.findAll()
-  .catch(err =>{console.log(err)})
-  res.send(projects)
-})
+//////////////////////////////////////////////////////////////////////
+///////                         PROJECT                        ///////
+//////////////////////////////////////////////////////////////////////
 
 app.get(
-"/project/:id", (req, res) => { projectModel.findOne ({where: {id: req.params.id}})
-  .then(project => { res.json(project) }) .catch(err => { res.send(err) })
+"/proptype", async (req, res) =>{ var proptypequery='SELECT * FROM `'+req.query.proptype+'`'
+  if (req.query.where) proptypequery += ' WHERE '+req.query.where
+  mydb.promise().query(proptypequery)
+  .then(([project, fields])=>{res.send(project)}).catch(err => {console.error(err); res.send (err) })
 })
 
 app.post(
   "/project/:id", (req, res) => {
     if (req.params.id != 'new'){
       sequelize.query(
-        'SELECT * FROM `projects` WHERE `projects`.`name`="' + req.body.name + 
-        '" AND `projects`.`id`=' + req.params.id + ' LIMIT 1;',
+          'SELECT * FROM `project` WHERE `project`.`name`="' + req.body.name + 
+          '" AND `project`.`id`=' + req.params.id + ' LIMIT 1;',
         {type: Sequelize.QueryTypes.SELECT})
-      .then(project => {
-        if(project) {
+      .then(projectx => {
+        if(projectx) {
           projectModel.update(req.body, { where: {id: req.params.id}})
           .then(()=>{res.json({id: req.params.id}) })
         }else{res.json('exists')}
       })
-      .catch(err => { res.send (err) })
+      .catch(err => {console.error(err); res.send (err) })
     }else{
       projectModel.findOne({ where: { name: req.body.name } })
-      .then(project => {
-        if(!project) {
+      .then(projectx => {
+        if(!projectx) {
           projectModel.create(req.body)
           .then(()=>{
-            // we use a raw query to retieve the id of the project we created
+            // we use a raw query to retieve the id of the projectx we created
             // warning: you can use also @@IDENTITY or mysql_insert_id() instead of LAST_INSERT_ID()
             return sequelize.query('SELECT LAST_INSERT_ID() AS lastId', {type: Sequelize.QueryTypes.SELECT})
             .then(lastId => {res.json({id: lastId[0].lastId})})
           })
-          .catch(err => { res.send (err) }) 
+          .catch(err => {console.error(err); res.send (err) })
         }else{res.json('exists')}
       })
     }
 })
 
 app.put(
-  "/projects/:id", (req, res) => { if(!req.body.name) { 
+  "/project/:id", (req, res) => { if(!req.body.name) { 
     res.status(400); res.json({ error: "Bad data" }) } else { projectModel.update( 
-      {name: req.body.name}, { where: {id: req.params.id} }) .then( () => { res.send ("Project Updated.") }) .error(err => res.send(err))
+      {name: req.body.name}, { where: {id: req.params.id} }) .then( () => { res.send ("Projectx Updated.") }) .error(err => res.send(err))
   }
 })
 
 app.delete(
-  "/projects/:id", (req, res) => { projectModel.destroy ({ 
-    where: { id: req.params.id } }) .then( () => { res.send("Project deleted.") }) .catch(err => { res.send(err) })
-})
-
-app.post(
-  "/projectimage", function(req, res) {
-  if (Object.keys(req.files).length == 0) { res.status(400).send('No files were uploaded.'); return }
-  try {uploadPath = './assets/images/projects/' + req.body.id + '.png'} catch (err) {console.log(err)}
-  req.files.file.mv(uploadPath, function(err) { if (err) { return res.status(500).send(err) } })
-  Jimp.read(uploadPath)
-    .then(uploadPath => {
-      return uploadPath
-        .resize(256, 256) // resize
-        .quality(60) // set quality
-        .write(uploadPath); // save
-    })
-  .then(res.json({ status: 'OK' }))
-  .catch(err => {console.error(err);})
+  "/project/:id", (req, res) => { projectModel.destroy ({ 
+    where: { id: req.params.id } }) .then( () => { res.send("Projectx deleted.") }) .catch(err => {console.error(err); res.send (err) })
 })
 
 //////////////////////////////////////////////////////////////////////
@@ -100,29 +80,12 @@ app.post(
 //////////////////////////////////////////////////////////////////////
 
 app.get(
-  "/comments", (req, res) =>{commentModel.findAll({where: {'project': req.query.id }})
-    .then(comments => { res.json(comments) }) .catch(err => { res.send(err) })})
-
-app.post(
-  "/commentimage", function(req, res) {
-  if (Object.keys(req.files).length == 0) { res.status(400).send('No files were uploaded.'); return }
-  try {uploadPath = './assets/images/comments/' + req.body.id + '.png'} catch (err) {console.log(err)}
-  req.files.file.mv(uploadPath, function(err) { if (err) { return res.status(500).send(err) } })
-  Jimp.read(uploadPath)
-    .then(uploadPath => {
-      return uploadPath
-        .resize(256, 256) // resize
-        .quality(60) // set quality
-        .write(uploadPath); // save
-    })
-  .then(res.json({ status: 'OK' }))
-  .catch(err => {console.error(err);})
-  
-})
+  "/comments", (req, res) =>{commentsModel.findAll({where: {'project': req.query.id }})
+    .then(comments => { res.json(comments) }) .catch(err => {console.error(err); res.send (err) })})
 
 
 //////////////////////////////////////////////////////////////////////
-///////                         USERS                          ///////
+///////                          USER                          ///////
 //////////////////////////////////////////////////////////////////////
 
 app.post(
@@ -136,7 +99,7 @@ app.post(
               }
           }else{ res.status(400).json({error: 'User does not exist'}) }
       })
-      .catch(err => { res.status(400).json({error: err }) })
+      .catch(err => {console.error(err); res.send (err) })
 })
 
 app.post(
@@ -154,11 +117,11 @@ app.post(
                 sequelize.query('SELECT LAST_INSERT_ID() AS lastId', {type: Sequelize.QueryTypes.SELECT})
                 .then(id => {res.json({id: id[0].lastId}) })
               })
-              .catch(err => { res.send ('error :' + err) })
+              .catch(err => {console.error(err); res.send (err) })
             })
           }else{ res.send('exists') }
         })
-        .catch(err => { res.send ('error :' + err) })
+        .catch(err => {console.error(err); res.send (err) })
 })
 
 app.put(
@@ -168,7 +131,7 @@ app.put(
       bcrypt.hash(req.body.password, 10, (err, hash) => {
         req.body.password = hash; userModel.update(req.body, { where: {id: req.body.id}})
         .then(user => { console.log('user updated'), res.json('updated: ' + user) }) 
-        .catch(err => { res.send ('error :' + err) })
+        .catch(err => {console.error(err); res.send (err) })
       })
   }
 })
@@ -177,28 +140,12 @@ app.get(
   "/user", (req, res, next) => {
   req.headers.authorization = req.headers.authorization.slice(7)
   try { check = jwt.verify(req.headers.authorization, process.env.SECRET_KEY) }
-  catch (err) {console.log(err)}
+  catch (err) {console.error(err)}
   let id = jwt.decode(req.headers.authorization)
-  userModel.findOne({ where: { id: id.id }})
-  .then(user => {res.json({ user })})
-  .catch(err => {res.send('error: ' + err)})
+  mydb.promise().query('SELECT * FROM `user` AS `user` WHERE `user`.`id` = '+id.id)
+  .then(([[user],fields]) => {res.json({ user })})
+  .catch(err => {console.error(err); res.send (err) })
 })
-
-app.post(
-  "/userimage", function(req, res) {
-    if (Object.keys(req.files).length == 0) { res.status(400).send('No files were uploaded.'); return }
-    try {uploadPath = './assets/images/users/' + req.body.id + '.png'} catch (err) {console.log(err)}
-    req.files.file.mv(uploadPath, function(err) { if (err) { return res.status(500).send(err) } })
-    Jimp.read(uploadPath)
-    .then(uploadPath => {
-      return uploadPath
-        .resize(256, 256) // resize
-        .quality(60) // set quality
-        .write(uploadPath); // save
-    })
-    .catch(err => {console.error(err);})
-    res.json({ status: 'OK' })
-  })
   
 
 //////////////////////////////////////////////////////////////////////
@@ -206,79 +153,83 @@ app.post(
 //////////////////////////////////////////////////////////////////////
 
 app.post(
-  "/votes", (req, res) => {
-    // checks if the vote is a project vote:
-    if(req.body.project){
-      // checks if the vote already exists:
-     pvoteModel.findOne({where: {user: req.body.user, vote: req.body.vote, project: req.body.project}})
-      .then(vote=>{
-        if(!vote){ 
-          return pvoteModel.create(req.body)
-          .then(()=>{myquery='update `projects` SET `'+req.body.vote+'` = `'+req.body.vote+'`+1 where `projects`.`id` = '+req.body.project
-            return sequelize.query(myquery)})
-          .then(()=>{return res.send('OK')})
-          .catch(err => { res.send(err) })
-        }else{
-          return removedpvoteModel.create(req.body)
-          .then(()=>{return sequelize.query('update `projects` SET `'+req.body.vote+'` = `'+req.body.vote+'`-1 where `projects`.`id` = '+req.body.project)})
-          .then(()=>{return pvoteModel.destroy({where: {id: vote.id}})})
-          .then(()=>{return res.send('OK')})
-          .catch(err => { res.send(err) })
-        }
-      })
-      .catch(err => { res.send(err) })
-    }else{
-     cvoteModel.findOne({where: {user: req.body.user, vote: req.body.vote, comment: req.body.comment}})
-      .then(vote=>{
-        if(!vote){
-          return cvoteModel.create(req.body)
-          .then(()=>{myquery='update `comments` SET `'+req.body.vote+'` = `'+req.body.vote+'`+1 where `comments`.`id` = '+req.body.comment
-            return sequelize.query(myquery)})
-          .then(()=>{return res.send('OK')})
-          .catch(err => { res.send(err) })
-        }else{console.log('trovato '+JSON.stringify(req.body))
-          return removedcvoteModel.create(req.body)
-          .then(()=>{return sequelize.query('update `comments` SET `'+req.body.vote+'` = `'+req.body.vote+'`-1 where `comments`.`id` = '+req.body.comment)})
-          .then(()=>{return cvoteModel.destroy({where: {id: vote.id}})})
-          .then(()=>{return res.send('OK')})
-          .catch(err => { res.send(err) })
-        }
-      })
-      .catch(err => { res.send(err) })
+"/vote", (req, res) => {var commentvar; var commentvalue; //At the beginning we prepare two comment-related variables
+  if (req.body.proptype=='project'){commentvar='';commentvalue=''} //they are null if the vote goes to the projectvote table
+  else{commentvar=', `project`';commentvalue=', '+req.body.projectid} //they specify the project if the vote goes to the commentvote table
+  let checkquery = 'SELECT * from `'+req.body.proptype+'vote` where `user` = '+req.body.user+' AND `condition` = \''
+    +req.body.condition+'\' AND `'+req.body.proptype+'` = '+req.body.id
+  mydb.promise().query(checkquery) //the presence of an existing vote is checked
+  .then(([[vote], fields])=>{//if there is no vote like the one clicked by the user,
+    if(!vote){ //a new vote is added into the database
+      let newvotequery = 'INSERT INTO `'+req.body.proptype+'vote` (`user`, `'+req.body.proptype+'`, `condition`' + commentvar
+        +' ) VALUES ('+req.body.user+', '+req.body.id+', \''+req.body.condition+'\''+commentvalue+')'
+      mydb.promise().query(newvotequery)
+      .then(()=>{//then the relative comment or project condition value is updated
+        let updatequery = 'UPDATE `'+req.body.proptype+'` SET `'+req.body.condition+'` = `'+req.body.condition
+        +'`+1 where `'+req.body.proptype+'`.`id` = '+req.body.id
+        mydb.promise().query(updatequery)})
+        .then(([rows,fields])=>res.send(rows))
+        .catch(err => res.send (err))
+    }else{ //if instead a vote exists, it is copied into the removed votetable:
+      let copyquery = 'INSERT INTO `removed'+req.body.proptype.charAt(0)+'vote` (`user`, `'+req.body.proptype+'`, `condition`' 
+      + commentvar +' ) VALUES ('+req.body.user+', '+req.body.id+', \''+req.body.condition+'\''+commentvalue+')'
+      mydb.promise().query(copyquery)
+      .then(()=>{ //then the relative comment or project is updated:
+        let updatequery = 'UPDATE `'+req.body.proptype+'` SET `'+req.body.condition+'` = `'+req.body.condition
+        +'`-1 where `'+req.body.proptype+'`.`id` = '+req.body.id
+        mydb.promise().query(updatequery)})
+        .then(()=>{//Finally, when all is safe, the old vote is removed:
+          let deletequery = 'DELETE FROM `'+req.body.proptype+'vote` where `id` = '+vote.id
+          mydb.promise().query(deletequery)})
+          .then(()=>{res.send('OK')})
+    .catch(err => {console.error(err); res.send (err) })
     }
+  })
+  .catch(err => {console.error(err); res.send (err) })
 })
 
 app.get(
-  "/uservotes", (req, res) => {
-    uservotesquery = 'select * from `'+req.query.type+'votes` where `user` = \''+req.query.id+'\';'
-    mydb.promise().query(uservotesquery)
-    .then(([uservotes, fields]) => {res.send(uservotes)})
+  "/uservote", (req, res) => {
+    uservotequery = 'select * from `'+req.query.proptype+'vote` where `user` = \''+req.query.id+'\''
+    if (req.query.where){uservotequery += ' AND ' +req.query.where}
+    mydb.promise().query(uservotequery)
+    .then(([uservote, fields]) => {res.send(uservote)})
+    .catch(err => {console.error(err); res.send (err) })
   })
 
 //////////////////////////////////////////////////////////////////////
 ///////                      MISCELLANOUS                      ///////
 //////////////////////////////////////////////////////////////////////
 
-app.get(
-  "/categories", (req, res) => { // we apply a filter to avoid main category = 0
-    sequelize.query( 'SELECT * FROM `categories` WHERE `categories`.`id`!="0"', {type: Sequelize.QueryTypes.SELECT})
-  .then(categories => { res.json(categories) }) .catch(err => { res.send(err) })
+app.post(
+  "/image", function(req, res) {
+  if (Object.keys(req.files).length == 0) { res.status(400).send('No files were uploaded.'); return }
+  try {uploadPath = './assets/image/'+ req.body.proptype + '/' + req.body.id + '.png'} catch (err) {console.error(err)}
+  req.files.file.mv(uploadPath, function(err) { if (err) { return res.status(500).send(err) } })
+  Jimp.read(uploadPath)
+    .then(uploadPath => {
+      return uploadPath
+        .resize(256, 256) // resize
+        .quality(60) // set quality
+        .write(uploadPath); // save
+    })
+  .then(res.json({ status: 'OK' }))
+  .catch(err => {console.error(err); res.send (err) })
+})
+
+app.get( // we apply a filter to avoid main category = 0
+"/category", (req, res) => { mydb.promise().query( 'SELECT * FROM `category` WHERE `category`.`id`!="0"')
+  .then(([category,fields]) => { res.json(category) }) .catch(err => {console.error(err); res.send (err) })
 })
 
 app.get(
-  "/tags", (req, res) => { tagsModel.findAll () // we apply a filter to avoid main category = 0
-  .then(tags => { res.json(tags) }) .catch(err => { res.send(err) })
-})
-
-app.delete(
-  "/projectimage", (req, res) => { pvoteModel.destroy ({ 
-  where: { id: req.params.id } }) .then( () => { res.send("Vote removed.") }) .catch(err => { res.send(err) })
+"/tag", (req, res) => { mydb.promise().query( 'SELECT * FROM `tag`')
+  .then(([tag,fields]) => { res.json(tag) }) .catch(err => {console.error(err); res.send (err) })
 })
 
 app.post(
-  "/tags", (req, res) => { 
-  tagModel.create(req.body)
-  .catch(err => { res.send ('error :' + err) })
+"/tag", (req, res) => { mydb.promise().query('INSERT INTO `tag` (`project`, `name`) VALUES ('+req.body.project+', '+req.body.name+'\')')
+  .then(result => { res.send (result) }) .catch(err => {console.error(err); res.send (err) })
 })
 
 //////////////////////////////////////////////////////////////////////
@@ -286,8 +237,8 @@ app.post(
 //////////////////////////////////////////////////////////////////////
 
 /* app.get(
-  "/projects", (req, res) => { projectModel.findAll ()
-    .then(projects => { res.json(projects) }) .catch(err => { res.send(err) })
+  "/project", (req, res) => { projectModel.findAll ()
+    .then(project => { res.json(project) }) .catch(err => {console.error(err); res.send (err) })
 }) */
 
 //////////////////////////////////////////////////////////////////////
@@ -297,59 +248,57 @@ app.post(
 //////////////////////////////////////////////////////////////////////
 
 app.post(
-  "/resetcpvoting", (req, res) => {//###### make it better with array of projects and comments ids instead of max
-    var votestype = ['comment', 'project']
-    for (let i=0;i<votestype.length;i++){
-      querycpids = 'SELECT `id` from `'+votestype[i]+'s`'
-      mydb.promise().query(querycpids)
-      .then(([cpids, fields]) =>{ 
-        for (let j=0;j<cpids.length;j++){
+  "/resetcpvoting", (req, res) => {//###### make it better with array of project and comment ids instead of max
+    var votetype = ['comment', 'project']
+    for (let i=0;i<votetype.length;i++){
+      mydb.promise().query('SELECT `id` from `'+votetype[i]+'`')
+      .then(([ids, fields]) =>{ 
+        for (let j=0;j<ids.length;j++){
           queryreset =
-             'select @D:=count(`vote`) from `'+votestype[i].charAt(0)+'votes` where `'+votestype[i]+'` = \'' +cpids[j].id+ '\' AND `vote` = \'D\'; '
-            +'select @U:=count(`vote`) from `'+votestype[i].charAt(0)+'votes` where `'+votestype[i]+'` = \'' +cpids[j].id+ '\' AND `vote` = \'U\'; '
-            +'select @F:=count(`vote`) from `'+votestype[i].charAt(0)+'votes` where `'+votestype[i]+'` = \'' +cpids[j].id+ '\' AND `vote` = \'F\'; '
-            +'select @I:=count(`vote`) from `'+votestype[i].charAt(0)+'votes` where `'+votestype[i]+'` = \'' +cpids[j].id+ '\' AND `vote` = \'I\'; '
-            +'select @C:=count(`vote`) from `'+votestype[i].charAt(0)+'votes` where `'+votestype[i]+'` = \'' +cpids[j].id+ '\' AND `vote` = \'C\'; '
-            +'select @T:=count(`vote`) from `'+votestype[i].charAt(0)+'votes` where `'+votestype[i]+'` = \'' +cpids[j].id+ '\' AND `vote` = \'T\'; '
-            +'select @E:=count(`vote`) from `'+votestype[i].charAt(0)+'votes` where `'+votestype[i]+'` = \'' +cpids[j].id+ '\' AND `vote` = \'E\'; '
-            +'update `'+votestype[i]+'s` set `D` = @D, `U` = @U, `F` = @F, `I` = @I, `C` = @C, `T` = @T, `E` = @E where `'
-            +votestype[i]+'s`.`id` = \'' +cpids[j].id+ '\';'
+             'select @D:=count(`condition`) from `'+votetype[i]+'vote` where `'+votetype[i]+'`=\'' +ids[j].id+ '\' AND `condition`=\'D\'; '
+            +'select @U:=count(`condition`) from `'+votetype[i]+'vote` where `'+votetype[i]+'`=\'' +ids[j].id+ '\' AND `condition`=\'U\'; '
+            +'select @F:=count(`condition`) from `'+votetype[i]+'vote` where `'+votetype[i]+'`=\'' +ids[j].id+ '\' AND `condition`=\'F\'; '
+            +'select @I:=count(`condition`) from `'+votetype[i]+'vote` where `'+votetype[i]+'`=\'' +ids[j].id+ '\' AND `condition`=\'I\'; '
+            +'select @C:=count(`condition`) from `'+votetype[i]+'vote` where `'+votetype[i]+'`=\'' +ids[j].id+ '\' AND `condition`=\'C\'; '
+            +'select @T:=count(`condition`) from `'+votetype[i]+'vote` where `'+votetype[i]+'`=\'' +ids[j].id+ '\' AND `condition`=\'T\'; '
+            +'select @E:=count(`condition`) from `'+votetype[i]+'vote` where `'+votetype[i]+'`=\'' +ids[j].id+ '\' AND `condition`=\'E\'; '
+            +'update `'+votetype[i]+'` set `D` = @D, `U` = @U, `F` = @F, `I` = @I, `C` = @C, `T` = @T, `E` = @E where `'
+            +votetype[i]+'`.`id` = \'' +ids[j].id+ '\';'
           mydb.promise().query(queryreset)
           .then(([res, fields]) =>{ console.log(' '+JSON.stringify(res))})
-          .catch(err=>{console.log(err)})
+          .catch(err=>{console.error(err); res.send (err) })
         }
       })
-      .catch(err=>{console.log(err)})
+      .catch(err=>{console.error(err); res.send (err) })
     }
     res.send('OK')
 })
 
 app.post(
   "/resetvoting", (req, response) => {
-    //user calculation algorithm !!!to be modified, it should become adaptive, also considering how much the user votes!!!
-    //first we select all the users through their id list: 
-    queryids = 'SELECT `id` from `users`';
-    mydb.promise().query(queryids)
-    .then(([usersids,fields]) => {
-      for (let i=0;i<usersids.length;i++){
-        //and then we select all comments per every user (although we could include those to which the user commented thanks to cvotes):
+    //user calculation algorithm !!!to be modified, it should become adaptive, also considering how much the user vote!!!
+    //first we select all the user through their id list: 
+    mydb.promise().query('SELECT `id` from `user`')
+    .then(([userids,fields]) => {
+      for (let i=0;i<userids.length;i++){
+        //and then we select all comments per every user (although we could include those to which the user commented thanks to commentsvote):
         querycomments = 
-            'select @D:=COALESCE(sum(`D`),0) from `comments` where `user` = \''+usersids[i].id+'\';'
-          + 'select @U:=COALESCE(sum(`U`),0) from `comments` where `user` = \''+usersids[i].id+'\';'
-          + 'select @F:=COALESCE(sum(`F`),0) from `comments` where `user` = \''+usersids[i].id+'\';'
-          + 'select @I:=COALESCE(sum(`I`),0) from `comments` where `user` = \''+usersids[i].id+'\';'
-          + 'select @C:=COALESCE(sum(`C`),0) from `comments` where `user` = \''+usersids[i].id+'\';'
-          + 'select @T:=COALESCE(sum(`T`),0) from `comments` where `user` = \''+usersids[i].id+'\';'
-          + 'select @E:=COALESCE(sum(`E`),0) from `comments` where `user` = \''+usersids[i].id+'\';'
-          + 'update `users` set `D` = @D, `U` = @U, `F` = @F, `I` = @I, `C` = @C, `T` = @T, `E` = @E where `users`.`id` = \'' +usersids[i].id+ '\';'
+            'select @D:=COALESCE(sum(`D`),0) from `comments` where `user` = \''+userids[i].id+'\';'
+          + 'select @U:=COALESCE(sum(`U`),0) from `comments` where `user` = \''+userids[i].id+'\';'
+          + 'select @F:=COALESCE(sum(`F`),0) from `comments` where `user` = \''+userids[i].id+'\';'
+          + 'select @I:=COALESCE(sum(`I`),0) from `comments` where `user` = \''+userids[i].id+'\';'
+          + 'select @C:=COALESCE(sum(`C`),0) from `comments` where `user` = \''+userids[i].id+'\';'
+          + 'select @T:=COALESCE(sum(`T`),0) from `comments` where `user` = \''+userids[i].id+'\';'
+          + 'select @E:=COALESCE(sum(`E`),0) from `comments` where `user` = \''+userids[i].id+'\';'
+          + 'update `user` set `D` = @D, `U` = @U, `F` = @F, `I` = @I, `C` = @C, `T` = @T, `E` = @E where `user`.`id` = \'' +userids[i].id+ '\';'
           mydb.promise().query(querycomments)
-        .catch(err=>{console.log(err)})
+        .catch(err=>{console.error(err); res.send (err) })
       }
-      for (let i=0;i<usersids.length;i++){
-        queryretrieve = 'select `D`,`U`,`F`,`I`,`C`,`T`,`E` from `users` where id = \''+usersids[i].id+'\';'
+      for (let i=0;i<userids.length;i++){
+        queryretrieve = 'select `D`,`U`,`F`,`I`,`C`,`T`,`E` from `user` where id = \''+userids[i].id+'\';'
         mydb.promise().query(queryretrieve)
         .then(([[res],fields])=>{
-          cc=['D','U','F','I','C','T','E']; var sum=0; var sum2=0; var sum3=0; var max=0; var res2={}; var res3={}; queryupdate = 'update `users` set ';
+          cc=['D','U','F','I','C','T','E']; var sum=0; var sum2=0; var sum3=0; var max=0; var res2={}; var res3={}; queryupdate = 'update `user` set ';
           for(let j=0;j<cc.length;j++){ sum += res[cc[j]]}
           if(sum==0){for(let j=0;j<cc.length;j++){res[cc[j]] = 4}
           }else{
@@ -361,16 +310,16 @@ app.post(
             for(let j=0;j<cc.length;j++){sum3 += res3[cc[j]]}
             for(let j=0;j<cc.length;j++){res[cc[j]] = Math.round(res3[cc[j]]/sum3*(21-sum2)+res2[cc[j]]+1)}
           }
-          for(let j=0;j<cc.length;j++){queryupdate = queryupdate + ' `vote` = \''+res[cc[j]]+'\','}
-          queryupdate = queryupdate.substring(0, queryupdate.length-1) + ' where id = \''+usersids[i].id+'\';'
+          for(let j=0;j<cc.length;j++){queryupdate = queryupdate + ' `condition` = \''+res[cc[j]]+'\','}
+          queryupdate = queryupdate.substring(0, queryupdate.length-1) + ' where id = \''+userids[i].id+'\';'
           mydb.promise().query(queryupdate)
-          .then(([res,fields])=>{//console.log(' '+JSON.stringify(res))
+          .then(([res,fields])=>{console.log(' '+JSON.stringify(res))
         })
-          .catch(err=>{console.log(err)})
+          .catch(err=>{console.error(err); res.send (err) })
           })
       }
     })
-    .catch(err=>{console.log(err)})
+    .catch(err=>{console.error(err); res.send (err) })
     response.send('OK')
 })
 
@@ -409,7 +358,7 @@ var projectModel = db.sequelize.define(
     created: { type: 'TIMESTAMP' },
     updated: { type: 'TIMESTAMP' },
   },
-  {    timestamps: false    },
+  {    timestamps: false, tableName: 'project',    },
 )
 
 var commentModel = db.sequelize.define(
@@ -430,7 +379,7 @@ var commentModel = db.sequelize.define(
     created: { type: 'TIMESTAMP' },
     updated: { type: 'TIMESTAMP' },
   },
-  {    timestamps: false    },
+  {    timestamps: false, tableName: 'comment',    },
 )
 
 var userModel = db.sequelize.define(
@@ -449,7 +398,7 @@ var userModel = db.sequelize.define(
       U: {type: Sequelize.TINYINT, allowNull: false, defaultValue: 4},
       D: {type: Sequelize.TINYINT, allowNull: false, defaultValue: 4},
       active: {type: Sequelize.TINYINT, allowNull: false, defaultValue: 1},
-      roles: {type: Sequelize.TINYINT, allowNull: false, defaultValue: 2},
+      role: {type: Sequelize.TINYINT, allowNull: false, defaultValue: 2},
       remember_token: { type: Sequelize.CHAR },
       payment_type: { type: Sequelize.CHAR },
       transaction_id: { type: Sequelize.CHAR },
@@ -459,37 +408,38 @@ var userModel = db.sequelize.define(
       created: { type: 'TIMESTAMP' },
       updated: { type: 'TIMESTAMP' },
   }, {
-      timestamps: false
+      timestamps: false,
+      tableName: 'user',
   }
 )
 
-var pvoteModel = db.sequelize.define(
-  'pvote',
+var projectvoteModel = db.sequelize.define(
+  'projectvote',
   {
       id: {type: Sequelize.INTEGER, primaryKey: true, autoincrement: true},
       user: {type: Sequelize.INTEGER, allowNull: false},
       project: {type: Sequelize.INTEGER, allowNull: false},
-      vote:  {type: Sequelize.CHAR, allowNull: false},
+      condition:  {type: Sequelize.CHAR, allowNull: false},
       created: { type: 'TIMESTAMP' },
       updated: { type: 'TIMESTAMP' },
   }, {
     timestamps: false,
-    //tableName: 'pvotes',
+    tableName: 'projectvote',
   }
 )
 
-var cvoteModel = db.sequelize.define(
-  'cvote',
+var commentvoteModel = db.sequelize.define(
+  'commentvote',
   {
       id: {type: Sequelize.INTEGER, primaryKey: true, autoincrement: true},
       user: {type: Sequelize.INTEGER, allowNull: false},
-      comment: {type: Sequelize.INTEGER, allowNull: false},
-      vote:  {type: Sequelize.CHAR, allowNull: false},
+      comments: {type: Sequelize.INTEGER, allowNull: false},
+      condition:  {type: Sequelize.CHAR, allowNull: false},
       created: { type: 'TIMESTAMP' },
       updated: { type: 'TIMESTAMP' },
   }, {
     timestamps: false,
-    //tableName: 'pvotes',
+    tableName: 'commentvote',
   }
 )
 
@@ -499,11 +449,12 @@ var removedpvoteModel = db.sequelize.define(
       id: {type: Sequelize.INTEGER, primaryKey: true, autoincrement: true},
       user: {type: Sequelize.INTEGER, allowNull: false},
       project: {type: Sequelize.INTEGER, allowNull: false},
-      vote:  {type: Sequelize.CHAR, allowNull: false},
+      condition:  {type: Sequelize.CHAR, allowNull: false},
       created: { type: 'TIMESTAMP' },
       updated: { type: 'TIMESTAMP' },
   }, {
     timestamps: false,
+    tableName: 'removedpvote',
   }
 )
 
@@ -513,11 +464,12 @@ var removedcvoteModel = db.sequelize.define(
       id: {type: Sequelize.INTEGER, primaryKey: true, autoincrement: true},
       user: {type: Sequelize.INTEGER, allowNull: false},
       comment: {type: Sequelize.INTEGER, allowNull: false},
-      vote:  {type: Sequelize.CHAR, allowNull: false},
+      condition:  {type: Sequelize.CHAR, allowNull: false},
       created: { type: 'TIMESTAMP' },
       updated: { type: 'TIMESTAMP' },
   }, {
     timestamps: false,
+    tableName: 'removecpvote',
   }
 )
 
@@ -526,11 +478,12 @@ var tagModel = db.sequelize.define(
   {
       id: {type: Sequelize.INTEGER, primaryKey: true, autoincrement: true},
       project: {type: Sequelize.INTEGER},
-      tagName: {type: Sequelize.CHAR, allowNull: false},
+      name: {type: Sequelize.CHAR, allowNull: false},
       created: { type: 'TIMESTAMP' },
       updated: { type: 'TIMESTAMP' },
   }, {
-    timestamps: false
+    timestamps: false,
+    tableName: 'tag',
   }
 )
 

@@ -11,8 +11,8 @@
           <b-form-input id="briefInput" v-model="formBrief" size="sm" required></b-form-input></b-form-group>
         <b-form-group label-for="contentInput" label="Content:" description="A longer description of the project idea">
           <b-form-textarea id="contentInput" v-model="formContent" size="sm" ></b-form-textarea></b-form-group>
-        <b-form-group label-for="tagsInput" label="Tags:" description="Tags. Separated, by, comma, :)">
-          <b-form-input id="tagsInput" v-model="formTags" size="sm" ></b-form-input></b-form-group>
+        <b-form-group label-for="tagInput" label="Tags:" description="Tags. Separated, by, comma, :)">
+          <b-form-input id="tagInput" v-model="formTag" size="sm" ></b-form-input></b-form-group>
         <div v-if="projectImage" class="row"><div class="col-10">
                     <b-form-group label-for="imageInput" label="Image:" description="The project image">
                       <b-form-file id="imageInput" v-model="formImageFile" ref="formImageFile" size="sm"></b-form-file>
@@ -34,7 +34,7 @@
         <!-- the parent project id owner will be notified, except for the Cooperacy project -->
         <b-form-group label-for="categoryInput" label="Category:" description="Please choose the project idea category">
           <b-form-select id="categoryInput" v-model="formCategory" >
-            <option v-for="category in categories" :key="category.id" :value="category.id">{{category.name}}</option>
+            <option v-for="category in category" :key="category.id" :value="category.id">{{category.name}}</option>
           </b-form-select></b-form-group>
         
         <h5 class="trust">BUDGET AND HUDGET</h5>
@@ -56,10 +56,9 @@
 <script>
 export default {
   middleware: ['auth'],
-  mounted() {   this.$store.dispatch('getCategoriesAction') },
+  mounted() {   this.$store.dispatch('getCategoryAction') },
   data() {
     return {
-      projects: [],
       formName: this.$store.state.project.name,
       formBrief: this.$store.state.project.brief,
       formContent: this.$store.state.project.content,
@@ -71,14 +70,14 @@ export default {
       formStageNofunding: this.$store.state.project.stage,
       formBudget: this.$store.state.project.budget,
       formHudget: this.$store.state.project.hudget,
-      formTags: '', // ######################################################### FIX NEEDED
+      formTag: '', // ######################################################### FIX NEEDED
     }
   },
   computed: { 
     nameInputState() { return this.name.length > 4 ? true : false },
     budgetInputState() { return this.bodget.length >= 1000 ? true : false },
-    categories(){return  this.$store.state.categories},
-    projectImage: function () { if (this.$store.state.project.image) { return require('../assets/images/projects/' + this.$store.state.project.id + '.png')}}
+    category(){return  this.$store.state.category},
+    projectImage: function () { if (this.$store.state.project.image) { return require('@/assets/image/project/' + this.$store.state.project.id + '.png')}}
   },
   methods: {
     projectForm() { 
@@ -98,21 +97,21 @@ export default {
         stage: this.formStageNofunding,
         budget: this.formBudget,
         hudget: this.formHudget, }
-      //vuex id, 'new' for new projects, taken from url for updates
+      //vuex id, 'new' for new project, taken from url for updates
       var dispatchId; this.$route.params.id ? dispatchId = this.$route.params.id : dispatchId = 'new'
       //vuex action to the database, the 'res'[ponse] variable brings the recently created or edited project >id< from the server..
       this.$store.dispatch('projectFormAction', {id: dispatchId, body: formBodyRequest}) 
-      //in order to use it in the tags table and in the image creation:
+      //in order to use it in the tag table and in the image creation:
       .then(async res => {
         if (res=='exists'){ return this.$toast.show('Project already exists!', {duration: 1000, className: 'toasts'})}
-        if (this.formTags){
-          var splittedTags = this.formTags.split(",")
-          for (let i=0; i<splittedTags.length; i++) {
-            if (splittedTags[i]==''){continue}
-            splittedTags[i] = splittedTags[i].replace(/^[ ]+/gi,'') //removes spaces at the beginning of tags
+        if (this.formTag){
+          var splittedTag = this.formTag.split(",")
+          for (let i=0; i<splittedTag.length; i++) {
+            if (splittedTag[i]==''){continue}
+            splittedTag[i] = splittedTag[i].replace(/^[ ]+/gi,'') //removes spaces at the beginning of tag
             let res = await this.$store.dispatch('tagFormAction', {
               project: res,
-              tagName: splittedTags[i]
+              name: splittedTag[i]
             })
             .catch(err => { console.log(err) })
           }
@@ -129,7 +128,7 @@ export default {
       let res = await this.$store.dispatch('imageUploadAction', {
           formImageData: formImageData, 
           headers: {headers: { 'Content-Type': 'multipart/form-data' }},
-          type: 'project',
+          proptype: 'project',
         })
         .catch(err => {console.log(err)})
         if (res) {this.doneToast()}

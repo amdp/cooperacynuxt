@@ -4,7 +4,7 @@
       <div class="row"><div class="col-12 d-flex justify-content-center"><p class="care subheading">OR CREATE A NEW ACCOUNT:</p></div></div>
       <div class="row">
         <div class="col-12 d-flex justify-content-center">
-          <b-form @submit.prevent="newUser" class="mt-3 was-validated">
+          <b-form @submit.prevent="newuser" class="mt-3 was-validated">
             <b-form-group label-for="nameInput" label="Name:" description="Please insert your name">
               <b-form-input id="nameInput" v-model="formName" size="sm" required></b-form-input></b-form-group>
             <b-form-group label-for="surnameInput" label="Surname:" description="Please insert your surname">
@@ -37,17 +37,17 @@ export default {
     }
   },
   methods: {
-    async newUser() {
-      var newUser = await this.$store.dispatch('newUserAction', { 
+    async newuser() {
+      var newuser = await this.$store.dispatch('newuserAction', { 
         name: this.formName,
         surname: this.formSurname,
         email: this.formEmail,
         password: this.formPassword,
       })
-      if (newUser == 'exists'){return this.$toast.show('Email already in use!', {duration: 1000, className: 'toasts'})}
+      if (newuser == 'exists'){return this.$toast.show('Email already in use!', {duration: 1000, className: 'toasts'})}
       if (this.formImageFile) {
         //the res variable in response from the server sends the id of the recently created user
-        this.imageUpload(newUser.id)
+        this.imageUpload(newuser.id)
         .catch(err => console.log(err))
       }else{this.addedToast()}
     },
@@ -58,7 +58,7 @@ export default {
         let res = await this.$store.dispatch('imageUploadAction', {
           formImageData: formImageData, 
           headers: {headers: { 'Content-Type': 'multipart/form-data' }},
-          type: 'user',
+          proptype: 'user',
         })
         .catch(err => {console.log(err)})
         if (res) {this.addedToast()}

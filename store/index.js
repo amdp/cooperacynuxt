@@ -1,18 +1,16 @@
 import axios from 'axios'
 
 export const state = () => ({
-  projects: '',
-  project: '',
-  comments: '',
-  votes: '',
-  mypvotes: '',
-  mycvotes: '',
-  pedit: false,
-  cedit: false,
-  tags: '',
-  categories: '',
-  conditions: [ 'equivalence', 'trust', 'care', 'transparency', 'freedom', 'understanding', 'diversity' ],
-  shortconditions: ['E','T','C','I','F','U','D'],
+  project: [],
+  comment: [],
+  vote: [],
+  projectuservote: [],
+  commentuservote: [],
+  edit: false,
+  tag: [],
+  category: [],
+  condition: [ 'equivalence', 'trust', 'care', 'transparency', 'freedom', 'understanding', 'diversity' ],
+  shortcondition: ['E','T','C','I','F','U','D'],
 })
 
 export const getters = { 
@@ -20,35 +18,27 @@ export const getters = {
 }
 
 export const mutations = {
-  getProjects: (state, payload) => {
-    state.projects = payload
+  getProptype: (state, payload) => {
+    state[payload.proptype] = payload.body
   },
-  getProject: (state, payload) => {
-    state.project = payload
+  getUservote: (state, payload) => {
+    state[payload.proptype + 'uservote'] = payload.body
   },
-  getComments: (state, payload) => {
-    state.comments = payload
+  voteUpdate: (state,payload) => {//updates the voted proptype (project or comment) state and uservote table
+    var votedProptype = state[payload.proptype].find(proptype => proptype.id == payload.id)
+    votedProptype[payload.cc] += payload.add //at this point we have updated the proptype, we proceed with the uservote table:
+    payload.add == 1 ? state[payload.proptype+'uservote'].push({user: payload.user, [payload.proptype]: payload.id, condition: payload.cc})
+    : state[payload.proptype+'uservote'].splice(
+      state[payload.proptype+'uservote'].findIndex(uservote => uservote[payload.proptype] == payload.id && uservote.condition == payload.cc),1)
   },
-  getMypvotes: (state, payload) => {
-    state.mypvotes = payload
+  getTag: (state, payload) => {
+    state.tag = payload
   },
-  getMycvotes: (state, payload) => {
-    state.mycvotes = payload
-  },
-  votedProject: (state,payload) => {
-    var projectToUpdate = state.projects.find(project => project.id === payload.id)
-    projectToUpdate[payload.votedcc] += payload.add
-    payload.add != -1 ? state.mypvotes.push({user: payload.user, project: payload.id, vote: payload.cc})
-    : state.mypvotes.splice(state.mypvotes.findIndex(x => x.project == payload.id && x.vote == payload.cc),1)
-  },
-  getTags: (state, payload) => {
-    state.tags = payload
-  },
-  getCategories: (state, payload) => {
-    state.categories = payload
+  getCategory: (state, payload) => {
+    state.category = payload
   },
   editSwitch: (state,payload) => {
-    payload.type == 'p' ? state.pedit = payload : state.cedit = payload
+    state.edit = payload
   },
 }
 
@@ -59,85 +49,74 @@ export const actions = {
 // warning: it seems all actions must use {data} as per response payload, 
 // don't change the word "data" between the brackets if not tested
 
-////////////////////////////// PROJECTS //////////////////////////////
+  getProptypeAction: async (context,payload) => {
+    let {data} = await axios({url:'/db/proptype', params: payload})
+    let go = {body: data, proptype: payload.proptype}
+    let gouser = {id: payload.userid, proptype: payload.proptype}
+    if (payload.where){gouser.where = payload.where}
+    context.dispatch('getUservoteAction', gouser )
+    context.commit('getProptype', go)
+  },
 
-  getProjectsAction: async (context,payload) => {
-    let {data} = await axios({url:'/db/projects', params: payload})
-    context.dispatch('myPvotesAction', {id: payload.userid, type: 'p'} )
-    context.commit('getProjects',data)
-  },
-  getProjectAction: async (context,payload) => {
-    let {data} = await axios.get('/db/project/' + payload.id)
-    context.commit('getProject',data)
-  },
   projectFormAction: async (context,payload) => {
     let {data} = await axios.post('/db/project/' + payload.id, payload.body)
     if (data.id){return data.id}
     else{return data}
   },
 
-////////////////////////////// COMMENTS //////////////////////////////
-
-  getCommentsAction: async (context,payload) => {
-    let {data} = await axios({url:'/db/comments', params: payload})
-    context.commit('getComments',data)
-  },
   commentFormAction: async (context,payload) => {
     let {data} = await axios.post('/db/comment/' + payload.id, payload.body)
     if (data.id){return data.id}
     else{return data}
   },
 
-////////////////////////////// USERS //////////////////////////////
+////////////////////////////// VOTE //////////////////////////////
 
-newUserAction: async (context, payload) => {
+  // this is the action that GETS THE VOTE
+  getUservoteAction: async (context, payload) => {
+    let {data} = await axios({url:'/db/uservote', params: payload})
+    let go = {body: data, proptype: payload.proptype}
+    if (payload.where){go.where = payload.where}
+    context.commit('getUservote', go)
+  },
+  // this is the action that EDITS THE VOTE
+  addVoteAction : async (context,payload) => {
+    let { data } = await axios.post('/db/vote', payload)
+  },
+
+////////////////////////////// USER //////////////////////////////
+
+newuserAction: async (context, payload) => {
   let {data} = await axios.post('/db/user', payload)
   return data
 },
-updateUserAction: async (context, payload) => {
+updateuserAction: async (context, payload) => {
   let {data} = await axios.put('/db/user', payload)
   return data
 },
 
-////////////////////////////// VOTES //////////////////////////////
+////////////////////////////// MISC //////////////////////////////
 
-  myPvotesAction: async (context, payload) => {
-    let {data} = await axios({url:'/db/uservotes', params: payload})
-    context.commit('getMypvotes',data)
-  },
-  myCvotesAction: async (context, payload) => {
-    let {data} = await axios({url:'/db/uservotes', params: payload})
-    context.commit('getMycvotes',data)
-  },
-  addVoteAction : async (context,payload) => {
-    let { data } = await axios.post('/db/votes', payload.body)
-  },
-
-////////////////////////////// TAGS //////////////////////////////
-
-  getTagsAction: async (context,payload) => {
-    let {data} = await axios.get('/db/tags')
-    context.commit('getTags',data)
+  getTagAction: async (context,payload) => {
+    let {data} = await axios.get('/db/tag')
+    context.commit('getTag',data)
   },
   tagFormAction: async (context,payload) => {
-    let {data} = await axios.post('/db/tags/' + payload.id, payload.body)
+    let {data} = await axios.post('/db/tag/', payload.body)
     return data
   },
 
-////////////////////////////// MISC //////////////////////////////
-
-  getCategoriesAction: async (context,payload) => {
-    let {data} = await axios.get('/db/categories')
-    context.commit('getCategories',data)
-  },
   editSwitchAction: async (context,payload) => {
     context.commit('editSwitch',payload)
-    return true
   },
+
+  getCategoryAction: async (context,payload) => {
+    let {data} = await axios.get('/db/category')
+    context.commit('getCategory',data)
+  },
+
   imageUploadAction: async (context,payload) => {
-    if (payload.type ==    'user') {var {data} = await axios.post( '/db/userimage',     payload.formImageData, payload.headers)}
-    if (payload.type == 'project') {var {data} = await axios.post( '/db/projectimage',  payload.formImageData, payload.headers)}
-    if (payload.type == 'comment') {var {data} = await axios.post( '/db/commentimage',  payload.formImageData, payload.headers)}
+    var {data} = await axios.post( '/db/image', payload.formImageData, payload.headers, payload.proptype)
     return data.status
   },
 
