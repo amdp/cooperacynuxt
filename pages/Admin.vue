@@ -1,7 +1,7 @@
 <template>
   <div>
-    <b-button @click="resetcpvoting">RE-SETUP COMMENTS AND PROJECTS VOTES</b-button>
-    <b-button @click="resetvoting">RE-SETUP USERS COLORBARS</b-button>
+    <b-button @click="resetcpvoting">RE-SETUP COMMENT AND PROJECT VOTING</b-button>
+    <b-button @click="resetvoting">RE-SETUP USER COLORBARS</b-button>
   </div>
 </template>
 

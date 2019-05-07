@@ -53,7 +53,7 @@ export default {
         let res = await this.$store.dispatch('imageUploadAction', {
           formImageData: formImageData, 
           headers: {headers: { 'Content-Type': 'multipart/form-data' }},
-          type: 'user',
+          proptype: 'user',
         })
         .catch(err => {console.log(err)})
         if (res) {this.userUpdate()}
