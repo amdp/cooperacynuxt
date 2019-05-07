@@ -1,4 +1,4 @@
-<!-- src="@/assets/images/main/coo.png" :src="require('@/assets/images/projects/' + project.image)" 
+<!-- src="@/assets/image/main/coo.png" :src="require('@/assets/image/project/' + project.image)" 
 
 var cci = get.from the database.the array
 console.log(JSON.stringify(cci))
@@ -6,12 +6,12 @@ console.log(JSON.stringify(cci))
 
 <template>
   <div class="mx-auto mt-4 mb-5">
-    <div class="row mt-5" v-for="project in projects" :key="project.id">
+    <div class="row mt-5" v-for="project in project" :key="project.id">
       <div class="col-12">
         <div class="row">
           <div class="col-1"></div>
           <div class="col-2" v-if="project.image">
-            <img :src="require('@/assets/images/projects/' + project.image)" width="100px" />
+            <img :src="require('@/assets/image/project/' + project.image)" width="100px" />
           </div>
           <div class="col-2" v-else> </div>
           <div class="col-9">
@@ -23,7 +23,7 @@ console.log(JSON.stringify(cci))
             </div>
           </div>
         </div>
-        <votebars />
+        <votebar />
       </div>
     </div>
 
@@ -32,17 +32,17 @@ console.log(JSON.stringify(cci))
 </template>
 
 <script>
-import Votebars from '@/components/Votebars'
+import Votebar from '@/components/Votebar'
 
 export default {
   computed: {
-      projects(){return  this.$store.state.projects}
+      project(){return  this.$store.state.project}
   },
   mounted() {
-    this.$store.dispatch('getProjects')
+    this.$store.dispatch('get')
   },
   components: {
-    Votebars: Votebars,
+    Votebar: Votebar,
   },
 }
 </script> -->

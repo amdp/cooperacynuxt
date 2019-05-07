@@ -11,7 +11,7 @@ Content-Type: image/png
 
 < test.png
 
-  POST http://localhost:5000/projects HTTP/1.1
+  POST http://localhost:5000/project HTTP/1.1
 content-type: application/json
 {
   "id": "593",
@@ -27,7 +27,7 @@ content-type: application/json
   "image": "image",
   "video": "video"
 }
-PUT http://localhost:5000/projects/593 HTTP/1.1
+PUT http://localhost:5000/project/593 HTTP/1.1
 Content-type: application/x-www-form-urlencoded
 name=name3
 
@@ -36,7 +36,7 @@ Content-type: application/json
 
 
 
-GET http://localhost:5000/serverDB/projects HTTP/1.1
+GET http://localhost:5000/serverDB/project HTTP/1.1
 Content-type: application/json
 < test.png
 
@@ -60,7 +60,7 @@ Content-type: application/json
   "password": "qqq"
 }
 
-GET http://127.0.0.1:3000/db/comments HTTP/1.1
+GET http://127.0.0.1:3000/db/comment HTTP/1.1
 Content-type: application/json
 
 {"id":"1"}
