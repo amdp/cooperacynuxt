@@ -35,8 +35,8 @@ export const mutations = {
 // warning: don't change the word "data" between curly braces if not tested
 
 export const actions = {
-  getProptypeAction: async (context,payload) => {console.log(' '+JSON.stringify(payload));
-    let {data} = await axios({url:'/db/proptype', params: payload})
+  getProptypeAction: async (context,payload) => {
+    let {data} = await axios({url:'http://127.0.0.1:3000/db/proptype', params: payload})
     let go = {body: data, proptype: payload.proptype}
     let gouser = {id: payload.userid, proptype: payload.proptype}
     if (payload.where){gouser.where = payload.where}
@@ -44,47 +44,47 @@ export const actions = {
     context.commit('setProptype', go)
   },
 
-  projectFormAction: async (context,payload) => {let {data} = await axios.post('/db/project', payload)
+  projectFormAction: async (context,payload) => {let {data} = await axios.post('http://127.0.0.1:3000/db/project', payload)
     if (data.id){return data.id}else{return data} },
 
-  commentFormAction: async (context,payload) => {let {data} = await axios.post('/db/comment', payload)
+  commentFormAction: async (context,payload) => {let {data} = await axios.post('http://127.0.0.1:3000/db/comment', payload)
     payload.id=data.id; context.commit('commentUpdate', payload) },
 
 ////////////////////////////// VOTE //////////////////////////////
 
   // this action GETS THE VOTE
   getUservoteAction: async (context, payload) => {
-    let {data} = await axios({url:'/db/uservote', params: payload})
+    let {data} = await axios({url:'http://127.0.0.1:3000/db/uservote', params: payload})
     let go = {body: data, proptype: payload.proptype}
     if (payload.where){go.where = payload.where}
     context.commit('setUservote', go)
   },
   // this action EDITS THE VOTE
-  addVoteAction : async (context,payload) => {let {data} = await axios.post('/db/vote', payload); return data },
+  addVoteAction : async (context,payload) => {let {data} = await axios.post('http://127.0.0.1:3000/db/vote', payload); return data },
 
 ////////////////////////////// USER //////////////////////////////
 
 newuserAction: async (context, payload) => {
-  let {data} = await axios.post('/db/user', payload)
+  let {data} = await axios.post('http://127.0.0.1:3000/db/user', payload)
   let go = {to: payload.email, subject: 'user registration confirmation', body: 'You have been registered.'}
-  axios.post('/db/email', go)
+  axios.post('http://127.0.0.1:3000/db/email', go)
   return data
 },
-updateuserAction: async (context, payload) => {let {data} = await axios.put('/db/user', payload); return data},
+updateuserAction: async (context, payload) => {let {data} = await axios.put('http://127.0.0.1:3000/db/user', payload); return data},
 
 ////////////////////////////// MISC //////////////////////////////
 
-  getTagAction: async (context,payload) => {let {data}=await axios.get('/db/tag') 
+  getTagAction: async (context,payload) => {let {data}=await axios.get('http://127.0.0.1:3000/db/tag') 
     context.commit('setTag',data) },
-  getCategoryAction: async (context,payload) => {let {data} = await axios.get('/db/category')
+  getCategoryAction: async (context,payload) => {let {data} = await axios.get('http://127.0.0.1:3000/db/category')
     context.commit('setCategory',data) },
-  tagFormAction: async (context,payload)=>{let {data} = await axios.post('/db/tag/',payload.body); return data},
+  tagFormAction: async (context,payload)=>{let {data} = await axios.post('http://127.0.0.1:3000/db/tag/',payload.body); return data},
   editSwitchAction: async (context,payload) => {context.commit('editSwitch',payload)},
   imageUploadAction: async (context,payload) => { 
-    let {data} = await axios.post( '/db/image', payload.formImageData, payload.headers, payload.proptype)
+    let {data} = await axios.post( 'http://127.0.0.1:3000/db/image', payload.formImageData, payload.headers, payload.proptype)
     return data.status
   },
 //Admin stuff here: be careful
-  resetVotingAction: async (context,payload) => {let{data} = await axios.post('/db/resetvoting'); return 'OK' },
-  resetcpVotingAction: async (context,payload)=>{let{data} = await axios.post('/db/resetcpvoting');return 'OK'},
+  resetVotingAction: async (context,payload) => {let{data} = await axios.post('http://127.0.0.1:3000/db/resetvoting'); return 'OK' },
+  resetcpVotingAction: async (context,payload)=>{let{data} = await axios.post('http://127.0.0.1:3000/db/resetcpvoting');return 'OK'},
 }
