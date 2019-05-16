@@ -22,20 +22,20 @@ export default {
       let voteif = []; for (let i=0;i<7;i++){
 
         // choosing the style to apply if the user voted this project/comment specific vote color:
-        var votetyle; var uservoted
+        var votestyle; var uservoted
         this.$store.state[this.proptype + 'uservote'] ? uservoted = this.$store.state[this.proptype + 'uservote'].findIndex(
           x => x[this.proptype] == this.voteprop.id && x.condition == this.$store.state.shortcondition[i])
           : uservoted = 0
-        uservoted != -1 ? votetyle = 'var(--'+this.$store.state.condition[i]+')'
+        uservoted != -1 ? votestyle = 'var(--my'+this.$store.state.condition[i]+')'
           : this.voteprop[this.$store.state.shortcondition[i]] != 0 ? 
-            votetyle = 'var(--mild'+this.$store.state.condition[i]+')' 
-            : votetyle = 'var(--dark'+this.$store.state.condition[i]+')'
+            votestyle = 'var(--they'+this.$store.state.condition[i]+')' 
+            : votestyle = 'var(--no'+this.$store.state.condition[i]+')'
 
         // applying the right style to vote:
         voteif.push({ // for all vote:
           v:  this.voteprop[this.$store.state.shortcondition[i]], 
           vlong: this.$store.state.condition[i],
-          style: 'background-color: '+votetyle,
+          style: 'background-color: '+votestyle,
         })} // now we already have a 7 elements array so we just add json keys as needed:
       if (this.proptype == 'user') { for (let i=0;i<7;i++){
         voteif[i].class = 'uservote b'+this.$store.state.condition[i]+' '+this.$store.state.condition[i],
@@ -54,7 +54,9 @@ export default {
     }
   },
   methods: {
-    voteswitch(cc){ // CLIENT-SIDE: sends id, votetype, user and adds 1/-1 to the vuex store variable 
+    voteswitch(cc){ 
+      if (!this.$auth.user){return this.$router.push({path: '/login'})}
+      // CLIENT-SIDE: sends id, votetype, user and adds 1/-1 to the vuex store variable 
       var add;  this.$store.state[this.proptype+'uservote'].findIndex( // checks if the vote exists, adds accordingly
         x => x[this.proptype] == this.voteprop.id && x.condition == cc) == -1 ? add = 1 : add = -1
       this.$store.commit('voteUpdate', {id: this.voteprop.id, cc: cc, user: this.$auth.user.id, add: add, proptype: this.proptype})
@@ -63,7 +65,7 @@ export default {
       var request = {id: this.voteprop.id, condition: cc, user: this.$auth.user.id, proptype: this.proptype}
       if (this.proptype == 'comment'){request.projectid = this.$route.params.id}
       this.$store.dispatch('addVoteAction', request)
-      .catch(err=>{console.log(err)})
+      .catch(err=>{console.error(err)})
     }
   }
 }

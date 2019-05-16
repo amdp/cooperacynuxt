@@ -38,14 +38,12 @@
           </b-form-select></b-form-group>
         
         <h5 class="trust">BUDGET AND HUDGET</h5>
-        <b-form-checkbox id="stageInput" v-model="formStageNofunding" switch class="m-3">FUNDED: this project idea needs Cooperacy Funds </b-form-checkbox>
-        <!--<b-form-group label-for="collectedInput" label="Collected:" description="insert the project Collected">
-        <b-form-input id="collectedInput" v-model="formCollected" ></b-form-input></b-form-group>-->
-        <b-form-group label-for="budgetInput" label="Budget:" description="insert the project Budget">
-          <b-form-input id="budgetInput" v-model="formBudget" ></b-form-input></b-form-group>
-        <b-form-group label-for="hudgetInput" label="Hudget:" description="insert the project Hudget">
-          <b-form-input id="hudgetInput" v-model="formHudget" ></b-form-input></b-form-group>
-      
+        <b-form-checkbox id="stageInput" v-model="formStageNofunding" switch class="m-3" @change="funded">FUNDED: this project idea needs Cooperacy Funds</b-form-checkbox>
+        <b-form-group label-for="budgetInput" :label="budgetlabel" :description="budgetdesc">
+          <b-form-input id="budgetInput" v-model="formBudget" @keypress="totalnonfunded" ></b-form-input></b-form-group>
+        <b-form-group label-for="hudgetInput" :label="hudgetlabel" :description="hudgetdesc">
+          <b-form-input id="hudgetInput" v-model="formHudget" @keypress="totalnonfunded"></b-form-input></b-form-group>
+        <h6 class="trust" v-if="this.totallabel != -1">TOTAL NON-FUNDED BUDGET: {{totallabel}}</h6>
         <b-button type="submit" class="btn btrust btn-block mt-3 gray border-0">GO!</b-button>
       </b-form>
     </div>
@@ -59,6 +57,11 @@ export default {
   mounted() {   this.$store.dispatch('getCategoryAction') },
   data() {
     return {
+      budgetlabel:  'Fee:',
+      hudgetlabel:  'Minimum participants:',
+      budgetdesc:   'Insert the amount the project participants should pay to participate',
+      hudgetdesc:   'Insert the minimum number of paying participants so that the project is sustainable',
+      totallabel: 0,
       formName: this.$store.state.project.name,
       formBrief: this.$store.state.project.brief,
       formContent: this.$store.state.project.content,
@@ -68,8 +71,8 @@ export default {
       formParent: this.$store.state.project.parent,
       formCategory: this.$store.state.project.category,
       formStageNofunding: this.$store.state.project.stage,
-      formBudget: this.$store.state.project.budget,
-      formHudget: this.$store.state.project.hudget,
+      formBudget: this.$store.state.project.budget ? this.$store.state.project.budget : 0,
+      formHudget: this.$store.state.project.hudget ? this.$store.state.project.hudget : 0,
       formTag: '', // ######################################################### FIX NEEDED
     }
   },
@@ -85,8 +88,11 @@ export default {
       if (!this.formAnonymous) {this.formAnonymous = 0}
       if (this.formStageNofunding) {this.formStageNofunding = 5
       }else{ this.$store.state.project.stage ? this.$store.state.project.stage : this.formStageNofunding = 7}
+      //'new' is set for a new project, if not the param.id is taken from url to update old ones
+      var dispatchId; this.$route.params.id ? dispatchId = this.$route.params.id : dispatchId = 'new'
       //database request body
       var formBodyRequest = { 
+        id: dispatchId,
         name: this.formName,
         brief: this.formBrief,
         content: this.formContent,
@@ -97,10 +103,8 @@ export default {
         stage: this.formStageNofunding,
         budget: this.formBudget,
         hudget: this.formHudget, }
-      //vuex id, 'new' for new project, taken from url for updates
-      var dispatchId; this.$route.params.id ? dispatchId = this.$route.params.id : dispatchId = 'new'
       //vuex action to the database, the 'res'[ponse] variable brings the recently created or edited project >id< from the server..
-      this.$store.dispatch('projectFormAction', {id: dispatchId, body: formBodyRequest}) 
+      this.$store.dispatch('projectFormAction', formBodyRequest) 
       //in order to use it in the tag table and in the image creation:
       .then(async res => {
         if (res=='exists'){ return this.$toast.show('Project already exists!', {duration: 1000, className: 'toasts'})}
@@ -113,24 +117,25 @@ export default {
               project: res,
               name: splittedTag[i]
             })
-            .catch(err => { console.log(err) })
+            .catch(err => { console.error(err) })
           }
         }
         if (this.formImageFile) {
           this.imageUpload(res)
-        }else if(dispatchId=='new'){/*if new and without image, Cooperacy project image is added as standard TOBEDONE ######################################################### FIX NEEDED */}
+        }else if(dispatchId=='new'){this.imageUpload(res, 'empty')}
       })  
     },
-    async imageUpload(id) {
+    async imageUpload(id, empty) {
       let formImageData = new FormData()
       formImageData.append('file', this.formImageFile)
       formImageData.append('id', id)
+      if(empty){formImageData.append('empty', true); formImageData.append('proptype','project')}
       let res = await this.$store.dispatch('imageUploadAction', {
           formImageData: formImageData, 
           headers: {headers: { 'Content-Type': 'multipart/form-data' }},
           proptype: 'project',
         })
-        .catch(err => {console.log(err)})
+        .catch(err => {console.error(err)})
         if (res) {this.doneToast()}
     },
     doneToast(){
@@ -140,6 +145,20 @@ export default {
       // ######################################################### FIX NEEDED
       setTimeout(function(){location.href = location.href},1200)
     },
+    funded(){
+      this.budgetlabel=='Fee:' ? this.budgetlabel='Budget:' : this.budgetlabel='Fee:'
+      this.hudgetlabel=='Minimum participants:' ? this.hudgetlabel='Hudget:' : this.hudgetlabel='Minimum participants:'
+      this.budgetdesc=='Insert the amount the project participants should pay to participate' ? 
+      this.budgetdesc= 'Insert the project Budget' : 
+      this.budgetdesc= 'Insert the amount the project participants should pay to participate'
+      this.hudgetdesc=='Insert the minimum number of paying participants so that the project is sustainable' ? 
+      this.hudgetdesc= 'Insert the project Hudget' : 
+      this.hudgetdesc= 'Insert the minimum number of paying participants so that the project is sustainable'
+      this.budgetlabel=='Fee:' ? this.totallabel = this.formBudget*this.formHudget : this.totallabel = -1
+    },
+    totalnonfunded(){
+      this.totallabel = this.formBudget*this.formHudget
+    }
   }
 }
 </script>
