@@ -13,7 +13,7 @@ export default {
   middleware: ['auth'],
   components: { Projectlist: Projectlist, },
   
-  //async fetch ({ store, params }) { 
-    //await store.dispatch('getProptypeAction', {userid: store.state.auth.user.id, proptype: 'project' }) },
+  async fetch ({ store, params }) { 
+    await store.dispatch('getProptypeAction', {userid: store.state.auth.user.id, proptype: 'project' }) },
 }
 </script>
