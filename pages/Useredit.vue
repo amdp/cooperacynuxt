@@ -55,7 +55,7 @@ export default {
           headers: {headers: { 'Content-Type': 'multipart/form-data' }},
           proptype: 'user',
         })
-        .catch(err => {console.log(err)})
+        .catch(err => {console.error(err)})
         if (res) {this.userUpdate()}
       }
     },
@@ -67,12 +67,12 @@ export default {
         email: this.formEmail,
         password: this.formPassword,
       })
-      .catch(err => {console.log(err)} )
+      .catch(err => {console.error(err)} )
       if(updateUser){ this.userReload()} // reloads the updated user information
     },
     userReload(){
       this.$auth.fetchUser()
-      .catch(err => {console.log(err)} )
+      .catch(err => {console.error(err)} )
       location.reload(true) // reloads the page
     },
   }

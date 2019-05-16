@@ -1,17 +1,11 @@
 const pkg = require('./package')
 
 module.exports = {
-  server: {
-    port: 3000,
-    host: '0.0.0.0', 
-  },
+  server: { port: 3000, host: '0.0.0.0', },
   serverMiddleware: ['./db'],
   mode: 'universal',
-  axios: {
-    proxy: true
-  },
-  proxy: { '/db': 'http://127.0.0.1:3000' },
-
+  //env: {baseUrl: process.env || 'http://127.0.0.1:3000'},
+  axios: { proxy: true }, proxy: { '/db': 'http://127.0.0.1:3000' },
 
   /*
   ** Headers of the page

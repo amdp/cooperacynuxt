@@ -48,7 +48,7 @@ export default {
       if (this.formImageFile) {
         //the res variable in response from the server sends the id of the recently created user
         this.imageUpload(newuser.id)
-        .catch(err => console.log(err))
+        .catch(err => console.error(err))
       }else{this.addedToast()}
     },
     async imageUpload(id) {
@@ -60,7 +60,7 @@ export default {
           headers: {headers: { 'Content-Type': 'multipart/form-data' }},
           proptype: 'user',
         })
-        .catch(err => {console.log(err)})
+        .catch(err => {console.error(err)})
         if (res) {this.addedToast()}
     },
     addedToast(){

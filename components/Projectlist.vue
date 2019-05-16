@@ -26,14 +26,8 @@
 
 <script>
 import Votebar from '@/components/Votebar'
-//warning this list can be viewed also by non members so the vote colors should be fixed! #########FIXMEEE
 export default {
-  mounted() { this.$store.dispatch('getProptypeAction', {userid: this.$auth.user.id, proptype: 'project'}) },
-  /* We should use fetch to make a single call to the server:         #############
-  async fetch ({ store }) { 
-    await store.dispatch('getProptypeAction', {userid: store.state.auth.user.id, proptype: 'project' })
-      return store.state.project
-   },*/
+  mounted(){ this.$store.dispatch('getProptypeAction', {userid: this.$auth.user.id, proptype: 'project'}) },
   components: { Votebar: Votebar, },
 }
 </script>

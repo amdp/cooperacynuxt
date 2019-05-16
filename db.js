@@ -1,7 +1,8 @@
 var express = require("express")
-var bodyParser = require("body-parser")
-var Jimp = require('jimp');
 var app = express()
+var bodyParser = require("body-parser")
+const nodemailer = require("nodemailer");
+var Jimp = require('jimp');
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
 const fileUpload = require('express-fileupload')
@@ -22,34 +23,29 @@ db.sequelize = sequelize; db.Sequelize = Sequelize
 var cc=['D','U','F','I','C','T','E']; var cclong = ['diversity','understanding','freedom','transparency','care','trust','equivalence']
 
 //////////////////////////////////////////////////////////////////////
-///////                         PROJECT                        ///////
+///////                  PROJECTS AND COMMENTS                 ///////
 //////////////////////////////////////////////////////////////////////
 
 app.get(
-"/proptype", async (req, res) =>{ var proptypequery='SELECT * FROM `'+req.query.proptype+'`'
+"/proptype", async (req, res) =>{var proptypequery='SELECT * FROM `'+req.query.proptype+'`'
   if (req.query.where) proptypequery += ' WHERE '+req.query.where
   mydb.promise().query(proptypequery)
   .then(([project, fields])=>{res.send(project)}).catch(err => {console.error(err); res.send (err) })
 })
 
 app.post(
-  "/project/:id", (req, res) => {
-    if (req.params.id != 'new'){
-      sequelize.query(
-          'SELECT * FROM `project` WHERE `project`.`name`="' + req.body.name + 
-          '" AND `project`.`id`=' + req.params.id + ' LIMIT 1;',
-        {type: Sequelize.QueryTypes.SELECT})
-      .then(projectx => {
-        if(projectx) {
-          projectModel.update(req.body, { where: {id: req.params.id}})
+  "/project", (req, res) => {
+    if (req.params.id != 'new'){mydb.promise().query('SELECT * FROM `project` WHERE `project`.`name`="' + req.body.name 
+    + '" AND `project`.`id`=' + req.params.id + ' LIMIT 1;')
+      .then(([project,fields]) => {
+        if(project) { projectModel.update(req.body, { where: {id: req.params.id}})
           .then(()=>{res.json({id: req.params.id}) })
         }else{res.json('exists')}
       })
       .catch(err => {console.error(err); res.send (err) })
     }else{
       projectModel.findOne({ where: { name: req.body.name } })
-      .then(projectx => {
-        if(!projectx) {
+      .then(project => { if(!project) {
           projectModel.create(req.body)
           .then(()=>{
             // we use a raw query to retieve the id of the projectx we created
@@ -63,26 +59,19 @@ app.post(
     }
 })
 
-app.put(
-  "/project/:id", (req, res) => { if(!req.body.name) { 
-    res.status(400); res.json({ error: "Bad data" }) } else { projectModel.update( 
-      {name: req.body.name}, { where: {id: req.params.id} }) .then( () => { res.send ("Projectx Updated.") }) .error(err => res.send(err))
-  }
+app.post(
+  "/comment", (req, res) => {
+    if (req.body.id != 'new'){ commentModel.update(req.body, { where: {id: req.body.id}})
+      .then(()=>{res.json({id: req.body.id}) })
+      .catch(err => {console.error(err); res.send (err) })
+    }else{
+      let query = 'INSERT INTO `comment` (`user`,`project`,`parent`,`content`) VALUES (\''
+      +req.body.user+'\',\''+req.body.project+'\',\''+req.body.parent+'\',\''+req.body.content+'\')'
+      mydb.promise().query(query)
+      .then(([row,fields])=>{res.json({id: row.insertId})})
+      .catch(err => {console.error(err); res.send (err) })
+    }
 })
-
-app.delete(
-  "/project/:id", (req, res) => { projectModel.destroy ({ 
-    where: { id: req.params.id } }) .then( () => { res.send("Projectx deleted.") }) .catch(err => {console.error(err); res.send (err) })
-})
-
-//////////////////////////////////////////////////////////////////////
-///////                        COMMENTS                        ///////
-//////////////////////////////////////////////////////////////////////
-
-app.get(
-  "/comments", (req, res) =>{commentsModel.findAll({where: {'project': req.query.id }})
-    .then(comments => { res.json(comments) }) .catch(err => {console.error(err); res.send (err) })})
-
 
 //////////////////////////////////////////////////////////////////////
 ///////                          USER                          ///////
@@ -113,6 +102,7 @@ app.post(
           if(!user) {
             bcrypt.hash(req.body.password, 10, (err, hash) => {
               req.body.password = hash; userModel.create(req.body)
+//INSERT INTO `user` (`id`,`name`,`surname`,`email`,`password`,`E`,`T`,`C`,`I`,`F`,`U`,`D`,`active`,`role`) VALUES (?,?,);
               .then (user => {
                 sequelize.query('SELECT LAST_INSERT_ID() AS lastId', {type: Sequelize.QueryTypes.SELECT})
                 .then(id => {res.json({id: id[0].lastId}) })
@@ -130,7 +120,7 @@ app.put(
     res.status(400); res.json({ error: "Bad data" }) } else { 
       bcrypt.hash(req.body.password, 10, (err, hash) => {
         req.body.password = hash; userModel.update(req.body, { where: {id: req.body.id}})
-        .then(user => { console.log('user updated'), res.json('updated: ' + user) }) 
+        .then(user => {res.json('updated: ' + user) }) 
         .catch(err => {console.error(err); res.send (err) })
       })
   }
@@ -203,8 +193,19 @@ app.get(
 
 app.post(
   "/image", function(req, res) {
-  if (Object.keys(req.files).length == 0) { res.status(400).send('No files were uploaded.'); return }
-  try {uploadPath = './assets/image/'+ req.body.proptype + '/' + req.body.id + '.png'} catch (err) {console.error(err)}
+  if (req.body.empty){
+    standardimage = './assets/image/'+req.body.proptype+'/1.png'
+    Jimp.read(standardimage)
+    .then(standardimage => {
+      return standardimage
+        .resize(256, 256) // resize
+        .quality(60) // set quality
+        .write('./assets/image/'+ req.body.proptype + '/' + req.body.id + '.png'); // save
+    })
+    .then(()=>{res.json({ status: 'OK' }) })
+    .catch(err => {console.error(err); res.send (err) })
+  } else if (Object.keys(req.files).length == 0) { res.status(400).send('No files were uploaded.') }
+  else {try {uploadPath = './assets/image/'+ req.body.proptype + '/' + req.body.id + '.png'} catch (err) {console.error(err)}
   req.files.file.mv(uploadPath, function(err) { if (err) { return res.status(500).send(err) } })
   Jimp.read(uploadPath)
     .then(uploadPath => {
@@ -214,7 +215,7 @@ app.post(
         .write(uploadPath); // save
     })
   .then(res.json({ status: 'OK' }))
-  .catch(err => {console.error(err); res.send (err) })
+  .catch(err => {console.error(err); res.send (err) })}
 })
 
 app.get( // we apply a filter to avoid main category = 0
@@ -231,6 +232,19 @@ app.post(
 "/tag", (req, res) => { mydb.promise().query('INSERT INTO `tag` (`project`, `name`) VALUES ('+req.body.project+', '+req.body.name+'\')')
   .then(result => { res.send (result) }) .catch(err => {console.error(err); res.send (err) })
 })
+
+app.post('/email', function (req, res) {
+  let transporter = nodemailer.createTransport({host: 'smtp.gmail.com', port: 465, secure: true,
+      auth: { user: 'cooperacy@cooperacy.org', pass: 'c00p3r4t10n'}})
+  let mailOptions = {from: '"Cooperacy" <cooperacy@cooperacy.org>',
+      to: req.body.to,
+      subject: req.body.subject,
+      text: req.body.body,
+      //html: '<b>NodeJS Email Tutorial</b>' // html body
+  }
+  transporter.sendMail(mailOptions, (error, info) => { if (error) { return console.error(error) }
+      console.log('Message %s sent: %s', info.messageId, info.response); res.render('index')
+})})
 
 //////////////////////////////////////////////////////////////////////
 ///////                          CCI                           ///////
@@ -346,7 +360,6 @@ var projectModel = db.sequelize.define(
     name: {type: Sequelize.CHAR, allowNull: false},
     brief: {type: Sequelize.CHAR},
     content:  {type: Sequelize.CHAR},
-    image: { type: Sequelize.CHAR },
     video: { type: Sequelize.CHAR },
     E: {type: Sequelize.TINYINT, allowNull: false, defaultValue: 0},
     T: {type: Sequelize.TINYINT, allowNull: false, defaultValue: 0},

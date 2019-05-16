@@ -32,21 +32,21 @@ done
 #    function(err, results, fields) {
 #      console.log(results); // results contains rows returned by server
 #      console.log(fields); // fields contains extra meta data about results, if available
-#      console.log(err);
+#      console.error(err);
 #    }
 #  )
 #  connection.query(query2,
 #    function(err, results, fields) {
 #      console.log(results); // results contains rows returned by server
 #      console.log(fields); // fields contains extra meta data about results, if available
-#      console.log(err);
+#      console.error(err);
 #    }
 #  )
 #  connection.query(query3,
 #    function(err, results, fields) {
 #      console.log(results); // results contains rows returned by server
 #      console.log(fields); // fields contains extra meta data about results, if available
-#      console.log(err);
+#      console.error(err);
 #    }
 #  )
 #}, 1000);
