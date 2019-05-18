@@ -1,17 +1,19 @@
 <template>
   <div>
-    <a href="/projects/new" class="ad">Add a new Project</a>
-    <projectslist />
+    <a href="/useredit" class="ad">Edit your information</a><br>
+    <a href="/project/form" class="af">Add a new Project</a><br>
+    <projectlist />
   </div>
 </template>
 
 <script>
-import Projectslist from '@/components/Projectslist'
+import Projectlist from '@/components/Projectlist'
 
 export default {
   middleware: ['auth'],
-  components: {
-    Projectslist: Projectslist,
-  },
+  components: { Projectlist: Projectlist, },
+  
+  async fetch ({ store, params }) { 
+    await store.dispatch('getProptypeAction', {userid: store.state.auth.user.id, proptype: 'project' }) },
 }
 </script>

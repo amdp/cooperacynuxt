@@ -1,8 +1,11 @@
 const pkg = require('./package')
 
 module.exports = {
-  server: {host: '0.0.0.0'},
+  server: { port: 3000, host: '0.0.0.0', },
+  serverMiddleware: ['./db'],
   mode: 'universal',
+  //env: {baseUrl: process.env || 'http://127.0.0.1:3000'},
+  axios: { proxy: true }, proxy: { '/db': 'http://127.0.0.1:3000' },
 
   /*
   ** Headers of the page
@@ -18,8 +21,6 @@ module.exports = {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
-
-  serverMiddleware: ['./db'],
 
   /*
   ** Customize the progress-bar color
@@ -46,15 +47,6 @@ module.exports = {
     '@nuxtjs/pwa',
     '@nuxtjs/auth',
   ],
-
-  /*
-   ** Axios module configuration
-   */
-  axios: {
-    proxy: true
-  },
-  
-  proxy: { '/db': 'http://127.0.0.1:3000' },
 
   auth: {
     strategies: {
