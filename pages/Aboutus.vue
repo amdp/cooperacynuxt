@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <br /><img class="page-header" src="~/assets/images/pages/banners/aboutus.png" />
+      <br /><img class="page-header" src="~/assets/image/page/banners/aboutus.png" />
       <p class="base">
         Cooperacy is a nonprofit project aiming to support our social ecosystem
         fostering the enjoyment of cooperation: on a more technical side, this
@@ -33,7 +33,7 @@
         If you consider our society and its natural ecosystem as a whole living
         organism, being part of Cooperacy means supporting this organism with
         the enjoyment of cooperation.
-        <a class="ae" href="/register">Joining</a> the voluntary pool will let
+        <a class="ae" href="/login">Joining</a> the voluntary pool will let
         you experiment and support a different social ecosystem based on
         cooperation and common enjoyment.<br /><br />
       </p>
@@ -42,28 +42,28 @@
       <p class="subheading transparency center space">THE TEAM</p>
       <div class="row">
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-center">
-          <img src="~/assets/images/pages/aboutus/amdp.png" alt="null" /><br />
+          <img src="~/assets/image/page/aboutus/amdp.png" alt="null" /><br />
           <p>
             Alessandro Merletti De Palo<br />
             <i>Co-founder and coordinator of Cooperacy</i>
           </p>
         </div>
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-center">
-          <img src="~/assets/images/pages/aboutus/mario.png" alt="Mario Sabatino" /><br />
+          <img src="~/assets/image/page/aboutus/mario.png" alt="Mario Sabatino" /><br />
           <p>
             Mario Sabatino Riontino<br />
             <i>Coorporate Project</i>
           </p>
         </div>
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-center">
-          <img src="~/assets/images/pages/aboutus/framba.png" alt="null" /><br />
+          <img src="~/assets/image/page/aboutus/framba.png" alt="null" /><br />
           <p>
             Federica Framba<br />
             <i>Designer</i>
           </p>
         </div>
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-center">
-          <img src="~/assets/images/pages/aboutus/alessia.png" alt="null" /><br />
+          <img src="~/assets/image/page/aboutus/alessia.png" alt="null" /><br />
           <p>
             Alessia De Santis<br />
             <i>Public Administration Projects</i>
@@ -72,28 +72,28 @@
       </div>
       <div class="row">
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-center">
-          <img src="~/assets/images/pages/aboutus/giosetta.png" alt="null" /><br />
+          <img src="~/assets/image/page/aboutus/giosetta.png" alt="null" /><br />
           <p>
             Giosetta Ciuffa<br />
             <i>External Relations</i>
           </p>
         </div>
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-center">
-          <img src="~/assets/images/pages/aboutus/marco.png" alt="null" /><br />
+          <img src="~/assets/image/page/aboutus/marco.png" alt="null" /><br />
           <p>
             Marco Marincola<br />
             <i>Engineer</i>
           </p>
         </div>
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-center">
-          <img src="~/assets/images/pages/aboutus/ali.png" alt="null" /><br />
+          <img src="~/assets/image/page/aboutus/ali.png" alt="null" /><br />
           <p>
             Ali Akhtari<br />
             <i>Front-End Developer</i>
           </p>
         </div>
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-center">
-          <img src="~/assets/images/pages/aboutus/ilario.png" alt="null" /><br />
+          <img src="~/assets/image/page/aboutus/ilario.png" alt="null" /><br />
           <p>
             Ilario Tito<br />
             <i>Co-founder</i>
@@ -102,14 +102,14 @@
       </div>
       <div class="row">
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-center">
-          <img src="~/assets/images/pages/aboutus/sara.png" alt="null" /><br />
+          <img src="~/assets/image/page/aboutus/sara.png" alt="null" /><br />
           <p>
             Sara Conallo<br />
             <i>Jackie of All Trades</i>
           </p>
         </div>
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-center">
-          <img src="~/assets/images/pages/aboutus/enea.png" alt="null" /><br />
+          <img src="~/assets/image/page/aboutus/enea.png" alt="null" /><br />
           <p>
             Enea Barbetta<br />
             <i>Main Developer</i>

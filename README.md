@@ -11,6 +11,7 @@ Then please continue to the "store" folder and see how global variables are mana
 Finally, see the index.vue file in the pages, continue to the defaul layout, and review the pages and their components.
 
 You can conclude your overview with a brief look at the assets and at the only css file on top of the Vue Bootstrap css architecture (No, we kept it 'simple' and didn't implement SCSS/SASS).
+Note: we tend to use all >singular< naming for database tables and internal variables.
 
 Have fun and happy coding!
 
@@ -37,6 +38,5 @@ $ npm run generate
 
 Please keep this file 42 lines short. For detailed explanation on how things work on Cooperacy, check the Platform idea on https://cooperacy.org/platform.
 About Nuxt, checkout [Nuxt.js docs](https://nuxtjs.org).
-
 
 And don't worry. Be happy!
