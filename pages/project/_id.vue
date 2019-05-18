@@ -30,19 +30,16 @@ import Votebar from '@/components/Votebar'
 import Comment from '@/components/Comment'
 
 export default {
-  middleware: ['auth'],
-  mounted() { return this.$store.dispatch('getProptypeAction', {
-    where: '`id` = '+this.$route.params.id+' LIMIT 1', userid: this.$store.state.auth.user.id, proptype: 'project'})},
-    //created() {store.dispatch('getProptypeAction', {where: '`id` = '+route.params.id+' LIMIT 1', userid: store.state.auth.user.id, proptype: 'project'})},
-    /* We should use fetch to make a single call to the server:         #############
-    asyncData ({ store,params }) { 
-      if (store.state.project){ return store.state.project.find(project => project.id == route.params.id)}else{ 
-        store.dispatch('getProptypeAction', {
-        where: '`id` = '+params.id+' LIMIT 1', userid: store.state.auth.user.id, proptype: 'project'})
-      return store.state.project[0]
-      }
-    },*/
-  components: { Votebar: Votebar, Comment: Comment,  },
+  middleware: ['auth'], components: { Votebar: Votebar, Comment: Comment, },
+  //mounted() { this.$store.dispatch('getProptypeAction', {
+    //where: '`id` = '+this.$route.params.id+' LIMIT 1', userid: this.$store.state.auth.user.id, proptype: 'project'}) 
+    //            this.$store.dispatch('getProptypeAction', {userid: this.$auth.user.id, proptype: 'comment',
+    //where: '`project` = '+this.$route.params.id}) },
+  async fetch ({ store, params }) { 
+    await store.dispatch('getProptypeAction', { 
+      projectid: params.id, limit:' LIMIT 1', userid: store.state.auth.user.id, proptype:'project'}) 
+    await store.dispatch('getProptypeAction', {
+      projectid: params.id, limit:' ',         userid: store.state.auth.user.id, proptype:'comment'})},
 }
 
 </script>

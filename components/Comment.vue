@@ -58,8 +58,6 @@ export default {
   data() { return {editreply: false, editreplyid: false, formComment: '',}},
   computed: { up(){if (this.$store.state.comment) {
       return this.$store.state.comment.filter(comment => { return comment.id === comment.parent })} else {return []}},},
-  mounted() { this.$store.dispatch('getProptypeAction', {userid: this.$auth.user.id, proptype: 'comment',
-    where: '`project` = '+this.$route.params.id})},
   components: { Votebar: Votebar, Comment: Comment, },
   methods: {
     userImage(commentuser){ if(commentuser){return require('../assets/image/user/' + commentuser + '.png')}else{}},

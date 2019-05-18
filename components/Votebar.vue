@@ -11,7 +11,7 @@
 </template>
 
 <script>
-//cc stands for cooperation condition
+//cc stands for cooperation condition, proptype could be user, project or comment
 export default {
   props: {
     voteprop: {required: true},
@@ -19,8 +19,8 @@ export default {
   },
   computed: {
     vote(){
+      if(this.proptype=='user'){return}
       let voteif = []; for (let i=0;i<7;i++){
-
         // choosing the style to apply if the user voted this project/comment specific vote color:
         var votestyle; var uservoted
         this.$store.state[this.proptype + 'uservote'] ? uservoted = this.$store.state[this.proptype + 'uservote'].findIndex(
@@ -30,7 +30,6 @@ export default {
           : this.voteprop[this.$store.state.shortcondition[i]] != 0 ? 
             votestyle = 'var(--they'+this.$store.state.condition[i]+')' 
             : votestyle = 'var(--no'+this.$store.state.condition[i]+')'
-
         // applying the right style to vote:
         voteif.push({ // for all vote:
           v:  this.voteprop[this.$store.state.shortcondition[i]], 

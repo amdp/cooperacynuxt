@@ -27,7 +27,6 @@
 <script>
 import Votebar from '@/components/Votebar'
 export default {
-  //mounted(){ this.$store.dispatch('getProptypeAction', {userid: this.$auth.user.id, proptype: 'project'}) },
   components: { Votebar: Votebar, },
 }
 </script>
