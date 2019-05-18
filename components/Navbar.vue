@@ -1,22 +1,22 @@
 <template>
   <b-navbar toggleable="lg" class="p-1 fixed-top bg-white d-flex flex-fill justify-content-center">
-    <b-navbar-brand to="/" v-if="!this.$auth.loggedIn"><img class="headerlogo" src="@/assets/images/main/wordlogo.png"  /></b-navbar-brand>
+    <b-navbar-brand to="/" v-if="!this.$auth.loggedIn"><img class="headerlogo" src="@/assets/image/main/wordlogo.png"  /></b-navbar-brand>
     <b-navbar-brand to="/user" v-if="this.$auth.loggedIn" >
-          <img class="usercoologo m-2" src="@/assets/images/main/coo.png"  />
+          <img class="usercoologo m-2" src="@/assets/image/main/coo.png"  />
           <img v-if="userImage" class="userlogo m-2 rounded-circle" :src="userImage">
     </b-navbar-brand>
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
     <b-collapse id="nav-collapse" is-nav>
-      <b-navbar-nav> 
-        <div v-if="this.$auth.loggedIn" class="row">
+      <b-navbar-nav class="w-100">
+        <div v-if="this.$auth.loggedIn" class="row w-100">
           <div class="col d-flex justify-content-start">
             <h3 class="diversity up base mr-3">{{this.$auth.user.name + ' ' + this.$auth.user.surname}}</h3>
             <a class="au minimini" to="useredit">EDIT</a>
           </div>
           <div class="w-100"></div>
           <div class="col ml-4 pl-4"><div class="row dflex justify-content-start">
-            <votebars :votesprop="$auth.user" :proptype="'user'" />
+            <votebar :voteprop="$auth.user" :proptype="'user'" />
             </div>
           </div>
         </div>
@@ -53,14 +53,14 @@
 </template>
 
 <script>
-import Votebars from '@/components/Votebars'
+import Votebar from '@/components/Votebar'
 
 export default {
   components: {
-    Votebars: Votebars,
+    Votebar: Votebar,
   },
   computed: {
-    userImage: function () { if (this.$auth.user.id) { return require('../assets/images/users/' + this.$auth.user.id + '.png')}}
+    userImage: function () { if (this.$auth.user.id) { return require('../assets/image/user/' + this.$auth.user.id + '.png')}}
   }
 }
 </script>

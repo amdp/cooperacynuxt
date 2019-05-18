@@ -1,53 +1,45 @@
 
 <template>
   <div class="mx-auto mt-4 mb-5">
-    <div v-if="this.$store.state.projectsvx.edit">
-      <projectform />
-    </div>
-    <div class="row mt-5" v-if="this.$store.state.projectsvx.project.name && !this.$store.state.projectsvx.edit" >
+    <div class="row mt-5" v-for="project in this.$store.state.project" :key="project.id">
       <div class="col-12">
         <div class="row">
-          <div class="col-1"></div>
-          <div class="col-2" v-if="project.image">
-            <img :src="require('@/assets/images/projects/' + project.id + '.png')" width="100px" />
+          <div class="col-1"><nuxt-link to="/project/form" >EDIT</nuxt-link></div>
+          <div class="col-2">
+            <img :src="require('@/assets/image/project/' + project.id + '.png')" width="100px" />
           </div>
-          <div class="col-2" v-else> </div>
           <div class="col-9">
             <div class="row">
-              <div class="col-10 space subheading up equivalence" >{{ project.name }}</div>
-              <div class="col-2 space subheading up" ><a class="ae mini" href="#" @click="editSwitch">EDIT</a></div>
+              <div class="col-12 space subheading up" >{{ project.name }}</div>
             </div>
             <div class="row">
-              <div class="col-12">{{ project.content }}</div>
+              <div class="col-12 mt-2">{{ project.content }}</div>
             </div>
           </div>
         </div>
-        <votebars :votesprop="project" :proptype="'project'" />
+        <votebar :voteprop="project" :proptype="'project'" />
       </div>
-      <b-row class="text-center mt-5"><b-col cols="12" class="subheading space up">COMMENTS AND QUESTIONS</b-col></b-row>
-      <comments :commentprop="project"/>
+      <b-row class="mt-5"><b-col cols="12" class="subheading space up text-center">COMMENTS AND QUESTIONS</b-col></b-row>
     </div>
+    <comment />
   </div>
 </template>
 
 <script>
-import Projectform from '@/components/Projectform'
-import Votebars from '@/components/Votebars'
-import Comments from '@/components/Comments'
+import Votebar from '@/components/Votebar'
+import Comment from '@/components/Comment'
 
 export default {
-  middleware: ['auth'],
-  computed: {
-      project(){return  this.$store.state.projectsvx.project},
-      edit(){ return  this.$store.state.projectsvx.edit},
-  },
-  mounted() { return this.$store.dispatch('projectsvx/getProjectAction', {id: this.$route.params.id})},
-  methods: { editSwitch(){this.$store.dispatch('projectsvx/editSwitchAction',true)} },
-  components: {
-    Votebars: Votebars,
-    Projectform: Projectform,
-    Comments: Comments,
-  },
+  middleware: ['auth'], components: { Votebar: Votebar, Comment: Comment, },
+  //mounted() { this.$store.dispatch('getProptypeAction', {
+    //where: '`id` = '+this.$route.params.id+' LIMIT 1', userid: this.$store.state.auth.user.id, proptype: 'project'}) 
+    //            this.$store.dispatch('getProptypeAction', {userid: this.$auth.user.id, proptype: 'comment',
+    //where: '`project` = '+this.$route.params.id}) },
+  async fetch ({ store, params }) { 
+    await store.dispatch('getProptypeAction', { 
+      projectid: params.id, limit:' LIMIT 1', userid: store.state.auth.user.id, proptype:'project'}) 
+    await store.dispatch('getProptypeAction', {
+      projectid: params.id, limit:' ',         userid: store.state.auth.user.id, proptype:'comment'})},
 }
 
 </script>
