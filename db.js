@@ -27,11 +27,21 @@ var cc=['D','U','F','I','C','T','E']; var cclong = ['diversity','understanding',
 //////////////////////////////////////////////////////////////////////
 
 app.get(
-"/proptype", async (req, res) =>{var proptypequery='SELECT * FROM `'+req.query.proptype+'`'
-  if (req.query.where) proptypequery += ' WHERE '+req.query.where
+"/proptype", async (req, res) =>{let where; let proptypequery='SELECT * FROM `'+req.query.proptype+'`'
+  req.query.proptype == 'project' ? where = 'id' : where = 'project'
+  if (req.query.limit) proptypequery += ' WHERE `'+where+'` = '+req.query.projectid+req.query.limit
   mydb.promise().query(proptypequery)
   .then(([project, fields])=>{res.send(project)}).catch(err => {console.error(err); res.send (err) })
 })
+
+app.get(//gets votes of projects and comments that have been voted by current user
+  "/uservote", (req, res) => {
+    uservotequery = 'select * from `'+req.query.proptype+'vote` where `user` = \''+req.query.userid+'\''
+    if (req.query.limit){uservotequery += ' AND `project`='+req.query.projectid}
+    mydb.promise().query(uservotequery)
+    .then(([uservote, fields]) => {res.send(uservote)})
+    .catch(err => {console.error(err); res.send (err) })
+  })
 
 app.post(
   "/project", (req, res) => {
@@ -68,7 +78,9 @@ app.post(
       let query = 'INSERT INTO `comment` (`user`,`project`,`parent`,`content`) VALUES (\''
       +req.body.user+'\',\''+req.body.project+'\',\''+req.body.parent+'\',\''+req.body.content+'\')'
       mydb.promise().query(query)
-      .then(([row,fields])=>{res.json({id: row.insertId})})
+      .then(([row,fields])=>{mydb.promise().query('SELECT * FROM `comment` WHERE `id` = ' + row.insertId)
+        .then(([row2,fields2])=>{console.log(' '+JSON.stringify(row2));
+          res.json(row2[0])})})
       .catch(err => {console.error(err); res.send (err) })
     }
 })
@@ -177,15 +189,6 @@ app.post(
   })
   .catch(err => {console.error(err); res.send (err) })
 })
-
-app.get(
-  "/uservote", (req, res) => {
-    uservotequery = 'select * from `'+req.query.proptype+'vote` where `user` = \''+req.query.id+'\''
-    if (req.query.where){uservotequery += ' AND ' +req.query.where}
-    mydb.promise().query(uservotequery)
-    .then(([uservote, fields]) => {res.send(uservote)})
-    .catch(err => {console.error(err); res.send (err) })
-  })
 
 //////////////////////////////////////////////////////////////////////
 ///////                      MISCELLANOUS                      ///////
