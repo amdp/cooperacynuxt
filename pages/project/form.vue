@@ -52,7 +52,7 @@
         
         <h5 class="trust">BUDGET AND HUDGET</h5>
         <b-form-group label-for="stageInput" label="" description="If you want to propose a free group cooperation, or a course, an event or similar with its own fee, you just leave it unchecked.">
-          <b-form-checkbox id="stageInput" v-model="formStageNofunding" switch class="m-3" @change="funded">FUNDED: this project idea needs Cooperacy Funds</b-form-checkbox>
+          <b-form-checkbox id="stageInput" v-model="formStageFunding" switch class="m-3" @change="funded">FUNDED: this project idea needs Cooperacy Funds</b-form-checkbox>
         </b-form-group>
         <b-form-group label-for="budgetInput" :label="budgetlabel" :description="budgetdesc">
           <b-form-input id="budgetInput" v-model="formBudget" @keypress="totalnonfunded" ></b-form-input></b-form-group>
@@ -82,7 +82,8 @@
 <script>
 export default {
   middleware: ['auth'],
-  async fetch ({ store, params }) {await store.dispatch('getCategoryAction'); await store.dispatch('getPlaceAction') },
+  async fetch ({ store, params }) {await store.dispatch('getCategoryAction'); await store.dispatch('getPlaceAction') 
+    await store.dispatch('getProjectAction', { projectid: store.state.edit, limit:' LIMIT 1', userid: store.state.auth.user.id,}) },
   computed: { 
     nameInputState() { return this.name.length > 4 ? true : false },
     budgetInputState() { return this.bodget.length >= 1000 ? true : false },
@@ -102,19 +103,19 @@ export default {
       hudgetdesc:   'Insert the minimum number of paying participants so that the project is sustainable',
       placedesc:    'Insert the country and location of your project idea',
       totallabel: 0,
-      formName: this.$store.state.project.name,
-      formCountry: 40,
-      formPlace: this.$store.state.project.place,
-      formBrief: this.$store.state.project.brief,
-      formContent: this.$store.state.project.content,
+      formName: this.$store.state.project[0]? this.$store.state.project[0].name : '',
+      formCountry: this.$store.state.project[0]? this.$store.state.project[0].name : '',
+      formPlace: this.$store.state.project[0]? this.$store.state.project[0].place : '',
+      formBrief: this.$store.state.project[0]? this.$store.state.project[0].brief : '',
+      formContent: this.$store.state.project[0]? this.$store.state.project[0].content : '',
       formImageFile: '', // to be chosen by the user, current image is shown on the side
-      formVideo: this.$store.state.project.video,
-      formAnonymous: this.$store.state.project.anonymous,
-      formParent: this.$store.state.project.parent,
-      formCategory: this.$store.state.project.category,
-      formStageNofunding: this.$store.state.project.stage,
-      formBudget: this.$store.state.project.budget ? this.$store.state.project.budget : 0,
-      formHudget: this.$store.state.project.hudget ? this.$store.state.project.hudget : 0,
+      formVideo: this.$store.state.project[0]? this.$store.state.project[0].video : '',
+      formAnonymous: this.$store.state.project[0]? this.$store.state.project[0].anonymous : 0,
+      formParent: this.$store.state.project[0]? this.$store.state.project[0].parent : '',
+      formCategory: this.$store.state.project[0]? this.$store.state.project[0].category : '',
+      formStageFunding: this.$store.state.project[0]? this.$store.state.project[0].stage==5? 0 : 1 : 0,
+      formBudget: this.$store.state.project[0]? Math.round(this.$store.state.project[0].budget)  : '',
+      formHudget: this.$store.state.project[0]? this.$store.state.project[0].hudget  : '',
       formTag: '', // ######################################################### FIX NEEDED
     }
   },
@@ -122,8 +123,8 @@ export default {
     projectForm() { 
       // This function triggers both project creation and updating
       if (!this.formAnonymous) {this.formAnonymous = 0}
-      if (this.formStageNofunding) {this.formStageNofunding = 5
-      }else{ this.$store.state.project.stage ? this.$store.state.project.stage : this.formStageNofunding = 7}
+      if (!this.formStageFunding) {this.formStageFunding = 5
+      }else{ this.$store.state.project.stage ? this.$store.state.project.stage : this.formStageFunding = 7}
       //'new' is set for a new project, if not the param.id is taken from url to update old ones
       var dispatchId; this.$route.params.id ? dispatchId = this.$route.params.id : dispatchId = 'new'
       this.formParent ? this.formParent : this.formParent = 1
@@ -137,7 +138,7 @@ export default {
         video: ' '+this.formVideo,
         anonymous: this.formAnonymous,
         parent: this.formParent,
-        stage: this.formStageNofunding,
+        stage: this.formStageFunding,
         budget: this.formBudget,
         hudget: this.formHudget, }
       //vuex action to the database, the 'res'[ponse] variable brings the recently created or edited project >id< from the server..
