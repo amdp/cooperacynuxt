@@ -88,7 +88,7 @@ export default {
     nameInputState() { return this.name.length > 4 ? true : false },
     budgetInputState() { return this.bodget.length >= 1000 ? true : false },
     category(){return  this.$store.state.category},
-    projectImage:function(){if(this.$store.state.project.id)return require('@/assets/image/project/' +this.$store.state.project.id+'.png')},
+    projectImage(){if(this.$store.state.project.id)return require('@/assets/image/project/' +this.$store.state.project.id+'.png')},
     place(){return this.$store.state.place.filter(place => { return place.parent === this.formCountry })},
     country(){let country=this.$store.state.place.filter(place => { return (place.parent < 10 && place.parent > 1) })
     return country.sort((a, b) => (a.name>b.name) ? 1 : -1)},

@@ -67,7 +67,7 @@ export default {
     Votebar: Votebar,
   },
   computed: {
-    userImage: function () { if (this.$auth.user.id) { return require('../assets/image/user/' + this.$auth.user.id + '.png')}}
+    userImage(){ if (this.$auth.user.id) { return require('../assets/image/user/' + this.$auth.user.id + '.png')}}
   }
 }
 </script>
