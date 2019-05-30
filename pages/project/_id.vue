@@ -31,15 +31,8 @@ import Comment from '@/components/Comment'
 
 export default {
   middleware: ['auth'], components: { Votebar: Votebar, Comment: Comment, },
-  //mounted() { this.$store.dispatch('getProptypeAction', {
-    //where: '`id` = '+this.$route.params.id+' LIMIT 1', userid: this.$store.state.auth.user.id, proptype: 'project'}) 
-    //            this.$store.dispatch('getProptypeAction', {userid: this.$auth.user.id, proptype: 'comment',
-    //where: '`project` = '+this.$route.params.id}) },
-  async fetch ({ store, params }) { 
-    await store.dispatch('getProptypeAction', { 
-      projectid: params.id, limit:' LIMIT 1', userid: store.state.auth.user.id, proptype:'project'}) 
-    await store.dispatch('getProptypeAction', {
-      projectid: params.id, limit:' ',         userid: store.state.auth.user.id, proptype:'comment'})},
+  async fetch ({store, params}){ 
+    await store.dispatch('getProjectAction', { projectid: params.id, limit:' LIMIT 1', userid: store.state.auth.user.id,}) 
+    await store.dispatch('getCommentAction', { projectid: params.id, limit:' ',        userid: store.state.auth.user.id,})},
 }
-
 </script>
