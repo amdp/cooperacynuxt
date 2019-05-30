@@ -14,12 +14,10 @@ const mysql = require("mysql2"); const mydb = mysql.createConnection({
 app.get("/project", (req, res) =>{let query = 'SELECT * FROM `project`'; let param=[];
   if (req.query.limit){query +=' WHERE `id`=?'; param=[req.query.projectid+req.query.limit]}
   else if (req.query.stage){query +=' WHERE `stage`=?'; param.push(req.query.stage)}
-  else if (!req.query.stage){query +=' WHERE `stage`!=?'; param = [1]}
   mydb.execute(query,param, function(err,project,fields){if(err){console.error(err);res.send(err)}else res.send(project)}) })
 
-app.get("/comment", (req, res) =>{let query = 'SELECT * FROM `comment`'; let param = [req.query.projectid+req.query.limit]
-  if (req.query.limit){query +=' WHERE `project` = ?'}
-  mydb.execute(query,param, function(err,comment,fields){if(err){console.error(err);res.send(err)}else res.send(comment)}) })
+app.get("/comment", (req, res) =>{mydb.execute('SELECT * FROM `comment` WHERE `project` = ? ORDER BY `id` DESC',[req.query.projectid],
+   function(err,comment,fields){if(err){console.error(err);res.send(err)}else res.send(comment)}) })
 
 app.get("/userproject", (req, res) =>{mydb.execute('SELECT * FROM `project` WHERE `id` IN (SELECT `project` FROM `userproject` WHERE `user`=?)',[req.query.userid], function(err,project,fields){if(err){console.error(err);res.send(err)}else res.send(project)}) })
 
@@ -65,7 +63,7 @@ if(!place){mydb.execute('INSERT INTO `place` (`parent`,`name`) VALUES (?,?)',[re
 
 app.post("/project", (req, res) => {
   if (req.body.id != 'new'){mydb.execute(
-    'UPDATE `project` SET `name`=?,`brief`=?,`content`=?,`video`=?,`anonymous`=?,`parent`=?,`stage`=?,`budget`=?,`hudget`=?, WHERE `project`.`id`=?',[req.body.name,req.body.brief,req.body.content,req.body.video,req.body.anonymous,req.body.parent,req.body.stage,req.body.budget,req.body.hudget,req.body.id],
+    'UPDATE `project` SET `name`=?,`brief`=?,`content`=?,`video`=?,`anonymous`=?,`parent`=?,`stage`=?,`budget`=?,`hudget`=? WHERE `project`.`id`=?',[req.body.name,req.body.brief,req.body.content,req.body.video,req.body.anonymous,req.body.parent,req.body.stage,req.body.budget,req.body.hudget,req.body.id],
     function(err,project,fields){if(err){console.error(err);res.send(err)} else res.json('updated: '+project)})
   }else{mydb.execute('SELECT * FROM `project` WHERE `project`.`name`= ? LIMIT 1',[req.body.name],
     function(err, [project], fields) {if (err) {console.error(err); res.send (err) }else{if(!project){mydb.execute(

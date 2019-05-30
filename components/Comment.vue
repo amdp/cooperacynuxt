@@ -1,5 +1,13 @@
 <template>
   <div class="mx-auto mt-4 mb-5">
+    
+    <b-form @submit.prevent="submitpost()">
+      <b-form-group label-for="postInput" label="New Post:" description="Enter a new comment, post, question or topic">
+      <b-button type="submit" style="display: none"></b-button>
+      <b-form-input id="postInput" v-model="formPost" size="sm"></b-form-input>
+      </b-form-group>
+    </b-form>
+
     <div class="row mt-3" v-for="comment in up" :key="comment.id">
       <div class="col-2"></div>
       <div class="col-8">
@@ -55,12 +63,13 @@ import Comment from '@/components/Comment'
 import { constants } from 'zlib';
 
 export default {
-  data() { return {editreply: false, editreplyid: false, formComment: '',}},
+  data() { return {editreply: false, editreplyid: false, formComment: '', formPost: '',}},
   computed: { up(){if (this.$store.state.comment) {
-      return this.$store.state.comment.filter(comment => { return comment.id === comment.parent })} else {return []}},},
+      return this.$store.state.comment.filter(comment => { return comment.parent === 0 })} else {return []}},},
   components: { Votebar: Votebar, Comment: Comment, },
   methods: {
     userImage(commentuser){ if(commentuser){return require('../assets/image/user/' + commentuser + '.png')}else{}},
+    submitpost(){this.$store.dispatch('commentFormAction', { id: 'new', parent: 0, project: this.$route.params.id, user: this.$auth.user.id, content: this.formPost}); this.formPost = '' },
     submitcomment(submitted, submittedid){this.$store.dispatch('commentFormAction', { id: submittedid, 
       parent: submitted.id, project: this.$route.params.id, user: this.$auth.user.id, content: this.formComment})
       this.reply(submitted.id)},
