@@ -1,7 +1,9 @@
 <template>
   <div>
-    <a href="/useredit" class="ad">Edit your information</a><br>
-    <a href="/project/form" class="af">Add a new Project</a><br>
+    <nuxt-link to="/useredit" class="ad">Edit your information</nuxt-link><br>
+    <nuxt-link to="/project/form" class="ac">Add a new Project</nuxt-link><br>
+    <nuxt-link to="/project/search" class="af">Project search</nuxt-link><br>
+    <h5 class="mt-2 d-flex justify-content-center">YOUR PROJECTS</h5>
     <projectlist />
   </div>
 </template>
