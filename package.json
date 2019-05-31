@@ -5,23 +5,23 @@
   "author": "Alessandro Merletti De Palo",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nodemon server/index.js",
+    "dev": "nuxt dev",
     "build": "nuxt build",
-    "start": "cross-env NODE_ENV=production node server/index.js",
+    "start":  "nuxt start",
     "generate": "nuxt generate"
   },
   "dependencies": {
-    "@nuxtjs/auth": "^4.5.3",
-    "@nuxtjs/axios": "^5.5.1",
+    "@nuxtjs/auth": "^4.6.1",
+    "@nuxtjs/axios": "^5.5.3",
     "@nuxtjs/pwa": "^2.6.0",
-    "@nuxtjs/toast": "^3.2.0",
+    "@nuxtjs/toast": "^3.2.1",
     "bcrypt": "3.0.4",
     "bignumber.js": "^7.2.1",
     "body-parser": "^1.19.0",
     "bootstrap": "^4.1.3",
     "bootstrap-vue": "^2.0.0-rc.20",
     "cross-env": "^5.2.0",
-    "express": "^4.17.0",
+    "express": "^4.17.1",
     "express-fileupload": "^1.1.4",
     "jquery": "^3.4.1",
     "jsonwebtoken": "^8.5.1",
@@ -30,7 +30,7 @@
     "mysql2": "^1.6.5",
     "nodemailer": "^6.2.1",
     "nodemon": "^1.19.1",
-    "nuxt": "^2.7.1",
+    "nuxt": "^2.8.0",
     "popper.js": "^1.15.0"
   },
   "devDependencies": {}

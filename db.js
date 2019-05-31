@@ -73,16 +73,18 @@ app.post("/project", (req, res) => {
       function(err,project,fields){if(err){console.error(err);res.send(err)}
       else{res.json({id: project.insertId})} } ) }else{res.json('exists')} } } )} })
 
-app.post("/comment", (req, res) => {
+app.post("/comment", (req, res) => {  
   if (req.body.id != 'new'){mydb.execute(
-    'UPDATE `comment` SET `parent`=?, `project`=?, `user`=?, `content`=?, WHERE `comment`.`id`=?',
+    'UPDATE `comment` SET `parent`=?, `project`=?, `user`=?, `content`=? WHERE `comment`.`id`=?',
     [req.body.parent,req.body.project,req.body.user,req.body.content,req.body.id],
-    function(err,comment,fields){if(err){console.error(err);res.send(err)}else{res.json({id: req.body.id})} } ) 
+    function(err,comment,fields){if(err){console.error(err);res.send(err)}else{mydb.execute(
+      'SELECT * FROM `comment` WHERE `id` = ?', [req.body.id],
+      function(err,[comment],fields){if(err){console.error(err);res.send(err)}else{res.json(comment)} }) }})
   }else{mydb.execute('INSERT INTO `comment` (`parent`,`project`,`user`,`content`) VALUES (?,?,?,?)',
     [req.body.parent,req.body.project,req.body.user,req.body.content],
     function(err,comment,fields){if(err){console.error(err);res.send(err)}else{mydb.execute(
       'SELECT * FROM `comment` WHERE `id` = ?', [comment.insertId],
-      function(err,comment,fields){if(err){console.error(err);res.send(err)}else{res.json(comment[0])}} )}})}})
+      function(err,[comment],fields){if(err){console.error(err);res.send(err)}else{res.json(comment)}} )}})}})
 
 app.post("/login", (req, res) => { mydb.execute('SELECT * FROM `user` WHERE `user`.`email`= ? LIMIT 1',[req.body.email],
   function(err,[user],fields){if(err){console.error(err);res.send(err)}else{if(user){

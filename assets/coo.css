@@ -1,7 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Prompt:300,400,600);
 @font-face {font-family: 'Prompt', sans-serif; src: href="https://fonts.googleapis.com/css?family=Prompt"}
-body{font-family: 'Prompt', sans-serif; font-size:14px; font-weight: 300; color:#777777; background-color:#ffffff}
-a{color: #777777;}
+body{font-family: 'Prompt', sans-serif; font-size:14px; font-weight: 300; color:#777; background-color:#ffffff}
+a{color: #777;} a:hover{color: #f80; text-decoration:none;}
 .circle  {margin: 0 auto;height:60vh;position: relative;margin-top:3vh;}
 
 :root {
@@ -15,22 +15,22 @@ a{color: #777777;}
   --nofreedom: #99a;    --nounderstanding: #a9a; --nodiversity: #bab;
 }
 
-.equivalence, .hequivalence {color: var(--equivalence)}     .bequivalence, .bhequivalence {background-color: var(--equivalence)}
-.trust, .htrust {color: var(--trust)}                 .btrust, .bhtrust {background-color: var(--trust)}
-.care, .hcare {color: var(--care)}                   .bcare, .bhcare {background-color: var(--care)}
-.transparency, .htransparency {color: var(--transparency)}   .btransparency, .bhtransparency {background-color: var(--transparency)}
-.freedom, .hfreedom {color: var(--freedom)}             .bfreedom, .bhfreedom {background-color: var(--freedom)}
-.understanding, .hunderstanding {color: var(--understanding)} .bunderstanding, .bhunderstanding {background-color: var(--understanding)}
-.diversity, .hdiversity {color: var(--diversity)}         .bdiversity, .bhdiversity {background-color: var(--diversity)}
-
 /*h colors have hover*/
-.hequivalence:hover, .bhequivalence:hover {background-color: var(--trust)}
-.htrust:hover, .bhtrust:hover {background-color: var(--transparency)}
-.hcare:hover, .bhcare:hover {background-color: var(--diversity)}
-.htransparency:hover, .bhtransparency:hover {background-color: var(--equivalence)}
-.hfreedom:hover, .bhfreedom:hover {background-color: var(--care)}
-.hunderstanding:hover, .bhunderstanding:hover {background-color: var(--freedom)}
-.hdiversity:hover, .bhdiversity:hover {background-color: var(--understanding)}
+.equivalence, .hequivalence     {color: var(--equivalence)}   .bequivalence, .bhequivalence     {background-color: var(--equivalence)}
+.trust, .htrust                 {color: var(--trust)}         .btrust, .bhtrust                 {background-color: var(--trust)}
+.care, .hcare                   {color: var(--care)}          .bcare, .bhcare                   {background-color: var(--care)}
+.transparency, .htransparency   {color: var(--transparency)}  .btransparency, .bhtransparency   {background-color: var(--transparency)}
+.freedom, .hfreedom             {color: var(--freedom)}       .bfreedom, .bhfreedom             {background-color: var(--freedom)}
+.understanding, .hunderstanding {color: var(--understanding)} .bunderstanding, .bhunderstanding {background-color: var(--understanding)}
+.diversity, .hdiversity         {color: var(--diversity)}     .bdiversity, .bhdiversity         {background-color: var(--diversity)}
+
+.hequivalence:hover             {color: var(--trust)}         .bhequivalence:hover              {background-color: var(--trust)}
+.htrust:hover                   {color: var(--transparency)}  .bhtrust:hover                    {background-color: var(--transparency)}
+.hcare:hover                    {color: var(--diversity)}     .bhcare:hover                     {background-color: var(--diversity)}
+.htransparency:hover            {color: var(--equivalence)}   .bhtransparency:hover             {background-color: var(--equivalence)}
+.hfreedom:hover                 {color: var(--care)}          .bhfreedom:hover                  {background-color: var(--care)}
+.hunderstanding:hover           {color: var(--freedom)}       .bhunderstanding:hover            {background-color: var(--freedom)}
+.hdiversity:hover               {color: var(--understanding)} .bhdiversity:hover                {background-color: var(--understanding)}
 
 
 .ae {text-decoration:none; background-image: linear-gradient( var(--equivalence) 50%,#FFFFFF 50%); background-repeat:repeat-x;
@@ -56,7 +56,7 @@ a{color: #777777;}
 .ad:hover {font-weight:200; text-decoration:none; color: var(--diversity); background-image:none;}
 .bblack {background-color: #000000;}
 .gray {color: #555555;}
-.lightgray {color: #777777;}
+.lightgray {color: #777;}
 .graylight {color: #CCCCCC;}
 .white, .white:hover {color: #FFFFFF;}
 .bgray {background-color: #eeeeee;}
