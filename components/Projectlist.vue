@@ -4,13 +4,13 @@
       <div class="row">
         <div class="col-10">
           <div class="row">
-            <div class="col-12 space subheading up" ><a :href="'/project/' + project.id" class="ae">{{ project.name }}</a></div>
+            <div class="col-12 space subheading up" ><a :href="'/project/' + project.id">{{ project.name }}</a></div>
           </div>
           <div class="row">
             <div class="col-12 mt-2">{{ project.content }}</div>
           </div>
         </div>
-        <div class="col-2"><img :src="require('@/assets/image/project/' + project.id + '.png')" width="80px" /></div>
+        <div class="col-2 pl-5"><img :src="require('@/assets/image/project/' + project.id + '.png')" width="80px" /></div>
       </div>
       <votebar :voteprop="project" :proptype="'project'" />
     </div></div> <!-- archived projects here -->
@@ -19,13 +19,13 @@
       <div class="row">
         <div class="col-10">
           <div class="row">
-            <div class="col-12 space subheading up" ><a :href="'/project/' + archived.id" class="ae">{{ archived.name }}</a></div>
+            <div class="col-12 space subheading up" ><a :href="'/project/' + archived.id">{{ archived.name }}</a></div>
           </div>
           <div class="row">
             <div class="col-12 mt-2">{{ archived.content }}</div>
           </div>
         </div>
-        <div class="col-2"><img :src="require('@/assets/image/project/' + archived.id + '.png')" width="80px" /></div>
+        <div class="col-2 pl-5"><img :src="require('@/assets/image/project/' + archived.id + '.png')" width="80px" /></div>
       </div>
       <votebar :voteprop="archived" :proptype="'project'" />
     </div></div>
