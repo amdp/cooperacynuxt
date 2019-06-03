@@ -37,8 +37,11 @@ app.get("/category", (req, res) => { mydb.execute( 'SELECT * FROM `category` WHE
 app.get("/tag", (req, res) => { mydb.execute( 'SELECT * FROM `tag`',[],
   function(err, tag, fields) {if (err) {console.error(err); res.send (err) } else res.json(tag) } ) })
 
-app.get("/place", (req, res) => { mydb.execute( 'SELECT `id`, `parent`, `name` FROM `place`',[],
+app.get("/place", (req, res) => { mydb.execute( 'SELECT `id`, `country`, `name` FROM `place`',[],
 function(err, place, fields) {if (err) {console.error(err); res.send (err) } else res.json(place) } ) })
+
+app.get("/country", (req, res) => { mydb.execute( 'SELECT `id`, `name` FROM `country`',[],
+function(err, country, fields) {if (err) {console.error(err); res.send (err) } else res.json(country) } ) })
 
 
 /////// UPDATE ///////
@@ -55,21 +58,21 @@ app.put("/user", (req, res) => { if(!req.body.name || !req.body.password) { res.
 
 app.post("/logout", (req, res) => { res.json({ status: 'OK' }) })
 
-app.post("/place", (req, res) => {mydb.execute('SELECT * FROM `place` WHERE `place`.`parent`=? AND `place`.`name`=?  LIMIT 1',
-[req.body.parent, req.body.name], function(err, [place], fields) {if (err) {console.error(err); res.send (err) }else{
-if(!place){mydb.execute('INSERT INTO `place` (`parent`,`name`) VALUES (?,?)',[req.body.parent,req.body.name],
+app.post("/place", (req, res) => {mydb.execute('SELECT * FROM `place` WHERE `place`.`country`=? AND `place`.`name`=?  LIMIT 1',
+[req.body.country, req.body.name], function(err, [place], fields) {if (err) {console.error(err); res.send (err) }else{
+if(!place){mydb.execute('INSERT INTO `place` (`country`,`name`) VALUES (?,?)',[req.body.country,req.body.name],
   function(err,place,fields){if(err){console.error(err);res.send(err)}
   else{res.json({id: place.insertId})} } ) }else{res.json('exists')} } } ) })
 
 app.post("/project", (req, res) => {
   if (req.body.id != 'new'){mydb.execute(
-    'UPDATE `project` SET `name`=?,`brief`=?,`content`=?,`video`=?,`anonymous`=?,`parent`=?,`stage`=?,`budget`=?,`hudget`=? WHERE `project`.`id`=?',[req.body.name,req.body.brief,req.body.content,req.body.video,req.body.anonymous,req.body.parent,req.body.stage,req.body.budget,req.body.hudget,req.body.id],
-    function(err,project,fields){if(err){console.error(err);res.send(err)} else res.json('updated: '+project)})
+    'UPDATE `project` SET `name`=?,`country`=?,`place`=?,`brief`=?,`content`=?,`video`=?,`anonymous`=?,`parent`=?,`stage`=?,`budget`=?,`hudget`=? WHERE `project`.`id`=?',[req.body.name,req.body.country,req.body.place,req.body.brief,req.body.content,req.body.video,req.body.anonymous,req.body.parent,req.body.stage,req.body.budget,req.body.hudget,req.body.id],
+    function(err,project,fields){if(err){console.error(err);res.send(err)} else res.json(req.body.id)})
   }else{mydb.execute('SELECT * FROM `project` WHERE `project`.`name`= ? LIMIT 1',[req.body.name],
     function(err, [project], fields) {if (err) {console.error(err); res.send (err) }else{if(!project){mydb.execute(
-      'INSERT INTO `project` (`name`,`place`,`brief`,`content`,`video`,`anonymous`,`parent`,`stage`,`budget`,`hudget`)'
+      'INSERT INTO `project` (`name`,`country`,`place`,`brief`,`content`,`video`,`anonymous`,`parent`,`stage`,`budget`,`hudget`)'
       +' VALUES (?,?,?,?,?,?,?,?,?,?)',
-      [req.body.name,req.body.place,req.body.brief,req.body.content,req.body.video,req.body.anonymous,req.body.parent,req.body.stage,req.body.budget,req.body.hudget],
+      [req.body.name,req.body.country,req.body.place,req.body.brief,req.body.content,req.body.video,req.body.anonymous,req.body.parent,req.body.stage,req.body.budget,req.body.hudget],
       function(err,project,fields){if(err){console.error(err);res.send(err)}
       else{res.json({id: project.insertId})} } ) }else{res.json('exists')} } } )} })
 

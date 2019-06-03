@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 export const state = () => ({
-  project: [], comment: [], vote: [], projectuservote: [], commentuservote: [], tag: [], category: [], place: [],  edit: false,
-  condition: ['equivalence', 'trust', 'care', 'transparency', 'freedom', 'understanding', 'diversity'], cc: ['E','T','C','I','F','U','D'],
+  project:[], comment:[], vote:[], projectuservote:[], commentuservote:[], tag:[], category:[], place:[],  edit: false, country:[],
+  condition:['equivalence', 'trust', 'care', 'transparency', 'freedom', 'understanding', 'diversity'], cc:['E','T','C','I','F','U','D'],
 })
 export const getters = { }
 export const mutations = { 
@@ -11,6 +11,7 @@ export const mutations = {
   setTag:       (state,payload) => {state.tag = payload},     
   setCategory:  (state,payload) => {state.category = payload},
   setPlace:     (state,payload) => {state.place = payload},
+  setCountry:   (state,payload) => {state.country = payload},
   setEditSwitch:(state,payload) => {state.edit = payload},
   setUservote:  (state,payload) => {state[payload.proptype + 'uservote'] = payload.body },
   setUserBar:   (state,payload) => {for(let j=0;j<state.cc.length;j++){state.auth.user[state.cc[j]] = payload[state.cc[j]]}},
@@ -50,8 +51,10 @@ export const actions = {
     let go = {body: data, proptype: payload.proptype}
     if (payload.where){go.where = payload.where}; context.commit('setUservote', go)
   },
+  addVoteAction:      async (context,payload) => {let {data} = await axios.post('http://127.0.0.1:3000/db/vote',    payload); return data},
   getPlaceAction: async(context,payload)=>{let {data}=await axios.get('http://127.0.0.1:3000/db/place'); context.commit('setPlace',data)},
-  addVoteAction:      async (context,payload) => {let {data} = await axios.post('http://127.0.0.1:3000/db/vote',    payload); return data },
+  getCountryAction: async(context,payload)=>{let {data}=await axios.get('http://127.0.0.1:3000/db/country'); 
+  context.commit('setCountry',data)},
   projectFormAction:  async (context,payload) => {let {data} = await axios.post('http://127.0.0.1:3000/db/project', payload)
     if (data.id){return data.id}else{return data} },
   commentFormAction:  async (context,payload) => {let {data} = await axios.post('http://127.0.0.1:3000/db/comment', payload)
