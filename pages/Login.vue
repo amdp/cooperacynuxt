@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="!this.$auth.loggedIn" class="row">
+    <div class="row">
       <div class="col-2"></div>
       <div class="col-4">
         <div class="d-flex justify-content-center">
@@ -30,21 +30,10 @@ import Newuser from '@/components/Newuser'
 
 export default {
   middleware: ['auth'],
-  components: {
-   Newuser: Newuser,
-  },
-  data() {
-      return { 
-        emailLogin: '',
-        passwordLogin: '',
-      }
-    },
-  methods: {
-    async login() { this.error = null
-      return this.$auth
-        .loginWith('local', { data: { email: this.emailLogin, password: this.passwordLogin }})
-        .catch(e => { this.error = e + ''})
-    },
+  components: {Newuser: Newuser,},
+  data(){return { emailLogin: '', passwordLogin: '',} },
+  methods: { async login() { this.error = null; 
+    this.$auth.loginWith('local', { data: { email: this.emailLogin, password: this.passwordLogin }}).catch(e => { this.error = e + ''})}
   },
   computed: {
     mailInputState() { return this.mail.length > 1 ? true : false }, //to be completed
@@ -54,11 +43,6 @@ export default {
      { key: 'facebook', name: 'Facebook', color: 'login-button border-0 bhfreedom' },
      { key: 'github', name: 'GitHub', color: 'login-button border-0 bhunderstanding' }
     ]),
-    redirect() { return (
-        this.$route.query.redirect &&
-        decodeURIComponent(this.$route.query.redirect)
-      )
-    },
   },
 }
 </script>
