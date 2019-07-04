@@ -20,8 +20,6 @@
           <b-form-input id="briefInput" v-model="formBrief" size="sm" required></b-form-input></b-form-group>
         <b-form-group label-for="contentInput" label="Content:" description="A longer description of the project idea">
           <b-form-textarea id="contentInput" v-model="formContent" size="sm" ></b-form-textarea></b-form-group>
-        <b-form-group label-for="tagInput" label="Tags:" description="Tags. Separated, by, comma, :)">
-          <b-form-input id="tagInput" v-model="formTag" size="sm" ></b-form-input></b-form-group>
         <div v-if="projectImage" class="row"><div class="col-10">
                     <b-form-group label-for="imageInput" label="Image:" description="The project image">
                       <b-form-file id="imageInput" v-model="formImageFile" ref="formImageFile" size="sm"></b-form-file>
@@ -63,6 +61,7 @@
         <h6 class="trust" v-if="this.totallabel != -1">TOTAL NON-FUNDED BUDGET: {{totallabel}}</h6>
         <b-button type="submit" class="btn btrust btn-block mt-3 gray border-0">GO!</b-button>
       </b-form>
+      
       <b-modal id="placemodal" title="Add a new place" hide-header-close><p class="my-4">Add a new place:</p>
             <b-form @submit.prevent="addplace">
               <b-form-group label-for="newcountryInput" label="Country:" description="Insert a place name after choosing a country">
@@ -88,10 +87,8 @@ export default {
     await store.dispatch('getCategoryAction'); await store.dispatch('getPlaceAction'); await store.dispatch('getCountryAction');
     await store.dispatch('getProjectAction', { projectid: store.state.edit, limit:' LIMIT 1', userid: store.state.auth.user.id,}) },
   mounted(){
-    if (this.$store.state.project[0] && this.$store.state.project[0].anonymous==1){
-      return (this.formAnonymous=1)}
-    if(this.$store.state.project[0] && this.$store.state.project[0].stage!=5){
-      return (this.formStageFunding=7, this.funded())}
+    if (this.$store.state.project[0] && this.$store.state.project[0].anonymous==1){return (this.formAnonymous=1)}
+    if(this.$store.state.project[0] && this.$store.state.project[0].stage!=5){return (this.formStageFunding=7, this.funded())}
     if(this.$store.state.project[0] && this.$store.state.project[0].place){return(this.formPlace=this.$store.state.project[0].place)}  
   },
   computed: {
@@ -106,7 +103,7 @@ export default {
       formNewcountry: '',
       formNewplace: '',
       country: this.$store.state.country,
-      category: this.$store.state.category,
+      category: this.$store.state.category.filter(category=>{return category.id!=0}),
       budgetlabel:  'Fee:',
       hudgetlabel:  'Minimum participants:',
       budgetdesc:   'Insert the amount the project participants should pay to participate',
@@ -126,7 +123,6 @@ export default {
       formStageFunding: 5,
       formBudget: this.$store.state.project[0]? Math.round(this.$store.state.project[0].budget)  : '',
       formHudget: this.$store.state.project[0]? this.$store.state.project[0].hudget  : '',
-      formTag: '', // ######################################################### FIX NEEDED
     }
   },
   methods: {
@@ -159,23 +155,10 @@ export default {
         hudget: this.formHudget, }
       //vuex action to the database, the 'res'[ponse] variable brings the recently created or edited project >id< from the server..
       this.$store.dispatch('projectFormAction', formBodyRequest) 
-      //in order to use it in the tag table and in the image creation:
+      //in order to use it in the image creation:
       .then(async res => {
         if (res=='exists'){ return this.$toast.show('Project already exists!', {duration: 1000, className: 'toasts'})}
-        if (this.formTag){
-          var splittedTag = this.formTag.split(",")
-          for (let i=0; i<splittedTag.length; i++) {
-            if (splittedTag[i]==''){continue}
-            splittedTag[i] = splittedTag[i].replace(/^[ ]+/gi,'') //removes spaces at the beginning of tag
-            let res = await this.$store.dispatch('tagFormAction', {
-              project: res,
-              name: splittedTag[i]
-            })
-            .catch(err => { console.error(err) })
-          }
-        }
-        if (this.formImageFile) {
-          this.imageUpload(res)
+        if (this.formImageFile) { this.imageUpload(res)
         }else if(formBodyRequest.id=='new'){this.imageUpload(res, 'empty')}
       })  
     },

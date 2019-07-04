@@ -75,16 +75,16 @@ import { constants } from 'zlib';
 
 export default {
   data() { return {formswitch: false, editreplyid: false, formComment: '', formPost: '',}},//if formswitch = a comment id, textbox appears
-  computed: { up(){if (this.$store.state.comment) {
-      return this.$store.state.comment.filter(comment => { return comment.parent === 0 })} else {return []}},},
+  computed: { up(){if(this.$store.state.comment){return this.$store.state.comment.filter(comment=>{ return comment.parent === 0 })}
+    else {return []}},},
   components: { Votebar: Votebar, Comment: Comment, },
   methods: {
     formcomment(comment, newoldid){if(comment.parent===0) {var parent=comment.id} else {var parent=comment.parent}
       newoldid=='new'? (this.$store.dispatch('commentFormAction', { id: newoldid, parent: parent, 
       project: this.$route.params.id, user: this.$auth.user.id, content: this.formComment}), this.reply(comment.id))
       : this.$store.dispatch('commentFormAction', { id: newoldid, parent: comment.parent, project: this.$route.params.id, user: this.$auth.user.id, content: this.formComment}); this.edit(comment.id) },
-    sub(comment, id){if (this.$store.state.comment) {
-      return this.$store.state.comment.filter(comment => { return comment.parent === id && comment.id != id })} else {return []}},
+    sub(comment, id){if (this.$store.state.comment){
+      return this.$store.state.comment.filter(comment=>{return comment.parent === id && comment.id != id })} else {return []}},
     userImage(commentuser){ if(commentuser){return require('../assets/image/user/' + commentuser + '.png')}else{}},
     formpost(){this.$store.dispatch('commentFormAction', { id: 'new', parent: 0, project: this.$route.params.id, user: this.$auth.user.id, content: this.formPost}); this.formPost = '' },
     reply(replycomment){this.formswitch == replycomment.id ? (this.formswitch = false, this.formComment = '')//turns off the box

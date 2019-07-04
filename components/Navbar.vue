@@ -22,8 +22,8 @@
         <b-navbar-nav class="ml-auto minini mr-4">
           <b-nav-item-dropdown text="THE PROJECT" no-caret right>
             <b-dropdown-item to="aboutyou">ABOUT YOU</b-dropdown-item>
-            <b-dropdown-item to="aboutus">ABOUT US</b-dropdown-item>
-            <b-dropdown-item to="platform">THE PLATFORM</b-dropdown-item>
+            <b-dropdown-item to="/i/aboutus">ABOUT US</b-dropdown-item>
+            <b-dropdown-item to="/i/whitepaper">THE PLATFORM</b-dropdown-item>
             <b-dropdown-item to="governance">GOVERNANCE</b-dropdown-item>
           </b-nav-item-dropdown>
 
