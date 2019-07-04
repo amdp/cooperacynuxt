@@ -1,8 +1,10 @@
 import axios from 'axios'
 
 export const state = () => ({
-  project:[], comment:[], vote:[], projectuservote:[], commentuservote:[], tag:[], category:[], place:[],  edit: false, country:[],
+  project:[], comment:[], vote:[], projectuservote:[], commentuservote:[], tag:[], place:[], edit: false, country:[],
   condition:['equivalence', 'trust', 'care', 'transparency', 'freedom', 'understanding', 'diversity'], cc:['E','T','C','I','F','U','D'],
+  category:[{"id":0,"name":"Main Cooperacy"},{"id":1,"name":"Wealth - General funded or fee-based projects"},{"id":2,"name":"Community"},{"id":3,"name":"Ecosystem and Wellbeing - Must really be related with the ecosystem care or with human wellbeing"},{"id":4,"name":"Reporting"},{"id":5,"name":"Location-based - For official cities, nations, neighbourhoods"},{"id":6,"name":"Science, Research, Education and Professionals groups and projects"},{"id":7,"name":"Arts Music Games Fun"}], 
+  stage:[{"id":1,"name":"historical"},{"id":2,"name":"active"},{"id":3,"name":"approval"},{"id":4,"name":"testing"},{"id":5,"name":"nofunding"},{"id":6,"name":"pairing"},{"id":7,"name":"idea"}],
 })
 export const getters = { }
 export const mutations = { 
@@ -51,6 +53,9 @@ export const actions = {
     let go = {body: data, proptype: payload.proptype}
     if (payload.where){go.where = payload.where}; context.commit('setUservote', go)
   },
+  getTagAction: async (context,payload) => {let {data}=await axios({url:'http://127.0.0.1:3000/db/tag', params: payload})
+    context.commit('setTag',data)},
+  getCategoryAction: async (context,payload) => {let {data} = await axios.get('http://127.0.0.1:3000/db/category'); context.commit('setCategory',data) },
   addVoteAction:      async (context,payload) => {let {data} = await axios.post('http://127.0.0.1:3000/db/vote',    payload); return data},
   getPlaceAction: async(context,payload)=>{let {data}=await axios.get('http://127.0.0.1:3000/db/place'); context.commit('setPlace',data)},
   getCountryAction: async(context,payload)=>{let {data}=await axios.get('http://127.0.0.1:3000/db/country'); 
@@ -64,10 +69,9 @@ export const actions = {
   newuserAction: async (context, payload) => {let {data} = await axios.post('http://127.0.0.1:3000/db/user', payload)
     let go = {to: payload.email, subject: 'user registration confirmation', body: 'You have been registered.'}
     axios.post('http://127.0.0.1:3000/db/email', go); return data },
-  updateUserAction: async (context, payload) => {let {data} = await axios.put('http://127.0.0.1:3000/db/user', payload); return data},
-  getTagAction: async (context,payload) => {let {data}=await axios.get('http://127.0.0.1:3000/db/tag'); context.commit('setTag',data) },
-  getCategoryAction: async (context,payload) => {let {data} = await axios.get('http://127.0.0.1:3000/db/category'); context.commit('setCategory',data) },
-  tagFormAction: async (context,payload)=>{let {data} = await axios.post('http://127.0.0.1:3000/db/tag/',payload.body); return data},
+  updateUserAction: async (context, payload) => {let {data} = await axios.put('http://127.0.0.1:3000/db/user',  payload); return data},
+  tagFormAction: async (context,payload)=>{let {data} = await axios.post('http://127.0.0.1:3000/db/tag',        payload); return data},
+  removeTagAction: async (context,payload)=>{let {data} = await axios.post('http://127.0.0.1:3000/db/tag',      payload); return data},
   editSwitchAction: async (context,payload) => {context.commit('setEditSwitch',payload)},
   imageUploadAction: async (context,payload) => { let {data} = await axios.post( 'http://127.0.0.1:3000/db/image', 
   payload.formImageData, payload.headers, payload.proptype); return data.status  },

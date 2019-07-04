@@ -34,7 +34,7 @@ app.get("/user", async (req, res) => {req.headers.authorization = req.headers.au
 app.get("/category", (req, res) => { mydb.execute( 'SELECT * FROM `category` WHERE `category`.`id`!= ?', [0],
   function(err, category, fields) {if (err) {console.error(err); res.send (err) } else res.json(category) } ) })
 
-app.get("/tag", (req, res) => { mydb.execute( 'SELECT * FROM `tag`',[],
+app.get("/tag", (req, res) => { mydb.execute( 'SELECT * FROM `tag` where `project`=?',[req.query.projectid],
   function(err, tag, fields) {if (err) {console.error(err); res.send (err) } else res.json(tag) } ) })
 
 app.get("/place", (req, res) => { mydb.execute( 'SELECT `id`, `country`, `name` FROM `place`',[],
@@ -103,8 +103,11 @@ app.post("/user",  (req, res) => {mydb.execute('SELECT * FROM `user` WHERE `user
       function(err,user,fields){if(err){console.error(err);res.send(err)}else{res.json({id: user.insertId})}})})
     }else{ res.send('exists') } } } ) })
 
-app.post("/tag", (req, res) => { mydb.execute('INSERT INTO `tag` (`project`,`name`) VALUES (?,?)',[req.body.project,req.body.name],
-  function(err,tag,fields){if(err){console.error(err);res.send(err)}else{res.send(tag)} }) })
+app.post("/tag", (req, res) => { if (req.body.tag == 'add'){
+    mydb.execute('INSERT INTO `tag` (`project`,`name`) VALUES (?,?)',[req.body.project,req.body.name],
+    function(err,tag,fields){if(err){console.error(err);res.send(err)}else{res.send(tag)} }) 
+  }else {mydb.execute('DELETE FROM `tag` where `project` = ? and `name` = ?',[req.body.project,req.body.name],
+  function(err,tag,fields){if(err){console.error(err);res.send(err)}else{res.send(tag)} }) }})
 
 app.post("/image", function(req, res) {if (req.body.empty){standardimage = './assets/image/'+req.body.proptype+'/1.png'
     Jimp.read(standardimage).then(standardimage => { return standardimage
@@ -128,19 +131,32 @@ app.post("/vote", (req, res) => {
     'SELECT * from `projectvote` where `user`=? AND `condition`=? AND `project`=?', [req.body.user,req.body.condition,req.body.id],
     function(err,[vote],fields){if(err){console.error(err);res.send(err)}else{//if a vote exists, it is copied into the removed votetable
       if(vote){mydb.execute('INSERT INTO `removedpvote` (`user`,`project`,`condition`) VALUES (?,?,?)',
-      [req.body.user,req.body.id,req.body.condition],
+        [req.body.user,req.body.id,req.body.condition],
         function(err,removedvote,fields){if(err){console.error(err);res.send(err)}else{
           if (cc.indexOf(req.body.condition) > -1 ) //then the relative project condition value is updated
-          mydb.execute('UPDATE `project` SET `'+req.body.condition+'`=`'+req.body.condition+'`-1 where `project`.`id`=?', [req.body.id],
-          function(err,updatedproject,fields){if(err){console.error(err);res.send(err)}else{//when all is safe, the old vote is removed:
-            mydb.execute('DELETE FROM `projectvote` where `id` = ?',[vote.id],
-            function(err,deletedvote,fields){if(err){console.error(err);res.send(err)}else{res.send('OK')}})} }) }}) }
+            mydb.execute('UPDATE `project` SET `'+req.body.condition+'`=`'+req.body.condition+'`-1 where `project`.`id`=?', [req.body.id],
+            function(err,updatedproject,fields){if(err){console.error(err);res.send(err)}else{//when all is safe, the old vote is removed:
+              mydb.execute('DELETE FROM `projectvote` where `id` = ?',[vote.id],
+              function(err,deletedvote,fields){if(err){console.error(err);res.send(err)}else{
+              //here, we revoke every platform effect the vote may have:
+                if (req.body.condition == 'F') mydb.execute('DELETE FROM `userproject` where `user` = ? and `project` = ?',
+                  [req.body.user, req.body.id],
+                  function(err,deletedvote,fields){if(err){console.error(err);res.send(err)}else{
+                    mydb.execute('UPDATE `project` SET `participant`=`participant`-1 where `project`.`id`=?',[req.body.id],
+                    function(err,deletedvote,fields){if(err){console.error(err);res.send(err)}else{res.send('OK')}}) }}) }}) }}) }}) }
       else{mydb.execute('INSERT INTO `projectvote` (`user`,`project`,`condition`) VALUES (?,?,?)',//if there is no vote
         [req.body.user,req.body.id,req.body.condition],//a new vote is added into the database
         function(err,voteinserted,fields){if(err){console.error(err);res.send(err)}else{
           if (cc.indexOf(req.body.condition) > -1 ) //then the relative project condition value is updated
-          mydb.execute('UPDATE `project` SET `'+req.body.condition+'`=`'+req.body.condition+'`+1 where `project`.`id`=?', [req.body.id],
-          function(err,updatedproject,fields){if(err){console.error(err);res.send(err)}else{res.send(updatedproject)}}) }}) } }}) }
+            mydb.execute('UPDATE `project` SET `'+req.body.condition+'`=`'+req.body.condition+'`+1 where `project`.`id`=?', [req.body.id],
+            function(err,updatedproject,fields){if(err){console.error(err);res.send(err)}else{
+            //here, we add every platform effect the vote may have:
+            if (req.body.condition == 'F') mydb.execute('INSERT INTO `userproject` (`user`,`project`) VALUES (?,?)',
+              [req.body.user,req.body.id],
+              function(err,participatedproject,fields){if(err){console.error(err);res.send(err)}else{
+                mydb.execute('UPDATE `project` SET `participant`=`participant`+1 where `project`.`id`=?',[req.body.id],
+                function(err,updateduserproject,fields){if(err){console.error(err);res.send(err)}else{
+                  res.send(updateduserproject)}}) }}) }}) }}) }}}) }
   else{mydb.execute(//the presence of an existing comment vote is checked
     'SELECT * from `commentvote` where `user`=? AND `condition`=? AND `comment`=?', [req.body.user,req.body.condition,req.body.id],
     function(err,[vote],fields){if(err){console.error(err);res.send(err)}else{//if a vote exists, it is copied into the removed votetable
