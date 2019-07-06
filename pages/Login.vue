@@ -26,11 +26,11 @@
 </template>
 
 <script>
-import Newuser from '@/components/Newuser'
+import newuser from '@/components/newuser'
 
 export default {
   middleware: ['auth'],
-  components: {Newuser: Newuser,},
+  components: {newuser: newuser,},
   data(){return { emailLogin: '', passwordLogin: '',} },
   methods: { async login() { this.error = null; 
     this.$auth.loginWith('local', { data: { email: this.emailLogin, password: this.passwordLogin }}).catch(e => { this.error = e + ''})}

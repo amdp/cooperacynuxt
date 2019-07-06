@@ -1,18 +1,17 @@
-<!-- <template>
+<template>
   <div>
-    <div><p class="base understanding center space up" v-if="this.$store.state.payment=='cancelled'">Subscription cancelled.<br><br>
+    <!-- <div v-if="this.$store.state.payment=='cancelled'"><p class="base understanding center space up">Subscription cancelled.<br><br>
     You have {{ this.$store.state.payment.days }} days left to join us!</p></div>
     <div v-else>
     <p class="base equivalence center space up">Step 2: the voluntary pooling<br><br></p>
-    <p class="base">The Cooperacy membership is based on voluntary pooling. All of us send just one euro per month: the money is pooled to finance future ideas and projects, included yours. If you do not believe it, you can see what we've done with the money directly from the public paypal account: go to the standard paypal login and enter our account with COOPERATION + password cooperation2016.<br><br>
+    <p class="base">The Cooperacy membership is based on a voluntary pooling of just one euro per month: the money is pooled to finance future ideas and projects, included yours.<br><br>
+
+    <nuxt-link href="paypalpay" class="btn btn-primary btn-block">VOLUNTARY POOLING THROUGH PAYPAL</nuxt-link>
+    <p class="mini">If you encounter any problem please screenshot any error and.. write us! (see below)</p><br><br>
+
+    Living in a low income country? You can pool with a lower amount if you help us adapt the amount to the different purchasing power of your nation. Write us.<br><br>
 
     If you don't like paypal, you can pool one year membership (12 euros) via bank transfer: our IBAN is IT61D0623001623000043225634 - Filiale AG 23 Milano Cariparma di via della Moscova.<br><br>
-
-    If you are living in a low income country, you can pool with a lower amount if you help us adapt the amount to the different purchasing power of your nation.<br><br>
-
-    <a target="_blank" href="{{asset('paypalpay')}}" class="btn btn-primary btn-block">VOLUNTARY POOLING THROUGH PAYPAL</a>
-    
-    <p class="mini">If you encounter any problem please screenshot any error and write us!</p><br><br>
 
     <p class="base">Pool instead via bank transfer sending us a code/receipt or contact us for suggestions, questions, requests:</p>
     <div role="form" class="wpcf7" id="wpcf7-f1303-p20-o1" lang="en-US" dir="ltr">
@@ -45,13 +44,12 @@
     'aria-invalid' => 'false',]) }}</span></p>
 
     <p class="mini"><input type="submit" value="Send" class="wpcf7-form-control wpcf7-submit" /></p>
-    <div class="wpcf7-response-output wpcf7-display-none"></div>
+    <div class="wpcf7-response-output wpcf7-display-none"></div>-->
 
-  </div><br>
-</div>
+
   </div>
 </template>
-
+<!--
 <script>
 var paypal = require('paypal-rest-sdk');
 
@@ -67,7 +65,7 @@ export default {
 }
 </script>
 
-<!--
+
 
 
 
