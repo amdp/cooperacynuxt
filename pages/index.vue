@@ -1,10 +1,10 @@
 <template><div class="m-0 p-0"><home /><projectlist /></div></template>
 
 <script>
-import Home from '@/components/Home'
-import Projectlist from '@/components/Projectlist'
+import home from '@/components/home'
+import projectlist from '@/components/projectlist'
 
-export default { components: {Home: Home, Projectlist: Projectlist,},
+export default { components: {home: home, projectlist: projectlist,},
   async fetch ({ store, params }) {await store.dispatch('getProjectAction', '') },
 }
 </script>

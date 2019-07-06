@@ -69,15 +69,15 @@
 </template>
 
 <script>
-import Votebar from '@/components/Votebar'
-import Comment from '@/components/Comment'
+import votebar from '@/components/votebar'
+import comment from '@/components/comment'
 import { constants } from 'zlib';
 
 export default {
   data() { return {formswitch: false, editreplyid: false, formComment: '', formPost: '',}},//if formswitch = a comment id, textbox appears
   computed: { up(){if(this.$store.state.comment){return this.$store.state.comment.filter(comment=>{ return comment.parent === 0 })}
     else {return []}},},
-  components: { Votebar: Votebar, Comment: Comment, },
+  components: { votebar: votebar, comment: comment, },
   methods: {
     formcomment(comment, newoldid){if(comment.parent===0) {var parent=comment.id} else {var parent=comment.parent}
       newoldid=='new'? (this.$store.dispatch('commentFormAction', { id: newoldid, parent: parent, 

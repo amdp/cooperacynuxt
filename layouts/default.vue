@@ -19,13 +19,13 @@
 </template>
 
 <script>
-import Navbar from '@/components/Navbar'
-import Foot from '@/components/Foot'
+import navbar from '@/components/navbar'
+import foot from '@/components/foot'
 
 export default {
   components: {
-    Navbar: Navbar,
-    Foot: Foot
+    navbar: navbar,
+    foot: foot
   }
 }
 </script>

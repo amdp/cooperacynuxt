@@ -60,11 +60,11 @@
 </template>
 
 <script>
-import Votebar from '@/components/Votebar'
+import votebar from '@/components/votebar'
 
 export default {
   components: {
-    Votebar: Votebar,
+    votebar: votebar,
   },
   computed: {
     userImage(){ if (this.$auth.user.id) { return require('../assets/image/user/' + this.$auth.user.id + '.png')}}

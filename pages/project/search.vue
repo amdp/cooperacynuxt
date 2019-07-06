@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Projectlist from '@/components/Projectlist'
-export default { middleware: ['auth'], components: { Projectlist: Projectlist, }, 
+import projectlist from '@/components/projectlist'
+export default { middleware: ['auth'], components: { projectlist: projectlist, }, 
   async fetch ({ store, params }) {await store.dispatch('getProjectAction', {userid: store.state.auth.user.id}) }, }
 </script>
