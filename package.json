@@ -20,8 +20,10 @@
     "bignumber.js": "^7.2.1",
     "body-parser": "^1.19.0",
     "bootstrap": "^4.1.3",
-    "bootstrap-vue": "^2.0.0-rc.25",
+    "bootstrap-vue": "^2.0.0-rc.26",
+    "braintree": "^2.18.0",
     "cross-env": "^5.2.0",
+    "dotenv": "^8.0.0",
     "express": "^4.17.1",
     "express-fileupload": "^1.1.5",
     "jquery": "^3.4.1",
@@ -29,10 +31,9 @@
     "jwt-decode": "^2.2.0",
     "mysql": "^2.17.1",
     "mysql2": "^1.6.5",
-    "nodemailer": "^6.2.1",
+    "nodemailer": "^6.3.0",
     "nodemon": "^1.19.1",
     "nuxt": "^2.8.1",
-    "paypal-rest-sdk": "^2.0.0-rc.1",
     "popper.js": "^1.15.0"
   },
   "devDependencies": {}
