@@ -3,6 +3,8 @@
     <div class="col-12">
       <div class="row"><div class="col-12 d-flex justify-content-center"><p class="care subheading">OR CREATE A NEW ACCOUNT:</p></div></div>
       <div class="row">
+      <div class="g-signin2" data-onsuccess="googleOnSignIn" data-theme="dark"></div>
+      <a href="#" @click="googleSignOut">Sign out</a>
         <div class="col-12 d-flex justify-content-center">
           <b-form @submit.prevent="newuser" class="mt-3 was-validated">
             <b-form-group label-for="nameInput" label="Name:" description="Please insert your name">
@@ -23,14 +25,6 @@
         </div>
       </div>
       <div class="d-flex justify-content-center" id="paypal-button-container"></div>
-      <script>paypal.Buttons({
-        //onError: function (err) {Show an error page here, when an error occurs}
-        //onCancel: function (data) {When a buyer cancels a payment, they typically return to the parent page. You can instead indicate a different page here.}
-        // REMOVE DEBUG!!
-        createSubscription: function(data, actions) { return actions.subscription.create({ 'plan_id': 'P-9C681042E7918904VLURYYGQ'});},
-        onApprove: function(data, actions) {alert('You have successfully become a member with subscription ID ' + data.subscriptionID);
-        this.formPaypalagreementid=data.subscriptionID; this.newuser();}}).render('#paypal-button-container');
-      </script>
     </div>
   </div>
 </template>
@@ -39,9 +33,12 @@
 export default {
   head: {
     title: 'Join or Login',
-    script: [{src:'https://www.paypal.com/sdk/js?client-id='+process.env.PAYPALID+'&vault=true&currency=EUR&debug=true'}], //live
-    //script: [{src:'https://www.paypal.com/sdk/js?client-id='+process.env.PAYPALID+'&vault=true&currency=EUR&debug=true'}], //sandbox
-    meta: [ { name: 'viewport', content: 'width=device-width, initial-scale=1' }, { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },]
+    script: [{src:'https://www.paypal.com/sdk/js?client-id='+process.env.PAYPALID+'&vault=true&currency=EUR&debug=false'}, {src: 'https://apis.google.com/js/platform.js', async: true, defer: true}, {src: '../googlelogin.js'}],
+    meta: [ 
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' }, 
+      { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
+      {name: 'google-signin-scope', content: 'profile email'}, 
+      {name: 'google-signin-client_id', content: `${process.env.GOOGLEID}` }]
   },
   data() {
     return {
@@ -53,7 +50,17 @@ export default {
       formPaypalagreementid: 'bank',
     }
   },
+  mounted: function(){
+    var that = this;
+    paypal.Buttons({
+      onError: function(err){alert(err); console.log('err'+err); that.formPaypalagreementid='e'+JSON.stringify(err); that.newuser()},
+      onCancel: function(data){console.log('c'+JSON.stringify(data)); that.formPaypalagreementid='c'+JSON.stringify(data); that.newuser()},
+      createSubscription: function(data, actions) { return actions.subscription.create({ 'plan_id': 'P-9C681042E7918904VLURYYGQ'});},
+      onApprove: function(data, actions) { alert('You have successfully become a member with subscription ID ' + data.subscriptionID);
+      that.formPaypalagreementid=data.subscriptionID; that.newuser(); }}).render('#paypal-button-container')
+  },
   methods: {
+    googleSignOut() {var auth2 = gapi.auth2.getAuthInstance(); auth2.signOut()},
     async newuser() {
       var newuser = await this.$store.dispatch('newuserAction', { 
         name: this.formName,
@@ -83,8 +90,8 @@ export default {
     },
     addedToast(){
       this.$toast.success('New user added.', {duration: 1000, className: 'toasts'})
-      setTimeout(function(){location.href = location.href}, 1200)
-    }
+      //setTimeout(function(){location.href = location.href}, 1200)
+    },
   },
 
 }
@@ -133,4 +140,24 @@ export default {
     'aria-invalid' => 'false',]) }}</span></p>
 
     <p class="mini"><input type="submit" value="Send" class="wpcf7-form-control wpcf7-submit" /></p>
-    <div class="wpcf7-response-output wpcf7-display-none"></div>-->
+    <div class="wpcf7-response-output wpcf7-display-none"></div>
+   
+   google sign out
+      function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
+  }
+
+  Verify the integrity of the ID token
+After you receive the ID token by HTTPS POST, you must verify the integrity of the token. To verify that the token is valid, ensure that the following criteria are satisfied:
+
+The ID token is properly signed by Google. Use Google's public keys (available in JWK or PEM format) to verify the token's signature. These keys are regularly rotated; examine the Cache-Control header in the response to determine when you should retrieve them again.
+The value of aud in the ID token is equal to one of your app's client IDs. This check is necessary to prevent ID tokens issued to a malicious app being used to access data about the same user on your app's backend server.
+The value of iss in the ID token is equal to accounts.google.com or https://accounts.google.com.
+The expiry time (exp) of the ID token has not passed.
+If you want to restrict access to only members of your G Suite domain, verify that the ID token has an hd claim that matches your G Suite domain name.
+Rather than writing your own code to perform these verification steps, we strongly recommend using a Google API client library for your platform, or a general-purpose JWT library. For development and debugging, you can call our tokeninfo validation endpoint.
+    
+    -->

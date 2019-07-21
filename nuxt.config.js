@@ -31,4 +31,5 @@ module.exports = {mode: 'universal', plugins: [], build: {extend(config, ctx) { 
     },
     redirect: { home: '/user', login: '/login', user: '/login', logout: '/login' }
   },
+  
 }
