@@ -33,7 +33,7 @@
 export default {
   head: {
     title: 'Join or Login',
-    script: [{src:'https://www.paypal.com/sdk/js?client-id='+process.env.PAYPALID+'&vault=true&currency=EUR&debug=false'}, {src: 'https://apis.google.com/js/platform.js', async: true, defer: true}, {src: '../googlelogin.js'}],
+    script: [{src:'https://www.paypal.com/sdk/js?client-id='+process.env.SANDPAYPALID+'&vault=true&currency=EUR&debug=false'}, {src: 'https://apis.google.com/js/platform.js', async: true, defer: true}, {src: '../googlelogin.js'}],
     meta: [ 
       { name: 'viewport', content: 'width=device-width, initial-scale=1' }, 
       { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
