@@ -41,7 +41,3 @@
  
   </div>
 </template>
-
-<script>
-
-</script>

@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import votebar from '~/components/votebar'
+import votebar from './votebar'
 export default { components: { votebar: votebar, },
 computed: { projectlist(){return this.$store.state.project.filter(project => {return project.stage != 1})},
             archivedlist(){return this.$store.state.project.filter(project => {return project.stage == 1})}

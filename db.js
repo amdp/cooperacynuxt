@@ -249,10 +249,7 @@ app.post("/resetuvoting", (req, res) => {//user calculation algorithm /it should
     function(err,result,fields){if(err){console.log('e: '+JSON.stringify(err));res.send(err)}else{console.log(''+JSON.stringify(result));response.send('OK')}})}
 })
 
-module.exports = {
-  path: '/db',
-  handler: app
-}
+module.exports = { path: '/db', handler: app }
 
 
 

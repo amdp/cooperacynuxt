@@ -97,8 +97,8 @@
 </template>
 
 <script>
-import votebar from '~/components/votebar'
-import comment from '~/components/comment'
+import votebar from '../../components/votebar'
+import comment from '../../components/comment'
 
 export default {
   middleware: ['auth'], components: { votebar: votebar, comment: comment, },
