@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="row">
-      <Navbar />
+      <navbar />
     </div>
     <div class="row navbarrow">
       <div class="col-2">

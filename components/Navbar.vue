@@ -21,26 +21,26 @@
 
         <b-navbar-nav class="ml-auto minini mr-4">
           <b-nav-item-dropdown text="THE PROJECT" no-caret right>
-            <b-dropdown-item to="aboutyou">ABOUT YOU</b-dropdown-item>
-            <b-dropdown-item to="/i/aboutus">ABOUT US</b-dropdown-item>
-            <b-dropdown-item to="/i/whitepaper">THE PLATFORM</b-dropdown-item>
-            <b-dropdown-item to="governance">GOVERNANCE</b-dropdown-item>
+            <b-dropdown-item to="/aboutyou">ABOUT YOU</b-dropdown-item>
+            <b-dropdown-item to="/aboutus">ABOUT US</b-dropdown-item>
+            <b-dropdown-item to="/whitepaper">THE PLATFORM</b-dropdown-item>
+            <b-dropdown-item to="/governance">GOVERNANCE</b-dropdown-item>
           </b-nav-item-dropdown>
 
-          <b-nav-item-dropdown text="SERVICES" no-caret right>
-              <b-dropdown-item to="coorporate">COOPERATION SERVICES</b-dropdown-item>
-              <b-dropdown-item to="openecosystem">OPEN SPACE COOPERATION</b-dropdown-item>
-              <b-dropdown-item to="overview">COOPERATION OVERVIEW</b-dropdown-item>
-              <b-dropdown-item to="cohackathon">COOPERATIVE HACKATHON</b-dropdown-item>
-              <b-dropdown-item to="workshops">COOPERATION WORKSHOPS</b-dropdown-item>
+          <b-nav-item-dropdown text="CORPORATE" no-caret right>
+              <b-dropdown-item to="/corporate">COOPREATION IN THE CORPORATE WORLD</b-dropdown-item>
+              <b-dropdown-item to="/overview">CAN WE MEASURE COOPERATION?</b-dropdown-item>
+              <b-dropdown-item to="/coopenspace">OPEN SPACE COOPERATION</b-dropdown-item>
+              <b-dropdown-item to="/cohackathon">COOPERATIVE HACKATHON</b-dropdown-item>
+              <b-dropdown-item to="/workshops">COOPERATION WORKSHOPS</b-dropdown-item>
           </b-nav-item-dropdown>
 
           <b-nav-item-dropdown text="SCIENCE" no-caret right>
-              <b-dropdown-item to="cooperation">COOPERATION</b-dropdown-item>
-              <b-dropdown-item to="integration">INTEGRATION</b-dropdown-item>
-              <b-dropdown-item to="cci">COOPERATION CONTEXT INDEX</b-dropdown-item>
-              <b-dropdown-item to="science">COOPERACY RESEARCH ASSOCIATION</b-dropdown-item>
-              <b-dropdown-item to="news">NEWS</b-dropdown-item>
+              <b-dropdown-item to="/cooperation">COOPERATION</b-dropdown-item>
+              <b-dropdown-item to="/integration">INTEGRATION</b-dropdown-item>
+              <b-dropdown-item to="/cci">COOPERATION CONTEXT INDEX</b-dropdown-item>
+              <b-dropdown-item to="/science">COOPERACY RESEARCH ASSOCIATION</b-dropdown-item>
+              <b-dropdown-item to="/news">NEWS</b-dropdown-item>
           </b-nav-item-dropdown>
 
           <span> &nbsp;&nbsp;&nbsp;</span>
