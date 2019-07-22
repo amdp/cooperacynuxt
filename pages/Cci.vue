@@ -32,7 +32,7 @@ console.log(JSON.stringify(cci))
 </template>
 
 <script>
-import votebar from '@/components/votebar'
+import votebar from '~/components/votebar'
 
 export default {
   computed: {
