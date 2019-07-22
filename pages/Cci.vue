@@ -43,17 +43,5 @@
 </template>
 
 <script>
-import votebar from '@/components/votebar'
 
-export default {
-  computed: {
-      project(){return  this.$store.state.project}
-  },
-  mounted() {
-    this.$store.dispatch('get')
-  },
-  components: {
-    votebar: votebar,
-  },
-}
-</script> -->
+</script>
