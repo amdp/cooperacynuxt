@@ -7,7 +7,7 @@ const nodemailer = require("nodemailer");
 const Jimp = require('jimp');
 const cc=['D','U','F','I','C','T','E']
 const mysql = require("mysql2"); const mydb = mysql.createConnection({
-  connectionLimit: 200, host:'localhost', user: 'cooperacy', password: process.env.DBPASS, database: 'coo', multipleStatements: true})
+  connectionLimit: 200, host:'localhost', user: process.env.MYSQLUSER, password: process.env.DBPASSWORD, database: process.env.DBDB, multipleStatements: true})
 
 
 var axios=require("axios")
@@ -44,6 +44,9 @@ function(err, place, fields) {if (err) {console.log('e: '+JSON.stringify(err)); 
 
 app.get("/country", (req, res) => { mydb.execute( 'SELECT `id`, `name` FROM `country`',[],
 function(err, country, fields) {if (err) {console.log('e: '+JSON.stringify(err)); res.send (err) } else res.json(country) } ) })
+
+app.get("/news", (req, res) => { mydb.execute( 'SELECT * FROM `news` ORDER BY `news`.`date` DESC',[],
+function(err, news, fields) {if (err) {console.log('e: '+JSON.stringify(err)); res.send (err) } else res.json(news) } ) })
 
 
 /////// UPDATE ///////
