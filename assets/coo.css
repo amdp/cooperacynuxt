@@ -107,4 +107,4 @@ img.page-header { margin-top: 0px; margin-bottom: 60px; width: 100%; height: aut
 .showme {display: none}
 
 /*not working*/
-.toasts {background-color: var(--diversity); color: #F00;}
+.toasts {background-color: var(--care)!important; color: #FFF!important;}

@@ -1,7 +1,7 @@
 # Created by .ignore support plugin (hsz.mobi)
 
 #main config
-nuxt.config.js
+.env
 
 ### Node template
 # Logs
