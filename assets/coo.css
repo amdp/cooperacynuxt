@@ -102,7 +102,7 @@ hr.home-hr { border:none; background-color:#666666; width:50px; height:2px!impor
 img.page-header { margin-top: 0px; margin-bottom: 60px; width: 100%; height: auto; vertical-align: top; border:none; }
 img.news { margin-top: 10px; margin-bottom: 20px; width: 70%; height: auto; vertical-align: bottom; border:none; }
 .foot {border-top: 1px solid #CCCCCC;}
-.currentImage {width:60px;}
+.currentImage {width:60px;} 
 .vote {height: 5px; cursor: pointer;} .vote:hover .showme {display: block;}
 .uservote {height: 2px;} .uservote:hover .showme {display: block;}
 .showme {display: none}
