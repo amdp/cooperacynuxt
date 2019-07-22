@@ -7,7 +7,7 @@ const nodemailer = require("nodemailer");
 const Jimp = require('jimp');
 const cc=['D','U','F','I','C','T','E']
 const mysql = require("mysql2"); const mydb = mysql.createConnection({
-  connectionLimit: 200, host:'localhost', user: 'cooperacy', password: process.env.DBPASS, database: 'coo', multipleStatements: true})
+  connectionLimit: 200, host:'localhost', user: 'cooperacy', password: process.env.DBPASSWORD, database: 'coo', multipleStatements: true})
 
 
 var axios=require("axios")
