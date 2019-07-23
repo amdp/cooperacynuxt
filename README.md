@@ -6,7 +6,8 @@ Hello, welcome to Cooperacy Platform universal app.
 It is based on NodeJs, Express, Vue, Nuxt with Vuex store + Vue Bootstrap and on a MySQL database.
 It uses Babel and Webpack, along with some minor extensions like the nice Jimp (Js Gimp).
 
-First place where to start is to see the MySql database. Then pass to db.js file, that is the main and only Express file of access to database.
+First place where to start is to see the MySql database: you need to ask me for a dumb one. 
+Then pass to db.js file, that is the main and only Express file used to access the database.
 Then please continue to the "store" folder and see how global variables are managed by the Vuex store through Actions connected with the db.js file.
 Finally, see the index.vue file in the pages, continue to the defaul layout, and review the pages and their components.
 
@@ -15,12 +16,14 @@ Note: we tend to use all >singular< naming for database tables and internal vari
 
 Have fun and happy coding!
 
-
-## Build Setup
+## Setup
 
 ``` bash
 # install dependencies
 $ npm install
+
+# setup .env
+$ mv dumbenv .env
 
 # serve with hot reload at localhost:3000
 $ npm run dev
@@ -36,7 +39,6 @@ $ npm start
 $ npm run generate
 ```
 
-Please keep this file 42 lines short. For detailed explanation on how things work on Cooperacy, check the Platform idea on https://cooperacy.org/platform.
-About Nuxt, checkout [Nuxt.js docs](https://nuxtjs.org).
+Please keep this file 42 lines short. For detailed explanation on how things work on Cooperacy, check the Platform idea on https://cooperacy.org/platform. About Nuxt, checkout [Nuxt.js docs](https://nuxtjs.org).
 
 And don't worry. Be happy!
