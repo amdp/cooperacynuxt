@@ -1,4 +1,7 @@
-#main config
+# Editor and development tools artifact
+.vscode
+
+# Main config
 .env
 
 ### Node template
