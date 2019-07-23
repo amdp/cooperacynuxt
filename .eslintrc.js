@@ -20,6 +20,10 @@ module.exports = {
   ],
   // add your custom rules here
   rules: {
+    "object-curly-newline": ["error", {
+      "minProperties": 2,
+      "consistent": true
+    }],
     "semi": [2, "never"],
     "no-console": "off",
     "vue/max-attributes-per-line": "off",
