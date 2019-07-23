@@ -8,9 +8,8 @@ const Jimp = require('jimp');
 const cc=['D','U','F','I','C','T','E']
 const mysql = require("mysql2"); const mydb = mysql.createConnection({ connectionLimit: 200, host:process.env.HOST, 
   user: process.env.MYSQLUSER, password: process.env.DBPASSWORD, database: process.env.DBDB, multipleStatements: true})
-
-
 var axios=require("axios")
+
 /////// GET ///////
 
 app.get("/project", (req, res) =>{let query = 'SELECT * FROM `project`'; let param=[];
@@ -45,9 +44,7 @@ function(err, place, fields) {if (err) {console.log('e: '+JSON.stringify(err)); 
 app.get("/country", (req, res) => { mydb.execute( 'SELECT `id`, `name` FROM `country`',[],
 function(err, country, fields) {if (err) {console.log('e: '+JSON.stringify(err)); res.send (err) } else res.json(country) } ) })
 
-
 /////// UPDATE ///////
-
 
 app.put("/user", (req, res) => { if(!req.body.name || !req.body.password) { res.status(400); res.json({ error: "Bad data" }) } else { 
   bcrypt.hash(req.body.password, 10, (err, hash) => { req.body.password = hash;

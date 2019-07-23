@@ -80,4 +80,3 @@ export const actions = {
   resetuVotingAction:   async (context,payload)=>{let{data} = await axios.post(process.env.DBURL+'/resetuvoting');  return 'OK'},
 }
 
-
