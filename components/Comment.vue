@@ -69,8 +69,8 @@
 </template>
 
 <script>
-import votebar from '~/components/votebar'
-import comment from '~/components/comment'
+import votebar from '@/components/votebar'
+import comment from '@/components/comment'
 import { constants } from 'zlib';
 
 export default {
