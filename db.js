@@ -44,6 +44,10 @@ function(err, place, fields) {if (err) {console.log('e: '+JSON.stringify(err)); 
 app.get("/country", (req, res) => { mydb.execute( 'SELECT `id`, `name` FROM `country`',[],
 function(err, country, fields) {if (err) {console.log('e: '+JSON.stringify(err)); res.send (err) } else res.json(country) } ) })
 
+app.get("/news", (req, res) => { mydb.execute( 'SELECT * FROM `news` ORDER BY `news`.`date` DESC',[],
+function(err, news, fields) {if (err) {console.log('e: '+JSON.stringify(err)); res.send (err) } else res.json(news) } ) })
+
+
 /////// UPDATE ///////
 
 app.put("/user", (req, res) => { if(!req.body.name || !req.body.password) { res.status(400); res.json({ error: "Bad data" }) } else { 
