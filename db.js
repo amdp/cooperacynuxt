@@ -6,9 +6,8 @@ const bcrypt = require("bcrypt")
 const nodemailer = require("nodemailer");
 const Jimp = require('jimp');
 const cc=['D','U','F','I','C','T','E']
-const mysql = require("mysql2"); const mydb = mysql.createConnection({ connectionLimit: 200, host:'localhost', 
-user: process.env.MYSQLUSER, password: process.env.DBPASSWORD, database: process.env.DBDB, multipleStatements: true})
-
+const mysql = require("mysql2"); const mydb = mysql.createConnection({ connectionLimit: 200, host:process.env.HOST, 
+  user: process.env.MYSQLUSER, password: process.env.DBPASSWORD, database: process.env.DBDB, multipleStatements: true})
 
 
 var axios=require("axios")

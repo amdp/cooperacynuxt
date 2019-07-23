@@ -19,8 +19,8 @@
 </template>
 
 <script>
-import navbar from '~/components/navbar'
-import foot from '~/components/foot'
+import navbar from '@/components/navbar'
+import foot from '@/components/foot'
 
 export default {
   components: {
