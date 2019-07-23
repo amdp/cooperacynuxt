@@ -1,5 +1,7 @@
 # Editor and development tools artifact
 .vscode
+*.sublime-project
+*.sublime-workspace
 
 # Main config
 .env
