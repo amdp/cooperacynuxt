@@ -3,6 +3,9 @@
 #main config
 .env
 
+#vsc
+.vscode
+
 ### Node template
 # Logs
 logs
