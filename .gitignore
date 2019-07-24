@@ -1,7 +1,12 @@
 # Created by .ignore support plugin (hsz.mobi)
 
-#main config
+# Main config
 .env
+
+#vsc and sublime
+.vscode
+*.sublime-project
+*.sublime-workspace
 
 ### Node template
 # Logs

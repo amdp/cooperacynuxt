@@ -6,11 +6,10 @@ const bcrypt = require("bcryptjs")
 const nodemailer = require("nodemailer");
 const Jimp = require('jimp');
 const cc=['D','U','F','I','C','T','E']
-const mysql = require("mysql2"); const mydb = mysql.createConnection({ connectionLimit: 200, host: localhost, 
+const mysql = require("mysql2"); const mydb = mysql.createConnection({ connectionLimit: 200, host: 'localhost',
   user: process.env.MYSQLUSER, password: process.env.DBPASSWORD, database: process.env.DBDB, multipleStatements: true})
-
-
 var axios=require("axios")
+
 /////// GET ///////
 
 app.get("/project", (req, res) =>{let query = 'SELECT * FROM `project`'; let param=[];
@@ -50,7 +49,6 @@ function(err, news, fields) {if (err) {console.log('e: '+JSON.stringify(err)); r
 
 
 /////// UPDATE ///////
-
 
 app.put("/user", (req, res) => { if(!req.body.name || !req.body.password) { res.status(400); res.json({ error: "Bad data" }) } else { 
   bcrypt.hash(req.body.password, 10, (err, hash) => { req.body.password = hash;
