@@ -3,7 +3,14 @@ require('dotenv').config()
 module.exports = {mode: 'universal', plugins: [], build: {extend(config, ctx) { } }, serverMiddleware: ['./db'],
   css: ['@assets/coo.css'],  modules: ['@nuxtjs/axios','@nuxtjs/toast','@nuxtjs/pwa','@nuxtjs/auth','bootstrap-vue/nuxt',],
   loading: { color: '#FFCC00', failedColor: 'black', height: '3px', continuous: true,  }, env: {DBURL: process.env.DBURL},
-  server: {port: process.env.PORT, host: process.env.HOST},
+  server: {
+    port: process.env.PORT,
+    host: process.env.HOST,
+    https: {
+      key: fs.readFileSync(path.resolve('/etc/letsencrypt/live/amarenapictures.com/', 'privkey.pem')),
+      cert: fs.readFileSync(path.resolve('/etc/letsencrypt/live/amarenapictures.com/', 'fullchain.pem'))
+    }
+  },
   
   head: {
     title: pkg.name,
