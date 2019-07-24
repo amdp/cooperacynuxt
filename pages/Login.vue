@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import newuser from '@/components/newuser'
+import newuser from '@@/components/newuser'
 
 export default {
   middleware: ['auth'],
