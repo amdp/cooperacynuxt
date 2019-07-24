@@ -4,7 +4,7 @@
 import home from '@/components/home'
 import projectlist from '@/components/projectlist'
 
-export default { components: {'home': home, 'projectlist': projectlist,},
+export default { components: {home: home, projectlist: projectlist,},
   async fetch ({ store, params }) {await store.dispatch('getProjectAction', '') },
 }
 </script>

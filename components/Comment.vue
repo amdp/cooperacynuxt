@@ -76,7 +76,7 @@ export default {
   data() { return {formswitch: false, editreplyid: false, formComment: '', formPost: '',}},//if formswitch = a comment id, textbox appears
   computed: { up(){if(this.$store.state.comment){return this.$store.state.comment.filter(comment=>{ return comment.parent === 0 })}
     else {return []}},},
-  components: { 'votebar': votebar, 'comment': comment, },
+  components: { votebar: votebar, comment: comment, },
   methods: {
     formcomment(comment, newoldid){if(comment.parent===0) {var parent=comment.id} else {var parent=comment.parent}
       newoldid=='new'? (this.$store.dispatch('commentFormAction', { id: newoldid, parent: parent, 
