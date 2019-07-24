@@ -1,14 +1,15 @@
-var express = require("express"); var app = express(); 
-var bodyParser = require("body-parser"); app.use(bodyParser.json()); app.use(bodyParser.urlencoded({extended: false}))
-const fileUpload = require("express-fileupload"); app.use(fileUpload())
+var express = require("express")
+var app = express()
+var bodyParser = require("body-parser")
+var axios=require("axios")
+const fileUpload = require("express-fileupload")
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcryptjs")
-const nodemailer = require("nodemailer");
-const Jimp = require('jimp');
+const nodemailer = require("nodemailer")
+const Jimp = require('jimp')
 const cc=['D','U','F','I','C','T','E']
-const mysql = require("mysql2"); const mydb = mysql.createConnection({ connectionLimit: 200, host: 'localhost',
+const mysql = require("mysql2"); const mydb = mysql.createConnection({ connectionLimit: 200, host: 'localhost', 
   user: process.env.MYSQLUSER, password: process.env.DBPASSWORD, database: process.env.DBDB, multipleStatements: true})
-var axios=require("axios")
 
 /////// GET ///////
 
