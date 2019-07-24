@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import projectlist from '@@/components/projectlist'
-export default { middleware: ['auth'], components: { projectlist: projectlist, },
+import projectlist from '@/components/projectlist'
+export default { middleware: ['auth'], components: { 'projectlist': projectlist, },
   mounted(){var cc=['D','U','F','I','C','T','E']; var sum=0; var sum2=0; var sum3=0; var max=0; var res={}; var res2={}; var res3={};
                 for(let j=0;j<cc.length;j++){ res[cc[j]] = this.$auth.user[cc[j]]}; 
                 for(let j=0;j<cc.length;j++){ sum += res[cc[j]]}
