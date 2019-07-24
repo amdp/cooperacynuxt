@@ -2,7 +2,7 @@ var express = require("express"); var app = express();
 var bodyParser = require("body-parser"); app.use(bodyParser.json()); app.use(bodyParser.urlencoded({extended: false}))
 const fileUpload = require("express-fileupload"); app.use(fileUpload())
 const jwt = require("jsonwebtoken")
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcryptjs")
 const nodemailer = require("nodemailer");
 const Jimp = require('jimp');
 const cc=['D','U','F','I','C','T','E']
