@@ -23,6 +23,6 @@ import navbar from '@/components/navbar'
 import foot from '@/components/foot'
 
 export default {
-  components: {'navbar': navbar, 'foot': foot }
+  components: {navbar: navbar, foot: foot }
 }
 </script>
