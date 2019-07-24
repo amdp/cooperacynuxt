@@ -1,3 +1,4 @@
+
 <template>
         <b-row class="p-0 w-100 m-0" v-if="this.proptype=='user'"><b-col cols="12" class="p-0 m-0 w-100 d-flex">
           <div v-for="vote in this.vote" :key="vote.userkey" :class="vote.class" :style="vote.style"></div>
