@@ -2,7 +2,9 @@
 
 ![Image](assets/image/github/image3.png)
 
-Hi and welcome to Cooperacy Coders main document. This is an introductory document for who wants to help the development and maintenance of the platform. You can read about the platform here: [https://cooperacy.org/platform](https://cooperacy.org/platform) . The official discussion channel is: You do not need to know or support the platform, for you it’s just a way to learn to code.
+Hi and welcome to Cooperacy Coders main document. This is an introductory document for who wants to help the development and maintenance of the platform. You can read about the platform here: [https://cooperacy.org/platform](https://cooperacy.org/platform) . The official discussion channel is: [https://discord.gg/sKb5Ju](https://discord.gg/sKb5Ju)
+
+You do not need to know or support the platform, for you it’s just a way to learn to code.
 
 Because it is learning and coding, please feel free to ask.
 
