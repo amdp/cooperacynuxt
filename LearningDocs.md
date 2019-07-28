@@ -134,14 +134,46 @@ To see the registered user pages, go to login and register, but do not hit PAYPA
 nuxt has three layers
 
 CLIENT => VUE // VUEX // NODE <= SERVER
+when you land in a page, vue renders the page and 
+executes the <SCRIPT> part at the end of the .vue file,
+with some CALLS.
+These calls go to the VUEX store: how do we recognise them?
+they all start with $store, for example this.$store.dispatch
+see for example index.vue
 
-## FINAL STUFF
+In that file, today (end of july), you have an async fetch function
+you will learn about the fetch function later
+So, store is VUEX. In this case for the fetch function you do not have
+the magic word "this" so you use store without it, that is why it is passed in the function brackets
+in any case store refers to the VUEX file /store/index.js
 
-1. Contributors
-Other contributors email: athxp@tutanota.com
-2. Other stuff
-3. Last
-Remember: have fun! :D
+The VUEX store has a state list, that is "LIKE" global variables
+"LIKE", not the same. They are variables accessible from any vue file,
+which is good because sometimes you need to have common variables
+amongst vue pages.
+
+Let's see the store/index.js: these variables (states) can be changed
+but ONLY BY VUEX store commands: these commands are called mutations, they come from actions.
+You see in the file you have also "getters", in NUXT the getters are less used because 
+of NUXT structure itself, so focus on the next kind of vuex store animals: "mutations" and "actions"
+the mutations SET the store STATES
+The actions instead go to the database, get the data and order the mutations to set the states
+so:
+
+STATE = list of variables that can be used THROUGH vue components and pages
+MUTATIONS = internal VUEX commands that SET or CHANGE the STATE variables
+ACTIONS = used to go to the server and get the data out of the DB and then mutate the STATES with the DB info
+
+so at LOAD, NUXT sets a list of VUEX STATE variables
+when a client goes on the pages the VUEX store calls go through VUEX ACTIONS to the database
+then through the MUTATIONS change the STATE variables
+ONLY ACTIONS go to the database
+They go through the axios module.
+Axios just simplifies XMLHttpRequests
+but we could use XMLHttpRequests directly.
+In any case, the actions use axios or xmlhttp requests to get info from the
+database and mutate the vuex variables.
+
 
 
 ////////////////////////////////////
@@ -151,46 +183,7 @@ copied from explanations, will become part of the guide:
 ////////////////////////////////////
 
 
-nuxt has three layers
-CLIENT => VUE // VUEX // NODE <= SERVER
-you land in a page, vue renders the page and calls in the SCRIPT part some CALLS
-these calls to to the VUEX store
-how do we recognise them?
-they all start with $store.
-for example
-this.$store.dispatch
-see index.vue
-you have an async fetch function
-the standard is to include as variables (store, params)
-because they are often used, even if you don't use params in that case
-I will teach you why
-store is VUEX
-in this case for the fetch function you do not have "this" so you use store without it
-that is why it is passed in the function brackets
-in any case
-store goes to VUEX
-the VUEX file is /store/index.js
-it has a state list
-that is "LIKE" global variables
-"LIKE"
-not the same
-these variables can be changed
-but ONLY BY VUEX
-you see you have also "getters"
-in nuxt the getters are less used because of its structure, so the next kind of vuex store animal is "mutations"
-mutations SET the store STATES
-so
-STATE = list of variables that can be used THROUGH vue components and pages
-MUTATIONS = internal VUEX commands that SET or CHANGE the STATE variables
-ACTIONS are instead used to go to the server and get the data out of the DB
-so at LOAD, NUXT sets a list of VUEX STATE variables
-the VUEX calls go through VUEX ACTIONS to the database
-when a client goes on the pages
-through the MUTATIONS
-change and populate the STATE variables
-ONLY ACTIONS go to the database through the axios module
-axios just simplifies XMLHttpRequests
-but we could decide to use XMLHttpRequests directly
+
 db js
 let's open it
 express, bodyparser, till mysql are tools node uses to handle the requests, do server stuff etc.
