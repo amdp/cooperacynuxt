@@ -26,13 +26,14 @@ Again, communicate your doubts. And you will gradually be happy.
 
 Thanks!
 
-## SETUP
-### 1. GITHUB
+## CHALLENGE ONE: GITHUB!
+If you pass this challenge you will be approaching the contributors zone, and be listed in the contributors.md file of this repo.
+### GITHUB
 Cooperacy is based on GitHub repositories. You find them here: [https://github.com/amdp](https://github.com/amdp)
 
 For detailed and complete guide please see [https://guides.github.com/introduction/flow/](https://guides.github.com/introduction/flow/) . If you do not want to follow the guide, please… ask 😄
 
-Git is quite complicated for newcomers so it is important for you to tell your difficulties. It is important that you learn it, though, because most of the world projects are updated thanks to the git process.
+Git is quite complicated for newcomers so it is important for you to tell your difficulties. It is important that you learn it too though, because most of the world projects are updated thanks to the git process.
 
 **Basically all you need to do is:**
 1.  Creating github account.
@@ -56,6 +57,8 @@ For doubts about every step, please ask! :)
 **Note:**
 
 When you create a new branch, you can mess around as much as you like, you won't destroy the software. When you want to issue a pull request, you should send only the changes that really matter, not everything you changed for testing. So the branch is your playground, but when you want your changes to be sent to the main program for integration you tidy everything up and issue your pull request.
+As per your first challenge, edit the contributors.md file and insert you in the learners list. Make a pull request and you're done.
+
 
 ### 2. MYSQL
 Please install Mysql 5.7 ([https://dev.mysql.com/downloads/mysql/5.7.html#downloads](https://dev.mysql.com/downloads/mysql/5.7.html#downloads))
