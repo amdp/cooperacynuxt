@@ -142,3 +142,189 @@ Other contributors email: athxp@tutanota.com
 2. Other stuff
 3. Last
 Remember: have fun! :D
+
+
+////////////////////////////////////
+CONTINUE HERE AT YOUR OWN RISK
+
+copied from explanations, will become part of the guide:
+////////////////////////////////////
+
+
+nuxt has three layers
+CLIENT => VUE // VUEX // NODE <= SERVER
+you land in a page, vue renders the page and calls in the SCRIPT part some CALLS
+these calls to to the VUEX store
+how do we recognise them?
+they all start with $store.
+for example
+this.$store.dispatch
+see index.vue
+you have an async fetch function
+the standard is to include as variables (store, params)
+because they are often used, even if you don't use params in that case
+I will teach you why
+store is VUEX
+in this case for the fetch function you do not have "this" so you use store without it
+that is why it is passed in the function brackets
+in any case
+store goes to VUEX
+the VUEX file is /store/index.js
+it has a state list
+that is "LIKE" global variables
+"LIKE"
+not the same
+these variables can be changed
+but ONLY BY VUEX
+you see you have also "getters"
+in nuxt the getters are less used because of its structure, so the next kind of vuex store animal is "mutations"
+mutations SET the store STATES
+so
+STATE = list of variables that can be used THROUGH vue components and pages
+MUTATIONS = internal VUEX commands that SET or CHANGE the STATE variables
+ACTIONS are instead used to go to the server and get the data out of the DB
+so at LOAD, NUXT sets a list of VUEX STATE variables
+the VUEX calls go through VUEX ACTIONS to the database
+when a client goes on the pages
+through the MUTATIONS
+change and populate the STATE variables
+ONLY ACTIONS go to the database through the axios module
+axios just simplifies XMLHttpRequests
+but we could decide to use XMLHttpRequests directly
+db js
+let's open it
+express, bodyparser, till mysql are tools node uses to handle the requests, do server stuff etc.
+so the first lines are for server node functionalities
+app.xx is the express variable that calls the different functions
+so app.get
+corresponds to GET HTTP axios requests
+app.post to POST and so on
+mydb is the mysql connection
+mydb.execute() is to issue commands to mysql
+req and res are two variables relative to the response and the request
+and the SELECT blabla is the MYSQL command
+the contact page should be easier to develop as it has no MYSQL call
+but goes to the server to send an email
+so
+rain, vue works in pages and components
+be aware that in nuxt some stuff DOES NOT WORK in components
+like do you guys remember the async fetch function?
+that DOES NOT WORK in components
+so what are components and pages?
+pages are pages
+components are part of pages that you can reuse in any page
+pretty simple
+so in cooperacy we have projects
+in the home page you see them
+if you log in, you see YOUR projects
+you guys will have the contact page, write it as you wish
+the page is contact.vue
+you have the old page written in php quoted
+with the different fields and a google captcha
+use useredit.vue as template
+the first part is a good way to write the FORM
+
+
+directory structure
+ASSETS = css, images, etc
+COMPONENTS = components
+LAYOUTS = layouts :smile:
+node_modules = all the node installed modules, BIG BIG folder
+PAGES = pages
+STATIC = try not to use this, it is not SERVER SIDE RENDERED NOR GENERALLY "NUXTED"
+we will eventually leave only the favicon there :smiley:
+STORE = VUEX
+keep in mind for your projects that STORE works if you put an index.js file there
+no file, no store
+
+now back to useredit
+we should use VUE BOOTSTRAP HTML TAGS
+so extra homework could be turn the <div class="row"> into <b-row> 
+SCRIPT PART
+the data() function is important
+syntax is data() { return { ..} }
+in data() I am usually multiliner :smile:
+as per the naming, I often use formVariable so that I know which is the page form variable
+and which is the one I am sending to the server
+as you see, you have the list of the form variables in data(){return{..
+middleware: ['auth'] is for logged in members so you should remove it
+methods: { ..} is for functions
+you should make only one function that sends the contact form info to the server and the server sends the email to cooperacy@cooperacy.org
+to send the email, you need to create a VUEX action
+call it contactAction
+and steal from this:
+  newuserAction: async (context, payload) => {let {data} = await axios.post(process.env.DBURL+'/user', payload)
+    let go = {to: payload.email, subject: 'user registration confirmation', body: 'You have been registered.'}
+    axios.post(process.env.DBURL+'/email', go); return data }, 
+newuserAction: async (context, payload) => {
+is the standard for a vuex action in nuxt
+payload is the array or object in which you insert all the form data
+go back to useredit
+you see this
+         let res = await this.$store.dispatch('imageUploadAction', {
+          formImageData: formImageData, 
+          headers: {headers: { 'Content-Type': 'multipart/form-data' }},
+          proptype: 'user',
+        }) 
+the dispatch triggers the action
+and after the COMMA ,
+you insert the PAYLOAD object you will find in the VUEX action
+ {
+          formImageData: formImageData, 
+          headers: {headers: { 'Content-Type': 'multipart/form-data' }},
+          proptype: 'user',
+        }
+this is what in the VUEX action will be "payload"
+newuserAction: async (context, payload)we could make a direct axios call, but it is good to keep everything in the store so that we find all the flow to the server in the same place
+imho : )
+yes rain
+payload is the container of the DATA that you pass to the VUEX ACTION
+or mutation etc.
+it is JUST A TERM
+VUEX likes to call it payload
+it could be BOX, CONTAINER, HEIDI
+being VUEX a "store"
+like a place where you store stuff
+payload is like stuff
+so you send the pack with the formData to the store
+the pack is called payload and awaits to be sent and receive something back
+the ACTION sends the payload to the server
+now
+final part
+NODE
+go to db.js
+you'll find
+ app.post('/email', function (req, res) {let transporter=nodemailer.createTransport({host:'smtp.gmail.com',port:465,secure:true, 
+  auth:{user:'cooperacy@cooperacy.org',pass:'c00p3r4t10n'}}) /* to add html in mailOptions use " html: '<b>test</b>' " */
+  let mailOptions = {from: '"Cooperacy" <cooperacy@cooperacy.org>', to:req.body.to, subject:req.body.subject, text:req.body.body}
+  transporter.sendMail(mailOptions, (error, info) => { if (error) { return console.error(error) }
+      console.log('Message %s sent: %s', info.messageId, info.response); res.render('index') })}) 
+
+this function uses nodemailer
+one of the constants we defined in the top of the file
+this function SENDS a mail to the user when s/he registers
+we want it to SEND a mail to cooperacy@cooperacy.org instead
+so auth:{user:xx,pass:xx}}) is fine
+from: '"Cooperacy" <cooperacy@cooperacy.org>', is wrong
+I mean
+it is ok for the function in db.js right now
+not for the one you should make
+the contact form is simply a mail you send to get some info
+now
+req.body
+req.body transforms the payload you sent into variables
+so if payload has payload.to payload.baby and payload.mom
+you will have req.body.to req.body.baby etc
+it depends how you call it in the previous steps
+app.post('/email', function (req, res) {let transporter=nodemailer.createTransport({host:'smtp.gmail.com',port:465,secure:true, 
+  auth:{user:'cooperacy@cooperacy.org',pass:'c00p3r4t10n'}}) /* to add html in mailOptions use " html: '<b>test</b>' " */
+  let mailOptions = {from: '"Cooperacy" <cooperacy@cooperacy.org>', to:req.body.to, subject:req.body.subject, text:req.body.body}
+  transporter.sendMail(mailOptions, (error, info) => { if (error) { return console.error(error) }
+      console.log('Message %s sent: %s', info.messageId, info.response); res.render('index') })}) 
+into
+ app.post('/contactemail', function (req, res) {let transporter=nodemailer.createTransport({host:'smtp.gmail.com',port:465,secure:true, 
+  auth:{user:'cooperacy@cooperacy.org',pass:'c00p3r4t10n'}}) /* to add html in mailOptions use " html: '<b>test</b>' " */
+  let mailOptions = {from: '"Cooperacy" <cooperacy@cooperacy.org>', to:req.body.to, subject:req.body.subject, text:req.body.body}
+  transporter.sendMail(mailOptions, (error, info) => { if (error) { return console.error(error) }
+      console.log('Message %s sent: %s', info.messageId, info.response); res.render('index') })}) 
+and edit app.post('/contactemail'...
