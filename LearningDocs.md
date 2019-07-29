@@ -203,11 +203,9 @@ There could be some issues, so please learn to ask in the discord server about h
 If you see the colorful cooperacy circle you've done it! Send a screenshot in the discord server and celebrate!
 In the contributors.md move your line to the NUXTERS level!
 
-## LEVEL TWO CHALLENGES: NUXT BASE LEARNING
+## LEVEL TWO: NUXT BASE LEARNING
 
-///EXPERIMENTAL PART ///
-
-**THE REPO AND THE THREE FILES**
+THE REPO AND THE THREE LAYERS
 
 There are three important files :
 
@@ -217,50 +215,114 @@ There are three important files :
 
 3. store/index.js store/index.js is VUEX. It’s sort of complicated, this stores variables coming from the database in a way that all the client side may access to them independently from the starting file/url.
 
-To see the registered user pages, go to login and register, but do not hit PAYPAL, just use BANK TRANSFER.
 
-nuxt has three layers
+So nuxt has three layers:
 
-CLIENT => VUE // VUEX // NODE <= SERVER
-when you land in a page, vue renders the page and 
-executes the <SCRIPT> part at the end of the .vue file,
+1 (CLIENT) VUE // 2 VUEX // 3 NODE (SERVER)
+
+when you land in a page, vue renders 
+the page and executes the <SCRIPT> 
+part at the end of the .vue file,
 with some CALLS.
-These calls go to the VUEX store: how do we recognise them?
-they all start with $store, for example this.$store.dispatch
-see for example index.vue
+These calls go to the VUEX store: 
+how do we recognise them?
+they all start with $store, 
+for example this.$store.dispatch.
 
-In that file, today (end of july), you have an async fetch function
-you will learn about the fetch function later
-So, store is VUEX. In this case for the fetch function you do not have
-the magic word "this" so you use store without it, that is why it is passed in the function brackets
-in any case store refers to the VUEX file /store/index.js
+In order to learn, see for example 
+index.vue
 
-The VUEX store has a state list, that is "LIKE" global variables
-"LIKE", not the same. They are variables accessible from any vue file,
-which is good because sometimes you need to have common variables
-amongst vue pages.
+In that file, today (end of july), 
+you have an async fetch function
+you will learn about the fetch 
+function later. That function has
+a "store.dispatch" command that is
+related to the VUEX store.
 
-Let's see the store/index.js: these variables (states) can be changed
-but ONLY BY VUEX store commands: these commands are called mutations, they come from actions.
-You see in the file you have also "getters", in NUXT the getters are less used because 
-of NUXT structure itself, so focus on the next kind of vuex store animals: "mutations" and "actions"
-the mutations SET the store STATES
-The actions instead go to the database, get the data and order the mutations to set the states
-so:
+
+So, "store" is VUEX. 
+In this case for the fetch function 
+you do not have the magic word "this"
+like in "this.$store.dispatch", 
+so you use store without it, 
+that is why it is passed in the 
+function brackets. In any case store 
+refers to the VUEX file 
+/store/index.js
+
+
+Let'open /store/index.js!
+The VUEX store has a state list, 
+that is "LIKE" global variables
+they are "LIKE" globals, not the same.
+States are variables accessible from
+any vue file, which is good because
+sometimes you need to have common
+variables across vue pages.
+
+
+Let's see the store/index.js: 
+these states can be changed,
+but ONLY BY VUEX store commands: 
+the commands able to change the states
+are called mutations, in this case they
+come from actions.
+
+
+You see in the file you have also 
+"getters", in NUXT the getters are 
+less used because of NUXT structure 
+itself, so focus on vuex store 
+"mutations" and "actions" now.
+
+
+The mutations SET the store STATES
+The actions instead go to the 
+server database, get the data and 
+order to the mutations to set the 
+states.
+
+
+Again:
+
 
 STATE = list of variables that can be used THROUGH vue components and pages
+
 MUTATIONS = internal VUEX commands that SET or CHANGE the STATE variables
+
 ACTIONS = used to go to the server and get the data out of the DB and then mutate the STATES with the DB info
 
-so at LOAD, NUXT sets a list of VUEX STATE variables
-when a client goes on the pages the VUEX store calls go through VUEX ACTIONS to the database
-then through the MUTATIONS change the STATE variables
-ONLY ACTIONS go to the database
-They go through the axios module.
+
+So when NUXT "loads a page", it sets 
+a list of VUEX STATE variables and
+when a client goes on the pages
+the VUEX store calls go through 
+VUEX ACTIONS to the database
+that through the MUTATIONS change 
+the STATE variables
+
+
+ONLY ACTIONS go to the database.
+They do this in our case through the
+axios module.
 Axios just simplifies XMLHttpRequests
-but we could use XMLHttpRequests directly.
-In any case, the actions use axios or xmlhttp requests to get info from the
-database and mutate the vuex variables.
+but we could use XMLHttpRequests 
+directly.
+In any case, the actions use axios 
+or xmlhttp requests to get info from 
+the remote server database and mutate
+ the vuex variables.
+
+
+To overcome this challenge, you must
+find a function with
+
+this.$store.dispatch
+
+when you find it, copy and paste the function
+in the discord server and you're done!
+
+### CHALLENGE TWO: VUEX AND THE SERVER
 
 
 
@@ -270,6 +332,7 @@ CONTINUE HERE AT YOUR OWN RISK
 copied from explanations, will become part of the guide:
 ////////////////////////////////////
 
+To see the registered user pages, go to login and register, but do not hit PAYPAL, just use BANK TRANSFER.
 
 
 db js
