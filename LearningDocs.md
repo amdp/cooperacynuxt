@@ -57,10 +57,10 @@ For doubts about every step, please ask! :)
 **Note:**
 
 When you create a new branch, you can mess around as much as you like, you won't destroy the software. When you want to issue a pull request, you should send only the changes that really matter, not everything you changed for testing. So the branch is your playground, but when you want your changes to be sent to the main program for integration you tidy everything up and issue your pull request.
-As per your first challenge, edit the contributors.md file and insert you in the learners list. Make a pull request and you're done.
+As per your first challenge, edit the contributors.md file and insert you in the "learners" list. Make a pull request and you're done.
 
 
-### 2. MYSQL
+### CHALLENGE 2: INSTALL MYSQL
 Please install Mysql 5.7 ([https://dev.mysql.com/downloads/mysql/5.7.html#downloads](https://dev.mysql.com/downloads/mysql/5.7.html#downloads))
 
 On windows, [https://dev.mysql.com/downloads/windows/installer/5.7.html](https://dev.mysql.com/downloads/windows/installer/5.7.html) (Note: MySQL Installer is 32 bit, but will install both 32 bit and 64 bit binaries.)
@@ -82,7 +82,9 @@ Then run the long list of commands you find in the file dimbdatabase in the /etc
 PS: Remember to start your mysql server!
 PS: You need php to be installed to use adminer, if you don't want to use adminer you can use any tool like heidi or mysqlworkbench.
 
-### 3. NODE AND NPM
+When you have done this step, edit the contributors.md and add your email after your name!
+
+### CHALLENGE 3: INSTALL NODE AND NPM
 
 Install Nodejs and Npm. First of all, node is based on npm, the package manager.
 
@@ -104,7 +106,10 @@ all these are currently build dependencies, but you can also separate them into 
 
 in node there is a difference between coding to test (dev) and setting up the environment for "production" or "online": build means we're going to go online and we do not need special features like autoreload. It's like when a dress has the marks with chalk or the needles, it's not definitive and you need it like that to play with it a little bit when you are measuring it or testing if it fits you. When you wear it, it's online :)
 
-### 4. NUXT
+Did you install node and npm? Well, you passed Challenge 3. You are now ready to install the repo, and gain level 2!
+
+
+### FINAL CHALLENGE LEVEL ONE: NUXT
 VUE AND NUXT
 Basically nuxt makes SSR easier, it renders the files both on server and on client side for better performance. Vue, instead, is very nice as lets you have DYNAMIC VARIABLES in your html code. For example, you can have a "for" loop into a div, and the div will automagically produce many divs as many elements in the for loop. Imagine you have a list of projects in a database, they will be cycled by the for loop and rendered, with a simple instruction in the html tag. Finally you can have COMPONENTS, that are pieces of code that you refer to with a simple tag, for example to insert the "banner" code into any of your pages, you would just enter <banner /> in your html and.. ta-daan, there it is.
 For more info, please ask!
@@ -115,9 +120,16 @@ We use bootstrap + a single coo.css file. Keep in mind, though, that Vue uses Vu
 INSTALLATION
 To set the repo up, go to its directory (if you downloaded a zip, extract it). Then run ‘npm i’, it will install all the required files.
 Rename the dumbenv file you find in /etc or root folder in a file named ‘.env’ 
-Finally, to start the repo, run: ‘npm run dev‘: it will run nuxt in development mode. If you get the error ETIMEDOUT check that HOST is 127.0.0.1 or ‘localhost’.
+Finally, to start the repo, run: ‘npm run dev‘: it will run nuxt in development mode. 
+If you get the error ETIMEDOUT check that HOST is 127.0.0.1 or ‘localhost’.
+There could be some issues, so please learn to ask in the discord server about how to solve them.
 
-## SETUP
+If you see the colorful cooperacy circle you've done it! Send a screenshot in the discord server and celebrate!
+In the contributors.md move your line to the NUXTERS level!
+
+## LEVEL TWO CHALLENGES: NUXT BASE LEARNING
+
+///EXPERIMENTAL PART ///
 
 **THE REPO AND THE THREE FILES**
 
