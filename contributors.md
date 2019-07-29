@@ -1,5 +1,7 @@
 LEARNERS
-
+``` scala
+Arafat Hossain  -    arafat.cse1993@gmail.com
+```
 NUXTERS
 
 CONTRIBUTORS
