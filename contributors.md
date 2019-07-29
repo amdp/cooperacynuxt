@@ -9,5 +9,7 @@ CONTRIBUTORS
 
 
 CIRCLE OF THE WISE
+``` scala
 bowor
 amdp
+```
