@@ -85,12 +85,14 @@ Alessandro Merletti De Palo (amdp)
 
 
 
-##THE GAME: LEVEL ONE
+## THE GAME: LEVEL ONE
+
 So let's begin! Overcome the following challenges
 to get deeper and deeper in the learning of
 the different coding aspects!
 
 ### CHALLENGE ONE: GITHUB!
+
 If you pass this challenge you will be approaching the contributors zone, and be listed in the contributors.md file of this repo.
 
 GITHUB
