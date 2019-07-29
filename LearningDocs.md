@@ -93,7 +93,10 @@ the different coding aspects!
 
 ### CHALLENGE ONE: GITHUB!
 
-If you pass this challenge you will be approaching the contributors zone, and be listed in the contributors.md file of this repo.
+If you pass this challenge you 
+will be approaching the contributors 
+zone, and be listed in the 
+contributors.md file of this repo.
 
 GITHUB
 
@@ -125,7 +128,12 @@ For doubts about every step, please ask! :)
 **Note:**
 
 When you create a new branch, you can mess around as much as you like, you won't destroy the software. When you want to issue a pull request, you should send only the changes that really matter, not everything you changed for testing. So the branch is your playground, but when you want your changes to be sent to the main program for integration you tidy everything up and issue your pull request.
-As per your first challenge, edit the contributors.md file and insert you in the "learners" list. Make a pull request and you're done.
+
+***As per your first challenge, 
+edit the contributors.md file 
+and insert you in the "learners" list.***
+
+Finally, make a pull request and you're done!
 
 
 ### CHALLENGE 2: INSTALL MYSQL
