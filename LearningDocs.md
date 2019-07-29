@@ -2,33 +2,99 @@
 
 ![Image](assets/image/github/image3.png)
 
-Hi and welcome to Cooperacy Coders main document. This is an introductory document for who wants to help the development and maintenance of the platform. You can read about the platform here: [https://cooperacy.org/platform](https://cooperacy.org/platform) . The official discussion channel is: [https://discord.gg/sKb5Ju](https://discord.gg/sKb5Ju)
+Hi and welcome to Cooperacy Coders main document.
 
-You do not need to know or support the platform, for you it’s just a way to learn to code.
+This is an introductory document for those who want to help the development and maintenance of the platform.
 
-Because it is learning and coding, please feel free to ask.
+It is structured as a ***game***
+so that you know your learning curve 
+and keep track of your achievements.
 
-I will say it again: nobody here is your teacher, we’ve got tasks for you and a lot to learn but it is not a "course", nobody will fill in the code for you, but it is expected from you to start with questions. You should learn to ask. Ask about your role, what can you help with, and when you receive a task, paste your code and ask: “What is wrong here?”. If you don't, maybe you'll feel the project is too complex, or you won't understand how it is structured, etc.
+You can read about the platform here:
+ [https://cooperacy.org/platform]
+(https://cooperacy.org/platform).
 
-This is due to the fact some guys know html/css/js, some have vue too in their knowledge, some have a node background, some want to do backend. Better to start talking rather than expecting. So don't expect, communicate!
 
-Moreover, it's a dynamic group. You are free and can come and go.
+
+**The official discussion channel is:**
+ [https://discord.gg/sKb5Ju]
+(https://discord.gg/sKb5Ju)
+
+
+
+Note: You do not need to know or support the platform, for you it’s just a way to learn to code.
+
+
+Because it is learning and coding, 
+please feel free to ask.
+I will say it again: nobody here is your teacher, 
+we’ve got tasks for you and a lot to learn
+but it is not a "course", 
+nobody will fill in the code for you,
+ but it is expected from you 
+to start with questions. 
+You should learn to ask. 
+Ask about your role, 
+what can you help with,
+and when you receive a task, 
+paste your code and ask: 
+“What is wrong here?”. 
+If you don't, maybe you'll feel 
+the project is too complex, 
+or you won't understand 
+how it is structured, etc.
+This is due to the fact some 
+guys know html/css/js, 
+some have vue too in their knowledge,
+some have a node background, 
+some want to do backend. 
+Better to start talking 
+rather than expecting.
+So don't expect, communicate!
+
+
+Moreover, it's a dynamic group. 
+You are free and can come and go.
 But.. remember to ask, communicate, interact.
 
 **THE REPO**
-We’re based on NODEJS, EXPRESS, VUE, VUEX, NUXT, BOOTSTRAP, BABEL, WEBPACK and a MySQL database. The need for MySQL instead of mongodb or other nosql is because we must address the relational structure for the platform.
 
-If you do not understand something here, remember to ask :)
+We’re based on NODEJS, EXPRESS, VUE, 
+VUEX, NUXT, BOOTSTRAP, BABEL, WEBPACK
+ and a MySQL database. The need for 
+MySQL instead of mongodb or other 
+nosql is because we must address 
+the relational structure for the 
+platform.
 
-As head of the project, and because I am currently coding alone, I tend to prefer one-line coding rather than multi-line, but you can use whatever style you like. You can rewrite or reorganise the pages so that they are more standard, and help the project.
+If you do not understand something here,
+remember to ask :)
 
-Again, communicate your doubts. And you will gradually be happy.
+As head of the project, 
+and because I am currently coding alone,
+ I tend to prefer one-line coding 
+rather than multi-line, but you can 
+use whatever style you like. 
+You can rewrite or reorganise the 
+pages so that they are more standard,
+ and help the project this way.
+
+Again, communicate your doubts. 
+And you will gradually be happy.
 
 Thanks!
 
-## CHALLENGE ONE: GITHUB!
+Alessandro Merletti De Palo (amdp)
+
+
+
+##THE GAME: LEVEL ONE##
+
+### CHALLENGE ONE: GITHUB!
 If you pass this challenge you will be approaching the contributors zone, and be listed in the contributors.md file of this repo.
-### GITHUB
+
+GITHUB
+
 Cooperacy is based on GitHub repositories. You find them here: [https://github.com/amdp](https://github.com/amdp)
 
 For detailed and complete guide please see [https://guides.github.com/introduction/flow/](https://guides.github.com/introduction/flow/) . If you do not want to follow the guide, please… ask 😄
