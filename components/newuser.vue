@@ -33,7 +33,10 @@
 export default {
   head: {
     title: 'Join or Login',
-    script: [{src:'https://www.paypal.com/sdk/js?client-id='+process.env.SANDPAYPALID+'&vault=true&currency=EUR&debug=false'}, {src: 'https://apis.google.com/js/platform.js', async: true, defer: true}, {src: '../googlelogin.js'}],
+    script: [
+      {src:'https://www.paypal.com/sdk/js?client-id='+process.env.PAYPALID+'&vault=true&currency=EUR&debug=false'},
+      {src: 'https://apis.google.com/js/platform.js', async: true, defer: true},
+      {src: '../static/googlelogin.js'}],
     meta: [ 
       { name: 'viewport', content: 'width=device-width, initial-scale=1' }, 
       { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
@@ -51,13 +54,24 @@ export default {
     }
   },
   mounted: function(){
-    var that = this;
+    var that = this //important: we need to have a reference to the variables in the page and cannot call 'this' in nested functions
+    
     paypal.Buttons({
-      onError: function(err){alert(err); console.log('err'+err); that.formPaypalagreementid='e'+JSON.stringify(err); that.newuser()},
-      onCancel: function(data){console.log('c'+JSON.stringify(data)); that.formPaypalagreementid='c'+JSON.stringify(data); that.newuser()},
-      createSubscription: function(data, actions) { return actions.subscription.create({ 'plan_id': 'P-9C681042E7918904VLURYYGQ'});},
-      onApprove: function(data, actions) { alert('You have successfully become a member with subscription ID ' + data.subscriptionID);
-      that.formPaypalagreementid=data.subscriptionID; that.newuser(); }}).render('#paypal-button-container')
+      onError: function(err){alert(err)
+        console.log('err'+err); 
+        that.formPaypalagreementid='e'+JSON.stringify(err); 
+        that.newuser()},
+      onCancel: function(data){
+        console.log('c'+JSON.stringify(data));
+        that.formPaypalagreementid='c'+JSON.stringify(data);
+        that.newuser()},
+      createSubscription: function(data, actions) {
+        return actions.subscription.create({ 'plan_id': 'P-9C681042E7918904VLURYYGQ'});},
+      onApprove: function(data, actions) { 
+        alert('You have successfully become a member with subscription ID ' + data.subscriptionID);
+        that.formPaypalagreementid=data.subscriptionID; 
+        that.newuser()}
+    }).render('#paypal-button-container')
   },
   methods: {
     googleSignOut() {var auth2 = gapi.auth2.getAuthInstance(); auth2.signOut()},
