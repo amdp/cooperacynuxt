@@ -11,15 +11,12 @@ so that you know your learning curve
 and keep track of your achievements.
 
 You can read about the platform here:
- [https://cooperacy.org/platform]
-(https://cooperacy.org/platform).
+https://cooperacy.org/platform
 
 
 
 **The official discussion channel is:**
- [https://discord.gg/sKb5Ju]
-(https://discord.gg/sKb5Ju)
-
+https://discord.gg/sKb5Ju
 
 
 Note: You do not need to know or support the platform, for you it’s just a way to learn to code.
@@ -88,7 +85,10 @@ Alessandro Merletti De Palo (amdp)
 
 
 
-##THE GAME: LEVEL ONE##
+##THE GAME: LEVEL ONE
+So let's begin! Overcome the following challenges
+to get deeper and deeper in the learning of
+the different coding aspects!
 
 ### CHALLENGE ONE: GITHUB!
 If you pass this challenge you will be approaching the contributors zone, and be listed in the contributors.md file of this repo.
