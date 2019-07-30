@@ -62,7 +62,7 @@ export default {
     script: [
       {src:'https://www.paypal.com/sdk/js?client-id='+process.env.PAYPALID+'&vault=true&currency=EUR&debug=false'},
       {src: 'https://apis.google.com/js/platform.js', async: true, defer: true},
-      {src: '../static/googlelogin.js'}],
+      {src: '@/assets/loginjs/googlelogin.js'}],
     meta: [ 
       { name: 'viewport', content: 'width=device-width, initial-scale=1' }, 
       { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
@@ -110,7 +110,7 @@ export default {
       }).render('#paypal-button-container')
   },
   methods: {
-    async login() { this.error = null; 
+    async login() { this.error = null;
       this.$auth.loginWith('local', { data: { 
         email: this.emailLogin, password: this.passwordLogin 
       }}).catch(e => { this.error = e + ''})
@@ -151,68 +151,3 @@ export default {
 
 }
 </script>
-    <!-- <div v-if="this.$store.state.payment=='cancelled'"><p class="base understanding center space up">Subscription cancelled.<br><br>
-    You have {{ this.$store.state.payment.days }} days left to join us!</p></div>
-    <div v-else>
-    <p class="base equivalence center space up">Step 2: the voluntary pooling<br><br></p>
-    <p class="base">The Cooperacy membership is based on a voluntary pooling of just one euro per month: the money is pooled to finance future ideas and projects, included yours.<br><br>
-
-    <nuxt-link href="paypalpay" class="btn btn-primary btn-block">VOLUNTARY POOLING THROUGH PAYPAL</nuxt-link>
-    <p class="mini">If you encounter any problem please screenshot any error and.. write us! (see below)</p><br><br>
-
-    Living in a low income country? You can pool with a lower amount if you help us adapt the amount to the different purchasing power of your nation. Write us.<br><br>
-
-    If you don't like paypal, you can pool one year membership (12 euros) via bank transfer: our IBAN is IT61D0623001623000043225634 - Filiale AG 23 Milano Cariparma di via della Moscova.<br><br>
-
-    <p class="base">Pool instead via bank transfer sending us a code/receipt or contact us for suggestions, questions, requests:</p>
-    <div role="form" class="wpcf7" id="wpcf7-f1303-p20-o1" lang="en-US" dir="ltr">
-
-    <p class="mini">Your Name (required)<br />
-    {{ Form::text('name', null, [
-    'size' => 40,
-    'class' => 'wpcf7-form-control wpcf7-text wpcf7-validates-as-required',
-    'aria-required' => 'true',
-    'aria-invalid' => 'false',]) }}</p>
-
-    <p class="mini">Your Email (required)<br />
-    <span class="wpcf7-form-control-wrap your-email">{{ Form::email('email', null, [
-    'size' => 40,
-    'class' => 'wpcf7-form-control wpcf7-text wpcf7-email wpcf7-validates-as-required wpcf7-validates-as-email',
-    'aria-required' => 'true',
-    'aria-invalid' => 'false',]) }}</span> </label></p>
-
-    <p class="mini">Subject<br />
-    <span class="wpcf7-form-control-wrap your-subject">{{ Form::text('subject', null, [
-    'size' => 40,
-    'class' => 'wpcf7-form-control wpcf7-text',
-    'aria-invalid' => 'false',]) }}</span></p>
-
-    <p class="mini">Your Message<br />
-    <span class="wpcf7-form-control-wrap your-message">{{ Form::textarea('message', null, [
-    'cols' => 40,
-    'rows'=>10,
-    'class' => 'wpcf7-form-control wpcf7-textarea',
-    'aria-invalid' => 'false',]) }}</span></p>
-
-    <p class="mini"><input type="submit" value="Send" class="wpcf7-form-control wpcf7-submit" /></p>
-    <div class="wpcf7-response-output wpcf7-display-none"></div>
-   
-   google sign out
-      function signOut() {
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-      console.log('User signed out.');
-    });
-  }
-
-  Verify the integrity of the ID token
-After you receive the ID token by HTTPS POST, you must verify the integrity of the token. To verify that the token is valid, ensure that the following criteria are satisfied:
-
-The ID token is properly signed by Google. Use Google's public keys (available in JWK or PEM format) to verify the token's signature. These keys are regularly rotated; examine the Cache-Control header in the response to determine when you should retrieve them again.
-The value of aud in the ID token is equal to one of your app's client IDs. This check is necessary to prevent ID tokens issued to a malicious app being used to access data about the same user on your app's backend server.
-The value of iss in the ID token is equal to accounts.google.com or https://accounts.google.com.
-The expiry time (exp) of the ID token has not passed.
-If you want to restrict access to only members of your G Suite domain, verify that the ID token has an hd claim that matches your G Suite domain name.
-Rather than writing your own code to perform these verification steps, we strongly recommend using a Google API client library for your platform, or a general-purpose JWT library. For development and debugging, you can call our tokeninfo validation endpoint.
-    
-    -->
