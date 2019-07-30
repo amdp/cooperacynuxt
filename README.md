@@ -23,7 +23,7 @@ Have fun and happy coding!
 $ npm install
 
 # setup .env
-$ mv dumbenv .env
+$ mv /etc/dumbenv .env
 
 # serve with hot reload at localhost:3000
 $ npm run dev

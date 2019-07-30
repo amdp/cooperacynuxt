@@ -2,11 +2,29 @@ import axios from 'axios'
 
 export const state = () => ({
   project:[], comment:[], vote:[], projectuservote:[], commentuservote:[], tag:[], place:[], country:[], news:[], edit: false,
-  condition:['equivalence', 'trust', 'care', 'transparency', 'freedom', 'understanding', 'diversity'], cc:['E','T','C','I','F','U','D'],
-  category:[{"id":0,"name":"Main Cooperacy"},{"id":1,"name":"Wealth - General funded or fee-based projects"},{"id":2,"name":"Community"},{"id":3,"name":"Ecosystem and Wellbeing - Must really be related with the ecosystem care or with human wellbeing"},{"id":4,"name":"Reporting"},{"id":5,"name":"Location-based - For official cities, nations, neighbourhoods"},{"id":6,"name":"Science, Research, Education and Professionals groups and projects"},{"id":7,"name":"Arts Music Games Fun"}], 
-  stage:[{"id":1,"name":"historical"},{"id":2,"name":"active"},{"id":3,"name":"approval"},{"id":4,"name":"testing"},{"id":5,"name":"nofunding"},{"id":6,"name":"pairing"},{"id":7,"name":"idea"}],
+  condition:['equivalence', 'trust', 'care', 'transparency', 'freedom', 'understanding', 'diversity'], 
+  cc:['E','T','C','I','F','U','D'],
+  category:[
+    {"id":0,"name":"Main Cooperacy"},
+    {"id":1,"name":"Wealth - General funded or fee-based projects"},
+    {"id":2,"name":"Community"},
+    {"id":3,"name":"Ecosystem and Wellbeing - Must really be related with the ecosystem care or with human wellbeing"},
+    {"id":4,"name":"Reporting"},
+    {"id":5,"name":"Location-based - For official cities, nations, neighbourhoods"},
+    {"id":6,"name":"Science, Research, Education and Professionals groups and projects"},
+    {"id":7,"name":"Arts Music Games Fun"}], 
+  stage:[
+    {"id":1,"name":"historical"},
+    {"id":2,"name":"active"},
+    {"id":3,"name":"approval"},
+    {"id":4,"name":"testing"},
+    {"id":5,"name":"nofunding"},
+    {"id":6,"name":"pairing"},
+    {"id":7,"name":"idea"}],
 })
+
 export const getters = { }
+
 export const mutations = { 
   setProject:   (state,payload) => {state.project = payload}, 
   setComment:   (state,payload) => {state.comment = payload},

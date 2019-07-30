@@ -1,16 +1,20 @@
 const pkg = require('./package')
 require('dotenv').config()
+import fs from 'fs'
+import path from 'path'
 module.exports = {mode: 'universal', plugins: [], build: {extend(config, ctx) { } }, serverMiddleware: ['./db'],
-  css: ['@assets/coo.css'],  modules: ['@nuxtjs/axios','@nuxtjs/toast','@nuxtjs/pwa','@nuxtjs/auth','bootstrap-vue/nuxt',],
-  loading: { color: '#FFCC00', failedColor: 'black', height: '3px', continuous: true,  }, env: {DBURL: process.env.DBURL},
-  server: {
-    port: process.env.PORT,
+  css: ['@assets/coo.css'],  
+  modules: ['@nuxtjs/axios','@nuxtjs/toast','@nuxtjs/pwa','@nuxtjs/auth','bootstrap-vue/nuxt',],
+  loading: { color: '#FFCC00', failedColor: 'black', height: '3px', continuous: true,  }, 
+  env: {DBURL: process.env.DBURL},
+  server: process.env.HTTPS ? {
+    port: process.env.PORT, 
     host: process.env.HOST,
     https: {
-      key: fs.readFileSync(path.resolve('/etc/letsencrypt/live/amarenapictures.com/', 'privkey.pem')),
-      cert: fs.readFileSync(path.resolve('/etc/letsencrypt/live/amarenapictures.com/', 'fullchain.pem'))
+      key: fs.readFileSync(path.resolve(process.env.HTTPSDIR, process.env.HTTPSKEY)),
+      cert: fs.readFileSync(path.resolve(process.env.HTTPSDIR, process.env.HTTPSCERT))
     }
-  },
+  } : { port: process.env.PORT, host: process.env.HOST,},
   
   head: {
     title: pkg.name,

@@ -1,6 +1,8 @@
 var express = require("express")
 var app = express()
 var bodyParser = require("body-parser")
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: false}))
 var axios=require("axios")
 const fileUpload = require("express-fileupload")
 const jwt = require("jsonwebtoken")
@@ -8,7 +10,8 @@ const bcrypt = require("bcryptjs")
 const nodemailer = require("nodemailer")
 const Jimp = require('jimp')
 const cc=['D','U','F','I','C','T','E']
-const mysql = require("mysql2"); const mydb = mysql.createConnection({ connectionLimit: 200, host: 'localhost', 
+const mysql = require("mysql2"); 
+const mydb = mysql.createConnection({ connectionLimit: 200, host: 'localhost', 
   user: process.env.MYSQLUSER, password: process.env.DBPASSWORD, database: process.env.DBDB, multipleStatements: true})
 
 /////// GET ///////
@@ -28,7 +31,8 @@ app.get("/uservote", (req, res) => {//gets votes of projects and comments that h
   let param=[req.query.userid]; if (req.query.limit){query += ' AND `project`= ?';param=[req.query.userid,req.query.projectid]}
   mydb.execute(query,param,function(err,uservote,fields){if(err){console.log('e: '+JSON.stringify(err));res.send(err)}else res.send(uservote)}) })
 
-app.get("/user", async (req, res) => {req.headers.authorization = req.headers.authorization.slice(7)
+app.get("/user", async (req, res) => {
+  req.headers.authorization = req.headers.authorization.slice(7)
   check=jwt.verify(req.headers.authorization,process.env.JWTSECRET); let id=jwt.decode(req.headers.authorization)
   mydb.execute('SELECT * FROM `user` AS `user` WHERE `user`.`id` =  ?', [id.id],
     function(err, [user], fields) {if (err) {console.log('e: '+JSON.stringify(err)); res.send (err) } else res.json({ user }) } ) })
@@ -59,6 +63,32 @@ app.put("/user", (req, res) => { if(!req.body.name || !req.body.password) { res.
 })
 
 /////// POST ///////
+
+app.post("/login", async (req, res) => { mydb.execute('SELECT * FROM `user` WHERE `user`.`email`= ? LIMIT 1',[req.body.email],
+  function(err,[user],fields){if(err){console.log('e: '+JSON.stringify(err));res.send(err)}else{if(user){
+    if(bcrypt.compareSync(req.body.password,user.password)) { 
+      let accessToken = jwt.sign({id: user.id}, process.env.JWTSECRET, { expiresIn: "20d" })
+      let today=new Date(Date.now()).toJSON().slice(0,10)
+      if (user.paypalagreementid == 'bank') {
+        if (user.paymentdeadline.toJSON().slice(0,10) >= today){res.json({token:{accessToken}})}
+        else {res.status(401).send('Bank transfer membership has expired')}
+      } else {
+        let agreementid=user.paypalagreementid
+        let today45ago=new Date(Date.now() + -45*24*3600*1000).toJSON().slice(0,10)
+        axios({ method: 'post', headers: {'content-type':'application/json','Access-Control-Allow-Credentials':true},
+          auth:{'username':process.env.PAYPALID,'password':process.env.PAYPALPASSWORD}, data: 'grant_type=client_credentials',
+          url: 'https://api.paypal.com/v1/oauth2/token',}).then((response)=>{let paypaltoken=response.data.access_token
+          axios({method: 'get', url: 'https://api.paypal.com/v1/payments/billing-agreements/'+agreementid+
+          '/transactions?start_date='+today45ago+'&end_date='+today,
+          headers: { 'Authorization':'Bearer '+paypaltoken, 'Content-Type':'application/json' } })
+          .then((transaction)=>{let list=transaction.data.agreement_transaction_list;
+            if(list[list.length-1].status=='Completed'){res.json({token:{accessToken}})}
+            else if(list[list.length-1].status=='Updated' && list[list.length-2].status=='Completed'){res.json({token:{accessToken}})}
+            else{res.send('Paypal membership has expired or has been suspended')} })
+            .catch(err => {console.log('e '+JSON.stringify(err.response.data));})
+          .catch(err => {console.log('e '+JSON.stringify(err.response.data));}) })
+      }
+    }else{res.status(400).json({error: 'User does not exist'})} } } } )  } )
 
 app.post("/logout", (req, res) => { res.json({ status: 'OK' }) })
 
@@ -92,31 +122,6 @@ app.post("/comment", (req, res) => {
     function(err,comment,fields){if(err){console.log('e: '+JSON.stringify(err));res.send(err)}else{mydb.execute(
       'SELECT * FROM `comment` WHERE `id` = ?', [comment.insertId],
       function(err,[comment],fields){if(err){console.log('e: '+JSON.stringify(err));res.send(err)}else{res.json(comment)}} )}})}})
-
-app.post("/login", async (req, res) => { mydb.execute('SELECT * FROM `user` WHERE `user`.`email`= ? LIMIT 1',[req.body.email],
-  function(err,[user],fields){if(err){console.log('e: '+JSON.stringify(err));res.send(err)}else{if(user){
-    if(bcrypt.compareSync(req.body.password,user.password)) { 
-      let accessToken = jwt.sign({id: user.id}, process.env.JWTSECRET, { expiresIn: "20d" })
-      let today=new Date(Date.now()).toJSON().slice(0,10); let today45ago=new Date(Date.now() + -45*24*3600*1000).toJSON().slice(0,10);
-      if (user.paypalagreementid == 'bank' && user.paymentdeadline >= today){res.json({token:{accessToken}})}
-      if (user.paypalagreementid == 'bank' && user.paymentdeadline < today){res.send('Bank transfer membership has expired')}
-      else {let agreementid=user.paypalagreementid;
-          axios({ method: 'post', headers: {'content-type':'application/json','Access-Control-Allow-Credentials':true},
-            auth:{'username':process.env.PAYPALID,'password':process.env.PAYPALPASSWORD}, data: 'grant_type=client_credentials',
-            url: 'https://api.paypal.com/v1/oauth2/token',}).then((response)=>{let paypaltoken=response.data.access_token
-            axios({method: 'get', url: 'https://api.paypal.com/v1/payments/billing-agreements/'+agreementid+
-            '/transactions?start_date='+today45ago+'&end_date='+today,
-            headers: { 'Authorization':'Bearer '+paypaltoken, 'Content-Type':'application/json' } })
-            .then((transaction)=>{let list=transaction.data.agreement_transaction_list;
-              if(list[list.length-1].status=='Completed'){res.json({token:{accessToken}})}
-              else if(list[list.length-1].status=='Updated' && list[list.length-2].status=='Completed'){res.json({token:{accessToken}})}
-              else{res.send('Paypal membership has expired or has been suspended')} })
-              .catch(err => {console.log('e '+JSON.stringify(err.response.data));})
-            .catch(err => {console.log('e '+JSON.stringify(err.response.data));}) })
-      }
-    }else{res.status(400).json({error: 'User does not exist'})} } } } )  } )
-
-    
 
 app.post("/user",  (req, res) => {mydb.execute('SELECT * FROM `user` WHERE `user`.`email`= ? LIMIT 1',[req.body.email],
   function(err,[user],fields){if(err){console.log('e: '+JSON.stringify(err));res.send(err)}else{if(!user){
