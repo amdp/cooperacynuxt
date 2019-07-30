@@ -295,9 +295,7 @@ downloaded a zip, extract it). Then run ‘npm i’,
 it will install all the required files.
 
 
-Rename the dumbenv file you find in /etc or root
-folder in a file named ‘.env’ and edit it according
-to its suggestions.
+Copy the `'dumbenv'` file you find in `'/etc'` folder to the root of the project, rename it to `'.env'` and edit it according to its suggestions.
 
 
 Finally, to start the repo, run: ‘npm run dev‘: 
