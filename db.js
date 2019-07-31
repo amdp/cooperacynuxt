@@ -124,11 +124,12 @@ app.post("/comment", (req, res) => {
       function(err,[comment],fields){if(err){console.log('e: '+JSON.stringify(err));res.send(err)}else{res.json(comment)}} )}})}})
 
 app.post("/user",  (req, res) => {mydb.execute('SELECT * FROM `user` WHERE `user`.`email`= ? LIMIT 1',[req.body.email],
-  function(err,[user],fields){if(err){console.log('e: '+JSON.stringify(err));res.send(err)}else{if(!user){
-    bcrypt.hash(req.body.password,10,(err,hash) => {mydb.execute(
-      'INSERT INTO `user` (`name`,`surname`,`email`,`password`,`paypalagreementid`) VALUES (?,?,?,?,?)',
-      [req.body.name,req.body.surname,req.body.email,hash,req.body.paypalagreementid],
-      function(err,user,fields){if(err){console.log('e: '+JSON.stringify(err));res.send(err)}else{res.json({id: user.insertId})}})})
+  function(err,[user],fields){if(err){console.log('e: '+JSON.stringify(err));res.send(err)}else{
+    if(!user){
+      bcrypt.hash(req.body.password,10,(err,hash) => {mydb.execute(
+        'INSERT INTO `user` (`name`,`surname`,`email`,`password`,`paypalagreementid`) VALUES (?,?,?,?,?)',
+        [req.body.name,req.body.surname,req.body.email,hash,req.body.paypalagreementid],
+        function(err,user,fields){if(err){console.log('e: '+JSON.stringify(err));res.send(err)}else{res.json({id: user.insertId})}})})
     }else{ res.send('exists') } } } ) })
 
 app.post("/tag", (req, res) => { if (req.body.tag == 'add'){
@@ -137,7 +138,9 @@ app.post("/tag", (req, res) => { if (req.body.tag == 'add'){
   }else {mydb.execute('DELETE FROM `tag` where `project` = ? and `name` = ?',[req.body.project,req.body.name],
   function(err,tag,fields){if(err){console.log('e: '+JSON.stringify(err));res.send(err)}else{res.send(tag)} }) }})
 
-app.post("/image", function(req, res) {if (req.body.empty){standardimage = './assets/image/'+req.body.proptype+'/1.png'
+app.post("/image", function(req, res) {
+  if (req.body.empty){
+    standardimage = './assets/image/'+req.body.proptype+'/1.png'
     Jimp.read(standardimage).then(standardimage => { return standardimage
       .resize(256, 256) .quality(60) .write('./assets/image/'+ req.body.proptype + '/' + req.body.id + '.png') })
     .then(()=>{res.json({ status: 'OK' }) }).catch(err => {console.log('e: '+JSON.stringify(err)); res.send (err) })
