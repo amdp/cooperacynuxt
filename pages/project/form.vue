@@ -167,13 +167,15 @@ export default {
       formImageData.append('file', this.formImageFile)
       formImageData.append('id', id)
       if(empty){formImageData.append('empty', true); formImageData.append('proptype','project')}
+      console.log(formImageData)
+      console.log('data '+ JSON.stringify(formImageData));
       let res = await this.$store.dispatch('imageUploadAction', {
-          formImageData: formImageData, 
-          headers: {headers: { 'Content-Type': 'multipart/form-data' }},
-          proptype: 'project',
-        })
-        .catch(err => {console.error(err)})
-        if (res) {this.doneToast()}
+        formImageData: formImageData,
+        headers: {headers: { 'Content-Type': 'multipart/form-data' }},
+        proptype: 'project',
+      })
+      .catch(err => {console.error(err)})
+      if (res) {this.doneToast()}
     },
     doneToast(){
       this.$toast.success('Done!', {duration: 1000, className: 'toasts'})

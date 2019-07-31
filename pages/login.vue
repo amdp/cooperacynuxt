@@ -44,7 +44,8 @@
               <b-form-file id="imageInput" v-model="formImageFile" ref="formImageFile" size="sm"></b-form-file>
             </b-form-group>
             <b-button type="submit" class="btn bhcare btn-block mt-3 white border-0">JOIN WITH BANK TRANSFER</b-button><br>
-            <p class="subheading d-flex justify-content-center">OR WITH</p>
+            <p class="subheading d-flex justify-content-center" >OR WITH</p>
+            <!-- CHECK would like OR WITH to be v-if="paypal"  -->
           </b-form>
         </div>
       </div>
@@ -60,9 +61,9 @@ export default {
   head: {
     title: 'Join or Login',
     script: [
-      {src:'https://www.paypal.com/sdk/js?client-id='+process.env.PAYPALID+'&vault=true&currency=EUR&debug=false'},
+      {src: 'https://www.paypal.com/sdk/js?client-id='+process.env.PAYPALID+'&vault=true&currency=EUR&debug=false'},
       {src: 'https://apis.google.com/js/platform.js', async: true, defer: true},
-      {src: '@/assets/loginjs/googlelogin.js'}],
+      {src: '/login/google.js'}],//CHECK https://github.com/nuxt/nuxt.js/issues/2000 better not to have it in the static folder tho
     meta: [ 
       { name: 'viewport', content: 'width=device-width, initial-scale=1' }, 
       { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
@@ -82,7 +83,7 @@ export default {
     }
   },
   computed: {
-    mailInputState() { return this.mail.length > 1 ? true : false }, //to be completed
+    mailInputState() { return this.mail.length > 1 ? true : false }, //CHECK to be completed
     strategies: () => ([
      { key: 'wechat', name: 'WeChat', color: 'login-button border-0 bhcare' },
      { key: 'google', name: 'Google', color: 'login-button border-0 bhequivalence' },
@@ -92,22 +93,24 @@ export default {
   },
   mounted: function(){
     var that = this //important: we need to have a reference to the variables in the page and cannot call 'this' in nested functions
-      paypal.Buttons({
-        onError: function(err){alert(err)
-          console.log('err'+err); 
-          that.formPaypalagreementid='e'+JSON.stringify(err); 
-          that.newuser()},
-        onCancel: function(data){
-          console.log('c'+JSON.stringify(data));
-          that.formPaypalagreementid='c'+JSON.stringify(data);
-          that.newuser()},
-        createSubscription: function(data, actions) {
-          return actions.subscription.create({ 'plan_id': 'P-9C681042E7918904VLURYYGQ'});},
-        onApprove: function(data, actions) { 
-          alert('You have successfully become a member with subscription ID ' + data.subscriptionID);
-          that.formPaypalagreementid=data.subscriptionID; 
-          that.newuser()}
-      }).render('#paypal-button-container')
+      if(this.paypal){
+        paypal.Buttons({
+          onError: function(err){alert(err)
+            console.log('err'+err); 
+            that.formPaypalagreementid='e'+JSON.stringify(err); 
+            that.newuser()},
+          onCancel: function(data){
+            console.log('c'+JSON.stringify(data));
+            that.formPaypalagreementid='c'+JSON.stringify(data);
+            that.newuser()},
+          createSubscription: function(data, actions) {
+            return actions.subscription.create({ 'plan_id': 'P-9C681042E7918904VLURYYGQ'});},
+          onApprove: function(data, actions) { 
+            alert('You have successfully become a member with subscription ID ' + data.subscriptionID);
+            that.formPaypalagreementid=data.subscriptionID; 
+            that.newuser()}
+        }).render('#paypal-button-container')
+      }
   },
   methods: {
     async login() { this.error = null;
@@ -126,22 +129,24 @@ export default {
       })
       if (newuser == 'exists'){return this.$toast.show('Email already in use!', {duration: 1000, className: 'toasts'})}
       if (this.formImageFile) {
-        //the res variable in response from the server sends the id of the recently created user
+        //the newuser variable in response from the server sends the id of the recently created user
         this.imageUpload(newuser.id)
         .catch(err => console.error(err))
-      }else{this.addedToast()}
+      }else{this.imageUpload(newuser.id, 'empty')}
     },
-    async imageUpload(id) {
-        let formImageData = new FormData()
-        formImageData.append('file', this.formImageFile)
-        formImageData.append('id', id)
-        let res = await this.$store.dispatch('imageUploadAction', {
-          formImageData: formImageData, 
-          headers: {headers: { 'Content-Type': 'multipart/form-data' }},
-          proptype: 'user',
-        })
-        .catch(err => {console.error(err)})
-        if (res) {this.addedToast()}
+    async imageUpload(id, empty) {
+      let formImageData = new FormData()
+      formImageData.append('file', this.formImageFile)
+      formImageData.append('id', id)
+      if(empty){formImageData.append('empty', true); formImageData.append('proptype','user')}
+      console.log('data '+JSON.stringify(formImageData));
+      let res = await this.$store.dispatch('imageUploadAction', {
+        formImageData: formImageData, 
+        headers: {headers: { 'Content-Type': 'multipart/form-data' }},
+        proptype: 'user',
+      })
+      .catch(err => {console.error(err)})
+      if (res) {this.addedToast()}
     },
     addedToast(){
       this.$toast.success('New user added.', {duration: 1000, className: 'toasts'})

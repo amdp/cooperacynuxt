@@ -93,7 +93,8 @@ export const actions = {
   tagFormAction: async (context,payload)=>{let {data} = await axios.post(process.env.DBURL+'/tag', payload); return data},
   removeTagAction: async (context,payload)=>{let {data} = await axios.post(process.env.DBURL+'/tag', payload); return data},
   editSwitchAction: async (context,payload) => {context.commit('setEditSwitch',payload)},
-  imageUploadAction: async (context,payload) => { let {data} = await axios.post( process.env.DBURL+'/image', 
+  imageUploadAction: async (context,payload) => { console.log(' '+JSON.stringify(payload));
+    let {data} = await axios.post( process.env.DBURL+'/image', 
   payload.formImageData, payload.headers, payload.proptype); return data.status },
 //Admin stuff here: be careful
   resetcpVotingAction:  async (context,payload)=>{let{data} = await axios.post(process.env.DBURL+'/resetcpvoting'); return 'OK'},

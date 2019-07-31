@@ -45,7 +45,7 @@
 
           <span> &nbsp;&nbsp;&nbsp;</span>
 
-          <b-nav-item v-if="!this.$auth.loggedIn" to="login">LOGIN</b-nav-item>
+          <b-nav-item v-if="!this.$auth.loggedIn" to="/login">LOGIN</b-nav-item>
           <b-nav-item v-if="this.$auth.loggedIn" @click="$auth.logout()">LOGOUT</b-nav-item>   
 
         </b-navbar-nav>
