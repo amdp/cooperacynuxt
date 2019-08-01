@@ -132,14 +132,12 @@ export default {
         //the newuser variable in response from the server sends the id of the recently created user
         this.imageUpload(newuser.id)
         .catch(err => console.error(err))
-      }else{this.imageUpload(newuser.id, 'empty')}
+      }else{this.addedToast()}
     },
     async imageUpload(id, empty) {
       let formImageData = new FormData()
       formImageData.append('file', this.formImageFile)
       formImageData.append('id', id)
-      if(empty){formImageData.append('empty', true); formImageData.append('proptype','user')}
-      console.log('data '+JSON.stringify(formImageData));
       let res = await this.$store.dispatch('imageUploadAction', {
         formImageData: formImageData, 
         headers: {headers: { 'Content-Type': 'multipart/form-data' }},

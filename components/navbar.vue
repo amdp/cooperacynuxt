@@ -62,11 +62,16 @@
 <script>
 import votebar from './votebar'
 
+
 export default {
   components: {votebar: votebar,},
   computed: {
-    userImage(){ if (this.$auth.user.id) { return require('../assets/image/user/' + this.$auth.user.id + '.png')}}
+    userImage(){
+      try{ return require('../assets/image/user/' + this.$auth.user.id + '.png')} 
+      catch (e) {return}
+    },
   }
 }
+
 </script>
           

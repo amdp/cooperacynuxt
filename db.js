@@ -5,6 +5,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
 var axios=require("axios")
 const fileUpload = require("express-fileupload")
+app.use(fileUpload())
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcryptjs")
 const nodemailer = require("nodemailer")
@@ -33,9 +34,11 @@ app.get("/uservote", (req, res) => {//gets votes of projects and comments that h
 
 app.get("/user", async (req, res) => {
   req.headers.authorization = req.headers.authorization.slice(7)
-  check=jwt.verify(req.headers.authorization,process.env.JWTSECRET); let id=jwt.decode(req.headers.authorization)
-  mydb.execute('SELECT * FROM `user` AS `user` WHERE `user`.`id` =  ?', [id.id],
-    function(err, [user], fields) {if (err) {console.log('e: '+JSON.stringify(err)); res.send (err) } else res.json({ user }) } ) })
+  if (req.headers.authorization=='undefined'){return res.status(500).send('JWT is undefined') }
+  else{ check=jwt.verify(req.headers.authorization,process.env.JWTSECRET)
+    let id=jwt.decode(req.headers.authorization)
+    mydb.execute('SELECT * FROM `user` AS `user` WHERE `user`.`id` =  ?', [id.id],
+    function(err, [user], fields) {if (err) {console.log('e: '+JSON.stringify(err)); res.send (err) } else res.json({ user }) } ) } })
 
 app.get("/category", (req, res) => { mydb.execute( 'SELECT * FROM `category` WHERE `category`.`id`!= ?', [0],
   function(err, category, fields) {if (err) {console.log('e: '+JSON.stringify(err)); res.send (err) } else res.json(category) } ) })
@@ -67,9 +70,10 @@ app.put("/user", (req, res) => { if(!req.body.name || !req.body.password) { res.
 app.post("/login", async (req, res) => { mydb.execute('SELECT * FROM `user` WHERE `user`.`email`= ? LIMIT 1',[req.body.email],
   function(err,[user],fields){if(err){console.log('e: '+JSON.stringify(err));res.send(err)}else{if(user){
     if(bcrypt.compareSync(req.body.password,user.password)) { 
-      let accessToken = jwt.sign({id: user.id}, process.env.JWTSECRET, { expiresIn: "20d" })
+      let accessToken = jwt.sign({id: user.id}, process.env.JWTSECRET, { expiresIn: '2h' })
       let today=new Date(Date.now()).toJSON().slice(0,10)
       if (user.paypalagreementid == 'bank') {
+        if (!user.paymentdeadline) {return res.status(500).send('The user hasn\'t been activated yet.')}
         if (user.paymentdeadline.toJSON().slice(0,10) >= today){res.json({token:{accessToken}})}
         else {res.status(401).send('Bank transfer membership has expired')}
       } else {
@@ -103,11 +107,11 @@ app.post("/project", (req, res) => {
     'UPDATE `project` SET `name`=?,`country`=?,`place`=?,`brief`=?,`content`=?,`video`=?,`anonymous`=?,`parent`=?,`stage`=?,`budget`=?,`hudget`=? WHERE `project`.`id`=?',[req.body.name,req.body.country,req.body.place,req.body.brief,req.body.content,req.body.video,req.body.anonymous,req.body.parent,req.body.stage,req.body.budget,req.body.hudget,req.body.id],
     function(err,project,fields){if(err){console.log('e: '+JSON.stringify(err));res.send(err)} else res.json(req.body.id)})
   }else{mydb.execute('SELECT * FROM `project` WHERE `project`.`name`= ? LIMIT 1',[req.body.name],
-    function(err, [project], fields) {if (err) {console.log('e: '+JSON.stringify(err)); res.send (err) }else{if(!project){mydb.execute(
+    function(err, [project], fields) {if (err) {console.log('efind: '+JSON.stringify(err)); res.send (err) }else{if(!project){mydb.execute(
       'INSERT INTO `project` (`name`,`country`,`place`,`brief`,`content`,`video`,`anonymous`,`parent`,`stage`,`budget`,`hudget`)'
-      +' VALUES (?,?,?,?,?,?,?,?,?,?)',
+      +' VALUES (?,?,?,?,?,?,?,?,?,?,?)',
       [req.body.name,req.body.country,req.body.place,req.body.brief,req.body.content,req.body.video,req.body.anonymous,req.body.parent,req.body.stage,req.body.budget,req.body.hudget],
-      function(err,project,fields){if(err){console.log('e: '+JSON.stringify(err));res.send(err)}
+      function(err,project,fields){if(err){console.log('einsert: '+JSON.stringify(err));res.send(err)}
       else{res.json({id: project.insertId})} } ) }else{res.json('exists')} } } )} })
 
 app.post("/comment", (req, res) => {  
@@ -139,20 +143,18 @@ app.post("/tag", (req, res) => { if (req.body.tag == 'add'){
   function(err,tag,fields){if(err){console.log('e: '+JSON.stringify(err));res.send(err)}else{res.send(tag)} }) }})
 
 app.post("/image", function(req, res) {
-  if (req.body.empty){
-    standardimage = './assets/image/'+req.body.proptype+'/1.png'
+  if (req.body.empty){standardimage = './assets/image/'+req.body.proptype+'/1.png'
     Jimp.read(standardimage).then(standardimage => { return standardimage
       .resize(256, 256) .quality(60) .write('./assets/image/'+ req.body.proptype + '/' + req.body.id + '.png') })
     .then(()=>{res.json({ status: 'OK' }) }).catch(err => {console.log('e: '+JSON.stringify(err)); res.send (err) })
-  } else if (Object.keys(req.files).length == 0) { res.status(400).send('No files were uploaded.') }
-  else {try {uploadPath = './assets/image/'+ req.body.proptype + '/' + req.body.id + '.png'} catch (err) {console.error(err)}
+  } else {try {uploadPath = './assets/image/'+ req.body.proptype + '/' + req.body.id + '.png'} catch (err) {console.error(err)}
   req.files.file.mv(uploadPath, function(err) { if (err) { return res.status(500).send(err) } })
   Jimp.read(uploadPath).then(uploadPath => { return uploadPath
         .resize(256, 256) .quality(60) .write(uploadPath)    })
   .then(res.json({ status: 'OK' })).catch(err => {console.log('e: '+JSON.stringify(err)); res.send (err) })} })
 
 app.post('/email', function (req, res) {let transporter=nodemailer.createTransport({host:'smtp.gmail.com',port:465,secure:true, 
-  auth:{user:'cooperacy@cooperacy.org',pass:'c00p3r4t10n'}}) /* to add html in mailOptions use " html: '<b>test</b>' " */
+  auth:{user: process.env.MAILUSER, pass: process.env.MAILPASSWORD}}) /* to add html in mailOptions use " html: '<b>test</b>' " */
   let mailOptions = {from: '"Cooperacy" <cooperacy@cooperacy.org>', to:req.body.to, subject:req.body.subject, text:req.body.body}
   transporter.sendMail(mailOptions, (error, info) => { if (error) { return console.error(error) }
       console.log('Message %s sent: %s', info.messageId, info.response); res.render('index') })})

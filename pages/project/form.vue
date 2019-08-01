@@ -94,7 +94,12 @@ export default {
   computed: {
     nameInputState() { return this.name.length > 4 ? true : false },
     budgetInputState() { return this.bodget.length >= 1000 ? true : false },
-    projectImage(){if(this.$store.state.project.id)return require('@/assets/image/project/' +this.$store.state.project.id+'.png')},
+    projectImage(){
+      if(this.$store.state.project.id){
+        try{return require('@/assets/image/project/' +this.$store.state.project.id+'.png')}
+        catch (e) {return require('../../assets/image/project/0.png')}
+      }
+    },
     place(){let place=this.$store.state.place.filter(place => { return place.country === this.formCountry })
     return place.sort((a, b) => (a.name>b.name) ? 1 : -1)},
   },
@@ -112,7 +117,7 @@ export default {
       totallabel: 0,
       formName: this.$store.state.project[0]? this.$store.state.project[0].name : '',
       formCountry: this.$store.state.project[0]? this.$store.state.project[0].country : '',
-      formPlace: this.$store.state.project[0]? this.$store.state.project[0].place : '',
+      formPlace: this.$store.state.project[0]? this.$store.state.project[0].place : 'Cooperacy',
       formBrief: this.$store.state.project[0]? this.$store.state.project[0].brief : '',
       formContent: this.$store.state.project[0]? this.$store.state.project[0].content : '',
       formImageFile: '', // to be chosen by the user, current image is shown on the side
@@ -121,8 +126,8 @@ export default {
       formParent: this.$store.state.project[0]? this.$store.state.project[0].parent : 1,
       formCategory: this.$store.state.project[0]? this.$store.state.project[0].category : '',
       formStageFunding: 5,
-      formBudget: this.$store.state.project[0]? Math.round(this.$store.state.project[0].budget)  : '',
-      formHudget: this.$store.state.project[0]? this.$store.state.project[0].hudget  : '',
+      formBudget: this.$store.state.project[0]? Math.round(this.$store.state.project[0].budget)  : '0',
+      formHudget: this.$store.state.project[0]? this.$store.state.project[0].hudget  : '2',
     }
   },
   methods: {
@@ -157,18 +162,19 @@ export default {
       this.$store.dispatch('projectFormAction', formBodyRequest) 
       //in order to use it in the image creation:
       .then(async res => {
+        console.log(' '+JSON.stringify(res));
         if (res=='exists'){ return this.$toast.show('Project already exists!', {duration: 1000, className: 'toasts'})}
-        if (this.formImageFile) { this.imageUpload(res)
-        }else if(formBodyRequest.id=='new'){this.imageUpload(res, 'empty')}
+        if (this.formImageFile) { this.imageUpload(res)}
+        else if(formBodyRequest.id=='new'){this.imageUpload(res, 'empty')}
       })  
     },
     async imageUpload(id, empty) {
+      console.log(' '+JSON.stringify(id));
       let formImageData = new FormData()
       formImageData.append('file', this.formImageFile)
       formImageData.append('id', id)
       if(empty){formImageData.append('empty', true); formImageData.append('proptype','project')}
-      console.log(formImageData)
-      console.log('data '+ JSON.stringify(formImageData));
+      for (var key of formImageData.entries()) { console.log(key[0] + ', ' + key[1]) }
       let res = await this.$store.dispatch('imageUploadAction', {
         formImageData: formImageData,
         headers: {headers: { 'Content-Type': 'multipart/form-data' }},
