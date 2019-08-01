@@ -2,7 +2,7 @@
 
 > cooperacynuxt
 
-Hello, welcome to Cooperacy Platform universal app, based on NodeJs, Express, Vue, Nuxt (including Babel and Webpack, check [Nuxt.js docs](https://nuxtjs.org) ) with Vuex store + Vue Bootstrap and on a MySQL database, along with some minor extensions like the nice Jimp (Js Gimp).
+Hello, welcome to Cooperacy Platform universal app, based on NodeJs, Express, Vue, Nuxt (including Babel and Webpack, check [Nuxt.js docs](https://nuxtjs.org)) with Vuex store + Vue Bootstrap and on a MySQL database, along with some minor extensions like the nice Jimp (Js Gimp).
 
 First place where to start is to see the MySql database you find in /etc/dumbdatabase. Then pass to db.js file, that is the main and only Express file used to access the database and some other minor server side functions. Then please continue to the "store" folder and see how shared state variables are managed by VUEX and through Actions connected with the db.js file.
 Finally, see the index.vue file in the pages, continue to the defaul layout, and review the pages and their components.
