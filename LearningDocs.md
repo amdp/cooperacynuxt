@@ -1013,11 +1013,27 @@ If you didn't manage, don't worry,
 write us in the discord channel and we
 will help you out!
 
-/// STOP HERE ///
+## Misc, notes and warnings
 
-///THESE ARE JUST NOTES///
+### WARNINGS
 
-/// TO BE CONTINUED! ///
+1. When you use FormData() remember you
+cannot console.log it. To log, some
+suggest:
+
+`for (var key of formData.entries()) {
+			console.log(key[0] + ', ' + key[1])
+		}`
+
+2. Remember you cannot use fetch and
+asyncData (nuxt functions) in components
+
+3. Remember `let`, `var` and `const` are
+different, so use them properly
+
+4. //to be continued//
+
+///NOTES FOR NEXT GUIDES///
 To see the registered user pages, 
 go to login and register using
 BANK TRANSFER. Do not use paypal.
