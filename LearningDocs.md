@@ -1032,7 +1032,11 @@ will help you out!
 
 ### WARNINGS
 
-1. When you use FormData() remember you
+1. You cannot use `console.log(' '+JSON.stringify());`
+with req.body, process.env, and some other objects, but
+you can send to console their internal elements 
+e.g. `console.log(' '+JSON.stringify(req.body.user));` .
+When you use FormData() remember you
 cannot console.log it. To log, some
 suggest:
 
@@ -1046,8 +1050,7 @@ asyncData (nuxt functions) in components
 3. Remember `let`, `var` and `const` are
 different, so use them properly
 
-4. You cannot use `console.log(' '+JSON.stringify());`
-with req.body
+4. 
 
 5. //to be continued//
 
