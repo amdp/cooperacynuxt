@@ -1053,7 +1053,20 @@ asyncData (nuxt functions) in components
 3. Remember `let`, `var` and `const` are
 different, so use them properly
 
-4. 
+4. Inserting dynamic images in nuxt is
+more difficult than the standard vue 
+because of babel, webpack and the nuxt
+structure. So you would need to use a
+computed: or a methods: property.
+Usually the `<img` tag is followed by
+a dynamic source: ` :src=" ` that has
+a function like `:src="getImage". Then,
+script side, you have something like:
+```
+  computed: {
+    getImage(){return require('../assets/image/'
+    + project.image + '.png')},
+```
 
 5. //to be continued//
 
