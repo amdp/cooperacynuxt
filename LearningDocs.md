@@ -750,20 +750,23 @@ Express, bodyparser, till Mysql2 are
 tools node uses to handle the 
 requests, do server stuff etc.
 The first lines are thus for 
-server node functionalities
+server node functionalities.
 
 
-app.xx is the Express variable 
+app.xx is the Express object 
 that calls the different functions:
-so "app.get"
-corresponds to GET XMLHTTP axios requests
-app.post to POST XMLHTTP requests and so on
+
+"app.get" corresponds to GET XMLHTTP axios requests
+
+"app.post" to POST XMLHTTP requests and so on
 
 
-mydb is the mysql connection
+mydb is the mysql connection,
+
 mydb.execute() is to issue 
 commands to the mysql server
 and databases.
+
 
 req and res are two very important
 variables relative to the request 
@@ -804,8 +807,8 @@ the form.
 As you see, we should use 
 VUE BOOTSTRAP HTML TAGS
 so extra homework could 
-be to turn the <div class="row"> 
-into <b-row>.
+be to turn the `<div class="row">`
+into `<b-row>`.
  
 Read about vue bootstrap here:
 https://bootstrap-vue.js.org/docs/components
@@ -825,15 +828,16 @@ data() function.
 
 The middleware: ['auth'] 
 is just to make it private,
-that is, for logged in members 
+that is, for logged in members,
 so you should remove it.
 
 
 methods: { ..}, as we know,
 is for js functions.
 You should make only one 
-function that sends the contact 
-form info to the server and 
+function connected to the form
+that sends the contact 
+form info to the server so that
 the server sends the email to 
 cooperacy@cooperacy.org.
 
@@ -858,9 +862,11 @@ You will see this:
 the "dispatch" triggers the action
 in /store/index.js and after the
 name of the action and the COMMA ,
-you insert some data, in this case
+you insert the data to be sent, 
+in this case
 data that corresponds to the
-form variables, to the PAYLOAD object 
+form variables.
+You send them to the PAYLOAD object 
 that you will find in the VUEX action:
 
 
@@ -873,7 +879,7 @@ that you will find in the VUEX action:
       })`
       
 
-this data is clear: form data
+this part is clear, form data
 becomes data for the server: 
 this is what in the VUEX action 
 will be called "payload".
@@ -884,7 +890,7 @@ VUEX PAYLOAD
 What is a payload? Do you remember
 the anaology with the market
 and the ships? Payload is what
-the ships charge and deliver
+the ships load, carry and deliver
 to the server.
 
 Payload is the container 
@@ -892,13 +898,13 @@ of the DATA that you pass
 to the VUEX ACTION
 or mutation etc.
 It is JUST A TERM.
-VUEX likes to call it payload
+VUEX likes to call it PAYLOAD.
 it could be BOX, CONTAINER, HEIDI..
 Being VUEX a "store"
 like a place where you store stuff
-payload is like stuff
+payload is like stuff,
 so you send the pack with 
-the data inserted in the form
+the data inserted in the VUE form
 to the "store".
 
 The pack is called payload 
@@ -926,7 +932,7 @@ which you insert all the form data
 you retreive in the vue page.
 Remember to update the "dispatch" in
 the VUE page with the right VUEX
-action name.
+action name you just created.
 
 
 Try to make your contact form
@@ -940,7 +946,6 @@ to the VUEX store.
 
 
 SERVERSIDE
-
 
 Now comes the final part: NODE.
 Go to db.js, you'll find this 
@@ -969,7 +974,8 @@ a mail to cooperacy@cooperacy.org
 with some text in the contact
 form box.
 So `auth:{user:xx,pass:xx}` is fine,
-while `from: '"Cooperacy" <cooperacy@cooperacy.org>'`, 
+while `from: '"Cooperacy" 
+<cooperacy@cooperacy.org>'`, 
 is wrong, I mean it is ok for the 
 user function in db.js right now
 but not for the one you should make!
@@ -992,7 +998,7 @@ you will have req.body.to
 req.body.baby and req.body.mom.
 
 It is just copying the VUEX
-payload into something called req.body
+payload into something called req.body.
 
 So now just duplicate the email function
 and try to make that function to send
@@ -1000,8 +1006,8 @@ via your smtp server and using
 your credentials a mail to
 cooperacy@cooperacy.org
 
-If you need to know if you sent an email,
-just check on your sent emails
+If you need to know if you sent an 
+email, just check on your sent emails
 folder.
 
 Did you manage to send a contact email?
