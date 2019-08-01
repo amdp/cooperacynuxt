@@ -84,7 +84,7 @@ export default {
       : this.$store.dispatch('commentFormAction', { id: newoldid, parent: comment.parent, project: this.$route.params.id, user: this.$auth.user.id, content: this.formComment}); this.edit(comment.id) },
     sub(comment, id){if (this.$store.state.comment){
       return this.$store.state.comment.filter(comment=>{return comment.parent === id && comment.id != id })} else {return []}},
-    userImage(commentuser){ if(commentuser){return require('../assets/image/user/' + commentuser + '.png')}else{}},
+    userImage(commentuser){ if(commentuser){return require('../assets/image/user/' + commentuser + '.png')} },
     formpost(){this.$store.dispatch('commentFormAction', { id: 'new', parent: 0, project: this.$route.params.id, user: this.$auth.user.id, content: this.formPost}); this.formPost = '' },
     reply(replycomment){this.formswitch == replycomment.id ? (this.formswitch = false, this.formComment = '')//turns off the box
     : (this.formswitch = replycomment.id, this.editreplyid = 'new', this.formComment = 'to #'+replycomment.id+': ')},

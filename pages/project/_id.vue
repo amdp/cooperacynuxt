@@ -5,7 +5,7 @@
         <div class="row">
           <div class="col-1"></div>
           <div class="col-2">
-            <img v-if="projectImage" :src="projectImage" width="100px" />
+            <img :src="projectImage" width="100px" />
           </div>
           <div class="col-7">
             <div class="row">
@@ -118,7 +118,8 @@ export default {
       console.log(' '+JSON.stringify(this.$store.state.project.findIndex(project=>project.id==this.$route.params.id)));
       this.$store.dispatch('getProjectAction',{projectid: this.$route.params.id, userid: this.$store.state.auth.user.id})}
       return this.$store.state.project[this.$store.state.project.findIndex(project=>project.id==this.$route.params.id)]},
-    projectImage(){return require('../../assets/image/project/'+this.oneproject.id+'.png')},
+    projectImage(){try{ return require('../../assets/image/project/'+this.oneproject.id+'.png')}
+      catch (e) {return require('../../assets/image/project/0.png')} },
     category(){return this.$store.state.category[this.$store.state.category.findIndex(category=>category.id==this.oneproject.category)]},
     stage(){return this.$store.state.stage[this.$store.state.stage.findIndex(stage=>stage.id==this.oneproject.stage)]}
   },
