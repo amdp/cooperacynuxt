@@ -177,9 +177,9 @@ Then log out and log in again not with root,
 but with the user.
 
 Then you should run the long list of commands 
-you find in the file dumbdatabase in the 
-/etc or root folder of the repo: just copy ALL
-the text and then paste it using the sql commands
+you find in the file dumbdatabase.sql in the 
+/etc folder of the repo: open it or just copy ALL
+the text and then paste it in the sql command box
 in any database/sql editor/online tool like
 workbench, only after you connected to your newly 
 created database. This will give you some dumb data
@@ -187,6 +187,9 @@ to test the platform. In workbench, just open the sql
 or copy its text into a sql command/query.
 
 PS: Remember to start your mysql server!
+
+NOTE: we recently edited the dumbdatabase so if
+you encounter problems please let us know.
 
 Workbench is strange to use at the beginning but
 once you copied the dunb database just 
