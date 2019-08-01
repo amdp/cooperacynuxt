@@ -101,7 +101,7 @@ contributors.md file of this repo.
 GITHUB
 
 Cooperacy is based on GitHub repositories. 
-You find them here: https://github.com/amdp
+You find them here: https://github.com/amdp/cooperacynuxt
 
 For detailed and complete guide please see 
 https://guides.github.com/introduction/flow/.
