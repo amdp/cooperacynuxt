@@ -686,7 +686,7 @@ back from basic html and learn step by step
 Vue, Vuex and the rest of NUXT.
 Overcoming this last third LEVEL you will
 start a final level to be part of the
-real contributors: the DEVELOPERS!
+real developers: the CONTRIBUTORS!
 
 ### CHALLENGE ONE: ONE SIMPLE VARIABLE AND ONE SIMPLE FUNCTION IN VUE
 
@@ -1186,7 +1186,7 @@ folder.
 
 Did you manage to send a contact email?
 If you did it, move your name and email to
-the "DEVELOPER" level!!
+the "CONTRIBUTORS" level!!
 Please also add your current COUNTRY!
 
 If you didn't manage, don't worry,
