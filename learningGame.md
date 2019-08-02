@@ -210,7 +210,7 @@ or any other http server.
 At the end, edit the contributors.md 
 and add your email after your name! You did it!!
 
-### CHALLENGE 3: INSTALL NODE AND NPM
+### FINAL CHALLENGE LEVEL ONE: INSTALL NODE, NPM AND NUXT
 
 First of all, you should know node is based on npm,
 the package manager. You should follow an online
@@ -262,12 +262,8 @@ When you wear it, instead, it's online :)
 
 
 Did you install node and npm? 
-Well, you passed Challenge 3! 
 You are now ready to install the repo, 
 and gain level 2!
-
-
-### FINAL CHALLENGE LEVEL ONE: NUXT
 
 VUE AND NUXT
 Basically nuxt makes SSR easier, it renders the
