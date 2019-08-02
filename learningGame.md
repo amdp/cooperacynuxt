@@ -893,7 +893,12 @@ discord channel you learned that for inserting a
 vue component you need to add the component tag,
 import the document before the `export default`
 line and finally to add it to the `components:`
-line. You also demonstrated you passed the final 
+line. Now you can even help the others
+in the lower level with their 
+difficulties, you gained the APPRENTICE level!
+Edit the contributors.md and put your
+name in the right position!
+You also demonstrated you passed the final 
 challenge before starting to develop!!
 
 ## FINAL LEVEL: START DEVELOPING!
