@@ -116,7 +116,7 @@ export default {
         body: this.body
       };
       try {
-        const res = await axios.post("/db/email", message);
+        const res = await axios.post("/db/contactemail", message);
         this.name = this.email = this.subject = this.body = "";
         this.response = res.data.message;
         console.log(res);

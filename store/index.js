@@ -87,8 +87,8 @@ export const actions = {
   placeFormAction:    async (context,payload) => {let {data} = await axios.post(process.env.DBURL+'/place', payload)
     context.dispatch('getPlaceAction')},
   newuserAction: async (context, payload) => {let {data} = await axios.post(process.env.DBURL+'/user', payload)
-    let go = {to: payload.email, subject: 'user registration confirmation', body: 'You have been registered.'}
-    axios.post(process.env.DBURL+'/email', go); return data },
+    let message = {to: payload.email, subject: 'user registration confirmation', body: 'You have been registered.'}
+    axios.post(process.env.DBURL+'/newuseremail', message); return data },
   updateUserAction: async (context, payload) => {let {data} = await axios.put(process.env.DBURL+'/user', payload); return data},
   tagFormAction: async (context,payload)=>{let {data} = await axios.post(process.env.DBURL+'/tag', payload); return data},
   removeTagAction: async (context,payload)=>{let {data} = await axios.post(process.env.DBURL+'/tag', payload); return data},

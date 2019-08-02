@@ -155,7 +155,13 @@ app.post("/image", function(req, res) {
         .resize(256, 256) .quality(60) .write(uploadPath)    })
   .then(res.json({ status: 'OK' })).catch(err => {console.log('e: '+JSON.stringify(err)); res.send (err) })} })
 
-app.post('/email', function(req, res) {
+app.post('/newuseremail', function (req, res) {let transporter=nodemailer.createTransport({host:'smtp.gmail.com',port:465,secure:true, 
+  auth:{user: process.env.MAILUSER, pass: process.env.MAILPASSWORD}}) /* to add html in mailOptions use " html: '<b>test</b>' " */
+  let mailOptions = {from: '"Cooperacy" <cooperacy@cooperacy.org>', to:req.body.to, subject:req.body.subject, text:req.body.body}
+  transporter.sendMail(mailOptions, (error, info) => { if (error) { return console.error(error) }
+      console.log('Message %s sent: %s', info.messageId, info.response); res.render('index') })})
+
+app.post('/contactemail', function(req, res) {
   const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 465,
