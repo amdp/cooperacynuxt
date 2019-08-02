@@ -35,7 +35,9 @@ app.get("/uservote", (req, res) => {//gets votes of projects and comments that h
 app.get("/user", async (req, res) => {
   req.headers.authorization = req.headers.authorization.slice(7)
   if (req.headers.authorization=='undefined'){return res.status(500).send('JWT is undefined') }
-  else{ check=jwt.verify(req.headers.authorization,process.env.JWTSECRET)
+  else{ try {jwt.verify(req.headers.authorization,process.env.JWTSECRET)}
+        catch(e){res.status(401).send(e + ': Auth Token Expired')
+          return axios({method: 'post', url: process.env.HOST+':'+process.env.PORT+'/db/logout' })}
     let id=jwt.decode(req.headers.authorization)
     mydb.execute('SELECT * FROM `user` AS `user` WHERE `user`.`id` =  ?', [id.id],
     function(err, [user], fields) {if (err) {console.log('e: '+JSON.stringify(err)); res.send (err) } else res.json({ user }) } ) } })
