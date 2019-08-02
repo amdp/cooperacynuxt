@@ -684,6 +684,13 @@ You now earned the VUEX EXPLORER LEVEL!
 In this upcoming lessons we will start 
 back from basic html and learn step by step
 Vue, Vuex and the rest of NUXT.
+Overcoming this last third LEVEL you will
+start a final level to be part of the
+real contributors: the DEVELOPERS!
+
+### CHALLENGE ONE: ONE SIMPLE VARIABLE AND ONE SIMPLE FUNCTION IN VUE
+
+
 
 VUE AND NUXT
 Vue works mostly with pages and components. 
@@ -716,6 +723,7 @@ list of variables you
 want to use in the HTML
 or for your other functionalities.
 
+
 I rarely use the same name
 for variables of different
 use, so, if I have to send
@@ -738,10 +746,157 @@ I am sending to the server.
 
 methods: {..} is a list of functions
 it lists the functions you want to use
-in your page
+in your page.
 
 
-## LEVEL FOUR: START DEVELOPING
+Now, let's test it. Let's take any page
+.vue we already have in the project 
+and insert in the data function one 
+variable:
+
+```
+data() {
+  return {
+    test: 'test ok!' //use whatever text you want here
+  } }
+```
+
+and in `methods:` another function:
+
+```
+methods: {
+  someAlert(){
+   alert(this.test)
+  }
+}
+```
+
+and now let's add a div with a
+@click in the middle of 
+the html part:
+
+```
+ <div @click="someAlert">TEST ALERT</div>
+```
+
+Now reload the page, and if clicking on 
+the div with TEST ALERT you get an alert
+you've done it!
+Screenshot your alert message and paste it
+in the discord channel :)
+
+### CHALLENGE TWO: REGISTER AND MAKE A LITTLE EDIT IN MYSQL
+
+Okay then let's use the platform.
+Go to LOGIN as in the right menu.
+Scroll down and enter your name,
+surname, email and password..
+eventually a pic of yours.
+Nothing will be sent to the 
+real cooperacy project, so
+don't worry and hit on bank transfer.
+
+
+A new user will be created without any 
+bank transfer. Now, open your mysql
+workbench software or similar and
+open the user table.
+
+Refer to the beginning section of this
+document to click in the small icon and
+make the table to appear.
+
+
+Now find your user, and edit "payment
+deadline". Insert any date AFTER today
+remembering the format is `YYYY-MM-DD 00:00:00`
+obviously you can edit the time `00:00:00`
+but it doesn't really change the situation.
+
+
+Apply your changes and try to login with
+your credentials. If you did, congratulations!
+You passed challenge two! Please post in
+the discord channel the screenshot of your
+user when you are logged in :)
+
+### CHALLENGE THREE: VUE COMPONENTS AND A NEW COOPERACY PROJECT
+
+Very well!! The rest of Vue you must learn should
+be learnt by doing. We just need one final step:
+components. At the same time, in Cooperacy we have 
+some projects in the home page that are general,
+while you can see, if you log in, YOUR created 
+and archived projects. 
+So let's create our first Cooperacy
+project. Login and click on "add a new project" 
+link.
+
+
+Enter whatever you like, and then when you get
+a confirmation go back to your profile clicking
+on the image close to your name in the header.
+
+
+You see your project there, right?
+Well, now just for the sake of an experiment,
+let's add the homepage logo into your user
+page. How?
+Just adding one component.
+
+
+Let's start having a look at the component folder.
+We will add the `home.vue` component.
+Go to the user.vue page. Add after:
+
+`<projectlist />`
+
+the component:
+
+`<home />`
+
+but not after the closing `</div></template>`.
+
+
+Now go to the script part and add after:
+
+`import projectlist from '@/components/projectlist'`
+
+the line
+
+`import home from '@/components/home'`
+
+
+what else? As a final step, edit the
+component line:
+
+```
+components: { projectlist: projectlist, },
+```
+
+into:
+
+```
+ components: { 
+  projectlist: projectlist, 
+  home: home,
+ },
+```
+
+now save and reload your user page if it didn't
+automagically as usually nuxt does.
+Scroll down and you should see the Cooperacy
+logo animation.
+
+Screenshot it and you will demonstrate to the
+discord channel you learned that for inserting a
+vue component you need to add the component tag,
+import the document before the `export default`
+line and finally to add it to the `components:`
+line. You also demonstrated you passed the final 
+challenge before starting to develop!!
+
+## FINAL LEVEL: START DEVELOPING!
 
 THE CONTACT FORM
 
@@ -965,11 +1120,13 @@ function to steal from and use
 for your contact form:
 
 
-` app.post('/email', function (req, res) {let transporter=nodemailer.createTransport({host:'ENTER YOUR SMTP like  smtp.gmail.com',port:465,secure:true, 
+```
+app.post('/email', function (req, res) {let transporter=nodemailer.createTransport({host:'ENTER YOUR SMTP like  smtp.gmail.com',port:465,secure:true, 
   auth:{user:'process.env.MAILUSER',pass:'process.ENV.MAILPASSWORD'}}) /* to add html in mailOptions use " html: '<b>test</b>' " */
   let mailOptions = {from: '"Cooperacy" <cooperacy@cooperacy.org>', to:req.body.to, subject:req.body.subject, text:req.body.body}
   transporter.sendMail(mailOptions, (error, info) => { if (error) { return console.error(error) }
-      console.log('Message %s sent: %s', info.messageId, info.response); res.render('index') })}) `
+      console.log('Message %s sent: %s', info.messageId, info.response); res.render('index') })}) 
+```
 
 
 This function uses nodemailer
@@ -1031,7 +1188,7 @@ If you didn't manage, don't worry,
 write us in the discord channel and we
 will help you out!
 
-## Misc, notes and warnings
+## LAST INFORMATION: A FEW WARNINGS
 
 ### WARNINGS
 
@@ -1040,12 +1197,13 @@ with req.body, process.env, and some other objects, but
 you can send to console their internal elements 
 e.g. `console.log(' '+JSON.stringify(req.body.user));` .
 When you use FormData() remember you
-cannot console.log it. To log, some
-suggest:
+cannot console.log it. To log it, use:
 
-`for (var key of formData.entries()) {
-			console.log(key[0] + ', ' + key[1])
-		}`
+```
+for (var key of formData.entries()) {
+  console.log(key[0] + ', ' + key[1])
+}
+```
 
 2. Remember you cannot use fetch and
 asyncData (nuxt functions) in components
@@ -1057,33 +1215,21 @@ different, so use them properly
 more difficult than the standard vue 
 because of babel, webpack and the nuxt
 structure. So you would need to use a
-computed: or a methods: property.
+computed: property or a methods: function.
+Computed: are values like those in the data
+function with the difference that they 
+can be elaborated before
+showing the page. 
 Usually the `<img` tag is followed by
 a dynamic source: ` :src=" ` that has
-a function like `:src="getImage". Then,
+a function like `:src="getImage"`. Then,
 script side, you have something like:
+
 ```
   computed: {
     getImage(){return require('../assets/image/'
     + project.image + '.png')},
+    ...
+  }
 ```
 
-5. //to be continued//
-
-///NOTES FOR NEXT GUIDES///
-To see the registered user pages, 
-go to login and register using
-BANK TRANSFER. Do not use paypal.
-Then, ope
-so in cooperacy we have projects
-in the home page you see them
-if you log in, 
-you see YOUR projects
-you guys will have the 
-contact page, write it as you wish
-newuserAction: async (context, payload)
-we could make a direct axios call,
-but it is good to keep everything 
-in the store so that we find all
- the flow to the server in the same
- place
