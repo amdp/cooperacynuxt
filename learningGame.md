@@ -22,6 +22,11 @@ https://discord.gg/sKb5Ju
 Note: You do not need to know or support the platform, for you it’s just a way to learn to code.
 
 
+IF YOU START THIS LEARNING GAME KEEP IN MIND WE UPDATE IT QUITE OFTEN,
+SO REMEMBER TO PULL OR GET BACK TO THIS FILE SO YOU READ THE MOST
+RECENT VERSION!
+
+
 Because it is learning and coding, 
 please feel free to ask.
 I will say it again: nobody here is your teacher, 
