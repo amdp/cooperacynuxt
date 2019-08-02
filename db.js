@@ -170,8 +170,7 @@ app.post('/contactemail', function(req, res) {
   }); /* to add html in mailOptions use " html: '<b>test</b>' " */
   const mailOptions = {
     from: req.body.email,
-    // read the MAILTO field in .env, use the defualt if blank
-    to: process.env.MAILTO || '"Cooperacy" <cooperacy@cooperacy.org>',
+    to: '"Cooperacy" <cooperacy@cooperacy.org>',
     // conveniently replies to the submitter of the form's email
     replyTo: `"${req.body.name}" <${req.body.email}>`,
     subject: req.body.subject,

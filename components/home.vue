@@ -124,7 +124,10 @@
       <p class="base text-center mb-3">
         <a href="/login" class="ae">Joining</a> Cooperacy is entertaining and makes you learn how to develop
         enjoyable cooperations in your
-        <a href="/aboutyou" class="ad">personal</a> relations, in the
+        <a
+          href="/aboutyou"
+          class="ad"
+        >personal</a> relations, in the
         <a href="/coorporate" class="af">corporate</a>
         world and at the
         <a href="/cci" class="au">international</a> level.
