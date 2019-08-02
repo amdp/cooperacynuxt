@@ -155,11 +155,42 @@ app.post("/image", function(req, res) {
         .resize(256, 256) .quality(60) .write(uploadPath)    })
   .then(res.json({ status: 'OK' })).catch(err => {console.log('e: '+JSON.stringify(err)); res.send (err) })} })
 
-app.post('/email', function (req, res) {let transporter=nodemailer.createTransport({host:'smtp.gmail.com',port:465,secure:true, 
-  auth:{user: process.env.MAILUSER, pass: process.env.MAILPASSWORD}}) /* to add html in mailOptions use " html: '<b>test</b>' " */
-  let mailOptions = {from: '"Cooperacy" <cooperacy@cooperacy.org>', to:req.body.to, subject:req.body.subject, text:req.body.body}
-  transporter.sendMail(mailOptions, (error, info) => { if (error) { return console.error(error) }
-      console.log('Message %s sent: %s', info.messageId, info.response); res.render('index') })})
+app.post('/email', function(req, res) {
+  const transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: { user: process.env.MAILUSER, pass: process.env.MAILPASSWORD }
+  }); /* to add html in mailOptions use " html: '<b>test</b>' " */
+  const mailOptions = {
+    from: req.body.email,
+    // read the MAILTO field in .env, use the defualt if blank
+    to: process.env.MAILTO || '"Cooperacy" <cooperacy@cooperacy.org>',
+    // conveniently replies to the submitter of the form's email
+    replyTo: `"${req.body.name}" <${req.body.email}>`,
+    subject: req.body.subject,
+    text: `Name: ${req.body.name}\n` +
+          `Email: ${req.body.email}\n\n` +
+          `${req.body.body}`
+  };
+  console.log(mailOptions);
+  transporter
+    .sendMail(mailOptions)
+    .then(info => {
+      console.log('Message %s sent: %s', info.messageId, info.response);
+      res.status(200).json({
+        message: `Thank you ${req.body.name} for your message!<br/>` +
+          `We'll get in touch as soon as possible.<br />`
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(200).json({
+        message: `An error occured ${req.body.name}!<br/>` +
+                  `Please try again later.`
+      });
+    });
+});
 
 app.post("/vote", (req, res) => {      
   if (req.body.proptype=='project'){mydb.execute(//the presence of an existing project vote is checked

@@ -19,3 +19,4 @@ DBURL=Database url, if not sure, use http://127.0.0.1:3000/db
 PREFIX=Database prefix, if not sure, use /db
 MAILUSER=Use your own email here
 MAILPASSWORD=Use your email password here
+MAILTO=For default, leave blank; For testing or other purposes you can fill it to change the default 'to' email of the contact form
