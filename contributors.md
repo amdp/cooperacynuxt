@@ -17,5 +17,5 @@ CONTRIBUTORS (DEVELOPERS)
 CIRCLE OF THE WISE ONES
 ``` scala
 bowor
-amdp
+amdp - alessandromerlettidepalo@gmail.com - Italy
 ```
