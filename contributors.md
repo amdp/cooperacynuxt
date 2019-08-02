@@ -6,11 +6,15 @@ Carmine Grossi  -    cgrossi@gmail.com
 ```
 NUXTERS
 
-CONTRIBUTORS
+VUEX EXPLORERS
+
+APPRENTICES
+
+CONTRIBUTORS (DEVELOPERS)
 
 
 
-CIRCLE OF THE WISE
+CIRCLE OF THE WISE ONES
 ``` scala
 bowor
 amdp
