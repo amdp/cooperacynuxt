@@ -200,8 +200,9 @@ click on the tiny icon close to the same name:
 
 ![Image](assets/image/github/image4.png)
 
-
-When you have done this step, edit the contributors.md 
+When you have done this step, just install Apache too
+or any other http server.
+At the end, edit the contributors.md 
 and add your email after your name! You did it!!
 
 ### CHALLENGE 3: INSTALL NODE AND NPM
@@ -338,7 +339,20 @@ rendered, progressive web app ready,
 mobile ready, desktop ready, etc.)
 
 
-The directory structure in NUXT is made of 
+Remember you start Nuxt with
+
+`npm run dev`
+
+and you stop it with CONTROL-C .
+Try and test these two commands and
+check that when you see nuxt
+compiling/loading, you can open the
+browser and see it load clientside:
+you will see the green nuxt icon
+and the load bars :)
+
+
+Good. The directory structure in NUXT is made of 
 these folders:
 
 
@@ -522,7 +536,7 @@ a screenshot of the /store/index.js
 file and you passed this 
 second challenge!
 
-### CHALLENGE THREE: RECONSTRUCT A WHOLE STORE PATH!
+### FINAL CHALLENGE LEVEL TWO: RECONSTRUCT A WHOLE STORE PATH!
 
 
 Alright then. It's time to see the docks!
@@ -820,7 +834,7 @@ You passed challenge two! Please post in
 the discord channel the screenshot of your
 user when you are logged in :)
 
-### CHALLENGE THREE: VUE COMPONENTS AND A NEW COOPERACY PROJECT
+### FINAL CHALLENGE LEVEL THREE: VUE COMPONENTS AND A NEW COOPERACY PROJECT
 
 Very well!! The rest of Vue you must learn should
 be learnt by doing. We just need one final step:
@@ -1237,4 +1251,10 @@ script side, you have something like:
     ...
   }
 ```
+
+5. If you get an ERROR, remember to check 
+the HTTP status error list:
+
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+
 
