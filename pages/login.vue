@@ -9,7 +9,8 @@
               <b-form-input id="emailLogin" v-model="emailLogin" size="sm" required autocomplete="current-email"></b-form-input></b-form-group>
             <b-form-group label-for="passwordLogin" label="Password:">
               <b-form-input  id="passwordLogin" v-model="passwordLogin" size="sm" required type="password" autocomplete="current-password" ></b-form-input></b-form-group>
-              <a class="ad" to="">Forgot password?</a>
+              <p>Forgot password? Enter your email and click <nuxt-link to="" class="ad" @click="recover">here</nuxt-link>.
+              If you still have problems, please <nuxt-link class="ac" to="/contact">contact us</nuxt-link>.</p>
               <b-button type="submit" class="btn bhdiversity white btn-block mt-3 gray border-0">Login</b-button>
           </b-form>
         </div>
@@ -119,6 +120,7 @@ export default {
       }}).catch(e => { this.error = e + ''})
     },
     googleSignOut() {var auth2 = gapi.auth2.getAuthInstance(); auth2.signOut()},
+    recover(){this.$store.dispatch('recoverPasswordAction', {email: this.formEmail})},
     async newuser() {
       var newuser = await this.$store.dispatch('newuserAction', { 
         name: this.formName,

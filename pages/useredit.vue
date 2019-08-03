@@ -12,8 +12,10 @@
             <b-form-group label-for="emailInput" label="Email:" description="Please insert a valid email that will be your username">
               <b-form-input id="emailInput" v-model="formEmail" size="sm" autocomplete="email" required></b-form-input></b-form-group>
               <!-- add insert previous password and relative check -->
-            <b-form-group label-for="passwordInput" label="Password:" description="Please insert your NEW password or passphrase">
-              <b-form-input id="passwordInput" v-model="formPassword" size="sm" type="password" required autocomplete="current-password"></b-form-input></b-form-group>
+            <b-form-group label-for="oldPasswordInput" label="Old Password:" description="Please insert your old password or passphrase">
+              <b-form-input id="oldPasswordInput" v-model="formOldPassword" size="sm" type="password" required autocomplete="current-password"></b-form-input></b-form-group>
+            <b-form-group label-for="newPasswordInput" label="New Password:" description="Please insert your new password or passphrase">
+              <b-form-input id="newPasswordInput" v-model="formNewPassword" size="sm" type="password" required autocomplete="current-password"></b-form-input></b-form-group>
             <b-form-group label-for="imageInput" label="Image:" description="Please choose an image for your account"> 
               <b-form-file id="imageInput" v-model="formImageFilename" ref="formImageFile" size="sm" accept="image/*"></b-form-file>
             </b-form-group>
@@ -34,7 +36,8 @@ export default {
       formName: this.$auth.user.name,
       formSurname: this.$auth.user.surname,
       formEmail: this.$auth.user.email,
-      formPassword: '',
+      formOldPassword: '',
+      formNewPassword: '',
       formImageFilename: '',
       id: this.$auth.user.id,
     }
@@ -60,12 +63,20 @@ export default {
       }
     },
     async userUpdate(){
+      let checkOldPassword = await this.$store.dispatch('checkOldPasswordAction', {
+        id: this.id,
+        email: this.formEmail,
+        password: this.formOldPassword,
+      })
+      if (!checkOldPassword){
+        return alert('Something went wrong. Please retry later, the server could have problems in processing your request.')
+      }
       var updateUser = await this.$store.dispatch('updateUserAction', { 
         id: this.id,
         name: this.formName,
         surname: this.formSurname,
         email: this.formEmail,
-        password: this.formPassword,
+        password: this.formNewPassword,
       })
       .catch(err => {console.error(err)} )
       if(updateUser){ this.userReload()} // reloads the updated user information
