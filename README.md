@@ -8,21 +8,20 @@ First place where to start is to see the MySql database you find in /etc/dumbdat
 Finally, see the index.vue file in the pages, continue to the defaul layout, and review the pages and their components.
 You can conclude your overview with a brief look at the assets and at the only css file on top of the Vue Bootstrap css architecture (No, we kept it 'simple' and didn't implement SCSS/SASS). Note: we tend to use all >singular< naming for database tables and internal variables.
 
-If you want to learn all the technologies used, we are slowly creating a crash guide, check the learning docs:
-https://github.com/amdp/cooperacynuxt/blob/master/LearningDocs.md
+If you want to learn all the technologies used, we are slowly creating a gamified crash guide, check the learning game:
+https://github.com/amdp/cooperacynuxt/blob/master/learningGame.md
 
 For detailed explanation on how things work on Cooperacy, check the Platform idea on https://cooperacy.org/platform.
 
 Have fun and happy coding!
 
 ## Setup
-
 ``` bash
 # install dependencies
 $ npm install
 
 # setup .env
-$ mv /etc/dumbenv .env
+$ cp /etc/dumbenv .env
 
 # serve with hot reload at localhost:3000
 $ npm run dev
@@ -37,6 +36,7 @@ $ npm start
 # generate static project
 $ npm run generate
 ```
+
 
 If you contribute, please keep this file 42 lines short.
 And don't worry. Be happy!
