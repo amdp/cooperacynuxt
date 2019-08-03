@@ -57,7 +57,6 @@ function(err, country, fields) {if (err) {console.log('e: '+JSON.stringify(err))
 app.get("/news", (req, res) => { mydb.execute( 'SELECT * FROM `news` ORDER BY `news`.`date` DESC',[],
 function(err, news, fields) {if (err) {console.log('e: '+JSON.stringify(err)); res.send (err) } else res.json(news) } ) })
 
-
 /////// UPDATE ///////
 
 app.put("/user", (req, res) => { if(!req.body.name || !req.body.password) { res.status(400); res.json({ error: "Bad data" }) } else { 
@@ -97,6 +96,20 @@ app.post("/login", async (req, res) => { mydb.execute('SELECT * FROM `user` WHER
     }else{res.status(400).json({error: 'User does not exist'})} } } } )  } )
 
 app.post("/logout", (req, res) => { res.json({ status: 'OK' }) })
+
+app.post("/checkpassword", async (req, res) => {
+  mydb.execute('SELECT * FROM `user` AS `user` WHERE `user`.`id` =  ? and `user`.`email` = ? LIMIT 1', [req.body.id, req.body.email],
+    function(err, [user], fields) {
+      if(err) {console.log('e: '+JSON.stringify(err)); res.send (err) } 
+      if(user){
+        if(bcrypt.compareSync(req.body.password,user.password)) 
+          res.send(true)
+        else res.send(false)
+      }else res.send(false)   })  })
+
+app.post("/recoverpassword", async (req, res) => {
+  //TO BE DONE 
+})
 
 app.post("/place", (req, res) => {mydb.execute('SELECT * FROM `place` WHERE `place`.`country`=? AND `place`.`name`=?  LIMIT 1',
 [req.body.country, req.body.name], function(err, [place], fields) {if (err) {console.log('e: '+JSON.stringify(err)); res.send (err) }else{
@@ -155,9 +168,14 @@ app.post("/image", function(req, res) {
         .resize(256, 256) .quality(60) .write(uploadPath)    })
   .then(res.json({ status: 'OK' })).catch(err => {console.log('e: '+JSON.stringify(err)); res.send (err) })} })
 
-app.post('/newuseremail', function (req, res) {let transporter=nodemailer.createTransport({host:'smtp.gmail.com',port:465,secure:true, 
-  auth:{user: process.env.MAILUSER, pass: process.env.MAILPASSWORD}}) /* to add html in mailOptions use " html: '<b>test</b>' " */
-  let mailOptions = {from: '"Cooperacy" <cooperacy@cooperacy.org>', to:req.body.to, subject:req.body.subject, text:req.body.body}
+app.post('/newuseremail', function (req, res) {
+  let transporter=nodemailer.createTransport({host:'smtp.gmail.com',port:465,secure:true, 
+  auth:{user: process.env.MAILUSER, pass: process.env.MAILPASSWORD}})
+  let mailOptions = {
+    from: '"Cooperacy" <cooperacy@cooperacy.org>', 
+    to:req.body.to, subject:req.body.subject, 
+    html: {path: req.body.body}
+  }
   transporter.sendMail(mailOptions, (error, info) => { if (error) { return console.error(error) }
       console.log('Message %s sent: %s', info.messageId, info.response); res.render('index') })})
 
@@ -174,7 +192,7 @@ app.post('/contactemail', function(req, res) {
     // conveniently replies to the submitter of the form's email
     replyTo: `"${req.body.name}" <${req.body.email}>`,
     subject: req.body.subject,
-    text: `Name: ${req.body.name}\n` + `Email: ${req.body.email}\n\n` + `${req.body.body}`
+    text: `Name: ${req.body.name}\n` + `Email: ${req.body.email}\n\n` + `Message: \n\n${req.body.body}`
   };
   console.log(mailOptions);
   transporter
@@ -188,7 +206,7 @@ app.post('/contactemail', function(req, res) {
     })
     .catch(err => {
       console.log(err);
-      res.status(200).json({
+      res.status(500).json({
         message: `An error occured ${req.body.name}!<br/>` +
                   `Please try again later.`
       });
