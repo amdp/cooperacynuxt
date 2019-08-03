@@ -1,6 +1,6 @@
 # THE COOPERACY CODERS LEARNING GAME
 
-![Image](../assets/image/github/image3.png)
+![Image](/assets/image/github/image3.png)
 
 
 ## LEVEL ONE
