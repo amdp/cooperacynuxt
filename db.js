@@ -174,9 +174,7 @@ app.post('/contactemail', function(req, res) {
     // conveniently replies to the submitter of the form's email
     replyTo: `"${req.body.name}" <${req.body.email}>`,
     subject: req.body.subject,
-    text: `Name: ${req.body.name}\n` +
-          `Email: ${req.body.email}\n\n` +
-          `${req.body.body}`
+    text: `Name: ${req.body.name}\n` + `Email: ${req.body.email}\n\n` + `${req.body.body}`
   };
   console.log(mailOptions);
   transporter
