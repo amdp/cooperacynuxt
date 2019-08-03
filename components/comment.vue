@@ -9,7 +9,7 @@
       </b-form-group>
     </b-form>
 
-    <!-- POST (COMMENT) -->
+    <!-- POSTS (OR UP, MAIN COMMENTS) -->
     <div class="row mt-3" v-for="comment in up" :key="comment.id">
       <div class="col-2"></div>
       <div class="col-8">
@@ -32,11 +32,11 @@
             <b-form @submit.prevent="formcomment(comment,editreplyid)">
               <b-button type="submit" style="display: none"></b-button>
               <b-form-input id="commentInput" v-model="formComment" size="sm"></b-form-input>
-              <b-link @click="edit(subcomment)" class="hunderstanding">Cancel</b-link>
+              <b-link @click="edit(comment)" class="hunderstanding">Cancel</b-link>
             </b-form>
           </div>
         </div>
-        <!-- COMMENT (SUBCOMMENT) -->
+        <!-- COMMENTS (OR SUBCOMMENTS) -->
         <div class="row mt-2" v-for="subcomment in sub(comment,comment.id)" :key="subcomment.id">
           <div class="col-1"></div>
           <div class="col-11">
@@ -74,8 +74,10 @@ import comment from '@/components/comment'
 
 export default {
   data() { return {formswitch: false, editreplyid: false, formComment: '', formPost: '',}},//if formswitch = a comment id, textbox appears
-  computed: { up(){if(this.$store.state.comment){return this.$store.state.comment.filter(comment=>{ return comment.parent === 0 })}
-    else {return []}},},
+  computed: { 
+    up(){if(this.$store.state.comment)
+      {return this.$store.state.comment.filter(comment=>{ return comment.parent === 0 })}
+      else {return []}},},
   components: { votebar: votebar, comment: comment, },
   methods: {
     formcomment(comment, newoldid){if(comment.parent===0) {var parent=comment.id} else {var parent=comment.parent}
@@ -83,7 +85,8 @@ export default {
       project: this.$route.params.id, user: this.$auth.user.id, content: this.formComment}), this.reply(comment.id))
       : this.$store.dispatch('commentFormAction', { id: newoldid, parent: comment.parent, project: this.$route.params.id, user: this.$auth.user.id, content: this.formComment}); this.edit(comment.id) },
     sub(comment, id){if (this.$store.state.comment){
-      return this.$store.state.comment.filter(comment=>{return comment.parent === id && comment.id != id })} else {return []}},
+      let subcomments=this.$store.state.comment.filter(comment=>{return comment.parent === id && comment.id != id })
+      subcomments.reverse(); return subcomments} else {return []}},
     userImage(commentuser){ if(commentuser){return require('../assets/image/user/' + commentuser + '.png')} },
     formpost(){this.$store.dispatch('commentFormAction', { id: 'new', parent: 0, project: this.$route.params.id, user: this.$auth.user.id, content: this.formPost}); this.formPost = '' },
     reply(replycomment){this.formswitch == replycomment.id ? (this.formswitch = false, this.formComment = '')//turns off the box

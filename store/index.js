@@ -37,7 +37,7 @@ export const mutations = {
   setUservote:  (state,payload) => {state[payload.proptype + 'uservote'] = payload.body },
   setUserBar:   (state,payload) => {for(let j=0;j<state.cc.length;j++){state.auth.user[state.cc[j]] = payload[state.cc[j]]}},
   commentUpdate:(state,payload) => {let old = state.comment.findIndex(({id})=> id === payload.id)
-  if (old===-1) {state.comment.push(payload)} else {state.comment.splice(old,1,payload)} },
+  if (old===-1) {state.comment.unshift(payload)} else {state.comment.splice(old,1,payload)} },
   setVoteUpdate:(state,payload) => {//updates the voted proptype (project or comment) state and uservote table
     var votedProptype = state[payload.proptype].find(proptype => proptype.id == payload.id)
     votedProptype[payload.cc] += payload.add //at this point we have updated the proptype, we proceed with the uservote table:
