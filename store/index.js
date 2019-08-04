@@ -1,17 +1,21 @@
 import axios from 'axios'
 
 export const state = () => ({
-  project:[], comment:[], vote:[], projectuservote:[], commentuservote:[], tag:[], place:[], country:[], news:[], edit: false,
-  condition:['equivalence', 'trust', 'care', 'transparency', 'freedom', 'understanding', 'diversity'], 
+  project:[], comment:[], vote:[], 
+  projectuservote:[], commentuservote:[], 
+  tag:[], place:[], country:[], news:[], 
+  edit: false,
+  condition:['equivalence', 'trust', 'care', 'transparency', 
+    'freedom', 'understanding', 'diversity'], 
   cc:['E','T','C','I','F','U','D'],
   category:[
     {"id":0,"name":"Main Cooperacy"},
     {"id":1,"name":"Wealth - General funded or fee-based projects"},
     {"id":2,"name":"Community"},
-    {"id":3,"name":"Ecosystem and Wellbeing - Must really be related with the ecosystem care or with human wellbeing"},
+    {"id":3,"name":"Ecosystem and Wellbeing"},
     {"id":4,"name":"Reporting"},
-    {"id":5,"name":"Location-based - For official cities, nations, neighbourhoods"},
-    {"id":6,"name":"Science, Research, Education and Professionals groups and projects"},
+    {"id":5,"name":"Location-based - Official cities, nations, places"},
+    {"id":6,"name":"Science, Research, Education and Professionals"},
     {"id":7,"name":"Arts Music Games Fun"}], 
   stage:[
     {"id":1,"name":"historical"},
@@ -34,21 +38,35 @@ export const mutations = {
   setCountry:   (state,payload) => {state.country = payload},
   setNews:      (state,payload) => {state.news = payload},
   setEditSwitch:(state,payload) => {state.edit = payload},
-  setUservote:  (state,payload) => {state[payload.proptype + 'uservote'] = payload.body },
-  setUserBar:   (state,payload) => {for(let j=0;j<state.cc.length;j++){state.auth.user[state.cc[j]] = payload[state.cc[j]]}},
-  commentUpdate:(state,payload) => {let old = state.comment.findIndex(({id})=> id === payload.id)
-  if (old===-1) {state.comment.unshift(payload)} else {state.comment.splice(old,1,payload)} },
-  setVoteUpdate:(state,payload) => {//updates the voted proptype (project or comment) state and uservote table
-    var votedProptype = state[payload.proptype].find(proptype => proptype.id == payload.id)
-    votedProptype[payload.cc] += payload.add //at this point we have updated the proptype, we proceed with the uservote table:
-    payload.add == 1 ? state[payload.proptype+'uservote'].push({user: payload.user, [payload.proptype]: payload.id, condition: payload.cc})
-    : state[payload.proptype+'uservote'].splice(state[payload.proptype+'uservote'].findIndex(
-      uservote =>uservote[payload.proptype]==payload.id && uservote.condition == payload.cc),1)  },
+  setUservote:  (state,payload) => {
+    state[payload.proptype + 'uservote'] = payload.body },
+  setUserBar:   (state,payload) => {for(let j=0;j<state.cc.length;j++)
+    {state.auth.user[state.cc[j]] = payload[state.cc[j]]}},
+  commentUpdate:(state,payload) => {
+    let old = state.comment.findIndex(({id})=> id === payload.id)
+    if (old===-1) {state.comment.unshift(payload)} 
+    else {state.comment.splice(old,1,payload)} },
+  setVoteUpdate:(state,payload) => {
+    //updates the voted proptype (project/comment) and uservote table
+    var votedProptype = state[payload.proptype].find(
+      proptype => proptype.id == payload.id)
+    votedProptype[payload.cc] += payload.add 
+    //the proptype is updated, we proceed with the uservote table:
+    payload.add == 1
+    ? state[payload.proptype+'uservote'].push({
+      user: payload.user, 
+      [payload.proptype]: payload.id,
+      condition: payload.cc})
+    : state[payload.proptype+'uservote'].splice(
+        state[payload.proptype+'uservote'].findIndex(
+        uservote =>uservote[payload.proptype]==payload.id 
+        && uservote.condition == payload.cc),1)  },
 }
 
 export const actions = {
   getProjectAction: async (context,payload) => {
-    let {data} = await axios.get(process.env.DBURL+'/project', {params: payload})
+    let {data} = await axios.get(process.env.DBURL+'/project', 
+    {params: payload})
     if (payload.userid) var gouser = {userid: payload.userid, proptype: 'project'}
     if (payload.limit){gouser.projectid = payload.projectid; gouser.limit = payload.limit}
     if (payload.userid) await context.dispatch('getUservoteAction', gouser )
@@ -97,7 +115,9 @@ export const actions = {
   payload.formImageData, payload.headers, payload.proptype); return data.status },
   checkOldPasswordAction: async (context,payload) => {let {data} = await axios.post(process.env.DBURL+'/checkpassword',payload); 
     return data},
-  recoverPasswordAction: async (context,payload) => {axios.post(process.env.DBURL+'/recoverpassword',payload)},
+  recoverPasswordAction: async (context,payload) => {
+    console.log(' '+JSON.stringify(payload));
+    axios.post(process.env.DBURL+'/recoverpassword/new',payload)},
 //Admin stuff here: be careful
   resetcpVotingAction:  async (context,payload)=>{let{data} = await axios.post(process.env.DBURL+'/resetcpvoting'); return 'OK'},
   resetuVotingAction:   async (context,payload)=>{let{data} = await axios.post(process.env.DBURL+'/resetuvoting');  return 'OK'},

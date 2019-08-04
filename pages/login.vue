@@ -5,13 +5,16 @@
       <div class="col-4">
         <div class="d-flex justify-content-center">
           <b-form @submit.prevent="login" class="needs-valitation" autocomplete="on">
-            <b-form-group label-for="emailLogin" label="Email:">
-              <b-form-input id="emailLogin" v-model="emailLogin" size="sm" required autocomplete="current-email"></b-form-input></b-form-group>
-            <b-form-group label-for="passwordLogin" label="Password:">
-              <b-form-input  id="passwordLogin" v-model="passwordLogin" size="sm" required type="password" autocomplete="current-password" ></b-form-input></b-form-group>
-              <p>Forgot password? Enter your email and click <nuxt-link to="" class="ad" @click="recover">here</nuxt-link>.
+            <b-form-group label-for="loginEmail" label="Email:">
+              <b-form-input id="loginEmail" v-model="loginEmail" size="sm" required autocomplete="current-email"></b-form-input></b-form-group>
+            <b-form-group label-for="loginPassword" label="Password:">
+              <b-form-input  id="loginPassword" v-model="loginPassword" size="sm" required type="password" autocomplete="current-password" ></b-form-input></b-form-group>
+              <b-button type="submit" class="btn bhdiversity white btn-block mt-3 gray border-0">Login</b-button><br>
+              <p>Forgot password? 
+                Just enter your email and a 
+                <em>new password</em>, then:
+              <b-button class="btn bhunderstanding white btn-block gray border-0" @click="recover">Set new password</b-button><br>
               If you still have problems, please <nuxt-link class="ac" to="/contact">contact us</nuxt-link>.</p>
-              <b-button type="submit" class="btn bhdiversity white btn-block mt-3 gray border-0">Login</b-button>
           </b-form>
         </div>
       </div>
@@ -73,8 +76,8 @@ export default {
   },
   data() {
     return {
-      emailLogin: '',
-      passwordLogin: '',
+      loginEmail: '',
+      loginPassword: '',
       formName: '',
       formSurname: '',
       formEmail: '',
@@ -116,11 +119,11 @@ export default {
   methods: {
     async login() { this.error = null;
       this.$auth.loginWith('local', { data: { 
-        email: this.emailLogin, password: this.passwordLogin 
+        email: this.loginEmail, password: this.loginPassword 
       }}).catch(e => { this.error = e + ''})
     },
     googleSignOut() {var auth2 = gapi.auth2.getAuthInstance(); auth2.signOut()},
-    recover(){this.$store.dispatch('recoverPasswordAction', {email: this.formEmail})},
+    recover(){this.$store.dispatch('recoverPasswordAction', {email: this.loginEmail, password: this.loginPassword})},
     async newuser() {
       var newuser = await this.$store.dispatch('newuserAction', { 
         name: this.formName,
