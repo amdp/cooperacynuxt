@@ -11,7 +11,9 @@ VUEX EXPLORERS
 APPRENTICES
 
 CONTRIBUTORS (DEVELOPERS)
-
+```
+Alireza Ghey    -   https://github.com/alirezaghey
+```
 
 
 CIRCLE OF THE WISE ONES
