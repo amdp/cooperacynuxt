@@ -95,7 +95,6 @@
 </template>
 
 <script>
-import axios from "axios";
 export default {
   name: "contactForm",
   data() {
@@ -116,10 +115,9 @@ export default {
         body: this.body
       };
       try {
-        const res = await axios.post("/db/contactemail", message);
+        const res = await this.$store.dispatch("contactEmailAction", message);
         this.name = this.email = this.subject = this.body = "";
-        this.response = res.data.message;
-        console.log(res);
+        this.response = res.message;
       } catch (error) {
         console.log(error);
       }
