@@ -36,25 +36,31 @@ app.get("/user", async (req, res) => {
   req.headers.authorization = req.headers.authorization.slice(7)
   if (req.headers.authorization=='undefined'){return res.status(500).send('JWT is undefined') }
   else{ try {jwt.verify(req.headers.authorization,process.env.JWTSECRET)}
-        catch(e){res.status(401).send(e + ': Auth Token Expired')
+        catch(e){res.status(401).send(e+': Auth Token Wrong or Expired')
           return axios({method: 'post', url: process.env.HOST+':'+process.env.PORT+'/db/logout' })}
     let id=jwt.decode(req.headers.authorization)
-    mydb.execute('SELECT * FROM `user` AS `user` WHERE `user`.`id` =  ?', [id.id],
+    mydb.execute(
+      'SELECT * FROM `user` AS `user` WHERE `user`.`id` =  ?', [id.id],
     function(err, [user], fields) {if (err) {console.log('e: '+JSON.stringify(err)); res.send (err) } else res.json({ user }) } ) } })
 
-app.get("/category", (req, res) => { mydb.execute( 'SELECT * FROM `category` WHERE `category`.`id`!= ?', [0],
+app.get("/category", (req, res) => { mydb.execute( 
+  'SELECT * FROM `category` WHERE `category`.`id`!= ?', [0],
   function(err, category, fields) {if (err) {console.log('e: '+JSON.stringify(err)); res.send (err) } else res.json(category) } ) })
 
-app.get("/tag", (req, res) => { mydb.execute( 'SELECT * FROM `tag` where `project`=?',[req.query.projectid],
+app.get("/tag", (req, res) => { mydb.execute( 
+  'SELECT * FROM `tag` where `project`=?',[req.query.projectid],
   function(err, tag, fields) {if (err) {console.log('e: '+JSON.stringify(err)); res.send (err) } else res.json(tag) } )})
 
-app.get("/place", (req, res) => { mydb.execute( 'SELECT `id`, `country`, `name` FROM `place`',[],
+app.get("/place", (req, res) => { mydb.execute( 
+  'SELECT `id`, `country`, `name` FROM `place`',[],
 function(err, place, fields) {if (err) {console.log('e: '+JSON.stringify(err)); res.send (err) } else res.json(place) } ) })
 
-app.get("/country", (req, res) => { mydb.execute( 'SELECT `id`, `name` FROM `country`',[],
+app.get("/country", (req, res) => { mydb.execute( 
+  'SELECT `id`, `name` FROM `country`',[],
 function(err, country, fields) {if (err) {console.log('e: '+JSON.stringify(err)); res.send (err) } else res.json(country) } ) })
 
-app.get("/news", (req, res) => { mydb.execute( 'SELECT * FROM `news` ORDER BY `news`.`date` DESC',[],
+app.get("/news", (req, res) => { mydb.execute( 
+  'SELECT * FROM `news` ORDER BY `news`.`date` DESC',[],
 function(err, news, fields) {if (err) {console.log('e: '+JSON.stringify(err)); res.send (err) } else res.json(news) } ) })
 
 /////// UPDATE ///////
@@ -107,8 +113,38 @@ app.post("/checkpassword", async (req, res) => {
         else res.send(false)
       }else res.send(false)   })  })
 
-app.post("/recoverpassword", async (req, res) => {
-  //TO BE DONE 
+app.post("/recoverpassword/:token", async (req, res) => {
+  if (req.body.email) {mydb.execute(
+    'SELECT * FROM `user` WHERE `user`.`email`= ? LIMIT 1',[req.body.email],
+    function(err,[user],fields){if(err){
+      console.log('e: '+JSON.stringify(err));res.send(err)}
+      else{if(user){
+        let token = jwt.sign(
+          {id: user.id, newpassword: req.body.password}, process.env.JWTSECRET, { expiresIn: '2h' })
+        let transporter=nodemailer.createTransport({
+          host:'smtp.gmail.com',port:465,secure:true, 
+          auth:{user: process.env.MAILUSER, 
+            pass: process.env.MAILPASSWORD}})
+          let mailOptions = {
+            from: '"Cooperacy" <cooperacy@cooperacy.org>', 
+            to:req.body.email, subject:'Change your Cooperacy password',
+            text:'Click here to set the new password:\n'
+              +process.env.HOST+':'+process.env.PORT+
+              '/db/recoverpassword/'+token
+              +'\nIf you didn\'t, ignore this email'
+          }
+      transporter.sendMail(mailOptions, (error, info) => { if (error) { return console.error(error) }
+          console.log('Message %s sent: %s', info.messageId, info.response); res.render('index') }) }
+      else {res.send('No user with this email')}} })
+  }else{
+    try {jwt.verify(req.param.token,process.env.JWTSECRET)}
+    catch(e){return res.status(401).send(
+      e + ': Auth Token Wrong or Expired')}
+    let {id,password}=jwt.decode(req.param.token)
+    bcrypt.hash(password, 10, (err, hash) => { password = hash
+      mydb.execute('UPDATE `user` SET `password`=? WHERE `id`=?',
+          [password, id],
+          function(err, user, fields) {if (err) {console.log('e: '+JSON.stringify(err)); res.send (err) } else res.json('updated')} ) }) } 
 })
 
 app.post("/place", (req, res) => {mydb.execute('SELECT * FROM `place` WHERE `place`.`country`=? AND `place`.`name`=?  LIMIT 1',

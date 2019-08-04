@@ -1,7 +1,7 @@
 <template>
   <div class="mx-auto mt-4 mb-5">
     
-    <!-- NEW COMMENT POST -->
+    <!-- NEW POST -->
     <b-form @submit.prevent="formpost()">
       <b-form-group label-for="postInput" label="New Post:" description="Enter a new comment, post, question or topic">
       <b-button type="submit" style="display: none"></b-button>
@@ -9,7 +9,7 @@
       </b-form-group>
     </b-form>
 
-    <!-- POSTS (OR UP, MAIN COMMENTS) -->
+    <!-- POSTS -->
     <div class="row mt-3" v-for="comment in up" :key="comment.id">
       <div class="col-2"></div>
       <div class="col-8">
@@ -26,7 +26,7 @@
           </div>
         </div>
         <div class="row"><div class="col-12"><votebar :voteprop="comment" :proptype="'comment'" /></div></div>
-        <!-- POST (COMMENT) FORM TEXTBOX -->
+        <!-- POSTS EDIT/REPLY FORM BOX -->
         <div class="row" v-if="formswitch==comment.id">
           <div class="col-12">
             <b-form @submit.prevent="formcomment(comment,editreplyid)">
@@ -36,7 +36,7 @@
             </b-form>
           </div>
         </div>
-        <!-- COMMENTS (OR SUBCOMMENTS) -->
+        <!-- COMMENTS -->
         <div class="row mt-2" v-for="subcomment in sub(comment,comment.id)" :key="subcomment.id">
           <div class="col-1"></div>
           <div class="col-11">
@@ -53,7 +53,7 @@
               </div>
             </div>
             <div class="row"><div class="col-12"><votebar :voteprop="subcomment" :proptype="'comment'" /></div></div>
-            <!-- COMMENT (SUBCOMMENT) FORM TEXTBOX -->
+            <!-- COMMENTS EDIT/REPLY FORM BOX -->
             <div class="row" v-if="formswitch==subcomment.id"><div class="col-12">
             <b-form @submit.prevent="formcomment(subcomment,editreplyid)">
               <b-button type="submit" style="display: none"></b-button>
