@@ -54,24 +54,30 @@ but goes to the server to
 send an email, so it is our first
 developer challenge.
 
-The page you wanna start with is
-contactform.vue, just have a look
-copy it and rename it contactform2.vue
-with an empty file.
+The page you want to start with is
+contact.vue, but you won't touch it yet, 
+you will just add there the new component
+you will code, you will change contactform
+into contactform2 when it will be ready.
+Now, have a look at the components and 
+find contactform.vue, that is the one
+you want to make on your own.
+Copy it and rename it contactform2.vue,
+but do not use the code in it.
 
-Try to clear all of it and 
+Try instead to clear all of it and 
 write it your own way.
 You need to enter the html part
 and the script one.
 
-You would optionally need then to insert a 
+You would optionally want to insert a 
 google captcha too.
 
 You can use all the other vue pages
 as hints. For example, useredit.vue 
 could be used as hint for creating
-the form instead of copying the
-contactform itself.
+the html form instead of copying the
+contactform.vue one itself.
 
 As you see, we should use 
 VUE BOOTSTRAP HTML TAGS
@@ -98,7 +104,8 @@ data() function.
 The middleware: ['auth'] 
 is just to make it private,
 that is, for logged in members,
-so you should remove it.
+so you should remove it if you
+copy useredit.vue.
 
 
 methods: { ..}, as we know,
@@ -107,8 +114,8 @@ is for js functions.
 You should make only one 
 function connected to the form
 that sends the contact 
-form info to the server so that
-the server sends the email to 
+form variables to the server so that
+the server sends an email to 
 cooperacy@cooperacy.org.
 
 
@@ -144,19 +151,24 @@ You send them to the PAYLOAD object
 that you will find in the VUEX action:
 
 
-`    { 
+```
+    { 
         id: this.id,
         name: this.formName,
         surname: this.formSurname,
         email: this.formEmail,
         password: this.formPassword,
-      })`
+      })
+```
       
 
-this part is clear: form form data
-it becomes data for the server. 
+this part is clear: form data
+becomes data for the server. 
 This is what in the VUEX action 
 will be called "payload".
+For all the form variables start
+with formXxxx, so that you do not 
+confuse what is what.
 
 
 VUEX PAYLOAD
@@ -169,16 +181,15 @@ to the server.
 
 Payload is the container 
 of the DATA that you pass 
-to the VUEX ACTION
-or mutation etc.
+to the VUEX ACTION or mutation etc.
 It is JUST A TERM.
 VUEX likes to call it PAYLOAD.
 it could be BOX, CONTAINER, HEIDI..
 Being VUEX a "store"
-like a place where you store stuff
-payload is like stuff,
-so you send the pack with 
-the data inserted in the VUE form
+like a place where you store stuff,
+payload is like its stuff,
+so you send the pack of stuff with 
+the data coming from the VUE form
 to the "store".
 
 The pack is called payload 
@@ -211,12 +222,15 @@ action name you just created.
 
 Try to make your contact form
 slightly different than the previous!
+You may want to change some name
+variables, vut if you get in trouble
+remember to ask!
 
 
 So, set the Action up in vuex
 and prepare the "dispatch" in the
-vue page to deliver the "payload"
-to the VUEX store.
+vue component function to deliver 
+the "payload" to the VUEX store.
 
 If you want to see what is inside
 of a payload, you can use:
@@ -224,7 +238,10 @@ of a payload, you can use:
 `console.log('payload: '+JSON.stringify(payload))`
 
 in the /store/index.js function.
-Of course you can use it for many
+To see it you should open the console
+tab in the inspector of your chrome
+or other browser.
+Of course you can use console for many
 other debugging, but remember you
 cannot use it with req.body in the
 db.js file!
@@ -289,13 +306,22 @@ payload into something called req.body.
 
 So now just duplicate the email function
 and try to make that function to send
-via your smtp server and using
-your credentials a mail to
-cooperacy@cooperacy.org
+via your personal smtp server and
+using your credentials a mail to
+cooperacy@cooperacy.org, don't
+pull these changes, it's just for you
+to learn.
+
+At the end of this to drop your branch
+or to drop your changes from the master
+if you didn't make a branch, look for
+git reset master hard in google.
+
 
 If you need to know if you sent an 
 email, just check on your sent emails
-folder.
+folder or ask amdp for confirmation
+in the discord channel.
 
 
 Alright, time to code it down and test it!
