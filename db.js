@@ -22,8 +22,13 @@ app.get("/project", (req, res) =>{let query = 'SELECT * FROM `project`'; let par
   else if (req.query.stage){query +=' WHERE `stage`=?'; param.push(req.query.stage)}
   mydb.execute(query,param, function(err,project,fields){if(err){console.log('e: '+JSON.stringify(err));res.send(err)}else res.send(project)}) })
 
-app.get("/comment", (req, res) =>{mydb.execute('SELECT * FROM `comment` WHERE `project` = ? ORDER BY `id` DESC',[req.query.projectid],
-   function(err,comment,fields){if(err){console.log('e: '+JSON.stringify(err));res.send(err)}else res.send(comment)}) })
+app.get("/comment", (req, res) =>{mydb.execute(
+  'SELECT comment.*, user.name, user.surname FROM comment'
+  + ' LEFT JOIN user ON comment.user = user.id'
+  + ' WHERE comment.project = ? ORDER BY id DESC',
+  [req.query.projectid],
+  function(err,comment,fields){
+    if(err){console.log('e: '+JSON.stringify(err));res.send(err)}else res.send(comment)}) })
 
 app.get("/userproject", (req, res) =>{mydb.execute('SELECT * FROM `project` WHERE `id` IN (SELECT `project` FROM `userproject` WHERE `user`=?)',[req.query.userid], function(err,project,fields){if(err){console.log('e: '+JSON.stringify(err));res.send(err)}else res.send(project)}) })
 
@@ -113,7 +118,7 @@ app.post("/checkpassword", async (req, res) => {
         else res.send(false)
       }else res.send(false)   })  })
 
-app.post("/recoverpassword/:token", async (req, res) => {
+app.post("/recoverpassword", async (req, res) => {
   if (req.body.email) {mydb.execute(
     'SELECT * FROM `user` WHERE `user`.`email`= ? LIMIT 1',[req.body.email],
     function(err,[user],fields){if(err){
@@ -130,20 +135,21 @@ app.post("/recoverpassword/:token", async (req, res) => {
             to:req.body.email, subject:'Change your Cooperacy password',
             text:'Click here to set the new password:\n'
               +process.env.HOST+':'+process.env.PORT+
-              '/db/recoverpassword/'+token
+              '/recover?jws='+token
               +'\nIf you didn\'t, ignore this email'
           }
       transporter.sendMail(mailOptions, (error, info) => { if (error) { return console.error(error) }
           console.log('Message %s sent: %s', info.messageId, info.response); res.render('index') }) }
       else {res.send('No user with this email')}} })
-  }else{
-    try {jwt.verify(req.param.token,process.env.JWTSECRET)}
+  }else if (req.body.token){
+    try {jwt.verify(req.body.token,process.env.JWTSECRET)}
     catch(e){return res.status(401).send(
       e + ': Auth Token Wrong or Expired')}
-    let {id,password}=jwt.decode(req.param.token)
-    bcrypt.hash(password, 10, (err, hash) => { password = hash
+    var {id,newpassword}=jwt.decode(req.body.token)
+    bcrypt.hash(newpassword, 10, (err, hash) => { 
+      newpassword = hash
       mydb.execute('UPDATE `user` SET `password`=? WHERE `id`=?',
-          [password, id],
+          [newpassword, id],
           function(err, user, fields) {if (err) {console.log('e: '+JSON.stringify(err)); res.send (err) } else res.json('updated')} ) }) } 
 })
 
