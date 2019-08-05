@@ -22,9 +22,18 @@
               :x2="gradient.x2"
               :y2="gradient.y2"
             >
-              <stop offset="0" :style="gradient.color1" />
-              <stop :offset="gradient.offset" :style="gradient.color2" />
-              <stop offset="1" :style="gradient.color3" />
+              <stop
+                offset="0"
+                :style="gradient.color1"
+              />
+              <stop
+                :offset="gradient.offset"
+                :style="gradient.color2"
+              />
+              <stop
+                offset="1"
+                :style="gradient.color3"
+              />
             </linearGradient>
           </template>
           <!--PATHS POSITION LOOP, APPLIES GRADIENTS THROUGH STROKE AND 'URL#..'-->
@@ -49,7 +58,10 @@
             :id="description.name"
             :style="{display: description.display}"
           >
-            <a :href="description.href" class="noline finger">
+            <a
+              :href="description.href"
+              class="noline finger"
+            >
               <text
                 :transform="description.matrix1"
                 fill="#555555"
@@ -101,42 +113,70 @@
     </div>
     <!--END CIRCLE-->
     <!--FADE IN AREA-->
-    <div id="homefade" style="opacity:0">
+    <div
+      id="homefade"
+      style="opacity:0"
+    >
       <div class="row mb-4 p-2">
         <div class="col-lg-4 col-xs-12 subheading text-center">
-          <a href="/platform" class="noline transparency space">DISCOVER</a>
+          <a
+            href="/platform"
+            class="noline transparency space"
+          >DISCOVER</a>
         </div>
         <div class="col-lg-4 col-xs-12 subheading text-center">
-          <a href="/cooperation" class="noline understanding space">LEARN</a>
+          <a
+            href="/cooperation"
+            class="noline understanding space"
+          >LEARN</a>
         </div>
         <div class="col-lg-4 col-xs-12 subheading text-center">
-          <a href="/login" class="noline equivalence space">JOIN</a>
+          <a
+            href="/login"
+            class="noline equivalence space"
+          >JOIN</a>
         </div>
       </div>
-      <p
-        class="base text-center"
-      >Cooperacy is a nonprofit scientific project aiming to spread cooperation amongst humans and in their ecosystem.</p>
+      <p class="base text-center">Cooperacy is a nonprofit scientific project aiming to spread cooperation amongst humans and in their ecosystem.</p>
       <p class="base text-center mb-2">
         We're setting up a
-        <a href="/platform" class="ae">platform</a> in which, supported by money, people help each other
+        <a
+          href="/platform"
+          class="ae"
+        >platform</a> in which, supported by money, people help each other
         to realise what they want for their lives taking decisions together in a productive way.
       </p>
       <p class="base text-center mb-3">
-        <a href="/login" class="ae">Joining</a> Cooperacy is entertaining and makes you learn how to develop
+        <a
+          href="/login"
+          class="ae"
+        >Joining</a> Cooperacy is entertaining and makes you learn how to develop
         enjoyable cooperations in your
         <a
           href="/aboutyou"
           class="ad"
         >personal</a> relations, in the
-        <a href="/coorporate" class="af">corporate</a>
+        <a
+          href="/coorporate"
+          class="af"
+        >corporate</a>
         world and at the
-        <a href="/cci" class="au">international</a> level.
+        <a
+          href="/cci"
+          class="au"
+        >international</a> level.
       </p>
       <div class="base text-center">
         <p class="base text-center mb-3">
-          <a class="ae" href="/login">Join</a> Cooperacy today,
+          <a
+            class="ae"
+            href="/login"
+          >Join</a> Cooperacy today,
           or
-          <nuxt-link class="ai" to="/contact">contact us</nuxt-link>for more information.
+          <nuxt-link
+            class="ai"
+            to="/contact"
+          >contact us</nuxt-link>for more information.
         </p>
         <br />
       </div>

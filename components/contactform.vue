@@ -1,7 +1,11 @@
 <template>
   <div class="container">
     <div class="row">
-      <h1 id="contact" name="contact" class="transparency heading center space">CONTACT US</h1>
+      <h1
+        id="contact"
+        name="contact"
+        class="transparency heading center space"
+      >CONTACT US</h1>
     </div>
     <div class="row">
       <p class="base center">Contact us or feel free to ask us anything that is not clear yet.</p>
@@ -9,16 +13,26 @@
 
     <!-- Test -->
     <div class="row">
-      <div class="col-md-6 mb-2" v-html="response" v-if="response.length"></div>
+      <div
+        class="col-md-6 mb-2"
+        v-html="response"
+        v-if="response.length"
+      ></div>
     </div>
     <div class="row">
       <div class="col-md-6 col-md-offset-3">
         <div class="well well-sm">
-          <form class="form-horizontal" @submit.prevent="sendMail">
+          <form
+            class="form-horizontal"
+            @submit.prevent="sendMail"
+          >
             <fieldset>
               <!-- Name input-->
               <div class="form-group">
-                <label class="col-md-3 control-label" for="name">Name</label>
+                <label
+                  class="col-md-3 control-label"
+                  for="name"
+                >Name</label>
                 <div class="col-md-9">
                   <input
                     v-model="name"
@@ -34,7 +48,10 @@
 
               <!-- Email input-->
               <div class="form-group">
-                <label class="col-md-3 control-label" for="email">Your E-mail</label>
+                <label
+                  class="col-md-3 control-label"
+                  for="email"
+                >Your E-mail</label>
                 <div class="col-md-9">
                   <input
                     v-model="email"
@@ -50,7 +67,10 @@
 
               <!-- Subject -->
               <div class="form-group">
-                <label class="col-md-3 control-label" for="subject">Subject</label>
+                <label
+                  class="col-md-3 control-label"
+                  for="subject"
+                >Subject</label>
                 <div class="col-md-9">
                   <input
                     v-model="subject"
@@ -66,7 +86,10 @@
 
               <!-- Message body -->
               <div class="form-group">
-                <label class="col-md-3 control-label" for="message">Your message</label>
+                <label
+                  class="col-md-3 control-label"
+                  for="message"
+                >Your message</label>
                 <div class="col-md-9">
                   <textarea
                     v-model="body"
@@ -83,7 +106,11 @@
               <!-- Form actions -->
               <div class="form-group">
                 <div class="col-md-3 text-right">
-                  <input type="submit" class="btn btn-primary btn-lg" value="Submit" />
+                  <input
+                    type="submit"
+                    class="btn btn-primary btn-lg"
+                    value="Submit"
+                  />
                 </div>
               </div>
             </fieldset>

@@ -18,11 +18,11 @@
           </b-form>
         </div>
       </div>
-      <div class="col-4">
+      <!-- <div class="col-4">
             <div v-for="s in strategies" :key="s.key" class="mb-3">
             <b-btn @click="$auth.loginWith(s.key)" block :class="s.color">Login with {{ s.name }}</b-btn>
             </div>
-      </div>
+      </div>-->
       <div class="col-2"></div>
     </div>
 
@@ -30,9 +30,9 @@
     <div class="col-12">
       <div class="row"><div class="col-12 d-flex justify-content-center mt-4">
         <p class="care subheading">OR CREATE A NEW ACCOUNT:</p></div></div>
-      <div class="row">
+      <div class="row"> <!--
       <div class="g-signin2" data-onsuccess="googleOnSignIn" data-theme="dark"></div>
-      <a href="#" @click="googleSignOut">Sign out</a>
+      <a href="#" @click="googleSignOut">Sign out</a>-->
         <div class="col-12 d-flex justify-content-center">
           <b-form @submit.prevent="newuser" class="mt-3 was-validated">
             <b-form-group label-for="nameInput" label="Name:" description="Please insert your name">

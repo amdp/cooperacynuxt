@@ -89,7 +89,7 @@ a.disabled {  opacity: 0.5; pointer-events: none;  cursor: default; }
 hr.home-hr { border:none; background-color:#666666; width:50px; height:2px!important; }
 
 .alt-login{ visibility:hidden; margin-left:-35px; }
-.vote-spacer { width:10px; float:left; }
+.vote-spacer { width:10px; text-align:left; }
 .label-default { background-color: #ffffff!important; color: #777!important; }
 .comment-content { overflow-wrap: break-word; word-wrap: break-word; -ms-word-break: break-all; 
   word-break: break-word; -ms-hyphens: auto; -moz-hyphens: auto; -webkit-hyphens: auto; hyphens: auto; }
