@@ -71,7 +71,7 @@ in a way that the client may
 access to them independently from the starting
 market stand, represented by a page file or url.
 
-3. db.js This is a very long file with all the 
+3. api.js This is a very long file with all the 
 node.js backend. It’s full of instructions for 
 the database. This is used when the docks (the store)
 sends ships to the server and the ships arrive:
@@ -79,7 +79,7 @@ should they get some food? Post some data?
 Delete an order? Deliver messages?
 
 All these operations are also called API.
-The db.js is the API that talks with the server.
+The api.js is the API that talks with the server.
 We will learn more about it.
 
 
