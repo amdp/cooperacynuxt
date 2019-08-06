@@ -9,8 +9,7 @@
 <script>
 export default {
   async mounted() {
-    let change = await this.$store.dispatch(
-      "recoverPasswordAction", {
+    let change = await this.$store.dispatch("recoverPasswordAction", {
       token: this.$route.query.jws
     });
     if (change == "updated") {

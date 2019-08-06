@@ -1266,7 +1266,7 @@ app.post("/resetuvoting", (req, res) => {
 })
 
 module.exports = {
-  path: "/db",
+  path: "/api",
   handler: app
 }
 
