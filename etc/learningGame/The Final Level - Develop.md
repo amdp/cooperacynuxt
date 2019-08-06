@@ -8,7 +8,7 @@
 THE CONTACT FORM
 
 Let's try to re-make the CONTACT FORM on our own.
-First of all, let's open db.js.
+First of all, let's open api.js.
 You'll see in the first lines
 many declarations.
 Express, bodyparser, till Mysql2 are
@@ -28,7 +28,8 @@ that calls the different functions:
 
 mydb is the mysql connection,
 
-mydb.execute() is to issue 
+mydb.execute() or mypool.query()
+are used to issue 
 commands to the mysql server
 and databases.
 
@@ -244,13 +245,13 @@ or other browser.
 Of course you can use console for many
 other debugging, but remember you
 cannot use it with req.body in the
-db.js file!
+api.js file!
 
 
 SERVERSIDE
 
 Now comes the final part: NODE.
-Go to db.js, you'll find this 
+Go to api.js, you'll find this 
 function to steal from and use
 for your contact form:
 
@@ -268,7 +269,7 @@ This function uses nodemailer,
 a module to send emails via
 nodejs/express.
 It's one of the constants we defined 
-in the top of the db.js file.
+in the top of the api.js file.
 
 This function SENDS a mail 
 to the user when s/he registers.
@@ -281,7 +282,7 @@ So `auth:{user:xx,pass:xx}` is fine,
 while `from: '"Cooperacy" 
 <cooperacy@cooperacy.org>'`, 
 is wrong, I mean it is ok for the 
-user function in db.js right now
+user function in api.js right now
 but not for the one you should make!
 
 The contact form is simply a mail 
