@@ -1,4 +1,4 @@
-function googleOnSignIn(googleUser) { 
+function googleOnSignIn(googleUser) {
   console.log("ok")
   var profile = googleUser.getBasicProfile()
   console.log("Full Name: " + profile.getName())

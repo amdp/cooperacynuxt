@@ -6,7 +6,15 @@
 </template>
 
 <script>
-export default { middleware: ['auth'],
-  methods: { resetcpvoting(){this.$store.dispatch('resetcpVotingAction')}, resetuvoting(){this.$store.dispatch('resetuVotingAction')} }
-}
+export default {
+  middleware: ["auth"],
+  methods: {
+    resetcpvoting() {
+      this.$store.dispatch("resetcpVotingAction");
+    },
+    resetuvoting() {
+      this.$store.dispatch("resetuVotingAction");
+    }
+  }
+};
 </script>

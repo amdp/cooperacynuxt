@@ -2,7 +2,7 @@ const pkg = require('./package')
 require('dotenv').config()
 import fs from 'fs'
 import path from 'path'
-module.exports = {mode: 'universal', plugins: [], build: {extend(config, ctx) { } }, serverMiddleware: ['./db'],
+module.exports = {mode: 'universal', plugins: [], build: {extend(config, ctx) { } }, serverMiddleware: ['./api'],
   css: ['@assets/coo.css'],  
   modules: ['@nuxtjs/axios','@nuxtjs/toast','@nuxtjs/pwa','@nuxtjs/auth','bootstrap-vue/nuxt',],
   loading: { color: '#FFCC00', failedColor: 'black', height: '3px', continuous: true,  }, 
@@ -35,9 +35,9 @@ module.exports = {mode: 'universal', plugins: [], build: {extend(config, ctx) { 
       },
       local: {
         endpoints:  {
-          login:    { url: '/db/login',  method: 'post', propertyName: 'token.accessToken' },
-          logout:   { url: '/db/logout', method: 'post' },
-          user:     { url: '/db/user',   method: 'get',  propertyName: 'user' }
+          login:    { url: '/api/login',  method: 'post', propertyName: 'token.accessToken' },
+          logout:   { url: '/api/logout', method: 'post' },
+          user:     { url: '/api/user',   method: 'get',  propertyName: 'user' }
         },
       },
     },
