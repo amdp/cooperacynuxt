@@ -30,7 +30,8 @@
       <div class="col-8">
         <div class="row">
           <div class="col-1 space minimini graylight up text-left p-0">
-            <img v-if="!anonymous"
+            <img
+              v-if="!anonymous"
               class="usercomment rounded-circle"
               :src="userImage(comment.user)"
             /></div>
@@ -39,7 +40,7 @@
         <div class="row">
           <div class="col-12 space minimini up text-right">
             <span v-if="!anonymous">
-              {{comment.name}} {{comment.surname}} 
+              {{comment.name}} {{comment.surname}}
             </span>
             <span class="graylight">
               #{{comment.id}} {{comment.created}}
@@ -101,7 +102,8 @@
           <div class="col-11">
             <div class="row">
               <div class="col-1 space minimini graylight up text-left p-0">
-                <img v-if="!anonymous"
+                <img
+                  v-if="!anonymous"
                   class="usercomment rounded-circle"
                   :src="userImage(subcomment.user)"
                 /></div>
@@ -109,12 +111,12 @@
             </div>
             <div class="row">
               <div class="col-12 space minimini up text-right">
-            <span v-if="!anonymous">
-              {{subcomment.name}} {{subcomment.surname}} 
-            </span>
-            <span class="graylight">
-              #{{subcomment.id}} {{subcomment.created}}
-            </span>
+                <span v-if="!anonymous">
+                  {{subcomment.name}} {{subcomment.surname}}
+                </span>
+                <span class="graylight">
+                  #{{subcomment.id}} {{subcomment.created}}
+                </span>
                 <span
                   v-if="$auth.user.id==subcomment.user"
                   class="gray finger"
@@ -181,7 +183,7 @@ export default {
       formswitch: false,
       editreplyid: false,
       formComment: "",
-      formPost: "",
+      formPost: ""
     };
   }, //if formswitch = a comment id, textbox appears
   computed: {
@@ -194,12 +196,12 @@ export default {
         return [];
       }
     },
-    anonymous(){
-      let thisproject = this.$store.state.project.filter(
-        project => { return project.id == this.$route.params.id;
-      })
-      if (thisproject[0].anonymous==1){
-        return true
+    anonymous() {
+      let thisproject = this.$store.state.project.filter(project => {
+        return project.id == this.$route.params.id;
+      });
+      if (thisproject[0].anonymous == 1) {
+        return true;
       }
     }
   },

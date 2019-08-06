@@ -4,45 +4,26 @@
     class="fixed-top bg-white d-flex flex-fill justify-content-center p-0"
   >
     <b-row class="w-100">
-      <b-col cols="12 d-flex">
+      <b-col cols="3 d-flex">
         <b-navbar-brand
+          class="headerlogo mb-2"
           to="/"
-          v-if="!this.$auth.loggedIn"
         ><img
             class="headerlogo"
             src="@/assets/image/main/wordlogo.png"
           />
         </b-navbar-brand>
-        <b-navbar-brand
-          to="/user"
-          v-if="this.$auth.loggedIn"
-          class="p-0"
-        >
-          <img
-            class="usercoologo m-2 p-0"
-            src="@/assets/image/main/coo.png"
-          />
-          <img
-            v-if="userImage"
-            class="userlogo rounded-circle m-2 p-0"
-            :src="userImage"
-          >
-        </b-navbar-brand>
-        <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+      </b-col>
 
+      <!-- central menu -->
+      <b-col cols="6 d-flex justify-content-center">
+        <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
         <b-collapse
           id="nav-collapse"
           is-nav
         >
-          <b-navbar-nav>
-            <b-row v-if="this.$auth.loggedIn">
-              <b-col class="d-flex justify-content-start">
-                <b-navbar-nav class="up mini mr-3">{{this.$auth.user.name + ' ' + this.$auth.user.surname}}</b-navbar-nav>
-              </b-col>
-            </b-row>
-          </b-navbar-nav>
-
-          <b-navbar-nav class="ml-auto minini mr-4">
+          <div class="container d-flex justify-content-center">
+          <b-navbar-nav class="minini">
             <b-nav-item-dropdown
               text="THE PROJECT"
               no-caret
@@ -78,8 +59,38 @@
               <b-dropdown-item to="/news">NEWS</b-dropdown-item>
             </b-nav-item-dropdown>
 
-            <span> &nbsp;&nbsp;&nbsp;</span>
+          </b-navbar-nav>
+          </div>
+          </b-collapse>
+          </b-col>
+          <!-- end menu -->
 
+
+          <b-col cols="3 d-flex">
+
+          <b-navbar-nav>
+            <b-row v-if="this.$auth.loggedIn">
+              <b-col class="d-flex justify-content-start">
+                <b-navbar-nav class="up mini mr-3">{{this.$auth.user.name + ' ' + this.$auth.user.surname}}</b-navbar-nav>
+              </b-col>
+            </b-row>
+            <b-nav-item
+              to="/user"
+              v-if="this.$auth.loggedIn"
+              class="p-0"
+            >
+              <img
+                class="usercoologo m-2 p-0"
+                src="@/assets/image/main/coo.png"
+              />
+              <img
+                v-if="userImage"
+                class="userlogo rounded-circle m-2 p-0"
+                :src="userImage"
+              >
+            </b-nav-item>
+            <span> &nbsp;&nbsp;&nbsp;</span>
+            <div class="container d-flex justify-content-end">
             <b-nav-item
               v-if="!this.$auth.loggedIn"
               to="/login"
@@ -88,9 +99,8 @@
               v-if="this.$auth.loggedIn"
               @click="$auth.logout()"
             >LOGOUT</b-nav-item>
-
+            </div>
           </b-navbar-nav>
-        </b-collapse>
       </b-col>
       <b-col
         v-if="this.$auth.loggedIn"
