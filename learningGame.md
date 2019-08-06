@@ -89,14 +89,13 @@ platform.
 If you do not understand something here,
 remember to ask :)
 
-As head of the project, 
-and because I am currently coding alone,
- I tend to prefer one-line coding 
-rather than multi-line, but you can 
-use whatever style you like. 
-You can rewrite or reorganise the 
-pages so that they are more standard,
- and help the project this way.
+We are using prettier and eslint as
+code formatters, you can find plugins
+to make it automatically correct your
+coding style so you do not need to
+go crazy with style and formatting.
+If you don't know how to do please..
+ASK! :)
 
 Again, communicate your doubts. 
 And you will gradually be happy.
