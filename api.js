@@ -34,52 +34,33 @@ const pool = mysql.createPool({
 const myPool = pool.promise();
 /////// GET ///////
 
-app.get('/project', async (req, res, next) => {
+app.get("/project", async (req, res, next) => {
   try {
-    let query = 'SELECT * FROM `project`';
-    let param = [];
+    let query = "SELECT * FROM `project`"
+    let param = []
 
     if (req.query.limit) {
-      query += ' WHERE `id`=?';
-      param = [req.query.projectid + req.query.limit];
+      query += " WHERE `id`=?"
+      param = [req.query.projectid + req.query.limit]
     } else if (req.query.stage) {
-      query += ' WHERE `stage`=?';
-      param.push(req.query.stage);
+      query += " WHERE `stage`=?"
+      param.push(req.query.stage)
     }
 
-    const [rows] = await myPool.query(query, param);
-    res.send(rows);
+    const [rows] = await myPool.query(query, param)
+    res.send(rows)
   } catch (err) {
-    //caveat @see https://expressjs.com/en/guide/error-handling.html
-    next(err);
+    next(err)
   }
 });
 
-app.get('/project-', (req, res) => {
-  let query = 'SELECT * FROM `project`';
-  let param = [];
-  if (req.query.limit) {
-    query += ' WHERE `id`=?';
-    param = [req.query.projectid + req.query.limit];
-  } else if (req.query.stage) {
-    query += ' WHERE `stage`=?';
-    param.push(req.query.stage);
-  }
-  mydb.execute(query, param, function(err, project, fields) {
-    if (err) {
-      console.log('e: ' + JSON.stringify(err));
-      res.send(err);
-    } else res.send(project);
-  });
-});
-
-app.get('/comment', (req, res) => {
+app.get("/comment", (req, res) => {
   mydb.execute(
     'SELECT comment.*, user.name, user.surname FROM comment' +
       ' LEFT JOIN user ON comment.user = user.id' +
       ' WHERE comment.project = ? ORDER BY id DESC',
     [req.query.projectid],
-    function(err, comment, fields) {
+    function(err, comment) {
       if (err) {
         console.log('e: ' + JSON.stringify(err));
         res.send(err);
@@ -92,7 +73,7 @@ app.get('/userproject', (req, res) => {
   mydb.execute(
     'SELECT * FROM `project` WHERE `id` IN (SELECT `project` FROM `userproject` WHERE `user`=?)',
     [req.query.userid],
-    function(err, project, fields) {
+    function(err, project) {
       if (err) {
         console.log('e: ' + JSON.stringify(err));
         res.send(err);
@@ -109,7 +90,7 @@ app.get('/uservote', (req, res) => {
     query += ' AND `project`= ?';
     param = [req.query.userid, req.query.projectid];
   }
-  mydb.execute(query, param, function(err, uservote, fields) {
+  mydb.execute(query, param, function(err, uservote) {
     if (err) {
       console.log('e: ' + JSON.stringify(err));
       res.send(err);
@@ -135,7 +116,7 @@ app.get('/user', async (req, res) => {
     mydb.execute(
       'SELECT * FROM `user` AS `user` WHERE `user`.`id` =  ?',
       [id.id],
-      function(err, [user], fields) {
+      function(err, [user]) {
         if (err) {
           console.log('e: ' + JSON.stringify(err));
           res.send(err);
@@ -149,7 +130,7 @@ app.get('/category', (req, res) => {
   mydb.execute(
     'SELECT * FROM `category` WHERE `category`.`id`!= ?',
     [0],
-    function(err, category, fields) {
+    function(err, category) {
       if (err) {
         console.log('e: ' + JSON.stringify(err));
         res.send(err);
@@ -162,7 +143,7 @@ app.get('/tag', (req, res) => {
   mydb.execute(
     'SELECT * FROM `tag` where `project`=?',
     [req.query.projectid],
-    function(err, tag, fields) {
+    function(err, tag) {
       if (err) {
         console.log('e: ' + JSON.stringify(err));
         res.send(err);
@@ -174,8 +155,7 @@ app.get('/tag', (req, res) => {
 app.get('/place', (req, res) => {
   mydb.execute('SELECT `id`, `country`, `name` FROM `place`', [], function(
     err,
-    place,
-    fields
+    place
   ) {
     if (err) {
       console.log('e: ' + JSON.stringify(err));
@@ -187,8 +167,7 @@ app.get('/place', (req, res) => {
 app.get('/country', (req, res) => {
   mydb.execute('SELECT `id`, `name` FROM `country`', [], function(
     err,
-    country,
-    fields
+    country
   ) {
     if (err) {
       console.log('e: ' + JSON.stringify(err));
@@ -200,8 +179,7 @@ app.get('/country', (req, res) => {
 app.get('/news', (req, res) => {
   mydb.execute('SELECT * FROM `news` ORDER BY `news`.`date` DESC', [], function(
     err,
-    news,
-    fields
+    news
   ) {
     if (err) {
       console.log('e: ' + JSON.stringify(err));
@@ -228,7 +206,7 @@ app.put('/user', (req, res) => {
           req.body.password,
           req.body.id
         ],
-        function(err, user, fields) {
+        function(err, user) {
           if (err) {
             console.log('e: ' + JSON.stringify(err));
             res.send(err);
@@ -245,7 +223,7 @@ app.post('/login', async (req, res) => {
   mydb.execute(
     'SELECT * FROM `user` WHERE `user`.`email`= ? LIMIT 1',
     [req.body.email],
-    function(err, [user], fields) {
+    function(err, [user]) {
       if (err) {
         console.log('e: ' + JSON.stringify(err));
         res.send(err);
@@ -340,7 +318,7 @@ app.post('/checkpassword', async (req, res) => {
   mydb.execute(
     'SELECT * FROM `user` AS `user` WHERE `user`.`id` =  ? and `user`.`email` = ? LIMIT 1',
     [req.body.id, req.body.email],
-    function(err, [user], fields) {
+    function(err, [user]) {
       if (err) {
         console.log('e: ' + JSON.stringify(err));
         res.send(err);
@@ -359,7 +337,7 @@ app.post('/recoverpassword', async (req, res) => {
     mydb.execute(
       'SELECT * FROM `user` WHERE `user`.`email`= ? LIMIT 1',
       [req.body.email],
-      function(err, [user], fields) {
+      function(err, [user]) {
         if (err) {
           console.log('e: ' + JSON.stringify(err));
           res.send(err);
@@ -420,7 +398,7 @@ app.post('/recoverpassword', async (req, res) => {
       mydb.execute(
         'UPDATE `user` SET `password`=? WHERE `id`=?',
         [newpassword, id],
-        function(err, user, fields) {
+        function(err) {
           if (err) {
             console.log('e: ' + JSON.stringify(err));
             res.send(err);
@@ -435,7 +413,7 @@ app.post('/place', (req, res) => {
   mydb.execute(
     'SELECT * FROM `place` WHERE `place`.`country`=? AND `place`.`name`=?  LIMIT 1',
     [req.body.country, req.body.name],
-    function(err, [place], fields) {
+    function(err, [place]) {
       if (err) {
         console.log('e: ' + JSON.stringify(err));
         res.send(err);
@@ -444,7 +422,7 @@ app.post('/place', (req, res) => {
           mydb.execute(
             'INSERT INTO `place` (`country`,`name`) VALUES (?,?)',
             [req.body.country, req.body.name],
-            function(err, place, fields) {
+            function(err, place) {
               if (err) {
                 console.log('e: ' + JSON.stringify(err));
                 res.send(err);
@@ -479,7 +457,7 @@ app.post('/project', (req, res) => {
         req.body.hudget,
         req.body.id
       ],
-      function(err, project, fields) {
+      function(err) {
         if (err) {
           console.log('e: ' + JSON.stringify(err));
           res.send(err);
@@ -490,7 +468,7 @@ app.post('/project', (req, res) => {
     mydb.execute(
       'SELECT * FROM `project` WHERE `project`.`name`= ? LIMIT 1',
       [req.body.name],
-      function(err, [project], fields) {
+      function(err, [project]) {
         if (err) {
           console.log('efind: ' + JSON.stringify(err));
           res.send(err);
@@ -512,7 +490,7 @@ app.post('/project', (req, res) => {
                 req.body.budget,
                 req.body.hudget
               ],
-              function(err, project, fields) {
+              function(err, project) {
                 if (err) {
                   console.log('einsert: ' + JSON.stringify(err));
                   res.send(err);
@@ -541,7 +519,7 @@ app.post('/comment', (req, res) => {
         req.body.content,
         req.body.id
       ],
-      function(err, comment, fields) {
+      function(err) {
         if (err) {
           console.log('e: ' + JSON.stringify(err));
           res.send(err);
@@ -549,7 +527,7 @@ app.post('/comment', (req, res) => {
           mydb.execute(
             'SELECT * FROM `comment` WHERE `id` = ?',
             [req.body.id],
-            function(err, [comment], fields) {
+            function(err, [comment]) {
               if (err) {
                 console.log('e: ' + JSON.stringify(err));
                 res.send(err);
@@ -565,7 +543,7 @@ app.post('/comment', (req, res) => {
     mydb.execute(
       'INSERT INTO `comment` (`parent`,`project`,`user`,`content`) VALUES (?,?,?,?)',
       [req.body.parent, req.body.project, req.body.user, req.body.content],
-      function(err, comment, fields) {
+      function(err, comment) {
         if (err) {
           console.log('e: ' + JSON.stringify(err));
           res.send(err);
@@ -573,7 +551,7 @@ app.post('/comment', (req, res) => {
           mydb.execute(
             'SELECT * FROM `comment` WHERE `id` = ?',
             [comment.insertId],
-            function(err, [comment], fields) {
+            function(err, [comment]) {
               if (err) {
                 console.log('e: ' + JSON.stringify(err));
                 res.send(err);
@@ -592,7 +570,7 @@ app.post('/user', (req, res) => {
   mydb.execute(
     'SELECT * FROM `user` WHERE `user`.`email`= ? LIMIT 1',
     [req.body.email],
-    function(err, [user], fields) {
+    function(err, [user]) {
       if (err) {
         console.log('e: ' + JSON.stringify(err));
         res.send(err);
@@ -608,7 +586,7 @@ app.post('/user', (req, res) => {
                 hash,
                 req.body.paypalagreementid
               ],
-              function(err, user, fields) {
+              function(err, user) {
                 if (err) {
                   console.log('e: ' + JSON.stringify(err));
                   res.send(err);
@@ -631,7 +609,7 @@ app.post('/tag', (req, res) => {
     mydb.execute(
       'INSERT INTO `tag` (`project`,`name`) VALUES (?,?)',
       [req.body.project, req.body.name],
-      function(err, tag, fields) {
+      function(err, tag) {
         if (err) {
           console.log('e: ' + JSON.stringify(err));
           res.send(err);
@@ -644,7 +622,7 @@ app.post('/tag', (req, res) => {
     mydb.execute(
       'DELETE FROM `tag` where `project` = ? and `name` = ?',
       [req.body.project, req.body.name],
-      function(err, tag, fields) {
+      function(err, tag) {
         if (err) {
           console.log('e: ' + JSON.stringify(err));
           res.send(err);
@@ -658,7 +636,7 @@ app.post('/tag', (req, res) => {
 
 app.post('/image', function(req, res) {
   if (req.body.empty) {
-    standardimage = './assets/image/' + req.body.proptype + '/1.png';
+    let standardimage = "./assets/image/" + req.body.proptype + "/1.png"
     Jimp.read(standardimage)
       .then(standardimage => {
         return standardimage
@@ -677,8 +655,8 @@ app.post('/image', function(req, res) {
       });
   } else {
     try {
-      uploadPath =
-        './assets/image/' + req.body.proptype + '/' + req.body.id + '.png';
+      var uploadPath =
+        "./assets/image/" + req.body.proptype + "/" + req.body.id + ".png"
     } catch (err) {
       console.error(err);
     }
@@ -795,7 +773,7 @@ app.post('/vote', (req, res) => {
       //the presence of an existing project vote is checked
       'SELECT * from `projectvote` where `user`=? AND `condition`=? AND `project`=?',
       [req.body.user, req.body.condition, req.body.id],
-      function(err, [vote], fields) {
+      function(err, [vote]) {
         if (err) {
           console.log('e: ' + JSON.stringify(err));
           res.send(err);
@@ -805,7 +783,7 @@ app.post('/vote', (req, res) => {
             mydb.execute(
               'INSERT INTO `removedpvote` (`user`,`project`,`condition`) VALUES (?,?,?)',
               [req.body.user, req.body.id, req.body.condition],
-              function(err, removedvote, fields) {
+              function(err) {
                 if (err) {
                   console.log('e: ' + JSON.stringify(err));
                   res.send(err);
@@ -819,7 +797,7 @@ app.post('/vote', (req, res) => {
                         req.body.condition +
                         '`-1 where `project`.`id`=?',
                       [req.body.id],
-                      function(err, updatedproject, fields) {
+                      function(err) {
                         if (err) {
                           console.log('e: ' + JSON.stringify(err));
                           res.send(err);
@@ -828,7 +806,7 @@ app.post('/vote', (req, res) => {
                           mydb.execute(
                             'DELETE FROM `projectvote` where `id` = ?',
                             [vote.id],
-                            function(err, deletedvote, fields) {
+                            function(err) {
                               if (err) {
                                 console.log('e: ' + JSON.stringify(err));
                                 res.send(err);
@@ -838,7 +816,7 @@ app.post('/vote', (req, res) => {
                                   mydb.execute(
                                     'DELETE FROM `userproject` where `user` = ? and `project` = ?',
                                     [req.body.user, req.body.id],
-                                    function(err, deletedvote, fields) {
+                                    function(err) {
                                       if (err) {
                                         console.log(
                                           'e: ' + JSON.stringify(err)
@@ -848,7 +826,7 @@ app.post('/vote', (req, res) => {
                                         mydb.execute(
                                           'UPDATE `project` SET `participant`=`participant`-1 where `project`.`id`=?',
                                           [req.body.id],
-                                          function(err, deletedvote, fields) {
+                                          function(err) {
                                             if (err) {
                                               console.log(
                                                 'e: ' + JSON.stringify(err)
@@ -875,7 +853,7 @@ app.post('/vote', (req, res) => {
             mydb.execute(
               'INSERT INTO `projectvote` (`user`,`project`,`condition`) VALUES (?,?,?)', //if there is no vote
               [req.body.user, req.body.id, req.body.condition], //a new vote is added into the database
-              function(err, voteinserted, fields) {
+              function(err) {
                 if (err) {
                   console.log('e: ' + JSON.stringify(err));
                   res.send(err);
@@ -889,7 +867,7 @@ app.post('/vote', (req, res) => {
                         req.body.condition +
                         '`+1 where `project`.`id`=?',
                       [req.body.id],
-                      function(err, updatedproject, fields) {
+                      function(err) {
                         if (err) {
                           console.log('e: ' + JSON.stringify(err));
                           res.send(err);
@@ -899,7 +877,7 @@ app.post('/vote', (req, res) => {
                             mydb.execute(
                               'INSERT INTO `userproject` (`user`,`project`) VALUES (?,?)',
                               [req.body.user, req.body.id],
-                              function(err, participatedproject, fields) {
+                              function(err) {
                                 if (err) {
                                   console.log('e: ' + JSON.stringify(err));
                                   res.send(err);
@@ -907,7 +885,7 @@ app.post('/vote', (req, res) => {
                                   mydb.execute(
                                     'UPDATE `project` SET `participant`=`participant`+1 where `project`.`id`=?',
                                     [req.body.id],
-                                    function(err, updateduserproject, fields) {
+                                    function(err, updateduserproject) {
                                       if (err) {
                                         console.log(
                                           'e: ' + JSON.stringify(err)
@@ -936,7 +914,7 @@ app.post('/vote', (req, res) => {
       //the presence of an existing comment vote is checked
       'SELECT * from `commentvote` where `user`=? AND `condition`=? AND `comment`=?',
       [req.body.user, req.body.condition, req.body.id],
-      function(err, [vote], fields) {
+      function(err, [vote]) {
         if (err) {
           console.log('e: ' + JSON.stringify(err));
           res.send(err);
@@ -951,7 +929,7 @@ app.post('/vote', (req, res) => {
                 req.body.condition,
                 req.body.projectid
               ],
-              function(err, removedvote, fields) {
+              function(err) {
                 if (err) {
                   console.log('e: ' + JSON.stringify(err));
                   res.send(err);
@@ -965,7 +943,7 @@ app.post('/vote', (req, res) => {
                         req.body.condition +
                         '`-1 where `comment`.`id`=?',
                       [req.body.id],
-                      function(err, updatedcomment, fields) {
+                      function(err) {
                         if (err) {
                           console.log('e: ' + JSON.stringify(err));
                           res.send(err);
@@ -974,7 +952,7 @@ app.post('/vote', (req, res) => {
                           mydb.execute(
                             'DELETE FROM `commentvote` where `id` = ?',
                             [vote.id],
-                            function(err, deletedvote, fields) {
+                            function(err) {
                               if (err) {
                                 console.log('e: ' + JSON.stringify(err));
                                 res.send(err);
@@ -991,7 +969,7 @@ app.post('/vote', (req, res) => {
                                       req.body.condition +
                                       '`-1 where `user`.`id`=?',
                                     [req.body.author],
-                                    function(err, updateuser, fields) {
+                                    function(err) {
                                       if (err) {
                                         console.log(
                                           'e: ' + JSON.stringify(err)
@@ -1023,7 +1001,7 @@ app.post('/vote', (req, res) => {
                 req.body.condition,
                 req.body.projectid
               ], //a new vote is added into the database
-              function(err, voteinserted, fields) {
+              function(err) {
                 if (err) {
                   console.log('e: ' + JSON.stringify(err));
                   res.send(err);
@@ -1037,7 +1015,7 @@ app.post('/vote', (req, res) => {
                         req.body.condition +
                         '`+1 where `comment`.`id`=?',
                       [req.body.id],
-                      function(err, updatedcomment, fields) {
+                      function(err, updatedcomment) {
                         if (err) {
                           console.log('e: ' + JSON.stringify(err));
                           res.send(err);
@@ -1054,7 +1032,7 @@ app.post('/vote', (req, res) => {
                                 req.body.condition +
                                 '`+1 where `user`.`id`=?',
                               [req.body.author],
-                              function(err, updateuser, fields) {
+                              function(err) {
                                 if (err) {
                                   console.log('e: ' + JSON.stringify(err));
                                   res.send(err);
@@ -1081,8 +1059,8 @@ app.post('/vote', (req, res) => {
 
 //admin
 
-app.post('/resetcpvoting', (req, res) => {
-  mydb.execute('SELECT `id` from `project`', [], function(err, id, fields) {
+app.post("/resetcpvoting", (req, res) => {
+  mydb.execute("SELECT `id` from `project`", [], function(err, id) {
     {
       if (err) {
         console.log('e: ' + JSON.stringify(err));
@@ -1099,7 +1077,7 @@ app.post('/resetcpvoting', (req, res) => {
         mydb.execute(
           'select count(`condition`) as count from `projectvote` where `project`=? AND `condition`=?',
           [id[j].id, c],
-          function(err, [result], fields) {
+          function(err, [result]) {
             if (err) {
               console.log('e: ' + JSON.stringify(err));
               res.send(err);
@@ -1128,7 +1106,7 @@ app.post('/resetcpvoting', (req, res) => {
         values.E,
         id
       ],
-      function(err, result, fields) {
+      function(err, result) {
         if (err) {
           console.log('e: ' + JSON.stringify(err));
           res.send(err);
@@ -1139,7 +1117,7 @@ app.post('/resetcpvoting', (req, res) => {
     );
   }
 
-  mydb.execute('SELECT `id` from `comment`', [], function(err, id, fields) {
+  mydb.execute("SELECT `id` from `comment`", [], function(err, id) {
     {
       if (err) {
         console.log('e: ' + JSON.stringify(err));
@@ -1156,7 +1134,7 @@ app.post('/resetcpvoting', (req, res) => {
         mydb.execute(
           'select count(`condition`) as count from `commentvote` where `comment`=? AND `condition`=?',
           [id[j].id, c],
-          function(err, [result], fields) {
+          function(err, [result]) {
             if (err) {
               console.log('e: ' + JSON.stringify(err));
               res.send(err);
@@ -1185,7 +1163,7 @@ app.post('/resetcpvoting', (req, res) => {
         values.E,
         id
       ],
-      function(err, result, fields) {
+      function(err, result) {
         if (err) {
           console.log('e: ' + JSON.stringify(err));
           res.send(err);
@@ -1200,7 +1178,8 @@ app.post('/resetcpvoting', (req, res) => {
 app.post('/resetuvoting', (req, res) => {
   //user calculation algorithm /it should become adaptive, considering how much the user votes
   //first we collect all the users id:
-  mydb.execute('SELECT `id` from `user`', [], function(err, id, fields) {
+  
+  mydb.execute("SELECT `id` from `user`", [], function(err, id) {
     {
       if (err) {
         console.log('e: ' + JSON.stringify(err));
@@ -1216,7 +1195,7 @@ app.post('/resetuvoting', (req, res) => {
       mydb.execute(
         'update `user` set `D`=?,`U`=?,`F`=?,`I`=?,`C`=?,`T`=?,`E`=? where `user`.`id` = ?',
         [0, 0, 0, 0, 0, 0, 0, id[j].id],
-        function(err, result, fields) {
+        function(err) {
           if (err) {
             console.log('e: ' + JSON.stringify(err));
             res.send(err);
@@ -1231,8 +1210,7 @@ app.post('/resetuvoting', (req, res) => {
   function findcomment(id) {
     mydb.execute('select `id` from `comment` where `user`=?', [id], function(
       err,
-      result,
-      fields
+      result
     ) {
       if (err) {
         console.log('e: ' + JSON.stringify(err));
@@ -1250,7 +1228,7 @@ app.post('/resetuvoting', (req, res) => {
         mydb.execute(
           'select count(`condition`) as count from `commentvote` where `comment`=? AND `condition`=? AND `user`!=?',
           [id[j].id, c, userid],
-          function(err, [result], fields) {
+          function(err, [result]) {
             if (err) {
               console.log('e: ' + JSON.stringify(err));
               res.send(err);
@@ -1280,13 +1258,13 @@ app.post('/resetuvoting', (req, res) => {
         values.E,
         userid
       ],
-      function(err, result, fields) {
+      function(err, result) {
         if (err) {
           console.log('e: ' + JSON.stringify(err));
           res.send(err);
         } else {
-          console.log('' + JSON.stringify(result));
-          response.send('OK');
+          console.log("" + JSON.stringify(result))
+          res.send("OK")
         }
       }
     );
@@ -1298,7 +1276,8 @@ module.exports = {
   handler: app
 };
 
-/*paypal old queries
+/*
+paypal old queries
 
 CREATE PLAN
 axios({method: 'post', url: 'https://api.paypal.com/v1/billing/plans', headers: { 'Authorization':'Bearer '+paypaltoken, 'Content-Type':'application/json'}, data: { 'product_id': 'PROD-8SD41723WB4858822','name': 'Cooperation Membership Plan','billing_cycles': [{'frequency': {'interval_unit': 'MONTH','interval_count': 1},'tenure_type': 'REGULAR','sequence': 1,'total_cycles': 998,'pricing_scheme': {'fixed_price': {'value': '1','currency_code': 'EUR'}}}],'payment_preferences': {'payment_failure_threshold':1}}})
