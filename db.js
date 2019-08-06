@@ -21,9 +21,41 @@ const mydb = mysql.createConnection({
   multipleStatements: true
 })
 
+const pool = mysql.createPool({
+  host: process.env.HOST,
+  user: process.env.MYSQLUSER,
+  password: process.env.DBPASSWORD,
+  database: process.env.DBDB,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
+})
+
+const myPool = pool.promise()
 /////// GET ///////
 
-app.get("/project", (req, res) => {
+app.get('/project', async (req, res, next) => {
+  try {
+    let query = 'SELECT * FROM `project`'
+    let param = []
+
+    if (req.query.limit) {
+      query += ' WHERE `id`=?'
+      param = [req.query.projectid + req.query.limit]
+    } else if (req.query.stage) {
+      query += ' WHERE `stage`=?'
+      param.push(req.query.stage)
+    }
+
+    const [rows] = await myPool.query(query, param)
+    res.send(rows)
+  } catch(err) {
+    //caveat @see https://expressjs.com/en/guide/error-handling.html
+    next(err)
+  }
+})
+
+app.get("/projectx", (req, res) => {
   let query = "SELECT * FROM `project`"
   let param = []
   if (req.query.limit) {
@@ -1258,7 +1290,7 @@ if(err){console.log(err.response.data);console.log('Proceeding with other member
 ADD DESCRIPTION:
 axios({method: 'patch', url: 'https://api.paypal.com/v1/billing/plans/P-7BP22733VS088190RLURYZIQ',
             headers: { 'Authorization':'Bearer '+paypaltoken, 'Content-Type':'application/json' }, data:[{
-              "op": "add", "path": "/description", "value": "Cooperacy Free Membership for Under 18" 
+              "op": "add", "path": "/description", "value": "Cooperacy Free Membership for Under 18"
             }] })
 
 FOR ALL REQUESTS:
