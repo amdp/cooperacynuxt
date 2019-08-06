@@ -34,43 +34,24 @@ const pool = mysql.createPool({
 const myPool = pool.promise()
 /////// GET ///////
 
-app.get('/project', async (req, res, next) => {
+app.get("/project", async (req, res, next) => {
   try {
-    let query = 'SELECT * FROM `project`'
+    let query = "SELECT * FROM `project`"
     let param = []
 
     if (req.query.limit) {
-      query += ' WHERE `id`=?'
+      query += " WHERE `id`=?"
       param = [req.query.projectid + req.query.limit]
     } else if (req.query.stage) {
-      query += ' WHERE `stage`=?'
+      query += " WHERE `stage`=?"
       param.push(req.query.stage)
     }
 
     const [rows] = await myPool.query(query, param)
     res.send(rows)
-  } catch(err) {
-    //caveat @see https://expressjs.com/en/guide/error-handling.html
+  } catch (err) {
     next(err)
   }
-})
-
-app.get("/project-", (req, res) => {
-  let query = "SELECT * FROM `project`"
-  let param = []
-  if (req.query.limit) {
-    query += " WHERE `id`=?"
-    param = [req.query.projectid + req.query.limit]
-  } else if (req.query.stage) {
-    query += " WHERE `stage`=?"
-    param.push(req.query.stage)
-  }
-  mydb.execute(query, param, function(err, project, fields) {
-    if (err) {
-      console.log("e: " + JSON.stringify(err))
-      res.send(err)
-    } else res.send(project)
-  })
 })
 
 app.get("/comment", (req, res) => {
@@ -1270,7 +1251,8 @@ module.exports = {
   handler: app
 }
 
-/*paypal old queries
+/*
+paypal old queries
 
 CREATE PLAN
 axios({method: 'post', url: 'https://api.paypal.com/v1/billing/plans', headers: { 'Authorization':'Bearer '+paypaltoken, 'Content-Type':'application/json'}, data: { 'product_id': 'PROD-8SD41723WB4858822','name': 'Cooperation Membership Plan','billing_cycles': [{'frequency': {'interval_unit': 'MONTH','interval_count': 1},'tenure_type': 'REGULAR','sequence': 1,'total_cycles': 998,'pricing_scheme': {'fixed_price': {'value': '1','currency_code': 'EUR'}}}],'payment_preferences': {'payment_failure_threshold':1}}})
