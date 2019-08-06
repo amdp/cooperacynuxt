@@ -146,7 +146,7 @@ similar to the ACTION name.
 Keep that path in mind.
 
 Now go to the file
-`/db.js`
+`/api.js`
 in the ///// GET /////
 part, look for the same path after
 something similar to "axios.get":
