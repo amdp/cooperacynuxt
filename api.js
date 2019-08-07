@@ -704,7 +704,27 @@ app.post('/newuseremail', function(req, res) {
   })
 })
 
+// helper function to verify reCaptch token
+// isValidRecaptchaToken = token => {
+//   const message = {
+//     secret: "6Lebn7EUAAAAAJB91cWRvPPJc_EMyk-OppYs9H65",
+//     response: token
+//   };
+//   const response = {};
+//   axios
+//     .post('URL: https://www.google.com/recaptcha/api/siteverify', message)
+//     .then(res => (response = res))
+//     .catch(err => console.log(err));
+//   console.log(response);
+//   return response.status;
+// };
+
 app.post('/contactemail', function(req, res) {
+  // if (!isValidRecaptchaToken(req.body.recaptchaToken)) {
+  //   res.status(500).json({
+  //     message: 'Invalid Captcha! Please try again.'
+  //   });
+  // }
   const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 465,
@@ -725,7 +745,7 @@ app.post('/contactemail', function(req, res) {
       `Email: ${req.body.email}\n\n` +
       `Message: \n\n${req.body.body}`
   }
-  console.log(mailOptions)
+  // console.log(mailOptions);
   transporter
     .sendMail(mailOptions)
     .then(info => {
