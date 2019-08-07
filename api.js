@@ -704,6 +704,7 @@ app.post('/newuseremail', function(req, res) {
   })
 })
 
+
 // helper function to verify reCaptch token
 // isValidRecaptchaToken = token => {
 //   const message = {
@@ -725,7 +726,6 @@ app.post('/contactemail', function(req, res) {
   //     message: 'Invalid Captcha! Please try again.'
   //   });
   // }
-
   const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 465,
@@ -1171,7 +1171,6 @@ app.post('/resetcpvoting', (req, res) => {
 app.post('/resetuvoting', (req, res) => {
   //user calculation algorithm /it should become adaptive, considering how much the user votes
   //first we collect all the users id:
-
   mydb.execute('SELECT `id` from `user`', [], function(err, id) {
     {
       if (err) {
