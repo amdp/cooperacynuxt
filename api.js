@@ -704,7 +704,6 @@ app.post('/newuseremail', function(req, res) {
   })
 })
 
-
 // helper function to verify reCaptch token
 // isValidRecaptchaToken = token => {
 //   const message = {
