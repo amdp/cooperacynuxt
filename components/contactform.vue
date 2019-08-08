@@ -21,7 +21,7 @@
                 <label class="col-md-3 control-label" for="name">Name</label>
                 <div class="col-md-9">
                   <input
-                    v-model="name"
+                    v-model="formName"
                     id="name"
                     name="name"
                     type="text"
@@ -37,7 +37,7 @@
                 <label class="col-md-3 control-label" for="email">Your E-mail</label>
                 <div class="col-md-9">
                   <input
-                    v-model="email"
+                    v-model="formEmail"
                     id="email"
                     name="email"
                     type="email"
@@ -53,7 +53,7 @@
                 <label class="col-md-3 control-label" for="subject">Subject</label>
                 <div class="col-md-9">
                   <input
-                    v-model="subject"
+                    v-model="formSubject"
                     id="subject"
                     name="subject"
                     type="text"
@@ -69,7 +69,7 @@
                 <label class="col-md-3 control-label" for="message">Your message</label>
                 <div class="col-md-9">
                   <textarea
-                    v-model="body"
+                    v-model="formBody"
                     class="form-control"
                     id="message"
                     name="message"
@@ -110,10 +110,10 @@ export default {
   name: "contactForm",
   data() {
     return {
-      name: "",
-      email: "",
-      subject: "",
-      body: "",
+      formName: "",
+      formEmail: "",
+      formSubject: "",
+      formBody: "",
       response: "",
       recaptchaToken: ""
     };
@@ -134,15 +134,15 @@ export default {
     },
     async sendMail() {
       const message = {
-        name: this.name,
-        email: this.email,
-        subject: this.subject,
-        body: this.body,
+        formName: this.formName,
+        formEmail: this.formEmail,
+        formSubject: this.formSubject,
+        formBody: this.formBody,
         recaptchaToken: this.recaptchaToken
       };
       try {
         const res = await this.$store.dispatch("contactEmailAction", message);
-        this.name = this.email = this.subject = this.body = this.recaptchaToken =
+        this.formName = this.formEmail = this.formSubject = this.formBody = this.recaptchaToken =
           "";
         this.response = res.message;
       } catch (error) {
