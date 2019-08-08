@@ -735,15 +735,15 @@ app.post('/contactemail', function(req, res) {
     }
   }) /* to add html in mailOptions use " html: '<b>test</b>' " */
   const mailOptions = {
-    from: req.body.email,
-    to: '"Cooperacy" <cooperacy@cooperacy.org>',
+    from: req.body.formEmail,
+    to: '"az" <alireza.q1357@gmail.com>', //'"Cooperacy" <cooperacy@cooperacy.org>',
     // conveniently replies to the submitter of the form's email
-    replyTo: `"${req.body.name}" <${req.body.email}>`,
-    subject: req.body.subject,
+    replyTo: `"${req.body.formName}" <${req.body.formEmail}>`,
+    subject: req.body.formSubject,
     text:
-      `Name: ${req.body.name}\n` +
-      `Email: ${req.body.email}\n\n` +
-      `Message: \n\n${req.body.body}`
+      `Name: ${req.body.formName}\n` +
+      `Email: ${req.body.formEmail}\n\n` +
+      `Message: \n\n${req.body.formBody}`
   }
   // console.log(mailOptions);
   transporter
@@ -752,7 +752,7 @@ app.post('/contactemail', function(req, res) {
       console.log('Message %s sent: %s', info.messageId, info.response)
       res.status(200).json({
         message:
-          `Thank you ${req.body.name} for your message!<br/>` +
+          `Thank you ${req.body.formName} for your message!<br/>` +
           `We'll get in touch as soon as possible.<br />`
       })
     })
@@ -760,7 +760,8 @@ app.post('/contactemail', function(req, res) {
       console.log(err)
       res.status(500).json({
         message:
-          `An error occured ${req.body.name}!<br/>` + `Please try again later.`
+          `An error occured ${req.body.formName}!<br/>` +
+          `Please try again later.`
       })
     })
 })
