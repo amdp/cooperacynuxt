@@ -3,8 +3,7 @@
 # Main config
 .env
 
-#vsc and sublime
-.vscode
+#sublime
 *.sublime-project
 *.sublime-workspace
 
