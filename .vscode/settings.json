@@ -2,5 +2,6 @@
   "git.ignoreLimitWarning": true,
   "prettier.jsxSingleQuote": true,
   "prettier.semi": false,
-  "prettier.singleQuote": true
+  "prettier.singleQuote": true,
+  "eslint.autoFixOnSave": true
 }
