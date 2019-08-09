@@ -4,6 +4,7 @@ Arafat Hossain  -    arafat.cse1993@gmail.com
 Kushan Vora     -    kushpvo@gmail.com
 Carmine Grossi  -    cgrossi@gmail.com
 bowor (athxp)
+Vaela Nightos   -    vaela@kenoshi.me
 ```
 NUXTERS
 
