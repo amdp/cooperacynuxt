@@ -3,5 +3,8 @@
   "prettier.jsxSingleQuote": true,
   "prettier.semi": false,
   "prettier.singleQuote": true,
-  "eslint.autoFixOnSave": true
+  "prettier.disableLanguages": [],
+  "eslint.autoFixOnSave": true,
+  "vetur.format.defaultFormatter.html": "prettier",
+  "rest-client.fontSize": 12
 }
