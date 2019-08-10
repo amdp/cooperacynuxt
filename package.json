@@ -34,7 +34,8 @@
     "nodemailer": "^6.3.0",
     "nodemon": "^1.19.1",
     "nuxt": "^2.8.1",
-    "popper.js": "^1.15.0"
+    "popper.js": "^1.15.0",
+    "vue-recaptcha": "^1.2.0"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^1.0.1",
