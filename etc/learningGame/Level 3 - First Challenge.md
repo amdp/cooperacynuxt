@@ -5,6 +5,10 @@
 
 ## LEVEL THREE: BACK TO THE BASICS
 
+Before proceeding, have a crash course about
+Nuxt:
+https://www.youtube.com/watch?v=ltzlhAxJr74
+
 In these upcoming lessons we will start 
 back from basic html and learn step by step
 some basic Vue, Vuex and the rest of NUXT.
