@@ -10,6 +10,11 @@ let's understand how Nuxt plays between Vue
 and the information stored in the server.
 
 
+Have a look at
+https://www.youtube.com/watch?v=Wy9q22isx3U
+for a vue basic crash course.
+
+
 Remember: your computer connects to internet
 via a browser, this means you are a "client".
 
