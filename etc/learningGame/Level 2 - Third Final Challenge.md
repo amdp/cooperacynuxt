@@ -5,6 +5,11 @@
 ### FINAL CHALLENGE LEVEL TWO: RECONSTRUCT A WHOLE STORE PATH!
 
 
+Before proceeding, let yourself do a crash course
+about vuex:
+https://www.youtube.com/watch?v=5lVQgZzLMHc
+
+
 Alright then. It's time to see the docks!
 Open the file /store/index.js!
 
