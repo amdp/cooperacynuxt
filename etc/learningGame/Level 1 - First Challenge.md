@@ -51,6 +51,22 @@ Last but not least, have fun.
 
 For doubts about every step, please ask! :)
 
+
+** Important **
+You should always check your master
+ clone branch is updated. So, if you
+ use command line, you should go into
+ the repo main folder and issue "git
+ pull". If you are in vsc, click on
+ the circle "recycle" little icon in
+ the footer-status bar below. If you
+ use other tools, check how to pull
+but keep your repo master branch
+ always updated otherwise you could
+ be working on an old repo or even
+ a non-working one.
+
+
 **Note:**
 
 When you create a new branch on the 
