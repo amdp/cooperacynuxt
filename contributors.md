@@ -5,6 +5,7 @@ Kushan Vora     -    kushpvo@gmail.com
 Carmine Grossi  -    cgrossi@gmail.com
 bowor (athxp)
 Vaela Nightos   -    vaela@kenoshi.me
+Peter Luczynski -    peter.luczynsky@gmail.com
 ```
 NUXTERS
 
