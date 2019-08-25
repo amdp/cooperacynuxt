@@ -6,5 +6,6 @@
   "prettier.disableLanguages": [],
   "eslint.autoFixOnSave": true,
   "vetur.format.defaultFormatter.html": "prettier",
-  "rest-client.fontSize": 12
+  "rest-client.fontSize": 12,
+  "prettier.jsxBracketSameLine": true
 }
