@@ -49,6 +49,7 @@
   },
   "prettier": {
     "semi": false,
-    "singleQuote": true
+    "singleQuote": true,
+    "jsxBracketSameLine": true
   }
 }

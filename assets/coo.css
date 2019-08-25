@@ -161,7 +161,7 @@ a:hover {
   background-repeat: repeat-x;
   background-size: 2px 0.2em;
   background-position: 0 1.35em;
-  color: #000000;
+  color: #777777;
 }
 .at {
   text-decoration: none;
@@ -169,7 +169,7 @@ a:hover {
   background-repeat: repeat-x;
   background-size: 2px 0.2em;
   background-position: 0 1.35em;
-  color: #000000;
+  color: #777777;
 }
 .ac {
   text-decoration: none;
@@ -177,7 +177,7 @@ a:hover {
   background-repeat: repeat-x;
   background-size: 2px 0.2em;
   background-position: 0 1.35em;
-  color: #000000;
+  color: #777777;
 }
 .ai {
   text-decoration: none;
@@ -185,7 +185,7 @@ a:hover {
   background-repeat: repeat-x;
   background-size: 2px 0.2em;
   background-position: 0 1.35em;
-  color: #000000;
+  color: #777777;
 }
 .af {
   text-decoration: none;
@@ -193,7 +193,7 @@ a:hover {
   background-repeat: repeat-x;
   background-size: 2px 0.2em;
   background-position: 0 1.35em;
-  color: #000000;
+  color: #777777;
 }
 .au {
   text-decoration: none;
@@ -201,7 +201,7 @@ a:hover {
   background-repeat: repeat-x;
   background-size: 2px 0.2em;
   background-position: 0 1.35em;
-  color: #000000;
+  color: #777777;
 }
 .ad {
   text-decoration: none;
@@ -209,7 +209,7 @@ a:hover {
   background-repeat: repeat-x;
   background-size: 2px 0.2em;
   background-position: 0 1.35em;
-  color: #000000;
+  color: #777777;
 }
 .ae:hover {
   font-weight: 200;
@@ -324,19 +324,27 @@ a:hover {
 .roundmodule {
   border-radius: 90px;
 }
-.mini {
+.t16 {
   font-size: 16px;
   font-weight: 200;
 }
-.minini {
+.t14 {
   font-size: 14px;
   font-weight: 200;
 }
-.minimini {
+.t12 {
+  font-size: 12px;
+  font-weight: 200;
+}
+.t11 {
+  font-size: 11px;
+  font-weight: 200;
+}
+.t10 {
   font-size: 10px;
   font-weight: 200;
 }
-.miniminimini {
+.t8 {
   font-size: 8px;
   font-weight: 200;
 }
@@ -356,6 +364,37 @@ a.disabled {
   opacity: 0.5;
   pointer-events: none;
   cursor: default;
+}
+
+/* navbar */
+
+.upmenu {
+  margin-top: 17px;
+}
+
+.submenu {
+  margin-top: -14px;
+  color: #777;
+  position: absolute;
+  font-size: 12px;
+}
+
+.navbar-brand {
+  width: 5%;
+}
+.navbarrow {
+  margin-top: 100px;
+}
+.headerlogo {
+  height: 60px;
+}
+.imglogo {
+  max-width: 100%;
+}
+.userlogo {
+  height: 50px;
+  width: 50px;
+  margin-top: 5%;
 }
 
 /* other */
@@ -393,12 +432,7 @@ hr.home-hr {
   visibility: hidden;
   margin-left: -35px;
 }
-.hideover {
-  z-index: 10;
-  top: 5px;
-  left: -50px;
-  position: absolute;
-}
+
 .vote-spacer {
   width: 10px;
   text-align: left;
@@ -418,28 +452,6 @@ hr.home-hr {
   hyphens: auto;
 }
 
-.navbar-brand {
-  width: 5%;
-}
-.navbarrow {
-  margin-top: 100px;
-}
-.headerlogo {
-  width: 244px;
-  height: 60px;
-}
-.usercoologo {
-  height: 60px;
-  width: 60px;
-}
-.userlogo {
-  height: 52px;
-  width: 52px;
-  z-index: 3;
-  position: relative;
-  right: 72px;
-  top: 4px;
-}
 .usercomment {
   height: 40px;
   width: 40px;
