@@ -1,20 +1,16 @@
 <template>
-  <div>
-    <div class="row">
+  <div class="container-fluid">
+    <b-row>
       <navbar />
-    </div>
-    <div class="row navbarrow">
-      <div class="col-2">
-      </div>
-      <div class="col-8">
-        <nuxt />
-      </div>
-      <div class="col-2">
-      </div>
-    </div>
-    <div class="row">
+    </b-row>
+    <b-row class="navbarrow">
+      <b-col cols="2"></b-col>
+      <b-col cols="8"><nuxt /></b-col>
+      <b-col cols="2"></b-col>
+    </b-row>
+    <b-row>
       <foot />
-    </div>
+    </b-row>
   </div>
 </template>
 
@@ -23,6 +19,6 @@ import navbar from '@/components/navbar'
 import foot from '@/components/foot'
 
 export default {
-  components: {navbar: navbar, foot: foot }
+  components: { navbar: navbar, foot: foot }
 }
 </script>

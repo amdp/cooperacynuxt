@@ -13,7 +13,7 @@
           <!--menu-->
           <b-row class="w-100 m-0 upmenu">
             <b-col cols="12" class="p-0 d-flex">
-              <div class="container d-flex justify-content-center p-0 t14">
+              <div class="container d-flex justify-content-center p-0 t14 mt-2">
                 <div @mouseover="menushow('project')" class="pr-4">
                   THE PROJECT
                 </div>
