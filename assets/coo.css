@@ -304,10 +304,8 @@ a:hover {
 .space {
   letter-spacing: 2px;
 }
-.footer {
-  vertical-align: middle;
-  font-size: 14px;
-  letter-spacing: 2px;
+.foot {
+  border-top: 1px solid #cccccc;
 }
 .up {
   text-transform: uppercase;
@@ -414,12 +412,6 @@ a.disabled {
   font-weight: 200;
   border: 1px solid;
 }
-.site-footer {
-  border-top-color: #d3e0e9;
-  border-top-style: solid;
-  border-top-width: 1px;
-  padding: 10px;
-}
 
 hr.home-hr {
   border: none;
@@ -471,9 +463,6 @@ img.news {
   height: auto;
   vertical-align: bottom;
   border: none;
-}
-.foot {
-  border-top: 1px solid #cccccc;
 }
 .currentImage {
   width: 60px;
