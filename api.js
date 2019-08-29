@@ -766,6 +766,35 @@ app.post('/contactemail', function(req, res) {
     })
 })
 
+//CCI to be "vued", post is the future one, remove following app.get('/map'
+
+app.post('/cci', (req, res) => {
+  mydb.execute('SELECT * FROM `CCI' + req.body.cciyear + '`', [], function(
+    err,
+    CCI
+  ) {
+    if (err) {
+      console.log('e: ' + JSON.stringify(err))
+      res.send(err)
+    } else res.json(CCI)
+  })
+})
+app.get('/map', (req, res) => {
+  mydb.execute('SELECT * FROM `CCI2017`', [], function(err, CCI) {
+    if (err) {
+      console.log('e: ' + JSON.stringify(err))
+      res.send(err)
+    } else {
+      let ccimakeup = {}
+      for (let i = 0; i < CCI.length; i++) {
+        let country = CCI[i]['country']
+        ccimakeup[country] = CCI[i]
+      }
+      res.json(ccimakeup)
+    }
+  })
+})
+
 app.post('/vote', (req, res) => {
   if (req.body.proptype == 'project') {
     mydb.execute(
