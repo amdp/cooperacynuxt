@@ -22,7 +22,7 @@ const mydb = mysql.createConnection({
 })
 
 const pool = mysql.createPool({
-  host: process.env.HOST,
+  host: 'localhost',
   user: process.env.MYSQLUSER,
   password: process.env.DBPASSWORD,
   database: process.env.DBDB,
