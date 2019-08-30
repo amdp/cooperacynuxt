@@ -142,7 +142,7 @@
       <div class="base text-center">
         <p class="base text-center mb-3">
           <a class="ae" href="/login">Join</a> Cooperacy today, or
-          <nuxt-link class="ai" to="/contact">contact us</nuxt-link>for more
+          <nuxt-link class="ai" to="/contact">contact us</nuxt-link> for more
           information.
         </p>
         <br />

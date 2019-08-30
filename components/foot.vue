@@ -2,7 +2,7 @@
   <div class="container-fluid p-0">
     <b-row>
       <div class="container-fluid foot d-flex justify-content-center t16 m-0">
-        <p class="base space my-2">
+        <p class="base space my-2 pr-3 pl-3">
           <nuxt-link to="/login" class="ae" style="background-image:none"
             >JOIN</nuxt-link
           >
