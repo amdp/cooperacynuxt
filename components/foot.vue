@@ -3,7 +3,10 @@
     <b-row>
       <div class="container-fluid foot d-flex justify-content-center t16 m-0">
         <p class="base space my-2">
-          <a to="/login" class="ae" style="background-image:none">JOIN</a> -
+          <nuxt-link to="/login" class="ae" style="background-image:none"
+            >JOIN</nuxt-link
+          >
+          -
           <a
             class="af"
             style="background-image:none"
@@ -12,13 +15,15 @@
           >
           -
           <a
-            href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=YS7MHXBSVDDEU"
+            href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=NQAB44A9HNLS4"
             class="at"
             style="background-image:none"
             >DONATE</a
           >
           -
-          <a class="ai" style="background-image:none" to="/contact">CONTACT</a>
+          <nuxt-link class="ai" style="background-image:none" to="/contact"
+            >CONTACT</nuxt-link
+          >
         </p>
       </div>
     </b-row>
