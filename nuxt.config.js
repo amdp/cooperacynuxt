@@ -16,7 +16,7 @@ module.exports = {
     'bootstrap-vue/nuxt'
   ],
   loading: {
-    color: '#FFCC00',
+    color: '#FF8800',
     failedColor: 'black',
     height: '3px',
     continuous: true
