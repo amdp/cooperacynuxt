@@ -3,27 +3,17 @@
     <b-row>
       <div class="container-fluid foot d-flex justify-content-center t16 m-0">
         <p class="base space my-2 pr-3 pl-3">
-          <nuxt-link to="/login" class="ae" style="background-image:none"
-            >JOIN</nuxt-link
-          >
-          -
-          <a
-            class="af"
-            style="background-image:none"
-            href="https://m.me/cooperacy.org"
-            >CHAT</a
-          >
-          -
+          <nuxt-link to="/login" class="ae menux">JOIN</nuxt-link>
+
+          <a class="af menux" href="https://m.me/cooperacy.org">CHAT</a>
+
           <a
             href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=NQAB44A9HNLS4"
-            class="at"
-            style="background-image:none"
+            class="at menux"
             >DONATE</a
           >
-          -
-          <nuxt-link class="ai" style="background-image:none" to="/contact"
-            >CONTACT</nuxt-link
-          >
+
+          <nuxt-link class="ai menux" to="/contact">CONTACT</nuxt-link>
         </p>
       </div>
     </b-row>

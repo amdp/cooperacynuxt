@@ -1,10 +1,10 @@
 <template>
-  <div class="container m-0 p-0">
+  <div class="container-fluid m-0 p-0">
     <div class="fixed-top bg-white p-0 d-none d-lg-block">
       <b-row class="w-100 m-0">
         <b-col cols="2" class="p-0">
           <!-- logo -->
-          <div class="container headerlogo p-0">
+          <div class="container headerlogo p-0 finger">
             <nuxt-link to="/" tag="img" class="imglogo" :src="wordLogo">
             </nuxt-link>
           </div>
@@ -30,28 +30,36 @@
                 class="container d-flex justify-content-center submenu"
                 v-if="coomenus.project"
               >
-                <nuxt-link class="mr-3" to="/aboutyou">ABOUT YOU</nuxt-link>
-                <nuxt-link class="mr-3" to="/aboutus">ABOUT US</nuxt-link>
-                <nuxt-link class="mr-3" to="/platform">THE PLATFORM</nuxt-link>
-                <nuxt-link class="mr-3" to="/governance"> GOVERNANCE</nuxt-link>
+                <nuxt-link class="mr-3 ae menux" to="/aboutyou"
+                  >ABOUT YOU</nuxt-link
+                >
+                <nuxt-link class="mr-3 ae menux" to="/aboutus"
+                  >ABOUT US</nuxt-link
+                >
+                <nuxt-link class="mr-3 ae menux" to="/platform"
+                  >THE PLATFORM</nuxt-link
+                >
+                <nuxt-link class="mr-3 ae menux" to="/governance">
+                  GOVERNANCE</nuxt-link
+                >
               </div>
               <div
                 class="container d-flex justify-content-center submenu"
                 v-if="coomenus.corporate"
               >
-                <nuxt-link class="mr-3" to="/corporate">
+                <nuxt-link class="mr-3 af menux" to="/corporate">
                   CORPORATE WORLD
                 </nuxt-link>
-                <nuxt-link class="mr-3" to="/overview">
+                <nuxt-link class="mr-3 af menux" to="/overview">
                   MEASURING COOPERATION
                 </nuxt-link>
-                <nuxt-link class="mr-3" to="/coopenspace">
+                <nuxt-link class="mr-3 af menux" to="/coopenspace">
                   CO-OPEN SPACE
                 </nuxt-link>
-                <nuxt-link class="mr-3" to="/cohackathon">
+                <nuxt-link class="mr-3 af menux" to="/cohackathon">
                   CO-HACKATHON
                 </nuxt-link>
-                <nuxt-link class="mr-3" to="/workshops">
+                <nuxt-link class="mr-3 af menux" to="/workshops">
                   WORKSHOPS
                 </nuxt-link>
               </div>
@@ -59,19 +67,19 @@
                 class="container d-flex justify-content-center submenu"
                 v-if="coomenus.science"
               >
-                <nuxt-link class="mr-3" to="/cooperation">
+                <nuxt-link class="mr-3 au menux" to="/cooperation">
                   COOPERATION
                 </nuxt-link>
-                <nuxt-link class="mr-3" to="/integration">
+                <nuxt-link class="mr-3 au menux" to="/integration">
                   INTEGRATION
                 </nuxt-link>
-                <nuxt-link class="mr-3" to="/cci">
+                <nuxt-link class="mr-3 au menux" to="/cci">
                   COOPERATION CONTEXT INDEX
                 </nuxt-link>
-                <nuxt-link class="mr-3" to="/science">
+                <nuxt-link class="mr-3 au menux" to="/science">
                   COOPERACY RESEARCH ASSOCIATION
                 </nuxt-link>
-                <nuxt-link class="mr-3" to="/news">
+                <nuxt-link class="mr-3 au menux" to="/news">
                   NEWS
                 </nuxt-link>
               </div>
@@ -109,13 +117,15 @@
             <nuxt-link
               to="/user"
               tag="img"
-              class="userlogo rounded-circle"
+              class="userlogo rounded-circle finger"
               :src="userImage"
             >
             </nuxt-link>
           </div>
         </b-col>
-        <b-col v-if="this.$auth.loggedIn" cols="12" class="p-0 d-flex">
+      </b-row>
+      <b-row class="w-100 p-0 m-0">
+        <b-col v-if="this.$auth.loggedIn" cols="12" class="p-0 fluid">
           <votebar :voteprop="$auth.user" :proptype="'user'" />
         </b-col>
 
@@ -196,6 +206,19 @@
                 </b-nav-dropdown>
               </b-navbar-nav>
             </b-collapse>
+          </b-col>
+        </b-row>
+        <b-row>
+          <b-col v-if="this.$auth.loggedIn" cols="12" class="p-0 fluid">
+            <votebar :voteprop="$auth.user" :proptype="'user'" />
+          </b-col>
+
+          <b-col
+            v-if="!this.$auth.loggedIn"
+            cols="12"
+            class="p-0 bg-secondary"
+            style="height: 1px"
+            >&nbsp;
           </b-col>
         </b-row>
       </div>

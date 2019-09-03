@@ -366,6 +366,10 @@ a.disabled {
 
 /* navbar */
 
+.menux {
+  background-image: none;
+}
+
 .upmenu {
   margin-top: 17px;
 }
