@@ -1237,6 +1237,7 @@ app.post('/resetuvoting', (req, res) => {
         console.log('e: ' + JSON.stringify(err))
         res.send(err)
       } else {
+        console.log(' ' + JSON.stringify(result))
         ucycleid(result, id)
       }
     })
@@ -1256,6 +1257,7 @@ app.post('/resetuvoting', (req, res) => {
             } else {
               values[c] = result.count
               if (values.E != undefined) {
+                console.log('count ' + JSON.stringify(result))
                 resetuvote(userid, values)
                 values = {}
               }
@@ -1285,11 +1287,11 @@ app.post('/resetuvoting', (req, res) => {
           res.send(err)
         } else {
           console.log('' + JSON.stringify(result))
-          res.send('OK')
         }
       }
     )
   }
+  res.send('OK')
 })
 
 module.exports = {
