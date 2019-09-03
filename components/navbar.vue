@@ -14,13 +14,13 @@
           <b-row class="w-100 m-0 upmenu">
             <b-col cols="12" class="p-0 d-flex">
               <div class="container d-flex justify-content-center p-0 t14 mt-2">
-                <div @mouseover="menushow('project')" class="pr-4">
+                <div @mouseover="menushow('project')" class="pr-2">
                   THE PROJECT
                 </div>
-                <div @mouseover="menushow('corporate')" class="pr-4">
+                <div @mouseover="menushow('corporate')" class="pl-2 pr-2">
                   CORPORATE
                 </div>
-                <div @mouseover="menushow('science')">
+                <div @mouseover="menushow('science')" class="pl-2">
                   SCIENCE
                 </div>
               </div>
@@ -204,6 +204,19 @@
                     NEWS
                   </b-dropdown-item>
                 </b-nav-dropdown>
+                <b-nav-text class="align-middle" v-if="this.$auth.loggedIn">
+                  {{ this.$auth.user.name + ' ' + this.$auth.user.surname }}
+                </b-nav-text>
+                <b-nav-item to="/login" v-if="!this.$auth.loggedIn"
+                  >LOGIN</b-nav-item
+                >
+                <nuxt-link
+                  to="/user"
+                  tag="img"
+                  class="userlogo rounded-circle finger"
+                  :src="userImage"
+                >
+                </nuxt-link>
               </b-navbar-nav>
             </b-collapse>
           </b-col>
