@@ -5,16 +5,21 @@
         <h5 class="mt-2 d-flex justify-content-center up">
           WELCOME {{ this.$auth.user.name }}
         </h5>
-        <nuxt-link to="/useredit" class="ad">Edit your information</nuxt-link
-        ><br />
-        <nuxt-link to="/project/form" class="ac">Add a new Project</nuxt-link
-        ><br />
-        <nuxt-link to="/project/search" class="af">Project search</nuxt-link
-        ><br />
-        <span class="au" @click="$auth.logout()">Logout</span><br />
+        <nuxt-link to="/useredit" class="ad">
+          Edit your information
+        </nuxt-link>
+        <br />
+        <nuxt-link to="/project/form" class="ac">
+          Add a new Project
+        </nuxt-link>
+        <br />
+        <nuxt-link to="/project/search" class="af">Project search </nuxt-link>
+        <br />
         <span class="au" @click="resetuvoting">
           Admin tool: Reset User Voting (HIGH RISK FUNCTION!)
         </span>
+        <br /><br />
+        <span class="au" @click="$auth.logout()">LOGOUT</span>
       </b-col>
       <b-col cols="6">
         <div class="container text-right">
