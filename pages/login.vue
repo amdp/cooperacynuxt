@@ -32,8 +32,8 @@
             >Login</b-button
           ><br />
           <p>
-            Forgot password? Just enter your email and a
-            <em>new password</em>, then:
+            Forgot password? Just enter your correct email address and a
+            <em>new password</em> in the login prompt you just used above, then:
             <b-button
               class="btn bhunderstanding white btn-block gray border-0"
               @click="recover"
