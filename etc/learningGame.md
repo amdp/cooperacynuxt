@@ -64,7 +64,7 @@ So, better to start talking
 rather than expecting.
 Don't expect, communicate!
 
-We're here: https://discord.gg/sKb5Ju
+We're here: https://discord.gg/FB24r6F
 
 Moreover, remember it's a dynamic group.
 You are free and can come and go.
