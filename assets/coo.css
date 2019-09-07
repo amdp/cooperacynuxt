@@ -381,11 +381,15 @@ a.disabled {
   font-size: 12px;
 }
 
+.fixed {
+  position: fixed;
+  z-index: 9999;
+}
 .navbar-brand {
   width: 5%;
 }
-.navbarrow {
-  margin-top: 100px;
+.main {
+  margin-top: 70px !important;
 }
 .headerlogo {
   height: 60px;
