@@ -1,7 +1,7 @@
 <template>
-  <div class="container-fluid p-0">
+  <b-container fluid class="p-0">
     <b-row>
-      <div class="container-fluid foot d-flex justify-content-center t16 m-0">
+      <b-container fluid class="foot d-flex justify-content-center t16 m-0">
         <p class="base space my-2 pr-3 pl-3">
           <nuxt-link to="/login" class="ae menux">JOIN</nuxt-link>
 
@@ -15,18 +15,18 @@
 
           <nuxt-link class="ai menux" to="/contact">CONTACT</nuxt-link>
         </p>
-      </div>
+      </b-container>
     </b-row>
     <b-row>
-      <div class="container-fluid d-flex justify-content-center t16">
+      <b-container fluid class="d-flex justify-content-center t16">
         <p class="t16 space m-0 text-center pl-4 pr-4">
           &copy; COOPERACY RESEARCH ASSOCIATION 2015-2018 - VIA DELLA MOSCOVA,
           39 - 20121 MILAN ITALY EU - FISCAL CODE 97725540153
         </p>
-      </div>
+      </b-container>
     </b-row>
     <b-row>
-      <div class="container-fluid d-flex justify-content-center t16">
+      <b-container fluid class="d-flex justify-content-center t16">
         <p class="t16 space mb-2 text-center pl-4 pr-4">
           <em><strong>WE USE COOKIES</strong></em
           >: BY VISITING THIS SITE YOU ABIDE TO OUR
@@ -34,7 +34,7 @@
             PRIVACY POLICY AND AGREEMENTS</nuxt-link
           >
         </p>
-      </div>
+      </b-container>
     </b-row>
-  </div>
+  </b-container>
 </template>

@@ -1,19 +1,19 @@
 <template>
-  <div class="container-fluid m-0 p-0">
-    <div class="fixed-top bg-white p-0 d-none d-lg-block">
+  <b-container fluid class="m-0 p-0 fixed">
+    <div class="bg-white p-0 d-none d-lg-block">
       <b-row class="w-100 m-0">
         <b-col cols="2" class="p-0">
           <!-- logo -->
-          <div class="container headerlogo p-0 finger">
+          <b-container class="headerlogo p-0 finger">
             <nuxt-link to="/" tag="img" class="imglogo" :src="wordLogo">
             </nuxt-link>
-          </div>
+          </b-container>
         </b-col>
         <b-col cols="8" class="p-0 d-flex">
           <!--menu-->
           <b-row class="w-100 m-0 upmenu">
             <b-col cols="12" class="p-0 d-flex">
-              <div class="container d-flex justify-content-center p-0 t14 mt-2">
+              <b-container class="d-flex justify-content-center p-0 t14 mt-2">
                 <div @mouseover="menushow('project')" class="pr-2">
                   THE PROJECT
                 </div>
@@ -23,11 +23,11 @@
                 <div @mouseover="menushow('science')" class="pl-2">
                   SCIENCE
                 </div>
-              </div>
+              </b-container>
             </b-col>
             <b-col cols="12" class="d-flex">
-              <div
-                class="container d-flex justify-content-center submenu"
+              <b-container
+                class="d-flex justify-content-center submenu"
                 v-if="coomenus.project"
               >
                 <nuxt-link class="mr-3 ae menux" to="/aboutyou"
@@ -42,9 +42,9 @@
                 <nuxt-link class="mr-3 ae menux" to="/governance">
                   GOVERNANCE</nuxt-link
                 >
-              </div>
-              <div
-                class="container d-flex justify-content-center submenu"
+              </b-container>
+              <b-container
+                class=" d-flex justify-content-center submenu"
                 v-if="coomenus.corporate"
               >
                 <nuxt-link class="mr-3 af menux" to="/corporate">
@@ -62,9 +62,9 @@
                 <nuxt-link class="mr-3 af menux" to="/workshops">
                   WORKSHOPS
                 </nuxt-link>
-              </div>
-              <div
-                class="container d-flex justify-content-center submenu"
+              </b-container>
+              <b-container
+                class=" d-flex justify-content-center submenu"
                 v-if="coomenus.science"
               >
                 <nuxt-link class="mr-3 au menux" to="/cooperation">
@@ -77,19 +77,19 @@
                   COOPERATION CONTEXT INDEX
                 </nuxt-link>
                 <nuxt-link class="mr-3 au menux" to="/science">
-                  COOPERACY RESEARCH ASSOCIATION
+                  RESEARCH
                 </nuxt-link>
                 <nuxt-link class="mr-3 au menux" to="/news">
                   NEWS
                 </nuxt-link>
-              </div>
+              </b-container>
             </b-col>
           </b-row>
         </b-col>
         <b-col cols="1" class="p-0 d-flex">
           <!-- user name and surname -->
-          <div
-            class="container d-flex justify-content-end p-0"
+          <b-container
+            class=" d-flex justify-content-end p-0"
             v-if="this.$auth.loggedIn"
           >
             <b-navbar-nav class="up t12">
@@ -97,21 +97,21 @@
                 {{ this.$auth.user.name + ' ' + this.$auth.user.surname }}
               </b-nav-text>
             </b-navbar-nav>
-          </div>
+          </b-container>
         </b-col>
         <b-col cols="1" class="p-0 d-flex">
           <!-- login -->
-          <div
-            class="container d-flex justify-content-end"
+          <b-container
+            class=" d-flex justify-content-end"
             v-if="!this.$auth.loggedIn"
           >
             <b-navbar-nav class="up t14">
               <b-nav-item to="/login">LOGIN</b-nav-item>
             </b-navbar-nav>
-          </div>
+          </b-container>
           <!-- user image link -->
-          <div
-            class="container d-flex justify-content-center p-0"
+          <b-container
+            class=" d-flex justify-content-center p-0"
             v-if="this.$auth.loggedIn"
           >
             <nuxt-link
@@ -121,27 +121,14 @@
               :src="userImage"
             >
             </nuxt-link>
-          </div>
-        </b-col>
-      </b-row>
-      <b-row class="w-100 p-0 m-0">
-        <b-col v-if="this.$auth.loggedIn" cols="12" class="p-0 fluid">
-          <votebar :voteprop="$auth.user" :proptype="'user'" />
-        </b-col>
-
-        <b-col
-          v-if="!this.$auth.loggedIn"
-          cols="12"
-          class="p-0 bg-secondary"
-          style="height: 1px"
-          >&nbsp;
+          </b-container>
         </b-col>
       </b-row>
     </div>
 
     <!---------------------------- mobile ---------------------------->
-    <b-navbar toggleable="lg" class="fixed-top bg-white p-0 d-lg-none">
-      <div class="container m-0 p-0">
+    <b-navbar toggleable="lg" class="bg-white p-0 d-lg-none">
+      <b-container fluid class="p-0 m-0">
         <b-row class="w-100 m-0 rebar">
           <b-col cols="3" class="float-left">
             <b-navbar-brand class="headerlogo" to="/">
@@ -210,33 +197,35 @@
                 <b-nav-item to="/login" v-if="!this.$auth.loggedIn"
                   >LOGIN</b-nav-item
                 >
-                <nuxt-link
-                  to="/user"
-                  tag="img"
-                  class="userlogo rounded-circle finger"
-                  :src="userImage"
-                >
-                </nuxt-link>
+                <b-nav-item to="/user" v-if="this.$auth.loggedIn">
+                  <nuxt-link
+                    to="/user"
+                    tag="img"
+                    class="userlogo rounded-circle finger"
+                    :src="userImage"
+                  >
+                  </nuxt-link>
+                </b-nav-item>
               </b-navbar-nav>
             </b-collapse>
           </b-col>
         </b-row>
-        <b-row>
-          <b-col v-if="this.$auth.loggedIn" cols="12" class="p-0 fluid">
-            <votebar :voteprop="$auth.user" :proptype="'user'" />
-          </b-col>
-
-          <b-col
-            v-if="!this.$auth.loggedIn"
-            cols="12"
-            class="p-0 bg-secondary"
-            style="height: 1px"
-            >&nbsp;
-          </b-col>
-        </b-row>
-      </div>
+      </b-container>
     </b-navbar>
-  </div>
+    <b-row class="w-100 p-0 pt-3 p-lg-0 m-0 bg-white">
+      <b-col v-if="this.$auth.loggedIn" cols="12" class="p-0 fluid">
+        <votebar :voteprop="$auth.user" :proptype="'user'" />
+      </b-col>
+
+      <b-col
+        v-if="!this.$auth.loggedIn"
+        cols="12"
+        class="p-0 bg-secondary"
+        style="height: 1px"
+        >&nbsp;
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
 
 <script>

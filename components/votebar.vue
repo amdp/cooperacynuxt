@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid p-0 m-0" v-if="this.proptype == 'user'">
+  <b-container fluid class="p-0 m-0" v-if="this.proptype == 'user'">
     <b-row class="p-0 w-100 m-0">
       <b-col cols="12" class="p-0 m-0 d-flex">
         <div
@@ -10,7 +10,7 @@
         ></div>
       </b-col>
     </b-row>
-  </div>
+  </b-container>
   <b-row class="mt-2" v-else-if="this.proptype == 'project'">
     <div
       v-for="vote in this.vote"
