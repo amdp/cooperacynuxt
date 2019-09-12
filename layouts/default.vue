@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid">
     <b-row>
-      <navbar />
+      <newNavbar />
     </b-row>
     <b-row class="navbarrow">
       <b-col cols="2"></b-col>
@@ -15,10 +15,10 @@
 </template>
 
 <script>
-import navbar from '@/components/navbar'
+import newNavbar from '@/components/newNavbar'
 import foot from '@/components/foot'
 
 export default {
-  components: { navbar: navbar, foot: foot }
+  components: { newNavbar, foot }
 }
 </script>
