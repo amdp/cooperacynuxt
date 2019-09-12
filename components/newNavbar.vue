@@ -72,7 +72,7 @@
               ><nuxt-link to="/news">NEWS</nuxt-link></b-dropdown-item
             >
           </b-nav-item-dropdown>
-          <b-nav-item class="ml-5"
+          <b-nav-item class="ml-lg-5"
             ><nuxt-link to="/login">LOGIN</nuxt-link></b-nav-item
           >
         </b-navbar-nav>
@@ -102,10 +102,29 @@ export default {
   height: 10vh;
   opacity: 0.8;
   z-index: 5;
+  width: 100%;
+  position: fixed;
+  background-color: white;
 }
 .img-logo {
   width: 230px;
   z-index: 6;
   cursor: pointer;
+}
+@media (max-width: 992px) {
+  .navbar {
+    opacity: 1;
+  }
+  .navbar-nav {
+    width: 100%;
+    background-color: white;
+    text-align: center;
+    margin-top: 30px;
+  }
+}
+@media (max-width: 576px) {
+  .img-logo {
+    width: 160px;
+  }
 }
 </style>
