@@ -3,10 +3,8 @@
     <b-row>
       <newNavbar />
     </b-row>
-    <b-row class="navbarrow">
-      <b-col cols="2"></b-col>
-      <b-col cols="8"><nuxt /></b-col>
-      <b-col cols="2"></b-col>
+    <b-row class="navbarrow d-flex justify-content-center">
+      <b-col cols="11" lg="8"><nuxt /></b-col>
     </b-row>
     <b-row>
       <foot />
