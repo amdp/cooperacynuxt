@@ -11,7 +11,7 @@
       </b-col>
     </b-row>
   </b-container>
-  <b-row class="mt-2" v-else-if="this.proptype == 'project'">
+  <b-row class="mt-2 p-0 up" v-else-if="this.proptype == 'project'">
     <div
       v-for="vote in this.vote"
       :key="vote.projectcc"
@@ -19,10 +19,12 @@
       :style="vote.style"
       @click="voteswitch(vote.projectcc)"
     >
-      <div class="showme t16">{{ vote.vlong }} : {{ vote.v }}</div>
+      <div class="showme t12 mt-1">
+        {{ vote.vlong }}<br />{{ vote.v }} points
+      </div>
     </div>
   </b-row>
-  <b-row class="mt-2" v-else-if="this.proptype == 'comment'">
+  <b-row class="mt-2 p-0 up" v-else-if="this.proptype == 'comment'">
     <div
       v-for="vote in this.vote"
       :key="vote.commentcc"
@@ -30,7 +32,9 @@
       :style="vote.style"
       @click="voteswitch(vote.commentcc)"
     >
-      <div class="showme t10">{{ vote.vlong }} : {{ vote.v }}</div>
+      <div class="showme t8 mt-1">
+        {{ vote.vlong }}<br />{{ vote.v }} points
+      </div>
     </div>
   </b-row>
 </template>
@@ -75,7 +79,7 @@ export default {
       if (this.proptype == 'user') {
         for (let i = 0; i < 7; i++) {
           ;(voteif[i].class =
-            'uservote b' +
+            'p-0 uservote b' +
             this.$store.state.condition[i] +
             ' ' +
             this.$store.state.condition[i]),
@@ -89,7 +93,7 @@ export default {
       if (this.proptype == 'project') {
         for (let i = 0; i < 7; i++) {
           ;(voteif[i].class =
-            'vote col b' +
+            'p-0 vote col b' +
             this.$store.state.condition[i] +
             ' ' +
             this.$store.state.condition[i]),
@@ -99,7 +103,7 @@ export default {
       if (this.proptype == 'comment') {
         for (let i = 0; i < 7; i++) {
           ;(voteif[i].class =
-            'vote col b' +
+            'p-0 vote col b' +
             this.$store.state.condition[i] +
             ' ' +
             this.$store.state.condition[i]),

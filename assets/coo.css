@@ -481,12 +481,14 @@ img.news {
 }
 .vote:hover .showme {
   display: block;
+  font-weight: 400;
 }
 .uservote {
   height: 2px;
 }
 .uservote:hover .showme {
   display: block;
+  font-weight: 400;
 }
 .showme {
   display: none;
