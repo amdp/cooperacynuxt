@@ -453,14 +453,22 @@ hr.home-hr {
   height: 40px;
   width: 40px;
 }
+.page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 img.page-header {
   margin-top: 0px;
   margin-bottom: 60px;
-  width: 100%;
+  width: 90vw;
   height: auto;
   vertical-align: top;
   border: none;
 }
+
+
+img.page-header 
 img.news {
   margin-top: 10px;
   margin-bottom: 20px;
