@@ -370,7 +370,7 @@ app.post('/recoverpassword', async (req, res) => {
                 process.env.PORT +
                 '/recover?jws=' +
                 token +
-                "\nIf you didn't, ignore this email"
+                '\nOr please just ignore this email'
             }
             transporter.sendMail(mailOptions, (error, info) => {
               if (error) {
@@ -405,7 +405,7 @@ app.post('/recoverpassword', async (req, res) => {
         }
       )
     })
-  }
+  } else console.log(' ' + JSON.stringify('No mail nor reset token received.'))
 })
 
 app.post('/place', (req, res) => {

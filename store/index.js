@@ -182,7 +182,7 @@ export const actions = {
     let { data } = await axios.get(process.env.DBURL + '/category')
     context.commit('setCategory', data)
   },
-  addVoteAction: async payload => {
+  addVoteAction: async (context, payload) => {
     let { data } = await axios.post(process.env.DBURL + '/vote', payload)
     return data
   },
@@ -203,7 +203,7 @@ export const actions = {
     let go = { godata: data, goyear: payload.cciyear }
     context.commit('setCCI', go)
   },
-  projectFormAction: async payload => {
+  projectFormAction: async (context, payload) => {
     let { data } = await axios.post(process.env.DBURL + '/project', payload)
     if (data.id) {
       return data.id
@@ -267,7 +267,8 @@ export const actions = {
     )
     return data
   },
-  recoverPasswordAction: async payload => {
+  recoverPasswordAction: async (context, payload) => {
+    console.log(' ' + JSON.stringify(payload))
     let { data } = await axios.post(
       process.env.DBURL + '/recoverpassword',
       payload
