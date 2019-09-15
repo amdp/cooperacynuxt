@@ -9,14 +9,14 @@
 <script>
 export default {
   async mounted() {
-    let change = await this.$store.dispatch("recoverPasswordAction", {
+    let change = await this.$store.dispatch('recoverPasswordAction', {
       token: this.$route.query.jws
-    });
-    if (change == "updated") {
+    })
+    if (change == 'updated') {
       setTimeout(function() {
-        location.href = "/login";
-      }, 1200);
+        location.href = '/login'
+      }, 1200)
     }
   }
-};
+}
 </script>

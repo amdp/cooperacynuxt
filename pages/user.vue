@@ -105,10 +105,8 @@ export default {
       }
       let sumcc = 0
       for (let j = 0; j < cc.length; j++) {
-        console.log(' ' + JSON.stringify(res[cc[j]]))
         sumcc += res[cc[j]]
       }
-      console.log('summing: ' + JSON.stringify(sumcc))
       if (sumcc < 28) res[cc[0]]++
       if (sumcc == 29) res[cc[6]]--
     }
