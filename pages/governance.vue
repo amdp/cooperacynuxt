@@ -30,10 +30,9 @@
       coordinators.<br />
     </p>
     <br />
-
     <p class="subheading freedom center space">DECISIONS</p>
     <br />
-    <p class="base">
+    <p class="base" style="width: 100%;">
       Coordinators may take direct decisions in their project. Only when their
       decision is publicly communicated it becomes effective. When they are in
       contrast or unsure about what decision to take, coordinators can ask
@@ -55,6 +54,7 @@
       <a class="ad" href="/integration">integrated</a>.<br />
 
       <br /><img
+        style="width: 100%;"
         class="page-header"
         src="~/assets/image/page/governance/decisions.png"
       />

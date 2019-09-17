@@ -44,8 +44,15 @@
     <div>
       <p class="subheading transparency center space">THE TEAM</p>
       <div class="row">
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-center">
-          <img src="~/assets/image/page/aboutus/amdp.png" alt="null" /><br />
+        <div
+          class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-center"
+          style="display: flex; flex-wrap: wrap; justify-content: center;"
+        >
+          <img
+            class="about"
+            src="~/assets/image/page/aboutus/amdp.png"
+            alt="null"
+          /><br />
           <p>
             Alessandro Merletti De Palo<br />
             <i>Co-founder and coordinator of Cooperacy</i>
@@ -53,6 +60,7 @@
         </div>
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-center">
           <img
+            class="about"
             src="~/assets/image/page/aboutus/mario.png"
             alt="Mario Sabatino"
           /><br />
@@ -62,14 +70,22 @@
           </p>
         </div>
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-center">
-          <img src="~/assets/image/page/aboutus/framba.png" alt="null" /><br />
+          <img
+            class="about"
+            src="~/assets/image/page/aboutus/framba.png"
+            alt="null"
+          /><br />
           <p>
             Federica Framba<br />
             <i>Designer</i>
           </p>
         </div>
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-center">
-          <img src="~/assets/image/page/aboutus/alessia.png" alt="null" /><br />
+          <img
+            class="about"
+            src="~/assets/image/page/aboutus/alessia.png"
+            alt="null"
+          /><br />
           <p>
             Alessia De Santis<br />
             <i>Public Administration Projects</i>
@@ -79,6 +95,7 @@
       <div class="row">
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-center">
           <img
+            class="about"
             src="~/assets/image/page/aboutus/giosetta.png"
             alt="null"
           /><br />
@@ -88,37 +105,57 @@
           </p>
         </div>
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-center">
-          <img src="~/assets/image/page/aboutus/marco.png" alt="null" /><br />
+          <img
+            class="about"
+            src="~/assets/image/page/aboutus/marco.png"
+            alt="null"
+          /><br />
           <p>
             Marco Marincola<br />
             <i>Engineer</i>
           </p>
         </div>
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-center">
-          <img src="~/assets/image/page/aboutus/ali.png" alt="null" /><br />
+          <img
+            class="about"
+            src="~/assets/image/page/aboutus/ali.png"
+            alt="null"
+          /><br />
           <p>
             Ali Akhtari<br />
             <i>Front-End Developer</i>
           </p>
         </div>
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-center">
-          <img src="~/assets/image/page/aboutus/ilario.png" alt="null" /><br />
+          <img
+            class="about"
+            src="~/assets/image/page/aboutus/ilario.png"
+            alt="null"
+          /><br />
           <p>
             Ilario Tito<br />
             <i>Co-founder</i>
           </p>
         </div>
       </div>
-      <div class="row">
+      <div class="row" style="display: flex; justify-content: center;">
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-center">
-          <img src="~/assets/image/page/aboutus/sara.png" alt="null" /><br />
+          <img
+            class="about"
+            src="~/assets/image/page/aboutus/sara.png"
+            alt="null"
+          /><br />
           <p>
             Sara Conallo<br />
             <i>Jackie of All Trades</i>
           </p>
         </div>
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-center">
-          <img src="~/assets/image/page/aboutus/enea.png" alt="null" /><br />
+          <img
+            class="about"
+            src="~/assets/image/page/aboutus/enea.png"
+            alt="null"
+          /><br />
           <p>
             Enea Barbetta<br />
             <i>Main Developer</i>
