@@ -213,43 +213,36 @@ a:hover {
   color: #777777;
 }
 .ae:hover {
-  font-weight: 200;
   text-decoration: none;
   color: var(--equivalence);
   background-image: none;
 }
 .at:hover {
-  font-weight: 200;
   text-decoration: none;
   color: var(--trust);
   background-image: none;
 }
 .ac:hover {
-  font-weight: 200;
   text-decoration: none;
   color: var(--care);
   background-image: none;
 }
 .ai:hover {
-  font-weight: 200;
   text-decoration: none;
   color: var(--transparency);
   background-image: none;
 }
 .af:hover {
-  font-weight: 200;
   text-decoration: none;
   color: var(--freedom);
   background-image: none;
 }
 .au:hover {
-  font-weight: 200;
   text-decoration: none;
   color: var(--understanding);
   background-image: none;
 }
 .ad:hover {
-  font-weight: 200;
   text-decoration: none;
   color: var(--diversity);
   background-image: none;
@@ -467,9 +460,7 @@ img.page-header {
   border: none;
 }
 
-
-img.page-header 
-img.news {
+img.page-header img.news {
   margin-top: 10px;
   margin-bottom: 20px;
   width: 70%;
