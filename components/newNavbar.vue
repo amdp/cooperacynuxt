@@ -1,4 +1,5 @@
 <template>
+  <!--  DESKTOP NAV -->
   <div class="w-100 nav-container">
     <b-navbar
       toggleable="lg"
@@ -43,40 +44,42 @@
           id="project"
           v-if="navState == 'project'"
         >
-          <nuxt-link class="dropdown" to="/aboutyou">ABOUT YOU</nuxt-link>
-          <nuxt-link class="dropdown" to="/aboutus">ABOUT US</nuxt-link>
-          <nuxt-link class="dropdown" to="/platform">THE PLATFORM</nuxt-link>
-          <nuxt-link class="dropdown" to="/governance">GOVERNANCE</nuxt-link>
+          <nuxt-link class="menu-item" to="/aboutyou">ABOUT YOU</nuxt-link>
+          <nuxt-link class="menu-item" to="/aboutus">ABOUT US</nuxt-link>
+          <nuxt-link class="menu-item" to="/platform">THE PLATFORM</nuxt-link>
+          <nuxt-link class="menu-item" to="/governance">GOVERNANCE</nuxt-link>
         </div>
         <div
           class="navbar-links text-center"
           id="corporate"
           v-if="navState == 'corporate'"
         >
-          <nuxt-link class="dropdown" to="/corporate"
+          <nuxt-link class="menu-item" to="/corporate"
             >CORPORATE WORLD</nuxt-link
           >
-          <nuxt-link class="dropdown" to="/overview"
+          <nuxt-link class="menu-item" to="/overview"
             >MEASURING COOPERATION</nuxt-link
           >
-          <nuxt-link class="dropdown" to="/coopenspace"
+          <nuxt-link class="menu-item" to="/coopenspace"
             >CO-OPEN SPACE</nuxt-link
           >
-          <nuxt-link class="dropdown" to="/cohackathon">CO-HACKATHON</nuxt-link>
-          <nuxt-link class="dropdown" to="/workshops">WORKSHOPS</nuxt-link>
+          <nuxt-link class="menu-item" to="/cohackathon"
+            >CO-HACKATHON</nuxt-link
+          >
+          <nuxt-link class="menu-item" to="/workshops">WORKSHOPS</nuxt-link>
         </div>
         <div
           class="navbar-links text-center"
           id="science"
           v-if="navState == 'science'"
         >
-          <nuxt-link class="dropdown" to="/cooperation">COOPERATION</nuxt-link>
-          <nuxt-link class="dropdown" to="/integration">INTEGRATION</nuxt-link>
-          <nuxt-link class="dropdown" to="/cci"
+          <nuxt-link class="menu-item" to="/cooperation">COOPERATION</nuxt-link>
+          <nuxt-link class="menu-item" to="/integration">INTEGRATION</nuxt-link>
+          <nuxt-link class="menu-item" to="/cci"
             >COOPERATION CONTEXT INDEX</nuxt-link
           >
-          <nuxt-link class="dropdown" to="/science">RESEARCH</nuxt-link>
-          <nuxt-link class="dropdown" to="/news">NEWS</nuxt-link>
+          <nuxt-link class="menu-item" to="/science">RESEARCH</nuxt-link>
+          <nuxt-link class="menu-item" to="/news">NEWS</nuxt-link>
         </div>
       </div>
       <div
@@ -94,10 +97,21 @@
             this.$auth.user.name + ' ' + this.$auth.user.surname
           }}</a>
           <div class="social-icons">
-            <a href="#" class="fab fa-facebook"></a>
-            <a href="#" class="fab fa-twitter"></a>
-            <a href="#" class="fab fa-instagram"></a>
-            <a href="#" class="fab fa-linkedin"></a>
+            <a
+              target="_blank"
+              href="https://www.facebook.com/cooperacy.org/"
+              class="fab fa-facebook"
+            ></a>
+            <a
+              target="_blank"
+              href="https://www.linkedin.com/company/cooperacy/"
+              class="fab fa-linkedin"
+            ></a>
+            <a
+              target="_blank"
+              href="https://discord.gg/kzBB3Xj"
+              class="fab fa-discord"
+            ></a>
           </div>
         </div>
       </div>
@@ -211,7 +225,9 @@ export default {
 </script>
 
 <style scoped>
+/* IMPORT FONTAWESOME */
 @import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.css);
+
 .nav-container {
   opacity: 1;
   z-index: 5;
@@ -223,7 +239,6 @@ export default {
   border-bottom: 1px #d3e0e9 solid;
 }
 .img-logo {
-  width: 230px;
   z-index: 6;
   cursor: pointer;
 }
@@ -239,19 +254,10 @@ export default {
 .navbar-links {
   margin-top: 0.2rem;
 }
-.dropdown {
+.menu-item {
   font-size: 11px;
   margin: 0px 5px;
   cursor: pointer;
-}
-#project .dropdown:hover {
-  color: var(--equivalence);
-}
-#corporate .dropdown:hover {
-  color: var(--freedom);
-}
-#science .dropdown:hover {
-  color: var(--understanding);
 }
 .nav-item,
 .nav {
@@ -265,45 +271,55 @@ export default {
   height: 2px;
   width: 14px;
   border-radius: 40%;
-  background: var(--equivalence);
   display: none;
   position: absolute;
   left: calc(50% - 7px);
   bottom: 0;
 }
-
-.project-active:after {
-  background: var(--equivalence);
-  display: inline-block;
-}
+.project-active:after,
+.science-active:after,
 .corporate-active:after {
-  background: var(--freedom);
   display: inline-block;
-}
-.science-active:after {
-  background: var(--understanding);
-  display: inline-block;
-}
-.fa-facebook:hover {
-  color: var(--freedom);
-}
-.fa-twitter:hover {
-  color: var(--transparency);
-}
-.fa-instagram:hover {
-  color: var(--equivalence);
-}
-.fa-linkedin:hover {
-  color: var(--understanding);
 }
 .fa-times,
 .fa-bars {
   font-size: 30px;
 }
+
+/* COLORS */
+#project .menu-item:hover,
+.fa-discord:hover {
+  color: var(--equivalence);
+}
+.project-active:after {
+  background-color: var(--equivalence);
+}
+#corporate .menu-item:hover,
+.fa-facebook:hover {
+  color: var(--freedom);
+}
+.corporate-active:after {
+  background-color: var(--freedom);
+}
+#science .menu-item:hover,
+.fa-linkedin:hover {
+  color: var(--understanding);
+}
+.science-active:after {
+  background-color: var(--understanding);
+}
+
+/* MEDIA QUERIES */
 @media (max-width: 992px) {
   .nav-menu-container,
   .right-container {
     display: none !important;
+  }
+}
+@media (min-width: 992px) {
+  .burger-btn,
+  .mobile-dropdown {
+    display: none;
   }
 }
 </style>
