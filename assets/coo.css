@@ -492,3 +492,6 @@ img.page-header img.news {
   background-color: var(--care) !important;
   color: #fff !important;
 }
+img.about {
+  width: 100%;
+}
