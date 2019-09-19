@@ -1,10 +1,14 @@
 <template>
-  <div class="container">
+  <b-container>
     <div class="row">
-      <h1 id="contact" name="contact" class="transparency heading center space">CONTACT US</h1>
+      <h1 id="contact" name="contact" class="transparency heading center space">
+        CONTACT US
+      </h1>
     </div>
     <div class="row">
-      <p class="base center">Contact us or feel free to ask us anything that is not clear yet.</p>
+      <p class="base center">
+        Contact us or feel free to ask us anything that is not clear yet.
+      </p>
     </div>
 
     <!-- Test -->
@@ -34,7 +38,9 @@
 
               <!-- Email input-->
               <div class="form-group">
-                <label class="col-md-3 control-label" for="email">Your E-mail</label>
+                <label class="col-md-3 control-label" for="email"
+                  >Your E-mail</label
+                >
                 <div class="col-md-9">
                   <input
                     v-model="formEmail"
@@ -50,7 +56,9 @@
 
               <!-- Subject -->
               <div class="form-group">
-                <label class="col-md-3 control-label" for="subject">Subject</label>
+                <label class="col-md-3 control-label" for="subject"
+                  >Subject</label
+                >
                 <div class="col-md-9">
                   <input
                     v-model="formSubject"
@@ -66,7 +74,9 @@
 
               <!-- Message body -->
               <div class="form-group">
-                <label class="col-md-3 control-label" for="message">Your message</label>
+                <label class="col-md-3 control-label" for="message"
+                  >Your message</label
+                >
                 <div class="col-md-9">
                   <textarea
                     v-model="formBody"
@@ -93,7 +103,11 @@
                   ></VueRecaptcha>
                 </div>
                 <div class="col-md-3 text-right">
-                  <input type="submit" class="btn btn-primary btn-lg" value="Submit" />
+                  <input
+                    type="submit"
+                    class="btn btn-primary btn-lg"
+                    value="Submit"
+                  />
                 </div>
               </div>
             </fieldset>
@@ -101,36 +115,36 @@
         </div>
       </div>
     </div>
-  </div>
+  </b-container>
 </template>
 
 <script>
-import VueRecaptcha from "vue-recaptcha";
+import VueRecaptcha from 'vue-recaptcha'
 export default {
-  name: "contactForm",
+  name: 'contactForm',
   data() {
     return {
-      formName: "",
-      formEmail: "",
-      formSubject: "",
-      formBody: "",
-      response: "",
-      recaptchaToken: ""
-    };
+      formName: '',
+      formEmail: '',
+      formSubject: '',
+      formBody: '',
+      response: '',
+      recaptchaToken: ''
+    }
   },
   components: {
     VueRecaptcha
   },
   methods: {
     submit() {
-      this.$refs.recaptcha.execute();
+      this.$refs.recaptcha.execute()
     },
     onVerify(res) {
-      this.recaptchaToken = res;
-      this.sendMail();
+      this.recaptchaToken = res
+      this.sendMail()
     },
     onExpired() {
-      this.$refs.recaptcha.reset();
+      this.$refs.recaptcha.reset()
     },
     async sendMail() {
       const message = {
@@ -139,16 +153,16 @@ export default {
         formSubject: this.formSubject,
         formBody: this.formBody,
         recaptchaToken: this.recaptchaToken
-      };
+      }
       try {
-        const res = await this.$store.dispatch("contactEmailAction", message);
+        const res = await this.$store.dispatch('contactEmailAction', message)
         this.formName = this.formEmail = this.formSubject = this.formBody = this.recaptchaToken =
-          "";
-        this.response = res.message;
+          ''
+        this.response = res.message
       } catch (error) {
-        console.log(error);
+        console.log(error)
       }
     }
   }
-};
+}
 </script>

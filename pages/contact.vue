@@ -3,11 +3,11 @@
 </template>
 
 <script>
-import contactForm from "../components/contactform";
+import contactForm from '../components/contactform'
 
 export default {
   components: {
     contactForm
   }
-};
+}
 </script>
