@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid">
     <b-row>
-      <newNavbar />
+      <navbar />
     </b-row>
     <b-row class="navbarrow d-flex justify-content-center">
       <b-col cols="11" lg="8"><nuxt /></b-col>
@@ -13,10 +13,10 @@
 </template>
 
 <script>
-import newNavbar from '@/components/newNavbar'
+import navbar from '@/components/navbar'
 import foot from '@/components/foot'
 
 export default {
-  components: { newNavbar, foot }
+  components: { navbar, foot }
 }
 </script>
