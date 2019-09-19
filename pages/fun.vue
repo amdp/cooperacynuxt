@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="page-container">
     <br /><img class="page-header" src="~/assets/image/page/banners/fun.png" />
     <br />
     <p class="subheading diversity center space margin">FUN</p>
@@ -34,7 +34,7 @@
     </p>
 
     <!--BEGIN WHEEL-->
-    <div style="position: relative; text-align: center;">
+    <div style="width: 100%; position: relative; text-align: center; ">
       <div class="rotating" style="position: absolute; z-index: 1;">
         <img
           src="~/assets/image/page/fun/pinwheel.png"
@@ -42,7 +42,6 @@
           height="330"
         />
       </div>
-
       <div style="position: absolute; z-index: 2">
         <img src="~/assets/image/page/fun/typo.png" />
       </div>

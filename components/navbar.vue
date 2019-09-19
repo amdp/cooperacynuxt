@@ -1,251 +1,230 @@
 <template>
-  <b-container fluid class="m-0 p-0 fixed">
-    <div class="bg-white p-0 d-none d-lg-block">
-      <b-row class="w-100 m-0">
-        <b-col cols="2" class="p-0">
-          <!-- logo -->
-          <b-container class="headerlogo p-0 finger">
-            <nuxt-link to="/" tag="img" class="imglogo" :src="wordLogo">
-            </nuxt-link>
-          </b-container>
-        </b-col>
-        <b-col cols="8" class="p-0 d-flex">
-          <!--menu-->
-          <b-row class="w-100 m-0 upmenu">
-            <b-col cols="12" class="p-0 d-flex">
-              <b-container class="d-flex justify-content-center p-0 t14 mt-2">
-                <div @mouseover="menushow('project')" class="pr-2">
-                  THE PROJECT
-                </div>
-                <div @mouseover="menushow('corporate')" class="pl-2 pr-2">
-                  CORPORATE
-                </div>
-                <div @mouseover="menushow('science')" class="pl-2">
-                  SCIENCE
-                </div>
-              </b-container>
-            </b-col>
-            <b-col cols="12" class="d-flex">
-              <b-container
-                class="d-flex justify-content-center submenu"
-                v-if="coomenus.project"
-              >
-                <nuxt-link class="mr-3 ae menux" to="/aboutyou"
-                  >ABOUT YOU</nuxt-link
-                >
-                <nuxt-link class="mr-3 ae menux" to="/aboutus"
-                  >ABOUT US</nuxt-link
-                >
-                <nuxt-link class="mr-3 ae menux" to="/platform"
-                  >THE PLATFORM</nuxt-link
-                >
-                <nuxt-link class="mr-3 ae menux" to="/governance">
-                  GOVERNANCE</nuxt-link
-                >
-              </b-container>
-              <b-container
-                class=" d-flex justify-content-center submenu"
-                v-if="coomenus.corporate"
-              >
-                <nuxt-link class="mr-3 af menux" to="/corporate">
-                  CORPORATE WORLD
-                </nuxt-link>
-                <nuxt-link class="mr-3 af menux" to="/overview">
-                  MEASURING COOPERATION
-                </nuxt-link>
-                <nuxt-link class="mr-3 af menux" to="/coopenspace">
-                  CO-OPEN SPACE
-                </nuxt-link>
-                <nuxt-link class="mr-3 af menux" to="/cohackathon">
-                  CO-HACKATHON
-                </nuxt-link>
-                <nuxt-link class="mr-3 af menux" to="/workshops">
-                  WORKSHOPS
-                </nuxt-link>
-              </b-container>
-              <b-container
-                class=" d-flex justify-content-center submenu"
-                v-if="coomenus.science"
-              >
-                <nuxt-link class="mr-3 au menux" to="/cooperation">
-                  COOPERATION
-                </nuxt-link>
-                <nuxt-link class="mr-3 au menux" to="/integration">
-                  INTEGRATION
-                </nuxt-link>
-                <nuxt-link class="mr-3 au menux" to="/cci">
-                  COOPERATION CONTEXT INDEX
-                </nuxt-link>
-                <nuxt-link class="mr-3 au menux" to="/science">
-                  RESEARCH
-                </nuxt-link>
-                <nuxt-link class="mr-3 au menux" to="/news">
-                  NEWS
-                </nuxt-link>
-              </b-container>
-            </b-col>
-          </b-row>
-        </b-col>
-        <b-col cols="1" class="p-0 d-flex">
-          <!-- user name and surname -->
-          <b-container
-            class=" d-flex justify-content-end p-0"
-            v-if="this.$auth.loggedIn"
-          >
-            <b-navbar-nav class="up t12">
-              <b-nav-text class="align-middle">
-                {{ this.$auth.user.name + ' ' + this.$auth.user.surname }}
-              </b-nav-text>
-            </b-navbar-nav>
-          </b-container>
-        </b-col>
-        <b-col cols="1" class="p-0 d-flex">
-          <!-- login -->
-          <b-container
-            class=" d-flex justify-content-end"
-            v-if="!this.$auth.loggedIn"
-          >
-            <b-navbar-nav class="up t14">
-              <b-nav-item to="/login">LOGIN</b-nav-item>
-            </b-navbar-nav>
-          </b-container>
-          <!-- user image link -->
-          <b-container
-            class=" d-flex justify-content-center p-0"
-            v-if="this.$auth.loggedIn"
-          >
-            <nuxt-link
-              to="/user"
-              tag="img"
-              class="userlogo rounded-circle finger"
-              :src="userImage"
+  <!--  DESKTOP NAV -->
+  <div class="w-100 nav-container">
+    <b-navbar
+      toggleable="lg"
+      class="navbar d-flex justify-content-start"
+      @mouseleave="navState = null"
+    >
+      <nuxt-link
+        to="/"
+        tag="img"
+        class="img-logo col-6 col-sm-4 col-lg-2 p-0"
+        :src="wordLogo"
+      ></nuxt-link>
+      <div class="col-8 d-flex flex-column h-100 nav-menu-container">
+        <div class="navbar-menu w-100 text-center">
+          <div class="nav" @mouseenter="navState = 'project'">
+            <div
+              class="nav-item"
+              :class="{ 'project-active': navState == 'project' }"
             >
-            </nuxt-link>
-          </b-container>
-        </b-col>
-      </b-row>
-    </div>
+              THE PROJECT
+            </div>
+          </div>
+          <div class="nav" @mouseenter="navState = 'corporate'">
+            <div
+              class="nav-item"
+              :class="{ 'corporate-active': navState == 'corporate' }"
+            >
+              CORPORATE
+            </div>
+          </div>
+          <div class="nav" @mouseenter="navState = 'science'">
+            <div
+              class="nav-item"
+              :class="{ 'science-active': navState == 'science' }"
+            >
+              SCIENCE
+            </div>
+          </div>
+        </div>
+        <div
+          class="navbar-links text-center"
+          id="project"
+          v-if="navState == 'project'"
+        >
+          <nuxt-link class="menu-item" to="/aboutyou">ABOUT YOU</nuxt-link>
+          <nuxt-link class="menu-item" to="/aboutus">ABOUT US</nuxt-link>
+          <nuxt-link class="menu-item" to="/platform">THE PLATFORM</nuxt-link>
+          <nuxt-link class="menu-item" to="/governance">GOVERNANCE</nuxt-link>
+        </div>
+        <div
+          class="navbar-links text-center"
+          id="corporate"
+          v-if="navState == 'corporate'"
+        >
+          <nuxt-link class="menu-item" to="/corporate"
+            >CORPORATE WORLD</nuxt-link
+          >
+          <nuxt-link class="menu-item" to="/overview"
+            >MEASURING COOPERATION</nuxt-link
+          >
+          <nuxt-link class="menu-item" to="/coopenspace"
+            >CO-OPEN SPACE</nuxt-link
+          >
+          <nuxt-link class="menu-item" to="/cohackathon"
+            >CO-HACKATHON</nuxt-link
+          >
+          <nuxt-link class="menu-item" to="/workshops">WORKSHOPS</nuxt-link>
+        </div>
+        <div
+          class="navbar-links text-center"
+          id="science"
+          v-if="navState == 'science'"
+        >
+          <nuxt-link class="menu-item" to="/cooperation">COOPERATION</nuxt-link>
+          <nuxt-link class="menu-item" to="/integration">INTEGRATION</nuxt-link>
+          <nuxt-link class="menu-item" to="/cci"
+            >COOPERATION CONTEXT INDEX</nuxt-link
+          >
+          <nuxt-link class="menu-item" to="/science">RESEARCH</nuxt-link>
+          <nuxt-link class="menu-item" to="/news">NEWS</nuxt-link>
+        </div>
+      </div>
+      <div
+        class="col-2 d-flex flex-column align-items-end h-100 right-container"
+      >
+        <div class="text-center h-100 d-flex flex-column">
+          <nuxt-link
+            class="mobile-nav-item pb-1 font-weight-bold"
+            id="login-btn"
+            v-if="!this.$auth.loggedIn"
+            to="/login"
+            >LOGIN</nuxt-link
+          >
+          <a href="" v-else>{{
+            this.$auth.user.name + ' ' + this.$auth.user.surname
+          }}</a>
+          <div class="social-icons">
+            <a
+              target="_blank"
+              href="https://www.facebook.com/cooperacy.org/"
+              class="fab fa-facebook"
+            ></a>
+            <a
+              target="_blank"
+              href="https://www.linkedin.com/company/cooperacy/"
+              class="fab fa-linkedin"
+            ></a>
+            <a
+              target="_blank"
+              href="https://discord.gg/kzBB3Xj"
+              class="fab fa-discord"
+            ></a>
+          </div>
+        </div>
+      </div>
 
-    <!---------------------------- mobile ---------------------------->
-    <b-navbar toggleable="lg" class="bg-white p-0 d-lg-none">
-      <b-container fluid class="p-0 m-0">
-        <b-row class="w-100 m-0 rebar">
-          <b-col cols="3" class="float-left">
-            <b-navbar-brand class="headerlogo" to="/">
-              <img class="headerlogo" src="@/assets/image/main/wordlogo.png" />
-            </b-navbar-brand>
-          </b-col>
-          <b-col cols="9" class="p-0 float-right">
-            <b-navbar-toggle
-              target="nav-collapse"
-              class="float-right"
-            ></b-navbar-toggle>
-            <b-collapse id="nav-collapse" is-nav>
-              <b-navbar-nav class="t12 float-right">
-                <b-nav-dropdown text="THE PROJECT">
-                  <b-dropdown-item to="/aboutyou" class="t12">
-                    ABOUT YOU
-                  </b-dropdown-item>
-                  <b-dropdown-item to="/aboutus" class="t12">
-                    ABOUT US
-                  </b-dropdown-item>
-                  <b-dropdown-item to="/platform" class="t12">
-                    THE PLATFORM
-                  </b-dropdown-item>
-                  <b-dropdown-item to="/governance" class="t12">
-                    GOVERNANCE
-                  </b-dropdown-item>
-                </b-nav-dropdown>
-
-                <b-nav-dropdown text="CORPORATE">
-                  <b-dropdown-item to="/corporate" class="t12">
-                    CORPORATE WORLD
-                  </b-dropdown-item>
-                  <b-dropdown-item to="/overview" class="t12">
-                    MEASURING COOPERATION
-                  </b-dropdown-item>
-                  <b-dropdown-item to="/coopenspace" class="t12">
-                    CO-OPEN SPACE
-                  </b-dropdown-item>
-                  <b-dropdown-item to="/cohackathon" class="t12">
-                    CO-HACKATHON
-                  </b-dropdown-item>
-                  <b-dropdown-item to="/workshops" class="t12">
-                    WORKSHOPS
-                  </b-dropdown-item>
-                </b-nav-dropdown>
-                <b-nav-dropdown text="SCIENCE">
-                  <b-dropdown-item to="/cooperation" class="t12">
-                    COOPERATION
-                  </b-dropdown-item>
-                  <b-dropdown-item to="/integration" class="t12">
-                    INTEGRATION
-                  </b-dropdown-item>
-                  <b-dropdown-item to="/cci" class="t12">
-                    COOPERATION CONTEXT INDEX
-                  </b-dropdown-item>
-                  <b-dropdown-item to="/science" class="t12">
-                    COOPERACY RESEARCH ASSOCIATION
-                  </b-dropdown-item>
-                  <b-dropdown-item to="/news" class="t12">
-                    NEWS
-                  </b-dropdown-item>
-                </b-nav-dropdown>
-                <b-nav-text class="align-middle" v-if="this.$auth.loggedIn">
-                  {{ this.$auth.user.name + ' ' + this.$auth.user.surname }}
-                </b-nav-text>
-                <b-nav-item to="/login" v-if="!this.$auth.loggedIn"
-                  >LOGIN</b-nav-item
-                >
-                <b-nav-item to="/user" v-if="this.$auth.loggedIn">
-                  <nuxt-link
-                    to="/user"
-                    tag="img"
-                    class="userlogo rounded-circle finger"
-                    :src="userImage"
-                  >
-                  </nuxt-link>
-                </b-nav-item>
-              </b-navbar-nav>
-            </b-collapse>
-          </b-col>
-        </b-row>
-      </b-container>
+      <!-- MOBILE HARMBURGER BUTTON -->
+      <div class="col-2 h-100 burger-btn ml-auto text-right" @click="resetNav">
+        <i
+          class="fas"
+          :class="[isDropdownVisible ? 'fa-times' : 'fa-bars']"
+        ></i>
+      </div>
     </b-navbar>
-    <b-row class="w-100 p-0 pt-3 p-lg-0 m-0 bg-white">
-      <b-col v-if="this.$auth.loggedIn" cols="12" class="p-0 fluid">
-        <votebar :voteprop="$auth.user" :proptype="'user'" />
-      </b-col>
 
-      <b-col
-        v-if="!this.$auth.loggedIn"
-        cols="12"
-        class="p-0 bg-secondary"
-        style="height: 1px"
-        >&nbsp;
-      </b-col>
-    </b-row>
-  </b-container>
+    <!-- MOBILE DROPDOWN -->
+    <div class="mobile-dropdown text-center pt-2" v-if="isDropdownVisible">
+      <div class="mobile-nav-box">
+        <div
+          @click="navState = 'project'"
+          class="nav-item"
+          :class="{ 'project-active': navState == 'project' }"
+        >
+          THE PROJECT
+        </div>
+        <div
+          class="mt-2 d-flex flex-column"
+          v-if="navState == 'project'"
+          @click="resetNav"
+        >
+          <nuxt-link class="mobile-nav-item" to="/aboutyou"
+            >ABOUT YOU</nuxt-link
+          >
+          <nuxt-link class="mobile-nav-item" to="/aboutus">ABOUT US</nuxt-link>
+          <nuxt-link class="mobile-nav-item" to="/platform"
+            >THE PLATFORM</nuxt-link
+          >
+          <nuxt-link class="mobile-nav-item" to="/governance"
+            >GOVERNANCE</nuxt-link
+          >
+        </div>
+      </div>
+      <div class="mobile-nav-box">
+        <div
+          @click="navState = 'corporate'"
+          class="nav-item"
+          :class="{ 'corporate-active': navState == 'corporate' }"
+        >
+          CORPORATE
+        </div>
+        <div
+          class="mt-2 d-flex flex-column"
+          v-if="navState == 'corporate'"
+          @click="resetNav"
+        >
+          <nuxt-link class="mobile-nav-item" to="/corporate"
+            >CORPORATE WORLD</nuxt-link
+          >
+          <nuxt-link class="mobile-nav-item" to="/overview"
+            >MEASURING COOPERATION</nuxt-link
+          >
+          <nuxt-link class="mobile-nav-item" to="/coopenspace"
+            >CO-OPEN SPACE</nuxt-link
+          >
+          <nuxt-link class="mobile-nav-item" to="/cohackathon"
+            >CO-HACKATHON</nuxt-link
+          >
+          <nuxt-link class="mobile-nav-item" to="/workshops"
+            >WORKSHOPS</nuxt-link
+          >
+        </div>
+      </div>
+      <div class="mobile-nav-box">
+        <div
+          @click="navState = 'science'"
+          class="nav-item"
+          :class="{ 'science-active': navState == 'science' }"
+        >
+          SCIENCE
+        </div>
+        <div
+          class="mt-2 d-flex flex-column"
+          v-if="navState == 'science'"
+          @click="resetNav"
+        >
+          <nuxt-link class="mobile-nav-item" to="/cooperation"
+            >COOPERATION</nuxt-link
+          >
+          <nuxt-link class="mobile-nav-item" to="/integration"
+            >INTEGRATION</nuxt-link
+          >
+          <nuxt-link class="mobile-nav-item" to="/cci"
+            >COOPERATION CONTEXT INDEX</nuxt-link
+          >
+          <nuxt-link class="mobile-nav-item" to="/science">RESEARCH</nuxt-link>
+          <nuxt-link class="mobile-nav-item" to="/news">NEWS</nuxt-link>
+        </div>
+      </div>
+      <div class="mobile-nav-box" @click="resetNav">
+        <nuxt-link to="/login" class="nav-item">LOGIN</nuxt-link>
+      </div>
+    </div>
+  </div>
 </template>
 
-<script>
-import votebar from './votebar'
 
+<script>
 export default {
   data() {
     return {
-      coomenus: { project: false, corporate: false, science: false }
+      navState: null,
+      isDropdownVisible: false
     }
   },
-  components: { votebar: votebar },
   computed: {
-    userImage() {
-      try {
-        return require('../assets/image/user/' + this.$auth.user.id + '.png')
-      } catch (e) {
-        return require('../assets/image/main/coo.png')
-      }
-    },
     wordLogo() {
       try {
         return require('../assets/image/main/wordlogo.png')
@@ -255,12 +234,117 @@ export default {
     }
   },
   methods: {
-    menushow(menu) {
-      this.coomenus['project'] = false
-      this.coomenus['corporate'] = false
-      this.coomenus['science'] = false
-      this.coomenus[menu] = true
+    resetNav: function() {
+      this.isDropdownVisible = !this.isDropdownVisible
+      this.navState = null
     }
   }
 }
 </script>
+
+<style scoped>
+/* IMPORT FONTAWESOME */
+@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.css);
+
+.nav-container {
+  opacity: 1;
+  z-index: 5;
+  width: 100%;
+  position: fixed;
+  background-color: white;
+}
+.navbar {
+  border-bottom: 1px #d3e0e9 solid;
+}
+.img-logo {
+  z-index: 6;
+  cursor: pointer;
+}
+.nav-item {
+  margin: 0 10px;
+}
+.social-icons a {
+  margin: 0 3px;
+}
+#login-btn {
+  border-bottom: 0.8px solid #666666;
+}
+.navbar-links {
+  margin-top: 0.2rem;
+}
+.menu-item {
+  font-size: 11px;
+  margin: 0px 5px;
+  cursor: pointer;
+}
+.nav-item,
+.nav {
+  cursor: pointer;
+  display: inline;
+  position: relative;
+  font-weight: 400;
+}
+.nav-item:after {
+  content: '';
+  height: 2px;
+  width: 14px;
+  border-radius: 40%;
+  display: none;
+  position: absolute;
+  left: calc(50% - 7px);
+  bottom: 0;
+}
+.project-active:after,
+.science-active:after,
+.corporate-active:after {
+  display: inline-block;
+}
+.fa-times,
+.fa-bars {
+  font-size: 30px;
+}
+.mobile-nav-box {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #dee2e6 !important;
+}
+.mobile-nav-items {
+  margin-bottom: 0.25rem;
+}
+
+/* COLORS */
+#project .menu-item:hover,
+.fa-discord:hover {
+  color: var(--equivalence);
+}
+.project-active:after {
+  background-color: var(--equivalence);
+}
+#corporate .menu-item:hover,
+.fa-facebook:hover {
+  color: var(--freedom);
+}
+.corporate-active:after {
+  background-color: var(--freedom);
+}
+#science .menu-item:hover,
+.fa-linkedin:hover {
+  color: var(--understanding);
+}
+.science-active:after {
+  background-color: var(--understanding);
+}
+
+/* MEDIA QUERIES */
+@media (max-width: 992px) {
+  .nav-menu-container,
+  .right-container {
+    display: none !important;
+  }
+}
+@media (min-width: 992px) {
+  .burger-btn,
+  .mobile-dropdown {
+    display: none;
+  }
+}
+</style>

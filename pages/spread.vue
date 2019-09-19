@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div class="page-container">
     <br /><img
       class="page-header"
       src="~/assets/image/page/banners/spread.png"
     />
 
-    <p class="base">
+    <p class="base" style="margin-right: auto;">
       Let's spread together cooperation and ecosystemic thinking!<br />
     </p>
     <p class="subheading equivalence center space margin">PRACTICE</p>

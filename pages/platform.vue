@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="page-container">
     <br /><img
       class="page-header"
       src="~/assets/image/page/banners/platform.png"
@@ -71,3 +71,12 @@
     </p>
   </div>
 </template>
+
+<style scoped>
+@media (max-width: 576px) {
+  img.page-header {
+    height: 30vh;
+    object-fit: cover;
+  }
+}
+</style>

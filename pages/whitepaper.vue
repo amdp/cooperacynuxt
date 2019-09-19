@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>
+    <div class="page-container">
       <br /><img
         class="page-header"
         src="~/assets/image/page/banners/whitepaper.png"

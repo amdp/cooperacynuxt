@@ -1,13 +1,13 @@
 <template>
-  <div>
+  <div class="page-container">
     <br /><img class="page-header" src="~/assets/image/page/banners/cci.png" />
 
-    <div style="text-align:center;">
-      <p class="center" style="margin-top:10px;text-align:center">
+    <div style="text-align:center;width:100%;">
+      <p class="center" style="margin-top:10px;text-align:center;">
         <object
           id="countries-map"
           type="image/svg+xml"
-          style="width:80%; height:80%"
+          style="width:100%; height:80%"
           data="/map.svg"
         >
           <param name="wmode" value="transparent"

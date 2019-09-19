@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="page-container">
     <br /><img class="page-header" src="~/assets/image/page/banners/news.png" />
 
     <div class="row mt-2" v-for="news in this.$store.state.news" :key="news.id">

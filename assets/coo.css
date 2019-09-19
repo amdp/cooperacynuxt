@@ -9,6 +9,7 @@ body {
   color: #777;
   background-color: #ffffff;
   font-size: 14px;
+  overflow-x: hidden;
 }
 a {
   color: #777;
@@ -212,43 +213,36 @@ a:hover {
   color: #777777;
 }
 .ae:hover {
-  font-weight: 200;
   text-decoration: none;
   color: var(--equivalence);
   background-image: none;
 }
 .at:hover {
-  font-weight: 200;
   text-decoration: none;
   color: var(--trust);
   background-image: none;
 }
 .ac:hover {
-  font-weight: 200;
   text-decoration: none;
   color: var(--care);
   background-image: none;
 }
 .ai:hover {
-  font-weight: 200;
   text-decoration: none;
   color: var(--transparency);
   background-image: none;
 }
 .af:hover {
-  font-weight: 200;
   text-decoration: none;
   color: var(--freedom);
   background-image: none;
 }
 .au:hover {
-  font-weight: 200;
   text-decoration: none;
   color: var(--understanding);
   background-image: none;
 }
 .ad:hover {
-  font-weight: 200;
   text-decoration: none;
   color: var(--diversity);
   background-image: none;
@@ -456,15 +450,21 @@ hr.home-hr {
   height: 40px;
   width: 40px;
 }
+.page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 img.page-header {
   margin-top: 0px;
   margin-bottom: 60px;
-  width: 100%;
+  width: 90vw;
   height: auto;
   vertical-align: top;
   border: none;
 }
-img.news {
+
+img.page-header img.news {
   margin-top: 10px;
   margin-bottom: 20px;
   width: 70%;
@@ -497,4 +497,7 @@ img.news {
 .toasts {
   background-color: var(--care) !important;
   color: #fff !important;
+}
+img.about {
+  width: 100%;
 }

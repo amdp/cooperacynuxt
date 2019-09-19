@@ -1,11 +1,10 @@
 <template>
-  <div>
+  <div class="page-container">
     <br /><img
       class="page-header"
       src="~/assets/image/page/banners/aboutyou.png"
     />
-
-    <p class="base">
+    <p class="base" style="margin-right: auto;">
       You may <span class="diversity">love</span>
       <a class="ae" href="/cooperation">doing things together</a>.
     </p>
