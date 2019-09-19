@@ -38,7 +38,7 @@ module.exports = {
     : { port: process.env.PORT, host: process.env.HOST },
 
   head: {
-    title: pkg.name,
+    title: 'Cooperacy',
     meta: [
       { charset: 'utf-8' },
       {

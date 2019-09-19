@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <b-container fluid>
     <b-row>
       <b-col cols="6">
         <h5 class="mt-2 d-flex justify-content-center up">
@@ -50,7 +50,7 @@
     </b-row>
     <h5 class="mt-5 d-flex justify-content-center">YOUR PROJECTS</h5>
     <projectlist />
-  </div>
+  </b-container>
 </template>
 
 <script>
@@ -103,12 +103,12 @@ export default {
           (res3[cc[j]] / sum3) * (21 - sum2) + res2[cc[j]] + 1
         )
       }
-      let sumcc
+      let sumcc = 0
       for (let j = 0; j < cc.length; j++) {
         sumcc += res[cc[j]]
       }
-      if (sumcc < 28) res[cc[6]]++
-      console.log(' ' + JSON.stringify(sumcc))
+      if (sumcc < 28) res[cc[0]]++
+      if (sumcc == 29) res[cc[6]]--
     }
     this.$store.commit('setUserBar', res)
   },
