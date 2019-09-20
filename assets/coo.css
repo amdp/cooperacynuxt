@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Prompt:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.css');
 
 * {
   font-family: 'Prompt', sans-serif;
@@ -359,20 +360,69 @@ a.disabled {
 }
 
 /* navbar */
-
-.menux {
-  background-image: none;
+.nav-container {
+  opacity: 1;
+  z-index: 5;
+  width: 100%;
+  position: fixed;
+  background-color: white;
 }
-
-.upmenu {
-  margin-top: 17px;
+.navbar {
+  border-bottom: 1px #d3e0e9 solid;
 }
-
-.submenu {
-  margin-top: -12px;
-  color: #777;
+.img-logo {
+  z-index: 6;
+  cursor: pointer;
+}
+.nav-item {
+  margin: 0 10px;
+}
+.social-icons a {
+  margin: 0 3px;
+}
+#login-btn {
+  border-bottom: 0.8px solid #666666;
+}
+.navbar-links {
+  margin-top: 0.2rem;
+}
+.menu-item {
+  font-size: 11px;
+  margin: 0px 5px;
+  cursor: pointer;
+}
+.nav-item,
+.nav {
+  cursor: pointer;
+  display: inline;
+  position: relative;
+  font-weight: 400;
+}
+.nav-item:after {
+  content: '';
+  height: 2px;
+  width: 14px;
+  border-radius: 40%;
+  display: none;
   position: absolute;
-  font-size: 12px;
+  left: calc(50% - 7px);
+  bottom: 0;
+}
+.project-active:after,
+.science-active:after,
+.corporate-active:after {
+  display: inline-block;
+}
+.fa-times,
+.fa-bars {
+  font-size: 30px;
+}
+.mobile-nav-box {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #dee2e6 !important;
+}
+.mobile-nav-items {
+  margin-bottom: 0.25rem;
 }
 
 .fixed {
@@ -396,9 +446,50 @@ a.disabled {
   width: 50px;
   margin-top: 5%;
 }
+/* Navbar colors */
+#project .menu-item:hover,
+.fa-discord:hover {
+  color: var(--equivalence);
+}
+.project-active:after {
+  background-color: var(--equivalence);
+}
+#corporate .menu-item:hover,
+.fa-facebook:hover {
+  color: var(--freedom);
+}
+.corporate-active:after {
+  background-color: var(--freedom);
+}
+#science .menu-item:hover,
+.fa-linkedin:hover {
+  color: var(--understanding);
+}
+.science-active:after {
+  background-color: var(--understanding);
+}
+
+/* Navbar media queries */
+@media (max-width: 992px) {
+  .nav-menu-container,
+  .right-container {
+    display: none !important;
+  }
+}
+@media (min-width: 992px) {
+  .burger-btn,
+  .mobile-dropdown {
+    display: none;
+  }
+}
 
 /* other */
-
+@media (max-width: 576px) {
+  img.page-header {
+    height: 30vh;
+    object-fit: cover;
+  }
+}
 .circle {
   margin: 0 auto;
   height: 60vh;
