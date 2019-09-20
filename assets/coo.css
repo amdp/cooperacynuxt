@@ -484,7 +484,12 @@ a.disabled {
 }
 
 /* other */
-
+@media (max-width: 576px) {
+  img.page-header {
+    height: 30vh;
+    object-fit: cover;
+  }
+}
 .circle {
   margin: 0 auto;
   height: 60vh;
