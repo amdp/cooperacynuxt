@@ -71,12 +71,3 @@
     </p>
   </div>
 </template>
-
-<style scoped>
-@media (max-width: 576px) {
-  img.page-header {
-    height: 30vh;
-    object-fit: cover;
-  }
-}
-</style>
