@@ -1,55 +1,210 @@
 <template>
-  <b-container fluid class="mt-5 mb-5">
-    <b-row class="mb-5" v-for="project in projectlist" :key="project.id">
-      <b-col cols="12">
-        <b-row>
-          <b-col cols="10">
-            <b-row class="space subheading up">
-              <a :href="'/project/' + project.id">{{ project.name }}</a>
-            </b-row>
-            <b-row>
-              {{ project.content }}
-            </b-row>
-          </b-col>
-          <b-col cols="2" class="p-0">
-            <img :src="projectImage(project.id)" width="100%" />
-          </b-col>
-        </b-row>
-        <votebar :voteprop="project" :proptype="'project'" />
-      </b-col>
-    </b-row>
-    <!-- archived projects here -->
-    <h5 class="mt-5 d-flex justify-content-center" v-if="archivedlist[0]">
-      ARCHIVED PROJECTS
-    </h5>
-    <b-row class="mt-5" v-for="archived in archivedlist" :key="archived.id">
-      <div class="col-12">
-        <div class="row">
-          <div class="col-10">
-            <div class="row">
-              <div class="col-12 space subheading up">
-                <a :href="'/project/' + archived.id">{{ archived.name }}</a>
-              </div>
+  <b-container fluid class="mb-5">
+    <div class="d-flex flex-wrap justify-content-center">
+      <h2 class="col-12 text-center mb-3">PROJECTS</h2>
+      <div
+        class="col-10 col-md-5 mx-2 mb-4 single-project"
+        v-for="project in projectlist"
+        :key="project.id"
+      >
+        <img
+          :src="projectImage(project.id)"
+          class="img-fluid img-responsive img-project"
+        />
+        <div class="project-content text-center p-2">
+          <b>{{ project.name }}</b>
+          <p class="text-left text-break">{{ project.content }}</p>
+          <p class="text-left">&#128205; Milan, Italy</p>
+          <div class="progress">
+            <div
+              class="progress-bar"
+              :class="{
+                'progress-zero': calculateProjectProgress(project) == 0
+              }"
+              role="progressbar"
+              :style="{ width: calculateProjectProgress(project) + '%' }"
+              aria-valuenow="25"
+              aria-valuemin="0"
+              aria-valuemax="100"
+            >
+              {{ calculateProjectProgress(project) }}%
             </div>
-            <div class="row">
-              <div class="col-12 mt-2">{{ archived.content }}</div>
-            </div>
-          </div>
-          <div class="col-2 pl-5">
-            <img :src="projectImage(archived.id)" width="80px" />
           </div>
         </div>
-        <votebar :voteprop="archived" :proptype="'project'" />
+        <div class="project-details p-2 d-flex">
+          <div>
+            <b>{{ Math.round(project.collected) }}</b>
+            <small>collected</small>
+          </div>
+          <div>
+            <b>{{ Math.round(project.budget) }}</b>
+            <small>budget</small>
+          </div>
+          <div>
+            <b>{{ getProjectStage(project.stage) }}</b>
+            <small>stage</small>
+          </div>
+        </div>
+        <!-- votebar -->
+        <div
+          class="project-buttons d-flex justify-content-center px-3 py-2 mb-2"
+        >
+          <div class="single-project-button" id="equivalence">
+            <img
+              src="../assets/icons/equivalence.svg"
+              class="img-fluid img-responsive"
+            />
+          </div>
+          <div class="single-project-button" id="care">
+            <img
+              src="../assets/icons/care.svg"
+              class="img-fluid img-responsive"
+            />
+          </div>
+          <div class="single-project-button" id="diversity">
+            <img
+              src="../assets/icons/diversity.svg"
+              class="img-fluid img-responsive"
+            />
+          </div>
+          <div class="single-project-button" id="understanding">
+            <img
+              src="../assets/icons/understanding.svg"
+              class="img-fluid img-responsive"
+            />
+          </div>
+          <div class="single-project-button" id="freedom">
+            <img
+              src="../assets/icons/freedom.svg"
+              class="img-fluid img-responsive"
+            />
+          </div>
+          <div class="single-project-button" id="transparency">
+            <img
+              src="../assets/icons/transparency.svg"
+              class="img-fluid img-responsive"
+            />
+          </div>
+          <div class="single-project-button" id="trust">
+            <img
+              src="../assets/icons/trust.svg"
+              class="img-fluid img-responsive"
+            />
+          </div>
+        </div>
+        <!-- end votebar -->
       </div>
-    </b-row>
+    </div>
+    <!-- archived projects here -->
+    <h2 class="col-12 text-center mb-3 mt-5" v-if="archivedlist[0]">
+      ARCHIVED PROJECTS
+    </h2>
+    <div class="d-flex justify-content-center flex-wrap">
+      <div
+        class="col-10 col-md-5 mx-2 mb-4 single-project"
+        v-for="archived in archivedlist"
+        :key="archived.id"
+      >
+        <img
+          :src="projectImage(archived.id)"
+          class="img-fluid img-responsive img-project"
+        />
+        <div class="project-content text-center p-2">
+          <b>{{ archived.name }}</b>
+          <p class="text-left text-break">{{ archived.content }}</p>
+          <p class="text-left">&#128205; Milan, Italy</p>
+          <div class="progress">
+            <div
+              class="progress-bar"
+              :class="{
+                'progress-zero': calculateProjectProgress(archived) == 0
+              }"
+              role="progressbar"
+              :style="{ width: calculateProjectProgress(archived) + '%' }"
+              aria-valuenow="25"
+              aria-valuemin="0"
+              aria-valuemax="100"
+            >
+              {{ calculateProjectProgress(archived) }}%
+            </div>
+          </div>
+        </div>
+        <div class="project-details p-2 d-flex">
+          <div>
+            <b>{{ Math.round(archived.collected) }}</b>
+            <small>collected</small>
+          </div>
+          <div>
+            <b>{{ Math.round(archived.budget) }}</b>
+            <small>budget</small>
+          </div>
+          <div>
+            <b>{{ archived.stage }}</b>
+            <small>stage</small>
+          </div>
+        </div>
+        <!-- votebar -->
+        <div
+          class="project-buttons d-flex justify-content-center px-3 py-2 mb-2"
+        >
+          <div class="single-project-button" id="equivalence">
+            <img
+              src="../assets/icons/equivalence.svg"
+              class="img-fluid img-responsive"
+            />
+          </div>
+          <div class="single-project-button" id="care">
+            <img
+              src="../assets/icons/care.svg"
+              class="img-fluid img-responsive"
+            />
+          </div>
+          <div class="single-project-button" id="diversity">
+            <img
+              src="../assets/icons/diversity.svg"
+              class="img-fluid img-responsive"
+            />
+          </div>
+          <div class="single-project-button" id="understanding">
+            <img
+              src="../assets/icons/understanding.svg"
+              class="img-fluid img-responsive"
+            />
+          </div>
+          <div class="single-project-button" id="freedom">
+            <img
+              src="../assets/icons/freedom.svg"
+              class="img-fluid img-responsive"
+            />
+          </div>
+          <div class="single-project-button" id="transparency">
+            <img
+              src="../assets/icons/transparency.svg"
+              class="img-fluid img-responsive"
+            />
+          </div>
+          <div class="single-project-button" id="trust">
+            <img
+              src="../assets/icons/trust.svg"
+              class="img-fluid img-responsive"
+            />
+          </div>
+        </div>
+        <!-- end votebar -->
+      </div>
+    </div>
   </b-container>
 </template>
 
 <script>
 import votebar from './votebar'
-
 export default {
   components: { votebar: votebar },
+  data() {
+    return {
+      isHover: null
+    }
+  },
   computed: {
     projectlist() {
       return this.$store.state.project.filter(project => {
@@ -69,7 +224,103 @@ export default {
       } catch (e) {
         return require('../assets/image/project/0.png')
       }
+    },
+    calculateProjectProgress(project) {
+      let projectProgress = Math.round(
+        (project.collected / project.budget) * 100
+      )
+      return isNaN(projectProgress) ? 0 : projectProgress
+    },
+    getProjectStage(id) {
+      return this.$store.state.stage.find(stage => stage.id == id).name
     }
   }
 }
 </script>
+
+<style scoped>
+.img-project {
+  width: 100%;
+  height: 170px;
+  object-fit: cover;
+}
+.single-project {
+  border: 1px solid var(--freedom);
+  padding: 0;
+  border-radius: 5px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition-duration: 0.3s;
+  height: fit-content;
+}
+.single-project:hover {
+  box-shadow: none;
+}
+.single-project > img {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom: 1px solid black;
+}
+.project-content b {
+  font-size: 20px;
+  color: black;
+}
+.progress-zero {
+  color: var(--freedom);
+  padding-left: 2px;
+}
+.project-details div {
+  display: flex;
+  flex-direction: column;
+  margin: 0 0.5rem;
+}
+.project-details b,
+.project-details small {
+  font-size: 12px;
+}
+.project-details b {
+  font-weight: 700;
+}
+.project-details small {
+  font-weight: light;
+}
+.project-buttons {
+  border-top: 1px solid black;
+}
+.single-project-button {
+  height: 30px;
+  width: 30px;
+  border-radius: 50px;
+  margin: 0.1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition-duration: 0.2s;
+  padding: 0.35rem;
+}
+@media (max-width: 768px) {
+  .single-project-button {
+    margin: 0.15rem;
+  }
+}
+/* colors */
+.single-project-button#equivalence:hover {
+  box-shadow: 0px 1px 1px var(--equivalence);
+}
+.single-project-button#care:hover {
+  box-shadow: 0px 1px 1px var(--care);
+}
+.single-project-button#transparency:hover {
+  box-shadow: 0px 1px 1px var(--transparency);
+}
+.single-project-button#freedom:hover {
+  box-shadow: 0px 1px 1px var(--freedom);
+}
+.single-project-button#diversity:hover {
+  box-shadow: 0px 1px 1px var(--diversity);
+}
+.single-project-button#trust:hover {
+  box-shadow: 0px 1px 1px var(--trust);
+}
+.single-project-button#understanding:hover {
+  box-shadow: 0px 1px 1px var(--understanding);
+}
+</style>
