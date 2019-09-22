@@ -97,31 +97,23 @@
             this.$auth.user.name + ' ' + this.$auth.user.surname
           }}</a>
           <div class="social-icons">
-            <a
-              target="_blank"
-              href="https://www.facebook.com/cooperacy.org/"
-              class="fab fa-facebook"
-            ></a>
-            <a
-              target="_blank"
-              href="https://www.linkedin.com/company/cooperacy/"
-              class="fab fa-linkedin"
-            ></a>
-            <a
-              target="_blank"
-              href="https://discord.gg/kzBB3Xj"
-              class="fab fa-discord"
-            ></a>
+            <a href="https://www.linkedin.com/company/cooperacy/">
+              <img src="../assets/icons/linkedin.svg" />
+            </a>
+            <a href="https://www.youtube.com/channel/UCbeRtTRYXwsbSPc9JvSMvtQ">
+              <img src="../assets/icons/youtube.svg" />
+            </a>
+            <a href="https://www.facebook.com/cooperacy.org/">
+              <img src="../assets/icons/facebook.svg" />
+            </a>
           </div>
         </div>
       </div>
 
       <!-- MOBILE HARMBURGER BUTTON -->
       <div class="col-2 h-100 burger-btn ml-auto text-right" @click="resetNav">
-        <i
-          class="fas"
-          :class="[isDropdownVisible ? 'fa-times' : 'fa-bars']"
-        ></i>
+        <img v-if="!isDropdownVisible" src="../assets/icons/bars.svg" />
+        <img v-else src="../assets/icons/times.svg" />
       </div>
     </b-navbar>
 
@@ -241,4 +233,3 @@ export default {
   }
 }
 </script>
-
