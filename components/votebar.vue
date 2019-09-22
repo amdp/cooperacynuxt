@@ -1,154 +1,79 @@
 <template>
-  <b-container fluid class="p-0 m-0" v-if="this.proptype == 'user'">
-    <b-row class="p-0 w-100 m-0">
-      <b-col cols="12" class="p-0 m-0 d-flex">
-        <div
-          v-for="vote in this.vote"
-          :key="vote.userkey"
-          :class="vote.class"
-          :style="vote.style"
-        ></div>
-      </b-col>
-    </b-row>
-  </b-container>
-  <b-row class="mt-2 p-0 up" v-else-if="this.proptype == 'project'">
-    <div
-      v-for="vote in this.vote"
-      :key="vote.projectcc"
-      :class="vote.class"
-      :style="vote.style"
-      @click="voteswitch(vote.projectcc)"
-    >
-      <div class="showme t12 mt-1">
-        {{ vote.vlong }}<br />{{ vote.v }} points
-      </div>
+  <div class="votebar d-flex justify-content-center px-3 py-2 mb-2">
+    <div class="single-project-button" id="equivalence">
+      <img
+        src="../assets/icons/equivalence.svg"
+        class="img-fluid img-responsive"
+      />
     </div>
-  </b-row>
-  <b-row class="mt-2 p-0 up" v-else-if="this.proptype == 'comment'">
-    <div
-      v-for="vote in this.vote"
-      :key="vote.commentcc"
-      :class="vote.class"
-      :style="vote.style"
-      @click="voteswitch(vote.commentcc)"
-    >
-      <div class="showme t8 mt-1">
-        {{ vote.vlong }}<br />{{ vote.v }} points
-      </div>
+    <div class="single-project-button" id="care">
+      <img src="../assets/icons/care.svg" class="img-fluid img-responsive" />
     </div>
-  </b-row>
+    <div class="single-project-button" id="diversity">
+      <img
+        src="../assets/icons/diversity.svg"
+        class="img-fluid img-responsive"
+      />
+    </div>
+    <div class="single-project-button" id="understanding">
+      <img
+        src="../assets/icons/understanding.svg"
+        class="img-fluid img-responsive"
+      />
+    </div>
+    <div class="single-project-button" id="freedom">
+      <img src="../assets/icons/freedom.svg" class="img-fluid img-responsive" />
+    </div>
+    <div class="single-project-button" id="transparency">
+      <img
+        src="../assets/icons/transparency.svg"
+        class="img-fluid img-responsive"
+      />
+    </div>
+    <div class="single-project-button" id="trust">
+      <img src="../assets/icons/trust.svg" class="img-fluid img-responsive" />
+    </div>
+  </div>
 </template>
 
-<script>
-//cc stands for cooperation condition, proptype could be user, project or comment
-export default {
-  props: {
-    voteprop: { required: true },
-    proptype: { required: true }
-  },
-  computed: {
-    vote() {
-      //need to avoid this to cycle through user votebar, which have always the same color
-      let voteif = []
-      for (let i = 0; i < 7; i++) {
-        // choosing the style to apply if the user voted this project/comment specific vote color:
-        var votestyle
-        var uservoted
-        this.$store.state[this.proptype + 'uservote']
-          ? (uservoted = this.$store.state[
-              this.proptype + 'uservote'
-            ].findIndex(
-              x =>
-                x[this.proptype] == this.voteprop.id &&
-                x.condition == this.$store.state.cc[i]
-            ))
-          : (uservoted = 0)
-        uservoted != -1
-          ? (votestyle = 'var(--my' + this.$store.state.condition[i] + ')')
-          : this.voteprop[this.$store.state.cc[i]] != 0
-          ? (votestyle = 'var(--they' + this.$store.state.condition[i] + ')')
-          : (votestyle = 'var(--no' + this.$store.state.condition[i] + ')')
-        // applying the right style to vote:
-        voteif.push({
-          // for all vote:
-          v: this.voteprop[this.$store.state.cc[i]],
-          vlong: this.$store.state.condition[i],
-          style: 'background-color: ' + votestyle
-        })
-      } // now we already have a 7 elements array so we just add json keys as needed:
-      if (this.proptype == 'user') {
-        for (let i = 0; i < 7; i++) {
-          ;(voteif[i].class =
-            'p-0 uservote b' +
-            this.$store.state.condition[i] +
-            ' ' +
-            this.$store.state.condition[i]),
-            (voteif[i].style =
-              'width: ' +
-              (this.$auth.user[this.$store.state.cc[i]] / 28) * 100 +
-              '%'),
-            (voteif[i].userkey = this.$store.state.cc[i])
-        }
-      }
-      if (this.proptype == 'project') {
-        for (let i = 0; i < 7; i++) {
-          ;(voteif[i].class =
-            'p-0 vote col b' +
-            this.$store.state.condition[i] +
-            ' ' +
-            this.$store.state.condition[i]),
-            (voteif[i].projectcc = this.$store.state.cc[i])
-        }
-      }
-      if (this.proptype == 'comment') {
-        for (let i = 0; i < 7; i++) {
-          ;(voteif[i].class =
-            'p-0 vote col b' +
-            this.$store.state.condition[i] +
-            ' ' +
-            this.$store.state.condition[i]),
-            (voteif[i].commentcc = this.$store.state.cc[i])
-        }
-      }
-      return voteif
-    }
-  },
-  methods: {
-    voteswitch(cc) {
-      if (!this.$auth.user) {
-        return this.$router.push({ path: '/login' })
-      }
-      // CLIENT-SIDE: sends id, votetype, user and adds 1/-1 to the vuex store variable
-      var add
-      this.$store.state[this.proptype + 'uservote'].findIndex(
-        // checks if the vote exists, adds accordingly
-        x => x[this.proptype] == this.voteprop.id && x.condition == cc
-      ) == -1
-        ? (add = 1)
-        : (add = -1)
-      this.$store.commit('setVoteUpdate', {
-        id: this.voteprop.id,
-        cc: cc,
-        user: this.$auth.user.id,
-        add: add,
-        proptype: this.proptype
-      })
-
-      // SERVER-SIDE: prepares and sends async REST call (either comment or project)
-      var request = {
-        id: this.voteprop.id,
-        condition: cc,
-        user: this.$auth.user.id,
-        proptype: this.proptype
-      }
-      if (this.proptype == 'comment') {
-        request.projectid = this.$route.params.id
-        request.author = this.voteprop.user
-      }
-      this.$store.dispatch('addVoteAction', request).catch(err => {
-        console.error(err)
-      })
-    }
+<style scoped>
+.votebar {
+  border-top: 1px solid black;
+}
+.single-project-button {
+  height: 30px;
+  width: 30px;
+  border-radius: 50px;
+  margin: 0.1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition-duration: 0.2s;
+  padding: 0.35rem;
+}
+@media (max-width: 768px) {
+  .single-project-button {
+    margin: 0.15rem;
   }
 }
-</script>
+/* colors */
+.single-project-button#equivalence:hover {
+  box-shadow: 0px 1px 1px var(--equivalence);
+}
+.single-project-button#care:hover {
+  box-shadow: 0px 1px 1px var(--care);
+}
+.single-project-button#transparency:hover {
+  box-shadow: 0px 1px 1px var(--transparency);
+}
+.single-project-button#freedom:hover {
+  box-shadow: 0px 1px 1px var(--freedom);
+}
+.single-project-button#diversity:hover {
+  box-shadow: 0px 1px 1px var(--diversity);
+}
+.single-project-button#trust:hover {
+  box-shadow: 0px 1px 1px var(--trust);
+}
+.single-project-button#understanding:hover {
+  box-shadow: 0px 1px 1px var(--understanding);
+}
+</style>
