@@ -377,8 +377,12 @@ a.disabled {
 .nav-item {
   margin: 0 10px;
 }
-.social-icons a {
-  margin: 0 3px;
+.social-icons img {
+  width: 17px;
+  height: 17px;
+}
+.burger-btn img {
+  height: 30px;
 }
 #login-btn {
   border-bottom: 0.8px solid #666666;
