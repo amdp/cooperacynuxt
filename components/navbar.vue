@@ -98,13 +98,13 @@
           }}</a>
           <div class="social-icons">
             <a href="https://www.linkedin.com/company/cooperacy/">
-              <img src="../assets/icons/linkedin.svg" />
+              <img src="../assets/icons/linkedin.svg" id="linkedin" />
             </a>
             <a href="https://www.youtube.com/channel/UCbeRtTRYXwsbSPc9JvSMvtQ">
-              <img src="../assets/icons/youtube.svg" />
+              <img src="../assets/icons/youtube.svg" id="youtube" />
             </a>
             <a href="https://www.facebook.com/cooperacy.org/">
-              <img src="../assets/icons/facebook.svg" />
+              <img src="../assets/icons/facebook.svg" id="facebook" />
             </a>
           </div>
         </div>
@@ -233,3 +233,18 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.social-icons img {
+  transition-duration: 0.3s;
+}
+#linkedin:hover {
+  filter: invert(100%) url('../assets/icons/linkedin.svg#transparency-filter');
+}
+#facebook:hover {
+  filter: invert(100%) url('../assets/icons/facebook.svg#freedom-filter');
+}
+#youtube:hover {
+  filter: invert(90%) url('../assets/icons/youtube.svg#youtube-filter');
+}
+</style>
