@@ -46,7 +46,7 @@
           </div>
         </div>
         <!-- votebar -->
-        <votebar />
+        <votebar :projectId="project.id" />
       </div>
     </div>
     <!-- archived projects here -->
@@ -97,7 +97,7 @@
             <small>stage</small>
           </div>
         </div>
-        <votebar />
+        <votebar :projectId="archived.id" />
       </div>
     </div>
   </b-container>
