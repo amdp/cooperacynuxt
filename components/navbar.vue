@@ -233,18 +233,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.social-icons img {
-  transition-duration: 0.3s;
-}
-#linkedin:hover {
-  filter: invert(100%) url('../assets/icons/linkedin.svg#transparency-filter');
-}
-#facebook:hover {
-  filter: invert(100%) url('../assets/icons/facebook.svg#freedom-filter');
-}
-#youtube:hover {
-  filter: invert(90%) url('../assets/icons/youtube.svg#youtube-filter');
-}
-</style>
