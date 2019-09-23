@@ -155,13 +155,12 @@ export default {
   border: 1px solid var(--freedom);
   padding: 0;
   border-radius: 5px;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   transition-duration: 0.3s;
   height: fit-content;
 }
 .single-project:hover {
-  box-shadow: none;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 .single-project > img {
   border-top-left-radius: 5px;
