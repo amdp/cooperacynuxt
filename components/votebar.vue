@@ -6,13 +6,13 @@
       @mouseenter="setVisibleVoteCount(projectId, 'equivalence')"
       @mouseleave="resetVisibleVoteCount"
     >
-      <small
+      <b
         v-if="
           visibleVoteCount.index == projectId &&
             visibleVoteCount.voteType == 'equivalence'
         "
       >
-        5</small
+        5</b
       >
       <img
         v-else
@@ -26,13 +26,13 @@
       @mouseenter="setVisibleVoteCount(projectId, 'care')"
       @mouseleave="resetVisibleVoteCount"
     >
-      <small
+      <b
         v-if="
           visibleVoteCount.index == projectId &&
             visibleVoteCount.voteType == 'care'
         "
       >
-        5</small
+        5</b
       >
       <img
         v-else
@@ -46,13 +46,13 @@
       @mouseenter="setVisibleVoteCount(projectId, 'diversity')"
       @mouseleave="resetVisibleVoteCount"
     >
-      <small
+      <b
         v-if="
           visibleVoteCount.index == projectId &&
             visibleVoteCount.voteType == 'diversity'
         "
       >
-        5</small
+        5</b
       >
       <img
         v-else
@@ -66,13 +66,13 @@
       @mouseenter="setVisibleVoteCount(projectId, 'understanding')"
       @mouseleave="resetVisibleVoteCount"
     >
-      <small
+      <b
         v-if="
           visibleVoteCount.index == projectId &&
             visibleVoteCount.voteType == 'understanding'
         "
       >
-        5</small
+        5</b
       >
       <img
         v-else
@@ -86,13 +86,13 @@
       @mouseenter="setVisibleVoteCount(projectId, 'freedom')"
       @mouseleave="resetVisibleVoteCount"
     >
-      <small
+      <b
         v-if="
           visibleVoteCount.index == projectId &&
             visibleVoteCount.voteType == 'freedom'
         "
       >
-        5</small
+        5</b
       >
       <img
         v-else
@@ -106,13 +106,13 @@
       @mouseenter="setVisibleVoteCount(projectId, 'transparency')"
       @mouseleave="resetVisibleVoteCount"
     >
-      <small
+      <b
         v-if="
           visibleVoteCount.index == projectId &&
             visibleVoteCount.voteType == 'transparency'
         "
       >
-        5</small
+        5</b
       >
       <img
         v-else
@@ -126,13 +126,13 @@
       @mouseenter="setVisibleVoteCount(projectId, 'trust')"
       @mouseleave="resetVisibleVoteCount"
     >
-      <small
+      <b
         v-if="
           visibleVoteCount.index == projectId &&
             visibleVoteCount.voteType == 'trust'
         "
       >
-        5</small
+        5</b
       >
       <img
         v-else
