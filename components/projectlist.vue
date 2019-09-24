@@ -33,11 +33,11 @@
         </div>
         <div class="project-details p-2 d-flex">
           <div>
-            <b>{{ Math.round(project.collected) }}</b>
+            <b>{{ Math.round(project.collected) }}€</b>
             <small>collected</small>
           </div>
           <div>
-            <b>{{ Math.round(project.budget) }}</b>
+            <b>{{ Math.round(project.budget) }}€</b>
             <small>budget</small>
           </div>
           <div>
@@ -89,11 +89,11 @@
         </div>
         <div class="project-details p-2 d-flex">
           <div>
-            <b>{{ Math.round(archived.collected) }}</b>
+            <b>{{ Math.round(archived.collected) }}€</b>
             <small>collected</small>
           </div>
           <div>
-            <b>{{ Math.round(archived.budget) }}</b>
+            <b>{{ Math.round(archived.budget) }}€</b>
             <small>budget</small>
           </div>
           <div>
