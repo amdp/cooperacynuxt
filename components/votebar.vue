@@ -171,13 +171,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.votebar-modal-btn {
-  position: absolute;
-  bottom: 4px;
-  right: 7px;
-  font-weight: 700;
-  color: black;
-}
-</style>

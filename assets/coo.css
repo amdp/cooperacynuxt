@@ -592,6 +592,18 @@ hr.home-hr {
 .single-vote-button small {
   font-weight: 500;
 }
+#votes-modal img {
+  display: inline-block;
+  height: 20px;
+  width: 20px;
+}
+.votebar-modal-btn {
+  position: absolute;
+  bottom: 4px;
+  right: 7px;
+  font-weight: 700;
+  color: black;
+}
 @media (max-width: 768px) {
   .single-vote-button {
     margin: 0.15rem;
