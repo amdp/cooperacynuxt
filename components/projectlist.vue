@@ -136,11 +136,6 @@ export default {
       })
     }
   },
-  beforeCreate() {
-    // fetches places and countries from DB and feeds the store
-    this.$store.dispatch('getPlaceAction')
-    this.$store.dispatch('getCountryAction')
-  },
   methods: {
     projectImage(id) {
       try {
@@ -168,7 +163,7 @@ export default {
           return projectPlace.name + ', ' + projectCountry.name
         }
       } else {
-        return 'Unknown'
+        return 'Loading...'
       }
     }
   }
