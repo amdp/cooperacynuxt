@@ -1,28 +1,33 @@
 <template>
-  <div class="votebar d-flex justify-content-center px-3 py-2 mb-2">
-    <div
-      v-for="(singleVote, i) in vote"
-      :key="i"
-      class="single-vote-button"
-      :id="singleVote.vlong"
-      @mouseenter="setVisibleVoteCount(projectId, singleVote.vlong)"
-      @mouseleave="resetVisibleVoteCount"
-      @click="voteswitch(vote.projectcc)"
-    >
-      <b
-        v-if="
-          visibleVoteCount.index == projectId &&
-            visibleVoteCount.voteType == singleVote.vlong
-        "
+  <div>
+    <div class="votebar d-flex justify-content-center px-3 pt-2 pb-4">
+      <div
+        v-for="(singleVote, i) in vote"
+        :key="i"
+        class="single-vote-button"
+        :id="singleVote.vlong"
+        @mouseenter="setVisibleVoteCount(projectId, singleVote.vlong)"
+        @mouseleave="resetVisibleVoteCount"
+        @click="voteswitch(vote.projectcc)"
       >
-        {{ singleVote.v }}</b
-      >
-      <img
-        v-else
-        :src="getVoteIconSrc(singleVote.vlong)"
-        class="img-fluid img-responsive"
-      />
+        <b
+          v-if="
+            visibleVoteCount.index == projectId &&
+              visibleVoteCount.voteType == singleVote.vlong
+          "
+        >
+          {{ singleVote.v }}</b
+        >
+        <img
+          v-else
+          :src="getVoteIconSrc(singleVote.vlong)"
+          class="img-fluid img-responsive"
+        />
+      </div>
     </div>
+
+    <!-- vote bar modal -->
+    <b class="votebar-modal-btn" @click="showVotesModal">?</b>
   </div>
 </template>
 
@@ -39,7 +44,8 @@ export default {
       visibleVoteCount: {
         index: null,
         voteType: null
-      }
+      },
+      isVoteModalVisible: false
     }
   },
   computed: {
@@ -155,11 +161,23 @@ export default {
       this.visibleVoteCount.index = null
       this.visibleVoteCount.voteType = null
     },
-
     // feeds the vote icon img src
     getVoteIconSrc: function(voteType) {
       return require('../assets/icons/' + voteType + '.svg')
+    },
+    showVotesModal: function() {
+      this.$bvModal.show('votes-modal')
     }
   }
 }
 </script>
+
+<style scoped>
+.votebar-modal-btn {
+  position: absolute;
+  bottom: 4px;
+  right: 7px;
+  font-weight: 700;
+  color: black;
+}
+</style>
