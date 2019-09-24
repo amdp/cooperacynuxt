@@ -163,7 +163,7 @@ export default {
           return projectPlace.name + ', ' + projectCountry.name
         }
       } else {
-        return 'Loading...'
+        return 'Unknown'
       }
     }
   }
