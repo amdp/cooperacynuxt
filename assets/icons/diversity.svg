@@ -1,19 +1,34 @@
 <svg
   xmlns="http://www.w3.org/2000/svg"
   xmlns:xlink="http://www.w3.org/1999/xlink"
-  xml:space="preserve"
   version="1.1"
-  style="shape-rendering:geometricPrecision;text-rendering:geometricPrecision;image-rendering:optimizeQuality;"
-  viewBox="0 0 278 250"
   x="0px"
   y="0px"
-  fill-rule="evenodd"
-  clip-rule="evenodd"
+  viewBox="0 0 50.4 63"
+  enable-background="new 0 0 50.4 50.4"
+  xml:space="preserve"
   fill="#f7d"
 >
   <g>
-    <circle class="fil0" cx="59" cy="141" r="59" />
-    <polygon class="fil1" points="186,0 51,27 142,131 " />
-    <polygon class="fil1" points="278,90 174,60 144,164 248,194 " />
+    <path
+      d="M26.177,26.328c0-2.291,1.092-4.597,3.475-5.774c-0.061-0.001-0.118-0.008-0.179-0.008h-9.331   c-4.245,0-6.49,2.862-6.49,5.782v13.69h3.965v-13.41h1.911l0.004,13.41h6.644V26.328z"
+    />
+    <path
+      d="M12.327,26.328c0-2.291,1.09-4.597,3.474-5.774c-0.061-0.001-0.118-0.008-0.179-0.008H6.578   c-4.245,0-6.49,2.862-6.49,5.782v13.69h3.966v-13.41h1.91l0.006,13.41h6.357V26.328z"
+    />
+    <rect
+      x="20.624"
+      y="9.844"
+      transform="matrix(0.7071 -0.7071 0.7071 0.7071 -2.5442 21.3866)"
+      width="7.842"
+      height="7.841"
+    />
+    <polygon points="32.506,10.04 38.728,19.355 44.951,10.04  " />
+  </g>
+  <g>
+    <path
+      d="M43.895,20.546h-9.902c-4.247,0-6.491,2.862-6.491,5.782v13.69h3.966v-13.41h1.911l0.005,13.41h11.178l-0.002-13.41h1.862   v13.41h3.964v-13.69C50.385,23.408,48.141,20.546,43.895,20.546z"
+    />
+    <circle cx="10.981" cy="13.77" r="4.649" />
   </g>
 </svg>
