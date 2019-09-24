@@ -14,7 +14,9 @@
         <div class="project-content text-center p-2">
           <b>{{ project.name }}</b>
           <p class="text-left text-break">{{ project.content }}</p>
-          <p class="text-left">&#128205; Milan, Italy</p>
+          <p class="text-left">
+            &#128205; {{ getProjectLocation(project.place) }}
+          </p>
           <div class="progress">
             <div
               class="progress-bar"
@@ -70,7 +72,9 @@
         <div class="project-content text-center p-2">
           <b>{{ archived.name }}</b>
           <p class="text-left text-break">{{ archived.content }}</p>
-          <p class="text-left">&#128205; Milan, Italy</p>
+          <p class="text-left">
+            &#128205; {{ getProjectLocation(archived.place) }}
+          </p>
           <div class="progress">
             <div
               class="progress-bar"
@@ -132,6 +136,11 @@ export default {
       })
     }
   },
+  beforeCreate() {
+    // fetches places and countries from DB and feeds the store
+    this.$store.dispatch('getPlaceAction')
+    this.$store.dispatch('getCountryAction')
+  },
   methods: {
     projectImage(id) {
       try {
@@ -148,6 +157,19 @@ export default {
     },
     getProjectStage(id) {
       return this.$store.state.stage.find(stage => stage.id == id).name
+    },
+    getProjectLocation(id) {
+      let projectPlace = this.$store.state.place.find(place => place.id == id)
+      if (projectPlace) {
+        let projectCountry = this.$store.state.country.find(
+          country => country.id == projectPlace.country
+        )
+        if (projectCountry) {
+          return projectPlace.name + ', ' + projectCountry.name
+        }
+      } else {
+        return 'Unknown'
+      }
     }
   }
 }
