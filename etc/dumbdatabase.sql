@@ -1433,7 +1433,6 @@ INSERT INTO `news` (`id`, `title`, `user`, `date`, `status`, `img`, `content`, `
 (17,	'September 2017 - Cooperacy @ Techfestival in Copenhagen',	22,	'2017-09-10',	1,	'5a8a03b714124.jpg',	'Techfestival aim was to start a new conversation on the relationship between humans & technology: people of all ages, backgrounds and nationalities gatehered in Copenhagen to attend events, talks and meetups.\r\n\r\n<p class=\"base\">Cooperacy participated with three activities:</p>\r\n<ul>\r\n<li class=\"base\">an <a href=\"https://www.eventbrite.com/e/cooperacy-social-technologies-and-acroyoga-at-techfestival-tickets-37098001120\" class=\"au\">event</a> where participants could learn more about cooperation and the social technologies that may enhance it and could experiment physical cooperation through an acro-yoga demo</li>\r\n<li class=\"base\">a <a href=\"https://www.eventbrite.com/e/cooperative-monopoly-meetup-at-techfestival-tickets-37099182654\" class=\"au\">session</a> of &ldquo;<a href=\"https://cooperacy.org/fun\" class=\"au\r\n\">Cooperative Monopoly</a>&ldquo; where participants - with the help of the workshop coordinators - experimented a different social system able to bring common enjoyment</li>\r\n<li class=\"base\">cph150, a two-day think tank with 150 philosophers, designers, technologists, artists, researchers and writers that resulted in a progressive manifesto on responsible tech development: <a href=\"https://copenhagenletter.org/\" class=\"au\">the Copenhagen Letter</a></li>\r\n</ul>',	'2018-02-18 21:43:28',	'2019-07-21 23:07:20'),
 (18,	'October 2017 - Cooperacy Open Ecosystem for AIR3',	22,	'2017-10-30',	1,	'5a8a063bccce6.jpg',	'AIR3, the Association of Italian Film Directors, asked Cooperacy to facilitate their assembly meetings through a participative format. The end of October marked an important moment for AIR3 as a decision about its future governance was needed. In this occasion Cooperacy organized a one-day meeting based on the Open Ecosystem.\r\n\r\n<p class=\"base\"><a href=\"http://youmark.it/rubriche/air3-si-incontra-di-nuovo-a-campo-largo-format-creato-da-cooperacy-per-gestire-i-lavori-durante-gli-incontri-degli-associati\" class=\"au\">Press Release YouMark</a></p>\r\n<p class=\"base\"><a href=\"http://www.mediakey.tv/index.php?id=leggi-news&amp;tx_ttnews%5Btt_news%5D=77050&amp;cHash=d264086177468db9e3baa8826b7189ac\" class=\"au\">Press Release Media Key</a></p>',	'2018-02-18 22:03:23',	'2019-07-21 23:07:38'),
 (19,	'September 2017 - Cooperacy @ Hackathon on Rare Diseases',	22,	'2017-09-30',	1,	'5a8b2feb9dea4.jpg',	'During the second edition of the “Forum on sustainability and opportunities in the health sector” that took place in Florence on September 29-30, Cooperacy facilitated a hackathon on rare diseases aiming at fostering the cooperation in the development of a medical or paramedical idea. Five groups of students from PoliMi-NECST Lab and Laba-Libera Accademia di Belle Arti di Brescia participated in the hackathon and two of them equally shared the victory.\r\n\r\n<p class=\"base\"><a href=\"https://www.specchioeconomico.com/rubriche/le-ultimissime/3957-supportato-da-cooperacy-concluso-leopolda-hackathon-sulle-malattie-rare\" class=\"au\">Press Release Specchio Economico</a></p>\r\n<p class=\"base\"><a href=\"http://www.digitalmarketingfarmaceutico.it/rarehackaton/\" class=\"au\">Press Release Digital Marketing</a></p>',	'2018-02-19 19:13:31',	'2019-07-21 23:07:59');
-
 DROP TABLE IF EXISTS `password_reset`;
 CREATE TABLE `password_reset` (
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -1443,13 +1442,11 @@ CREATE TABLE `password_reset` (
   KEY `password_resets_email_index` (`email`),
   KEY `password_resets_token_index` (`token`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 INSERT INTO `password_reset` (`email`, `token`, `created`, `updated`) VALUES
 ('eneabarbetta@yahoo.it',	'$2y$10$9slnXsUIZM0f4tgjpP9BF.k4hnOzyivODBPCLKPZ03B3.iHjT2DmG',	'2017-04-19 06:03:03',	'2019-04-25 11:44:47'),
 ('deepzstudio@gmail.com',	'$2y$10$46hrm/o.xf6jdsGmDLpbRe.PLRH5Wuijy9WuJKvHWuKRzBjTi1L9C',	'2018-05-09 06:47:23',	'2019-04-25 11:44:47'),
 ('franunziati@yahoo.it',	'$2y$10$pKaCa9TbsdX7XD9E2CKV9OorU3SaN/aVnhbyypY4WCrtABnpUVuG6',	'2018-06-06 16:20:02',	'2019-04-25 11:44:47'),
 ('enea.barbetta@gmail.com',	'$2y$10$O5IYJHYS0bNRHIy7Io5O1uLgzNB/j.LaY/AFf3y1UrsUA2FR41n2m',	'2018-09-15 09:32:11',	'2019-04-25 11:44:47');
-
 DROP TABLE IF EXISTS `place`;
 CREATE TABLE `place` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1461,7 +1458,6 @@ CREATE TABLE `place` (
   KEY `country` (`country`),
   CONSTRAINT `place_ibfk_2` FOREIGN KEY (`country`) REFERENCES `country` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
 INSERT INTO `place` (`id`, `country`, `name`, `created`, `updated`) VALUES
 (1,	1,	'Cooperacy',	'2019-06-01 22:29:43',	'2019-06-01 22:32:07'),
 (260,	1100,	'Milan',	'2019-04-25 11:48:56',	'2019-06-01 17:13:03'),
@@ -1474,7 +1470,6 @@ INSERT INTO `place` (`id`, `country`, `name`, `created`, `updated`) VALUES
 (385,	450,	'Ndjamena',	'2019-05-30 16:03:33',	'2019-06-01 17:13:03'),
 (386,	850,	'Accra',	'2019-05-30 16:10:41',	'2019-06-01 17:11:18'),
 (388,	1100,	'Rome',	'2019-06-01 22:58:40',	'2019-06-01 22:58:40');
-
 DROP TABLE IF EXISTS `plan`;
 CREATE TABLE `plan` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1485,7 +1480,6 @@ CREATE TABLE `plan` (
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 INSERT INTO `plan` (`id`, `plan_id`, `charge_id`, `status`, `created`, `updated`) VALUES
 (17,	'P-4ES58239FA7477303C3KHDVQ',	'CHM-5X610516X75916324C3KHDVQ',	'ACTIVE',	'2017-05-17 14:43:24',	'2019-04-25 11:50:27'),
 (40,	'P-1N610333JY173362GQV5CNZI',	'CHM-756165714L106921YQV5CNZI',	'ACTIVE',	'2017-04-19 09:10:32',	'2019-04-25 11:50:27'),
@@ -1500,7 +1494,6 @@ INSERT INTO `plan` (`id`, `plan_id`, `charge_id`, `status`, `created`, `updated`
 (51,	'P-29B62270R63345030CIR375I',	'CHM-5EP23290SK771871SCIR375I',	'ACTIVE',	'2018-06-18 09:04:53',	'2019-04-25 11:50:27'),
 (52,	'P-1WH73665BL312661KYYUXEHY',	'CHM-2KK800933T297710JYYUXEHY',	'ACTIVE',	'2018-07-23 08:02:45',	'2019-04-25 11:50:27'),
 (53,	'P-41B7233963047314DCGE7C3A',	'CHM-5DD34377YB770353HCGE7C3A',	'ACTIVE',	'2018-11-14 09:25:16',	'2019-04-25 11:50:27');
-
 DROP TABLE IF EXISTS `project`;
 CREATE TABLE `project` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1535,7 +1528,6 @@ CREATE TABLE `project` (
   CONSTRAINT `project_ibfk_5` FOREIGN KEY (`stage`) REFERENCES `stage` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
   CONSTRAINT `project_ibfk_6` FOREIGN KEY (`category`) REFERENCES `category` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
 INSERT INTO `project` (`id`, `name`, `country`, `place`, `brief`, `content`, `video`, `anonymous`, `parent`, `category`, `stage`, `collected`, `budget`, `participant`, `hudget`, `E`, `T`, `C`, `I`, `F`, `U`, `D`, `created`, `updated`) VALUES
 (1,	'Cooperacy',	1,	1,	'Cooperacy',	'Cooperacy is a scientific project aiming to spread the practice and the awareness of ecosystemic thinking and cooperation.',	'',	0,	1,	0,	7,	1.5309958911948288,	7000.0000000000000000,	1,	7000,	5,	4,	2,	0,	3,	0,	4,	'2019-04-25 11:58:19',	'2019-07-07 13:26:05'),
 (375,	'Corso di Chitarra a Milano',	1100,	260,	'Corso di chitarra a cura di Giovanna Littardi',	'    -',	'    ',	0,	1,	2,	5,	0.0000000000000000,	30.0000000000000000,	2,	5,	2,	1,	1,	0,	0,	0,	0,	'2019-04-23 15:21:14',	'2019-06-10 04:35:53'),
@@ -1549,7 +1541,6 @@ INSERT INTO `project` (`id`, `name`, `country`, `place`, `brief`, `content`, `vi
 (581,	'Cooperacy Events',	1,	1,	'Stay tuned for all the Cooperacy Events!',	'This project is born as a way to be notified about all the Cooperacy Events',	'',	0,	1,	1,	5,	0.0000000000000000,	0.0000000000000000,	2,	2,	1,	1,	1,	0,	0,	1,	0,	'2019-04-23 13:43:33',	'2019-07-07 14:38:42'),
 (732,	'Lezioni di Acroyoga',	1100,	260,	'Impara a fare Acroyoga e sostieni Cooperacy!',	'Gestito dall\'associazione Open Acroyoga',	'',	0,	1,	1,	5,	0.0000000000000000,	0.0000000000000000,	2,	2,	0,	0,	0,	0,	0,	0,	0,	'2019-04-22 18:34:25',	'2019-06-01 22:31:50'),
 (733,	'Mercatino di frutta partecipata',	1100,	260,	'Acquista con Cooperacy frutta buona e rivendila pagandoti il trasporto',	'Progetto già testato e riattivabile',	'',	0,	1,	1,	5,	0.0000000000000000,	0.0000000000000000,	2,	2,	1,	0,	0,	0,	0,	0,	0,	'2019-04-22 18:34:25',	'2019-06-01 22:31:53');
-
 DROP TABLE IF EXISTS `projectvote`;
 CREATE TABLE `projectvote` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1564,7 +1555,6 @@ CREATE TABLE `projectvote` (
   CONSTRAINT `projectvote_ibfk_3` FOREIGN KEY (`user`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
   CONSTRAINT `projectvote_ibfk_4` FOREIGN KEY (`project`) REFERENCES `project` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
 INSERT INTO `projectvote` (`id`, `user`, `project`, `condition`, `created`, `updated`) VALUES
 (28,	40,	1,	'E',	'2017-09-03 19:17:31',	'2019-04-22 15:15:16'),
 (31,	40,	1,	'T',	'2017-09-03 19:22:26',	'2019-04-22 15:15:25'),
@@ -1607,7 +1597,6 @@ INSERT INTO `projectvote` (`id`, `user`, `project`, `condition`, `created`, `upd
 (1209,	7,	1,	'E',	'2019-06-01 00:03:45',	'2019-06-01 00:03:45'),
 (1210,	7,	1,	'C',	'2019-07-07 13:26:05',	'2019-07-07 13:26:05'),
 (1211,	7,	581,	'C',	'2019-07-07 14:38:42',	'2019-07-07 14:38:42');
-
 DROP TABLE IF EXISTS `removedcvote`;
 CREATE TABLE `removedcvote` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1625,7 +1614,6 @@ CREATE TABLE `removedcvote` (
   CONSTRAINT `removedcvote_ibfk_5` FOREIGN KEY (`comment`) REFERENCES `comment` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `removedcvote_ibfk_7` FOREIGN KEY (`project`) REFERENCES `project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
 DROP TABLE IF EXISTS `removedpvote`;
 CREATE TABLE `removedpvote` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1640,26 +1628,22 @@ CREATE TABLE `removedpvote` (
   CONSTRAINT `removedpvote_ibfk_4` FOREIGN KEY (`user`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `removedpvote_ibfk_5` FOREIGN KEY (`project`) REFERENCES `project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
 DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role` (
   `id` tinyint(3) NOT NULL AUTO_INCREMENT,
   `name` varchar(10) COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
 INSERT INTO `role` (`id`, `name`) VALUES
 (1,	'admin'),
 (2,	'user'),
 (3,	'reporter');
-
 DROP TABLE IF EXISTS `stage`;
 CREATE TABLE `stage` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
 INSERT INTO `stage` (`id`, `name`) VALUES
 (1,	'historical'),
 (2,	'active'),
@@ -1668,7 +1652,6 @@ INSERT INTO `stage` (`id`, `name`) VALUES
 (5,	'nofunding'),
 (6,	'pairing'),
 (7,	'idea');
-
 DROP TABLE IF EXISTS `tag`;
 CREATE TABLE `tag` (
   `id` int(16) NOT NULL AUTO_INCREMENT,
@@ -1680,14 +1663,12 @@ CREATE TABLE `tag` (
   KEY `project` (`project`),
   CONSTRAINT `tag_ibfk_2` FOREIGN KEY (`project`) REFERENCES `project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 INSERT INTO `tag` (`id`, `project`, `name`, `created`, `updated`) VALUES
 (38,	732,	'acroyoga',	'2019-04-25 12:08:57',	'2019-04-25 12:08:57'),
 (39,	733,	'frutta',	'2019-04-25 12:08:57',	'2019-04-25 12:08:57'),
 (40,	733,	'verdura',	'2019-04-25 12:08:57',	'2019-04-25 12:08:57'),
 (41,	375,	'chitarra',	'2019-06-09 19:01:36',	'2019-06-09 19:01:36'),
 (42,	375,	'corso',	'2019-06-09 19:01:48',	'2019-06-09 19:01:48');
-
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -1714,10 +1695,8 @@ CREATE TABLE `user` (
   KEY `role` (`role`),
   CONSTRAINT `user_ibfk_2` FOREIGN KEY (`role`) REFERENCES `role` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
 INSERT INTO `user` (`id`, `name`, `surname`, `email`, `password`, `E`, `T`, `C`, `I`, `F`, `U`, `D`, `active`, `role`, `remember_token`, `paymentdeadline`, `paypalagreementid`, `created`, `updated`) VALUES
 (7,	'Alessandro',	'Merletti De Palo',	'alessandromerlettidepalo@gmail.com',	‘dumb-passwordgoeshere’,	29,	9,	13,	4,	7,	0,	13,	1,	2,	NULL,	NULL,	'I-LYDVA4W364J0',	'2017-07-21 17:37:37',	'2019-07-07 14:53:22');
-
 DROP TABLE IF EXISTS `userproject`;
 CREATE TABLE `userproject` (
   `project` int(11) NOT NULL,
@@ -1729,15 +1708,8 @@ CREATE TABLE `userproject` (
   CONSTRAINT `userproject_ibfk_4` FOREIGN KEY (`project`) REFERENCES `project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `userproject_ibfk_5` FOREIGN KEY (`user`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
 INSERT INTO `userproject` (`project`, `user`, `created`, `updated`) VALUES
 (378,	7,	'2019-04-25 15:22:39',	'2019-04-25 15:22:58'),
 (389,	7,	'2019-04-25 15:22:39',	'2019-04-25 15:22:58'),
-(390,	33,	'2019-04-25 15:22:39',	'2019-04-25 15:22:58'),
-(401,	78,	'2019-04-25 15:22:39',	'2019-04-25 15:22:58'),
 (402,	7,	'2019-04-25 15:22:39',	'2019-04-25 15:22:58'),
-(434,	22,	'2019-04-25 15:22:39',	'2019-04-25 15:22:58'),
-(469,	78,	'2019-04-25 15:22:39',	'2019-04-25 15:22:58'),
 (581,	7,	'2019-04-25 15:22:39',	'2019-04-25 15:22:58'),
-(375,	33,	'2019-06-09 14:02:25',	'2019-06-09 14:02:25'),
-(375,	78,	'2019-06-09 14:02:40',	'2019-06-09 14:02:40');
