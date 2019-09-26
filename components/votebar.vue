@@ -26,7 +26,7 @@
       </div>
     </div>
 
-    <!-- vote bar modal -->
+    <!-- vote bar modal button -->
     <b class="votebar-modal-btn" @click="showVotesModal">?</b>
   </div>
 </template>
@@ -44,8 +44,7 @@ export default {
       visibleVoteCount: {
         index: null,
         voteType: null
-      },
-      isVoteModalVisible: false
+      }
     }
   },
   computed: {
