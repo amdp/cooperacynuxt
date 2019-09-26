@@ -110,7 +110,7 @@
           </div>
         </nuxt-link>
         <votebar
-          :projectId="archived.id"
+          :voteId="archived.id"
           :voteprop="archived"
           :proptype="'project'"
         />
