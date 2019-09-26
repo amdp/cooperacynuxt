@@ -441,6 +441,9 @@ a.disabled {
   transition-duration: 0.3s;
   height: fit-content;
 }
+.single-project a:hover {
+  color: #777;
+}
 .single-project:hover {
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
