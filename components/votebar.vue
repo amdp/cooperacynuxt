@@ -6,13 +6,13 @@
         :key="i"
         class="single-vote-button"
         :id="singleVote.vlong"
-        @mouseenter="setVisibleVoteCount(projectId, singleVote.vlong)"
+        @mouseenter="setVisibleVoteCount(voteId, singleVote.vlong)"
         @mouseleave="resetVisibleVoteCount"
         @click="voteswitch(vote.projectcc)"
       >
         <b
           v-if="
-            visibleVoteCount.index == projectId &&
+            visibleVoteCount.index == voteId &&
               visibleVoteCount.voteType == singleVote.vlong
           "
         >
@@ -37,7 +37,7 @@ export default {
   props: {
     voteprop: { required: true },
     proptype: { required: true },
-    projectId: { required: true }
+    voteId: { required: true }
   },
   data() {
     return {

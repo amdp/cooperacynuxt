@@ -123,7 +123,11 @@
             </div>
             <div class="row">
               <div class="col-12">
-                <votebar :voteprop="subcomment" :proptype="'comment'" />
+                <votebar
+                  :voteprop="subcomment"
+                  :proptype="'comment'"
+                  :voteId="subcomment.id"
+                />
               </div>
             </div>
             <!-- COMMENTS EDIT/REPLY FORM BOX -->

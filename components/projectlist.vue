@@ -49,7 +49,7 @@
         </div>
         <!-- votebar -->
         <votebar
-          :projectId="project.id"
+          :voteId="project.id"
           :voteprop="project"
           :proptype="'project'"
         />
