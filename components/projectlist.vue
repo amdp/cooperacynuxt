@@ -7,46 +7,48 @@
         v-for="project in projectlist"
         :key="project.id"
       >
-        <img
-          :src="projectImage(project.id)"
-          class="img-fluid img-responsive img-project"
-        />
-        <div class="project-content text-center p-2">
-          <b>{{ project.name }}</b>
-          <p class="text-left text-break">{{ project.content }}</p>
-          <p class="text-left">
-            &#128205; {{ getProjectLocation(project.place) }}
-          </p>
-          <div class="progress">
-            <div
-              class="progress-bar"
-              :class="{
-                'progress-zero': calculateProjectProgress(project) == 0
-              }"
-              role="progressbar"
-              :style="{ width: calculateProjectProgress(project) + '%' }"
-              aria-valuenow="25"
-              aria-valuemin="0"
-              aria-valuemax="100"
-            >
-              {{ calculateProjectProgress(project) }}%
+        <nuxt-link :to="'/project/' + project.id">
+          <img
+            :src="projectImage(project.id)"
+            class="img-fluid img-responsive img-project"
+          />
+          <div class="project-content text-center p-2">
+            <b>{{ project.name }}</b>
+            <p class="text-left text-break">{{ project.content }}</p>
+            <p class="text-left">
+              &#128205; {{ getProjectLocation(project.place) }}
+            </p>
+            <div class="progress">
+              <div
+                class="progress-bar"
+                :class="{
+                  'progress-zero': calculateProjectProgress(project) == 0
+                }"
+                role="progressbar"
+                :style="{ width: calculateProjectProgress(project) + '%' }"
+                aria-valuenow="25"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                {{ calculateProjectProgress(project) }}%
+              </div>
             </div>
           </div>
-        </div>
-        <div class="project-details p-2 d-flex">
-          <div>
-            <b>{{ Math.round(project.collected) }}€</b>
-            <small>collected</small>
+          <div class="project-details p-2 d-flex">
+            <div>
+              <b>{{ Math.round(project.collected) }}€</b>
+              <small>collected</small>
+            </div>
+            <div>
+              <b>{{ Math.round(project.budget) }}€</b>
+              <small>budget</small>
+            </div>
+            <div>
+              <b>{{ getProjectStage(project.stage) }}</b>
+              <small>stage</small>
+            </div>
           </div>
-          <div>
-            <b>{{ Math.round(project.budget) }}€</b>
-            <small>budget</small>
-          </div>
-          <div>
-            <b>{{ getProjectStage(project.stage) }}</b>
-            <small>stage</small>
-          </div>
-        </div>
+        </nuxt-link>
         <!-- votebar -->
         <votebar
           :voteId="project.id"
@@ -65,46 +67,48 @@
         v-for="archived in archivedlist"
         :key="archived.id"
       >
-        <img
-          :src="projectImage(archived.id)"
-          class="img-fluid img-responsive img-project"
-        />
-        <div class="project-content text-center p-2">
-          <b>{{ archived.name }}</b>
-          <p class="text-left text-break">{{ archived.content }}</p>
-          <p class="text-left">
-            &#128205; {{ getProjectLocation(archived.place) }}
-          </p>
-          <div class="progress">
-            <div
-              class="progress-bar"
-              :class="{
-                'progress-zero': calculateProjectProgress(archived) == 0
-              }"
-              role="progressbar"
-              :style="{ width: calculateProjectProgress(archived) + '%' }"
-              aria-valuenow="25"
-              aria-valuemin="0"
-              aria-valuemax="100"
-            >
-              {{ calculateProjectProgress(archived) }}%
+        <nuxt-link :to="'/project/' + archived.id">
+          <img
+            :src="projectImage(archived.id)"
+            class="img-fluid img-responsive img-project"
+          />
+          <div class="project-content text-center p-2">
+            <b>{{ archived.name }}</b>
+            <p class="text-left text-break">{{ archived.content }}</p>
+            <p class="text-left">
+              &#128205; {{ getProjectLocation(archived.place) }}
+            </p>
+            <div class="progress">
+              <div
+                class="progress-bar"
+                :class="{
+                  'progress-zero': calculateProjectProgress(archived) == 0
+                }"
+                role="progressbar"
+                :style="{ width: calculateProjectProgress(archived) + '%' }"
+                aria-valuenow="25"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                {{ calculateProjectProgress(archived) }}%
+              </div>
             </div>
           </div>
-        </div>
-        <div class="project-details p-2 d-flex">
-          <div>
-            <b>{{ Math.round(archived.collected) }}€</b>
-            <small>collected</small>
+          <div class="project-details p-2 d-flex">
+            <div>
+              <b>{{ Math.round(archived.collected) }}€</b>
+              <small>collected</small>
+            </div>
+            <div>
+              <b>{{ Math.round(archived.budget) }}€</b>
+              <small>budget</small>
+            </div>
+            <div>
+              <b>{{ archived.stage }}</b>
+              <small>stage</small>
+            </div>
           </div>
-          <div>
-            <b>{{ Math.round(archived.budget) }}€</b>
-            <small>budget</small>
-          </div>
-          <div>
-            <b>{{ archived.stage }}</b>
-            <small>stage</small>
-          </div>
-        </div>
+        </nuxt-link>
         <votebar
           :projectId="archived.id"
           :voteprop="archived"
