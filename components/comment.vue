@@ -57,7 +57,11 @@
         </div>
         <div class="row">
           <div class="col-12">
-            <votebar :voteprop="comment" :proptype="'comment'" />
+            <votebar
+              :voteprop="comment"
+              :proptype="'comment'"
+              :voteId="comment.id"
+            />
           </div>
         </div>
         <!-- POSTS EDIT/REPLY FORM BOX -->
