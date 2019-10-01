@@ -3,7 +3,7 @@
   <div class="w-100 nav-container">
     <b-navbar
       toggleable="lg"
-      class="navbar d-flex justify-content-start"
+      class="navbar d-flex justify-content-start flex-wrap"
       @mouseleave="navState = null"
     >
       <nuxt-link
@@ -204,12 +204,17 @@
         <nuxt-link to="/login" class="nav-item">LOGIN</nuxt-link>
       </div>
     </div>
+    <b-col v-if="this.$auth.loggedIn" cols="12" class="p-0 fluid">
+      <votebar :voteId="1" :voteprop="$auth.user" :proptype="'user'" />
+    </b-col>
   </div>
 </template>
 
 
 <script>
+import votebar from './votebar'
 export default {
+  components: { votebar },
   data() {
     return {
       navState: null,
@@ -233,3 +238,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.nav-container {
+  height: auto;
+}
+</style>
