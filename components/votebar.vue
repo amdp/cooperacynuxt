@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div class="votebar d-flex justify-content-center px-3 pt-2 pb-4">
+    <!-- project votebar -->
+    <div v-if="proptype == 'project'" class="project-votebar">
       <div
         v-for="(singleVote, i) in vote"
         :key="i"
@@ -24,10 +25,38 @@
           class="img-fluid img-responsive"
         />
       </div>
+      <!-- vote bar modal button -->
+      <b class="votebar-modal-btn" @click="showVotesModal">?</b>
     </div>
 
-    <!-- vote bar modal button -->
-    <b class="votebar-modal-btn" @click="showVotesModal">?</b>
+    <!-- user votebar -->
+    <b-container fluid class="p-0 m-0" v-else-if="proptype == 'user'">
+      <b-row class="p-0 w-100 m-0">
+        <b-col cols="12" class="p-0 m-0 d-flex">
+          <div
+            v-for="vote in this.vote"
+            :key="vote.userkey"
+            :class="vote.class"
+            :style="vote.style"
+          ></div>
+        </b-col>
+      </b-row>
+    </b-container>
+
+    <!-- comment votebar -->
+    <b-row class="mt-2 p-0 up" v-else-if="proptype == 'comment'">
+      <div
+        v-for="vote in this.vote"
+        :key="vote.commentcc"
+        :class="vote.class"
+        :style="vote.style"
+        @click="voteswitch(vote.commentcc)"
+      >
+        <div class="showme t8 mt-1">
+          {{ vote.vlong }}<br />{{ vote.v }} points
+        </div>
+      </div>
+    </b-row>
   </div>
 </template>
 

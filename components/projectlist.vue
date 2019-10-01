@@ -112,7 +112,7 @@
         <votebar
           :voteId="archived.id"
           :voteprop="archived"
-          :proptype="'project'"
+          proptype="project"
         />
       </div>
     </div>

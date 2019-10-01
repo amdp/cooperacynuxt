@@ -576,11 +576,19 @@ hr.home-hr {
   visibility: hidden;
   margin-left: -35px;
 }
-.votebar {
+.project-votebar {
   border-top: 1px solid black;
+  display: flex;
+  justify-content: center;
+  padding-right: 1rem;
+  padding-left: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 1.5rem;
+}
+.comments-and-nav-votebar {
 }
 
-.single-vote-button {
+.project-votebar .single-vote-button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -593,7 +601,7 @@ hr.home-hr {
   padding: 0.35rem;
   cursor: pointer;
 }
-.single-vote-button small {
+.project-votebar .single-vote-button small {
   font-weight: 500;
 }
 .votebar-modal-btn {
@@ -621,30 +629,30 @@ hr.home-hr {
   color: black;
 }
 @media (max-width: 768px) {
-  .single-vote-button {
+  .project-votebar .single-vote-button {
     margin: 0.15rem;
   }
 }
 /* votebar colors */
-.single-vote-button#equivalence:hover {
+.project-votebar .single-vote-button#equivalence:hover {
   box-shadow: 0px 1px 1px var(--equivalence);
 }
-.single-vote-button#care:hover {
+.project-votebar .single-vote-button#care:hover {
   box-shadow: 0px 1px 1px var(--care);
 }
-.single-vote-button#transparency:hover {
+.project-votebar .single-vote-button#transparency:hover {
   box-shadow: 0px 1px 1px var(--transparency);
 }
-.single-vote-button#freedom:hover {
+.project-votebar .single-vote-button#freedom:hover {
   box-shadow: 0px 1px 1px var(--freedom);
 }
-.single-vote-button#diversity:hover {
+.project-votebar .single-vote-button#diversity:hover {
   box-shadow: 0px 1px 1px var(--diversity);
 }
-.single-vote-button#trust:hover {
+.project-votebar .single-vote-button#trust:hover {
   box-shadow: 0px 1px 1px var(--trust);
 }
-.single-vote-button#understanding:hover {
+.project-votebar .single-vote-button#understanding:hover {
   box-shadow: 0px 1px 1px var(--understanding);
 }
 
