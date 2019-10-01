@@ -1,0 +1,19 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  xml:space="preserve"
+  version="1.1"
+  style="shape-rendering:geometricPrecision;text-rendering:geometricPrecision;image-rendering:optimizeQuality;"
+  viewBox="0 0 278 250"
+  x="0px"
+  y="0px"
+  fill-rule="evenodd"
+  clip-rule="evenodd"
+  fill="#f7d"
+>
+  <g>
+    <circle class="fil0" cx="59" cy="141" r="59" />
+    <polygon class="fil1" points="186,0 51,27 142,131 " />
+    <polygon class="fil1" points="278,90 174,60 144,164 248,194 " />
+  </g>
+</svg>
