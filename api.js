@@ -9,7 +9,7 @@ app.use(fileUpload())
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const nodemailer = require('nodemailer')
-const Jimp = require('jimp')
+const jimp = require('jimp')
 const cc = ['D', 'U', 'F', 'I', 'C', 'T', 'E']
 const mysql = require('mysql2')
 const mydb = mysql.createConnection({
@@ -109,7 +109,8 @@ app.get('/user', async (req, res) => {
       res.status(401).send(e + ': Auth Token Wrong or Expired')
       return axios({
         method: 'post',
-        url: process.env.HOST + ':' + process.env.PORT + '/db/logout'
+        url:
+          'http://' + process.env.HOST + ':' + process.env.PORT + '/api/logout'
       })
     }
     let id = jwt.decode(req.headers.authorization)
@@ -636,7 +637,8 @@ app.post('/tag', (req, res) => {
 app.post('/image', function(req, res) {
   if (req.body.empty) {
     let standardimage = './assets/image/' + req.body.proptype + '/1.png'
-    Jimp.read(standardimage)
+    jimp
+      .read(standardimage)
       .then(standardimage => {
         return standardimage
           .resize(256, 256)
@@ -664,7 +666,8 @@ app.post('/image', function(req, res) {
         return res.status(500).send(err)
       }
     })
-    Jimp.read(uploadPath)
+    jimp
+      .read(uploadPath)
       .then(uploadPath => {
         return uploadPath
           .resize(256, 256)
