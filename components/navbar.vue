@@ -93,9 +93,9 @@
             to="/login"
             >LOGIN</nuxt-link
           >
-          <a href="" v-else>{{
+          <nuxt-link to="/user" v-else>{{
             this.$auth.user.name + ' ' + this.$auth.user.surname
-          }}</a>
+          }}</nuxt-link>
           <div class="social-icons">
             <a href="https://www.linkedin.com/company/cooperacy/">
               <img src="../assets/icons/linkedin.svg" id="linkedin" />
@@ -200,8 +200,13 @@
           <nuxt-link class="mobile-nav-item" to="/news">NEWS</nuxt-link>
         </div>
       </div>
-      <div class="mobile-nav-box" @click="resetNav">
+      <div class="mobile-nav-box" @click="resetNav" v-if="!this.$auth.loggedIn">
         <nuxt-link to="/login" class="nav-item">LOGIN</nuxt-link>
+      </div>
+      <div class="mobile-nav-box" v-else>
+        <nuxt-link to="/user" class="nav-item">{{
+          this.$auth.user.name + ' ' + this.$auth.user.surname
+        }}</nuxt-link>
       </div>
     </div>
     <b-col v-if="this.$auth.loggedIn" cols="12" class="p-0 fluid">
