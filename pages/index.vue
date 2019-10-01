@@ -13,6 +13,8 @@ export default {
   components: { home: home, projectlist: projectlist },
   async fetch({ store, params }) {
     await store.dispatch('getProjectAction', '')
+    await store.dispatch('getPlaceAction')
+    await store.dispatch('getCountryAction')
   }
 }
 </script>

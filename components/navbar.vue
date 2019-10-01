@@ -3,7 +3,7 @@
   <div class="w-100 nav-container">
     <b-navbar
       toggleable="lg"
-      class="navbar d-flex justify-content-start"
+      class="navbar d-flex justify-content-start flex-wrap"
       @mouseleave="navState = null"
     >
       <nuxt-link
@@ -93,35 +93,27 @@
             to="/login"
             >LOGIN</nuxt-link
           >
-          <a href="" v-else>{{
+          <nuxt-link to="/user" v-else>{{
             this.$auth.user.name + ' ' + this.$auth.user.surname
-          }}</a>
+          }}</nuxt-link>
           <div class="social-icons">
-            <a
-              target="_blank"
-              href="https://www.facebook.com/cooperacy.org/"
-              class="fab fa-facebook"
-            ></a>
-            <a
-              target="_blank"
-              href="https://www.linkedin.com/company/cooperacy/"
-              class="fab fa-linkedin"
-            ></a>
-            <a
-              target="_blank"
-              href="https://discord.gg/kzBB3Xj"
-              class="fab fa-discord"
-            ></a>
+            <a href="https://www.linkedin.com/company/cooperacy/">
+              <img src="../assets/icons/linkedin.svg" id="linkedin" />
+            </a>
+            <a href="https://www.youtube.com/channel/UCbeRtTRYXwsbSPc9JvSMvtQ">
+              <img src="../assets/icons/youtube.svg" id="youtube" />
+            </a>
+            <a href="https://www.facebook.com/cooperacy.org/">
+              <img src="../assets/icons/facebook.svg" id="facebook" />
+            </a>
           </div>
         </div>
       </div>
 
       <!-- MOBILE HARMBURGER BUTTON -->
       <div class="col-2 h-100 burger-btn ml-auto text-right" @click="resetNav">
-        <i
-          class="fas"
-          :class="[isDropdownVisible ? 'fa-times' : 'fa-bars']"
-        ></i>
+        <img v-if="!isDropdownVisible" src="../assets/icons/bars.svg" />
+        <img v-else src="../assets/icons/times.svg" />
       </div>
     </b-navbar>
 
@@ -208,16 +200,26 @@
           <nuxt-link class="mobile-nav-item" to="/news">NEWS</nuxt-link>
         </div>
       </div>
-      <div class="mobile-nav-box" @click="resetNav">
+      <div class="mobile-nav-box" @click="resetNav" v-if="!this.$auth.loggedIn">
         <nuxt-link to="/login" class="nav-item">LOGIN</nuxt-link>
       </div>
+      <div class="mobile-nav-box" v-else>
+        <nuxt-link to="/user" class="nav-item">{{
+          this.$auth.user.name + ' ' + this.$auth.user.surname
+        }}</nuxt-link>
+      </div>
     </div>
+    <b-col v-if="this.$auth.loggedIn" cols="12" class="p-0 fluid">
+      <votebar :voteId="1" :voteprop="$auth.user" :proptype="'user'" />
+    </b-col>
   </div>
 </template>
 
 
 <script>
+import votebar from './votebar'
 export default {
+  components: { votebar },
   data() {
     return {
       navState: null,
@@ -242,3 +244,8 @@ export default {
 }
 </script>
 
+<style scoped>
+.nav-container {
+  height: auto;
+}
+</style>

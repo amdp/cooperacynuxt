@@ -76,7 +76,7 @@
             </div>
           </div>
         </div>
-        <votebar :voteprop="oneproject" :proptype="'project'" />
+        <votebar :voteprop="oneproject" :proptype="'project'" :voteId="oneproject.id"/>
       </div>
       <b-row class="mt-5 d-block">
         <b-link class="au" @click="edit">Edit this project</b-link>
