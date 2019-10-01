@@ -215,7 +215,6 @@
   </div>
 </template>
 
-
 <script>
 import votebar from './votebar'
 export default {

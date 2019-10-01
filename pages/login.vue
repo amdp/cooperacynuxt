@@ -102,7 +102,6 @@
                 required
               ></b-form-input>
             </b-form-group>
-            <!-- add crypt password before sending it -->
             <b-form-group
               label-for="passwordInput"
               label="Password:"
@@ -134,7 +133,9 @@
               class="btn bhcare btn-block mt-3 white border-0"
               >JOIN WITH BANK TRANSFER</b-button
             ><br />
-            <p class="subheading d-flex justify-content-center">OR WITH</p>
+            <p class="subheading d-flex justify-content-center">
+              OR WITH
+            </p>
             <!-- CHECK would like OR WITH to be v-if="paypal"  -->
           </b-form>
         </div>
@@ -210,7 +211,8 @@ export default {
   },
   mounted: function() {
     var that = this //important: we need to have a reference to the variables in the page and cannot call 'this' in nested functions
-    if (this.paypal) {
+    if (paypal) {
+      console.log(' ' + JSON.stringify('paypal starting'))
       paypal
         .Buttons({
           onError: function(err) {
@@ -239,6 +241,7 @@ export default {
           }
         })
         .render('#paypal-button-container')
+      console.log(' ' + JSON.stringify('render launched'))
     }
   },
   methods: {

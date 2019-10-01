@@ -43,7 +43,7 @@ Content-type: application/json
 
 
 
-DELETE http://localhost:3000/db/userimage HTTP/1.1
+DELETE http://localhost:3000/api/userimage HTTP/1.1
 Content-type: application/json
 
 {
@@ -52,7 +52,7 @@ Content-type: application/json
 
 
 
-POST http://localhost:3000/db/login HTTP/1.1
+POST http://localhost:3000/api/login HTTP/1.1
 Content-type: application/json
 
 {
@@ -60,14 +60,12 @@ Content-type: application/json
   "password": "qqq"
 }
 
-GET http://127.0.0.1:3000/db/comment HTTP/1.1
+GET http://127.0.0.1:3000/api/comment HTTP/1.1
 Content-type: application/json
 
 {"id":"1"}
 
 ###-->
 
-POST http://127.0.0.1:3000/db/resetvoting HTTP/1.1
-Content-type: application/json
-
-{}
+POST http://127.0.0.1:3000/api/resetvoting HTTP/1.1 Content-type:
+application/json {}
