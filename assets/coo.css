@@ -492,7 +492,12 @@ a.disabled {
   width: 5%;
 }
 .main {
-  margin-top: 70px !important;
+  margin-top: 12vh;
+}
+@media (max-width: 576px) {
+  .main {
+    margin-top: 10vh;
+  }
 }
 .headerlogo {
   height: 60px;
