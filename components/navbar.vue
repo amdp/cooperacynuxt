@@ -1,5 +1,5 @@
 <template>
-  <!--  DESKTOP NAV -->
+  <!--  dekstop nav -->
   <div class="w-100 nav-container">
     <b-navbar
       toggleable="lg"
@@ -97,14 +97,14 @@
             this.$auth.user.name + ' ' + this.$auth.user.surname
           }}</nuxt-link>
           <div class="social-icons">
+            <a href="https://www.facebook.com/cooperacy.org/">
+              <img src="../assets/icons/facebook.svg" id="facebook" />
+            </a>
             <a href="https://www.linkedin.com/company/cooperacy/">
               <img src="../assets/icons/linkedin.svg" id="linkedin" />
             </a>
             <a href="https://www.youtube.com/channel/UCbeRtTRYXwsbSPc9JvSMvtQ">
               <img src="../assets/icons/youtube.svg" id="youtube" />
-            </a>
-            <a href="https://www.facebook.com/cooperacy.org/">
-              <img src="../assets/icons/facebook.svg" id="facebook" />
             </a>
           </div>
         </div>
