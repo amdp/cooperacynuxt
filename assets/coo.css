@@ -411,7 +411,6 @@ a.disabled {
   cursor: pointer;
   display: inline;
   position: relative;
-  font-weight: 400;
 }
 .nav-item:after {
   content: '';
