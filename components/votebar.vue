@@ -1,63 +1,42 @@
 <template>
-  <div>
-    <!-- project votebar -->
-    <div v-if="proptype == 'project'" class="project-votebar">
-      <div
-        v-for="(singleVote, i) in vote"
-        :key="i"
-        class="single-vote-button"
-        :id="singleVote.vlong"
-        @mouseenter="setVisibleVoteCount(voteId, singleVote.vlong)"
-        @mouseleave="resetVisibleVoteCount"
-        @click="voteswitch(vote.projectcc)"
-      >
-        <b
-          v-if="
-            visibleVoteCount.index == voteId &&
-              visibleVoteCount.voteType == singleVote.vlong
-          "
-        >
-          {{ singleVote.v }}</b
-        >
-        <img
-          v-else
-          :src="getVoteIconSrc(singleVote.vlong)"
-          class="img-fluid img-responsive"
-        />
-      </div>
-      <!-- vote bar modal button -->
-      <b class="votebar-modal-btn" @click="showVotesModal">?</b>
-    </div>
-
-    <!-- user votebar -->
-    <b-container fluid class="p-0 m-0" v-else-if="proptype == 'user'">
-      <b-row class="p-0 w-100 m-0">
-        <b-col cols="12" class="p-0 m-0 d-flex">
-          <div
-            v-for="vote in this.vote"
-            :key="vote.userkey"
-            :class="vote.class"
-            :style="vote.style"
-          ></div>
-        </b-col>
-      </b-row>
-    </b-container>
-
-    <!-- comment votebar -->
-    <b-row class="mt-2 p-0 up" v-else-if="proptype == 'comment'">
-      <div
-        v-for="vote in this.vote"
-        :key="vote.commentcc"
-        :class="vote.class"
-        :style="vote.style"
-        @click="voteswitch(vote.commentcc)"
-      >
-        <div class="showme t8 mt-1">
-          {{ vote.vlong }}<br />{{ vote.v }} points
-        </div>
-      </div>
+  <b-container fluid class="p-0 m-0" v-if="this.proptype == 'user'">
+    <b-row class="p-0 w-100 m-0">
+      <b-col cols="12" class="p-0 m-0 d-flex">
+        <div
+          v-for="vote in this.vote"
+          :key="vote.userkey"
+          :class="vote.class"
+          :style="vote.style"
+        ></div>
+      </b-col>
     </b-row>
-  </div>
+  </b-container>
+  <b-row class="mt-2 p-0 up" v-else-if="this.proptype == 'project'">
+    <div
+      v-for="vote in this.vote"
+      :key="vote.projectcc"
+      :class="vote.class"
+      :style="vote.style"
+      @click="voteswitch(vote.projectcc)"
+    >
+      <div class="showme t12 mt-1">
+        {{ vote.vlong }}<br />{{ vote.v }} points
+      </div>
+    </div>
+  </b-row>
+  <b-row class="mt-2 p-0 up" v-else-if="this.proptype == 'comment'">
+    <div
+      v-for="vote in this.vote"
+      :key="vote.commentcc"
+      :class="vote.class"
+      :style="vote.style"
+      @click="voteswitch(vote.commentcc)"
+    >
+      <div class="showme t8 mt-1">
+        {{ vote.vlong }}<br />{{ vote.v }} points
+      </div>
+    </div>
+  </b-row>
 </template>
 
 <script>
@@ -65,16 +44,7 @@
 export default {
   props: {
     voteprop: { required: true },
-    proptype: { required: true },
-    voteId: { required: true }
-  },
-  data() {
-    return {
-      visibleVoteCount: {
-        index: null,
-        voteType: null
-      }
-    }
+    proptype: { required: true }
   },
   computed: {
     vote() {
@@ -178,23 +148,6 @@ export default {
       this.$store.dispatch('addVoteAction', request).catch(err => {
         console.error(err)
       })
-    },
-
-    // makes vote count visible on hover
-    setVisibleVoteCount: function(index, voteType) {
-      this.visibleVoteCount.index = index
-      this.visibleVoteCount.voteType = voteType
-    },
-    resetVisibleVoteCount: function() {
-      this.visibleVoteCount.index = null
-      this.visibleVoteCount.voteType = null
-    },
-    // feeds the vote icon img src
-    getVoteIconSrc: function(voteType) {
-      return require('../assets/icons/' + voteType + '.svg')
-    },
-    showVotesModal: function() {
-      this.$bvModal.show('votes-modal')
     }
   }
 }
