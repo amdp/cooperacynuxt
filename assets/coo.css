@@ -411,7 +411,6 @@ a.disabled {
   cursor: pointer;
   display: inline;
   position: relative;
-  font-weight: 400;
 }
 .nav-item:after {
   content: '';
@@ -492,7 +491,12 @@ a.disabled {
   width: 5%;
 }
 .main {
-  margin-top: 70px !important;
+  margin-top: 12vh;
+}
+@media (max-width: 576px) {
+  .main {
+    margin-top: 10vh;
+  }
 }
 .headerlogo {
   height: 60px;
@@ -584,8 +588,6 @@ hr.home-hr {
   padding-left: 1rem;
   padding-top: 0.5rem;
   padding-bottom: 1.5rem;
-}
-.comments-and-nav-votebar {
 }
 
 .project-votebar .single-vote-button {
