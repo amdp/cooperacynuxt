@@ -209,7 +209,7 @@ export default {
       }
     ]
   },
-  mounted: function() {
+  asyncData() {
     var that = this //important: we need to have a reference to the variables in the page and cannot call 'this' in nested functions
     paypal
       .Buttons({
