@@ -109,8 +109,7 @@ app.get('/user', async (req, res) => {
       res.status(401).send(e + ': Auth Token Wrong or Expired')
       return axios({
         method: 'post',
-        url:
-          'http://' + process.env.HOST + ':' + process.env.PORT + '/api/logout'
+        url: process.env.DBURL + 'logout'
       })
     }
     let id = jwt.decode(req.headers.authorization)
@@ -366,9 +365,7 @@ app.post('/recoverpassword', async (req, res) => {
               subject: 'Change your Cooperacy password',
               text:
                 'Click here to set the new password:\n' +
-                process.env.HOST +
-                ':' +
-                process.env.PORT +
+                process.env.HOME +
                 '/recover?jws=' +
                 token +
                 '\nOr please just ignore this email'

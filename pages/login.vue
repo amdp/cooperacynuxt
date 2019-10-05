@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-row class="mr-3 ml-3">
+    <b-row class="mr-3 ml-3 mt-5">
       <div class="container d-flex justify-content-center">
         <b-form
           @submit.prevent="login"
