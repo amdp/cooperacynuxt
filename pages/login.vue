@@ -209,38 +209,38 @@ export default {
       }
     ]
   },
-  mounted() {
-    var that = this //important: we need to have a reference to the variables in the page and cannot call 'this' in nested functions
-    paypal
-      .Buttons({
-        onError: function(err) {
-          alert(err)
-          console.log('err' + err)
-          that.formPaypalagreementid = 'e' + JSON.stringify(err)
-          that.newuser()
-        },
-        onCancel: function(data) {
-          console.log('c' + JSON.stringify(data))
-          that.formPaypalagreementid = 'c' + JSON.stringify(data)
-          that.newuser()
-        },
-        createSubscription: function(data, actions) {
-          return actions.subscription.create({
-            plan_id: 'P-9C681042E7918904VLURYYGQ'
-          })
-        },
-        onApprove: function(data, actions) {
-          alert(
-            'You have successfully become a member with subscription ID ' +
-              data.subscriptionID
-          )
-          that.formPaypalagreementid = data.subscriptionID
-          that.newuser()
-        }
-      })
-      .render('#paypal-button-container')
-  },
   methods: {
+    async loadpaypal() {
+      var that = this //important: we need to have a reference to the variables in the page and cannot call 'this' in nested functions
+      await paypal
+        .Buttons({
+          onError: function(err) {
+            alert(err)
+            console.log('err' + err)
+            that.formPaypalagreementid = 'e' + JSON.stringify(err)
+            that.newuser()
+          },
+          onCancel: function(data) {
+            console.log('c' + JSON.stringify(data))
+            that.formPaypalagreementid = 'c' + JSON.stringify(data)
+            that.newuser()
+          },
+          createSubscription: function(data, actions) {
+            return actions.subscription.create({
+              plan_id: 'P-9C681042E7918904VLURYYGQ'
+            })
+          },
+          onApprove: function(data, actions) {
+            alert(
+              'You have successfully become a member with subscription ID ' +
+                data.subscriptionID
+            )
+            that.formPaypalagreementid = data.subscriptionID
+            that.newuser()
+          }
+        })
+        .render('#paypal-button-container')
+    },
     async login() {
       this.error = null
       this.$auth
@@ -309,6 +309,40 @@ export default {
       })
       //setTimeout(function(){location.href = location.href}, 1200)
     }
+  },
+  mounted() {
+    async function loadpaypal() {
+      var that = this //important: we need to have a reference to the variables in the page and cannot call 'this' in nested functions
+      await paypal
+        .Buttons({
+          onError: function(err) {
+            alert(err)
+            console.log('err' + err)
+            that.formPaypalagreementid = 'e' + JSON.stringify(err)
+            that.newuser()
+          },
+          onCancel: function(data) {
+            console.log('c' + JSON.stringify(data))
+            that.formPaypalagreementid = 'c' + JSON.stringify(data)
+            that.newuser()
+          },
+          createSubscription: function(data, actions) {
+            return actions.subscription.create({
+              plan_id: 'P-9C681042E7918904VLURYYGQ'
+            })
+          },
+          onApprove: function(data, actions) {
+            alert(
+              'You have successfully become a member with subscription ID ' +
+                data.subscriptionID
+            )
+            that.formPaypalagreementid = data.subscriptionID
+            that.newuser()
+          }
+        })
+        .render('#paypal-button-container')
+    }
+    loadpaypal()
   }
 }
 </script>
