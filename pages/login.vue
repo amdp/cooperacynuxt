@@ -158,7 +158,9 @@ export default {
         src:
           'https://www.paypal.com/sdk/js?client-id=' +
           process.env.PAYPALID +
-          '&vault=true&currency=EUR&debug=false'
+          '&vault=true&currency=EUR&debug=false',
+        async: true,
+        defer: true
       },
       {
         src: 'https://apis.google.com/js/platform.js',
