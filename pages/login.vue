@@ -28,16 +28,16 @@
           </b-form-group>
           <b-button
             type="submit"
-            class="btn bhdiversity white btn-block mt-3 gray border-0"
-            >Login</b-button
+            class="btn bhcare white btn-block mt-3 border-0"
+            >LOGIN</b-button
           ><br />
           <p>
-            Forgot password? Just enter your correct email address and a
-            <em>new password</em> in the login prompt you just used above, then:
+            Want to change password? Just enter a
+            <em>new password</em> above together with your email
             <b-button
-              class="btn bhunderstanding white btn-block gray border-0"
+              class="btn bhunderstanding white btn-block border-0"
               @click="recover"
-              >Set new password</b-button
+              >CHANGE PASSWORD</b-button
             ><br />
             If you still have problems, please
             <nuxt-link class="ac" to="/contact">contact us</nuxt-link>.
@@ -52,99 +52,103 @@
         >
       </div>
     </b-row> -->
-
-    <div class="col-12">
-      <div class="row">
-        <div class="col-12 d-flex justify-content-center mt-4">
-          <p class="care subheading">OR CREATE A NEW ACCOUNT:</p>
-        </div>
+    <div class="row">
+      <div class="col-12 d-flex justify-content-center mt-4">
+        <b-button
+          class="btn bhcare white btn-block border-0 mb-3"
+          @click="newaccount"
+          >CREATE A NEW SUBSCRIPTION BASED ACCOUNT INSTEAD</b-button
+        >
       </div>
-      <div class="row">
-        <!--
+    </div>
+    <div class="row" v-if="this.newaccountvar">
+      <!--
       <div class="g-signin2" data-onsuccess="googleOnSignIn" data-theme="dark"></div>
       <a href="#" @click="googleSignOut">Sign out</a>-->
-        <div class="col-12 d-flex justify-content-center">
-          <b-form @submit.prevent="newuser" class="mt-3 was-validated">
-            <b-form-group
-              label-for="nameInput"
-              label="Name:"
-              description="Please insert your name"
-            >
-              <b-form-input
-                id="nameInput"
-                v-model="formName"
-                size="sm"
-                required
-              ></b-form-input>
-            </b-form-group>
-            <b-form-group
-              label-for="surnameInput"
-              label="Surname:"
-              description="Please insert your surname"
-            >
-              <b-form-input
-                id="surnameInput"
-                v-model="formSurname"
-                size="sm"
-                required
-              ></b-form-input>
-            </b-form-group>
-            <b-form-group
-              label-for="emailInput"
-              label="Email:"
-              description="Please insert a valid email: it will be your future username"
-            >
-              <b-form-input
-                id="emailInput"
-                v-model="formEmail"
-                size="sm"
-                autocomplete="email"
-                required
-              ></b-form-input>
-            </b-form-group>
-            <b-form-group
-              label-for="passwordInput"
-              label="Password:"
-              description="Please insert your password or passphrase"
-            >
-              <b-form-input
-                id="passwordInput"
-                v-model="formPassword"
-                size="sm"
-                type="password"
-                autocomplete="new-password"
-                required
-              ></b-form-input>
-            </b-form-group>
-            <b-form-group
-              label-for="imageInput"
-              label="Image:"
-              description="Please choose an image for your account"
-            >
-              <b-form-file
-                id="imageInput"
-                v-model="formImageFile"
-                ref="formImageFile"
-                size="sm"
-              ></b-form-file>
-            </b-form-group>
-            <b-button
-              type="submit"
-              class="btn bhcare btn-block mt-3 white border-0"
-              >JOIN WITH BANK TRANSFER</b-button
-            ><br />
-            <p class="subheading d-flex justify-content-center">
-              OR WITH
-            </p>
-            <!-- CHECK would like OR WITH to be v-if="paypal"  -->
-          </b-form>
-        </div>
+      <div class="col-12 d-flex justify-content-center">
+        <b-form @submit.prevent="newuser" class="mt-3 was-validated">
+          <b-form-group
+            label-for="nameInput"
+            label="Name:"
+            description="Please insert your name"
+          >
+            <b-form-input
+              id="nameInput"
+              v-model="formName"
+              size="sm"
+              required
+            ></b-form-input>
+          </b-form-group>
+          <b-form-group
+            label-for="surnameInput"
+            label="Surname:"
+            description="Please insert your surname"
+          >
+            <b-form-input
+              id="surnameInput"
+              v-model="formSurname"
+              size="sm"
+              required
+            ></b-form-input>
+          </b-form-group>
+          <b-form-group
+            label-for="emailInput"
+            label="Email:"
+            description="Please insert a valid email: it will be your future username"
+          >
+            <b-form-input
+              id="emailInput"
+              v-model="formEmail"
+              size="sm"
+              autocomplete="email"
+              required
+            ></b-form-input>
+          </b-form-group>
+          <b-form-group
+            label-for="passwordInput"
+            label="Password:"
+            description="Please insert your password or passphrase"
+          >
+            <b-form-input
+              id="passwordInput"
+              v-model="formPassword"
+              size="sm"
+              type="password"
+              autocomplete="new-password"
+              required
+            ></b-form-input>
+          </b-form-group>
+          <b-form-group
+            label-for="imageInput"
+            label="Image:"
+            description="Please choose an image for your account"
+          >
+            <b-form-file
+              id="imageInput"
+              v-model="formImageFile"
+              ref="formImageFile"
+              size="sm"
+            ></b-form-file>
+          </b-form-group>
+          <b-button
+            type="submit"
+            class="btn bhcare btn-block mt-3 white border-0"
+            >JOIN WITH BANK TRANSFER</b-button
+          ><br />
+          <p
+            class="btn bhcare white btn-block border-0 mb-4"
+            @click="loadpaypal"
+          >
+            JOIN WITH PAYPAL
+          </p>
+          <div
+            class="d-flex justify-content-center"
+            id="paypal-button-container"
+          ></div>
+        </b-form>
       </div>
-      <div
-        class="d-flex justify-content-center"
-        id="paypal-button-container"
-      ></div>
     </div>
+    <b-row v-else class="mb-5"></b-row>
   </div>
 </template>
 
@@ -158,9 +162,7 @@ export default {
         src:
           'https://www.paypal.com/sdk/js?client-id=' +
           process.env.PAYPALID +
-          '&vault=true&currency=EUR&debug=false',
-        async: true,
-        defer: true
+          '&vault=true&currency=EUR&debug=false'
       },
       {
         src: 'https://apis.google.com/js/platform.js',
@@ -185,7 +187,9 @@ export default {
       formEmail: '',
       formPassword: '',
       formImageFile: '',
-      formPaypalagreementid: 'bank'
+      formPaypalagreementid: 'bank',
+      newaccountvar: false,
+      newaccountpaypal: false
     }
   },
   computed: {
@@ -212,36 +216,42 @@ export default {
     ]
   },
   methods: {
-    async loadpaypal() {
-      var that = this //important: we need to have a reference to the variables in the page and cannot call 'this' in nested functions
-      await paypal
-        .Buttons({
-          onError: function(err) {
-            alert(err)
-            console.log('err' + err)
-            that.formPaypalagreementid = 'e' + JSON.stringify(err)
-            that.newuser()
-          },
-          onCancel: function(data) {
-            console.log('c' + JSON.stringify(data))
-            that.formPaypalagreementid = 'c' + JSON.stringify(data)
-            that.newuser()
-          },
-          createSubscription: function(data, actions) {
-            return actions.subscription.create({
-              plan_id: 'P-9C681042E7918904VLURYYGQ'
-            })
-          },
-          onApprove: function(data, actions) {
-            alert(
-              'You have successfully become a member with subscription ID ' +
-                data.subscriptionID
-            )
-            that.formPaypalagreementid = data.subscriptionID
-            that.newuser()
-          }
-        })
-        .render('#paypal-button-container')
+    newaccount() {
+      this.newaccountvar = true
+    },
+    loadpaypal() {
+      if (!this.newaccountpaypal) {
+        var that = this //important: we need to have a reference to the variables in the page and cannot call 'this' in nested functions
+        paypal
+          .Buttons({
+            onError: function(err) {
+              alert(err)
+              console.log('err' + err)
+              that.formPaypalagreementid = 'e' + JSON.stringify(err)
+              that.newuser()
+            },
+            onCancel: function(data) {
+              console.log('c' + JSON.stringify(data))
+              that.formPaypalagreementid = 'c' + JSON.stringify(data)
+              that.newuser()
+            },
+            createSubscription: function(data, actions) {
+              return actions.subscription.create({
+                plan_id: 'P-9C681042E7918904VLURYYGQ'
+              })
+            },
+            onApprove: function(data, actions) {
+              alert(
+                'You have successfully become a member with subscription ID ' +
+                  data.subscriptionID
+              )
+              that.formPaypalagreementid = data.subscriptionID
+              that.newuser()
+            }
+          })
+          .render('#paypal-button-container')
+        this.newaccountpaypal = true
+      }
     },
     async login() {
       this.error = null
@@ -311,40 +321,6 @@ export default {
       })
       //setTimeout(function(){location.href = location.href}, 1200)
     }
-  },
-  mounted() {
-    async function loadpaypal() {
-      var that = this //important: we need to have a reference to the variables in the page and cannot call 'this' in nested functions
-      await paypal
-        .Buttons({
-          onError: function(err) {
-            alert(err)
-            console.log('err' + err)
-            that.formPaypalagreementid = 'e' + JSON.stringify(err)
-            that.newuser()
-          },
-          onCancel: function(data) {
-            console.log('c' + JSON.stringify(data))
-            that.formPaypalagreementid = 'c' + JSON.stringify(data)
-            that.newuser()
-          },
-          createSubscription: function(data, actions) {
-            return actions.subscription.create({
-              plan_id: 'P-9C681042E7918904VLURYYGQ'
-            })
-          },
-          onApprove: function(data, actions) {
-            alert(
-              'You have successfully become a member with subscription ID ' +
-                data.subscriptionID
-            )
-            that.formPaypalagreementid = data.subscriptionID
-            that.newuser()
-          }
-        })
-        .render('#paypal-button-container')
-    }
-    loadpaypal()
   }
 }
 </script>

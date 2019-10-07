@@ -14,6 +14,7 @@ module.exports = {
     '@nuxtjs/pwa',
     '@nuxtjs/auth',
     'bootstrap-vue/nuxt'
+    //['@nuxtjs/dotenv', { systemvars: true, path: '/' }],
   ],
   loading: {
     color: '#FF8800',
@@ -21,7 +22,10 @@ module.exports = {
     height: '3px',
     continuous: true
   },
-  env: { DBURL: process.env.DBURL },
+  env: {
+    DBURL: process.env.DBURL,
+    PAYPALID: process.env.PAYPALID
+  },
   server: process.env.HTTPS
     ? {
         port: process.env.PORT,
