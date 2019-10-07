@@ -10,11 +10,14 @@
         <nuxt-link :to="'/project/' + project.id">
           <img
             :src="projectImage(project.id)"
-            class="img-fluid img-responsive img-project"
+            class="img-fluid img-responsive img-project w-100 mb-2"
           />
           <div class="project-content text-center p-2">
             <b>{{ project.name }}</b>
             <p class="text-left text-break">{{ project.content }}</p>
+            <!-- votebar -->
+            <votebar :voteprop="project" :proptype="'project'" class="mb-4" />
+            <!-- end votebar -->
             <p class="text-left">
               &#128205; {{ getProjectLocation(project.place) }}
             </p>
@@ -49,12 +52,6 @@
             </div>
           </div>
         </nuxt-link>
-        <!-- votebar -->
-        <votebar
-          :voteId="project.id"
-          :voteprop="project"
-          :proptype="'project'"
-        />
       </div>
     </div>
     <!-- archived projects here -->
@@ -70,11 +67,14 @@
         <nuxt-link :to="'/project/' + archived.id">
           <img
             :src="projectImage(archived.id)"
-            class="img-fluid img-responsive img-project"
+            class="img-fluid img-responsive w-100 mb-2"
           />
+
           <div class="project-content text-center p-2">
             <b>{{ archived.name }}</b>
             <p class="text-left text-break">{{ archived.content }}</p>
+            <votebar :voteprop="archived" proptype="project" class="mb-4" />
+
             <p class="text-left">
               &#128205; {{ getProjectLocation(archived.place) }}
             </p>
@@ -109,11 +109,6 @@
             </div>
           </div>
         </nuxt-link>
-        <votebar
-          :voteId="archived.id"
-          :voteprop="archived"
-          proptype="project"
-        />
       </div>
     </div>
   </b-container>
