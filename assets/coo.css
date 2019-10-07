@@ -411,7 +411,6 @@ a.disabled {
   cursor: pointer;
   display: inline;
   position: relative;
-  font-weight: 400;
 }
 .nav-item:after {
   content: '';
@@ -480,7 +479,7 @@ a.disabled {
   padding: 0.5rem 0;
   border-bottom: 1px solid #dee2e6 !important;
 }
-.mobile-nav-items {
+.mobile-menu-items {
   margin-bottom: 0.25rem;
 }
 
