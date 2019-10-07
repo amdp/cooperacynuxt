@@ -228,12 +228,10 @@ export default {
               alert(err)
               console.log('err' + err)
               that.formPaypalagreementid = 'e' + JSON.stringify(err)
-              that.newuser()
             },
             onCancel: function(data) {
               console.log('c' + JSON.stringify(data))
               that.formPaypalagreementid = 'c' + JSON.stringify(data)
-              that.newuser()
             },
             createSubscription: function(data, actions) {
               return actions.subscription.create({
