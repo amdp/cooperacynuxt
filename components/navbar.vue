@@ -87,7 +87,7 @@
       >
         <div class="text-center h-100 d-flex flex-column">
           <nuxt-link
-            class="mobile-nav-item pb-1 font-weight-bold"
+            class="mobile-menu-item pb-1 font-weight-bold"
             id="login-btn"
             v-if="!this.$auth.loggedIn"
             to="/login"
@@ -119,9 +119,8 @@
 
     <!-- MOBILE DROPDOWN -->
     <div class="mobile-dropdown text-center pt-2" v-if="isDropdownVisible">
-      <div class="mobile-nav-box">
+      <div class="mobile-nav-box" @click="navState = 'project'">
         <div
-          @click="navState = 'project'"
           class="nav-item"
           :class="{ 'project-active': navState == 'project' }"
         >
@@ -132,21 +131,20 @@
           v-if="navState == 'project'"
           @click="resetNav"
         >
-          <nuxt-link class="mobile-nav-item" to="/aboutyou"
+          <nuxt-link class="mobile-menu-item" to="/aboutyou"
             >ABOUT YOU</nuxt-link
           >
-          <nuxt-link class="mobile-nav-item" to="/aboutus">ABOUT US</nuxt-link>
-          <nuxt-link class="mobile-nav-item" to="/platform"
+          <nuxt-link class="mobile-menu-item" to="/aboutus">ABOUT US</nuxt-link>
+          <nuxt-link class="mobile-menu-item" to="/platform"
             >THE PLATFORM</nuxt-link
           >
-          <nuxt-link class="mobile-nav-item" to="/governance"
+          <nuxt-link class="mobile-menu-item" to="/governance"
             >GOVERNANCE</nuxt-link
           >
         </div>
       </div>
-      <div class="mobile-nav-box">
+      <div class="mobile-nav-box" @click="navState = 'corporate'">
         <div
-          @click="navState = 'corporate'"
           class="nav-item"
           :class="{ 'corporate-active': navState == 'corporate' }"
         >
@@ -157,26 +155,25 @@
           v-if="navState == 'corporate'"
           @click="resetNav"
         >
-          <nuxt-link class="mobile-nav-item" to="/corporate"
+          <nuxt-link class="mobile-menu-item" to="/corporate"
             >CORPORATE WORLD</nuxt-link
           >
-          <nuxt-link class="mobile-nav-item" to="/overview"
+          <nuxt-link class="mobile-menu-item" to="/overview"
             >MEASURING COOPERATION</nuxt-link
           >
-          <nuxt-link class="mobile-nav-item" to="/coopenspace"
+          <nuxt-link class="mobile-menu-item" to="/coopenspace"
             >CO-OPEN SPACE</nuxt-link
           >
-          <nuxt-link class="mobile-nav-item" to="/cohackathon"
+          <nuxt-link class="mobile-menu-item" to="/cohackathon"
             >CO-HACKATHON</nuxt-link
           >
-          <nuxt-link class="mobile-nav-item" to="/workshops"
+          <nuxt-link class="mobile-menu-item" to="/workshops"
             >WORKSHOPS</nuxt-link
           >
         </div>
       </div>
-      <div class="mobile-nav-box">
+      <div class="mobile-nav-box" @click="navState = 'science'">
         <div
-          @click="navState = 'science'"
           class="nav-item"
           :class="{ 'science-active': navState == 'science' }"
         >
@@ -187,17 +184,17 @@
           v-if="navState == 'science'"
           @click="resetNav"
         >
-          <nuxt-link class="mobile-nav-item" to="/cooperation"
+          <nuxt-link class="mobile-menu-item" to="/cooperation"
             >COOPERATION</nuxt-link
           >
-          <nuxt-link class="mobile-nav-item" to="/integration"
+          <nuxt-link class="mobile-menu-item" to="/integration"
             >INTEGRATION</nuxt-link
           >
-          <nuxt-link class="mobile-nav-item" to="/cci"
+          <nuxt-link class="mobile-menu-item" to="/cci"
             >COOPERATION CONTEXT INDEX</nuxt-link
           >
-          <nuxt-link class="mobile-nav-item" to="/science">RESEARCH</nuxt-link>
-          <nuxt-link class="mobile-nav-item" to="/news">NEWS</nuxt-link>
+          <nuxt-link class="mobile-menu-item" to="/science">RESEARCH</nuxt-link>
+          <nuxt-link class="mobile-menu-item" to="/news">NEWS</nuxt-link>
         </div>
       </div>
       <div class="mobile-nav-box" @click="resetNav" v-if="!this.$auth.loggedIn">
@@ -210,7 +207,7 @@
       </div>
     </div>
     <b-col v-if="this.$auth.loggedIn" cols="12" class="p-0 fluid">
-      <votebar :voteId="1" :voteprop="$auth.user" :proptype="'user'" />
+      <votebar :voteprop="$auth.user" :proptype="'user'" />
     </b-col>
   </div>
 </template>
