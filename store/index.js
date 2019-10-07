@@ -1,5 +1,3 @@
-import axios from 'axios'
-
 export const state = () => ({
   project: [],
   comment: [],
@@ -124,8 +122,8 @@ export const mutations = {
 }
 
 export const actions = {
-  getProjectAction: async (context, payload) => {
-    let { data } = await axios.get(process.env.DBURL + '/project', {
+  getProjectAction: async function(context, payload) {
+    let { data } = await this.$axios.get(process.env.DBURL + '/project', {
       params: payload
     })
     if (payload.userid)
@@ -137,8 +135,8 @@ export const actions = {
     if (payload.userid) await context.dispatch('getUservoteAction', gouser)
     context.commit('setProject', data)
   },
-  getUserProjectAction: async (context, payload) => {
-    let { data } = await axios.get(process.env.DBURL + '/userproject', {
+  getUserProjectAction: async function(context, payload) {
+    let { data } = await this.$axios.get(process.env.DBURL + '/userproject', {
       params: payload
     })
     let gouser = { userid: payload.userid, proptype: 'project' }
@@ -149,8 +147,8 @@ export const actions = {
     await context.dispatch('getUservoteAction', gouser)
     context.commit('setProject', data)
   },
-  getCommentAction: async (context, payload) => {
-    let { data } = await axios.get(process.env.DBURL + '/comment', {
+  getCommentAction: async function(context, payload) {
+    let { data } = await this.$axios.get(process.env.DBURL + '/comment', {
       params: payload
     })
     let gouser = { userid: payload.userid, proptype: 'comment' }
@@ -161,9 +159,9 @@ export const actions = {
     await context.dispatch('getUservoteAction', gouser)
     context.commit('setComment', data)
   },
-  getUservoteAction: async (context, payload) => {
+  getUservoteAction: async function(context, payload) {
     // this action GETS THE USER VOTE,  addVoteAction EDITS THE VOTE
-    let { data } = await axios.get(process.env.DBURL + '/uservote', {
+    let { data } = await this.$axios.get(process.env.DBURL + '/uservote', {
       params: payload
     })
     let go = { body: data, proptype: payload.proptype }
@@ -172,80 +170,86 @@ export const actions = {
     }
     context.commit('setUservote', go)
   },
-  getTagAction: async (context, payload) => {
-    let { data } = await axios.get(process.env.DBURL + '/tag', {
+  getTagAction: async function(context, payload) {
+    let { data } = await this.$axios.get(process.env.DBURL + '/tag', {
       params: payload
     })
     context.commit('setTag', data)
   },
-  getCategoryAction: async context => {
-    let { data } = await axios.get(process.env.DBURL + '/category')
+  getCategoryAction: async function(context) {
+    let { data } = await this.$axios.get(process.env.DBURL + '/category')
     context.commit('setCategory', data)
   },
-  addVoteAction: async (context, payload) => {
-    let { data } = await axios.post(process.env.DBURL + '/vote', payload)
+  addVoteAction: async function(context, payload) {
+    let { data } = await this.$axios.post(process.env.DBURL + '/vote', payload)
     return data
   },
-  getNewsAction: async context => {
-    let { data } = await axios.get(process.env.DBURL + '/news')
+  getNewsAction: async function(context) {
+    let { data } = await this.$axios.get(process.env.DBURL + '/news')
     context.commit('setNews', data)
   },
-  getPlaceAction: async context => {
-    let { data } = await axios.get(process.env.DBURL + '/place')
+  getPlaceAction: async function(context) {
+    let { data } = await this.$axios.get(process.env.DBURL + '/place')
     context.commit('setPlace', data)
   },
-  getCountryAction: async context => {
-    let { data } = await axios.get(process.env.DBURL + '/country')
+  getCountryAction: async function(context) {
+    let { data } = await this.$axios.get(process.env.DBURL + '/country')
     context.commit('setCountry', data)
   },
-  getCCIAction: async (context, payload) => {
-    let { data } = await axios.post(process.env.DBURL + '/CCI', payload)
+  getCCIAction: async function(context, payload) {
+    let { data } = await this.$axios.post(process.env.DBURL + '/CCI', payload)
     let go = { godata: data, goyear: payload.cciyear }
     context.commit('setCCI', go)
   },
-  projectFormAction: async (context, payload) => {
-    let { data } = await axios.post(process.env.DBURL + '/project', payload)
+  projectFormAction: async function(context, payload) {
+    let { data } = await this.$axios.post(
+      process.env.DBURL + '/project',
+      payload
+    )
     if (data.id) {
       return data.id
     } else {
       return data
     }
   },
-  commentFormAction: async (context, payload) => {
-    let { data } = await axios.post(process.env.DBURL + '/comment', payload)
+  commentFormAction: async function(context, payload) {
+    let { data } = await this.$axios.post(
+      process.env.DBURL + '/comment',
+      payload
+    )
     context.commit('commentUpdate', data)
   },
-  placeFormAction: async (context, payload) => {
-    await axios.post(process.env.DBURL + '/place', payload)
+  placeFormAction: async function(context, payload) {
+    await this.$axios.post(process.env.DBURL + '/place', payload)
     context.dispatch('getPlaceAction')
   },
-  newuserAction: async (context, payload) => {
-    let { data } = await axios.post(process.env.DBURL + '/user', payload)
+  newuserAction: async function(context, payload) {
+    let { data } = await this.$axios.post(process.env.DBURL + '/user', payload)
     let message = {
       to: payload.email,
       subject: 'user registration confirmation',
       body: './assets/email/welcome.html'
     }
-    axios.post(process.env.DBURL + '/newuseremail', message)
+    this.$axios.post(process.env.DBURL + '/newuseremail', message)
     return data
   },
-  updateUserAction: async (context, payload) => {
-    let { data } = await axios.put(process.env.DBURL + '/user', payload)
+  updateUserAction: async function(context, payload) {
+    let { data } = await this.$axios.put(process.env.DBURL + '/user', payload)
     return data
   },
-  tagFormAction: async (context, payload) => {
-    let { data } = await axios.post(process.env.DBURL + '/tag', payload)
+  tagFormAction: async function(context, payload) {
+    let { data } = await this.$axios.post(process.env.DBURL + '/tag', payload)
     return data
   },
-  removeTagAction: async (context, payload) => {
-    let { data } = await axios.post(process.env.DBURL + '/tag', payload)
+  removeTagAction: async function(context, payload) {
+    let { data } = await this.$axios.post(process.env.DBURL + '/tag', payload)
     return data
   },
-  editSwitchAction: async (context, payload) => {
+  editSwitchAction: async function(context, payload) {
     context.commit('setEditSwitch', payload)
   },
-  imageUploadAction: async (context, payload) => {
-    let { data } = await axios.post(
+  imageUploadAction: async function(context, payload) {
+    let { data } = await this.$axios.post(
       process.env.DBURL + '/image',
       payload.formImageData,
       payload.headers,
@@ -253,23 +257,23 @@ export const actions = {
     )
     return data.status
   },
-  contactEmailAction: async (context, payload) => {
-    let { data } = await axios.post(
+  contactEmailAction: async function(context, payload) {
+    let { data } = await this.$axios.post(
       process.env.DBURL + '/contactemail',
       payload
     )
     return data
   },
-  checkOldPasswordAction: async (context, payload) => {
-    let { data } = await axios.post(
+  checkOldPasswordAction: async function(context, payload) {
+    let { data } = await this.$axios.post(
       process.env.DBURL + '/checkpassword',
       payload
     )
     return data
   },
-  recoverPasswordAction: async (context, payload) => {
+  recoverPasswordAction: async function(context, payload) {
     console.log(' ' + JSON.stringify(payload))
-    let { data } = await axios.post(
+    let { data } = await this.$axios.post(
       process.env.DBURL + '/recoverpassword',
       payload
     )
@@ -277,12 +281,12 @@ export const actions = {
   },
 
   //Admin stuff here: be careful
-  resetcpVotingAction: async () => {
-    await axios.post(process.env.DBURL + '/resetcpvoting')
+  resetcpVotingAction: async function() {
+    await this.$axios.post(process.env.DBURL + '/resetcpvoting')
     return 'OK'
   },
-  resetuVotingAction: async () => {
-    await axios.post(process.env.DBURL + '/resetuvoting')
+  resetuVotingAction: async function() {
+    await this.$axios.post(process.env.DBURL + '/resetuvoting')
     return 'OK'
   }
 }
