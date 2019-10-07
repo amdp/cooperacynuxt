@@ -7,6 +7,7 @@
       @mouseleave="navState = null"
     >
       <nuxt-link
+        @click.native="resetNav"
         to="/"
         tag="img"
         class="img-logo col-6 col-sm-4 col-lg-2 p-0"
@@ -197,14 +198,18 @@
           <nuxt-link class="mobile-menu-item" to="/news">NEWS</nuxt-link>
         </div>
       </div>
-      <div class="mobile-nav-box" @click="resetNav" v-if="!this.$auth.loggedIn">
-        <nuxt-link to="/login" class="nav-item">LOGIN</nuxt-link>
-      </div>
-      <div class="mobile-nav-box" v-else>
-        <nuxt-link to="/user" class="nav-item">{{
-          this.$auth.user.name + ' ' + this.$auth.user.surname
-        }}</nuxt-link>
-      </div>
+      <nuxt-link to="/login" v-if="!this.$auth.loggedIn" @click.native="resetNav">
+        <div class="mobile-nav-box">
+          <p class="nav-item">LOGIN</p>
+        </div>
+      </nuxt-link>
+      <nuxt-link to="/user" @click.native="resetNav" v-else>
+        <div class="mobile-nav-box">
+          <p class="nav-item">{{
+            this.$auth.user.name + ' ' + this.$auth.user.surname
+          }}</p>
+        </div>
+      </nuxt-link>
     </div>
     <b-col v-if="this.$auth.loggedIn" cols="12" class="p-0 fluid">
       <votebar :voteprop="$auth.user" :proptype="'user'" />
