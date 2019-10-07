@@ -210,7 +210,7 @@
       </div>
     </div>
     <b-col v-if="this.$auth.loggedIn" cols="12" class="p-0 fluid">
-      <votebar :voteId="1" :voteprop="$auth.user" :proptype="'user'" />
+      <votebar :voteprop="$auth.user" :proptype="'user'" />
     </b-col>
   </div>
 </template>

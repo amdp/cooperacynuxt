@@ -15,6 +15,9 @@
           <div class="project-content text-center p-2">
             <b>{{ project.name }}</b>
             <p class="text-left text-break">{{ project.content }}</p>
+            <!-- votebar -->
+            <votebar :voteprop="project" :proptype="'project'" class="mb-4" />
+            <!-- end votebar -->
             <p class="text-left">
               &#128205; {{ getProjectLocation(project.place) }}
             </p>
@@ -49,12 +52,6 @@
             </div>
           </div>
         </nuxt-link>
-        <!-- votebar -->
-        <votebar
-          :voteId="project.id"
-          :voteprop="project"
-          :proptype="'project'"
-        />
       </div>
     </div>
     <!-- archived projects here -->
