@@ -25,6 +25,9 @@ module.exports = {
   env: {
     DBURL: process.env.DBURL
   },
+  axios: {
+    https: process.env.HTTPS ? true : false
+  },
   server: process.env.HTTPS
     ? {
         port: process.env.PORT,
