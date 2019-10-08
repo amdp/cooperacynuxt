@@ -238,7 +238,7 @@ export default {
   },
   methods: {
     resetNav: function() {
-      this.isDropdownVisible = !this.isDropdownVisible
+      this.isDropdownVisible = false
       this.navState = null
     }
   }
