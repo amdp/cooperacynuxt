@@ -78,24 +78,20 @@ module.exports = {
       local: {
         endpoints: {
           login: {
-            url: process.env.HOME + '/api/login',
+            url: '/api/login',
             method: 'post',
             propertyName: 'token.accessToken'
           },
-          logout: { url: process.env.HOME + '/api/logout', method: 'post' },
-          user: {
-            url: process.env.HOME + '/api/user',
-            method: 'get',
-            propertyName: 'user'
-          }
+          logout: { url: '/api/logout', method: 'post' },
+          user: { url: '/api/user', method: 'get', propertyName: 'user' }
         }
       }
     },
     redirect: {
-      home: process.env.HOME + '/user',
-      login: process.env.HOME + '/login',
-      user: process.env.HOME + '/login',
-      logout: process.env.HOME + '/login'
+      home: '/user',
+      login: '/login',
+      user: '/login',
+      logout: '/login'
     }
   }
 }
