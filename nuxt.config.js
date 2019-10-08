@@ -15,6 +15,7 @@ module.exports = {
     '@nuxtjs/auth',
     'bootstrap-vue/nuxt'
     //['@nuxtjs/dotenv', { systemvars: true, path: '/' }],
+    //'@nuxtjs/proxy',
   ],
   loading: {
     color: '#FF8800',
@@ -26,7 +27,8 @@ module.exports = {
     DBURL: process.env.DBURL
   },
   axios: {
-    https: process.env.HTTPS ? true : false
+    https: process.env.HTTPS ? true : false,
+    baseURL: process.env.DBURL
   },
   server: process.env.HTTPS
     ? {
@@ -41,7 +43,7 @@ module.exports = {
           )
         }
       }
-    : { port: process.env.PORT, host: process.env.HOST },
+    : { host: process.env.HOST, port: process.env.PORT },
 
   head: {
     title: 'Cooperacy',
@@ -81,12 +83,12 @@ module.exports = {
       local: {
         endpoints: {
           login: {
-            url: '/api/login',
+            url: '/login',
             method: 'post',
             propertyName: 'token.accessToken'
           },
-          logout: { url: '/api/logout', method: 'post' },
-          user: { url: '/api/user', method: 'get', propertyName: 'user' }
+          logout: { url: '/logout', method: 'post' },
+          user: { url: '/user', method: 'get', propertyName: 'user' }
         }
       }
     },
