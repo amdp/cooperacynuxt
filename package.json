@@ -37,7 +37,6 @@
     "nodemon": "^1.19.3",
     "nuxt": "^2.10.0",
     "popper.js": "^1.15.0",
-    "proxy": "^1.0.1",
     "vue-recaptcha": "^1.2.0"
   },
   "devDependencies": {
