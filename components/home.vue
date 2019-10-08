@@ -267,7 +267,7 @@ export default {
         {
           name: 'equivalenceD',
           display: 'none',
-          href: 'http://cooperacy.org/cooperation#equivalence',
+          href: 'https://cooperacy.org/cooperation#equivalence',
           matrix1: 'matrix(1 0 0 1 157 360)',
           matrix2: 'matrix(1 0 0 1 225 440)',
           style:
@@ -282,7 +282,7 @@ export default {
         {
           name: 'trustD',
           display: 'none',
-          href: 'http://cooperacy.org/cooperation#trust',
+          href: 'https://cooperacy.org/cooperation#trust',
           matrix1: 'matrix(1 0 0 1 278 360)',
           matrix2: 'matrix(1 0 0 1 208 443)',
           style:
@@ -297,7 +297,7 @@ export default {
         {
           name: 'careD',
           display: 'none',
-          href: 'http://cooperacy.org/cooperation#care',
+          href: 'https://cooperacy.org/cooperation#care',
           matrix1: 'matrix(1 0 0 1 286 360)',
           matrix2: 'matrix(1 0 0 1 182 443)',
           style:
@@ -312,7 +312,7 @@ export default {
         {
           name: 'transparencyD',
           display: 'none',
-          href: 'http://cooperacy.org/cooperation#transparency',
+          href: 'https://cooperacy.org/cooperation#transparency',
           matrix1: 'matrix(1 0 0 1 132 360)',
           matrix2: 'matrix(1 0 0 1 194 443)',
           style:
@@ -327,7 +327,7 @@ export default {
         {
           name: 'freedomD',
           display: 'none',
-          href: 'http://cooperacy.org/cooperation#freedom',
+          href: 'https://cooperacy.org/cooperation#freedom',
           matrix1: 'matrix(1 0 0 1 222 360)',
           matrix2: 'matrix(1 0 0 1 184 443)',
           style:
@@ -342,7 +342,7 @@ export default {
         {
           name: 'understandingD',
           display: 'none',
-          href: 'http://cooperacy.org/cooperation#understanding',
+          href: 'https://cooperacy.org/cooperation#understanding',
           matrix1: 'matrix(1 0 0 1 118 360)',
           matrix2: 'matrix(1 0 0 1 116 443)',
           style:
@@ -357,7 +357,7 @@ export default {
         {
           name: 'diversityD',
           display: 'none',
-          href: 'http://cooperacy.org/cooperation#diversity',
+          href: 'https://cooperacy.org/cooperation#diversity',
           matrix1: 'matrix(1 0 0 1 218 360)',
           matrix2: 'matrix(1 0 0 1 180 443)',
           style:
