@@ -106,7 +106,7 @@
       <img
         width="480px"
         height="360px"
-        src="~/assets/image/page/participate/coofood.png"
+        src="~/assets/image/page/participate/coofood.jpg"
       /><br /><br />
     </div>
 
