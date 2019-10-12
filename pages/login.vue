@@ -155,28 +155,31 @@
 <script>
 export default {
   middleware: ['auth'],
-  head: {
-    title: 'Join or Login',
-    script: [
-      {
-        src:
-          'https://www.paypal.com/sdk/js?client-id=' +
-          process.env.PAYPALID +
-          '&vault=true&currency=EUR&debug=false'
-      },
-      {
-        src: 'https://apis.google.com/js/platform.js',
-        async: true,
-        defer: true
-      },
-      { src: '/login/google.js' }
-    ], //CHECK https://github.com/nuxt/nuxt.js/issues/2000 better not to have it in the static folder tho
-    meta: [
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
-      { name: 'google-signin-scope', content: 'profile email' },
-      { name: 'google-signin-client_id', content: `${process.env.GOOGLEID}` }
-    ]
+  head() {
+    return {
+      title: 'Join or Login',
+      script: [
+        {
+          src:
+            'https://www.paypal.com/sdk/js?client-id=' +
+            process.env.PAYPALID +
+            '&vault=true&currency=EUR&debug=false',
+          defer: true
+        },
+        {
+          src: 'https://apis.google.com/js/platform.js',
+          async: true,
+          defer: true
+        },
+        { src: '/login/google.js' }
+      ], //CHECK https://github.com/nuxt/nuxt.js/issues/2000 better not to have it in the static folder tho
+      meta: [
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
+        { name: 'google-signin-scope', content: 'profile email' },
+        { name: 'google-signin-client_id', content: `${process.env.GOOGLEID}` }
+      ]
+    }
   },
   data() {
     return {
@@ -220,6 +223,7 @@ export default {
       this.newaccountvar = true
     },
     loadpaypal() {
+      console.log('env paypal:  ' + process.env.PAYPALID)
       if (!this.newaccountpaypal) {
         var that = this //important: we need to have a reference to the variables in the page and cannot call 'this' in nested functions
         paypal
