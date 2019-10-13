@@ -126,6 +126,21 @@ app.get('/user', async (req, res) => {
   }
 })
 
+app.get('/userlist', async (req, res) => {
+  mydb.execute(
+    'SELECT `id`,`name`,`surname`,`email`,' +
+      '`E`,`T`,`C`,`I`,`F`,`U`,`D`,`active`,`role`,' +
+      '`remember_token`,`paymentdeadline`,`paypalagreementid`,`created`,`updated` FROM `user`',
+    [],
+    function(err, userlist) {
+      if (err) {
+        console.log('e: ' + JSON.stringify(err))
+        res.send(err)
+      } else res.json(userlist)
+    }
+  )
+})
+
 app.get('/category', (req, res) => {
   mydb.execute(
     'SELECT * FROM `category` WHERE `category`.`id`!= ?',

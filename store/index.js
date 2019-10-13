@@ -2,6 +2,7 @@ export const state = () => ({
   project: [],
   comment: [],
   vote: [],
+  userlist: [],
   projectuservote: [],
   commentuservote: [],
   tag: [],
@@ -81,6 +82,9 @@ export const mutations = {
   },
   setCCI: (state, payload) => {
     state['CCI' + payload.goyear] = payload.godata
+  },
+  setUserlist: (state, payload) => {
+    state.userlist = payload
   },
   setUservote: (state, payload) => {
     state[payload.proptype + 'uservote'] = payload.body
@@ -195,6 +199,10 @@ export const actions = {
   getCountryAction: async function(context) {
     let { data } = await this.$axios.get(process.env.DBURL + '/country')
     context.commit('setCountry', data)
+  },
+  getUserlistAction: async function(context) {
+    let { data } = await this.$axios.get(process.env.DBURL + '/userlist')
+    context.commit('setUserlist', data)
   },
   getCCIAction: async function(context, payload) {
     let { data } = await this.$axios.post(process.env.DBURL + '/CCI', payload)
