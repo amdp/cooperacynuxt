@@ -224,8 +224,10 @@ export default {
       }
     },
     userImage(commentuser) {
-      if (commentuser) {
+      try {
         return require('../assets/image/user/' + commentuser + '.png')
+      } catch (e) {
+        return require('../assets/image/user/0.png')
       }
     },
     formpost() {

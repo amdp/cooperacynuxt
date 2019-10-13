@@ -12,16 +12,16 @@
             :src="projectImage(project.id)"
             class="img-fluid img-responsive img-project w-100 mb-2"
           />
+
+          <votebar :voteprop="project" :proptype="'project'" class="mb-4" />
+
           <div class="project-content text-center p-2">
-            <b>{{ project.name }}</b>
-            <p class="text-left text-break">{{ project.content }}</p>
-            <!-- votebar -->
-            <votebar :voteprop="project" :proptype="'project'" class="mb-4" />
-            <!-- end votebar -->
+            <p class="up subheading">{{ project.name }}</p>
+            <p class="text-left text-break">{{ project.brief }}</p>
             <p class="text-left">
-              &#128205; {{ getProjectLocation(project.place) }}
+              &#127757; {{ getProjectLocation(project.place) }}
             </p>
-            <div class="progress">
+            <div class="progress" v-if="project.stage == 7">
               <div
                 class="progress-bar"
                 :class="{
@@ -37,7 +37,7 @@
               </div>
             </div>
           </div>
-          <div class="project-details p-2 d-flex">
+          <div class="project-details p-2 d-flex" v-if="project.stage == 7">
             <div>
               <b>{{ Math.round(project.collected) }}€</b>
               <small>collected</small>
@@ -46,6 +46,7 @@
               <b>{{ Math.round(project.budget) }}€</b>
               <small>budget</small>
             </div>
+            <!-- the following should go outside this and show the stage -->
             <div>
               <b>{{ getProjectStage(project.stage) }}</b>
               <small>stage</small>

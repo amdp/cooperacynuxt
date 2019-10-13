@@ -15,8 +15,20 @@
         <br />
         <nuxt-link to="/project/search" class="af">Project search </nuxt-link>
         <br />
-        <span class="au" @click="resetuvoting">
-          Admin tool: Reset User Voting (HIGH RISK FUNCTION!)
+        <nuxt-link to="/userlist" class="ac">
+          Members List
+        </nuxt-link>
+        <br />
+        <span class="au" @click="resetuvoting" v-if="this.$auth.user.role == 1">
+          Admin tool: Reset User Voting and Colorbar
+        </span>
+        <br />
+        <span
+          class="au"
+          @click="resetcpvoting"
+          v-if="this.$auth.user.role == 1"
+        >
+          Admin tool: Reset Projects and Comment Voting
         </span>
         <br /><br />
         <span class="au" @click="$auth.logout()">LOGOUT</span>
@@ -48,7 +60,6 @@
         </div>
       </b-col>
     </b-row>
-    <h5 class="mt-5 d-flex justify-content-center">YOUR PROJECTS</h5>
     <projectlist />
   </b-container>
 </template>
@@ -115,6 +126,9 @@ export default {
   methods: {
     async resetuvoting() {
       await this.$store.dispatch('resetuVotingAction')
+    },
+    async resetcpvoting() {
+      await this.$store.dispatch('resetcpVotingAction')
     }
   },
   async fetch({ store, params }) {

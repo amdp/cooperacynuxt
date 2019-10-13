@@ -445,7 +445,6 @@ a.disabled {
 .single-project img {
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
-  border-bottom: 1px solid black;
 }
 .project-content b {
   font-size: 20px;
