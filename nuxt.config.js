@@ -24,7 +24,8 @@ module.exports = {
     continuous: true
   },
   env: {
-    DBURL: process.env.DBURL
+    DBURL: process.env.DBURL,
+    PAYPALID: process.env.PAYPALID
   },
   axios: {
     https: process.env.HTTPS ? true : false,

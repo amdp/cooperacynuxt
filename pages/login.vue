@@ -139,7 +139,7 @@
             class="btn bhcare white btn-block border-0 mb-4"
             @click="loadpaypal"
           >
-            JOIN WITH PAYPAL
+            JOIN WITH PAYPAL OR CREDIT CARD
           </p>
           <div
             class="d-flex justify-content-center"
@@ -223,7 +223,6 @@ export default {
       this.newaccountvar = true
     },
     loadpaypal() {
-      console.log('env paypal:  ' + process.env.PAYPALID)
       if (!this.newaccountpaypal) {
         var that = this //important: we need to have a reference to the variables in the page and cannot call 'this' in nested functions
         paypal
