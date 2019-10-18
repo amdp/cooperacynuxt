@@ -109,7 +109,7 @@ app.get('/user', async (req, res) => {
       res.status(401).send(e + ': Auth Token Wrong or Expired')
       return axios({
         method: 'post',
-        url: process.env.DBURL + 'logout'
+        url: process.env.DBURL + '/logout'
       })
     }
     let id = jwt.decode(req.headers.authorization)
@@ -810,7 +810,7 @@ app.get('/map', (req, res) => {
   })
 })
 
-app.post('/vote', (req, res) => {
+app.post('/vote', function(req, res) {
   if (req.body.proptype == 'project') {
     mydb.execute(
       //the presence of an existing project vote is checked
@@ -821,66 +821,60 @@ app.post('/vote', (req, res) => {
           console.log('e: ' + JSON.stringify(err))
           res.send(err)
         } else {
-          //if a vote exists, it is copied into the removed votetable
+          //if a vote exists, it is removed
           if (vote) {
+            removevote(vote)
+          } else {
+            // if not, it is added
+            addvote(vote)
+          }
+        }
+      }
+    )
+  }
+  //this adds the vote
+  let addvote = function() {
+    mydb.execute(
+      'INSERT INTO `projectvote` (`user`,`project`,`condition`) VALUES (?,?,?)', //if there is no vote
+      [req.body.user, req.body.id, req.body.condition], //a new vote is added into the database
+      function(err) {
+        if (err) {
+          console.log('e: ' + JSON.stringify(err))
+          res.send(err)
+        } else {
+          if (cc.indexOf(req.body.condition) > -1)
+            //then the relative project condition value is updated
             mydb.execute(
-              'INSERT INTO `removedpvote` (`user`,`project`,`condition`) VALUES (?,?,?)',
-              [req.body.user, req.body.id, req.body.condition],
+              'UPDATE `project` SET `' +
+                req.body.condition +
+                '`=`' +
+                req.body.condition +
+                '`+1 where `project`.`id`=?',
+              [req.body.id],
               function(err) {
                 if (err) {
                   console.log('e: ' + JSON.stringify(err))
                   res.send(err)
                 } else {
-                  if (cc.indexOf(req.body.condition) > -1)
-                    //then the relative project condition value is updated
+                  //here, we add every platform effect the vote may have:
+                  if (req.body.condition == 'F')
                     mydb.execute(
-                      'UPDATE `project` SET `' +
-                        req.body.condition +
-                        '`=`' +
-                        req.body.condition +
-                        '`-1 where `project`.`id`=?',
-                      [req.body.id],
+                      'INSERT INTO `userproject` (`user`,`project`) VALUES (?,?)',
+                      [req.body.user, req.body.id],
                       function(err) {
                         if (err) {
                           console.log('e: ' + JSON.stringify(err))
                           res.send(err)
                         } else {
-                          //when all is safe, the old vote is removed:
                           mydb.execute(
-                            'DELETE FROM `projectvote` where `id` = ?',
-                            [vote.id],
-                            function(err) {
+                            'UPDATE `project` SET `participant`=`participant`+1 where `project`.`id`=?',
+                            [req.body.id],
+                            function(err, updateduserproject) {
                               if (err) {
                                 console.log('e: ' + JSON.stringify(err))
                                 res.send(err)
                               } else {
-                                //here, we revoke every platform effect the vote may have:
-                                if (req.body.condition == 'F')
-                                  mydb.execute(
-                                    'DELETE FROM `userproject` where `user` = ? and `project` = ?',
-                                    [req.body.user, req.body.id],
-                                    function(err) {
-                                      if (err) {
-                                        console.log('e: ' + JSON.stringify(err))
-                                        res.send(err)
-                                      } else {
-                                        mydb.execute(
-                                          'UPDATE `project` SET `participant`=`participant`-1 where `project`.`id`=?',
-                                          [req.body.id],
-                                          function(err) {
-                                            if (err) {
-                                              console.log(
-                                                'e: ' + JSON.stringify(err)
-                                              )
-                                              res.send(err)
-                                            } else {
-                                              res.send('OK')
-                                            }
-                                          }
-                                        )
-                                      }
-                                    }
-                                  )
+                                res.send(updateduserproject)
                               }
                             }
                           )
@@ -890,65 +884,79 @@ app.post('/vote', (req, res) => {
                 }
               }
             )
-          } else {
+        }
+      }
+    )
+  }
+  //removes the vote if the vote is already there
+  let removevote = function(votetoremove) {
+    mydb.execute(
+      'INSERT INTO `removedpvote` (`user`,`project`,`condition`) VALUES (?,?,?)',
+      [req.body.user, req.body.id, req.body.condition],
+      function(err) {
+        if (err) {
+          console.log('e: ' + JSON.stringify(err))
+          res.send(err)
+        } else {
+          if (cc.indexOf(req.body.condition) > -1)
+            //then the relative project condition value is updated
             mydb.execute(
-              'INSERT INTO `projectvote` (`user`,`project`,`condition`) VALUES (?,?,?)', //if there is no vote
-              [req.body.user, req.body.id, req.body.condition], //a new vote is added into the database
+              'UPDATE `project` SET `' +
+                req.body.condition +
+                '`=`' +
+                req.body.condition +
+                '`-1 where `project`.`id`=?',
+              [req.body.id],
               function(err) {
                 if (err) {
                   console.log('e: ' + JSON.stringify(err))
                   res.send(err)
                 } else {
-                  if (cc.indexOf(req.body.condition) > -1)
-                    //then the relative project condition value is updated
-                    mydb.execute(
-                      'UPDATE `project` SET `' +
-                        req.body.condition +
-                        '`=`' +
-                        req.body.condition +
-                        '`+1 where `project`.`id`=?',
-                      [req.body.id],
-                      function(err) {
-                        if (err) {
-                          console.log('e: ' + JSON.stringify(err))
-                          res.send(err)
-                        } else {
-                          //here, we add every platform effect the vote may have:
-                          if (req.body.condition == 'F')
-                            mydb.execute(
-                              'INSERT INTO `userproject` (`user`,`project`) VALUES (?,?)',
-                              [req.body.user, req.body.id],
-                              function(err) {
-                                if (err) {
-                                  console.log('e: ' + JSON.stringify(err))
-                                  res.send(err)
-                                } else {
-                                  mydb.execute(
-                                    'UPDATE `project` SET `participant`=`participant`+1 where `project`.`id`=?',
-                                    [req.body.id],
-                                    function(err, updateduserproject) {
-                                      if (err) {
-                                        console.log('e: ' + JSON.stringify(err))
-                                        res.send(err)
-                                      } else {
-                                        res.send(updateduserproject)
-                                      }
+                  //when all is safe, the old vote is removed:
+                  mydb.execute(
+                    'DELETE FROM `projectvote` where `id` = ?',
+                    [votetoremove.id],
+                    function(err) {
+                      if (err) {
+                        console.log('e: ' + JSON.stringify(err))
+                        res.send(err)
+                      } else {
+                        //here, we revoke every platform effect the vote may have:
+                        if (req.body.condition == 'F')
+                          mydb.execute(
+                            'DELETE FROM `userproject` where `user` = ? and `project` = ?',
+                            [req.body.user, req.body.id],
+                            function(err) {
+                              if (err) {
+                                console.log('e: ' + JSON.stringify(err))
+                                res.send(err)
+                              } else {
+                                mydb.execute(
+                                  'UPDATE `project` SET `participant`=`participant`-1 where `project`.`id`=?',
+                                  [req.body.id],
+                                  function(err) {
+                                    if (err) {
+                                      console.log('e: ' + JSON.stringify(err))
+                                      res.send(err)
+                                    } else {
+                                      res.send('OK')
                                     }
-                                  )
-                                }
+                                  }
+                                )
                               }
-                            )
-                        }
+                            }
+                          )
                       }
-                    )
+                    }
+                  )
                 }
               }
             )
-          }
         }
       }
     )
-  } else {
+  }
+  if (req.body.proptype == 'comment') {
     mydb.execute(
       //the presence of an existing comment vote is checked
       'SELECT * from `commentvote` where `user`=? AND `condition`=? AND `comment`=?',

@@ -94,7 +94,7 @@
               <div class="form-group">
                 <div class="col-md-3">
                   <VueRecaptcha
-                    sitekey="6Lebn7EUAAAAAMXHJikyM2tnZbLG8lH_Bugqv0S7"
+                    sitekey="process.env.RECAPTCHA"
                     size="invisible"
                     ref="recaptcha"
                     @verify="onVerify"
