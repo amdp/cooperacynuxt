@@ -94,7 +94,7 @@
               <div class="form-group">
                 <div class="col-md-3">
                   <VueRecaptcha
-                    sitekey="process.env.RECAPTCHA"
+                    :sitekey="envrecaptcha"
                     size="invisible"
                     ref="recaptcha"
                     @verify="onVerify"
@@ -129,11 +129,15 @@ export default {
       formSubject: '',
       formBody: '',
       response: '',
-      recaptchaToken: ''
+      recaptchaToken: '',
+      envrecaptcha: process.env.RECAPTCHA
     }
   },
   components: {
     VueRecaptcha
+  },
+  mounted() {
+    console.log(' ' + JSON.stringify(this.envrecaptcha))
   },
   methods: {
     submit() {
