@@ -34,7 +34,7 @@ const pool = mysql.createPool({
 const myPool = pool.promise()
 /////// GET ///////
 
-app.get('/project', async (req, res, next) => {
+app.get('/project', async function(req, res, next) {
   try {
     let query = 'SELECT * FROM `project`'
     let param = []
@@ -47,415 +47,398 @@ app.get('/project', async (req, res, next) => {
       param.push(req.query.stage)
     }
 
-    const [rows] = await myPool.query(query, param)
-    res.send(rows)
+    const [project] = await myPool.execute(query, param)
+    res.send(project)
   } catch (err) {
     next(err)
   }
 })
 
-app.get('/comment', (req, res) => {
-  mydb.execute(
-    'SELECT comment.*, user.name, user.surname FROM comment' +
+app.get('/comment', async function(req, res, next) {
+  try {
+    let query =
+      'SELECT comment.*, user.name, user.surname FROM comment' +
       ' LEFT JOIN user ON comment.user = user.id' +
-      ' WHERE comment.project = ? ORDER BY id DESC',
-    [req.query.projectid],
-    function(err, comment) {
-      if (err) {
-        console.log('e: ' + JSON.stringify(err))
-        res.send(err)
-      } else res.send(comment)
-    }
-  )
-})
-
-app.get('/userproject', (req, res) => {
-  mydb.execute(
-    'SELECT * FROM `project` WHERE `id` IN (SELECT `project` FROM `userproject` WHERE `user`=?)',
-    [req.query.userid],
-    function(err, project) {
-      if (err) {
-        console.log('e: ' + JSON.stringify(err))
-        res.send(err)
-      } else res.send(project)
-    }
-  )
-})
-
-app.get('/uservote', (req, res) => {
-  //gets votes of projects and comments that have been voted by current user
-  let query = 'select * from `' + req.query.proptype + 'vote` where `user` = ?'
-  let param = [req.query.userid]
-  if (req.query.limit) {
-    query += ' AND `project`= ?'
-    param = [req.query.userid, req.query.projectid]
+      ' WHERE comment.project = ? ORDER BY id DESC'
+    let param = [req.query.projectid]
+    const [comment] = await myPool.execute(query, param)
+    res.send(comment)
+  } catch (err) {
+    next(err)
   }
-  mydb.execute(query, param, function(err, uservote) {
-    if (err) {
-      console.log('e: ' + JSON.stringify(err))
-      res.send(err)
-    } else res.send(uservote)
-  })
 })
 
-app.get('/user', async (req, res) => {
+app.get('/userproject', async function(req, res, next) {
+  try {
+    let query =
+      'SELECT * FROM `project` WHERE `id` IN (SELECT `project` FROM `userproject` WHERE `user`=?)'
+    let param = [req.query.userid]
+    const [project] = await myPool.execute(query, param)
+    res.send(project)
+  } catch (err) {
+    next(err)
+  }
+})
+
+app.get('/uservote', async function(req, res, next) {
+  //gets the votes of projects and comments that have been cast by current user
+  try {
+    let query =
+      'select * from `' + req.query.proptype + 'vote` where `user` = ?'
+    let param = [req.query.userid]
+
+    if (req.query.limit) {
+      query += ' AND `project`= ?'
+      param = [req.query.userid, req.query.projectid]
+    }
+
+    const [uservote] = await myPool.execute(query, param)
+    res.send(uservote)
+  } catch (err) {
+    next(err)
+  }
+})
+
+app.get('/user', async function(req, res, next) {
   req.headers.authorization = req.headers.authorization.slice(7)
+
   if (req.headers.authorization == 'undefined') {
     return res.status(500).send('JWT is undefined')
   } else {
     try {
       jwt.verify(req.headers.authorization, process.env.JWTSECRET)
-    } catch (e) {
-      res.status(401).send(e + ': Auth Token Wrong or Expired')
+    } catch (err) {
+      res.status(401).send(err + ': Auth Token Wrong or Expired')
       return axios({
         method: 'post',
         url: process.env.DBURL + '/logout'
       })
     }
     let id = jwt.decode(req.headers.authorization)
-    mydb.execute(
-      'SELECT * FROM `user` AS `user` WHERE `user`.`id` =  ?',
-      [id.id],
-      function(err, [user]) {
-        if (err) {
-          console.log('e: ' + JSON.stringify(err))
-          res.send(err)
-        } else res.json({ user })
-      }
-    )
+    try {
+      let query = 'SELECT * FROM `user` AS `user` WHERE `user`.`id` =  ?'
+      let param = [id.id]
+      const [user] = await myPool.execute(query, param)
+      res.send({ user: user[0] })
+    } catch (err) {
+      next(err)
+    }
   }
 })
 
-app.get('/userlist', async (req, res) => {
-  mydb.execute(
-    'SELECT `id`,`name`,`surname`,`email`,' +
+app.get('/userlist', async function(req, res, next) {
+  try {
+    let query =
+      'SELECT `id`,`name`,`surname`,`email`,' +
       '`E`,`T`,`C`,`I`,`F`,`U`,`D`,`active`,`role`,' +
-      '`remember_token`,`paymentdeadline`,`paypalagreementid`,`created`,`updated` FROM `user`',
-    [],
-    function(err, userlist) {
-      if (err) {
-        console.log('e: ' + JSON.stringify(err))
-        res.send(err)
-      } else res.json(userlist)
-    }
-  )
+      '`remember_token`,`paymentdeadline`,`paypalagreementid`,`created`,`updated` FROM `user`'
+    let param = []
+    const [userlist] = await myPool.execute(query, param)
+    res.send(userlist)
+  } catch (err) {
+    next(err)
+  }
 })
 
-app.get('/category', (req, res) => {
-  mydb.execute(
-    'SELECT * FROM `category` WHERE `category`.`id`!= ?',
-    [0],
-    function(err, category) {
-      if (err) {
-        console.log('e: ' + JSON.stringify(err))
-        res.send(err)
-      } else res.json(category)
-    }
-  )
+app.get('/category', async function(req, res, next) {
+  try {
+    let query = 'SELECT * FROM `category` WHERE `category`.`id`!= ?'
+    let param = [0]
+    const [category] = await myPool.execute(query, param)
+    res.send(category)
+  } catch (err) {
+    next(err)
+  }
 })
 
-app.get('/tag', (req, res) => {
-  mydb.execute(
-    'SELECT * FROM `tag` where `project`=?',
-    [req.query.projectid],
-    function(err, tag) {
-      if (err) {
-        console.log('e: ' + JSON.stringify(err))
-        res.send(err)
-      } else res.json(tag)
-    }
-  )
+app.get('/tag', async function(req, res, next) {
+  try {
+    let query = 'SELECT * FROM `tag` where `project`=?'
+    let param = [req.query.projectid]
+    const [tag] = await myPool.execute(query, param)
+    res.send(tag)
+  } catch (err) {
+    next(err)
+  }
 })
 
-app.get('/place', (req, res) => {
-  mydb.execute('SELECT `id`, `country`, `name` FROM `place`', [], function(
-    err,
-    place
-  ) {
-    if (err) {
-      console.log('e: ' + JSON.stringify(err))
-      res.send(err)
-    } else res.json(place)
-  })
+app.get('/place', async function(req, res, next) {
+  try {
+    let query = 'SELECT `id`, `country`, `name` FROM `place`'
+    let param = []
+    const [place] = await myPool.execute(query, param)
+    res.send(place)
+  } catch (err) {
+    next(err)
+  }
 })
 
-app.get('/country', (req, res) => {
-  mydb.execute('SELECT `id`, `name` FROM `country`', [], function(
-    err,
-    country
-  ) {
-    if (err) {
-      console.log('e: ' + JSON.stringify(err))
-      res.send(err)
-    } else res.json(country)
-  })
+app.get('/country', async function(req, res, next) {
+  try {
+    let query = 'SELECT `id`, `name` FROM `country`'
+    let param = []
+    const [country] = await myPool.execute(query, param)
+    res.send(country)
+  } catch (err) {
+    next(err)
+  }
 })
 
-app.get('/news', (req, res) => {
-  mydb.execute('SELECT * FROM `news` ORDER BY `news`.`date` DESC', [], function(
-    err,
-    news
-  ) {
-    if (err) {
-      console.log('e: ' + JSON.stringify(err))
-      res.send(err)
-    } else res.json(news)
-  })
+app.get('/news', async function(req, res, next) {
+  try {
+    let query = 'SELECT * FROM `news` ORDER BY `news`.`date` DESC'
+    let param = []
+    const [news] = await myPool.execute(query, param)
+    res.send(news)
+  } catch (err) {
+    next(err)
+  }
 })
 
 /////// UPDATE ///////
 
-app.put('/user', (req, res) => {
+app.put('/user', async function(req, res, next) {
   if (!req.body.name || !req.body.password) {
     res.status(400)
-    res.json({ error: 'Bad data' })
+    res.send({ error: 'Bad data' })
   } else {
-    bcrypt.hash(req.body.password, 10, (err, hash) => {
+    bcrypt.hash(req.body.password, 10, async function(err, hash) {
       req.body.password = hash
-      mydb.execute(
-        'UPDATE `user` SET `name`=?,`surname`=?,`email`=?,`password`=? WHERE `id`=?',
-        [
+      try {
+        let query =
+          'UPDATE `user` SET `name`=?,`surname`=?,`email`=?,`password`=? WHERE `id`=?'
+        let param = [
           req.body.name,
           req.body.surname,
           req.body.email,
           req.body.password,
           req.body.id
-        ],
-        function(err, user) {
-          if (err) {
-            console.log('e: ' + JSON.stringify(err))
-            res.send(err)
-          } else res.json('updated: ' + user)
-        }
-      )
+        ]
+        const [user] = await myPool.execute(query, param)
+        res.send('updated: ' + user)
+      } catch (err) {
+        next(err)
+      }
     })
   }
 })
 
 /////// POST ///////
 
-app.post('/login', async (req, res) => {
-  mydb.execute(
-    'SELECT * FROM `user` WHERE `user`.`email`= ? LIMIT 1',
-    [req.body.email],
-    function(err, [user]) {
-      if (err) {
-        console.log('e: ' + JSON.stringify(err))
-        res.send(err)
-      } else {
-        if (user) {
-          if (bcrypt.compareSync(req.body.password, user.password)) {
-            let accessToken = jwt.sign({ id: user.id }, process.env.JWTSECRET, {
-              expiresIn: '2h'
-            })
-            let today = new Date(Date.now()).toJSON().slice(0, 10)
-            if (user.paypalagreementid == 'bank') {
-              if (!user.paymentdeadline) {
-                return res
-                  .status(500)
-                  .send("The user hasn't been activated yet.")
-              }
-              if (user.paymentdeadline.toJSON().slice(0, 10) >= today) {
-                res.json({ token: { accessToken } })
-              } else {
-                res.status(401).send('Bank transfer membership has expired')
-              }
-            } else {
-              let agreementid = user.paypalagreementid
-              let today45ago = new Date(Date.now() + -45 * 24 * 3600 * 1000)
-                .toJSON()
-                .slice(0, 10)
-              axios({
-                method: 'post',
-                headers: {
-                  'content-type': 'application/json',
-                  'Access-Control-Allow-Credentials': true
-                },
-                auth: {
-                  username: process.env.PAYPALID,
-                  password: process.env.PAYPALPASSWORD
-                },
-                data: 'grant_type=client_credentials',
-                url: 'https://api.paypal.com/v1/oauth2/token'
-              }).then(response => {
-                let paypaltoken = response.data.access_token
-                axios({
-                  method: 'get',
-                  url:
-                    'https://api.paypal.com/v1/payments/billing-agreements/' +
-                    agreementid +
-                    '/transactions?start_date=' +
-                    today45ago +
-                    '&end_date=' +
-                    today,
-                  headers: {
-                    Authorization: 'Bearer ' + paypaltoken,
-                    'Content-Type': 'application/json'
-                  }
-                })
-                  .then(transaction => {
-                    let list = transaction.data.agreement_transaction_list
-                    if (list[list.length - 1].status == 'Completed') {
-                      res.json({ token: { accessToken } })
-                    } else if (
-                      list[list.length - 1].status == 'Updated' &&
-                      list[list.length - 2].status == 'Completed'
-                    ) {
-                      res.json({ token: { accessToken } })
-                    } else {
-                      res.send(
-                        'Paypal membership has expired or has been suspended'
-                      )
-                    }
-                  })
-                  .catch(err => {
-                    console.log('e ' + JSON.stringify(err.response.data))
-                  })
-                  .catch(err => {
-                    console.log('e ' + JSON.stringify(err.response.data))
-                  })
-              })
-            }
+app.post('/login', async function(req, res, next) {
+  try {
+    let query = 'SELECT * FROM `user` WHERE `user`.`email`= ? LIMIT 1'
+    let param = [req.body.email]
+    const [user] = await myPool.execute(query, param)
+    logincheck(user[0])
+  } catch (err) {
+    next(err)
+  }
+  async function logincheck(user) {
+    if (!user) {
+      res.status(400).json({ error: 'User does not exist' })
+    } else {
+      if (bcrypt.compareSync(req.body.password, user.password)) {
+        let accessToken = jwt.sign({ id: user.id }, process.env.JWTSECRET, {
+          expiresIn: '2h'
+        })
+        let today = new Date(Date.now()).toJSON().slice(0, 10)
+        // bank transfer membership
+        if (user.paypalagreementid == 'bank') {
+          if (!user.paymentdeadline) {
+            return res.status(500).send("The user hasn't been activated yet.")
+          }
+          if (user.paymentdeadline.toJSON().slice(0, 10) >= today) {
+            res.send({ token: { accessToken } })
           } else {
-            res.status(400).json({ error: 'User does not exist' })
+            res.status(401).send('Bank transfer membership has expired')
+          }
+        } else {
+          // paypal membership check
+          try {
+            let agreementid = user.paypalagreementid
+            let today45ago = new Date(Date.now() + -45 * 24 * 3600 * 1000)
+              .toJSON()
+              .slice(0, 10)
+            let response = await axios({
+              method: 'post',
+              headers: {
+                'content-type': 'application/json',
+                'Access-Control-Allow-Credentials': true
+              },
+              auth: {
+                username: process.env.PAYPALID,
+                password: process.env.PAYPALPASSWORD
+              },
+              data: 'grant_type=client_credentials',
+              url: 'https://api.paypal.com/v1/oauth2/token'
+            })
+            let paypaltoken = response.data.access_token
+            let transaction = await axios({
+              method: 'get',
+              url:
+                'https://api.paypal.com/v1/payments/billing-agreements/' +
+                agreementid +
+                '/transactions?start_date=' +
+                today45ago +
+                '&end_date=' +
+                today,
+              headers: {
+                Authorization: 'Bearer ' + paypaltoken,
+                'Content-Type': 'application/json'
+              }
+            })
+            let list = transaction.data.agreement_transaction_list
+            if (list[list.length - 1].status == 'Completed') {
+              res.send({ token: { accessToken } })
+            } else if (
+              list[list.length - 1].status == 'Updated' &&
+              list[list.length - 2].status == 'Completed'
+            ) {
+              res.send({ token: { accessToken } })
+            } else {
+              res.send('Paypal membership has expired or has been suspended')
+            }
+          } catch (err) {
+            next(err)
           }
         }
       }
     }
-  )
+  }
 })
 
 app.post('/logout', (req, res) => {
-  res.json({ status: 'OK' })
+  res.send({ status: 'OK' })
 })
 
-app.post('/checkpassword', async (req, res) => {
-  mydb.execute(
-    'SELECT * FROM `user` AS `user` WHERE `user`.`id` =  ? and `user`.`email` = ? LIMIT 1',
-    [req.body.id, req.body.email],
-    function(err, [user]) {
-      if (err) {
-        console.log('e: ' + JSON.stringify(err))
-        res.send(err)
-      }
-      if (user) {
-        if (bcrypt.compareSync(req.body.password, user.password)) res.send(true)
-        else res.send(false)
-      } else res.send(false)
-    }
-  )
+app.post('/checkpassword', async function(req, res, next) {
+  try {
+    let query =
+      'SELECT * FROM `user` AS `user` WHERE `user`.`id` =  ? and `user`.`email` = ? LIMIT 1'
+    let param = [req.body.id, req.body.email]
+    const [user] = await myPool.execute(query, param)
+    checkpassword(user[0])
+  } catch (err) {
+    next(err)
+  }
+  async function checkpassword(user) {
+    if (user) {
+      if (bcrypt.compareSync(req.body.password, user.password)) res.send(true)
+      else res.send(false)
+    } else res.send(false)
+  }
 })
 
-app.post('/recoverpassword', async (req, res) => {
+app.post('/recoverpassword', async function(req, res, next) {
   if (req.body.email) {
-    mydb.execute(
-      'SELECT * FROM `user` WHERE `user`.`email`= ? LIMIT 1',
-      [req.body.email],
-      function(err, [user]) {
-        if (err) {
-          console.log('e: ' + JSON.stringify(err))
-          res.send(err)
-        } else {
-          if (user) {
-            let token = jwt.sign(
-              {
-                id: user.id,
-                newpassword: req.body.password
-              },
-              process.env.JWTSECRET,
-              { expiresIn: '2h' }
-            )
-            let transporter = nodemailer.createTransport({
-              host: 'smtp.gmail.com',
-              port: 465,
-              secure: true,
-              auth: {
-                user: process.env.MAILUSER,
-                pass: process.env.MAILPASSWORD
-              }
-            })
-            let mailOptions = {
-              from: '"Cooperacy" <cooperacy@cooperacy.org>',
-              to: req.body.email,
-              subject: 'Change your Cooperacy password',
-              text:
-                'Click here to set the new password:\n' +
-                process.env.HOME +
-                '/recover?jws=' +
-                token +
-                '\nOr please just ignore this email'
-            }
-            transporter.sendMail(mailOptions, (error, info) => {
-              if (error) {
-                return console.error(error)
-              }
-              console.log('Message %s sent: %s', info.messageId, info.response)
-              res.render('index')
-            })
-          } else {
-            res.send('No user with this email')
-          }
-        }
-      }
-    )
+    try {
+      let query = 'SELECT * FROM `user` WHERE `user`.`email`= ? LIMIT 1'
+      let param = [req.body.email]
+      const [user] = await myPool.execute(query, param)
+      recoverpassword(user[0])
+    } catch (err) {
+      next(err)
+    }
   } else if (req.body.token) {
+    setuppassword()
+  } else {
+    res.status(404).send('No mail nor token, exiting.')
+  }
+  async function recoverpassword(user) {
+    //this happens when the user wants to change his password
+    if (user) {
+      let token = jwt.sign(
+        {
+          id: user.id,
+          newpassword: req.body.password
+        },
+        process.env.JWTSECRET,
+        { expiresIn: '2h' }
+      )
+      let transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
+        auth: {
+          user: process.env.MAILUSER,
+          pass: process.env.MAILPASSWORD
+        }
+      })
+      let mailOptions = {
+        from: '"Cooperacy Website" <websitemails@cooperacy.org>',
+        to: req.body.email,
+        subject: 'Change your Cooperacy password',
+        text:
+          'Click here to set the new password:\n' +
+          process.env.URLHOME +
+          '/recover?jws=' +
+          token +
+          '\nOr please just ignore this email'
+      }
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          return console.error(error)
+        }
+        console.log('Message %s sent: %s', info.messageId, info.response)
+        res.render('index')
+      })
+    } else {
+      res.send('No user with this email')
+    }
+  }
+  async function setuppassword() {
+    // this happens instead once he clicks on the confirmation link to change his password
     try {
       jwt.verify(req.body.token, process.env.JWTSECRET)
-    } catch (e) {
-      return res.status(401).send(e + ': Auth Token Wrong or Expired')
+    } catch (err) {
+      return res.status(401).send(err + ': Auth Token Wrong or Expired')
     }
     var { id, newpassword } = jwt.decode(req.body.token)
-    bcrypt.hash(newpassword, 10, (err, hash) => {
-      newpassword = hash
-      mydb.execute(
-        'UPDATE `user` SET `password`=? WHERE `id`=?',
-        [newpassword, id],
-        function(err) {
-          if (err) {
-            console.log('e: ' + JSON.stringify(err))
-            res.send(err)
-          } else res.json('updated')
-        }
-      )
-    })
-  } else console.log(' ' + JSON.stringify('No mail nor reset token received.'))
+    try {
+      let newhashedpassword = await bcrypt.hash(newpassword, 10)
+      let query = 'UPDATE `user` SET `password`=? WHERE `id`=?'
+      let param = [newhashedpassword, id]
+      await myPool.execute(query, param)
+      res.send('updated')
+    } catch (err) {
+      next(err)
+    }
+  }
 })
 
-app.post('/place', (req, res) => {
-  mydb.execute(
-    'SELECT * FROM `place` WHERE `place`.`country`=? AND `place`.`name`=?  LIMIT 1',
-    [req.body.country, req.body.name],
-    function(err, [place]) {
-      if (err) {
-        console.log('e: ' + JSON.stringify(err))
-        res.send(err)
-      } else {
-        if (!place) {
-          mydb.execute(
-            'INSERT INTO `place` (`country`,`name`) VALUES (?,?)',
-            [req.body.country, req.body.name],
-            function(err, place) {
-              if (err) {
-                console.log('e: ' + JSON.stringify(err))
-                res.send(err)
-              } else {
-                res.json({ id: place.insertId })
-              }
-            }
-          )
-        } else {
-          res.json('exists')
-        }
+app.post('/place', async function(req, res, next) {
+  try {
+    let query =
+      'SELECT * FROM `place` WHERE `place`.`country`=? AND `place`.`name`=?  LIMIT 1'
+    let param = [req.body.country, req.body.name]
+    const [place] = await myPool.execute(query, param)
+    newplace(place[0])
+  } catch (err) {
+    next(err)
+  }
+  async function newplace(place) {
+    if (place) {
+      res.send('exists')
+    } else {
+      try {
+        let query = 'INSERT INTO `place` (`country`,`name`) VALUES (?,?)'
+        let param = [req.body.country, req.body.name]
+        const [place] = await myPool.execute(query, param)
+        res.send({ id: place.insertId })
+      } catch (err) {
+        next(err)
       }
     }
-  )
+  }
 })
 
-app.post('/project', (req, res) => {
+app.post('/project', async function(req, res, next) {
   if (req.body.id != 'new') {
-    mydb.execute(
-      'UPDATE `project` SET `name`=?,`country`=?,`place`=?,`brief`=?,`content`=?,`video`=?,`anonymous`=?,`parent`=?,`stage`=?,`budget`=?,`hudget`=? WHERE `project`.`id`=?',
-      [
+    try {
+      let query =
+        'UPDATE `project` SET `name`=?,`country`=?,`place`=?,`brief`=?,`content`=?,`video`=?,`anonymous`=?,`parent`=?,`stage`=?,`budget`=?,`hudget`=? WHERE `project`.`id`=?'
+      let param = [
         req.body.name,
         req.body.country,
         req.body.place,
@@ -468,185 +451,160 @@ app.post('/project', (req, res) => {
         req.body.budget,
         req.body.hudget,
         req.body.id
-      ],
-      function(err) {
-        if (err) {
-          console.log('e: ' + JSON.stringify(err))
-          res.send(err)
-        } else res.json(req.body.id)
-      }
-    )
+      ]
+      await myPool.execute(query, param)
+      res.send(req.body.id)
+    } catch (err) {
+      next(err)
+    }
   } else {
-    mydb.execute(
-      'SELECT * FROM `project` WHERE `project`.`name`= ? LIMIT 1',
-      [req.body.name],
-      function(err, [project]) {
-        if (err) {
-          console.log('efind: ' + JSON.stringify(err))
-          res.send(err)
-        } else {
-          if (!project) {
-            mydb.execute(
-              'INSERT INTO `project` (`name`,`country`,`place`,`brief`,`content`,`video`,`anonymous`,`parent`,`stage`,`budget`,`hudget`)' +
-                ' VALUES (?,?,?,?,?,?,?,?,?,?,?)',
-              [
-                req.body.name,
-                req.body.country,
-                req.body.place,
-                req.body.brief,
-                req.body.content,
-                req.body.video,
-                req.body.anonymous,
-                req.body.parent,
-                req.body.stage,
-                req.body.budget,
-                req.body.hudget
-              ],
-              function(err, project) {
-                if (err) {
-                  console.log('einsert: ' + JSON.stringify(err))
-                  res.send(err)
-                } else {
-                  res.json({ id: project.insertId })
-                }
-              }
-            )
-          } else {
-            res.json('exists')
-          }
-        }
+    try {
+      let query = 'SELECT * FROM `project` WHERE `project`.`name`= ? LIMIT 1'
+      let param = [req.body.name]
+      const [project] = await myPool.execute(query, param)
+      if (project[0]) {
+        res.send('exists')
+      } else {
+        addproject()
       }
-    )
+    } catch (err) {
+      next(err)
+    }
+  }
+  async function addproject() {
+    try {
+      let query =
+        'INSERT INTO `project` (`name`,`country`,`place`,`brief`,`content`,`video`,`anonymous`,`parent`,`stage`,`budget`,`hudget`)' +
+        ' VALUES (?,?,?,?,?,?,?,?,?,?,?)'
+      let param = [
+        req.body.name,
+        req.body.country,
+        req.body.place,
+        req.body.brief,
+        req.body.content,
+        req.body.video,
+        req.body.anonymous,
+        req.body.parent,
+        req.body.stage,
+        req.body.budget,
+        req.body.hudget
+      ]
+      const [project] = await myPool.execute(query, param)
+      res.send({ id: project.insertId })
+    } catch (err) {
+      next(err)
+    }
   }
 })
 
-app.post('/comment', (req, res) => {
+app.post('/comment', async function(req, res, next) {
   if (req.body.id != 'new') {
-    mydb.execute(
-      'UPDATE `comment` SET `parent`=?, `project`=?, `user`=?, `content`=? WHERE `comment`.`id`=?',
-      [
+    try {
+      let query =
+        'UPDATE `comment` SET `parent`=?, `project`=?, `user`=?, `content`=? WHERE `comment`.`id`=?'
+      let param = [
         req.body.parent,
         req.body.project,
         req.body.user,
         req.body.content,
         req.body.id
-      ],
-      function(err) {
-        if (err) {
-          console.log('e: ' + JSON.stringify(err))
-          res.send(err)
-        } else {
-          mydb.execute(
-            'SELECT * FROM `comment` WHERE `id` = ?',
-            [req.body.id],
-            function(err, [comment]) {
-              if (err) {
-                console.log('e: ' + JSON.stringify(err))
-                res.send(err)
-              } else {
-                res.json(comment)
-              }
-            }
-          )
-        }
-      }
-    )
+      ]
+      await myPool.execute(query, param)
+    } catch (err) {
+      next(err)
+    }
+    try {
+      let query = 'SELECT * FROM `comment` WHERE `id` = ?'
+      let param = [req.body.id]
+      let [comment] = await myPool.execute(query, param)
+      res.send(comment[0])
+    } catch (err) {
+      next(err)
+    }
   } else {
-    mydb.execute(
-      'INSERT INTO `comment` (`parent`,`project`,`user`,`content`) VALUES (?,?,?,?)',
-      [req.body.parent, req.body.project, req.body.user, req.body.content],
-      function(err, comment) {
-        if (err) {
-          console.log('e: ' + JSON.stringify(err))
-          res.send(err)
-        } else {
-          mydb.execute(
-            'SELECT * FROM `comment` WHERE `id` = ?',
-            [comment.insertId],
-            function(err, [comment]) {
-              if (err) {
-                console.log('e: ' + JSON.stringify(err))
-                res.send(err)
-              } else {
-                res.json(comment)
-              }
-            }
-          )
-        }
-      }
-    )
+    try {
+      let query =
+        'INSERT INTO `comment` (`parent`,`project`,`user`,`content`) VALUES (?,?,?,?)'
+      let param = [
+        req.body.parent,
+        req.body.project,
+        req.body.user,
+        req.body.content
+      ]
+      const [comment] = await myPool.execute(query, param)
+      returncomment(comment)
+    } catch (err) {
+      next(err)
+    }
+  }
+  async function returncomment(returned) {
+    try {
+      let query = 'SELECT * FROM `comment` WHERE `id` = ?'
+      let param = [returned.insertId]
+      let [comment] = await myPool.execute(query, param)
+      res.send(comment[0])
+    } catch (err) {
+      next(err)
+    }
   }
 })
 
-app.post('/user', (req, res) => {
-  mydb.execute(
-    'SELECT * FROM `user` WHERE `user`.`email`= ? LIMIT 1',
-    [req.body.email],
-    function(err, [user]) {
-      if (err) {
-        console.log('e: ' + JSON.stringify(err))
-        res.send(err)
-      } else {
-        if (!user) {
-          bcrypt.hash(req.body.password, 10, (err, hash) => {
-            mydb.execute(
-              'INSERT INTO `user` (`name`,`surname`,`email`,`password`,`paypalagreementid`) VALUES (?,?,?,?,?)',
-              [
-                req.body.name,
-                req.body.surname,
-                req.body.email,
-                hash,
-                req.body.paypalagreementid
-              ],
-              function(err, user) {
-                if (err) {
-                  console.log('e: ' + JSON.stringify(err))
-                  res.send(err)
-                } else {
-                  res.json({ id: user.insertId })
-                }
-              }
-            )
-          })
-        } else {
-          res.send('exists')
-        }
+app.post('/user', async function(req, res, next) {
+  try {
+    let query = 'SELECT * FROM `user` WHERE `user`.`email`= ? LIMIT 1'
+    let param = [req.body.email]
+    let [user] = await myPool.execute(query, param)
+    newuser(user[0])
+  } catch (err) {
+    next(err)
+  }
+  async function newuser(user) {
+    if (user) {
+      res.send('exists')
+    } else {
+      let hashed = await bcrypt.hash(req.body.password, 10)
+      try {
+        let query =
+          'INSERT INTO `user` (`name`,`surname`,`email`,`password`,`paypalagreementid`) VALUES (?,?,?,?,?)'
+        let param = [
+          req.body.name,
+          req.body.surname,
+          req.body.email,
+          hashed,
+          req.body.paypalagreementid
+        ]
+        let [user] = await myPool.execute(query, param)
+        res.send({ id: user[0].insertId })
+      } catch (err) {
+        next(err)
       }
     }
-  )
-})
-
-app.post('/tag', (req, res) => {
-  if (req.body.tag == 'add') {
-    mydb.execute(
-      'INSERT INTO `tag` (`project`,`name`) VALUES (?,?)',
-      [req.body.project, req.body.name],
-      function(err, tag) {
-        if (err) {
-          console.log('e: ' + JSON.stringify(err))
-          res.send(err)
-        } else {
-          res.send(tag)
-        }
-      }
-    )
-  } else {
-    mydb.execute(
-      'DELETE FROM `tag` where `project` = ? and `name` = ?',
-      [req.body.project, req.body.name],
-      function(err, tag) {
-        if (err) {
-          console.log('e: ' + JSON.stringify(err))
-          res.send(err)
-        } else {
-          res.send(tag)
-        }
-      }
-    )
   }
 })
 
-app.post('/image', function(req, res) {
+app.post('/tag', async function(req, res, next) {
+  if (req.body.tag == 'add') {
+    try {
+      let query = 'INSERT INTO `tag` (`project`,`name`) VALUES (?,?)'
+      let param = [req.body.project, req.body.name]
+      let [tag] = await myPool.execute(query, param)
+      res.send(tag)
+    } catch (err) {
+      next(err)
+    }
+  } else {
+    try {
+      let query = 'DELETE FROM `tag` where `project` = ? and `name` = ?'
+      let param = [req.body.project, req.body.name]
+      let [tag] = await myPool.execute(query, param)
+      res.send(tag)
+    } catch (err) {
+      next(err)
+    }
+  }
+})
+
+app.post('/image', async function(req, res, next) {
   if (req.body.empty) {
     let standardimage = './assets/image/' + req.body.proptype + '/1.png'
     jimp
@@ -660,10 +618,9 @@ app.post('/image', function(req, res) {
           )
       })
       .then(() => {
-        res.json({ status: 'OK' })
+        res.send({ status: 'OK' })
       })
       .catch(err => {
-        console.log('e: ' + JSON.stringify(err))
         res.send(err)
       })
   } else {
@@ -671,7 +628,7 @@ app.post('/image', function(req, res) {
       var uploadPath =
         './assets/image/' + req.body.proptype + '/' + req.body.id + '.png'
     } catch (err) {
-      console.error(err)
+      next(err)
     }
     req.files.file.mv(uploadPath, function(err) {
       if (err) {
@@ -686,9 +643,8 @@ app.post('/image', function(req, res) {
           .quality(60)
           .write(uploadPath)
       })
-      .then(res.json({ status: 'OK' }))
+      .then(res.send({ status: 'OK' }))
       .catch(err => {
-        console.log('e: ' + JSON.stringify(err))
         res.send(err)
       })
   }
@@ -731,7 +687,7 @@ app.post('/contactemail', function(req, res) {
   }) /* to add html in mailOptions use " html: '<b>test</b>' " */
   const mailOptions = {
     from: req.body.formEmail,
-    to: '"az" <alireza.q1357@gmail.com>', //'"Cooperacy" <cooperacy@cooperacy.org>',
+    to: '"Cooperacy" <cooperacy@cooperacy.org>',
     // conveniently replies to the submitter of the form's email
     replyTo: `"${req.body.formName}" <${req.body.formEmail}>`,
     subject: req.body.formSubject,
@@ -763,31 +719,30 @@ app.post('/contactemail', function(req, res) {
 
 //CCI to be "vued", post is the future one, remove following app.get('/map'
 
-app.post('/cci', (req, res) => {
-  mydb.execute('SELECT * FROM `CCI' + req.body.cciyear + '`', [], function(
-    err,
-    CCI
-  ) {
-    if (err) {
-      console.log('e: ' + JSON.stringify(err))
-      res.send(err)
-    } else res.json(CCI)
-  })
+app.post('/cci', async function(req, res, next) {
+  try {
+    let query = 'SELECT * FROM `CCI' + req.body.cciyear + '`'
+    let param = []
+    let [CCI] = await myPool.execute(query, param)
+    res.send(CCI)
+  } catch (err) {
+    next(err)
+  }
 })
-app.get('/map', (req, res) => {
-  mydb.execute('SELECT * FROM `CCI2017`', [], function(err, CCI) {
-    if (err) {
-      console.log('e: ' + JSON.stringify(err))
-      res.send(err)
-    } else {
-      let ccimakeup = {}
-      for (let i = 0; i < CCI.length; i++) {
-        let country = CCI[i]['country']
-        ccimakeup[country] = CCI[i]
-      }
-      res.json(ccimakeup)
+app.get('/map', async function(req, res, next) {
+  try {
+    let query = 'SELECT * FROM `CCI2017`' + req.body.cciyear + '`'
+    let param = []
+    let [CCI] = await myPool.execute(query, param)
+    let ccimakeup = {}
+    for (let i = 0; i < CCI.length; i++) {
+      let country = CCI[i]['country']
+      ccimakeup[country] = CCI[i]
     }
-  })
+    res.send(ccimakeup)
+  } catch (err) {
+    next(err)
+  }
 })
 
 app.post('/vote', function(req, res) {
@@ -798,7 +753,6 @@ app.post('/vote', function(req, res) {
       [req.body.user, req.body.condition, req.body.id],
       function(err, [vote]) {
         if (err) {
-          console.log('e: ' + JSON.stringify(err))
           res.send(err)
         } else {
           //if a vote exists, it is removed
@@ -819,7 +773,6 @@ app.post('/vote', function(req, res) {
       [req.body.user, req.body.id, req.body.condition], //a new vote is added into the database
       function(err) {
         if (err) {
-          console.log('e: ' + JSON.stringify(err))
           res.send(err)
         } else {
           if (cc.indexOf(req.body.condition) > -1)
@@ -833,7 +786,6 @@ app.post('/vote', function(req, res) {
               [req.body.id],
               function(err) {
                 if (err) {
-                  console.log('e: ' + JSON.stringify(err))
                   res.send(err)
                 } else {
                   //here, we add every platform effect the vote may have:
@@ -843,7 +795,6 @@ app.post('/vote', function(req, res) {
                       [req.body.user, req.body.id],
                       function(err) {
                         if (err) {
-                          console.log('e: ' + JSON.stringify(err))
                           res.send(err)
                         } else {
                           mydb.execute(
@@ -851,7 +802,6 @@ app.post('/vote', function(req, res) {
                             [req.body.id],
                             function(err, updateduserproject) {
                               if (err) {
-                                console.log('e: ' + JSON.stringify(err))
                                 res.send(err)
                               } else {
                                 res.send(updateduserproject)
@@ -875,7 +825,6 @@ app.post('/vote', function(req, res) {
       [req.body.user, req.body.id, req.body.condition],
       function(err) {
         if (err) {
-          console.log('e: ' + JSON.stringify(err))
           res.send(err)
         } else {
           if (cc.indexOf(req.body.condition) > -1)
@@ -889,7 +838,6 @@ app.post('/vote', function(req, res) {
               [req.body.id],
               function(err) {
                 if (err) {
-                  console.log('e: ' + JSON.stringify(err))
                   res.send(err)
                 } else {
                   //when all is safe, the old vote is removed:
@@ -898,7 +846,6 @@ app.post('/vote', function(req, res) {
                     [votetoremove.id],
                     function(err) {
                       if (err) {
-                        console.log('e: ' + JSON.stringify(err))
                         res.send(err)
                       } else {
                         //here, we revoke every platform effect the vote may have:
@@ -908,7 +855,6 @@ app.post('/vote', function(req, res) {
                             [req.body.user, req.body.id],
                             function(err) {
                               if (err) {
-                                console.log('e: ' + JSON.stringify(err))
                                 res.send(err)
                               } else {
                                 mydb.execute(
@@ -916,7 +862,6 @@ app.post('/vote', function(req, res) {
                                   [req.body.id],
                                   function(err) {
                                     if (err) {
-                                      console.log('e: ' + JSON.stringify(err))
                                       res.send(err)
                                     } else {
                                       res.send('OK')
@@ -943,7 +888,6 @@ app.post('/vote', function(req, res) {
       [req.body.user, req.body.condition, req.body.id],
       function(err, [vote]) {
         if (err) {
-          console.log('e: ' + JSON.stringify(err))
           res.send(err)
         } else {
           //if a vote exists, it is copied into the removed votetable
@@ -958,7 +902,6 @@ app.post('/vote', function(req, res) {
               ],
               function(err) {
                 if (err) {
-                  console.log('e: ' + JSON.stringify(err))
                   res.send(err)
                 } else {
                   if (cc.indexOf(req.body.condition) > -1)
@@ -972,7 +915,6 @@ app.post('/vote', function(req, res) {
                       [req.body.id],
                       function(err) {
                         if (err) {
-                          console.log('e: ' + JSON.stringify(err))
                           res.send(err)
                         } else {
                           //when all is safe, the old vote is removed:
@@ -981,7 +923,6 @@ app.post('/vote', function(req, res) {
                             [vote.id],
                             function(err) {
                               if (err) {
-                                console.log('e: ' + JSON.stringify(err))
                                 res.send(err)
                               } else {
                                 if (
@@ -998,7 +939,6 @@ app.post('/vote', function(req, res) {
                                     [req.body.author],
                                     function(err) {
                                       if (err) {
-                                        console.log('e: ' + JSON.stringify(err))
                                         res.send(err)
                                       } else {
                                         res.send('OK')
@@ -1028,7 +968,6 @@ app.post('/vote', function(req, res) {
               ], //a new vote is added into the database
               function(err) {
                 if (err) {
-                  console.log('e: ' + JSON.stringify(err))
                   res.send(err)
                 } else {
                   if (cc.indexOf(req.body.condition) > -1)
@@ -1042,7 +981,6 @@ app.post('/vote', function(req, res) {
                       [req.body.id],
                       function(err, updatedcomment) {
                         if (err) {
-                          console.log('e: ' + JSON.stringify(err))
                           res.send(err)
                         } else {
                           if (
@@ -1059,7 +997,6 @@ app.post('/vote', function(req, res) {
                               [req.body.author],
                               function(err) {
                                 if (err) {
-                                  console.log('e: ' + JSON.stringify(err))
                                   res.send(err)
                                 } else {
                                   res.send(updatedcomment)
@@ -1088,7 +1025,6 @@ app.post('/resetcpvoting', (req, res) => {
   mydb.execute('SELECT `id` from `project`', [], function(err, id) {
     {
       if (err) {
-        console.log('e: ' + JSON.stringify(err))
         res.send(err)
       } else {
         pcycleid(id)
@@ -1104,7 +1040,6 @@ app.post('/resetcpvoting', (req, res) => {
           [id[j].id, c],
           function(err, [result]) {
             if (err) {
-              console.log('e: ' + JSON.stringify(err))
               res.send(err)
             } else {
               values[c] = result.count
@@ -1133,7 +1068,6 @@ app.post('/resetcpvoting', (req, res) => {
       ],
       function(err, result) {
         if (err) {
-          console.log('e: ' + JSON.stringify(err))
           res.send(err)
         } else {
           console.log(' ' + JSON.stringify(result))
@@ -1145,7 +1079,6 @@ app.post('/resetcpvoting', (req, res) => {
   mydb.execute('SELECT `id` from `comment`', [], function(err, id) {
     {
       if (err) {
-        console.log('e: ' + JSON.stringify(err))
         res.send(err)
       } else {
         ccycleid(id)
@@ -1161,7 +1094,6 @@ app.post('/resetcpvoting', (req, res) => {
           [id[j].id, c],
           function(err, [result]) {
             if (err) {
-              console.log('e: ' + JSON.stringify(err))
               res.send(err)
             } else {
               values[c] = result.count
@@ -1190,7 +1122,6 @@ app.post('/resetcpvoting', (req, res) => {
       ],
       function(err, result) {
         if (err) {
-          console.log('e: ' + JSON.stringify(err))
           res.send(err)
         } else {
           console.log(' ' + JSON.stringify(result))
@@ -1206,7 +1137,6 @@ app.post('/resetuvoting', (req, res) => {
   mydb.execute('SELECT `id` from `user`', [], function(err, id) {
     {
       if (err) {
-        console.log('e: ' + JSON.stringify(err))
         res.send(err)
       } else {
         zero(id)
@@ -1221,7 +1151,6 @@ app.post('/resetuvoting', (req, res) => {
         [0, 0, 0, 0, 0, 0, 0, id[j].id],
         function(err) {
           if (err) {
-            console.log('e: ' + JSON.stringify(err))
             res.send(err)
           } else {
             findcomment(id[j].id)
@@ -1237,7 +1166,6 @@ app.post('/resetuvoting', (req, res) => {
       result
     ) {
       if (err) {
-        console.log('e: ' + JSON.stringify(err))
         res.send(err)
       } else {
         console.log(' ' + JSON.stringify(result))
@@ -1255,7 +1183,6 @@ app.post('/resetuvoting', (req, res) => {
           [id[j].id, c, userid],
           function(err, [result]) {
             if (err) {
-              console.log('e: ' + JSON.stringify(err))
               res.send(err)
             } else {
               values[c] = result.count
@@ -1286,7 +1213,6 @@ app.post('/resetuvoting', (req, res) => {
       ],
       function(err, result) {
         if (err) {
-          console.log('e: ' + JSON.stringify(err))
           res.send(err)
         } else {
           console.log('' + JSON.stringify(result))

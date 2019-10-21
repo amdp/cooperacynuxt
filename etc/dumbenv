@@ -1,6 +1,6 @@
 PORT=Port number, if not sure, use 3000
 HOST=host, if not sure, use 127.0.0.1
-HOME=if not sure, use http://127.0.0.1:3000
+URLHOME=if not sure, use http://127.0.0.1:3000
 DBURL=if not sure, use http://127.0.0.1:3000/api
 
 MYSQLUSER=Your mysql username

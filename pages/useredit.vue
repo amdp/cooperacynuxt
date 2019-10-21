@@ -64,14 +64,13 @@
             <b-form-group
               label-for="newPasswordInput"
               label="New Password:"
-              description="Please insert your new password or passphrase"
+              description="In case, please insert your new password or passphrase"
             >
               <b-form-input
                 id="newPasswordInput"
                 v-model="formNewPassword"
                 size="sm"
                 type="password"
-                required
                 autocomplete="current-password"
               ></b-form-input>
             </b-form-group>
@@ -90,7 +89,7 @@
             </b-form-group>
             <b-button
               type="submit"
-              class="btn bhcare btn-block mt-3 white border-0"
+              class="btn bhcare btn-block mt-3 mb-3 white border-0"
               >UPDATE</b-button
             >
           </b-form>
