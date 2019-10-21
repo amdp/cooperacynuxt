@@ -171,17 +171,15 @@ export default {
   computed: {
     up() {
       if (this.$store.state.comment) {
-        return this.$store.state.comment.filter(comment => {
-          return comment.parent === 0
-        })
+        return this.$store.state.comment.filter(comment => comment.parent === 0)
       } else {
         return []
       }
     },
     anonymous() {
-      let thisproject = this.$store.state.project.filter(project => {
-        return project.id == this.$route.params.id
-      })
+      let thisproject = this.$store.state.project.filter(
+        project => project.id == this.$route.params.id
+      )
       if (thisproject[0].anonymous == 1) {
         return true
       }
@@ -214,9 +212,9 @@ export default {
     },
     sub(comment, id) {
       if (this.$store.state.comment) {
-        let subcomments = this.$store.state.comment.filter(comment => {
-          return comment.parent === id && comment.id != id
-        })
+        let subcomments = this.$store.state.comment.filter(
+          comment => comment.parent === id && comment.id != id
+        )
         subcomments.reverse()
         return subcomments
       } else {

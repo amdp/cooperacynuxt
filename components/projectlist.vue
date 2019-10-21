@@ -124,14 +124,10 @@ export default {
   },
   computed: {
     projectlist() {
-      return this.$store.state.project.filter(project => {
-        return project.stage != 1
-      })
+      return this.$store.state.project.filter(project => project.stage != 1)
     },
     archivedlist() {
-      return this.$store.state.project.filter(project => {
-        return project.stage == 1
-      })
+      return this.$store.state.project.filter(project => project.stage == 1)
     }
   },
   methods: {

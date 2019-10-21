@@ -79,7 +79,7 @@
 export default {
   head() {
     return {
-      title: 'About Us'
+      title: 'About You'
     }
   }
 }

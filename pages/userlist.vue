@@ -42,14 +42,10 @@ export default {
   },
   computed: {
     memberlist() {
-      return this.$store.state.userlist.filter(userlist => {
-        return userlist.active == 1
-      })
+      return this.$store.state.userlist.filter(userlist => userlist.active == 1)
     },
     olduserlist() {
-      return this.$store.state.userlist.filter(userlist => {
-        return userlist.active == 0
-      })
+      return this.$store.state.userlist.filter(userlist => userlist.active == 0)
     }
   },
   methods: {

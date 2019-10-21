@@ -228,8 +228,10 @@ export const actions = {
     context.commit('commentUpdate', data)
   },
   placeFormAction: async function(context, payload) {
-    await this.$axios.post(process.env.DBURL + '/place', payload)
-    context.dispatch('getPlaceAction')
+    let { data } = await this.$axios.post(process.env.DBURL + '/place', payload)
+    if (data == 'exists') {
+      return data
+    } else context.dispatch('getPlaceAction')
   },
   newuserAction: async function(context, payload) {
     let { data } = await this.$axios.post(process.env.DBURL + '/user', payload)

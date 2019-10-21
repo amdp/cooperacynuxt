@@ -288,7 +288,7 @@ export default {
       if (newuser == 'exists') {
         return this.$toast.show('Email already in use!', {
           duration: 1000,
-          className: 'toasts'
+          className: 'toast'
         })
       }
       if (this.formImageFile) {
@@ -318,7 +318,7 @@ export default {
     addedToast() {
       this.$toast.success('New user added.', {
         duration: 1000,
-        className: 'toasts'
+        className: 'toast'
       })
       //setTimeout(function(){location.href = location.href}, 1200)
     }

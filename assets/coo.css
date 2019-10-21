@@ -728,8 +728,12 @@ img.page-header img.news {
   top: 2px;
 }
 
-.toasts {
+.toast {
   background-color: var(--care) !important;
+  color: #fff !important;
+}
+.toastunderstanding {
+  background-color: var(--understanding) !important;
   color: #fff !important;
 }
 img.about {

@@ -33,6 +33,7 @@
           <nuxt-link class="ai" to="/terms">
             PRIVACY POLICY AND AGREEMENTS</nuxt-link
           >
+          <span class="au" @click="$auth.logout()">LOGOUT</span>
         </p>
       </b-container>
     </b-row>
