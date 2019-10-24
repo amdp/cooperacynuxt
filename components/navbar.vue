@@ -7,7 +7,7 @@
       @mouseleave="navState = null"
     >
       <nuxt-link
-        @click.native="resetNav"
+        @click.native="hideNav"
         to="/"
         tag="img"
         class="img-logo col-6 col-sm-4 col-lg-2 p-0"
@@ -111,8 +111,8 @@
         </div>
       </div>
 
-      <!-- MOBILE HARMBURGER BUTTON -->
-      <div class="col-2 h-100 burger-btn ml-auto text-right" @click="resetNav">
+      <!-- MOBILE HAMBURGER BUTTON -->
+      <div class="col-2 h-100 burger-btn ml-auto text-right" @click="toggleNav">
         <img v-if="!isDropdownVisible" src="../assets/icons/bars.svg" />
         <img v-else src="../assets/icons/times.svg" />
       </div>
@@ -130,7 +130,7 @@
         <div
           class="mt-2 d-flex flex-column"
           v-if="navState == 'project'"
-          @click="resetNav"
+          @click="hideNav"
         >
           <nuxt-link class="mobile-menu-item" to="/aboutyou"
             >ABOUT YOU</nuxt-link
@@ -154,7 +154,7 @@
         <div
           class="mt-2 d-flex flex-column"
           v-if="navState == 'corporate'"
-          @click="resetNav"
+          @click="hideNav"
         >
           <nuxt-link class="mobile-menu-item" to="/corporate"
             >CORPORATE WORLD</nuxt-link
@@ -183,7 +183,7 @@
         <div
           class="mt-2 d-flex flex-column"
           v-if="navState == 'science'"
-          @click="resetNav"
+          @click="hideNav"
         >
           <nuxt-link class="mobile-menu-item" to="/cooperation"
             >COOPERATION</nuxt-link
@@ -198,16 +198,20 @@
           <nuxt-link class="mobile-menu-item" to="/news">NEWS</nuxt-link>
         </div>
       </div>
-      <nuxt-link to="/login" v-if="!this.$auth.loggedIn" @click.native="resetNav">
+      <nuxt-link
+        to="/login"
+        v-if="!this.$auth.loggedIn"
+        @click.native="hideNav"
+      >
         <div class="mobile-nav-box">
           <p class="nav-item">LOGIN</p>
         </div>
       </nuxt-link>
-      <nuxt-link to="/user" @click.native="resetNav" v-else>
+      <nuxt-link to="/user" @click.native="hideNav" v-else>
         <div class="mobile-nav-box">
-          <p class="nav-item">{{
-            this.$auth.user.name + ' ' + this.$auth.user.surname
-          }}</p>
+          <p class="nav-item">
+            {{ this.$auth.user.name + ' ' + this.$auth.user.surname }}
+          </p>
         </div>
       </nuxt-link>
     </div>
@@ -237,9 +241,16 @@ export default {
     }
   },
   methods: {
-    resetNav: function() {
-      this.isDropdownVisible = !this.isDropdownVisible
+    resetNavState: function() {
       this.navState = null
+    },
+    hideNav: function() {
+      this.isDropdownVisible = false
+      this.resetNavState()
+    },
+    toggleNav: function() {
+      this.isDropdownVisible = !this.isDropdownVisible
+      this.resetNavState()
     }
   }
 }
