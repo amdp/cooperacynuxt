@@ -31,12 +31,12 @@
               CORPORATE
             </div>
           </div>
-          <div class="nav" @mouseenter="navState = 'science'">
+          <div class="nav" @mouseenter="navState = 'research'">
             <div
               class="nav-item"
-              :class="{ 'science-active': navState == 'science' }"
+              :class="{ 'research-active': navState == 'research' }"
             >
-              SCIENCE
+              RESEARCH
             </div>
           </div>
         </div>
@@ -71,15 +71,15 @@
         </div>
         <div
           class="navbar-links text-center"
-          id="science"
-          v-if="navState == 'science'"
+          id="research"
+          v-if="navState == 'research'"
         >
           <nuxt-link class="menu-item" to="/cooperation">COOPERATION</nuxt-link>
           <nuxt-link class="menu-item" to="/integration">INTEGRATION</nuxt-link>
           <nuxt-link class="menu-item" to="/cci"
             >COOPERATION CONTEXT INDEX</nuxt-link
           >
-          <nuxt-link class="menu-item" to="/science">RESEARCH</nuxt-link>
+          <nuxt-link class="menu-item" to="/science">SCIENCE</nuxt-link>
           <nuxt-link class="menu-item" to="/news">NEWS</nuxt-link>
         </div>
       </div>
@@ -173,16 +173,16 @@
           >
         </div>
       </div>
-      <div class="mobile-nav-box" @click="navState = 'science'">
+      <div class="mobile-nav-box" @click="navState = 'research'">
         <div
           class="nav-item"
-          :class="{ 'science-active': navState == 'science' }"
+          :class="{ 'research-active': navState == 'research' }"
         >
-          SCIENCE
+          RESEARCH
         </div>
         <div
           class="mt-2 d-flex flex-column"
-          v-if="navState == 'science'"
+          v-if="navState == 'research'"
           @click="resetNav"
         >
           <nuxt-link class="mobile-menu-item" to="/cooperation"
@@ -194,20 +194,24 @@
           <nuxt-link class="mobile-menu-item" to="/cci"
             >COOPERATION CONTEXT INDEX</nuxt-link
           >
-          <nuxt-link class="mobile-menu-item" to="/science">RESEARCH</nuxt-link>
+          <nuxt-link class="mobile-menu-item" to="/science">SCIENCE</nuxt-link>
           <nuxt-link class="mobile-menu-item" to="/news">NEWS</nuxt-link>
         </div>
       </div>
-      <nuxt-link to="/login" v-if="!this.$auth.loggedIn" @click.native="resetNav">
+      <nuxt-link
+        to="/login"
+        v-if="!this.$auth.loggedIn"
+        @click.native="resetNav"
+      >
         <div class="mobile-nav-box">
           <p class="nav-item">LOGIN</p>
         </div>
       </nuxt-link>
       <nuxt-link to="/user" @click.native="resetNav" v-else>
         <div class="mobile-nav-box">
-          <p class="nav-item">{{
-            this.$auth.user.name + ' ' + this.$auth.user.surname
-          }}</p>
+          <p class="nav-item">
+            {{ this.$auth.user.name + ' ' + this.$auth.user.surname }}
+          </p>
         </div>
       </nuxt-link>
     </div>

@@ -76,7 +76,11 @@
             </div>
           </div>
         </div>
-        <votebar :voteprop="oneproject" :proptype="'project'" :voteId="oneproject.id"/>
+        <votebar
+          :voteprop="oneproject"
+          :proptype="'project'"
+          :voteId="oneproject.id"
+        />
       </div>
       <b-row class="mt-5 d-block">
         <b-link class="au" @click="edit">Edit this project</b-link>
@@ -89,7 +93,7 @@
           >COMMENTS AND QUESTIONS</b-col
         >
       </b-row>
-
+      <!-- MODAL MODAL MODAL -->
       <b-modal id="addtagmodal" title="Add a new tag" hide-header-close>
         <p class="my-4">
           (CURRENT TAGS:
@@ -114,7 +118,7 @@
           >
         </template>
       </b-modal>
-
+      <!-- MODAL MODAL MODAL -->
       <b-modal id="removetagmodal" title="Remove a tag" hide-header-close>
         <p class="my-4">Select a tag:</p>
         <b-form @submit.prevent="removetag">

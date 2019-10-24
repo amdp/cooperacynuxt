@@ -423,7 +423,7 @@ a.disabled {
   bottom: 0;
 }
 .project-active:after,
-.science-active:after,
+.research-active:after,
 .corporate-active:after {
   display: inline-block;
 }
@@ -519,11 +519,11 @@ a.disabled {
 .corporate-active:after {
   background-color: var(--freedom);
 }
-#science .menu-item:hover,
+#research .menu-item:hover,
 .fa-linkedin:hover {
   color: var(--understanding);
 }
-.science-active:after {
+.research-active:after {
   background-color: var(--understanding);
 }
 
