@@ -248,12 +248,9 @@ export default {
       this.isDropdownVisible = false
       this.resetNavState()
     },
-    showNav: function() {
-      this.isDropdownVisible = true
-      this.resetNavState()
-    },
     toggleNav: function() {
       this.isDropdownVisible = !this.isDropdownVisible
+      this.resetNavState()
     }
   }
 }
