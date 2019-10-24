@@ -198,16 +198,20 @@
           <nuxt-link class="mobile-menu-item" to="/news">NEWS</nuxt-link>
         </div>
       </div>
-      <nuxt-link to="/login" v-if="!this.$auth.loggedIn" @click.native="resetNav">
+      <nuxt-link
+        to="/login"
+        v-if="!this.$auth.loggedIn"
+        @click.native="resetNav"
+      >
         <div class="mobile-nav-box">
           <p class="nav-item">LOGIN</p>
         </div>
       </nuxt-link>
       <nuxt-link to="/user" @click.native="resetNav" v-else>
         <div class="mobile-nav-box">
-          <p class="nav-item">{{
-            this.$auth.user.name + ' ' + this.$auth.user.surname
-          }}</p>
+          <p class="nav-item">
+            {{ this.$auth.user.name + ' ' + this.$auth.user.surname }}
+          </p>
         </div>
       </nuxt-link>
     </div>
@@ -238,7 +242,7 @@ export default {
   },
   methods: {
     resetNav: function() {
-      this.isDropdownVisible = false
+      this.isDropdownVisible = !this.isDropdownVisible
       this.navState = null
     }
   }
