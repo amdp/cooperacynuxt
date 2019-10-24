@@ -122,8 +122,8 @@
         </div>
       </div>
       <p class="base text-center">
-        Cooperacy is a nonprofit scientific project aiming to spread cooperation
-        amongst humans and in their ecosystem.
+        Cooperacy is an open project aiming to spread and apply Cooperation
+        Science.
       </p>
       <p class="base text-center mb-2">
         We're setting up a

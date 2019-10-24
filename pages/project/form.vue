@@ -123,7 +123,7 @@
             required
           ></b-form-input>
         </b-form-group>
-        <!-- the parent project id owner will be notified, except for the Cooperacy project -->
+        <!-- FIX : the parent project id owner will be notified, except for the Cooperacy project -->
         <b-form-group
           label-for="categoryInput"
           label="Category:"
@@ -200,11 +200,13 @@
         <h6 class="trust" v-if="this.totallabel != -1">
           TOTAL NON-FUNDED BUDGET: {{ totallabel }}
         </h6>
-        <b-button type="submit" class="btn btrust btn-block mt-3 gray border-0"
+        <b-button
+          type="submit"
+          class="btn btrust btn-block mt-3 mb-3 gray border-0"
           >GO!</b-button
         >
       </b-form>
-
+      <!-- MODAL MODAL MODAL -->
       <b-modal id="placemodal" title="Add a new place" hide-header-close>
         <p class="my-4">Add a new place:</p>
         <b-form @submit.prevent="addplace">
@@ -251,6 +253,55 @@ export default {
       userid: store.state.auth.user.id
     })
   },
+  data() {
+    return {
+      country: this.$store.state.country,
+      category: this.$store.state.category.filter(category => category.id != 0),
+      budgetlabel: 'Fee:',
+      hudgetlabel: 'Minimum participants:',
+      budgetdesc:
+        'Insert the amount the project participants should pay to participate',
+      hudgetdesc:
+        'Insert the minimum number of paying participants so that the project is sustainable',
+      placedesc: 'Insert the country and location of your project idea',
+      totallabel: 0,
+      formAnonymous: 0,
+      formNewcountry: null,
+      formNewplace: null,
+      formName: this.$store.state.project[0]
+        ? this.$store.state.project[0].name
+        : null,
+      formCountry: this.$store.state.project[0]
+        ? this.$store.state.project[0].country
+        : null,
+      formPlace: this.$store.state.project[0]
+        ? this.$store.state.project[0].place
+        : 'Cooperacy',
+      formBrief: this.$store.state.project[0]
+        ? this.$store.state.project[0].brief
+        : null,
+      formContent: this.$store.state.project[0]
+        ? this.$store.state.project[0].content
+        : null,
+      formImageFile: null,
+      formVideo: this.$store.state.project[0]
+        ? this.$store.state.project[0].video
+        : null,
+      formParent: this.$store.state.project[0]
+        ? this.$store.state.project[0].parent
+        : 1,
+      formCategory: this.$store.state.project[0]
+        ? this.$store.state.project[0].category
+        : null,
+      formStageFunding: 5,
+      formBudget: this.$store.state.project[0]
+        ? Math.round(this.$store.state.project[0].budget)
+        : '0',
+      formHudget: this.$store.state.project[0]
+        ? this.$store.state.project[0].hudget
+        : '2'
+    }
+  },
   mounted() {
     if (
       this.$store.state.project[0] &&
@@ -293,55 +344,6 @@ export default {
       return place.sort((a, b) => (a.name > b.name ? 1 : -1))
     }
   },
-  data() {
-    return {
-      formNewcountry: '',
-      formNewplace: '',
-      country: this.$store.state.country,
-      category: this.$store.state.category.filter(category => category.id != 0),
-      budgetlabel: 'Fee:',
-      hudgetlabel: 'Minimum participants:',
-      budgetdesc:
-        'Insert the amount the project participants should pay to participate',
-      hudgetdesc:
-        'Insert the minimum number of paying participants so that the project is sustainable',
-      placedesc: 'Insert the country and location of your project idea',
-      totallabel: 0,
-      formName: this.$store.state.project[0]
-        ? this.$store.state.project[0].name
-        : '',
-      formCountry: this.$store.state.project[0]
-        ? this.$store.state.project[0].country
-        : '',
-      formPlace: this.$store.state.project[0]
-        ? this.$store.state.project[0].place
-        : 'Cooperacy',
-      formBrief: this.$store.state.project[0]
-        ? this.$store.state.project[0].brief
-        : '',
-      formContent: this.$store.state.project[0]
-        ? this.$store.state.project[0].content
-        : '',
-      formImageFile: '', // to be chosen by the user, current image is shown on the side
-      formVideo: this.$store.state.project[0]
-        ? this.$store.state.project[0].video
-        : '',
-      formAnonymous: '0',
-      formParent: this.$store.state.project[0]
-        ? this.$store.state.project[0].parent
-        : 1,
-      formCategory: this.$store.state.project[0]
-        ? this.$store.state.project[0].category
-        : '',
-      formStageFunding: 5,
-      formBudget: this.$store.state.project[0]
-        ? Math.round(this.$store.state.project[0].budget)
-        : '0',
-      formHudget: this.$store.state.project[0]
-        ? this.$store.state.project[0].hudget
-        : '2'
-    }
-  },
   methods: {
     funded() {
       if (this.formStageFunding == 5) {
@@ -373,8 +375,8 @@ export default {
         country: this.formCountry,
         place: this.formPlace,
         brief: this.formBrief,
-        content: ' ' + this.formContent,
-        video: ' ' + this.formVideo,
+        content: '' + this.formContent,
+        video: '' + this.formVideo,
         anonymous: this.formAnonymous,
         parent: this.formParent,
         stage: this.formStageFunding,
@@ -386,7 +388,6 @@ export default {
         .dispatch('projectFormAction', formBodyRequest)
         //in order to use it in the image creation:
         .then(async res => {
-          console.log(' ' + JSON.stringify(res))
           if (res == 'exists') {
             return this.$toast.show('Project already exists!', {
               duration: 1000,
@@ -395,23 +396,17 @@ export default {
           }
           if (this.formImageFile) {
             this.imageUpload(res)
-          } else if (formBodyRequest.id == 'new') {
-            this.imageUpload(res, 'empty')
-          }
+          } else this.doneToast(res)
         })
     },
-    async imageUpload(id, empty) {
-      console.log(' ' + JSON.stringify(id))
+    async imageUpload(id) {
       let formImageData = new FormData()
       formImageData.append('file', this.formImageFile)
       formImageData.append('id', id)
-      if (empty) {
-        formImageData.append('empty', true)
-        formImageData.append('proptype', 'project')
-      }
-      for (var key of formImageData.entries()) {
-        console.log(key[0] + ', ' + key[1])
-      }
+      formImageData.append('proptype', 'project')
+      // for (var key of formImageData.entries()) {
+      //   console.log(key[0] + ', ' + key[1])
+      // }
       let res = await this.$store
         .dispatch('imageUploadAction', {
           formImageData: formImageData,
@@ -422,17 +417,19 @@ export default {
           console.error(err)
         })
       if (res) {
-        this.doneToast()
+        this.doneToast(res)
       }
     },
-    doneToast() {
+    doneToast(res) {
       this.$toast.success('Done!', { duration: 1000, className: 'toast' })
-      this.$store.dispatch('editSwitchAction', false)
-      // how to effectively reload the page here before vue gets the state change?
-      // ######################################################### FIX NEEDED
       setTimeout(function() {
-        location.href = location.href
+        if (res == 'OK') {
+          location.href = location.href
+        } else {
+          location.href = process.env.URLHOME + '/project/' + res
+        }
       }, 1200)
+      this.$store.dispatch('editSwitchAction', false)
     },
     async addplace() {
       let result = await this.$store.dispatch('placeFormAction', {

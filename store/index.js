@@ -262,10 +262,10 @@ export const actions = {
     let { data } = await this.$axios.post(
       process.env.DBURL + '/image',
       payload.formImageData,
-      payload.headers,
-      payload.proptype
+      payload.headers
     )
-    return data.status
+    if (data.id) return data.id
+    else return data.status
   },
   contactEmailAction: async function(context, payload) {
     let { data } = await this.$axios.post(

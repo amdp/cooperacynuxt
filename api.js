@@ -605,48 +605,23 @@ app.post('/tag', async function(req, res, next) {
 })
 
 app.post('/image', async function(req, res, next) {
-  if (req.body.empty) {
-    let standardimage = './assets/image/' + req.body.proptype + '/1.png'
-    jimp
-      .read(standardimage)
-      .then(standardimage => {
-        return standardimage
-          .resize(256, 256)
-          .quality(60)
-          .write(
-            './assets/image/' + req.body.proptype + '/' + req.body.id + '.png'
-          )
-      })
-      .then(() => {
-        res.send({ status: 'OK' })
-      })
-      .catch(err => {
-        res.send(err)
-      })
-  } else {
-    try {
-      var uploadPath =
-        './assets/image/' + req.body.proptype + '/' + req.body.id + '.png'
-    } catch (err) {
-      next(err)
-    }
-    req.files.file.mv(uploadPath, function(err) {
-      if (err) {
-        return res.status(500).send(err)
-      }
+  try {
+    var uploadPath =
+      './assets/image/' + req.body.proptype + '/' + req.body.id + '.png'
+    req.files.file.mv(uploadPath)
+  } catch (err) {
+    next(err)
+  }
+  try {
+    jimp.read(uploadPath).then(function(uploadPath) {
+      return uploadPath
+        .resize(256, 256)
+        .quality(60)
+        .write(uploadPath)
     })
-    jimp
-      .read(uploadPath)
-      .then(uploadPath => {
-        return uploadPath
-          .resize(256, 256)
-          .quality(60)
-          .write(uploadPath)
-      })
-      .then(res.send({ status: 'OK' }))
-      .catch(err => {
-        res.send(err)
-      })
+    res.send({ status: 'OK', id: req.body.id })
+  } catch (err) {
+    next(err)
   }
 })
 
@@ -731,7 +706,7 @@ app.post('/cci', async function(req, res, next) {
 })
 app.get('/map', async function(req, res, next) {
   try {
-    let query = 'SELECT * FROM `CCI2017`' + req.body.cciyear + '`'
+    let query = 'SELECT * FROM `CCI2017`'
     let param = []
     let [CCI] = await myPool.execute(query, param)
     let ccimakeup = {}
@@ -745,80 +720,61 @@ app.get('/map', async function(req, res, next) {
   }
 })
 
-app.post('/vote', function(req, res) {
+app.post('/vote', async function(req, res, next) {
   if (req.body.proptype == 'project') {
-    mydb.execute(
-      //the presence of an existing project vote is checked
-      'SELECT * from `projectvote` where `user`=? AND `condition`=? AND `project`=?',
-      [req.body.user, req.body.condition, req.body.id],
-      function(err, [vote]) {
-        if (err) {
-          res.send(err)
-        } else {
-          //if a vote exists, it is removed
-          if (vote) {
-            removevote(vote)
-          } else {
-            // if not, it is added
-            addvote(vote)
-          }
-        }
+    try {
+      let query =
+        'SELECT * from `projectvote` where `user`=? AND `condition`=? AND `project`=?'
+      let param = [req.body.user, req.body.condition, req.body.id]
+      let [vote] = await myPool.execute(query, param)
+      //if a vote exists, it is removed
+      if (vote) {
+        removevote(vote)
+      } else {
+        // if not, it is added
+        addvote()
       }
-    )
+    } catch (err) {
+      next(err)
+    }
   }
-  //this adds the vote
-  let addvote = function() {
-    mydb.execute(
-      'INSERT INTO `projectvote` (`user`,`project`,`condition`) VALUES (?,?,?)', //if there is no vote
-      [req.body.user, req.body.id, req.body.condition], //a new vote is added into the database
-      function(err) {
-        if (err) {
-          res.send(err)
-        } else {
-          if (cc.indexOf(req.body.condition) > -1)
-            //then the relative project condition value is updated
-            mydb.execute(
-              'UPDATE `project` SET `' +
-                req.body.condition +
-                '`=`' +
-                req.body.condition +
-                '`+1 where `project`.`id`=?',
-              [req.body.id],
-              function(err) {
-                if (err) {
-                  res.send(err)
-                } else {
-                  //here, we add every platform effect the vote may have:
-                  if (req.body.condition == 'F')
-                    mydb.execute(
-                      'INSERT INTO `userproject` (`user`,`project`) VALUES (?,?)',
-                      [req.body.user, req.body.id],
-                      function(err) {
-                        if (err) {
-                          res.send(err)
-                        } else {
-                          mydb.execute(
-                            'UPDATE `project` SET `participant`=`participant`+1 where `project`.`id`=?',
-                            [req.body.id],
-                            function(err, updateduserproject) {
-                              if (err) {
-                                res.send(err)
-                              } else {
-                                res.send(updateduserproject)
-                              }
-                            }
-                          )
-                        }
-                      }
-                    )
-                }
-              }
-            )
-        }
+  let addvote = async function() {
+    let thingsdone = 'start '
+    try {
+      let query =
+        'INSERT INTO `projectvote` (`user`,`project`,`condition`) VALUES (?,?,?)'
+      let param = [req.body.user, req.body.id, req.body.condition]
+      myPool.execute(query, param)
+      thingsdone += 'adding vote '
+      if (cc.indexOf(req.body.condition) > -1) {
+        //meanwhile the relative project condition value is updated
+        query =
+          'UPDATE `project` SET `' +
+          req.body.condition +
+          '`=`' +
+          req.body.condition +
+          '`+1 where `project`.`id`=?'
+        param = [req.body.id]
+        myPool.execute(query, param)
       }
-    )
+      thingsdone += 'updating project condition '
+      if (req.body.condition == 'F') {
+        //meanwhile we add every platform effect the vote may have
+        query = 'INSERT INTO `userproject` (`user`,`project`) VALUES (?,?)'
+        param = [req.body.user, req.body.id]
+        myPool.execute(query, param)
+        thingsdone += 'freedom, updating userproject '
+        query =
+          'UPDATE `project` SET `participant`=`participant`+1 where `project`.`id`=?'
+        param = [req.body.id]
+        myPool.execute(query, param)
+        thingsdone += 'freedom, adding one participant '
+      }
+      res.send(thingsdone)
+    } catch (err) {
+      next(err)
+    }
   }
-  //removes the vote if the vote is already there
   let removevote = function(votetoremove) {
     mydb.execute(
       'INSERT INTO `removedpvote` (`user`,`project`,`condition`) VALUES (?,?,?)',

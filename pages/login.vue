@@ -298,7 +298,7 @@ export default {
         this.addedToast()
       }
     },
-    async imageUpload(id, empty) {
+    async imageUpload(id) {
       let formImageData = new FormData()
       formImageData.append('file', this.formImageFile)
       formImageData.append('id', id)

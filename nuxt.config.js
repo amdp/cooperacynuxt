@@ -24,6 +24,7 @@ module.exports = {
     continuous: true
   },
   env: {
+    URLHOME: process.env.URLHOME,
     DBURL: process.env.DBURL,
     PAYPALID: process.env.PAYPALID,
     RECAPTCHA: process.env.RECAPTCHA
