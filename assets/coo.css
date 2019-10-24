@@ -739,3 +739,7 @@ img.page-header img.news {
 img.about {
   width: 100%;
 }
+img,
+video {
+  max-width: 90vw;
+}
