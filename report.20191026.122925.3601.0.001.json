@@ -4,10 +4,10 @@
     "reportVersion": 1,
     "event": "Allocation failed - JavaScript heap out of memory",
     "trigger": "FatalError",
-    "filename": "report.20191024.082300.30398.0.001.json",
-    "dumpEventTime": "2019-10-24T08:23:00Z",
-    "dumpEventTimeStamp": "1571898180120",
-    "processId": 30398,
+    "filename": "report.20191026.122925.3601.0.001.json",
+    "dumpEventTime": "2019-10-26T12:29:25Z",
+    "dumpEventTimeStamp": "1572085765191",
+    "processId": 3601,
     "cwd": "/Users/amdp/G/Me/Desktop/coding/coo",
     "commandLine": [
       "node",
@@ -49,37 +49,37 @@
       {
         "model": "Intel(R) Core(TM) i5-7267U CPU @ 3.10GHz",
         "speed": 3100,
-        "user": 57986460,
+        "user": 7608570,
         "nice": 0,
-        "sys": 29799280,
-        "idle": 235022770,
+        "sys": 3630290,
+        "idle": 29740440,
         "irq": 0
       },
       {
         "model": "Intel(R) Core(TM) i5-7267U CPU @ 3.10GHz",
         "speed": 3100,
-        "user": 57986460,
+        "user": 7608570,
         "nice": 0,
-        "sys": 29799280,
-        "idle": 235022770,
+        "sys": 3630290,
+        "idle": 29740440,
         "irq": 0
       },
       {
         "model": "Intel(R) Core(TM) i5-7267U CPU @ 3.10GHz",
         "speed": 3100,
-        "user": 57986460,
+        "user": 7608570,
         "nice": 0,
-        "sys": 29799280,
-        "idle": 235022770,
+        "sys": 3630290,
+        "idle": 29740440,
         "irq": 0
       },
       {
         "model": "Intel(R) Core(TM) i5-7267U CPU @ 3.10GHz",
         "speed": 3100,
-        "user": 57986460,
+        "user": 7608570,
         "nice": 0,
-        "sys": 29799280,
-        "idle": 235022770,
+        "sys": 3630290,
+        "idle": 29740440,
         "irq": 0
       }
     ],
@@ -133,23 +133,55 @@
       "symbol": "v8::internal::Heap::AllocateRawWithRetryOrFail(int, v8::internal::AllocationType, v8::internal::AllocationAlignment) [/usr/local/bin/node]"
     },
     {
-      "pc": "0x000000010030dfb7",
-      "symbol": "v8::internal::Factory::NewFillerObject(int, bool, v8::internal::AllocationType) [/usr/local/bin/node]"
+      "pc": "0x0000000100318425",
+      "symbol": "v8::internal::Factory::NewMap(v8::internal::InstanceType, int, v8::internal::ElementsKind, int) [/usr/local/bin/node]"
     },
     {
-      "pc": "0x00000001005ca7e7",
-      "symbol": "v8::internal::Runtime_AllocateInYoungGeneration(int, unsigned long*, v8::internal::Isolate*) [/usr/local/bin/node]"
+      "pc": "0x00000001004d88ca",
+      "symbol": "v8::internal::Map::RawCopy(v8::internal::Isolate*, v8::internal::Handle<v8::internal::Map>, int, int) [/usr/local/bin/node]"
     },
     {
-      "pc": "0x00000001009104f9",
-      "symbol": "Builtins_CEntry_Return1_DontSaveFPRegs_ArgvOnStack_NoBuiltinExit [/usr/local/bin/node]"
+      "pc": "0x00000001004d9173",
+      "symbol": "v8::internal::Map::CopyDropDescriptors(v8::internal::Isolate*, v8::internal::Handle<v8::internal::Map>) [/usr/local/bin/node]"
+    },
+    {
+      "pc": "0x00000001004d54f3",
+      "symbol": "v8::internal::Map::CopyReplaceDescriptors(v8::internal::Isolate*, v8::internal::Handle<v8::internal::Map>, v8::internal::Handle<v8::internal::DescriptorArray>, v8::internal::Handle<v8::internal::LayoutDescriptor>, v8::internal::TransitionFlag, v8::internal::MaybeHandle<v8::internal::Name>, char const*, v8::internal::SimpleTransitionFlag) [/usr/local/bin/node]"
+    },
+    {
+      "pc": "0x00000001004d8f9b",
+      "symbol": "v8::internal::Map::Copy(v8::internal::Isolate*, v8::internal::Handle<v8::internal::Map>, char const*) [/usr/local/bin/node]"
+    },
+    {
+      "pc": "0x00000001004c73ef",
+      "symbol": "v8::internal::JSObject::OptimizeAsPrototype(v8::internal::Handle<v8::internal::JSObject>, bool) [/usr/local/bin/node]"
+    },
+    {
+      "pc": "0x00000001004d791d",
+      "symbol": "v8::internal::Map::SetPrototype(v8::internal::Isolate*, v8::internal::Handle<v8::internal::Map>, v8::internal::Handle<v8::internal::HeapObject>, bool) [/usr/local/bin/node]"
+    },
+    {
+      "pc": "0x00000001005abb1b",
+      "symbol": "v8::internal::Runtime_DefineClass(int, unsigned long*, v8::internal::Isolate*) [/usr/local/bin/node]"
+    },
+    {
+      "pc": "0x00000001009106f4",
+      "symbol": "Builtins_CEntry_Return1_DontSaveFPRegs_ArgvInRegister_NoBuiltinExit [/usr/local/bin/node]"
+    },
+    {
+      "pc": "0x0000000100963932",
+      "symbol": "Builtins_CallRuntimeHandler [/usr/local/bin/node]"
+    },
+    {
+      "pc": "0x0000000100885764",
+      "symbol": "Builtins_InterpreterEntryTrampoline [/usr/local/bin/node]"
     }
   ],
   "javascriptHeap": {
-    "totalMemory": 2154147840,
-    "totalCommittedMemory": 2150361200,
-    "usedMemory": 2139394688,
-    "availableMemory": 47825280,
+    "totalMemory": 2191876096,
+    "totalCommittedMemory": 2185400944,
+    "usedMemory": 1926131352,
+    "availableMemory": 41258224,
     "memoryLimit": 2197815296,
     "heapSpaces": {
       "read_only_space": {
@@ -160,38 +192,38 @@
         "available": 229872
       },
       "new_space": {
-        "memorySize": 4194304,
-        "committedMemory": 1265168,
-        "capacity": 2094656,
-        "used": 278048,
-        "available": 1816608
+        "memorySize": 33554432,
+        "committedMemory": 28052088,
+        "capacity": 16757248,
+        "used": 14928,
+        "available": 16742320
       },
       "old_space": {
-        "memorySize": 2082615296,
-        "committedMemory": 2082306080,
-        "capacity": 2075212752,
-        "used": 2075196064,
-        "available": 16688
+        "memorySize": 1787965440,
+        "committedMemory": 1787476552,
+        "capacity": 1595674016,
+        "used": 1594084432,
+        "available": 1589584
       },
       "code_space": {
-        "memorySize": 3047424,
-        "committedMemory": 2947200,
-        "capacity": 2583072,
-        "used": 2583072,
+        "memorySize": 4620288,
+        "committedMemory": 4450144,
+        "capacity": 4059616,
+        "used": 4059616,
         "available": 0
       },
       "map_space": {
-        "memorySize": 7606272,
-        "committedMemory": 7388080,
-        "capacity": 5193360,
-        "used": 5193360,
+        "memorySize": 305401856,
+        "committedMemory": 305317952,
+        "capacity": 268196960,
+        "used": 268196960,
         "available": 0
       },
       "large_object_space": {
-        "memorySize": 55218176,
-        "committedMemory": 55218176,
-        "capacity": 55011544,
-        "used": 55011544,
+        "memorySize": 58867712,
+        "committedMemory": 58867712,
+        "capacity": 58642816,
+        "used": 58642816,
         "available": 0
       },
       "code_large_object_space": {
@@ -204,20 +236,20 @@
       "new_large_object_space": {
         "memorySize": 0,
         "committedMemory": 0,
-        "capacity": 2094656,
+        "capacity": 16757248,
         "used": 0,
-        "available": 2094656
+        "available": 16757248
       }
     }
   },
   "resourceUsage": {
-    "userCpuSeconds": 124.888,
-    "kernelCpuSeconds": 7.09541,
-    "cpuConsumptionPercent": 0.712154,
-    "maxRss": 2260142653440,
+    "userCpuSeconds": 443.997,
+    "kernelCpuSeconds": 24.6738,
+    "cpuConsumptionPercent": 7.97738,
+    "maxRss": 2371228794880,
     "pageFaults": {
-      "IORequired": 4050,
-      "IONotRequired": 1465701
+      "IORequired": 54,
+      "IONotRequired": 4061465
     },
     "fsActivity": {
       "reads": 0,
@@ -234,7 +266,7 @@
     "npm_config_only": "",
     "npm_config_commit_hooks": "true",
     "npm_config_browser": "",
-    "npm_package_gitHead": "763d3c10a9469bb64530c64200eae1cac4020fb0",
+    "npm_package_gitHead": "36d9ac1f78989442473ed42c71f024af0c5dc7a8",
     "npm_package_devDependencies_prettier": "^1.18.2",
     "npm_config_also": "",
     "npm_package_scripts_lintfix": "eslint --fix --ext .js,.vue --ignore-path .gitignore .",
@@ -293,7 +325,7 @@
     "npm_config_logs_max": "10",
     "npm_config_always_auth": "",
     "npm_package_dependencies_vue_recaptcha": "^1.2.0",
-    "SSH_AUTH_SOCK": "/private/tmp/com.apple.launchd.Wv4JTHG9eb/Listeners",
+    "SSH_AUTH_SOCK": "/private/tmp/com.apple.launchd.a1nncJchSw/Listeners",
     "npm_package_devDependencies_eslint": "^6.5.1",
     "__CF_USER_TEXT_ENCODING": "0x1F5:0x0:0x0",
     "npm_execpath": "/usr/local/lib/node_modules/npm/bin/npm-cli.js",
@@ -329,7 +361,7 @@
     "PWD": "/Users/amdp/G/Me/Desktop/coding/coo",
     "npm_config_user": "",
     "npm_config_node_version": "12.7.0",
-    "DBUS_LAUNCHD_SESSION_BUS_SOCKET": "/private/tmp/com.apple.launchd.sNsRthbWDR/unix_domain_listener",
+    "DBUS_LAUNCHD_SESSION_BUS_SOCKET": "/private/tmp/com.apple.launchd.bggvpI1AmS/unix_domain_listener",
     "npm_lifecycle_event": "dev",
     "npm_config_save": "true",
     "npm_config_ignore_prepublish": "",
@@ -408,7 +440,7 @@
     "npm_config_production": "",
     "npm_package_dependencies_nuxt": "^2.10.0",
     "npm_package_dependencies_jsonwebtoken": "^8.5.1",
-    "DISPLAY": "/private/tmp/com.apple.launchd.HQs8OfBEwH/org.macosforge.xquartz:0",
+    "DISPLAY": "/private/tmp/com.apple.launchd.6IOihGpHs0/org.macosforge.xquartz:0",
     "npm_config_send_metrics": "",
     "npm_config_save_bundle": "",
     "npm_package_dependencies_express": "^4.17.1",
@@ -418,7 +450,6 @@
     "npm_config_init_author_name": "",
     "npm_config_git": "git",
     "npm_config_scope": "",
-    "SQLITE_EXEMPT_PATH_FROM_VNODE_GUARDS": "/Users/amdp/Library/WebKit/Databases",
     "npm_config_unsafe_perm": "true",
     "npm_config_tmp": "/var/folders/3j/2dr34w8d17l82bwftnx_ch2w0000gn/T",
     "npm_config_onload_script": "",

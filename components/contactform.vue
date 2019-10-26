@@ -136,9 +136,6 @@ export default {
   components: {
     VueRecaptcha
   },
-  mounted() {
-    console.log(' ' + JSON.stringify(this.envrecaptcha))
-  },
   methods: {
     submit() {
       this.$refs.recaptcha.execute()

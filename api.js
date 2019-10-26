@@ -12,15 +12,6 @@ const nodemailer = require('nodemailer')
 const jimp = require('jimp')
 const cc = ['D', 'U', 'F', 'I', 'C', 'T', 'E']
 const mysql = require('mysql2')
-const mydb = mysql.createConnection({
-  connectionLimit: 200,
-  host: 'localhost',
-  user: process.env.MYSQLUSER,
-  password: process.env.DBPASSWORD,
-  database: process.env.DBDB,
-  multipleStatements: true
-})
-
 const pool = mysql.createPool({
   host: 'localhost',
   user: process.env.MYSQLUSER,
@@ -30,8 +21,18 @@ const pool = mysql.createPool({
   connectionLimit: 10,
   queueLimit: 0
 })
+const mypool = pool.promise()
 
-const myPool = pool.promise()
+//error function triggered by next
+app.use(function(err, req, res, next) {
+  if (res.headersSent) {
+    return next(err)
+  }
+  res.status(500)
+  res.render('error', { error: err })
+  console.log(' ' + JSON.stringify(err))
+})
+
 /////// GET ///////
 
 app.get('/project', async function(req, res, next) {
@@ -47,7 +48,7 @@ app.get('/project', async function(req, res, next) {
       param.push(req.query.stage)
     }
 
-    const [project] = await myPool.execute(query, param)
+    const [project] = await mypool.execute(query, param)
     res.send(project)
   } catch (err) {
     next(err)
@@ -61,7 +62,7 @@ app.get('/comment', async function(req, res, next) {
       ' LEFT JOIN user ON comment.user = user.id' +
       ' WHERE comment.project = ? ORDER BY id DESC'
     let param = [req.query.projectid]
-    const [comment] = await myPool.execute(query, param)
+    const [comment] = await mypool.execute(query, param)
     res.send(comment)
   } catch (err) {
     next(err)
@@ -73,7 +74,7 @@ app.get('/userproject', async function(req, res, next) {
     let query =
       'SELECT * FROM `project` WHERE `id` IN (SELECT `project` FROM `userproject` WHERE `user`=?)'
     let param = [req.query.userid]
-    const [project] = await myPool.execute(query, param)
+    const [project] = await mypool.execute(query, param)
     res.send(project)
   } catch (err) {
     next(err)
@@ -92,7 +93,7 @@ app.get('/uservote', async function(req, res, next) {
       param = [req.query.userid, req.query.projectid]
     }
 
-    const [uservote] = await myPool.execute(query, param)
+    const [uservote] = await mypool.execute(query, param)
     res.send(uservote)
   } catch (err) {
     next(err)
@@ -118,7 +119,7 @@ app.get('/user', async function(req, res, next) {
     try {
       let query = 'SELECT * FROM `user` AS `user` WHERE `user`.`id` =  ?'
       let param = [id.id]
-      const [user] = await myPool.execute(query, param)
+      const [user] = await mypool.execute(query, param)
       res.send({ user: user[0] })
     } catch (err) {
       next(err)
@@ -133,7 +134,7 @@ app.get('/userlist', async function(req, res, next) {
       '`E`,`T`,`C`,`I`,`F`,`U`,`D`,`active`,`role`,' +
       '`remember_token`,`paymentdeadline`,`paypalagreementid`,`created`,`updated` FROM `user`'
     let param = []
-    const [userlist] = await myPool.execute(query, param)
+    const [userlist] = await mypool.execute(query, param)
     res.send(userlist)
   } catch (err) {
     next(err)
@@ -144,7 +145,7 @@ app.get('/category', async function(req, res, next) {
   try {
     let query = 'SELECT * FROM `category` WHERE `category`.`id`!= ?'
     let param = [0]
-    const [category] = await myPool.execute(query, param)
+    const [category] = await mypool.execute(query, param)
     res.send(category)
   } catch (err) {
     next(err)
@@ -155,7 +156,7 @@ app.get('/tag', async function(req, res, next) {
   try {
     let query = 'SELECT * FROM `tag` where `project`=?'
     let param = [req.query.projectid]
-    const [tag] = await myPool.execute(query, param)
+    const [tag] = await mypool.execute(query, param)
     res.send(tag)
   } catch (err) {
     next(err)
@@ -166,7 +167,7 @@ app.get('/place', async function(req, res, next) {
   try {
     let query = 'SELECT `id`, `country`, `name` FROM `place`'
     let param = []
-    const [place] = await myPool.execute(query, param)
+    const [place] = await mypool.execute(query, param)
     res.send(place)
   } catch (err) {
     next(err)
@@ -177,7 +178,7 @@ app.get('/country', async function(req, res, next) {
   try {
     let query = 'SELECT `id`, `name` FROM `country`'
     let param = []
-    const [country] = await myPool.execute(query, param)
+    const [country] = await mypool.execute(query, param)
     res.send(country)
   } catch (err) {
     next(err)
@@ -188,7 +189,7 @@ app.get('/news', async function(req, res, next) {
   try {
     let query = 'SELECT * FROM `news` ORDER BY `news`.`date` DESC'
     let param = []
-    const [news] = await myPool.execute(query, param)
+    const [news] = await mypool.execute(query, param)
     res.send(news)
   } catch (err) {
     next(err)
@@ -214,7 +215,7 @@ app.put('/user', async function(req, res, next) {
           req.body.password,
           req.body.id
         ]
-        const [user] = await myPool.execute(query, param)
+        const [user] = await mypool.execute(query, param)
         res.send('updated: ' + user)
       } catch (err) {
         next(err)
@@ -229,7 +230,7 @@ app.post('/login', async function(req, res, next) {
   try {
     let query = 'SELECT * FROM `user` WHERE `user`.`email`= ? LIMIT 1'
     let param = [req.body.email]
-    const [user] = await myPool.execute(query, param)
+    const [user] = await mypool.execute(query, param)
     logincheck(user[0])
   } catch (err) {
     next(err)
@@ -317,7 +318,7 @@ app.post('/checkpassword', async function(req, res, next) {
     let query =
       'SELECT * FROM `user` AS `user` WHERE `user`.`id` =  ? and `user`.`email` = ? LIMIT 1'
     let param = [req.body.id, req.body.email]
-    const [user] = await myPool.execute(query, param)
+    const [user] = await mypool.execute(query, param)
     checkpassword(user[0])
   } catch (err) {
     next(err)
@@ -335,7 +336,7 @@ app.post('/recoverpassword', async function(req, res, next) {
     try {
       let query = 'SELECT * FROM `user` WHERE `user`.`email`= ? LIMIT 1'
       let param = [req.body.email]
-      const [user] = await myPool.execute(query, param)
+      const [user] = await mypool.execute(query, param)
       recoverpassword(user[0])
     } catch (err) {
       next(err)
@@ -399,7 +400,7 @@ app.post('/recoverpassword', async function(req, res, next) {
       let newhashedpassword = await bcrypt.hash(newpassword, 10)
       let query = 'UPDATE `user` SET `password`=? WHERE `id`=?'
       let param = [newhashedpassword, id]
-      await myPool.execute(query, param)
+      await mypool.execute(query, param)
       res.send('updated')
     } catch (err) {
       next(err)
@@ -412,7 +413,7 @@ app.post('/place', async function(req, res, next) {
     let query =
       'SELECT * FROM `place` WHERE `place`.`country`=? AND `place`.`name`=?  LIMIT 1'
     let param = [req.body.country, req.body.name]
-    const [place] = await myPool.execute(query, param)
+    const [place] = await mypool.execute(query, param)
     newplace(place[0])
   } catch (err) {
     next(err)
@@ -424,7 +425,7 @@ app.post('/place', async function(req, res, next) {
       try {
         let query = 'INSERT INTO `place` (`country`,`name`) VALUES (?,?)'
         let param = [req.body.country, req.body.name]
-        const [place] = await myPool.execute(query, param)
+        const [place] = await mypool.execute(query, param)
         res.send({ id: place.insertId })
       } catch (err) {
         next(err)
@@ -452,7 +453,7 @@ app.post('/project', async function(req, res, next) {
         req.body.hudget,
         req.body.id
       ]
-      await myPool.execute(query, param)
+      await mypool.execute(query, param)
       res.send(req.body.id)
     } catch (err) {
       next(err)
@@ -461,7 +462,7 @@ app.post('/project', async function(req, res, next) {
     try {
       let query = 'SELECT * FROM `project` WHERE `project`.`name`= ? LIMIT 1'
       let param = [req.body.name]
-      const [project] = await myPool.execute(query, param)
+      const [project] = await mypool.execute(query, param)
       if (project[0]) {
         res.send('exists')
       } else {
@@ -489,7 +490,7 @@ app.post('/project', async function(req, res, next) {
         req.body.budget,
         req.body.hudget
       ]
-      const [project] = await myPool.execute(query, param)
+      const [project] = await mypool.execute(query, param)
       res.send({ id: project.insertId })
     } catch (err) {
       next(err)
@@ -509,14 +510,14 @@ app.post('/comment', async function(req, res, next) {
         req.body.content,
         req.body.id
       ]
-      await myPool.execute(query, param)
+      await mypool.execute(query, param)
     } catch (err) {
       next(err)
     }
     try {
       let query = 'SELECT * FROM `comment` WHERE `id` = ?'
       let param = [req.body.id]
-      let [comment] = await myPool.execute(query, param)
+      let [comment] = await mypool.execute(query, param)
       res.send(comment[0])
     } catch (err) {
       next(err)
@@ -531,7 +532,7 @@ app.post('/comment', async function(req, res, next) {
         req.body.user,
         req.body.content
       ]
-      const [comment] = await myPool.execute(query, param)
+      const [comment] = await mypool.execute(query, param)
       returncomment(comment)
     } catch (err) {
       next(err)
@@ -541,7 +542,7 @@ app.post('/comment', async function(req, res, next) {
     try {
       let query = 'SELECT * FROM `comment` WHERE `id` = ?'
       let param = [returned.insertId]
-      let [comment] = await myPool.execute(query, param)
+      let [comment] = await mypool.execute(query, param)
       res.send(comment[0])
     } catch (err) {
       next(err)
@@ -553,7 +554,7 @@ app.post('/user', async function(req, res, next) {
   try {
     let query = 'SELECT * FROM `user` WHERE `user`.`email`= ? LIMIT 1'
     let param = [req.body.email]
-    let [user] = await myPool.execute(query, param)
+    let [user] = await mypool.execute(query, param)
     newuser(user[0])
   } catch (err) {
     next(err)
@@ -573,7 +574,7 @@ app.post('/user', async function(req, res, next) {
           hashed,
           req.body.paypalagreementid
         ]
-        let [user] = await myPool.execute(query, param)
+        let [user] = await mypool.execute(query, param)
         res.send({ id: user[0].insertId })
       } catch (err) {
         next(err)
@@ -587,7 +588,7 @@ app.post('/tag', async function(req, res, next) {
     try {
       let query = 'INSERT INTO `tag` (`project`,`name`) VALUES (?,?)'
       let param = [req.body.project, req.body.name]
-      let [tag] = await myPool.execute(query, param)
+      let [tag] = await mypool.execute(query, param)
       res.send(tag)
     } catch (err) {
       next(err)
@@ -596,7 +597,7 @@ app.post('/tag', async function(req, res, next) {
     try {
       let query = 'DELETE FROM `tag` where `project` = ? and `name` = ?'
       let param = [req.body.project, req.body.name]
-      let [tag] = await myPool.execute(query, param)
+      let [tag] = await mypool.execute(query, param)
       res.send(tag)
     } catch (err) {
       next(err)
@@ -698,7 +699,7 @@ app.post('/cci', async function(req, res, next) {
   try {
     let query = 'SELECT * FROM `CCI' + req.body.cciyear + '`'
     let param = []
-    let [CCI] = await myPool.execute(query, param)
+    let [CCI] = await mypool.execute(query, param)
     res.send(CCI)
   } catch (err) {
     next(err)
@@ -708,7 +709,7 @@ app.get('/map', async function(req, res, next) {
   try {
     let query = 'SELECT * FROM `CCI2017`'
     let param = []
-    let [CCI] = await myPool.execute(query, param)
+    let [CCI] = await mypool.execute(query, param)
     let ccimakeup = {}
     for (let i = 0; i < CCI.length; i++) {
       let country = CCI[i]['country']
@@ -721,298 +722,238 @@ app.get('/map', async function(req, res, next) {
 })
 
 app.post('/vote', async function(req, res, next) {
-  if (req.body.proptype == 'project') {
-    try {
-      let query =
-        'SELECT * from `projectvote` where `user`=? AND `condition`=? AND `project`=?'
-      let param = [req.body.user, req.body.condition, req.body.id]
-      let [vote] = await myPool.execute(query, param)
-      //if a vote exists, it is removed
-      if (vote) {
-        removevote(vote)
-      } else {
-        // if not, it is added
-        addvote()
-      }
-    } catch (err) {
-      next(err)
+  try {
+    let query =
+      'SELECT * from `' +
+      req.body.proptype +
+      'vote` where `user`=? AND `condition`=? AND `' +
+      req.body.proptype +
+      '`=?'
+    let param = [req.body.user, req.body.condition, req.body.id]
+    let [vote] = await mypool.execute(query, param)
+    //if a vote exists, it is removed
+    if (vote[0]) {
+      await removevote(vote[0])
+    } else {
+      // if not, it is added
+      await addvote()
     }
+  } catch (err) {
+    next(err)
   }
-  let addvote = async function() {
-    let thingsdone = 'start '
+  res.send('OK')
+
+  async function addvote() {
     try {
       let query =
         'INSERT INTO `projectvote` (`user`,`project`,`condition`) VALUES (?,?,?)'
       let param = [req.body.user, req.body.id, req.body.condition]
-      myPool.execute(query, param)
-      thingsdone += 'adding vote '
-      if (cc.indexOf(req.body.condition) > -1) {
-        //meanwhile the relative project condition value is updated
+      if (req.body.proptype == 'comment') {
         query =
-          'UPDATE `project` SET `' +
-          req.body.condition +
-          '`=`' +
-          req.body.condition +
-          '`+1 where `project`.`id`=?'
-        param = [req.body.id]
-        myPool.execute(query, param)
+          'INSERT INTO `commentvote` (`user`,`comment`,`condition`,`project`) VALUES (?,?,?,?)'
+        param.push(req.body.projectid)
       }
-      thingsdone += 'updating project condition '
-      if (req.body.condition == 'F') {
-        //meanwhile we add every platform effect the vote may have
-        query = 'INSERT INTO `userproject` (`user`,`project`) VALUES (?,?)'
-        param = [req.body.user, req.body.id]
-        myPool.execute(query, param)
-        thingsdone += 'freedom, updating userproject '
-        query =
-          'UPDATE `project` SET `participant`=`participant`+1 where `project`.`id`=?'
-        param = [req.body.id]
-        myPool.execute(query, param)
-        thingsdone += 'freedom, adding one participant '
-      }
-      res.send(thingsdone)
+      mypool.execute(query, param)
     } catch (err) {
       next(err)
     }
-  }
-  let removevote = function(votetoremove) {
-    mydb.execute(
-      'INSERT INTO `removedpvote` (`user`,`project`,`condition`) VALUES (?,?,?)',
-      [req.body.user, req.body.id, req.body.condition],
-      function(err) {
-        if (err) {
-          res.send(err)
-        } else {
-          if (cc.indexOf(req.body.condition) > -1)
-            //then the relative project condition value is updated
-            mydb.execute(
-              'UPDATE `project` SET `' +
-                req.body.condition +
-                '`=`' +
-                req.body.condition +
-                '`-1 where `project`.`id`=?',
-              [req.body.id],
-              function(err) {
-                if (err) {
-                  res.send(err)
-                } else {
-                  //when all is safe, the old vote is removed:
-                  mydb.execute(
-                    'DELETE FROM `projectvote` where `id` = ?',
-                    [votetoremove.id],
-                    function(err) {
-                      if (err) {
-                        res.send(err)
-                      } else {
-                        //here, we revoke every platform effect the vote may have:
-                        if (req.body.condition == 'F')
-                          mydb.execute(
-                            'DELETE FROM `userproject` where `user` = ? and `project` = ?',
-                            [req.body.user, req.body.id],
-                            function(err) {
-                              if (err) {
-                                res.send(err)
-                              } else {
-                                mydb.execute(
-                                  'UPDATE `project` SET `participant`=`participant`-1 where `project`.`id`=?',
-                                  [req.body.id],
-                                  function(err) {
-                                    if (err) {
-                                      res.send(err)
-                                    } else {
-                                      res.send('OK')
-                                    }
-                                  }
-                                )
-                              }
-                            }
-                          )
-                      }
-                    }
-                  )
-                }
-              }
-            )
+
+    //meanwhile the relative project-comment condition value is updated
+    try {
+      let query =
+        'UPDATE `' +
+        req.body.proptype +
+        '` SET `' +
+        req.body.condition +
+        '`=`' +
+        req.body.condition +
+        '`+1 where `' +
+        req.body.proptype +
+        '`.`id`=?'
+      let param = [req.body.id]
+      await mypool.execute(query, param)
+    } catch (err) {
+      next(err)
+    }
+
+    if (req.body.proptype == 'comment') {
+      //only if it is a comment vote, the user colorbar is updated
+      if (req.body.user != req.body.author) {
+        try {
+          let query =
+            'UPDATE `user` SET `' +
+            req.body.condition +
+            '`=`' +
+            req.body.condition +
+            '`+1 where `user`.`id`=?'
+          let param = [req.body.author]
+          mypool.execute(query, param)
+        } catch (err) {
+          next(err)
         }
       }
-    )
+    }
+    if (req.body.condition == 'F' && req.body.proptype == 'project') {
+      //meanwhile we add every platform effect the vote may have
+      try {
+        let query = 'INSERT INTO `userproject` (`user`,`project`) VALUES (?,?)'
+        let param = [req.body.user, req.body.id]
+        mypool.execute(query, param)
+      } catch (err) {
+        next(err)
+      }
+      try {
+        let query =
+          'UPDATE `project` SET `participant`=`participant`+1 where `project`.`id`=?'
+        let param = [req.body.id]
+        mypool.execute(query, param)
+      } catch (err) {
+        next(err)
+      }
+    }
   }
-  if (req.body.proptype == 'comment') {
-    mydb.execute(
-      //the presence of an existing comment vote is checked
-      'SELECT * from `commentvote` where `user`=? AND `condition`=? AND `comment`=?',
-      [req.body.user, req.body.condition, req.body.id],
-      function(err, [vote]) {
-        if (err) {
-          res.send(err)
-        } else {
-          //if a vote exists, it is copied into the removed votetable
-          if (vote) {
-            mydb.execute(
-              'INSERT INTO `removedcvote` (`user`,`comment`,`condition`,`project`) VALUES (?,?,?,?)',
-              [
-                req.body.user,
-                req.body.id,
-                req.body.condition,
-                req.body.projectid
-              ],
-              function(err) {
-                if (err) {
-                  res.send(err)
-                } else {
-                  if (cc.indexOf(req.body.condition) > -1)
-                    //then the relative comment or project is updated
-                    mydb.execute(
-                      'UPDATE `comment` SET `' +
-                        req.body.condition +
-                        '`=`' +
-                        req.body.condition +
-                        '`-1 where `comment`.`id`=?',
-                      [req.body.id],
-                      function(err) {
-                        if (err) {
-                          res.send(err)
-                        } else {
-                          //when all is safe, the old vote is removed:
-                          mydb.execute(
-                            'DELETE FROM `commentvote` where `id` = ?',
-                            [vote.id],
-                            function(err) {
-                              if (err) {
-                                res.send(err)
-                              } else {
-                                if (
-                                  cc.indexOf(req.body.condition) > -1 &&
-                                  req.body.user != req.body.author
-                                ) {
-                                  //finally, we update the user colorbar
-                                  mydb.execute(
-                                    'UPDATE `user` SET `' +
-                                      req.body.condition +
-                                      '`=`' +
-                                      req.body.condition +
-                                      '`-1 where `user`.`id`=?',
-                                    [req.body.author],
-                                    function(err) {
-                                      if (err) {
-                                        res.send(err)
-                                      } else {
-                                        res.send('OK')
-                                      }
-                                    }
-                                  )
-                                } else {
-                                  res.send('OK')
-                                }
-                              }
-                            }
-                          )
-                        }
-                      }
-                    )
-                }
-              }
-            )
-          } else {
-            mydb.execute(
-              'INSERT INTO `commentvote` (`user`,`comment`,`condition`,`project`) VALUES (?,?,?,?)', //if there is no vote
-              [
-                req.body.user,
-                req.body.id,
-                req.body.condition,
-                req.body.projectid
-              ], //a new vote is added into the database
-              function(err) {
-                if (err) {
-                  res.send(err)
-                } else {
-                  if (cc.indexOf(req.body.condition) > -1)
-                    //then the relative comment condition value is updated
-                    mydb.execute(
-                      'UPDATE `comment` SET `' +
-                        req.body.condition +
-                        '`=`' +
-                        req.body.condition +
-                        '`+1 where `comment`.`id`=?',
-                      [req.body.id],
-                      function(err, updatedcomment) {
-                        if (err) {
-                          res.send(err)
-                        } else {
-                          if (
-                            cc.indexOf(req.body.condition) > -1 &&
-                            req.body.user != req.body.author
-                          ) {
-                            //finally, we update the user colorbar
-                            mydb.execute(
-                              'UPDATE `user` SET `' +
-                                req.body.condition +
-                                '`=`' +
-                                req.body.condition +
-                                '`+1 where `user`.`id`=?',
-                              [req.body.author],
-                              function(err) {
-                                if (err) {
-                                  res.send(err)
-                                } else {
-                                  res.send(updatedcomment)
-                                }
-                              }
-                            )
-                          } else {
-                            res.send(updatedcomment)
-                          }
-                        }
-                      }
-                    )
-                }
-              }
-            )
-          }
+  async function removevote(votetoremove) {
+    try {
+      //the vote is archived (we await for it)
+      let query =
+        'INSERT INTO `removedpvote` (`user`,`project`,`condition`) VALUES (?,?,?)'
+      let param = [req.body.user, req.body.id, req.body.condition]
+      if (req.body.proptype == 'comment') {
+        query =
+          'INSERT INTO `removedcvote` (`user`,`comment`,`condition`,`project`) VALUES (?,?,?,?)'
+        param.push(req.body.projectid)
+      }
+      await mypool.execute(query, param)
+    } catch (err) {
+      next(err)
+    }
+    //then the relative project/comment condition value is updated
+    try {
+      let query =
+        'UPDATE `' +
+        req.body.proptype +
+        '` SET `' +
+        req.body.condition +
+        '`=`' +
+        req.body.condition +
+        '`-1 where `' +
+        req.body.proptype +
+        '`.`id`=?'
+      let param = [req.body.id]
+      mypool.execute(query, param)
+    } catch (err) {
+      next(err)
+    }
+    //then the old vote is removed:
+    try {
+      let query = 'DELETE FROM `' + req.body.proptype + 'vote` where `id` = ?'
+      let param = [votetoremove.id]
+      mypool.execute(query, param)
+    } catch (err) {
+      next(err)
+    }
+    //finally, we revoke every platform effect the vote may have had:
+    if (req.body.proptype == 'comment') {
+      if (req.body.user != req.body.author) {
+        try {
+          let query =
+            'UPDATE `user` SET `' +
+            req.body.condition +
+            '`=`' +
+            req.body.condition +
+            '`-1 where `user`.`id`=?'
+          let param = [req.body.author]
+          mypool.execute(query, param)
+        } catch (err) {
+          next(err)
         }
       }
-    )
+    }
+    if (req.body.condition == 'F' && req.body.proptype == 'project') {
+      try {
+        let query =
+          'DELETE FROM `userproject` where `user` = ? and `project` = ?'
+        let param = [req.body.user, req.body.id]
+        mypool.execute(query, param)
+      } catch (err) {
+        next(err)
+      }
+      try {
+        let query =
+          'UPDATE `project` SET `participant`=`participant`-1 where `project`.`id`=?'
+        let param = [req.body.id]
+        mypool.execute(query, param)
+      } catch (err) {
+        next(err)
+      }
+    }
   }
 })
 
 //admin
 
-app.post('/resetcpvoting', (req, res) => {
-  mydb.execute('SELECT `id` from `project`', [], function(err, id) {
-    {
-      if (err) {
-        res.send(err)
+app.post('/resetvoting', async function(req, res, next) {
+  var proptype = ['project', 'comment', 'user']
+  for (let i = 0; i < proptype.length; i++) {
+    try {
+      let query = 'SELECT `id` from `' + proptype[i] + '`'
+      let [id] = await mypool.execute(query, [])
+      if (proptype[i] == 'user') {
+        await zero(id)
       } else {
-        pcycleid(id)
+        await cycleid(id, proptype[i])
       }
-    }
-  })
-  function pcycleid(id) {
-    for (let j = 0; j < id.length; j++) {
-      var values = {}
-      cc.forEach(function(c) {
-        mydb.execute(
-          'select count(`condition`) as count from `projectvote` where `project`=? AND `condition`=?',
-          [id[j].id, c],
-          function(err, [result]) {
-            if (err) {
-              res.send(err)
-            } else {
-              values[c] = result.count
-              if (values.E != undefined) {
-                resetpvote(id[j].id, values)
-                values = {}
-              }
-            }
-          }
-        )
-      })
+    } catch (err) {
+      next(err)
     }
   }
-  function resetpvote(id, values) {
-    mydb.execute(
-      'update `project` set `D`=?,`U`=?,`F`=?,`I`=?,`C`=?,`T`=?,`E`=? where `project`.`id` = ?',
-      [
+  async function cycleid(id, proptype, userid) {
+    // with for and variable j we go through all id's
+    for (let j = 0; j < id.length; j++) {
+      let values = {} //for every id we collect 7 c values
+      for (let c = 0; c < cc.length; c++) {
+        try {
+          let query =
+            'select count(`condition`) as count from `' +
+            proptype +
+            'vote` where `' +
+            proptype +
+            '`=? AND `condition`=?'
+          let param = [id[j].id, cc[c]]
+          if (userid) {
+            query += ' AND `user`!=?'
+            param.push(userid)
+          }
+          let [result] = await mypool.execute(query, param)
+          values[cc[c]] = result[0].count
+          if (values.E != undefined) {
+            if (userid) {
+              resetvote(userid, values, 'user')
+            } else {
+              resetvote(id[j].id, values, proptype)
+            }
+            //values = {}
+          }
+        } catch (err) {
+          next(err)
+        }
+      }
+    }
+  }
+  async function resetvote(id, values, proptype) {
+    try {
+      let query =
+        'update `' +
+        proptype +
+        '` set `D`=?,`U`=?,`F`=?,`I`=?,`C`=?,`T`=?,`E`=? where `' +
+        proptype +
+        '`.`id` = ?'
+      if (proptype == 'user') {
+        // this repeatedly adds the values from the comments to the user colorbar
+        query =
+          'update `user` set `D`=`D`+?,`U`=`U`+?,`F`=`F`+?,`I`=`I`+?,`C`=`C`+?,`T`=`T`+?,`E`=`E`+? where `user`.`id` = ?'
+      }
+      let param = [
         values.D,
         values.U,
         values.F,
@@ -1021,160 +962,39 @@ app.post('/resetcpvoting', (req, res) => {
         values.T,
         values.E,
         id
-      ],
-      function(err, result) {
-        if (err) {
-          res.send(err)
-        } else {
-          console.log(' ' + JSON.stringify(result))
-        }
-      }
-    )
+      ]
+      await mypool.execute(query, param)
+    } catch (err) {
+      next(err)
+    }
   }
 
-  mydb.execute('SELECT `id` from `comment`', [], function(err, id) {
-    {
-      if (err) {
-        res.send(err)
-      } else {
-        ccycleid(id)
-      }
-    }
-  })
-  function ccycleid(id) {
-    for (let j = 0; j < id.length; j++) {
-      var values = {}
-      cc.forEach(function(c) {
-        mydb.execute(
-          'select count(`condition`) as count from `commentvote` where `comment`=? AND `condition`=?',
-          [id[j].id, c],
-          function(err, [result]) {
-            if (err) {
-              res.send(err)
-            } else {
-              values[c] = result.count
-              if (values.E != undefined) {
-                resetcvote(id[j].id, values)
-                values = {}
-              }
-            }
-          }
+  //we reset all users conditions values to 0:
+  async function zero(id) {
+    try {
+      for (let j = 0; j < id.length; j++) {
+        await mypool.execute(
+          'update `user` set `D`=?,`U`=?,`F`=?,`I`=?,`C`=?,`T`=?,`E`=? where `user`.`id` = ?',
+          [0, 0, 0, 0, 0, 0, 0, id[j].id]
         )
-      })
-    }
-  }
-  function resetcvote(id, values) {
-    mydb.execute(
-      'update `comment` set `D`=?,`U`=?,`F`=?,`I`=?,`C`=?,`T`=?,`E`=? where `comment`.`id` = ?',
-      [
-        values.D,
-        values.U,
-        values.F,
-        values.I,
-        values.C,
-        values.T,
-        values.E,
-        id
-      ],
-      function(err, result) {
-        if (err) {
-          res.send(err)
-        } else {
-          console.log(' ' + JSON.stringify(result))
-        }
+        findcomment(id[j].id)
       }
-    )
-  }
-})
-
-app.post('/resetuvoting', (req, res) => {
-  //user calculation algorithm /it should become adaptive, considering how much the user votes
-  //first we collect all the users id:
-  mydb.execute('SELECT `id` from `user`', [], function(err, id) {
-    {
-      if (err) {
-        res.send(err)
-      } else {
-        zero(id)
-      }
-    }
-  })
-  //we reset all their conditions values to 0:
-  function zero(id) {
-    for (let j = 0; j < id.length; j++) {
-      mydb.execute(
-        'update `user` set `D`=?,`U`=?,`F`=?,`I`=?,`C`=?,`T`=?,`E`=? where `user`.`id` = ?',
-        [0, 0, 0, 0, 0, 0, 0, id[j].id],
-        function(err) {
-          if (err) {
-            res.send(err)
-          } else {
-            findcomment(id[j].id)
-          }
-        }
-      )
+    } catch (err) {
+      next(err)
     }
   }
   //then we find all the comments made for each user id:
-  function findcomment(id) {
-    mydb.execute('select `id` from `comment` where `user`=?', [id], function(
-      err,
-      result
-    ) {
-      if (err) {
-        res.send(err)
-      } else {
-        console.log(' ' + JSON.stringify(result))
-        ucycleid(result, id)
+  async function findcomment(id) {
+    try {
+      let query = 'select `id` from `comment` where `user`=?'
+      let param = [id]
+      let [result] = await mypool.execute(query, param)
+      if (result.length > 0) {
+        cycleid(result, 'comment', id)
       }
-    })
-  }
-  //then from all the comments retrieved, we must get the commentvotes:
-  function ucycleid(id, userid) {
-    for (let j = 0; j < id.length; j++) {
-      var values = {}
-      cc.forEach(function(c) {
-        mydb.execute(
-          'select count(`condition`) as count from `commentvote` where `comment`=? AND `condition`=? AND `user`!=?',
-          [id[j].id, c, userid],
-          function(err, [result]) {
-            if (err) {
-              res.send(err)
-            } else {
-              values[c] = result.count
-              if (values.E != undefined) {
-                console.log('count ' + JSON.stringify(result))
-                resetuvote(userid, values)
-                values = {}
-              }
-            }
-          }
-        )
-      })
+    } catch (err) {
+      next(err)
     }
-  }
-  //finally we repeatedly add the counted votes to the users conditions:
-  function resetuvote(userid, values) {
-    mydb.execute(
-      'update `user` set `D`=`D`+?,`U`=`U`+?,`F`=`F`+?,`I`=`I`+?,`C`=`C`+?,`T`=`T`+?,`E`=`E`+? where `user`.`id` = ?',
-      [
-        values.D,
-        values.U,
-        values.F,
-        values.I,
-        values.C,
-        values.T,
-        values.E,
-        userid
-      ],
-      function(err, result) {
-        if (err) {
-          res.send(err)
-        } else {
-          console.log('' + JSON.stringify(result))
-        }
-      }
-    )
   }
   res.send('OK')
 })
