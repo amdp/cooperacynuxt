@@ -102,6 +102,11 @@
 <script>
 export default {
   middleware: ['auth'],
+  head() {
+    return {
+      title: 'Cooperacy - Edit User Information'
+    }
+  },
   data() {
     return {
       formName: this.$auth.user.name,

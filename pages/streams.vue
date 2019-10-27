@@ -27,8 +27,17 @@
 
     <p class="base">
       If you are interested as a researcher in one of these fields, please feel
-      free to <a class="ae" href="/register">join</a> or
-      <a class="ai" href="/contact">contact</a> us.
+      free to <nuxt-link to="/login" class="ae">join</nuxt-link> or
+      <nuxt-link to="/contact" class="ai">contact</nuxt-link> us.
     </p>
   </div>
 </template>
+<script>
+export default {
+  head() {
+    return {
+      title: 'Cooperacy - Research Streams'
+    }
+  }
+}
+</script>

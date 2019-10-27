@@ -19,16 +19,8 @@
           Members List
         </nuxt-link>
         <br />
-        <span class="au" @click="resetuvoting" v-if="this.$auth.user.role == 1">
-          Admin tool: Reset User Voting and Colorbar
-        </span>
-        <br />
-        <span
-          class="au"
-          @click="resetcpvoting"
-          v-if="this.$auth.user.role == 1"
-        >
-          Admin tool: Reset Projects and Comment Voting
+        <span class="au" @click="resetvoting" v-if="this.$auth.user.role == 1">
+          Admin tool: Reset all Voting and Colorbar
         </span>
         <br /><br />
         <span class="au" @click="$auth.logout()">LOGOUT</span>
@@ -68,6 +60,11 @@
 import projectlist from '@/components/projectlist'
 export default {
   middleware: ['auth'],
+  head() {
+    return {
+      title: 'Cooperacy' + this.$auth.user.name + ' ' + this.$auth.user.surname
+    }
+  },
   components: { projectlist: projectlist },
   mounted() {
     var cc = ['D', 'U', 'F', 'I', 'C', 'T', 'E']
@@ -124,11 +121,8 @@ export default {
     this.$store.commit('setUserBar', res)
   },
   methods: {
-    async resetuvoting() {
-      await this.$store.dispatch('resetuVotingAction')
-    },
-    async resetcpvoting() {
-      await this.$store.dispatch('resetcpVotingAction')
+    async resetvoting() {
+      await this.$store.dispatch('resetVotingAction')
     }
   },
   async fetch({ store, params }) {

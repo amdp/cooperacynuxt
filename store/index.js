@@ -163,17 +163,6 @@ export const actions = {
     await context.dispatch('getUservoteAction', gouser)
     context.commit('setComment', data)
   },
-  getUservoteAction: async function(context, payload) {
-    // this action GETS THE USER VOTE,  addVoteAction EDITS THE VOTE
-    let { data } = await this.$axios.get(process.env.DBURL + '/uservote', {
-      params: payload
-    })
-    let go = { body: data, proptype: payload.proptype }
-    if (payload.where) {
-      go.where = payload.where
-    }
-    context.commit('setUservote', go)
-  },
   getTagAction: async function(context, payload) {
     let { data } = await this.$axios.get(process.env.DBURL + '/tag', {
       params: payload
@@ -183,10 +172,6 @@ export const actions = {
   getCategoryAction: async function(context) {
     let { data } = await this.$axios.get(process.env.DBURL + '/category')
     context.commit('setCategory', data)
-  },
-  addVoteAction: async function(context, payload) {
-    let { data } = await this.$axios.post(process.env.DBURL + '/vote', payload)
-    return data
   },
   getNewsAction: async function(context) {
     let { data } = await this.$axios.get(process.env.DBURL + '/news')
@@ -282,21 +267,30 @@ export const actions = {
     return data
   },
   recoverPasswordAction: async function(context, payload) {
-    console.log(' ' + JSON.stringify(payload))
     let { data } = await this.$axios.post(
       process.env.DBURL + '/recoverpassword',
       payload
     )
     return data
   },
-
-  //Admin stuff here: be careful
-  resetcpVotingAction: async function() {
-    await this.$axios.post(process.env.DBURL + '/resetcpvoting')
-    return 'OK'
+  getUservoteAction: async function(context, payload) {
+    // this action GETS THE USER VOTE INFO,  addVoteAction IS THE REAL VOTING ACTION-FUNCTION
+    let { data } = await this.$axios.get(process.env.DBURL + '/uservote', {
+      params: payload
+    })
+    let go = { body: data, proptype: payload.proptype }
+    if (payload.where) {
+      go.where = payload.where
+    }
+    context.commit('setUservote', go)
   },
-  resetuVotingAction: async function() {
-    await this.$axios.post(process.env.DBURL + '/resetuvoting')
+  addVoteAction: async function(context, payload) {
+    let { data } = await this.$axios.post(process.env.DBURL + '/vote', payload)
+    return data
+  },
+  //Admin stuff here: be careful
+  resetVotingAction: async function() {
+    await this.$axios.post(process.env.DBURL + '/resetvoting')
     return 'OK'
   }
 }

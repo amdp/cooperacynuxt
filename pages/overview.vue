@@ -7,10 +7,10 @@
     <p class="subheading freedom center">CAN WE MEASURE COOPERATION?</p>
     <p class="base">
       Cooperacy Overview is a methodology that allows to measure the conditions
-      of <a class="ae" href="/cooperation">Cooperation</a> in your organisation
+      of <nuxt-link to="/cooperation" class="ae">Cooperation</nuxt-link> in your organisation
       in order to obtain a complete overview of your social ecosystem. This
       would allow you to have a deeper
-      <a class="au" href="/cooperation#understanding">understanding</a> of your
+      <nuxt-link to="/cooperation#understanding" class="au">understanding</nuxt-link> of your
       human resources interactions and how they could be improved in cooperation
       and ecosystemic terms.
     </p>
@@ -19,12 +19,12 @@
     <p class="subheading freedom center">CREATE YOUR OWN ORGANISATION INDEX</p>
     <p class="base">
       What could be the measure of
-      <a class="at" href="/cooperation#trust">Trust</a> in your organization?
+      <nuxt-link to="/cooperation#trust" class="at">Trust</nuxt-link> in your organization?
       What could measure the
-      <a class="af" href="/cooperation#freedom">Freedom</a> to innovate amongst
+      <nuxt-link to="/cooperation#freedom" class="af">Freedom</nuxt-link> to innovate amongst
       your people? What about your organisation
-      <a class="ai" href="/cooperation#transparency">Transparency</a>? These and
-      other kinds of <a class="au" href="/cci">indexes</a> may be identified in
+      <nuxt-link to="/cooperation#transparency" class="ai">Transparency</nuxt-link>? These and
+      other kinds of <nuxt-link to="/cci" class="au">indexes</nuxt-link> may be identified in
       your social ecosystem in order to overview what changes could drive to a
       more balanced and growth-oriented performance.
     </p>
@@ -35,21 +35,30 @@
       Once the Overview is completed, identifying the possible interventions
       becomes an easier task. Nevertheless, in order to apply the required
       changes, it is very important to respect the ecosystemic
-      <a class="ac" href="/cooperation#care">relations</a> in order not to break
+      <nuxt-link to="/cooperation#care" class="ac">relations</nuxt-link> in order not to break
       their balances. The final step in the Cooperacy Overview methodology is
       therefore to schedule gradual transformations that may finally result in
       an organic evolution able to foster, together with the desired growth,
       mutual enjoyment in the human resources involved. The transformation
       proposed follow the Cooperacy Group's
-      <a class="au" href="/journey">Journey</a> methodology.<br /><br />
+      <nuxt-link to="/journey" class="au">Journey</nuxt-link> methodology.<br /><br />
 
       If you're instead interested in allowing your organisation to have a
-      deeper <a class="au" href="/cooperation#understanding">knowledge</a> about
-      Cooperation Science, <a class="ai" href="/contact">contact us</a> in order
-      to organise a <a class="af" href="/workshops">workshop</a> in your
+      deeper <nuxt-link to="/cooperation#understanding" class="au">knowledge</nuxt-link> about
+      Cooperation Science, <nuxt-link to="/contact" class="ai">contact us</nuxt-link> in order
+      to organise a <nuxt-link to="/workshops" class="af">workshop</nuxt-link> in your
       headquarters or offices.
     </p>
     <br />
     <br />
   </div>
 </template>
+<script>
+export default {
+  head() {
+    return {
+      title: 'Cooperacy - Cooperation Overview'
+    }
+  }
+}
+</script>

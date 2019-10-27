@@ -157,7 +157,7 @@ export default {
   middleware: ['auth'],
   head() {
     return {
-      title: 'Join or Login',
+      title: 'Cooperacy - Login',
       script: [
         {
           src:
@@ -183,13 +183,13 @@ export default {
   },
   data() {
     return {
-      loginEmail: '',
-      loginPassword: '',
-      formName: '',
-      formSurname: '',
-      formEmail: '',
-      formPassword: '',
-      formImageFile: '',
+      loginEmail: null,
+      loginPassword: null,
+      formName: null,
+      formSurname: null,
+      formEmail: null,
+      formPassword: null,
+      formImageFile: null,
       formPaypalagreementid: 'bank',
       newaccountvar: false,
       newaccountpaypal: false

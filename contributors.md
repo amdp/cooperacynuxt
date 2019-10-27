@@ -8,7 +8,7 @@ bowor (athxp)
 Vaela Nightos   -    vaela@kenoshi.me
 Peter Luczynski -    peter.luczynsky@gmail.com
 Jason Scotto    -    jayjscotto@gmail.com
-Ali Akhtari    -    info@aliakhtari.me
+
 ```
 
 NUXTERS
@@ -21,6 +21,7 @@ CONTRIBUTORS (DEVELOPERS)
 
 ```
 Alireza Ghey    -   https://github.com/alirezaghey
+Ali Akhtari    -    info@aliakhtari.me
 ```
 
 REFERENCE

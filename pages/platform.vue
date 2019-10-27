@@ -27,10 +27,10 @@
     <p class="base">
       The platform distributes the common money and resources to the ideas
       according to how much they are desired by the participants. Expressing
-      their <a class="ae" href="/cooperation#diversity">preferences</a> through
-      <a class="ae" href="/cooperation#diversity">transparent</a> votes, the
+      their <nuxt-link to="/cooperation#diversity" class="ae">preferences</nuxt-link> through
+      <nuxt-link to="/cooperation#diversity" class="ae">transparent</nuxt-link> votes, the
       common collected money goes
-      <a class="ae" href="/integration">proportionally</a> to the ideas
+      <nuxt-link to="/integration" class="ae">proportionally</nuxt-link> to the ideas
       according to how many votes they received. Keeping it simple: people
       propose <i>ideas</i>, <i>votes</i> allocate the common money.
     </p>
@@ -40,7 +40,7 @@
       Every idea is co-owned, so when it produces wealth, its profits go back to
       the platform collected money, in order to fund other ideas and to create a
       virtuous circle that slowly generates resources for
-      <a class="ae" href="/cooperation#equivalence">everyone</a>.
+      <nuxt-link to="/cooperation#equivalence" class="ae">everyone</nuxt-link>.
     </p>
 
     <p class="subheading center space equivalence margin">
@@ -48,7 +48,7 @@
     </p>
     <p class="base">
       An artificial intelligence will learn from all the
-      <a class="au" href="/science">data</a> coming from the platform and
+      <nuxt-link to="/science" class="au">data</nuxt-link> coming from the platform and
       suggest, in the long run, best practices in order to help the people to
       realise their ideas. Moreover, the participants can communicate their
       happiness, so that the "deep learning ecosystem" will base its suggestions
@@ -59,15 +59,24 @@
     <p class="base">
       <i
         >For more technical information about the platform, see its
-        <a class="au" href="/whitepaper">white paper</a>.</i
+        <nuxt-link to="/whitepaper" class="au">white paper</nuxt-link>.</i
       >
     </p>
 
     <p class="base">
       We would be very happy to see you on board. One euro per month is really a
       small effort to see how much can be done when we join our forces.<br /><br />
-      Enter the <a class="ae" href="/register">Cooperacy</a> Platform.. let's
+      Enter the <nuxt-link to="/login" class="ae">Cooperacy</nuxt-link> Platform.. let's
       start doing things together!
     </p>
   </div>
 </template>
+<script>
+export default {
+  head() {
+    return {
+      title: 'Cooperacy - The Cooperacy Platform'
+    }
+  }
+}
+</script>
