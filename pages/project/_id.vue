@@ -1,154 +1,124 @@
 <template>
-  <div class="mx-auto mt-4 mb-5">
-    <div class="row mt-5 d-block" v-if="oneproject">
-      <div class="col-12">
-        <div class="row">
-          <div class="col-1"></div>
-          <div class="col-2">
-            <img :src="projectImage" width="100px" />
-          </div>
-          <div class="col-7">
-            <div class="row">
-              <div class="col-12 space subheading up">
-                {{ oneproject.name }}
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12 space t10 up">{{ oneproject.brief }}</div>
-            </div>
-            <div class="row">
-              <div class="col-12 mt-2">{{ oneproject.content }}</div>
-            </div>
-            <div class="row">
-              <div class="col-12 mt-2">
-                PROJECT BASED IN: {{ oneproject.place }},
-                {{ oneproject.country }}.
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12 mt-2 t10 up">
-                TAGS:
-                <span v-for="tag in this.$store.state.tag" :key="tag.id">{{
-                  tag.name
-                }}</span>
-                <span
-                  >- <b-link v-b-modal.addtagmodal class="ac">Add</b-link> or
-                  <b-link v-b-modal.removetagmodal class="au">remove</b-link> a
-                  tag</span
-                >
-              </div>
-            </div>
-          </div>
-          <div class="col-2">
-            <div class="row">
-              <div class="col-12 t10 mt-2" v-if="oneproject.anonymous">
-                AFTF ON
-              </div>
-              <div class="col-12 t10 mt-2" v-if="!oneproject.anonymous">
-                AFTF OFF
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12 mt-2 t10" v-if="oneproject.stage != 5">
-                BUDGET: {{ Math.round(oneproject.collected) }}/{{
-                  Math.round(oneproject.budget)
-                }}
-              </div>
-              <div class="col-12 mt-2 t10" v-else>
-                FEE: {{ Math.round(oneproject.budget) }}
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12 mt-2 t10">
-                HUDGET: {{ oneproject.participant }}/{{ oneproject.hudget }}
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12 mt-2 t10">
-                PARENT PROJECT: {{ oneproject.parent }}
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12 mt-2 t10">CATEGORY: {{ category.name }}</div>
-            </div>
-            <div class="row">
-              <div class="col-12 mt-2 t10">STAGE: {{ stage.name }}</div>
-            </div>
-          </div>
-        </div>
-        <votebar
-          :voteprop="oneproject"
-          :proptype="'project'"
-          :voteId="oneproject.id"
-        />
-      </div>
-      <b-row class="mt-5 d-block">
-        <b-link class="au" @click="edit">Edit this project</b-link>
-        <b-link class="ae" @click="archive">Archive this project</b-link>
-      </b-row>
-      <b-row class="mt-5">
-        <b-col
-          cols="12"
-          class="subheading space up d-flex justify-content-center"
-          >COMMENTS AND QUESTIONS</b-col
-        >
-      </b-row>
-      <!-- MODAL MODAL MODAL -->
-      <b-modal id="addtagmodal" title="Add a new tag" hide-header-close>
-        <p class="my-4">
-          (CURRENT TAGS:
+  <div class="project-page-container py-3 w-100">
+    <div
+      class="project-details-container d-flex flex-wrap align-items-center justify-content-around w-100"
+    >
+      <img
+        :src="projectImage"
+        class="project-details-image img-fluid img-responsive col-2"
+      />
+      <div
+        class="project-details col-8 d-flex flex-column align-items-center justify-content-center text-center"
+      >
+        <h2 class="font-weight-light">{{ oneproject.name.toUpperCase() }}</h2>
+        <small>{{ oneproject.brief }}</small>
+        <p>{{ oneproject.content }}</p>
+        <p>
+          <strong>PROJECT BASED IN:</strong>
+          {{ oneproject.place + ', ' + oneproject.country }}
+        </p>
+        <p>
+          TAGS:
           <span v-for="tag in this.$store.state.tag" :key="tag.id">{{
             tag.name
-          }}</span
-          >)
+          }}</span>
+          <span
+            >- <b-link v-b-modal.addtagmodal class="ac">Add</b-link> or
+            <b-link v-b-modal.removetagmodal class="au">remove</b-link> a
+            tag</span
+          >
         </p>
-        <b-form @submit.prevent="addtag">
-          <b-form-group
-            label-for="newtagInput"
-            description="Insert a new tag for your project"
-          >
-            <span>{{ oneproject.name }}</span>
-            <b-form-input id="newTagInput" v-model="formTag"></b-form-input>
-          </b-form-group>
-        </b-form>
-        <template slot="modal-footer" slot-scope="{ ok, cancel }">
-          <b-button size="sm" class="bcare" @click="addtag()">ADD</b-button>
-          <b-button size="sm" class="btransparency" @click="cancel()"
-            >CLOSE</b-button
-          >
-        </template>
-      </b-modal>
-      <!-- MODAL MODAL MODAL -->
-      <b-modal id="removetagmodal" title="Remove a tag" hide-header-close>
-        <p class="my-4">Select a tag:</p>
-        <b-form @submit.prevent="removetag">
-          <b-form-group
-            label-for="newtagInput"
-            label="Tag:"
-            description="Remove tags from your project"
-          >
-            <span>{{ oneproject.name }}</span>
-            <b-form-select id="removeTagInput" v-model="formRemoveTag">
-              <option
-                v-for="tag in this.$store.state.tag"
-                :key="tag.id"
-                :value="tag.name"
-                >{{ tag.name }}</option
-              >
-            </b-form-select>
-          </b-form-group>
-        </b-form>
-        <template slot="modal-footer" slot-scope="{ ok, cancel }">
-          <b-button size="sm" class="bcare" @click="removetag()"
-            >REMOVE</b-button
-          >
-          <b-button size="sm" class="btransparency" @click="cancel()"
-            >CLOSE</b-button
-          >
-        </template>
-      </b-modal>
+      </div>
+      <div class="project-stats d-flex flex-column col-2">
+        <small>
+          <strong>AFTF: </strong>{{ oneproject.anonymous ? 'ON' : 'OFF' }}
+        </small>
+        <small>
+          <strong>BUDGET: </strong>{{ Math.round(oneproject.collected) }}/{{
+            Math.round(oneproject.budget)
+          }}
+        </small>
+        <small>
+          <strong>FEE: </strong> {{ Math.round(oneproject.budget) }}
+        </small>
+        <small>
+          <strong>HUDGET: </strong> {{ oneproject.participant }}/{{
+            oneproject.hudget
+          }}
+        </small>
+        <small>
+          <strong>PARENT PROJECT: </strong> {{ oneproject.parent }}
+        </small>
+        <small> <strong>CATEGORY: </strong> {{ category.name }} </small>
+        <small> <strong>STATE: </strong> {{ stage.name }} </small>
+      </div>
+      <votebar
+        :voteprop="oneproject"
+        :proptype="'project'"
+        :voteId="oneproject.id"
+      />
+      <div class="col-12 mt-4">
+        <b-link class="au" @click="edit">Edit this project</b-link>
+        <b-link class="ae" @click="archive">Archive this project</b-link>
+      </div>
     </div>
-    <comment />
+    <div class="comments-container w-100 mt-5">
+      <h3 class="font-weight-normal text-center">COMMENTS AND QUESTIONS</h3>
+      <comment />
+    </div>
+
+    <!-- ADD TAGS MODAL -->
+    <b-modal id="addtagmodal" title="Add a new tag" hide-header-close>
+      <p class="my-4">
+        (CURRENT TAGS:
+        <span v-for="tag in this.$store.state.tag" :key="tag.id">{{
+          tag.name
+        }}</span
+        >)
+      </p>
+      <b-form @submit.prevent="addtag">
+        <b-form-group
+          label-for="newtagInput"
+          description="Insert a new tag for your project"
+        >
+          <span>{{ oneproject.name }}</span>
+          <b-form-input id="newTagInput" v-model="formTag"></b-form-input>
+        </b-form-group>
+      </b-form>
+      <template slot="modal-footer" slot-scope="{ ok, cancel }">
+        <b-button size="sm" class="bcare" @click="addtag()">ADD</b-button>
+        <b-button size="sm" class="btransparency" @click="cancel()"
+          >CLOSE</b-button
+        >
+      </template>
+    </b-modal>
+    <!-- REMOVE TAGS MODAL -->
+    <b-modal id="removetagmodal" title="Remove a tag" hide-header-close>
+      <p class="my-4">Select a tag:</p>
+      <b-form @submit.prevent="removetag">
+        <b-form-group
+          label-for="newtagInput"
+          label="Tag:"
+          description="Remove tags from your project"
+        >
+          <span>{{ oneproject.name }}</span>
+          <b-form-select id="removeTagInput" v-model="formRemoveTag">
+            <option
+              v-for="tag in this.$store.state.tag"
+              :key="tag.id"
+              :value="tag.name"
+              >{{ tag.name }}</option
+            >
+          </b-form-select>
+        </b-form-group>
+      </b-form>
+      <template slot="modal-footer" slot-scope="{ ok, cancel }">
+        <b-button size="sm" class="bcare" @click="removetag()">REMOVE</b-button>
+        <b-button size="sm" class="btransparency" @click="cancel()"
+          >CLOSE</b-button
+        >
+      </template>
+    </b-modal>
   </div>
 </template>
 
