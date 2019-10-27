@@ -12,7 +12,7 @@
     <p class="base">
       Visit the <nuxt-link to="/cooperation" class="ae">learning</nuxt-link> pages and try to
       practice on your own cooperation
-      <nuxt-link to="/solutions" class="ae">methodologies</nuxt-link>, like the proportional
+      <nuxt-link to="/integration#solutions" class="ae">methodologies</nuxt-link>, like the proportional
       creative <nuxt-link to="/integration" class="ad">integration</nuxt-link>. In a larger
       group, try to test our
       <nuxt-link to="/governance" class="af">governance</nuxt-link> model and please give us

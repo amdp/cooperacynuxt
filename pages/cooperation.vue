@@ -23,12 +23,14 @@
       conditions.
     </p>
 
-    <br /><img
-      id="diversity"
-      name="diversity"
-      class="page-header"
-      src="~/assets/image/page/banners/diversity.png"
-    /><br />
+    <br />
+    <p id="diversity" name="diversity">
+      <img
+        class="page-header"
+        src="~/assets/image/page/banners/diversity.png"
+      />
+    </p>
+    <br />
 
     <p class="subheading diversity center space margin">WE'RE ALL DIFFERENT</p>
     <p class="base">
@@ -53,7 +55,7 @@
       Anthropologically mankind reached high levels of survival and wealth also
       thanks to the natural tendency to pursue and develop different personal
       skills, generating the possibility to have more
-      <nuxt-link to="/integration#solutions" class="ad">roles</nuxt-link> and
+      <nuxt-link to="/integration#diversity" class="ad">roles</nuxt-link> and
       functions for every participant in the community. Probably we are the most
       diverse and role-differentiated creatures on earth.
     </p>
@@ -69,12 +71,14 @@
       >.
     </p>
 
-    <br /><img
-      id="understanding"
-      name="understanding"
-      class="page-header"
-      src="~/assets/image/page/banners/understanding.png"
-    /><br />
+    <br />
+    <p id="understanding" name="understanding">
+      <img
+        class="page-header"
+        src="~/assets/image/page/banners/understanding.png"
+      />
+    </p>
+    <br />
 
     <p class="subheading understanding center space margin">
       DIFFERENT PERSPECTIVES
@@ -94,9 +98,9 @@
       occurs in groups when there is very low information flow, social and
       cultural diversities with lack of acceptance of the differences, usually
       forcing them into orthodoxy or uniformity. We propose different
-      <nuxt-link to="/solutions" class="ad">solutions</nuxt-link> to a state of
-      conflict, that may arise due to misunderstanding even between people who
-      appreciate one another.
+      <nuxt-link to="/integration#solutions" class="ad">solutions</nuxt-link> to
+      a state of conflict, that may arise due to misunderstanding even between
+      people who appreciate one another.
     </p>
 
     <p class="subheading understanding center space margin">COMMON CODES</p>
@@ -116,12 +120,11 @@
       enjoyment.
     </p>
 
-    <br /><img
-      id="freedom"
-      name="freedom"
-      class="page-header"
-      src="~/assets/image/page/banners/freedom.png"
-    /><br />
+    <br />
+    <p id="freedom" name="freedom">
+      <img class="page-header" src="~/assets/image/page/banners/freedom.png" />
+    </p>
+    <br />
 
     <p class="subheading freedom center space margin">CHOICES</p>
     <p class="base">
@@ -131,8 +134,8 @@
       choice in a generic collaborative interaction make it impossible to make
       it become a cooperation: there is no mutual enjoyment. To solve these kind
       of contextual issues, a good personal space or even
-      <nuxt-link to="/solutions" class="af">separation</nuxt-link> are needed,
-      even in a nice cooperation.
+      <nuxt-link to="//integration#freedom" class="af">separation</nuxt-link>
+      are needed, even in a nice cooperation.
     </p>
 
     <p class="subheading freedom center space margin">OUR PERSONAL STORY</p>
@@ -160,12 +163,14 @@
       that allows individual, intimate, personal freedom.
     </p>
 
-    <br /><img
-      id="transparency"
-      name="transparency"
-      class="page-header"
-      src="~/assets/image/page/banners/transparency.png"
-    /><br />
+    <br />
+    <p id="transparency" name="transparency">
+      <img
+        class="page-header"
+        src="~/assets/image/page/banners/transparency.png"
+      />
+    </p>
+    <br />
 
     <p class="subheading transparency center space margin">TRUTH OR CONTEXT?</p>
     <p class="base">
@@ -176,7 +181,9 @@
       it is not our personal interpretation of truth that we want the other to
       have access to. Usually, instead of communicating the truth, it is better
       to communicate the
-      <nuxt-link to="/solutions" class="ai">contextual point of view</nuxt-link>
+      <nuxt-link to="/integration#transparency" class="ai"
+        >contextual point of view</nuxt-link
+      >
       with which we see things now or made a choice before.
     </p>
     <p class="subheading transparency center space margin">BETRAYAL</p>
@@ -201,12 +208,11 @@
       supports transparency and truth acceptance.
     </p>
 
-    <br /><img
-      id="care"
-      name="care"
-      class="page-header"
-      src="~/assets/image/page/banners/care.png"
-    /><br />
+    <br />
+    <p id="care" name="care">
+      <img class="page-header" src="~/assets/image/page/banners/care.png" />
+    </p>
+    <br />
 
     <p class="subheading care center space margin">COORDINATION</p>
     <p class="base">
@@ -245,12 +251,11 @@
       <nuxt-link to="/aboutus" class="ac">living being</nuxt-link>.
     </p>
 
-    <br /><img
-      id="trust"
-      name="trust"
-      class="page-header"
-      src="~/assets/image/page/banners/trust.png"
-    /><br />
+    <br />
+    <p id="trust" name="trust">
+      <img class="page-header" src="~/assets/image/page/banners/trust.png" />
+    </p>
+    <br />
 
     <p class="subheading trust center space margin">WHAT IS TRUST?</p>
     <p class="base">
@@ -308,12 +313,14 @@
       the emergence of cooperation and mutual enjoyment.
     </p>
 
-    <br /><img
-      id="equivalence"
-      name="equivalences"
-      class="page-header"
-      src="~/assets/image/page/banners/equivalence.png"
-    /><br />
+    <br />
+    <p id="equivalence" name="equivalence">
+      <img
+        class="page-header"
+        src="~/assets/image/page/banners/equivalence.png"
+      />
+    </p>
+    <br />
 
     <p class="subheading equivalence center space margin">EQUALITY?</p>
     <p class="base">
@@ -370,8 +377,8 @@
         >proportional creative integration</nuxt-link
       >
       and the different
-      <nuxt-link to="/solutions" class="ad">solutions</nuxt-link> that can
-      resolve eventual contextual contrasts, or join
+      <nuxt-link to="/integration#solutions" class="ad">solutions</nuxt-link>
+      that can resolve eventual contextual contrasts, or join
       <nuxt-link to="/login" class="ae">Cooperacy</nuxt-link> and
       <nuxt-link to="/participate" class="ae">participate</nuxt-link> in our
       activities, our live webinars or our efforts in spreading the knowledge of
