@@ -18,17 +18,16 @@
 
     <!-- POSTS -->
     <div class="row mt-3" v-for="comment in up" :key="comment.id">
-      <div class="col-2"></div>
-      <div class="col-8">
+      <div class="col-8 mx-auto">
         <div class="row">
-          <div class="col-1 space t10 graylight up text-left p-0">
+          <div class="col-2 col-md-1 space t10 graylight up text-left p-0">
             <img
               v-if="!anonymous"
-              class="usercomment rounded-circle"
+              class="usercomment rounded-circle img-responsive img-fluid"
               :src="userImage(comment.user)"
             />
           </div>
-          <div class="col-11 p-0">{{ comment.content }}</div>
+          <p class="col-10 col-md-11">{{ comment.content }}</p>
         </div>
         <div class="row">
           <div class="col-12 space t10 up text-right">
@@ -38,12 +37,13 @@
             <span class="graylight">
               #{{ comment.id }} {{ comment.created }}
             </span>
+            <br />
             <span
               v-if="$auth.user.id == comment.user"
               class="gray finger"
               @click="remove(comment)"
             >
-              - Delete</span
+              Delete</span
             >
             <span
               v-if="$auth.user.id == comment.user"
@@ -86,17 +86,16 @@
           v-for="subcomment in sub(comment, comment.id)"
           :key="subcomment.id"
         >
-          <div class="col-1"></div>
-          <div class="col-11">
+          <div class="col-11 mx-auto">
             <div class="row">
-              <div class="col-1 space t10 graylight up text-left p-0">
+              <div class="col-2 col-md-1 space t10 graylight up text-left p-0">
                 <img
                   v-if="!anonymous"
                   class="usercomment rounded-circle"
                   :src="userImage(subcomment.user)"
                 />
               </div>
-              <div class="col-11 p-0">{{ subcomment.content }}</div>
+              <div class="col-10 col-md-1 p-0">{{ subcomment.content }}</div>
             </div>
             <div class="row">
               <div class="col-12 space t10 up text-right">
@@ -106,12 +105,13 @@
                 <span class="graylight">
                   #{{ subcomment.id }} {{ subcomment.created }}
                 </span>
+                <br />
                 <span
                   v-if="$auth.user.id == subcomment.user"
                   class="gray finger"
                   @click="remove(subcomment)"
                 >
-                  - Delete</span
+                  Delete</span
                 >
                 <span
                   v-if="$auth.user.id == subcomment.user"
@@ -148,7 +148,6 @@
             </div>
           </div>
         </div>
-        <div class="col-2"></div>
       </div>
     </div>
   </div>

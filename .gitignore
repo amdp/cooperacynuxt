@@ -86,6 +86,7 @@ dist
 
 # IDE
 .idea
+.todo
 
 # Service worker
 sw.*
