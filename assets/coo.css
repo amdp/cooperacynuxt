@@ -488,9 +488,9 @@ a.disabled {
 .main {
   margin-top: 10vw;
 }
-@media (max-width: 900px) and (orientation: landscape) {
+@media (max-width: 900px) {
   .main {
-    margin-top: 14vw;
+    margin-top: 17vw;
   }
 }
 .headerlogo {
