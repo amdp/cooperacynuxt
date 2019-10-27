@@ -51,3 +51,12 @@
     </p>
   </div>
 </template>
+<script>
+export default {
+  head() {
+    return {
+      title: 'Cooperacy - The Scientific Network'
+    }
+  }
+}
+</script>

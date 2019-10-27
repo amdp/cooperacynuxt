@@ -44,3 +44,12 @@
     </p>
   </div>
 </template>
+<script>
+export default {
+  head() {
+    return {
+      title: 'Cooperacy - Spread the Project'
+    }
+  }
+}
+</script>

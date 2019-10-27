@@ -216,3 +216,12 @@
     </p>
   </div>
 </template>
+<script>
+export default {
+  head() {
+    return {
+      title: 'Cooperacy - Proportional Creative Integration'
+    }
+  }
+}
+</script>

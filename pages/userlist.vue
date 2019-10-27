@@ -137,6 +137,11 @@
 <script>
 export default {
   middleware: ['auth'],
+  head() {
+    return {
+      title: 'Cooperacy - Users List'
+    }
+  },
   async fetch({ store, params }) {
     await store.dispatch('getUserlistAction', '')
   },

@@ -192,17 +192,7 @@
         name="contributors"
         style="color: #22DDEE; font-size: 24px; font-weight: bold; margin-bottom: 10px;"
       ></p>
-      <p class="subheading transparency center space">
-        CONTRIBUTORS LIST AND PLANNING
-      </p>
-      <br />
       <p class="base">
-        You can see in our
-        <a class="ai" href="https://goo.gl/OYcrOS">planning</a> the list of
-        names as well as the relative monetary value of the activity (including
-        expenses) done as if monetary wages would have been corresponded to the
-        participants. We keep track about it as we would correspond those
-        amounts if we will have the possibility.<br /><br />
         We're still doing some more work to allow better transparency. If you
         don't see something you're curious of, please
         <a class="ai" href="/contact">ask</a> for more information to be shown
@@ -523,7 +513,7 @@
 export default {
   head() {
     return {
-      title: 'About Us'
+      title: 'Cooperacy - About Us'
     }
   }
 }

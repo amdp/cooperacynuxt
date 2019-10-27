@@ -69,3 +69,12 @@
     </p>
   </div>
 </template>
+<script>
+export default {
+  head() {
+    return {
+      title: 'Cooperacy - The Cooperation Journey'
+    }
+  }
+}
+</script>

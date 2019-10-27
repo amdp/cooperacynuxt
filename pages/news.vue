@@ -13,6 +13,11 @@
 
 <script>
 export default {
+  head() {
+    return {
+      title: 'Cooperacy - News'
+    }
+  },
   async fetch({ store, params }) {
     await store.dispatch('getNewsAction', '')
   },
