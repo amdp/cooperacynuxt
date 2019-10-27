@@ -60,6 +60,11 @@
 import projectlist from '@/components/projectlist'
 export default {
   middleware: ['auth'],
+  head() {
+    return {
+      title: 'Cooperacy' + this.$auth.user.name + ' ' + this.$auth.user.surname
+    }
+  },
   components: { projectlist: projectlist },
   mounted() {
     var cc = ['D', 'U', 'F', 'I', 'C', 'T', 'E']

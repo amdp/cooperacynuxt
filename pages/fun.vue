@@ -171,3 +171,12 @@
     <br /><br /><br />
   </div>
 </template>
+<script>
+export default {
+  head() {
+    return {
+      title: 'Cooperacy - Fun'
+    }
+  }
+}
+</script>

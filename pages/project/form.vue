@@ -243,6 +243,11 @@
 <script>
 export default {
   middleware: ['auth'],
+  head() {
+    return {
+      title: 'Cooperacy - Project Form'
+    }
+  },
   async fetch({ store, params }) {
     await store.dispatch('getCategoryAction')
     await store.dispatch('getPlaceAction')

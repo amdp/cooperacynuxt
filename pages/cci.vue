@@ -167,7 +167,7 @@ export default {
     await store.dispatch('getCCIAction', { cciyear: '2015' })
   },
   head: {
-    title: 'Cooperation Context Index',
+    title: 'Cooperacy - Cooperation Context Index',
     script: [
       {
         src: '/map.js'

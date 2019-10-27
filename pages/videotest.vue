@@ -23,3 +23,12 @@
     </h2>
   </div>
 </template>
+<script>
+export default {
+  head() {
+    return {
+      title: 'Cooperacy - Videos'
+    }
+  }
+}
+</script>

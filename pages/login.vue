@@ -157,7 +157,7 @@ export default {
   middleware: ['auth'],
   head() {
     return {
-      title: 'Join or Login',
+      title: 'Cooperacy - Login',
       script: [
         {
           src:

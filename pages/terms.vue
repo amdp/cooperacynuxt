@@ -215,3 +215,12 @@
       <p class="base">If you do something that gets Cooperacy sued, or break any of the promises you make in this agreement, you agree to defend, indemnify, and hold Cooperacy harmless from all liabilities, claims, and expenses (including reasonable attorneys’ fees and other legal costs) that arise from or relate to your use or misuse of Cooperacy. Cooperacy reserve the right to assume the exclusive defense and control of any matter otherwise subject to this indemnification clause, in which case you agree that you’ll cooperate and help Cooperacy in asserting any defenses.</p><br>
   </div>
 </template>
+<script>
+export default {
+  head() {
+    return {
+      title: 'Cooperacy - Terms and Agreements'
+    }
+  }
+}
+</script>

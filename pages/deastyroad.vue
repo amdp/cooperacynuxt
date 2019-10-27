@@ -31,3 +31,12 @@
     <br /><br />
   </div>
 </template>
+<script>
+export default {
+  head() {
+    return {
+      title: 'Cooperacy - Deasty'
+    }
+  }
+}
+</script>

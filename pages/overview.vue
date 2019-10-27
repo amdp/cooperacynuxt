@@ -53,3 +53,12 @@
     <br />
   </div>
 </template>
+<script>
+export default {
+  head() {
+    return {
+      title: 'Cooperacy - Cooperation Overview'
+    }
+  }
+}
+</script>

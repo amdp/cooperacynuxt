@@ -158,6 +158,11 @@ import comment from '@/components/comment'
 
 export default {
   middleware: ['auth'],
+  head() {
+    return {
+      title: 'Cooperacy - Project: ' + this.oneproject.name
+    }
+  },
   components: { votebar: votebar, comment: comment },
   async fetch({ store, params }) {
     await store.dispatch('getCommentAction', {

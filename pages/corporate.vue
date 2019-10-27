@@ -58,3 +58,12 @@
     <br />
   </div>
 </template>
+<script>
+export default {
+  head() {
+    return {
+      title: 'Cooperacy - Corporate'
+    }
+  }
+}
+</script>
