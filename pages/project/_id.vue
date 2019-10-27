@@ -1,14 +1,14 @@
 <template>
-  <div class="project-page-container py-3 w-100">
+  <div class="project-page-container py-5 py-md-3 w-100">
     <div
       class="project-details-container d-flex flex-wrap align-items-center justify-content-around w-100"
     >
       <img
         :src="projectImage"
-        class="project-details-image img-fluid img-responsive col-2"
+        class="project-details-image img-fluid img-responsive col-8 col-md-2 mb-2 mb-md-0"
       />
       <div
-        class="project-details col-8 d-flex flex-column align-items-center justify-content-center text-center"
+        class="project-details col-12 col-md-8 d-flex flex-column align-items-center justify-content-center text-center"
       >
         <h2 class="font-weight-light">{{ oneproject.name.toUpperCase() }}</h2>
         <small>{{ oneproject.brief }}</small>
@@ -29,7 +29,7 @@
           >
         </p>
       </div>
-      <div class="project-stats d-flex flex-column col-2">
+      <div class="project-stats d-flex flex-column col-8 col-md-2">
         <small>
           <strong>AFTF: </strong>{{ oneproject.anonymous ? 'ON' : 'OFF' }}
         </small>
