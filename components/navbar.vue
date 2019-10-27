@@ -12,7 +12,8 @@
         tag="img"
         class="img-logo col-6 col-sm-4 col-lg-2 p-0"
         :src="wordLogo"
-      ></nuxt-link>
+      >
+      </nuxt-link>
       <div class="col-8 d-flex flex-column h-100 nav-menu-container">
         <div class="navbar-menu w-100 text-center">
           <div class="nav" @mouseenter="navState = 'project'">
@@ -76,9 +77,9 @@
         >
           <nuxt-link class="menu-item" to="/cooperation">COOPERATION</nuxt-link>
           <nuxt-link class="menu-item" to="/integration">INTEGRATION</nuxt-link>
-          <nuxt-link class="menu-item" to="/cci"
-            >COOPERATION CONTEXT INDEX</nuxt-link
-          >
+          <nuxt-link class="menu-item" to="/cci">
+            COOPERATION CONTEXT INDEX
+          </nuxt-link>
           <nuxt-link class="menu-item" to="/science">SCIENCE</nuxt-link>
           <nuxt-link class="menu-item" to="/news">NEWS</nuxt-link>
         </div>
@@ -92,11 +93,12 @@
             id="login-btn"
             v-if="!this.$auth.loggedIn"
             to="/login"
-            >LOGIN</nuxt-link
           >
-          <nuxt-link to="/user" v-else>{{
-            this.$auth.user.name + ' ' + this.$auth.user.surname
-          }}</nuxt-link>
+            LOGIN
+          </nuxt-link>
+          <nuxt-link to="/user" v-else>
+            {{ this.$auth.user.name + ' ' + this.$auth.user.surname }}
+          </nuxt-link>
           <div class="social-icons">
             <a href="https://www.facebook.com/cooperacy.org/">
               <img src="../assets/icons/facebook.svg" id="facebook" />
@@ -132,16 +134,16 @@
           v-if="navState == 'project'"
           @click="hideNav"
         >
-          <nuxt-link class="mobile-menu-item" to="/aboutyou"
-            >ABOUT YOU</nuxt-link
-          >
+          <nuxt-link class="mobile-menu-item" to="/aboutyou">
+            ABOUT YOU
+          </nuxt-link>
           <nuxt-link class="mobile-menu-item" to="/aboutus">ABOUT US</nuxt-link>
-          <nuxt-link class="mobile-menu-item" to="/platform"
-            >THE PLATFORM</nuxt-link
-          >
-          <nuxt-link class="mobile-menu-item" to="/governance"
-            >GOVERNANCE</nuxt-link
-          >
+          <nuxt-link class="mobile-menu-item" to="/platform">
+            THE PLATFORM
+          </nuxt-link>
+          <nuxt-link class="mobile-menu-item" to="/governance">
+            GOVERNANCE
+          </nuxt-link>
         </div>
       </div>
       <div class="mobile-nav-box" @click="navState = 'corporate'">
@@ -156,21 +158,21 @@
           v-if="navState == 'corporate'"
           @click="hideNav"
         >
-          <nuxt-link class="mobile-menu-item" to="/corporate"
-            >CORPORATE WORLD</nuxt-link
-          >
-          <nuxt-link class="mobile-menu-item" to="/overview"
-            >MEASURING COOPERATION</nuxt-link
-          >
-          <nuxt-link class="mobile-menu-item" to="/coopenspace"
-            >CO-OPEN SPACE</nuxt-link
-          >
-          <nuxt-link class="mobile-menu-item" to="/cohackathon"
-            >CO-HACKATHON</nuxt-link
-          >
-          <nuxt-link class="mobile-menu-item" to="/workshops"
-            >WORKSHOPS</nuxt-link
-          >
+          <nuxt-link class="mobile-menu-item" to="/corporate">
+            CORPORATE WORLD
+          </nuxt-link>
+          <nuxt-link class="mobile-menu-item" to="/overview">
+            MEASURING COOPERATION
+          </nuxt-link>
+          <nuxt-link class="mobile-menu-item" to="/coopenspace">
+            CO-OPEN SPACE
+          </nuxt-link>
+          <nuxt-link class="mobile-menu-item" to="/cohackathon">
+            CO-HACKATHON
+          </nuxt-link>
+          <nuxt-link class="mobile-menu-item" to="/workshops">
+            WORKSHOPS
+          </nuxt-link>
         </div>
       </div>
       <div class="mobile-nav-box" @click="navState = 'research'">
@@ -185,15 +187,15 @@
           v-if="navState == 'research'"
           @click="hideNav"
         >
-          <nuxt-link class="mobile-menu-item" to="/cooperation"
-            >COOPERATION</nuxt-link
-          >
-          <nuxt-link class="mobile-menu-item" to="/integration"
-            >INTEGRATION</nuxt-link
-          >
-          <nuxt-link class="mobile-menu-item" to="/cci"
-            >COOPERATION CONTEXT INDEX</nuxt-link
-          >
+          <nuxt-link class="mobile-menu-item" to="/cooperation">
+            COOPERATION
+          </nuxt-link>
+          <nuxt-link class="mobile-menu-item" to="/integration">
+            INTEGRATION
+          </nuxt-link>
+          <nuxt-link class="mobile-menu-item" to="/cci">
+            COOPERATION CONTEXT INDEX
+          </nuxt-link>
           <nuxt-link class="mobile-menu-item" to="/science">SCIENCE</nuxt-link>
           <nuxt-link class="mobile-menu-item" to="/news">NEWS</nuxt-link>
         </div>

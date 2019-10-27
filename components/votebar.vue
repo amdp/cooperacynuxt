@@ -22,7 +22,7 @@
       :style="vote.style"
       @click="voteswitch(vote.projectcc)"
     >
-      <div class="showme project-showme t12 mt-1">
+      <div class="showme showmeon t12 mt-1">
         {{ vote.vlong }}: {{ vote.v }} votes
       </div>
     </div>
@@ -35,8 +35,8 @@
       :style="vote.style"
       @click="voteswitch(vote.commentcc)"
     >
-      <div class="showme t8 mt-1">
-        {{ vote.vlong }}<br />{{ vote.v }} points
+      <div class="showme showmeon t12 mt-1">
+        {{ vote.vlong }}: {{ vote.v }} votes
       </div>
     </div>
   </b-row>
