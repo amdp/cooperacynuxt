@@ -49,7 +49,7 @@
             :id="description.name"
             :style="{ display: description.display }"
           >
-            <a :href="description.href" class="noline finger">
+            <nuxt-link :to="description.href" class="noline finger">
               <text
                 :transform="description.matrix1"
                 fill="#555555"
@@ -72,7 +72,7 @@
               >
                 {{ description.text }}
               </text>
-            </a>
+            </nuxt-link>
           </g>
         </template>
         <!--PAYOFF, DISAPPEARS VIA MOUSEOVER ON PATHS-->
@@ -112,13 +112,19 @@
     <div id="homefade" style="opacity:0">
       <div class="row mb-4 p-2">
         <div class="col-lg-4 col-xs-12 subheading text-center">
-          <a href="/platform" class="noline transparency space">DISCOVER</a>
+          <nuxt-link to="/platform" class="noline transparency space"
+            >DISCOVER</nuxt-link
+          >
         </div>
         <div class="col-lg-4 col-xs-12 subheading text-center">
-          <a href="/cooperation" class="noline understanding space">LEARN</a>
+          <nuxt-link to="/cooperation" class="noline understanding space"
+            >LEARN</nuxt-link
+          >
         </div>
         <div class="col-lg-4 col-xs-12 subheading text-center">
-          <a href="/login" class="noline equivalence space">JOIN</a>
+          <nuxt-link to="/login" class="noline equivalence space"
+            >JOIN</nuxt-link
+          >
         </div>
       </div>
       <p class="base text-center">
@@ -127,21 +133,23 @@
       </p>
       <p class="base text-center mb-2">
         We're setting up a
-        <a href="/platform" class="ae">platform</a> in which, supported by
-        money, people help each other to realise what they want for their lives
-        taking decisions together in a productive way.
+        <nuxt-link to="/platform" class="ae">platform</nuxt-link> in which,
+        supported by money, people help each other to realise what they want for
+        their lives taking decisions together in a productive way.
       </p>
       <p class="base text-center mb-3">
-        <a href="/login" class="ae">Joining</a> Cooperacy is entertaining and
-        makes you learn how to develop enjoyable cooperations in your
-        <a href="/aboutyou" class="ad">personal</a> relations, in the
-        <a href="/coorporate" class="af">corporate</a>
+        <nuxt-link to="/login" class="ae">Joining</nuxt-link> Cooperacy is
+        entertaining and makes you learn how to develop enjoyable cooperations
+        in your
+        <nuxt-link to="/aboutyou" class="ad">personal</nuxt-link> relations, in
+        the
+        <nuxt-link to="/coorporate" class="af">corporate</nuxt-link>
         world and at the
-        <a href="/cci" class="au">international</a> level.
+        <nuxt-link to="/cci" class="au">international</nuxt-link> level.
       </p>
       <div class="base text-center">
         <p class="base text-center mb-3">
-          <a class="ae" href="/login">Join</a> Cooperacy today, or
+          <nuxt-link class="ae" to="/login">Join</nuxt-link> Cooperacy today, or
           <nuxt-link class="ai" to="/contact">contact us</nuxt-link> for more
           information.
         </p>
@@ -267,7 +275,7 @@ export default {
         {
           name: 'equivalenceD',
           display: 'none',
-          href: 'https://cooperacy.org/cooperation#equivalence',
+          href: 'cooperation#equivalence',
           matrix1: 'matrix(1 0 0 1 157 360)',
           matrix2: 'matrix(1 0 0 1 225 440)',
           style:
@@ -282,7 +290,7 @@ export default {
         {
           name: 'trustD',
           display: 'none',
-          href: 'https://cooperacy.org/cooperation#trust',
+          href: 'cooperation#trust',
           matrix1: 'matrix(1 0 0 1 278 360)',
           matrix2: 'matrix(1 0 0 1 208 443)',
           style:
@@ -297,7 +305,7 @@ export default {
         {
           name: 'careD',
           display: 'none',
-          href: 'https://cooperacy.org/cooperation#care',
+          href: 'cooperation#care',
           matrix1: 'matrix(1 0 0 1 286 360)',
           matrix2: 'matrix(1 0 0 1 182 443)',
           style:
@@ -312,7 +320,7 @@ export default {
         {
           name: 'transparencyD',
           display: 'none',
-          href: 'https://cooperacy.org/cooperation#transparency',
+          href: 'cooperation#transparency',
           matrix1: 'matrix(1 0 0 1 132 360)',
           matrix2: 'matrix(1 0 0 1 194 443)',
           style:
@@ -327,7 +335,7 @@ export default {
         {
           name: 'freedomD',
           display: 'none',
-          href: 'https://cooperacy.org/cooperation#freedom',
+          href: 'cooperation#freedom',
           matrix1: 'matrix(1 0 0 1 222 360)',
           matrix2: 'matrix(1 0 0 1 184 443)',
           style:
@@ -342,7 +350,7 @@ export default {
         {
           name: 'understandingD',
           display: 'none',
-          href: 'https://cooperacy.org/cooperation#understanding',
+          href: 'cooperation#understanding',
           matrix1: 'matrix(1 0 0 1 118 360)',
           matrix2: 'matrix(1 0 0 1 116 443)',
           style:
@@ -357,7 +365,7 @@ export default {
         {
           name: 'diversityD',
           display: 'none',
-          href: 'https://cooperacy.org/cooperation#diversity',
+          href: 'cooperation#diversity',
           matrix1: 'matrix(1 0 0 1 218 360)',
           matrix2: 'matrix(1 0 0 1 180 443)',
           style:
