@@ -37,6 +37,3 @@ $ npm start
 # generate static project
 $ npm run generate
 ```
-
-If you contribute, please keep this file 42 lines short.
-And don't worry. Be happy!
