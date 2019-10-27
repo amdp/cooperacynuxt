@@ -698,6 +698,9 @@ img.page-header img.news {
   vertical-align: bottom;
   border: none;
 }
+img.news {
+  max-width: 70%;
+}
 .currentImage {
   width: 60px;
 }
@@ -719,13 +722,13 @@ img.page-header img.news {
   font-size: 10px;
 }
 .showme,
-.project-showme {
+.showmeon {
   display: none;
 }
-.project-showme {
+.showmeon {
   position: absolute;
-  left: 0;
-  top: 2px;
+  left: 5px;
+  top: 7px;
 }
 
 .toast {

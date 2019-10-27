@@ -132,7 +132,7 @@ app.get('/userlist', async function(req, res, next) {
     let query =
       'SELECT `id`,`name`,`surname`,`email`,' +
       '`E`,`T`,`C`,`I`,`F`,`U`,`D`,`active`,`role`,' +
-      '`remember_token`,`paymentdeadline`,`paypalagreementid`,`created`,`updated` FROM `user`'
+      '`paymentdeadline`,`paypalagreementid`,`created`,`updated` FROM `user`'
     let param = []
     const [userlist] = await mypool.execute(query, param)
     res.send(userlist)
