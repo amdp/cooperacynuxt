@@ -58,10 +58,10 @@
       simple steps, you may experience a transition from the standard
       competitive economy to a different one based on cooperation.<br /><br />
       We recently discovered Monopoly was invented by
-      <a class="ad" rc="https://en.wikipedia.org/wiki/Lizzie_Magie"
+      <a class="ad" href="https://en.wikipedia.org/wiki/Lizzie_Magie"
         >Lizzy Magie</a
       >, a
-      <a class="au" src="https://en.wikipedia.org/wiki/Georgism">Georgist</a>
+      <a class="au" href="https://en.wikipedia.org/wiki/Georgism">Georgist</a>
       and game designer from the US. The game was called "The Landlord Game" or
       "Prosperity". The two names depend on the fact the original game had two
       set of rules, one quite similar to the Monopoly ones (The Landlord), the

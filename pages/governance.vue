@@ -74,7 +74,7 @@
       they want. If there is not a clear orientation<SUP>2</SUP> after the
       voting phase, the participants leave their choice to the coordinators.
       They may also choose with the coordinators which one of the seven possible
-      <nuxt-link to="/solutions" class="af">solutions</nuxt-link> to apply for the realization
+      <nuxt-link to="/integration#solutions" class="af">solutions</nuxt-link> to apply for the realization
       of the project’s will:<br /><br />
       - Turns or experimentations, starting from the most voted<br />
       - Give a definite time to test the previous situation and then vote
