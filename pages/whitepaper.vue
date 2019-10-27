@@ -227,7 +227,7 @@
         the idea are kept frozen during the approval project phase until it is
         turned into an active project. The budget release milestones deadlines
         are chosen according to the Cooperacy
-        <a class="af" href="/governance">governance</a> scheme.<br />
+        <nuxt-link to="/governance" class="af">governance</nuxt-link> scheme.<br />
         Eventual contrasts not resolved in the 7 budget milestones are solved
         with a transparent voting kept live for three days, in which the
         participants can change their votes. The coordinators have three more

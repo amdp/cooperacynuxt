@@ -13,22 +13,25 @@
       2014.<br /><br />
 
       The research investigation questions what is
-      <a class="ae" href="/cooperation">Cooperation</a> and what are its
-      conditions, in order to
-      <a class="au" href="/cooperation#understanding">understand</a> how to
-      <a class="ac" href="/cooperation#care">coordinate</a> human
-      <a class="ad" href="/cooperation#diversity">diversity</a> towards mutual
-      enjoyment and better ecosystemic awareness.<br />
+      <nuxt-link to="/cooperation" class="ae">Cooperation</nuxt-link> and what
+      are its conditions, in order to
+      <nuxt-link to="/cooperation#understanding" class="au"
+        >understand</nuxt-link
+      >
+      how to
+      <nuxt-link to="/cooperation#care" class="ac">coordinate</nuxt-link> human
+      <nuxt-link to="/cooperation#diversity" class="ad">diversity</nuxt-link>
+      towards mutual enjoyment and better ecosystemic awareness.<br />
 
       During 2014, a group of 7 independent researchers investigated from
       different disciplines and perspectives the model of Cooperation Science
       developed by Alessandro Merletti De Palo based on an extensive literature
       review about Cooperation and its many different frameworks.<br /><br />
       The model, based on interdisciplinary systemic
-      <a class="au" href="/coscience">approach</a>, was confirmed by the
-      investigations results, and the subsequent paper was accepted at the
-      M.I.T. 2015
-      <a class="au" href="http://cci.mit.edu/">Collective Intelligence</a>
+      <nuxt-link to="/coscience" class="au">approach</nuxt-link>, was confirmed
+      by the investigations results, and the subsequent paper was accepted at
+      the M.I.T. 2015
+      <a href="http://cci.mit.edu/" class="au">Collective Intelligence</a>
       Conference in Santa Clara, organized by the
       <a class="au" href="https://lsa.umich.edu/cscs"
         >University of Michigan - Ann Arbour</a
@@ -55,8 +58,8 @@
       <a class="au" href="http://www.openproduction.info/"
         >Conference for Coproduction systems</a
       >. Our preliminary
-      <a class="au" href="/cci">Cooperation Context Index</a> together with
-      Facebook Group Cooperation analysis were presented at the
+      <nuxt-link to="/cci" class="au">Cooperation Context Index</nuxt-link>
+      together with Facebook Group Cooperation analysis were presented at the
       <a
         class="au"
         href="https://sites.google.com/a/stern.nyu.edu/collective-intelligence-conference/"
@@ -79,9 +82,10 @@
       humans who produced the
       <a class="au" href="https://copenhagenletter.org/">Copenhagen Letter</a
       >.<br /><br />
-      You can browse our <a class="au" href="/articles">project articles</a>,
-      <a class="au" href="/streams">research streams</a> or academic
-      <a class="au" href="/network">network</a>.
+      You can browse our
+      <nuxt-link to="/articles" class="au">project articles</nuxt-link>,
+      <nuxt-link to="/streams" class="au">research streams</nuxt-link> or
+      academic <nuxt-link to="/network" class="au">network</nuxt-link>.
     </p>
   </div>
 </template>

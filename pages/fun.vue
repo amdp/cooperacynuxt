@@ -7,9 +7,10 @@
       Fun and games make us feel together, especially if the gameplay is not too
       competitive. Fun enhances the bright side of the artistic zest and the
       power of creative innovation. Art brings our
-      <a class="ad" href="/cooperation#diversity">diversity</a> to become
-      beauty. Art, fun, games and innovation represent the generative side of
-      our lives. This page is dedicated to fun, creativity and cooperation.
+      <nuxt-link to="/cooperation#diversity" class="ad">diversity</nuxt-link> to
+      become beauty. Art, fun, games and innovation represent the generative
+      side of our lives. This page is dedicated to fun, creativity and
+      cooperation.
     </p>
 
     <br />
@@ -166,7 +167,7 @@
       gameplay, or structured with an ecosystemic thinking approach. To learn
       more about the possibilities of integrating cooperation in your dynamics
       or your narratives, have a look at our
-      <a class="au" href="/cooperation">learning area.</a>
+      <nuxt-link to="/cooperation" class="au">learning area.</nuxt-link>
     </p>
     <br /><br /><br />
   </div>
