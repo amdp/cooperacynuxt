@@ -47,7 +47,16 @@
       <br />
       If you represent a University, a scientific institution or any related
       organisation and want to join our network feel free to
-      <a class="ai" href="/contact">contact</a> us.
+      <nuxt-link to="/contact" class="ai">contact</nuxt-link> us.
     </p>
   </div>
 </template>
+<script>
+export default {
+  head() {
+    return {
+      title: 'Cooperacy - The Scientific Network'
+    }
+  }
+}
+</script>

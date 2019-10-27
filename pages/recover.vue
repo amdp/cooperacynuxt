@@ -8,6 +8,11 @@
 
 <script>
 export default {
+  head() {
+    return {
+      title: 'Cooperacy - Re-setting Your Password...'
+    }
+  },
   async mounted() {
     let change = await this.$store.dispatch('recoverPasswordAction', {
       token: this.$route.query.jws

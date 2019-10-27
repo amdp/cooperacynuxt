@@ -1,6 +1,7 @@
 <template>
   <div>
-    <p class="subheading transparency center space">PRIVACY POLICY AND AGREEMENTS<br>(TERMS AND CONDITIONS, TERMS OF USE, RIGHTS AND RESPONSIBILITIES, INTERNATIONAL PRIVACY POLICY)</p><br>
+    <p class="subheading transparency text-center space mt-5">PRIVACY POLICY AND AGREEMENTS<br>
+    </p><p class="base text-center transparency">TERMS AND CONDITIONS<br> TERMS OF USE<br> RIGHTS AND RESPONSIBILITIES<br> INTERNATIONAL PRIVACY POLICY</p><br>
 
     <p
       class="base"
@@ -16,7 +17,7 @@
       These Agreements are written in English.<br>
       To the extent any translated version of this agreement conflicts with the English version, the English version controls.<br><br>
 
-      Date of Last Revision: December 18, 2017<br><br>
+      Date of Last Revision: October 27, 2019<br><br>
     </p>
 
     <p class="base">Before your use of the Site, please carefully read these Agreements. By using the Site, YOU ACKNOWLEDGE THAT YOU HAVE READ, UNDERSTAND, ACCEPT AND AGREE TO BE BOUND BY THESE AGREEMENTS, AND THESE AGREEMENTS WILL APPLY TO YOU AND WILL CONSTITUTE A BINDING LEGAL CONTRACT BETWEEN YOU AND COOPERACY. IF YOU DO NOT AGREE TO ALL OF THE TERMS AND CONDITIONS OF THESE AGREEMENTS, DO NOT USE THE SITE.</p><br>
@@ -215,3 +216,12 @@
       <p class="base">If you do something that gets Cooperacy sued, or break any of the promises you make in this agreement, you agree to defend, indemnify, and hold Cooperacy harmless from all liabilities, claims, and expenses (including reasonable attorneys’ fees and other legal costs) that arise from or relate to your use or misuse of Cooperacy. Cooperacy reserve the right to assume the exclusive defense and control of any matter otherwise subject to this indemnification clause, in which case you agree that you’ll cooperate and help Cooperacy in asserting any defenses.</p><br>
   </div>
 </template>
+<script>
+export default {
+  head() {
+    return {
+      title: 'Cooperacy - Terms and Agreements'
+    }
+  }
+}
+</script>

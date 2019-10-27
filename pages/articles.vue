@@ -38,8 +38,8 @@
       common people coherently with our model that is inclusive, considering
       diversity a strong potential. Everyone is therefore invited to participate
       and cooperate with us. <br /><br />You can
-      <a class="ae" href="/register">join</a> Cooperacy or even help us now,
-      answering only two questions in our online
+      <nuxt-link to="/login" class="ae">join</nuxt-link> Cooperacy or even help
+      us now, answering only two questions in our online
       <a
         class="au"
         href="https://docs.google.com/forms/d/e/1FAIpQLSeiH8qMbsnRJQVt5n1CS1KPsJfsxBQML3hAbImpaDqiIuVrQw/viewform"
@@ -48,3 +48,12 @@
     </p>
   </div>
 </template>
+<script>
+export default {
+  head() {
+    return {
+      title: 'Cooperacy - Scientific Articles'
+    }
+  }
+}
+</script>

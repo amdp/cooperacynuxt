@@ -8,8 +8,8 @@
     <br /><br />
     <p class="base">
       The Cooperacy governance is the way
-      <a class="ae" href="/participate">participants</a> take decisions in
-      Cooperacy, according to cooperation science insights.
+      <nuxt-link to="/participate" class="ae">participants</nuxt-link> take
+      decisions in Cooperacy, according to cooperation science insights.
     </p>
     <br /><br />
 
@@ -19,7 +19,7 @@
       The Cooperacy governance is made of projects, that can have upprojects or
       subprojects. The main project is called Cooperacy. Every project is based
       on the most simple form of
-      <a class="ae" href="/cooperation">cooperation</a>: two or more people
+      <nuxt-link to="/cooperation" class="ae">cooperation</nuxt-link>: two or more people
       doing something together. <br />
       It is advised every project should have maximum 148 people and two
       coordinators. A single coordinator is considered provisory, while projects
@@ -44,14 +44,14 @@
       Participants may also oppose the coordinators decisions. If the opposing
       participants are at least two<SUP>1</SUP>, the coordinators should
       proportionally and creatively
-      <a class="ad" href="/integration">integrate</a> the opposition according
-      to the seven <a class="ae" href="/integration#solutions">solutions</a> or
+      <nuxt-link to="/integration" class="ad">integrate</nuxt-link> the opposition according
+      to the seven <nuxt-link to="/integration#solutions" class="ae">solutions</nuxt-link> or
       alternatively start a voting phase.<br /><br />
 
       If just a single participants proposes or opposes, but nobody secondes,
       the single instance is recorded or, when possible, but not always,
       proportionally and creatively
-      <a class="ad" href="/integration">integrated</a>.<br />
+      <nuxt-link to="/integration" class="ad">integrated</nuxt-link>.<br />
 
       <br /><img
         style="width: 100%;"
@@ -74,7 +74,7 @@
       they want. If there is not a clear orientation<SUP>2</SUP> after the
       voting phase, the participants leave their choice to the coordinators.
       They may also choose with the coordinators which one of the seven possible
-      <a class="af" href="/solutions">solutions</a> to apply for the realization
+      <nuxt-link to="/integration#solutions" class="af">solutions</nuxt-link> to apply for the realization
       of the project’s will:<br /><br />
       - Turns or experimentations, starting from the most voted<br />
       - Give a definite time to test the previous situation and then vote
@@ -87,7 +87,7 @@
       - Evaluate things through data, common values or objective criterias and
       vote again<br />
       - Combine using the
-      <a class="af" href="/integration">proportional creative integration</a>
+      <nuxt-link to="/integration" class="af">proportional creative integration</nuxt-link>
       the different solutions or give people -or the same solutions- specific
       roles<br />
     </p>
@@ -103,7 +103,16 @@
       2: VOTING IS INFORMATIVE The voting results are indicators of the
       participants will, they do not explicitly determine a final decision,
       because winning and losing the voting process is substituted by
-      <a class="af" href="/integration">proportional creative integration</a>.
+      <nuxt-link to="/integration" class="af">proportional creative integration</nuxt-link>.
     </p>
   </div>
 </template>
+<script>
+export default {
+  head() {
+    return {
+      title: 'Cooperacy - Governance'
+    }
+  }
+}
+</script>

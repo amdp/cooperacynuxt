@@ -34,7 +34,6 @@ var countries = (function() {
               ++o
             )
               if (void 0 !== l[a[o].id]) {
-                console.log(' ' + JSON.stringify(l[a[o].id].CCI))
                 var i =
                   127 +
                   Math.round(((l[a[o].id].CCI - r[0]) / (r[1] - r[0])) * 127)

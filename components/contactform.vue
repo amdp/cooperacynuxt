@@ -124,20 +124,17 @@ export default {
   name: 'contactForm',
   data() {
     return {
-      formName: '',
-      formEmail: '',
-      formSubject: '',
-      formBody: '',
-      response: '',
-      recaptchaToken: '',
+      formName: null,
+      formEmail: null,
+      formSubject: null,
+      formBody: null,
+      response: null,
+      recaptchaToken: null,
       envrecaptcha: process.env.RECAPTCHA
     }
   },
   components: {
     VueRecaptcha
-  },
-  mounted() {
-    console.log(' ' + JSON.stringify(this.envrecaptcha))
   },
   methods: {
     submit() {
@@ -160,8 +157,7 @@ export default {
       }
       try {
         const res = await this.$store.dispatch('contactEmailAction', message)
-        this.formName = this.formEmail = this.formSubject = this.formBody = this.recaptchaToken =
-          ''
+        this.formName = this.formEmail = this.formSubject = this.formBody = this.recaptchaToken = null
         this.response = res.message
       } catch (error) {
         console.log(error)

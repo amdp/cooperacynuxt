@@ -158,6 +158,11 @@ import comment from '@/components/comment'
 
 export default {
   middleware: ['auth'],
+  head() {
+    return {
+      title: 'Cooperacy - Project: ' + this.oneproject.name
+    }
+  },
   components: { votebar: votebar, comment: comment },
   async fetch({ store, params }) {
     await store.dispatch('getCommentAction', {
@@ -186,14 +191,6 @@ export default {
           project => project.id == this.$route.params.id
         ) == -1
       ) {
-        console.log(
-          ' ' +
-            JSON.stringify(
-              this.$store.state.project.findIndex(
-                project => project.id == this.$route.params.id
-              )
-            )
-        )
         this.$store.dispatch('getProjectAction', {
           projectid: this.$route.params.id,
           userid: this.$store.state.auth.user.id
