@@ -375,6 +375,11 @@ a.disabled {
   cursor: pointer;
   max-height: 70px;
 }
+@media (max-width: 992px) and (orientation: landscape) {
+  .img-logo {
+    max-height: 40px;
+  }
+}
 .nav-item {
   margin: 0 10px;
 }
@@ -495,8 +500,7 @@ a.disabled {
     padding-top: 120px;
   }
 }
-
-@media (max-width: 576px) {
+@media (max-width: 576px) and (orientation: portrait) {
   .main {
     padding-top: 50px;
   }
