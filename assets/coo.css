@@ -373,6 +373,7 @@ a.disabled {
 .img-logo {
   z-index: 6;
   cursor: pointer;
+  max-height: 70px;
 }
 .nav-item {
   margin: 0 10px;
@@ -486,13 +487,21 @@ a.disabled {
   width: 5%;
 }
 .main {
-  margin-top: 10vw;
+  padding-top: 90px;
 }
-@media (max-width: 900px) {
+
+@media (min-width: 1200px) {
   .main {
-    margin-top: 17vw;
+    padding-top: 120px;
   }
 }
+
+@media (max-width: 576px) {
+  .main {
+    padding-top: 50px;
+  }
+}
+
 .headerlogo {
   height: 60px;
 }
