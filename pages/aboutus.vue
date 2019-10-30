@@ -9,9 +9,9 @@
         Cooperacy is a nonprofit project aiming to support our social ecosystem
         fostering the enjoyment of cooperation: on a more technical side, this
         is achieved transforming the current
-        <a href="https://en.wikipedia.org/wiki/Pareto_distribution" class="au">
-          power law
-        </a>
+        <a href="https://en.wikipedia.org/wiki/Pareto_distribution" class="au"
+          >power law</a
+        >
         distribution of resources, decisions and activities into a more even
         one.<br /><br />
         The

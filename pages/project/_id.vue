@@ -212,7 +212,9 @@ export default {
         anonymous: this.oneproject.anonymous,
         parent: this.oneproject.parent,
         budget: this.oneproject.budget,
-        hudget: this.oneproject.hudget
+        hudget: this.oneproject.hudget,
+        country: this.oneproject.country,
+        place: this.oneproject.place
       })
       return this.$router.push({ path: '/project/user' })
     },
