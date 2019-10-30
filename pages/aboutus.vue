@@ -88,12 +88,12 @@
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-center">
           <img
             class="about"
-            src="~/assets/image/page/aboutus/alessia.png"
+            src="~/assets/image/page/aboutus/ali.png"
             alt="null"
           /><br />
           <p>
-            Alessia De Santis<br />
-            <i>Public Administration Projects</i>
+            Ali Akhtari<br />
+            <i>Front-End Developer</i>
           </p>
         </div>
       </div>
@@ -101,12 +101,12 @@
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-center">
           <img
             class="about"
-            src="~/assets/image/page/aboutus/giosetta.png"
+            src="~/assets/image/page/aboutus/alessia.png"
             alt="null"
           /><br />
           <p>
-            Giosetta Ciuffa<br />
-            <i>External Relations</i>
+            Alessia De Santis<br />
+            <i>Public Administration Projects</i>
           </p>
         </div>
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-center">
@@ -123,36 +123,12 @@
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-center">
           <img
             class="about"
-            src="~/assets/image/page/aboutus/ali.png"
-            alt="null"
-          /><br />
-          <p>
-            Ali Akhtari<br />
-            <i>Front-End Developer</i>
-          </p>
-        </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-center">
-          <img
-            class="about"
             src="~/assets/image/page/aboutus/ilario.png"
             alt="null"
           /><br />
           <p>
             Ilario Tito<br />
             <i>Co-founder</i>
-          </p>
-        </div>
-      </div>
-      <div class="row" style="display: flex; justify-content: center;">
-        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-center">
-          <img
-            class="about"
-            src="~/assets/image/page/aboutus/sara.png"
-            alt="null"
-          /><br />
-          <p>
-            Sara Conallo<br />
-            <i>Jackie of All Trades</i>
           </p>
         </div>
         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 text-center">
@@ -163,7 +139,7 @@
           /><br />
           <p>
             Enea Barbetta<br />
-            <i>Main Developer</i>
+            <i>Developer</i>
           </p>
         </div>
       </div>
