@@ -128,7 +128,7 @@ export default {
       formEmail: null,
       formSubject: null,
       formBody: null,
-      response: null,
+      response: [],
       recaptchaToken: null,
       envrecaptcha: process.env.RECAPTCHA
     }
