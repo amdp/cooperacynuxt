@@ -555,17 +555,11 @@ a.disabled {
 }
 
 /* other */
-@media (max-width: 576px) {
-  img.page-header {
-    height: 30vh;
-    object-fit: cover;
-  }
-}
+
 .circle {
   margin: 0 auto;
   height: 60vh;
   position: relative;
-  margin-top: 3vh;
 }
 .baset {
   text-align: justify;
@@ -707,7 +701,7 @@ img.page-header {
     padding-top: 50px;
   }
   img.page-header {
-    width: 90%;
+    width: 100%;
   }
 }
 img.page-header img.news {
