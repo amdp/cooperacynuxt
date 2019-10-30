@@ -95,7 +95,7 @@
                   :src="userImage(subcomment.user)"
                 />
               </div>
-              <div class="col-10 col-md-1 p-0">{{ subcomment.content }}</div>
+              <div class="col-10 col-md-11">{{ subcomment.content }}</div>
             </div>
             <div class="row">
               <div class="col-12 space t10 up text-right">
