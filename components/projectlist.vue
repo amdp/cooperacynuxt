@@ -76,7 +76,7 @@
           <votebar :voteprop="archived" proptype="project" class="mb-4" />
 
           <p class="text-left">
-            &#128205; {{ getProjectLocation(archived.place) }}
+            &#127757; {{ getProjectLocation(archived.place) }}
           </p>
           <div class="progress">
             <div
