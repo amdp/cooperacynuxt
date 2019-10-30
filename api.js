@@ -49,7 +49,7 @@ app.get('/project', async function(req, res, next) {
     }
 
     const [project] = await mypool.execute(query, param)
-    res.sendStatus(project)
+    res.send(project)
   } catch (err) {
     next(err)
   }
@@ -63,7 +63,7 @@ app.get('/comment', async function(req, res, next) {
       ' WHERE comment.project = ? ORDER BY id DESC'
     let param = [req.query.projectid]
     const [comment] = await mypool.execute(query, param)
-    res.sendStatus(comment)
+    res.send(comment)
   } catch (err) {
     next(err)
   }
@@ -75,7 +75,7 @@ app.get('/userproject', async function(req, res, next) {
       'SELECT * FROM `project` WHERE `id` IN (SELECT `project` FROM `userproject` WHERE `user`=?)'
     let param = [req.query.userid]
     const [project] = await mypool.execute(query, param)
-    res.sendStatus(project)
+    res.send(project)
   } catch (err) {
     next(err)
   }
@@ -94,7 +94,7 @@ app.get('/uservote', async function(req, res, next) {
     }
 
     const [uservote] = await mypool.execute(query, param)
-    res.sendStatus(uservote)
+    res.send(uservote)
   } catch (err) {
     next(err)
   }
@@ -120,7 +120,7 @@ app.get('/user', async function(req, res, next) {
       let query = 'SELECT * FROM `user` AS `user` WHERE `user`.`id` =  ?'
       let param = [id.id]
       const [user] = await mypool.execute(query, param)
-      res.sendStatus({ user: user[0] })
+      res.send({ user: user[0] })
     } catch (err) {
       next(err)
     }
@@ -135,7 +135,7 @@ app.get('/userlist', async function(req, res, next) {
       '`paymentdeadline`,`paypalagreementid`,`created`,`updated` FROM `user`'
     let param = []
     const [userlist] = await mypool.execute(query, param)
-    res.sendStatus(userlist)
+    res.send(userlist)
   } catch (err) {
     next(err)
   }
@@ -146,7 +146,7 @@ app.get('/category', async function(req, res, next) {
     let query = 'SELECT * FROM `category` WHERE `category`.`id`!= ?'
     let param = [0]
     const [category] = await mypool.execute(query, param)
-    res.sendStatus(category)
+    res.send(category)
   } catch (err) {
     next(err)
   }
@@ -157,7 +157,7 @@ app.get('/tag', async function(req, res, next) {
     let query = 'SELECT * FROM `tag` where `project`=?'
     let param = [req.query.projectid]
     const [tag] = await mypool.execute(query, param)
-    res.sendStatus(tag)
+    res.send(tag)
   } catch (err) {
     next(err)
   }
@@ -168,7 +168,7 @@ app.get('/place', async function(req, res, next) {
     let query = 'SELECT `id`, `country`, `name` FROM `place`'
     let param = []
     const [place] = await mypool.execute(query, param)
-    res.sendStatus(place)
+    res.send(place)
   } catch (err) {
     next(err)
   }
@@ -179,7 +179,7 @@ app.get('/country', async function(req, res, next) {
     let query = 'SELECT `id`, `name` FROM `country`'
     let param = []
     const [country] = await mypool.execute(query, param)
-    res.sendStatus(country)
+    res.send(country)
   } catch (err) {
     next(err)
   }
@@ -190,7 +190,7 @@ app.get('/news', async function(req, res, next) {
     let query = 'SELECT * FROM `news` ORDER BY `news`.`date` DESC'
     let param = []
     const [news] = await mypool.execute(query, param)
-    res.sendStatus(news)
+    res.send(news)
   } catch (err) {
     next(err)
   }
@@ -201,7 +201,7 @@ app.get('/news', async function(req, res, next) {
 app.put('/user', async function(req, res, next) {
   if (!req.body.name || !req.body.password) {
     res.status(400)
-    res.sendStatus({ error: 'Bad data' })
+    res.send({ error: 'Bad data' })
   } else {
     bcrypt.hash(req.body.password, 10, async function(err, hash) {
       req.body.password = hash
@@ -216,7 +216,7 @@ app.put('/user', async function(req, res, next) {
           req.body.id
         ]
         const [user] = await mypool.execute(query, param)
-        res.sendStatus('updated: ' + user)
+        res.send('updated: ' + user)
       } catch (err) {
         next(err)
       }
@@ -250,7 +250,7 @@ app.post('/login', async function(req, res, next) {
             return res.status(500).send("The user hasn't been activated yet.")
           }
           if (user.paymentdeadline.toJSON().slice(0, 10) >= today) {
-            res.sendStatus({ token: { accessToken } })
+            res.send({ token: { accessToken } })
           } else {
             res.status(401).send('Bank transfer membership has expired')
           }
@@ -291,16 +291,14 @@ app.post('/login', async function(req, res, next) {
             })
             let list = transaction.data.agreement_transaction_list
             if (list[list.length - 1].status == 'Completed') {
-              res.sendStatus({ token: { accessToken } })
+              res.send({ token: { accessToken } })
             } else if (
               list[list.length - 1].status == 'Updated' &&
               list[list.length - 2].status == 'Completed'
             ) {
-              res.sendStatus({ token: { accessToken } })
+              res.send({ token: { accessToken } })
             } else {
-              res.sendStatus(
-                'Paypal membership has expired or has been suspended'
-              )
+              res.send('Paypal membership has expired or has been suspended')
             }
           } catch (err) {
             next(err)
@@ -312,7 +310,7 @@ app.post('/login', async function(req, res, next) {
 })
 
 app.post('/logout', (req, res) => {
-  res.sendStatus({ status: 'OK' })
+  res.send({ status: 'OK' })
 })
 
 app.post('/checkpassword', async function(req, res, next) {
@@ -327,10 +325,9 @@ app.post('/checkpassword', async function(req, res, next) {
   }
   async function checkpassword(user) {
     if (user) {
-      if (bcrypt.compareSync(req.body.password, user.password))
-        res.sendStatus(true)
-      else res.sendStatus(false)
-    } else res.sendStatus(false)
+      if (bcrypt.compareSync(req.body.password, user.password)) res.send(true)
+      else res.send(false)
+    } else res.send(false)
   }
 })
 
@@ -388,7 +385,7 @@ app.post('/recoverpassword', async function(req, res, next) {
         res.render('index')
       })
     } else {
-      res.sendStatus('No user with this email')
+      res.send('No user with this email')
     }
   }
   async function setuppassword() {
@@ -404,7 +401,7 @@ app.post('/recoverpassword', async function(req, res, next) {
       let query = 'UPDATE `user` SET `password`=? WHERE `id`=?'
       let param = [newhashedpassword, id]
       await mypool.execute(query, param)
-      res.sendStatus('updated')
+      res.send('updated')
     } catch (err) {
       next(err)
     }
@@ -423,13 +420,13 @@ app.post('/place', async function(req, res, next) {
   }
   async function newplace(place) {
     if (place) {
-      res.sendStatus('exists')
+      res.send('exists')
     } else {
       try {
         let query = 'INSERT INTO `place` (`country`,`name`) VALUES (?,?)'
         let param = [req.body.country, req.body.name]
         const [place] = await mypool.execute(query, param)
-        res.sendStatus({ id: place.insertId })
+        res.send({ id: place.insertId })
       } catch (err) {
         next(err)
       }
@@ -457,7 +454,7 @@ app.post('/project', async function(req, res, next) {
         req.body.id
       ]
       await mypool.execute(query, param)
-      res.sendStatus(req.body.id)
+      res.send(req.body.id)
     } catch (err) {
       next(err)
     }
@@ -467,7 +464,7 @@ app.post('/project', async function(req, res, next) {
       let param = [req.body.name]
       const [project] = await mypool.execute(query, param)
       if (project[0]) {
-        res.sendStatus('exists')
+        res.send('exists')
       } else {
         addproject()
       }
@@ -494,7 +491,7 @@ app.post('/project', async function(req, res, next) {
         req.body.hudget
       ]
       const [project] = await mypool.execute(query, param)
-      res.sendStatus({ id: project.insertId })
+      res.send({ id: project.insertId })
     } catch (err) {
       next(err)
     }
@@ -521,7 +518,7 @@ app.post('/comment', async function(req, res, next) {
       let query = 'SELECT * FROM `comment` WHERE `id` = ?'
       let param = [req.body.id]
       let [comment] = await mypool.execute(query, param)
-      res.sendStatus(comment[0])
+      res.send(comment[0])
     } catch (err) {
       next(err)
     }
@@ -546,7 +543,7 @@ app.post('/comment', async function(req, res, next) {
       let query = 'SELECT * FROM `comment` WHERE `id` = ?'
       let param = [returned.insertId]
       let [comment] = await mypool.execute(query, param)
-      res.sendStatus(comment[0])
+      res.send(comment[0])
     } catch (err) {
       next(err)
     }
@@ -564,7 +561,7 @@ app.post('/user', async function(req, res, next) {
   }
   async function newuser(user) {
     if (user) {
-      res.sendStatus('exists')
+      res.send('exists')
     } else {
       let hashed = await bcrypt.hash(req.body.password, 10)
       try {
@@ -578,7 +575,7 @@ app.post('/user', async function(req, res, next) {
           req.body.paypalagreementid
         ]
         let [user] = await mypool.execute(query, param)
-        res.sendStatus({ id: user[0].insertId })
+        res.send({ id: user[0].insertId })
       } catch (err) {
         next(err)
       }
@@ -592,7 +589,7 @@ app.post('/tag', async function(req, res, next) {
       let query = 'INSERT INTO `tag` (`project`,`name`) VALUES (?,?)'
       let param = [req.body.project, req.body.name]
       let [tag] = await mypool.execute(query, param)
-      res.sendStatus(tag)
+      res.send(tag)
     } catch (err) {
       next(err)
     }
@@ -601,7 +598,7 @@ app.post('/tag', async function(req, res, next) {
       let query = 'DELETE FROM `tag` where `project` = ? and `name` = ?'
       let param = [req.body.project, req.body.name]
       let [tag] = await mypool.execute(query, param)
-      res.sendStatus(tag)
+      res.send(tag)
     } catch (err) {
       next(err)
     }
@@ -623,7 +620,7 @@ app.post('/image', async function(req, res, next) {
         .quality(60)
         .write(uploadPath)
     })
-    res.sendStatus({ status: 'OK', id: req.body.id })
+    res.send({ status: 'OK', id: req.body.id })
   } catch (err) {
     next(err)
   }
@@ -703,7 +700,7 @@ app.post('/cci', async function(req, res, next) {
     let query = 'SELECT * FROM `CCI' + req.body.cciyear + '`'
     let param = []
     let [CCI] = await mypool.execute(query, param)
-    res.sendStatus(CCI)
+    res.send(CCI)
   } catch (err) {
     next(err)
   }
@@ -718,7 +715,7 @@ app.get('/map', async function(req, res, next) {
       let country = CCI[i]['country']
       ccimakeup[country] = CCI[i]
     }
-    res.sendStatus(ccimakeup)
+    res.send(ccimakeup)
   } catch (err) {
     next(err)
   }
@@ -744,7 +741,7 @@ app.post('/vote', async function(req, res, next) {
   } catch (err) {
     next(err)
   }
-  res.sendStatus('OK')
+  res.send('OK')
 
   async function addvote() {
     try {
@@ -999,7 +996,7 @@ app.post('/resetvoting', async function(req, res, next) {
       next(err)
     }
   }
-  res.sendStatus('OK')
+  res.send('OK')
 })
 
 module.exports = {
@@ -1022,7 +1019,7 @@ axios({method: 'get', url: 'https://api.paypal.com/v1/billing/plans/P-9C681042E7
 STANDARD API CHECK NOT WORKING WITH OLD AGREEMENTS:
 paypal.billingAgreement.get(agreementid,function(err,agreement)
 {if(agreement){if(agreement.state=='Active'){res.json({token:{accessToken} })}}
-if(agreement){if(agreement.state=='Suspended' || agreement.state=='Cancelled'){res.sendStatus('expired')} }
+if(agreement){if(agreement.state=='Suspended' || agreement.state=='Cancelled'){res.send('expired')} }
 if(err){console.log(err.response.data);console.log('Proceeding with other membership test: '+JSON.stringify(err.response.message))})
 
 ADD DESCRIPTION:
