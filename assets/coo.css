@@ -697,12 +697,19 @@ hr.home-hr {
 img.page-header {
   margin-top: 0px;
   margin-bottom: 60px;
-  width: 90vw;
   height: auto;
   vertical-align: top;
   border: none;
+  width: 75%;
 }
-
+@media (max-width: 768px) {
+  .page-container {
+    padding-top: 50px;
+  }
+  img.page-header {
+    width: 90%;
+  }
+}
 img.page-header img.news {
   margin-top: 10px;
   margin-bottom: 20px;
