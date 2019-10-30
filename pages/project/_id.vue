@@ -128,6 +128,10 @@ import comment from '@/components/comment'
 
 export default {
   middleware: ['auth'],
+  validate({ params }) {
+    // Must be a number
+    return /^\d+$/.test(params.id)
+  },
   head() {
     return {
       title: 'Cooperacy - Project: ' + this.oneproject.name
@@ -216,7 +220,7 @@ export default {
         country: this.oneproject.country,
         place: this.oneproject.place
       })
-      return this.$router.push({ path: '/project/user' })
+      return this.$router.push({ path: '/user' })
     },
     async addtag() {
       if (this.formTag) {

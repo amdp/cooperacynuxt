@@ -454,7 +454,7 @@ app.post('/project', async function(req, res, next) {
         req.body.id
       ]
       await mypool.execute(query, param)
-      res.send(req.body.id)
+      res.send({ id: req.body.id })
     } catch (err) {
       next(err)
     }
