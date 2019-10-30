@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="circle mb-md-5">
+    <div class="circle mb-md-3">
       <svg
         xmlns:xlink="http://www.w3.org/1999/xlink"
         width="100%"
@@ -161,11 +161,6 @@
 
 <style>
 /* HOME PAGE CIRCLE AND FADING ANIMATIONS, SEE ALSO STYLE SPECIFICATION IN SINGLE PREVIOUS ELEMENTS */
-.circle {
-  margin: 0 auto;
-  height: 60vh;
-  position: relative;
-}
 #coocircle {
   transform-origin: center center;
   -webkit-transform-origin: center center;
