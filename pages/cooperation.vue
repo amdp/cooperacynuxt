@@ -24,12 +24,7 @@
     </p>
 
     <br />
-    <p id="diversity" name="diversity">
-      <img
-        class="page-header"
-        src="~/assets/image/page/banners/diversity.png"
-      />
-    </p>
+    <img class="page-header" src="~/assets/image/page/banners/diversity.png" />
     <br />
 
     <p class="subheading diversity center space margin">WE'RE ALL DIFFERENT</p>
@@ -72,12 +67,10 @@
     </p>
 
     <br />
-    <p id="understanding" name="understanding">
-      <img
-        class="page-header"
-        src="~/assets/image/page/banners/understanding.png"
-      />
-    </p>
+    <img
+      class="page-header"
+      src="~/assets/image/page/banners/understanding.png"
+    />
     <br />
 
     <p class="subheading understanding center space margin">
@@ -121,9 +114,7 @@
     </p>
 
     <br />
-    <p id="freedom" name="freedom">
-      <img class="page-header" src="~/assets/image/page/banners/freedom.png" />
-    </p>
+    <img class="page-header" src="~/assets/image/page/banners/freedom.png" />
     <br />
 
     <p class="subheading freedom center space margin">CHOICES</p>
@@ -164,12 +155,10 @@
     </p>
 
     <br />
-    <p id="transparency" name="transparency">
-      <img
-        class="page-header"
-        src="~/assets/image/page/banners/transparency.png"
-      />
-    </p>
+    <img
+      class="page-header"
+      src="~/assets/image/page/banners/transparency.png"
+    />
     <br />
 
     <p class="subheading transparency center space margin">TRUTH OR CONTEXT?</p>
@@ -209,9 +198,7 @@
     </p>
 
     <br />
-    <p id="care" name="care">
-      <img class="page-header" src="~/assets/image/page/banners/care.png" />
-    </p>
+    <img class="page-header" src="~/assets/image/page/banners/care.png" />
     <br />
 
     <p class="subheading care center space margin">COORDINATION</p>
@@ -252,9 +239,7 @@
     </p>
 
     <br />
-    <p id="trust" name="trust">
-      <img class="page-header" src="~/assets/image/page/banners/trust.png" />
-    </p>
+    <img class="page-header" src="~/assets/image/page/banners/trust.png" />
     <br />
 
     <p class="subheading trust center space margin">WHAT IS TRUST?</p>
@@ -314,12 +299,10 @@
     </p>
 
     <br />
-    <p id="equivalence" name="equivalence">
-      <img
-        class="page-header"
-        src="~/assets/image/page/banners/equivalence.png"
-      />
-    </p>
+    <img
+      class="page-header"
+      src="~/assets/image/page/banners/equivalence.png"
+    />
     <br />
 
     <p class="subheading equivalence center space margin">EQUALITY?</p>
