@@ -6,14 +6,14 @@
       class="navbar d-flex justify-content-start flex-wrap"
       @mouseleave="navState = null"
     >
-      <nuxt-link
-        @click.native="hideNav"
-        to="/"
-        tag="img"
-        class="img-logo col-6 col-sm-4 col-lg-2 p-0"
-        :src="wordLogo"
-      >
-      </nuxt-link>
+      <div class="col-6 col-sm-4 col-lg-2 p-0" @click.native="hideNav">
+        <nuxt-link
+          to="/"
+          tag="img"
+          class="img-logo img-responsive img-fluid"
+          :src="wordLogo"
+        />
+      </div>
       <div class="col-8 d-flex flex-column h-100 nav-menu-container">
         <div class="navbar-menu w-100 text-center">
           <div class="nav" @mouseenter="navState = 'project'">
