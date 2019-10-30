@@ -1,7 +1,7 @@
 <template>
   <div class="page-container">
-    <br /><img
-      class="page-header"
+    <img
+      class="page-header col-md-8"
       src="~/assets/image/page/banners/platform.png"
     />
 
@@ -27,11 +27,13 @@
     <p class="base">
       The platform distributes the common money and resources to the ideas
       according to how much they are desired by the participants. Expressing
-      their <nuxt-link to="/cooperation#diversity" class="ae">preferences</nuxt-link> through
-      <nuxt-link to="/cooperation#diversity" class="ae">transparent</nuxt-link> votes, the
-      common collected money goes
-      <nuxt-link to="/integration" class="ae">proportionally</nuxt-link> to the ideas
-      according to how many votes they received. Keeping it simple: people
+      their
+      <nuxt-link to="/cooperation#diversity" class="ae">preferences</nuxt-link>
+      through
+      <nuxt-link to="/cooperation#diversity" class="ae">transparent</nuxt-link>
+      votes, the common collected money goes
+      <nuxt-link to="/integration" class="ae">proportionally</nuxt-link> to the
+      ideas according to how many votes they received. Keeping it simple: people
       propose <i>ideas</i>, <i>votes</i> allocate the common money.
     </p>
 
@@ -48,12 +50,12 @@
     </p>
     <p class="base">
       An artificial intelligence will learn from all the
-      <nuxt-link to="/science" class="au">data</nuxt-link> coming from the platform and
-      suggest, in the long run, best practices in order to help the people to
-      realise their ideas. Moreover, the participants can communicate their
-      happiness, so that the "deep learning ecosystem" will base its suggestions
-      not only on data, but also on the most human, irrational and personal
-      information of all: mood.
+      <nuxt-link to="/science" class="au">data</nuxt-link> coming from the
+      platform and suggest, in the long run, best practices in order to help the
+      people to realise their ideas. Moreover, the participants can communicate
+      their happiness, so that the "deep learning ecosystem" will base its
+      suggestions not only on data, but also on the most human, irrational and
+      personal information of all: mood.
     </p>
 
     <p class="base">
@@ -66,7 +68,8 @@
     <p class="base">
       We would be very happy to see you on board. One euro per month is really a
       small effort to see how much can be done when we join our forces.<br /><br />
-      Enter the <nuxt-link to="/login" class="ae">Cooperacy</nuxt-link> Platform.. let's
+      Enter the
+      <nuxt-link to="/login" class="ae">Cooperacy</nuxt-link> Platform.. let's
       start doing things together!
     </p>
   </div>
