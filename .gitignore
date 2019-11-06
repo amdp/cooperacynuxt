@@ -2,7 +2,6 @@
 
 # Main config
 .env
-dumbenv.env
 
 #sublime
 *.sublime-project
