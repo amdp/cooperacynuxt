@@ -6,7 +6,6 @@ Carmine Grossi  -    cgrossi@gmail.com
 bowor (athxp)
 Vaela Nightos   -    vaela@kenoshi.me
 Peter Luczynski -    peter.luczynsky@gmail.com
-Jason Scotto    -    jayjscotto@gmail.com
 ```
 NUXTERS
 
@@ -17,6 +16,7 @@ APPRENTICES
 CONTRIBUTORS (DEVELOPERS)
 ```
 Alireza Ghey    -   https://github.com/alirezaghey
+Jason Scotto    -   https://github.com/jayjscotto
 ```
 
 
