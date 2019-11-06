@@ -1696,7 +1696,7 @@ CREATE TABLE `user` (
   CONSTRAINT `user_ibfk_2` FOREIGN KEY (`role`) REFERENCES `role` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 INSERT INTO `user` (`id`, `name`, `surname`, `email`, `password`, `E`, `T`, `C`, `I`, `F`, `U`, `D`, `active`, `role`, `remember_token`, `paymentdeadline`, `paypalagreementid`, `created`, `updated`) VALUES
-(7,	'Alessandro',	'Merletti De Palo',	'alessandromerlettidepalo@gmail.com',	‘dumb-passwordgoeshere’,	29,	9,	13,	4,	7,	0,	13,	1,	2,	NULL,	NULL,	'I-LYDVA4W364J0',	'2017-07-21 17:37:37',	'2019-07-07 14:53:22');
+(7,	'Alessandro',	'Merletti De Palo',	'alessandromerlettidepalo@gmail.com',	'dumb-passwordgoeshere',	29,	9,	13,	4,	7,	0,	13,	1,	2,	NULL,	NULL,	'I-LYDVA4W364J0',	'2017-07-21 17:37:37',	'2019-07-07 14:53:22');
 DROP TABLE IF EXISTS `userproject`;
 CREATE TABLE `userproject` (
   `project` int(11) NOT NULL,
