@@ -305,6 +305,9 @@ a:hover {
 .up {
   text-transform: uppercase;
 }
+.justify {
+  text-align: justify;
+}
 .sweetround {
   border-radius: 20px;
 }

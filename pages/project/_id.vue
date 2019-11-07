@@ -11,8 +11,9 @@
         class="project-details col-12 col-md-8 d-flex flex-column align-items-center justify-content-center text-center"
       >
         <h2 class="font-weight-light">{{ oneproject.name.toUpperCase() }}</h2>
-        <small>{{ oneproject.brief }}</small>
-        <p>{{ oneproject.content }}</p>
+        <small class="mb-2 up">{{ oneproject.brief }}</small>
+        <small class="mb-2"> <strong>STAGE: </strong> {{ stage.name }} </small>
+        <p class="justify">{{ oneproject.content }}</p>
         <p>
           <strong>PROJECT BASED IN:</strong>
           {{ oneproject.place + ', ' + oneproject.country }}
@@ -50,7 +51,6 @@
           <strong>PARENT PROJECT: </strong> {{ oneproject.parent }}
         </small>
         <small> <strong>CATEGORY: </strong> {{ category.name }} </small>
-        <small> <strong>STATE: </strong> {{ stage.name }} </small>
       </div>
       <votebar
         :voteprop="oneproject"
@@ -58,8 +58,22 @@
         :voteId="oneproject.id"
       />
       <div class="col-12 mt-4">
-        <b-link class="au" @click="edit">Edit this project</b-link>
-        <b-link class="ae" @click="archive">Archive this project</b-link>
+        <b-link class="au" v-if="oneproject.stage != 1" @click="edit"
+          >Edit this project</b-link
+        >
+        <b-link
+          class="ae"
+          v-if="oneproject.stage != 1 && this.$auth.user.role == 1"
+          @click="archive"
+          >Archive this project</b-link
+        >
+        <b-link
+          class="au"
+          v-if="oneproject.stage == 1 && this.$auth.user.role == 1"
+          @click="unarchive"
+          >Resume this project</b-link
+        >
+        <b-link class="at" @click="copy">Copy this project</b-link>
       </div>
     </div>
     <div class="comments-container w-100 mt-5">
@@ -149,8 +163,6 @@ export default {
       projectid: params.id,
       userid: store.state.auth.user.id
     })
-
-    //await store.dispatch('getUserprojectAction', { projectid: params.id, limit:' LIMIT 1', userid: store.state.auth.user.id,})
   },
   data() {
     return {
@@ -201,10 +213,6 @@ export default {
     }
   },
   methods: {
-    edit() {
-      this.$store.dispatch('editSwitchAction', this.$route.params.id)
-      return this.$router.push({ path: '/project/form' })
-    },
     archive() {
       this.$store.dispatch('projectFormAction', {
         stage: 1,
@@ -220,7 +228,28 @@ export default {
         country: this.oneproject.country,
         place: this.oneproject.place
       })
+      this.$store.dispatch('getUserProjectAction', {
+        userid: this.$auth.user.id
+      })
       return this.$router.push({ path: '/user' })
+    },
+    edit() {
+      this.$store.dispatch('editSwitchAction', { id: this.$route.params.id })
+      return this.$router.push({ path: '/project/form' })
+    },
+    unarchive() {
+      this.$store.dispatch('editSwitchAction', { id: this.$route.params.id })
+      return this.$router.push({ path: '/project/form' })
+    },
+    copy() {
+      this.$store.dispatch('editSwitchAction', {
+        id: this.$route.params.id,
+        copy: true
+      })
+      this.$store.dispatch('getUserProjectAction', {
+        userid: this.$auth.user.id
+      })
+      return this.$router.push({ path: '/project/form' })
     },
     async addtag() {
       if (this.formTag) {
