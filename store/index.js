@@ -31,7 +31,7 @@ export const state = () => ({
       id: 3,
       name: 'Ecosystem and Wellbeing'
     },
-    { id: 4, name: 'Reporting' },
+    { id: 4, name: 'Voting Proposals and Reporting' },
     {
       id: 5,
       name: 'Location-based - For official cities, nations, places'
