@@ -183,7 +183,7 @@
           <b-form-input
             id="budgetInput"
             v-model="formBudget"
-            @keypress="totalnonfunded"
+            @keyup="totalfreeproject"
           ></b-form-input>
         </b-form-group>
         <b-form-group
@@ -194,11 +194,11 @@
           <b-form-input
             id="hudgetInput"
             v-model="formHudget"
-            @keypress="totalnonfunded"
+            @keyup="totalfreeproject"
           ></b-form-input>
         </b-form-group>
         <h6 class="trust" v-if="this.totallabel != -1">
-          TOTAL NON-FUNDED BUDGET: {{ totallabel }}
+          TOTAL FREE PROJECT BUDGET: {{ totallabel }}
         </h6>
         <b-button
           type="submit"
@@ -249,14 +249,15 @@ export default {
     }
   },
   async fetch({ store, params }) {
-    await store.dispatch('getCategoryAction')
     await store.dispatch('getPlaceAction')
     await store.dispatch('getCountryAction')
-    await store.dispatch('getProjectAction', {
-      projectid: store.state.edit.id,
-      limit: ' LIMIT 1',
-      userid: store.state.auth.user.id
-    })
+    if (store.state.edit.id) {
+      await store.dispatch('getProjectAction', {
+        projectid: store.state.edit.id,
+        limit: ' LIMIT 1',
+        userid: store.state.auth.user.id
+      })
+    }
   },
   data() {
     return {
@@ -265,7 +266,7 @@ export default {
       budgetlabel: 'Fee:',
       hudgetlabel: 'Minimum participants:',
       budgetdesc:
-        'Insert the amount the project participants should pay to participate',
+        'Insert the amount the project participants should pay to participate (courses, concerts..) or leave 0 for free participation',
       hudgetdesc:
         'Insert the minimum number of paying participants so that the project is sustainable',
       placedesc: 'Insert the country and location of your project idea',
@@ -273,55 +274,55 @@ export default {
       formAnonymous: 0,
       formNewcountry: null,
       formNewplace: null,
-      formName: this.$store.state.project[0]
+      formName: this.$store.state.edit.id
         ? this.$store.state.project[0].name
         : null,
-      formCountry: this.$store.state.project[0]
+      formCountry: this.$store.state.edit.id
         ? this.$store.state.project[0].country
         : null,
-      formPlace: this.$store.state.project[0]
+      formPlace: this.$store.state.edit.id
         ? this.$store.state.project[0].place
         : 'Cooperacy',
-      formBrief: this.$store.state.project[0]
+      formBrief: this.$store.state.edit.id
         ? this.$store.state.project[0].brief
         : null,
-      formContent: this.$store.state.project[0]
+      formContent: this.$store.state.edit.id
         ? this.$store.state.project[0].content
         : null,
       formImageFile: null,
-      formVideo: this.$store.state.project[0]
+      formVideo: this.$store.state.edit.id
         ? this.$store.state.project[0].video
         : null,
-      formParent: this.$store.state.project[0]
+      formParent: this.$store.state.edit.id
         ? this.$store.state.project[0].parent
         : 1,
-      formCategory: this.$store.state.project[0]
+      formCategory: this.$store.state.edit.id
         ? this.$store.state.project[0].category
         : null,
       formStageFunding: 5,
-      formBudget: this.$store.state.project[0]
+      formBudget: this.$store.state.edit.id
         ? Math.round(this.$store.state.project[0].budget)
-        : '0',
-      formHudget: this.$store.state.project[0]
+        : 0,
+      formHudget: this.$store.state.edit.id
         ? this.$store.state.project[0].hudget
-        : '2'
+        : 2
     }
   },
   mounted() {
     if (
-      this.$store.state.project[0] &&
+      this.$store.state.edit.id &&
       this.$store.state.project[0].anonymous == 1
     ) {
       return (this.formAnonymous = 1)
     }
-    if (
-      this.$store.state.project[0] &&
-      this.$store.state.project[0].stage != 5
-    ) {
+    if (this.$store.state.edit.id && this.$store.state.project[0].stage != 5) {
       return (this.formStageFunding = 7), this.funded()
     }
-    if (this.$store.state.project[0] && this.$store.state.project[0].place) {
+    if (this.$store.state.edit.id && this.$store.state.project[0].place) {
       return (this.formPlace = this.$store.state.project[0].place)
+    }
+    if (this.$store.state.edit.id && this.$store.state.project[0].stage == 5) {
+      totalfreeproject()
     }
   },
   computed: {
@@ -368,8 +369,25 @@ export default {
         this.totallabel = -1
       }
     },
-    totalnonfunded() {
+    totalfreeproject() {
       this.totallabel = this.formBudget * this.formHudget
+    },
+    async addplace() {
+      let result = await this.$store.dispatch('placeFormAction', {
+        country: this.formNewcountry,
+        name: this.formNewplace
+      })
+      if (result == 'exists') {
+        this.$toast.success('This place already exists!', {
+          duration: 1000,
+          className: 'toastunderstanding'
+        })
+      } else {
+        this.$toast.success(this.formNewplace + ' added!', {
+          duration: 1000,
+          className: 'toast'
+        })
+      }
     },
     projectForm() {
       // This function creates and sends database request body both for project creation and updating
@@ -448,23 +466,6 @@ export default {
           location.href = process.env.URLHOME + '/project/' + res
         }
       }, 1200)
-    },
-    async addplace() {
-      let result = await this.$store.dispatch('placeFormAction', {
-        country: this.formNewcountry,
-        name: this.formNewplace
-      })
-      if (result == 'exists') {
-        this.$toast.success('This place already exists!', {
-          duration: 1000,
-          className: 'toastunderstanding'
-        })
-      } else {
-        this.$toast.success(this.formNewplace + ' added!', {
-          duration: 1000,
-          className: 'toast'
-        })
-      }
     }
   }
 }

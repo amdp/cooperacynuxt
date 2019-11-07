@@ -12,7 +12,9 @@
       >
         <h2 class="font-weight-light">{{ oneproject.name.toUpperCase() }}</h2>
         <small class="mb-2 up">{{ oneproject.brief }}</small>
-        <small class="mb-2"> <strong>STAGE: </strong> {{ stage.name }} </small>
+        <small class="mb-2 up">
+          <strong>STAGE: </strong> {{ stage.name }}
+        </small>
         <p class="justify">{{ oneproject.content }}</p>
         <p>
           <strong>PROJECT BASED IN:</strong>
@@ -34,12 +36,12 @@
         <small>
           <strong>AFTF: </strong>{{ oneproject.anonymous ? 'ON' : 'OFF' }}
         </small>
-        <small>
+        <small v-if="oneproject.stage != '5'">
           <strong>BUDGET: </strong>{{ Math.round(oneproject.collected) }}/{{
             Math.round(oneproject.budget)
           }}
         </small>
-        <small>
+        <small v-if="oneproject.stage == '5'">
           <strong>FEE: </strong> {{ Math.round(oneproject.budget) }}
         </small>
         <small>

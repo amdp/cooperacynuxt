@@ -29,7 +29,7 @@ export const state = () => ({
     { id: 2, name: 'Community' },
     {
       id: 3,
-      name: 'Ecosystem and Wellbeing - Ecosystem care, human wellbeing'
+      name: 'Ecosystem and Wellbeing'
     },
     { id: 4, name: 'Reporting' },
     {
@@ -38,7 +38,7 @@ export const state = () => ({
     },
     {
       id: 6,
-      name: 'Science, Research, Education and Professionals'
+      name: 'Science, Research, Education and Groups of Professionals'
     },
     { id: 7, name: 'Arts Music Games Fun' }
   ],
@@ -47,9 +47,14 @@ export const state = () => ({
     { id: 2, name: 'active' },
     { id: 3, name: 'approval' },
     { id: 4, name: 'testing' },
-    { id: 5, name: 'nofunding' },
+    { id: 5, name: 'free' },
     { id: 6, name: 'pairing' },
     { id: 7, name: 'idea' }
+  ],
+  roles: [
+    { id: 0, name: 'user' },
+    { id: 2, name: 'admin' },
+    { id: 3, name: 'reporter' }
   ]
 })
 
@@ -64,9 +69,6 @@ export const mutations = {
   },
   setTag: (state, payload) => {
     state.tag = payload
-  },
-  setCategory: (state, payload) => {
-    state.category = payload
   },
   setPlace: (state, payload) => {
     state.place = payload
@@ -168,10 +170,6 @@ export const actions = {
       params: payload
     })
     context.commit('setTag', data)
-  },
-  getCategoryAction: async function(context) {
-    let { data } = await this.$axios.get(process.env.DBURL + '/category')
-    context.commit('setCategory', data)
   },
   getNewsAction: async function(context) {
     let { data } = await this.$axios.get(process.env.DBURL + '/news')

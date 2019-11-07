@@ -141,17 +141,6 @@ app.get('/userlist', async function(req, res, next) {
   }
 })
 
-app.get('/category', async function(req, res, next) {
-  try {
-    let query = 'SELECT * FROM `category` WHERE `category`.`id`!= ?'
-    let param = [0]
-    const [category] = await mypool.execute(query, param)
-    res.send(category)
-  } catch (err) {
-    next(err)
-  }
-})
-
 app.get('/tag', async function(req, res, next) {
   try {
     let query = 'SELECT * FROM `tag` where `project`=?'
@@ -693,7 +682,7 @@ app.post('/contactemail', function(req, res) {
     })
 })
 
-//CCI to be "vued", post is the future one, remove following app.get('/map'
+//CCI to be "vued", post is the future one, remove following app.get('/map'..
 
 app.post('/cci', async function(req, res, next) {
   try {
