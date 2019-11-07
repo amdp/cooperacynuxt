@@ -65,6 +65,11 @@ export default {
       title: 'Cooperacy' + this.$auth.user.name + ' ' + this.$auth.user.surname
     }
   },
+  async fetch({ store, params }) {
+    await store.dispatch('getUserProjectAction', {
+      userid: store.state.auth.user.id
+    })
+  },
   components: { projectlist: projectlist },
   mounted() {
     var cc = ['D', 'U', 'F', 'I', 'C', 'T', 'E']
@@ -124,11 +129,6 @@ export default {
     async resetvoting() {
       await this.$store.dispatch('resetVotingAction')
     }
-  },
-  async fetch({ store, params }) {
-    await store.dispatch('getUserProjectAction', {
-      userid: store.state.auth.user.id
-    })
   }
 }
 </script>

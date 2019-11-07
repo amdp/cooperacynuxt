@@ -47,8 +47,14 @@
           </div>
           <!-- the following should go outside this and show the stage -->
           <div>
-            <b>{{ getProjectStage(project.stage) }}</b>
-            <small>stage</small>
+            <b>stage</b>
+            <small class="up">{{ getProjectStage(project.stage) }}</small>
+          </div>
+        </div>
+        <div class="project-details p-2 d-flex" v-if="project.stage != 7">
+          <div>
+            <b>stage</b>
+            <small class="up">{{ getProjectStage(project.stage) }}</small>
           </div>
         </div>
       </div>
@@ -104,8 +110,8 @@
             <small>budget</small>
           </div>
           <div>
-            <b>{{ archived.stage }}</b>
-            <small>stage</small>
+            <b>stage</b>
+            <small class="up">{{ getProjectStage(archived.stage) }}</small>
           </div>
         </div>
       </div>

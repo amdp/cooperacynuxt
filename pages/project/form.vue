@@ -206,7 +206,7 @@
           >GO!</b-button
         >
       </b-form>
-      <!-- MODAL MODAL MODAL -->
+      <!-- MODAL: ADD A NEW PLACE -->
       <b-modal id="placemodal" title="Add a new place" hide-header-close>
         <p class="my-4">Add a new place:</p>
         <b-form @submit.prevent="addplace">
@@ -253,7 +253,7 @@ export default {
     await store.dispatch('getPlaceAction')
     await store.dispatch('getCountryAction')
     await store.dispatch('getProjectAction', {
-      projectid: store.state.edit,
+      projectid: store.state.edit.id,
       limit: ' LIMIT 1',
       userid: store.state.auth.user.id
     })
@@ -373,9 +373,13 @@ export default {
     },
     projectForm() {
       // This function creates and sends database request body both for project creation and updating
-      //'new' is set for a new project, if not the param.id is taken from url to update old ones
+      //'new' is set for a new project, if not the param.id is taken from url to update or copy old ones
+      let projectid = 'new'
+      if (this.$store.state.edit.id && !this.$store.state.edit.copy) {
+        projectid = this.$store.state.edit.id
+      }
       var formBodyRequest = {
-        id: this.$store.state.edit ? this.$store.state.edit : 'new',
+        id: projectid,
         name: this.formName,
         country: this.formCountry,
         place: this.formPlace,
@@ -391,13 +395,22 @@ export default {
       //vuex action to the database, the 'res'[ponse] variable brings the recently created or edited project >id< from the server..
       this.$store
         .dispatch('projectFormAction', formBodyRequest)
-        //in order to use it in the image creation:
+        //..in order to use it in the image creation and to make the user a participant of its project:
         .then(async res => {
           if (res == 'exists') {
             return this.$toast.show('Project already exists!', {
               duration: 1000,
               className: 'toast'
             })
+          }
+          if (projectid == 'new') {
+            let freedomvote = {
+              id: res,
+              condition: 'F',
+              user: this.$auth.user.id,
+              proptype: 'project'
+            }
+            this.$store.dispatch('addVoteAction', freedomvote)
           }
           if (this.formImageFile) {
             this.imageUpload(res)
@@ -427,14 +440,14 @@ export default {
     },
     doneToast(res) {
       this.$toast.success('Done!', { duration: 1000, className: 'toast' })
+      this.$store.dispatch('editSwitchAction', false)
       setTimeout(function() {
         if (res == 'OK') {
-          location.href = location.href
+          location.href = process.env.URLHOME + '/project/' + res.id
         } else {
           location.href = process.env.URLHOME + '/project/' + res
         }
       }, 1200)
-      this.$store.dispatch('editSwitchAction', false)
     },
     async addplace() {
       let result = await this.$store.dispatch('placeFormAction', {

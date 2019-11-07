@@ -112,9 +112,9 @@ export default {
       formName: this.$auth.user.name,
       formSurname: this.$auth.user.surname,
       formEmail: this.$auth.user.email,
-      formOldPassword: '',
-      formNewPassword: '',
-      formImageFilename: '',
+      formOldPassword: null,
+      formNewPassword: null,
+      formImageFilename: null,
       id: this.$auth.user.id
     }
   },
