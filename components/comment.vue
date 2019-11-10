@@ -18,16 +18,16 @@
 
     <!-- POSTS -->
     <div class="row mt-3" v-for="comment in up" :key="comment.id">
-      <div class="col-8 mx-auto">
-        <div class="row">
+      <div class="col-10 col-lg-7 mx-auto projectbox p-3">
+        <div class="row mb-2 mt-0 ml-0 mr-0 p-0">
           <div class="col-2 col-md-1 space t10 graylight up text-left p-0">
             <img
               v-if="!anonymous"
-              class="usercomment rounded-circle img-responsive img-fluid"
+              class="usercomment rounded-circle img-responsive"
               :src="userImage(comment.user)"
             />
           </div>
-          <p class="col-10 col-md-11">{{ comment.content }}</p>
+          <p class="col-10 col-md-11" v-html="comment.content"></p>
         </div>
         <div class="row">
           <div class="col-12 space t10 up text-right">
@@ -55,7 +55,7 @@
             <span class="gray finger" @click="reply(comment)"> - Reply</span>
           </div>
         </div>
-        <div class="row">
+        <div class="row m-0 p-0">
           <div class="col-12 mb-3">
             <votebar
               :voteprop="comment"
@@ -87,7 +87,7 @@
           :key="subcomment.id"
         >
           <div class="col-11 mx-auto">
-            <div class="row">
+            <div class="row mb-2 mt-0 ml-0 mr-0 p-0">
               <div class="col-2 col-md-1 space t10 graylight up text-left p-0">
                 <img
                   v-if="!anonymous"
@@ -95,7 +95,7 @@
                   :src="userImage(subcomment.user)"
                 />
               </div>
-              <div class="col-10 col-md-11">{{ subcomment.content }}</div>
+              <div class="col-10 col-md-11" v-html="subcomment.content"></div>
             </div>
             <div class="row">
               <div class="col-12 space t10 up text-right">
@@ -125,7 +125,7 @@
                 >
               </div>
             </div>
-            <div class="row">
+            <div class="row m-0 p-0">
               <div class="col-12 mb-3">
                 <votebar :voteprop="subcomment" :proptype="'comment'" />
               </div>
@@ -185,29 +185,35 @@ export default {
     }
   },
   methods: {
-    formcomment(comment, newoldid) {
+    formcomment(comment, editreplyid) {
       if (comment.parent === 0) {
         var parent = comment.id
       } else {
         var parent = comment.parent
       }
-      newoldid == 'new'
-        ? (this.$store.dispatch('commentFormAction', {
-            id: newoldid,
-            parent: parent,
-            project: this.$route.params.id,
-            user: this.$auth.user.id,
-            content: this.formComment
-          }),
-          this.reply(comment.id))
-        : this.$store.dispatch('commentFormAction', {
-            id: newoldid,
-            parent: comment.parent,
-            project: this.$route.params.id,
-            user: this.$auth.user.id,
-            content: this.formComment
-          })
-      this.edit(comment.id)
+      this.formComment = this.formComment.replace(
+        /(http:\/\/[^\s]+|https:\/\/[^\s]+)/gm,
+        '<a class="ae" href="$1">$1</a>'
+      )
+      if (editreplyid == 'new') {
+        this.$store.dispatch('commentFormAction', {
+          id: editreplyid,
+          parent: parent,
+          project: this.$route.params.id,
+          user: this.$auth.user.id,
+          content: this.formComment
+        })
+        this.reply(comment.id)
+      } else {
+        this.$store.dispatch('commentFormAction', {
+          id: editreplyid,
+          parent: comment.parent,
+          project: this.$route.params.id,
+          user: this.$auth.user.id,
+          content: this.formComment
+        })
+        this.edit(comment.id)
+      }
     },
     sub(comment, id) {
       if (this.$store.state.comment) {
@@ -228,6 +234,10 @@ export default {
       }
     },
     formpost() {
+      this.formPost = this.formPost.replace(
+        /(http:\/\/[^\s]+|https:\/\/[^\s]+)/gm,
+        '<a class="ae" href="$1">$1</a>'
+      )
       this.$store.dispatch('commentFormAction', {
         id: 'new',
         parent: 0,
@@ -238,28 +248,37 @@ export default {
       this.formPost = ''
     },
     reply(replycomment) {
-      this.formswitch == replycomment.id
-        ? ((this.formswitch = false), (this.formComment = '')) //turns off the box
-        : ((this.formswitch = replycomment.id),
-          (this.editreplyid = 'new'),
-          (this.formComment = 'to #' + replycomment.id + ': '))
+      if (this.formswitch == replycomment.id) {
+        this.formswitch = false //turns off the box
+      } else {
+        this.formswitch = replycomment.id
+        this.editreplyid = 'new' //use new due to
+        this.formComment = 'to #' + replycomment.id + ': '
+      }
     },
     edit(editcomment) {
-      this.formswitch == editcomment.id
-        ? ((this.formswitch = false), (this.formComment = '')) //turns off the box
-        : ((this.formswitch = editcomment.id),
-          (this.editreplyid = editcomment.id),
-          (this.formComment = editcomment.content))
+      if (this.formswitch == editcomment.id) {
+        this.formswitch = false //turns off the box
+      } else {
+        this.formswitch = editcomment.id
+        this.editreplyid = editcomment.id
+        if (editcomment.content) {
+          this.formComment = editcomment.content.replace(
+            /(<a class="ae" href="[^"]+">|<\/a>)/gm,
+            ''
+          )
+        }
+      }
     },
-    remove(deletecomment) {
+    remove(toberemoved) {
       this.$store.dispatch('commentFormAction', {
-        id: deletecomment.id,
-        parent: deletecomment.parent,
+        id: toberemoved.id,
+        parent: toberemoved.parent,
         project: this.$route.params.id,
         user: this.$auth.user.id,
         content: 'removed by author'
       })
-      this.edit(deletecomment.id)
+      this.edit(toberemoved.id)
     }
   }
 }

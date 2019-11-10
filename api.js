@@ -24,14 +24,14 @@ const pool = mysql.createPool({
 const mypool = pool.promise()
 
 //error function triggered by next
-app.use(function(err, req, res, next) {
-  if (res.headersSent) {
-    return next(err)
-  }
-  res.status(500)
-  res.render('error', { error: err })
-  console.log(' ' + JSON.stringify(err))
-})
+// app.use(function(err, req, res, next) {
+//   if (res.headersSent) {
+//     return next(err)
+//   }
+//   res.status(500)
+//   res.render('error', { error: err })
+//   console.log(' ' + JSON.stringify(err))
+// })
 
 /////// GET ///////
 
@@ -488,7 +488,22 @@ app.post('/project', async function(req, res, next) {
 })
 
 app.post('/comment', async function(req, res, next) {
-  if (req.body.id != 'new') {
+  if (req.body.id == 'new') {
+    try {
+      let query =
+        'INSERT INTO `comment` (`parent`,`project`,`user`,`content`) VALUES (?,?,?,?)'
+      let param = [
+        req.body.parent,
+        req.body.project,
+        req.body.user,
+        req.body.content
+      ]
+      const [comment] = await mypool.execute(query, param)
+      returncomment(comment)
+    } catch (err) {
+      next(err)
+    }
+  } else {
     try {
       let query =
         'UPDATE `comment` SET `parent`=?, `project`=?, `user`=?, `content`=? WHERE `comment`.`id`=?'
@@ -504,34 +519,25 @@ app.post('/comment', async function(req, res, next) {
       next(err)
     }
     try {
-      let query = 'SELECT * FROM `comment` WHERE `id` = ?'
-      let param = [req.body.id]
-      let [comment] = await mypool.execute(query, param)
-      res.send(comment[0])
-    } catch (err) {
-      next(err)
-    }
-  } else {
-    try {
       let query =
-        'INSERT INTO `comment` (`parent`,`project`,`user`,`content`) VALUES (?,?,?,?)'
-      let param = [
-        req.body.parent,
-        req.body.project,
-        req.body.user,
-        req.body.content
-      ]
+        'SELECT comment.*, user.name, user.surname FROM comment' +
+        ' LEFT JOIN user ON comment.user = user.id' +
+        ' WHERE comment.id = ?'
+      let param = [req.body.id]
       const [comment] = await mypool.execute(query, param)
-      returncomment(comment)
+      res.send(comment[0])
     } catch (err) {
       next(err)
     }
   }
   async function returncomment(returned) {
     try {
-      let query = 'SELECT * FROM `comment` WHERE `id` = ?'
+      let query =
+        'SELECT comment.*, user.name, user.surname FROM comment' +
+        ' LEFT JOIN user ON comment.user = user.id' +
+        ' WHERE comment.id = ?'
       let param = [returned.insertId]
-      let [comment] = await mypool.execute(query, param)
+      const [comment] = await mypool.execute(query, param)
       res.send(comment[0])
     } catch (err) {
       next(err)
@@ -543,7 +549,7 @@ app.post('/user', async function(req, res, next) {
   try {
     let query = 'SELECT * FROM `user` WHERE `user`.`email`= ? LIMIT 1'
     let param = [req.body.email]
-    let [user] = await mypool.execute(query, param)
+    const [user] = await mypool.execute(query, param)
     newuser(user[0])
   } catch (err) {
     next(err)
@@ -563,7 +569,7 @@ app.post('/user', async function(req, res, next) {
           hashed,
           req.body.paypalagreementid
         ]
-        let [user] = await mypool.execute(query, param)
+        const [user] = await mypool.execute(query, param)
         res.send({ id: user[0].insertId })
       } catch (err) {
         next(err)
@@ -577,7 +583,7 @@ app.post('/tag', async function(req, res, next) {
     try {
       let query = 'INSERT INTO `tag` (`project`,`name`) VALUES (?,?)'
       let param = [req.body.project, req.body.name]
-      let [tag] = await mypool.execute(query, param)
+      const [tag] = await mypool.execute(query, param)
       res.send(tag)
     } catch (err) {
       next(err)
@@ -586,7 +592,7 @@ app.post('/tag', async function(req, res, next) {
     try {
       let query = 'DELETE FROM `tag` where `project` = ? and `name` = ?'
       let param = [req.body.project, req.body.name]
-      let [tag] = await mypool.execute(query, param)
+      const [tag] = await mypool.execute(query, param)
       res.send(tag)
     } catch (err) {
       next(err)
@@ -688,7 +694,7 @@ app.post('/cci', async function(req, res, next) {
   try {
     let query = 'SELECT * FROM `CCI' + req.body.cciyear + '`'
     let param = []
-    let [CCI] = await mypool.execute(query, param)
+    const [CCI] = await mypool.execute(query, param)
     res.send(CCI)
   } catch (err) {
     next(err)
@@ -698,7 +704,7 @@ app.get('/map', async function(req, res, next) {
   try {
     let query = 'SELECT * FROM `CCI2017`'
     let param = []
-    let [CCI] = await mypool.execute(query, param)
+    const [CCI] = await mypool.execute(query, param)
     let ccimakeup = {}
     for (let i = 0; i < CCI.length; i++) {
       let country = CCI[i]['country']
@@ -719,7 +725,7 @@ app.post('/vote', async function(req, res, next) {
       req.body.proptype +
       '`=?'
     let param = [req.body.user, req.body.condition, req.body.id]
-    let [vote] = await mypool.execute(query, param)
+    const [vote] = await mypool.execute(query, param)
     //if a vote exists, it is removed
     if (vote[0]) {
       await removevote(vote[0])
@@ -886,7 +892,7 @@ app.post('/resetvoting', async function(req, res, next) {
   for (let i = 0; i < proptype.length; i++) {
     try {
       let query = 'SELECT `id` from `' + proptype[i] + '`'
-      let [id] = await mypool.execute(query, [])
+      const [id] = await mypool.execute(query, [])
       if (proptype[i] == 'user') {
         await zero(id)
       } else {
@@ -913,7 +919,7 @@ app.post('/resetvoting', async function(req, res, next) {
             query += ' AND `user`!=?'
             param.push(userid)
           }
-          let [result] = await mypool.execute(query, param)
+          const [result] = await mypool.execute(query, param)
           values[cc[c]] = result[0].count
           if (values.E != undefined) {
             if (userid) {
@@ -977,7 +983,7 @@ app.post('/resetvoting', async function(req, res, next) {
     try {
       let query = 'select `id` from `comment` where `user`=?'
       let param = [id]
-      let [result] = await mypool.execute(query, param)
+      const [result] = await mypool.execute(query, param)
       if (result.length > 0) {
         cycleid(result, 'comment', id)
       }

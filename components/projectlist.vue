@@ -1,119 +1,80 @@
 <template>
-  <b-container fluid class="mb-5">
-    <div class="d-flex flex-wrap justify-content-center">
-      <h2 class="col-12 text-center mb-3">PROJECTS</h2>
+  <b-container fluid class="justify-content-center m-0 p-0">
+    <div
+      fluid
+      class="justify-content-center m-0 p-0"
+      v-for="type in projectTypes"
+      :key="type"
+    >
+      <h2 class="text-center mb-3 up" v-if="projectlist(type).length > 0">
+        {{ type }}
+      </h2>
       <div
-        class="col-10 col-md-5 mx-2 mb-4 single-project"
-        v-for="project in projectlist"
+        class="p-3 ml-0 mr-0 mb-3 w-100 projectbox"
+        v-for="project in projectlist(type)"
         :key="project.id"
       >
-        <img
-          :src="projectImage(project.id)"
-          class="img-fluid img-responsive img-project w-100 mb-2"
-        />
-        <votebar :voteprop="project" :proptype="'project'" class="mb-4" />
-        <div class="project-content text-center p-2">
-          <nuxt-link :to="'/project/' + project.id">
-            <p class="up subheading">{{ project.name }}</p>
-          </nuxt-link>
-          <p class="text-left text-break">{{ project.brief }}</p>
-          <p class="text-left">
-            &#127757; {{ getProjectLocation(project.place) }}
-          </p>
-          <div class="progress" v-if="project.stage == 7">
-            <div
-              class="progress-bar"
-              :class="{
-                'progress-zero': calculateProjectProgress(project) == 0
-              }"
-              role="progressbar"
-              :style="{ width: calculateProjectProgress(project) + '%' }"
-              aria-valuenow="25"
-              aria-valuemin="0"
-              aria-valuemax="100"
-            >
-              {{ calculateProjectProgress(project) }}%
-            </div>
-          </div>
-        </div>
-        <div class="project-details p-2 d-flex" v-if="project.stage == 7">
-          <div>
-            <b>{{ Math.round(project.collected) }}€</b>
-            <small>collected</small>
-          </div>
-          <div>
-            <b>{{ Math.round(project.budget) }}€</b>
-            <small>budget</small>
-          </div>
-          <!-- the following should go outside this and show the stage -->
-          <div>
-            <b>stage</b>
-            <small class="up">{{ getProjectStage(project.stage) }}</small>
-          </div>
-        </div>
-        <div class="project-details p-2 d-flex" v-if="project.stage != 7">
-          <div>
-            <b>stage</b>
-            <small class="up">{{ getProjectStage(project.stage) }}</small>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- archived projects here -->
-    <h2 class="col-12 text-center mb-3 mt-5" v-if="archivedlist[0]">
-      ARCHIVED PROJECTS
-    </h2>
-    <div class="d-flex justify-content-center flex-wrap">
-      <div
-        class="col-10 col-md-5 mx-2 mb-4 single-project"
-        v-for="archived in archivedlist"
-        :key="archived.id"
-      >
-        <img
-          :src="projectImage(archived.id)"
-          class="img-fluid img-responsive w-100 mb-2"
-        />
-
-        <div class="project-content text-center p-2">
-          <nuxt-link :to="'/project/' + archived.id">
-            <p class="up subheading">{{ archived.name }}</p>
-          </nuxt-link>
-          <p class="text-left text-break">{{ archived.content }}</p>
-          <votebar :voteprop="archived" proptype="project" class="mb-4" />
-
-          <p class="text-left">
-            &#127757; {{ getProjectLocation(archived.place) }}
-          </p>
-          <div class="progress">
-            <div
-              class="progress-bar"
-              :class="{
-                'progress-zero': calculateProjectProgress(archived) == 0
-              }"
-              role="progressbar"
-              :style="{ width: calculateProjectProgress(archived) + '%' }"
-              aria-valuenow="25"
-              aria-valuemin="0"
-              aria-valuemax="100"
-            >
-              {{ calculateProjectProgress(archived) }}%
-            </div>
-          </div>
-        </div>
-        <div class="project-details p-2 d-flex">
-          <div>
-            <b>{{ Math.round(archived.collected) }}€</b>
-            <small>collected</small>
-          </div>
-          <div>
-            <b>{{ Math.round(archived.budget) }}€</b>
-            <small>budget</small>
-          </div>
-          <div>
-            <b>stage</b>
-            <small class="up">{{ getProjectStage(archived.stage) }}</small>
-          </div>
-        </div>
+        <b-row class="m-0 p-0 w-100">
+          <b-col cols="12" class="m-0 p-0 w-100">
+            <!-- project-title -->
+            <b-row class="m-0 p-0">
+              <b-col cols="3" lg="2" class="m-0 pt-2 pl-1 pr-1 text-center">
+                <img
+                  :src="projectImage(project.id)"
+                  class="m-0 p-0 img-project"
+                />
+              </b-col>
+              <b-col cols="9" lg="10" class="m-0 pl-2">
+                <b-row class="m-0 p-0 space subheading up finger">
+                  <nuxt-link :to="'/project/' + project.id">{{
+                    project.name
+                  }}</nuxt-link>
+                </b-row>
+                <b-row class="m-0 p-0">
+                  {{ project.brief }}
+                </b-row>
+              </b-col>
+            </b-row>
+            <!-- details -->
+            <b-row class="mt-3 ml-0 mr-0 p-0 w-100">
+              <b-col cols="12" class="m-0 p-0 w-100">
+                <p class="text-left mt-2">
+                  &#127757;
+                  <small class="up"
+                    >{{ category(project.category) }}
+                    {{ stage(project.stage) }}-PROJECT IN
+                    {{ location(project.place) }}
+                  </small>
+                </p>
+                <div v-if="project.stage == 7">
+                  <div
+                    class="progress-bar"
+                    :class="{
+                      'progress-zero': calculateProjectProgress(project) == 0
+                    }"
+                    role="progressbar"
+                    :style="{
+                      width: calculateProjectProgress(project) + '%'
+                    }"
+                    aria-valuenow="25"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                  >
+                    &nbsp;&nbsp;{{ calculateProjectProgress(project) }}% of €{{
+                      Math.round(project.budget)
+                    }}
+                  </div>
+                </div>
+              </b-col>
+            </b-row>
+            <!-- votebar -->
+            <b-row class="ml-0 mr-0 p-0 w-100">
+              <b-col cols="12" class="m-0 p-0 w-100">
+                <votebar :voteprop="project" :proptype="'project'" />
+              </b-col>
+            </b-row>
+          </b-col>
+        </b-row>
       </div>
     </div>
   </b-container>
@@ -125,18 +86,18 @@ export default {
   components: { votebar: votebar },
   data() {
     return {
-      isHover: null
-    }
-  },
-  computed: {
-    projectlist() {
-      return this.$store.state.project.filter(project => project.stage != 1)
-    },
-    archivedlist() {
-      return this.$store.state.project.filter(project => project.stage == 1)
+      isHover: null,
+      projectTypes: ['projects', 'archived']
     }
   },
   methods: {
+    projectlist(type) {
+      if (type == 'projects') {
+        return this.$store.state.project.filter(project => project.stage != 1)
+      } else {
+        return this.$store.state.project.filter(project => project.stage == 1)
+      }
+    },
     projectImage(id) {
       try {
         return require('../assets/image/project/' + id + '.png')
@@ -148,12 +109,15 @@ export default {
       let projectProgress = Math.round(
         (project.collected / project.budget) * 100
       )
-      return isNaN(projectProgress) ? 0 : projectProgress
+      return isNaN(projectProgress) ? 0 : projectProgress //add infinity or remove budget 0 ideas
     },
-    getProjectStage(id) {
+    stage(id) {
       return this.$store.state.stage.find(stage => stage.id == id).name
     },
-    getProjectLocation(id) {
+    category(id) {
+      return this.$store.state.category.find(category => category.id == id).name
+    },
+    location(id) {
       let projectPlace = this.$store.state.place.find(place => place.id == id)
       if (projectPlace) {
         let projectCountry = this.$store.state.country.find(
