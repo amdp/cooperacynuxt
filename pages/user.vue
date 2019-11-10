@@ -1,6 +1,6 @@
 <template>
   <b-container fluid>
-    <b-row>
+    <b-row class="mt-3">
       <b-col cols="6">
         <h5 class="mt-2 d-flex justify-content-center up">
           WELCOME {{ this.$auth.user.name }}
@@ -80,65 +80,74 @@ export default {
     await store.dispatch('getUserProjectAction', {
       userid: store.state.auth.user.id
     })
+    await store.dispatch('getPlaceAction')
+    await store.dispatch('getCountryAction')
   },
   components: { projectlist: projectlist },
   mounted() {
-    var cc = ['D', 'U', 'F', 'I', 'C', 'T', 'E']
-    var sum = 0
-    var sum2 = 0
-    var sum3 = 0
-    var max = 0
-    var res = {}
-    var res2 = {}
-    var res3 = {}
-    for (let j = 0; j < cc.length; j++) {
-      res[cc[j]] = this.$auth.user[cc[j]]
-    }
-    for (let j = 0; j < cc.length; j++) {
-      sum += res[cc[j]]
-    }
-    if (sum == 0) {
-      for (let j = 0; j < cc.length; j++) {
-        res[cc[j]] = 4
-      }
-    } else {
-      for (let j = 0; j < cc.length; j++) {
-        res2[cc[j]] = (res[cc[j]] * 21) / sum
-      }
-      for (let j = 0; j < cc.length; j++) {
-        if (max < res2[cc[j]]) {
-          max = res2[cc[j]]
-        }
-      }
-      for (let j = 0; j < cc.length; j++) {
-        res2[cc[j]] = res2[cc[j]] * (1 - Math.abs((max - 6) / max))
-      }
-      for (let j = 0; j < cc.length; j++) {
-        sum2 += res2[cc[j]]
-      }
-      for (let j = 0; j < cc.length; j++) {
-        res3[cc[j]] = Math.abs(6 - res2[cc[j]]) / 7
-      }
-      for (let j = 0; j < cc.length; j++) {
-        sum3 += res3[cc[j]]
-      }
-      for (let j = 0; j < cc.length; j++) {
-        res[cc[j]] = Math.round(
-          (res3[cc[j]] / sum3) * (21 - sum2) + res2[cc[j]] + 1
-        )
-      }
-      let sumcc = 0
-      for (let j = 0; j < cc.length; j++) {
-        sumcc += res[cc[j]]
-      }
-      if (sumcc < 28) res[cc[0]]++
-      if (sumcc == 29) res[cc[6]]--
-    }
-    this.$store.commit('setUserBar', res)
+    this.rainbowcode()
   },
   methods: {
     async resetvoting() {
       await this.$store.dispatch('resetVotingAction')
+    },
+    rainbowcode() {
+      if (this.$auth.user.rainbowcode) {
+        return
+      }
+      var cc = ['D', 'U', 'F', 'I', 'C', 'T', 'E']
+      var sum = 0
+      var sum2 = 0
+      var sum3 = 0
+      var max = 0
+      var res = {}
+      var res2 = {}
+      var res3 = {}
+      for (let j = 0; j < cc.length; j++) {
+        res[cc[j]] = this.$auth.user[cc[j]]
+      }
+      for (let j = 0; j < cc.length; j++) {
+        sum += res[cc[j]]
+      }
+      if (sum == 0) {
+        for (let j = 0; j < cc.length; j++) {
+          res[cc[j]] = 4
+        }
+      } else {
+        for (let j = 0; j < cc.length; j++) {
+          res2[cc[j]] = (res[cc[j]] * 21) / sum
+        }
+        for (let j = 0; j < cc.length; j++) {
+          if (max < res2[cc[j]]) {
+            max = res2[cc[j]]
+          }
+        }
+        for (let j = 0; j < cc.length; j++) {
+          res2[cc[j]] = res2[cc[j]] * (1 - Math.abs((max - 6) / max))
+        }
+        for (let j = 0; j < cc.length; j++) {
+          sum2 += res2[cc[j]]
+        }
+        for (let j = 0; j < cc.length; j++) {
+          res3[cc[j]] = Math.abs(6 - res2[cc[j]]) / 7
+        }
+        for (let j = 0; j < cc.length; j++) {
+          sum3 += res3[cc[j]]
+        }
+        for (let j = 0; j < cc.length; j++) {
+          res[cc[j]] = Math.round(
+            (res3[cc[j]] / sum3) * (21 - sum2) + res2[cc[j]] + 1
+          )
+        }
+        let sumcc = 0
+        for (let j = 0; j < cc.length; j++) {
+          sumcc += res[cc[j]]
+        }
+        if (sumcc < 28) res[cc[0]]++
+        if (sumcc == 29) res[cc[6]]--
+      }
+      this.$auth.user.rainbowcode = true
+      this.$store.commit('setUserBar', res)
     }
   }
 }

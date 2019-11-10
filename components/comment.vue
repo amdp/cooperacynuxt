@@ -12,6 +12,7 @@
           id="postInput"
           v-model="formPost"
           size="sm"
+          @keyup="check()"
         ></b-form-input>
       </b-form-group>
     </b-form>
@@ -57,6 +58,7 @@
         </div>
         <div class="row m-0 p-0">
           <div class="col-12 mb-3">
+            <p>VOTE FOR THIS COMMENT:</p>
             <votebar
               :voteprop="comment"
               :proptype="'comment'"
@@ -127,6 +129,7 @@
             </div>
             <div class="row m-0 p-0">
               <div class="col-12 mb-3">
+                <p>VOTE FOR THIS COMMENT:</p>
                 <votebar :voteprop="subcomment" :proptype="'comment'" />
               </div>
             </div>
@@ -248,6 +251,7 @@ export default {
       this.formPost = ''
     },
     reply(replycomment) {
+      check()
       if (this.formswitch == replycomment.id) {
         this.formswitch = false //turns off the box
       } else {
@@ -257,6 +261,7 @@ export default {
       }
     },
     edit(editcomment) {
+      check()
       if (this.formswitch == editcomment.id) {
         this.formswitch = false //turns off the box
       } else {
@@ -271,6 +276,7 @@ export default {
       }
     },
     remove(toberemoved) {
+      check()
       this.$store.dispatch('commentFormAction', {
         id: toberemoved.id,
         parent: toberemoved.parent,
@@ -279,6 +285,11 @@ export default {
         content: 'removed by author'
       })
       this.edit(toberemoved.id)
+    },
+    check() {
+      if (!this.$auth.user) {
+        return this.$router.push({ path: '/login' })
+      }
     }
   }
 }

@@ -56,6 +56,7 @@
           <strong>CATEGORY: </strong> {{ category(oneproject.category) }}
         </small>
       </div>
+      <p>VOTE FOR THIS PROJECT:</p>
       <votebar
         :voteprop="oneproject"
         :proptype="'project'"

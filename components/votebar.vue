@@ -12,7 +12,7 @@
     </b-row>
   </b-container>
   <b-row
-    class="w-100 m-0 mt-2 p-0 up position-relative"
+    class="w-100 mt-2 mb-2 ml-0 mr-0 p-0 up position-relative"
     v-else-if="this.proptype == 'project'"
   >
     <div
@@ -22,12 +22,15 @@
       :style="vote.style"
       @click="voteswitch(vote.projectcc)"
     >
-      <div class="showme showmeon t12 mt-1">
-        {{ vote.vlong }}: {{ vote.v }} votes
+      <div class="showme showmeon t12 mt-1 mb-0 ml-0 mr-0 p-0">
+        {{ vote.vlong }}: {{ vote.v }} {{ votevotes(vote.v) }}
       </div>
     </div>
   </b-row>
-  <b-row class="mt-2 p-0 up" v-else-if="this.proptype == 'comment'">
+  <b-row
+    class="w-100 mt-2 mb-2 ml-0 mr-0 p-0 up"
+    v-else-if="this.proptype == 'comment'"
+  >
     <div
       v-for="vote in this.vote"
       :key="vote.commentcc"
@@ -35,8 +38,8 @@
       :style="vote.style"
       @click="voteswitch(vote.commentcc)"
     >
-      <div class="showme showmeon t12 mt-1">
-        {{ vote.vlong }}: {{ vote.v }} votes
+      <div class="showme showmeon t12 mt-5 mb-0 ml-0 mr-0 p-0">
+        {{ vote.vlong }}: {{ vote.v }} {{ votevotes(vote.v) }}
       </div>
     </div>
   </b-row>
@@ -57,20 +60,24 @@ export default {
         // choosing the style to apply if the user voted this project/comment specific vote color:
         var votestyle
         var uservoted
-        this.$store.state[this.proptype + 'uservote']
-          ? (uservoted = this.$store.state[
-              this.proptype + 'uservote'
-            ].findIndex(
-              x =>
-                x[this.proptype] == this.voteprop.id &&
-                x.condition == this.$store.state.cc[i]
-            ))
-          : (uservoted = 0)
-        uservoted != -1
-          ? (votestyle = 'var(--my' + this.$store.state.condition[i] + ')')
-          : this.voteprop[this.$store.state.cc[i]] != 0
-          ? (votestyle = 'var(--they' + this.$store.state.condition[i] + ')')
-          : (votestyle = 'var(--no' + this.$store.state.condition[i] + ')')
+        if (this.$store.state[this.proptype + 'uservote']) {
+          uservoted = this.$store.state[this.proptype + 'uservote'].findIndex(
+            x =>
+              x[this.proptype] == this.voteprop.id &&
+              x.condition == this.$store.state.cc[i]
+          )
+        } else {
+          uservoted = 0
+        }
+        if (uservoted != -1) {
+          votestyle = 'var(--on' + this.$store.state.condition[i] + ')'
+        } else {
+          if (this.voteprop[this.$store.state.cc[i]] != 0) {
+            votestyle = 'var(--they' + this.$store.state.condition[i] + ')'
+          } else {
+            votestyle = 'var(--off' + this.$store.state.condition[i] + ')'
+          }
+        }
         // applying the right style to vote:
         voteif.push({
           // for all vote:
@@ -117,6 +124,13 @@ export default {
     }
   },
   methods: {
+    votevotes(v) {
+      if (v == 1) {
+        return 'vote'
+      } else {
+        return 'votes'
+      }
+    },
     voteswitch(cc) {
       if (!this.$auth.user) {
         return this.$router.push({ path: '/login' })
