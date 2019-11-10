@@ -12,7 +12,7 @@
     </b-row>
   </b-container>
   <b-row
-    class="w-100 m-0 mt-4 p-0 up position-relative"
+    class="w-100 m-0 mt-2 p-0 up position-relative"
     v-else-if="this.proptype == 'project'"
   >
     <div

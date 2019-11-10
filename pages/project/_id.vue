@@ -1,7 +1,7 @@
 <template>
   <div class="project-page-container py-5 py-md-3 w-100">
     <div
-      class="project-details-container d-flex flex-wrap align-items-center justify-content-around w-100"
+      class="project-details-container d-flex flex-wrap align-items-center justify-content-around w-100 projectbox p-3"
     >
       <img
         :src="projectImage"
@@ -13,12 +13,12 @@
         <h2 class="font-weight-light">{{ oneproject.name.toUpperCase() }}</h2>
         <small class="mb-2 up">{{ oneproject.brief }}</small>
         <small class="mb-2 up">
-          <strong>STAGE: </strong> {{ stage.name }}
+          <strong>STAGE: </strong> {{ stage(oneproject.stage) }}
         </small>
         <p class="justify">{{ oneproject.content }}</p>
         <p>
           <strong>PROJECT BASED IN:</strong>
-          {{ oneproject.place + ', ' + oneproject.country }}
+          {{ location(oneproject.place) }}
         </p>
         <p>
           TAGS:
@@ -52,7 +52,9 @@
         <small>
           <strong>PARENT PROJECT: </strong> {{ oneproject.parent }}
         </small>
-        <small> <strong>CATEGORY: </strong> {{ category.name }} </small>
+        <small>
+          <strong>CATEGORY: </strong> {{ category(oneproject.category) }}
+        </small>
       </div>
       <votebar
         :voteprop="oneproject"
@@ -165,6 +167,8 @@ export default {
       projectid: params.id,
       userid: store.state.auth.user.id
     })
+    await store.dispatch('getPlaceAction')
+    await store.dispatch('getCountryAction')
   },
   data() {
     return {
@@ -198,20 +202,6 @@ export default {
       } catch (e) {
         return require('../../assets/image/project/0.png')
       }
-    },
-    category() {
-      return this.$store.state.category[
-        this.$store.state.category.findIndex(
-          category => category.id == this.oneproject.category
-        )
-      ]
-    },
-    stage() {
-      return this.$store.state.stage[
-        this.$store.state.stage.findIndex(
-          stage => stage.id == this.oneproject.stage
-        )
-      ]
     }
   },
   methods: {
@@ -283,6 +273,25 @@ export default {
       }
       this.formRemoveTag = ''
       this.$toast.success('Removed!', { duration: 1000, className: 'toasts' })
+    },
+    stage(id) {
+      return this.$store.state.stage.find(stage => stage.id == id).name
+    },
+    category(id) {
+      return this.$store.state.category.find(category => category.id == id).name
+    },
+    location(id) {
+      let projectPlace = this.$store.state.place.find(place => place.id == id)
+      if (projectPlace) {
+        let projectCountry = this.$store.state.country.find(
+          country => country.id == projectPlace.country
+        )
+        if (projectCountry) {
+          return projectPlace.name + ', ' + projectCountry.name
+        }
+      } else {
+        return 'Unknown'
+      }
     }
   }
 }
