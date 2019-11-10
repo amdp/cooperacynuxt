@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="circle mb-md-3">
+    <div class="circle mb-md-4">
       <svg
         xmlns:xlink="http://www.w3.org/1999/xlink"
         width="100%"
