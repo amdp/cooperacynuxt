@@ -70,6 +70,7 @@
             <!-- votebar -->
             <b-row class="ml-0 mr-0 p-0 w-100">
               <b-col cols="12" class="m-0 p-0 w-100">
+                <p>VOTE FOR THIS PROJECT:</p>
                 <votebar :voteprop="project" :proptype="'project'" />
               </b-col>
             </b-row>

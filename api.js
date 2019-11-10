@@ -903,7 +903,7 @@ app.post('/resetvoting', async function(req, res, next) {
     }
   }
   async function cycleid(id, proptype, userid) {
-    // with for and variable j we go through all id's
+    // with for and variable j we go through all id's of the proptype received
     for (let j = 0; j < id.length; j++) {
       let values = {} //for every id we collect 7 c values
       for (let c = 0; c < cc.length; c++) {
@@ -921,6 +921,9 @@ app.post('/resetvoting', async function(req, res, next) {
           }
           const [result] = await mypool.execute(query, param)
           values[cc[c]] = result[0].count
+          if (userid == 7) {
+            console.log('cycleid ' + JSON.stringify(values[cc[c]]))
+          }
           if (values.E != undefined) {
             if (userid) {
               resetvote(userid, values, 'user')
@@ -983,9 +986,9 @@ app.post('/resetvoting', async function(req, res, next) {
     try {
       let query = 'select `id` from `comment` where `user`=?'
       let param = [id]
-      const [result] = await mypool.execute(query, param)
-      if (result.length > 0) {
-        cycleid(result, 'comment', id)
+      const [resultid] = await mypool.execute(query, param)
+      if (resultid.length > 0) {
+        cycleid(resultid, 'comment', id)
       }
     } catch (err) {
       next(err)

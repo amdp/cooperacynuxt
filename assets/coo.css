@@ -26,33 +26,33 @@ a:hover {
 
 :root {
   --equivalence: #f80;
-  --myequivalence: #f80;
-  --theyequivalence: #fb9;
-  --noequivalence: #baa;
+  --onequivalence: #f80;
+  --theyequivalence: #fd9;
+  --offequivalence: #aaa;
   --trust: #fc0;
-  --mytrust: #fc0;
-  --theytrust: #fc9;
-  --notrust: #bba;
+  --ontrust: #fc0;
+  --theytrust: #fea;
+  --offtrust: #aaa;
   --care: #7d0;
-  --mycare: #7d0;
-  --theycare: #bd9;
-  --nocare: #aba;
+  --oncare: #7d0;
+  --theycare: #cf9;
+  --offcare: #aaa;
   --transparency: #0dd;
-  --mytransparency: #9aa;
-  --theytransparency: #add;
-  --notransparency: #0dd;
+  --ontransparency: #aaa;
+  --offtransparency: #0dd;
+  --theytransparency: #aaa;
   --freedom: #08d;
-  --myfreedom: #08d;
-  --theyfreedom: #7cf;
-  --nofreedom: #99a;
+  --onfreedom: #08d;
+  --theyfreedom: #adf;
+  --offfreedom: #aaa;
   --understanding: #a7e;
-  --myunderstanding: #a7e;
-  --theyunderstanding: #baf;
-  --nounderstanding: #a9a;
+  --onunderstanding: #a7e;
+  --theyunderstanding: #dcf;
+  --offunderstanding: #aaa;
   --diversity: #f7d;
-  --mydiversity: #f7d;
-  --theydiversity: #ebe;
-  --nodiversity: #bab;
+  --ondiversity: #f7d;
+  --theydiversity: #fcf;
+  --offdiversity: #aaa;
 }
 
 /*h cooperation colors, h* have hover*/
@@ -696,9 +696,11 @@ img.news {
   width: 60px;
 }
 .vote {
-  height: 5px;
+  height: 10px;
   position: static;
   cursor: pointer;
+  margin-right: 3px;
+  border-radius: 3px;
 }
 .vote:hover .showme {
   display: block;

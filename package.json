@@ -17,7 +17,7 @@
     "@nuxtjs/auth": "^4.8.4",
     "@nuxtjs/axios": "^5.8.0",
     "@nuxtjs/pwa": "^3.0.0-beta.19",
-    "@nuxtjs/toast": "^3.2.1",
+    "@nuxtjs/toast": "^3.3.0",
     "bcryptjs": "^2.4.3",
     "bignumber.js": "^7.2.1",
     "body-parser": "^1.19.0",
@@ -46,7 +46,7 @@
     "eslint-loader": "^2.2.1",
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-vue": "^5.2.3",
-    "prettier": "^1.18.2"
+    "prettier": "^1.19.1"
   },
   "prettier": {
     "semi": false,
