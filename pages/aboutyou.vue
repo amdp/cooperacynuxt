@@ -23,8 +23,8 @@
       <nuxt-link to="/cooperation" class="au">awareness</nuxt-link>.<br /><br />
 
       For example, you may believe in
-      <nuxt-link to="/science" class="au">science</nuxt-link> and technology but
-      want them to be respectful of the people’s
+      <nuxt-link to="/research" class="au">science</nuxt-link> and technology
+      but want them to be respectful of the people’s
       <nuxt-link to="/cooperation#care" class="ac">feelings</nuxt-link
       >.<br /><br />
 

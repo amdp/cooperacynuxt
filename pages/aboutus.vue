@@ -35,7 +35,7 @@
         is the live application of the Cooperacy model. The participants of any
         organization or community can enjoy a natural social system able to
         generate collaboration, innovation and problem solving.<br /><br />
-        <nuxt-link to="/science" class="ai">Cooperacy Research</nuxt-link> is
+        <nuxt-link to="/research" class="ai">Cooperacy Research</nuxt-link> is
         instead a continuous scientific investigation about possible social
         systems based on cooperation and ecosystemic awareness.<br /><br />
         If you consider our society and its natural ecosystem as a whole living

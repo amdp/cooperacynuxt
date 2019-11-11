@@ -50,7 +50,7 @@
     </p>
     <p class="base">
       An artificial intelligence will learn from all the
-      <nuxt-link to="/science" class="au">data</nuxt-link> coming from the
+      <nuxt-link to="/research" class="au">data</nuxt-link> coming from the
       platform and suggest, in the long run, best practices in order to help the
       people to realise their ideas. Moreover, the participants can communicate
       their happiness, so that the "deep learning ecosystem" will base its
