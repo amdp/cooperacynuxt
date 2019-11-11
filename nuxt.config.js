@@ -47,7 +47,12 @@ module.exports = {
         }
       }
     : { host: process.env.HOST, port: process.env.PORT },
-
+  pwa: {
+    manifest: {
+      name: 'Cooperacy',
+      lang: 'en'
+    }
+  },
   head: {
     title: 'Cooperacy',
     meta: [
