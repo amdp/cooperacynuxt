@@ -1,8 +1,8 @@
 <template>
   <b-container fluid class="p-0">
     <b-row>
-      <b-container fluid class="foot d-flex justify-content-center t16 m-0">
-        <p class="base space my-2 pr-3 pl-3">
+      <b-container fluid class="foot d-flex justify-content-center t16">
+        <p class="base text-center space m-0 my-2 pr-4 pl-4">
           <nuxt-link to="/login" class="ae menux">JOIN</nuxt-link>
 
           <a class="af menux" href="https://m.me/cooperacy.org">CHAT</a>
