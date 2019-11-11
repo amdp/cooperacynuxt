@@ -23,16 +23,6 @@ const pool = mysql.createPool({
 })
 const mypool = pool.promise()
 
-//error function triggered by next
-// app.use(function(err, req, res, next) {
-//   if (res.headersSent) {
-//     return next(err)
-//   }
-//   res.status(500)
-//   res.render('error', { error: err })
-//   console.log(' ' + JSON.stringify(err))
-// })
-
 /////// GET ///////
 
 app.get('/project', async function(req, res, next) {
@@ -995,6 +985,16 @@ app.post('/resetvoting', async function(req, res, next) {
     }
   }
   res.send('OK')
+})
+
+//error function triggered by next
+app.use(function(err, req, res, next) {
+  if (res.headersSent) {
+    return next(err)
+  }
+  res.status(500)
+  res.render('error', { error: err })
+  console.log('nexterr: ' + JSON.stringify(err))
 })
 
 module.exports = {
