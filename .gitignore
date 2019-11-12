@@ -90,7 +90,6 @@ dist
 
 # Service worker
 sw.*
-OneSignalSDK*
 
 #DS Store macos
 .DS_Store
