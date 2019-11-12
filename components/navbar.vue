@@ -114,7 +114,10 @@
       </div>
 
       <!-- MOBILE HAMBURGER BUTTON -->
-      <div class="col-2 h-100 burger-btn ml-auto text-right" @click="toggleNav">
+      <div
+        class="col-2 h-100 burger-btn ml-auto text-right mr-2"
+        @click="toggleNav"
+      >
         <img v-if="!isDropdownVisible" src="../assets/icons/bars.svg" />
         <img v-else src="../assets/icons/times.svg" />
       </div>
