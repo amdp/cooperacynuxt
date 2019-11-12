@@ -73,7 +73,7 @@ export default {
   middleware: ['auth'],
   head() {
     return {
-      title: 'Cooperacy' + this.$auth.user.name + ' ' + this.$auth.user.surname
+      title: 'Cooperacy ' + this.$auth.user.name + ' ' + this.$auth.user.surname
     }
   },
   async fetch({ store, params }) {
