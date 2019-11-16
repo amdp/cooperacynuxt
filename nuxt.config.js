@@ -5,13 +5,17 @@ import path from 'path'
 module.exports = {
   mode: 'universal',
   plugins: [],
-  build: {},
+  build: {
+    parallel: true,
+    cache: true,
+    hardSource: true
+  },
   serverMiddleware: ['./api'],
   css: ['@assets/coo.css'],
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/toast',
-    //'@nuxtjs/pwa',
+    '@nuxtjs/pwa',
     '@nuxtjs/auth',
     'bootstrap-vue/nuxt'
     //['@nuxtjs/dotenv', { systemvars: true, path: '/' }],
