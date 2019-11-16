@@ -1,11 +1,8 @@
 {
   "git.ignoreLimitWarning": true,
-  "prettier.jsxSingleQuote": true,
   "prettier.semi": false,
-  "prettier.singleQuote": true,
   "prettier.disableLanguages": [],
   "eslint.autoFixOnSave": true,
   "vetur.format.defaultFormatter.html": "prettier",
-  "rest-client.fontSize": 12,
-  "prettier.jsxBracketSameLine": true
+  "rest-client.fontSize": 12
 }
