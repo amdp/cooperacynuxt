@@ -38,7 +38,7 @@
       :style="vote.style"
       @click="voteswitch(vote.commentcc)"
     >
-      <div class="showme showmeon t12 mt-5 mb-0 ml-0 mr-0 p-0">
+      <div class="showme showmeon t12 mt-3 mb-0 ml-0 mr-0 p-0">
         {{ vote.vlong }}: {{ vote.v }} {{ votevotes(vote.v) }}
       </div>
     </div>
@@ -89,7 +89,7 @@ export default {
       if (this.proptype == 'user') {
         for (let i = 0; i < 7; i++) {
           ;(voteif[i].class =
-            'p-0 uservote b' +
+            'p-0 raimbowcode b' +
             this.$store.state.condition[i] +
             ' ' +
             this.$store.state.condition[i]),

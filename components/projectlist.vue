@@ -19,10 +19,7 @@
             <!-- project-title -->
             <b-row class="m-0 p-0">
               <b-col cols="3" lg="2" class="m-0 pt-2 pl-1 pr-1 text-center">
-                <img
-                  :src="projectImage(project.id)"
-                  class="m-0 p-0 img-project"
-                />
+                <img :src="projectImage(project.id)" class="m-0 p-0 img-100" />
               </b-col>
               <b-col cols="9" lg="10" class="m-0 pl-2">
                 <b-row class="m-0 p-0 space subheading up finger">
@@ -46,21 +43,37 @@
                     {{ location(project.place) }}
                   </small>
                 </p>
+                <div
+                  class="progress-bar bfreedom"
+                  :class="{
+                    'progress-zero': progress(project, 'h') == 0
+                  }"
+                  role="progressbar"
+                  :style="{
+                    width: progress(project, 'h') + '%'
+                  }"
+                  aria-valuenow="25"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                >
+                  HUDGET: &nbsp;&nbsp;{{ progress(project, 'h') }}% of
+                  {{ Math.round(project.hudget) }}
+                </div>
                 <div v-if="project.stage == 7">
                   <div
-                    class="progress-bar"
+                    class="progress-bar btrust coogray"
                     :class="{
-                      'progress-zero': calculateProjectProgress(project) == 0
+                      'progress-zero': progress(project) == 0
                     }"
                     role="progressbar"
                     :style="{
-                      width: calculateProjectProgress(project) + '%'
+                      width: progress(project) + '%'
                     }"
                     aria-valuenow="25"
                     aria-valuemin="0"
                     aria-valuemax="100"
                   >
-                    &nbsp;&nbsp;{{ calculateProjectProgress(project) }}% of €{{
+                    BUDGET: &nbsp;&nbsp;{{ progress(project) }}% of €{{
                       Math.round(project.budget)
                     }}
                   </div>
@@ -106,10 +119,15 @@ export default {
         return require('../assets/image/project/0.png')
       }
     },
-    calculateProjectProgress(project) {
-      let projectProgress = Math.round(
-        (project.collected / project.budget) * 100
-      )
+    progress(project, hudget) {
+      let projectProgress
+      if (hudget) {
+        projectProgress = Math.round(
+          (project.participants / project.hudget) * 100
+        )
+      } else {
+        projectProgress = Math.round((project.collected / project.budget) * 100)
+      }
       return isNaN(projectProgress) ? 0 : projectProgress //add infinity or remove budget 0 ideas
     },
     stage(id) {
