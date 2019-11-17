@@ -93,3 +93,6 @@ sw.*
 
 #DS Store macos
 .DS_Store
+
+#error reports
+report.*

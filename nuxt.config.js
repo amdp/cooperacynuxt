@@ -6,16 +6,16 @@ module.exports = {
   mode: 'universal',
   plugins: [],
   build: {
-    parallel: true,
-    cache: true,
-    hardSource: true
+    //parallel: true,
+    //cache: true,
+    //hardSource: true
   },
   serverMiddleware: ['./api'],
   css: ['@assets/coo.css'],
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/toast',
-    '@nuxtjs/pwa',
+    //'@nuxtjs/pwa',
     '@nuxtjs/auth',
     'bootstrap-vue/nuxt'
     //['@nuxtjs/dotenv', { systemvars: true, path: '/' }],
@@ -51,12 +51,12 @@ module.exports = {
         }
       }
     : { host: process.env.HOST, port: process.env.PORT },
-  pwa: {
-    manifest: {
-      name: 'Cooperacy',
-      lang: 'en'
-    }
-  },
+  // pwa: {
+  //   manifest: {
+  //     name: 'Cooperacy',
+  //     lang: 'en'
+  //   }
+  // },
   head: {
     title: 'Cooperacy',
     meta: [
