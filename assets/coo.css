@@ -40,7 +40,7 @@ a:hover {
   --transparency: #0dd;
   --ontransparency: #aaa;
   --offtransparency: #0dd;
-  --theytransparency: #aaa;
+  --theytransparency: #0aa;
   --freedom: #08d;
   --onfreedom: #08d;
   --theyfreedom: #adf;
@@ -54,6 +54,7 @@ a:hover {
   --theydiversity: #fcf;
   --offdiversity: #aaa;
   --coogray: #777;
+  --aaagray: #aaa;
 }
 
 /*h cooperation colors, h* have hover*/
@@ -71,6 +72,9 @@ a:hover {
 .bhequivalence:hover {
   background-color: var(--trust);
 }
+.theyequivalence {
+  background-color: var(--theyequivalence);
+}
 .trust,
 .htrust {
   color: var(--trust);
@@ -84,6 +88,9 @@ a:hover {
 .btrust,
 .bhtrust {
   background-color: var(--trust);
+}
+.theytrust {
+  background-color: var(--theytrust);
 }
 .care,
 .hcare {
@@ -99,6 +106,9 @@ a:hover {
 .bhcare:hover {
   background-color: var(--diversity);
 }
+.theycare {
+  background-color: var(--theycare);
+}
 .transparency,
 .htransparency {
   color: var(--transparency);
@@ -113,6 +123,9 @@ a:hover {
 .bhtransparency:hover {
   background-color: var(--equivalence);
 }
+.theytransparency {
+  background-color: var(--theytransparency);
+}
 .freedom,
 .hfreedom {
   color: var(--freedom);
@@ -126,6 +139,9 @@ a:hover {
 }
 .bhfreedom:hover {
   background-color: var(--care);
+}
+.theyfreedom {
+  background-color: var(--theyfreedom);
 }
 .understanding,
 .hunderstanding {
@@ -145,6 +161,9 @@ a:hover {
 .bhunderstanding:hover {
   background-color: var(--freedom);
 }
+.theyunderstanding {
+  background-color: var(--theyunderstanding);
+}
 .diversity,
 .hdiversity {
   color: var(--diversity);
@@ -159,8 +178,14 @@ a:hover {
 .bhdiversity:hover {
   background-color: var(--understanding);
 }
+.theydiversity {
+  background-color: var(--theydiversity);
+}
 .coogray {
   color: var(--coogray);
+}
+.aaagray {
+  background-color: var(--aaagray);
 }
 
 .ae {
