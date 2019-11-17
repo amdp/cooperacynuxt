@@ -210,79 +210,89 @@ app.post('/login', async function(req, res, next) {
     let query = 'SELECT * FROM `user` WHERE `user`.`email`= ? LIMIT 1'
     let param = [req.body.email]
     const [user] = await mypool.execute(query, param)
+    if (user.length == 0) {
+      return res.status(401).send('wrong user/password')
+    }
     logincheck(user[0])
   } catch (err) {
     next(err)
   }
   async function logincheck(user) {
-    if (!user) {
-      res.status(400).json({ error: 'User does not exist' })
+    if (!bcrypt.compareSync(req.body.password, user.password)) {
+      return res.status(401).send('wrong user/password')
+    }
+    let accessToken = jwt.sign({ id: user.id }, process.env.JWTSECRET, {
+      expiresIn: '2h'
+    })
+    let today = new Date(Date.now()).toJSON().slice(0, 10)
+    // bank transfer membership
+    if (user.paypalagreementid == 'bank') {
+      if (!user.paymentdeadline) {
+        return res
+          .status(500)
+          .send({ error: "The user hasn't been activated yet." })
+      }
+      if (user.paymentdeadline.toJSON().slice(0, 10) >= today) {
+        res.send({ token: { accessToken } })
+      } else {
+        res.status(401).send({ error: 'bank transfer membership has expired' })
+      }
     } else {
-      if (bcrypt.compareSync(req.body.password, user.password)) {
-        let accessToken = jwt.sign({ id: user.id }, process.env.JWTSECRET, {
-          expiresIn: '2h'
+      // paypal membership check
+      let today45ago = new Date(Date.now() + -45 * 24 * 3600 * 1000)
+        .toJSON()
+        .slice(0, 10)
+      try {
+        var response = await axios({
+          method: 'post',
+          headers: {
+            'content-type': 'application/json',
+            'Access-Control-Allow-Credentials': true
+          },
+          auth: {
+            username: process.env.PAYPALID,
+            password: process.env.PAYPALPASSWORD
+          },
+          data: 'grant_type=client_credentials',
+          url: 'https://api.paypal.com/v1/oauth2/token'
         })
-        let today = new Date(Date.now()).toJSON().slice(0, 10)
-        // bank transfer membership
-        if (user.paypalagreementid == 'bank') {
-          if (!user.paymentdeadline) {
-            return res.status(500).send("The user hasn't been activated yet.")
+      } catch (err) {
+        console.log('errlog ' + JSON.stringify(err))
+        next(err)
+      }
+      try {
+        let paypaltoken = response.data.access_token
+        let transaction = await axios({
+          method: 'get',
+          url:
+            'https://api.paypal.com/v1/payments/billing-agreements/' +
+            user.paypalagreementid +
+            '/transactions?start_date=' +
+            today45ago +
+            '&end_date=' +
+            today,
+          headers: {
+            Authorization: 'Bearer ' + paypaltoken,
+            'Content-Type': 'application/json'
           }
-          if (user.paymentdeadline.toJSON().slice(0, 10) >= today) {
-            res.send({ token: { accessToken } })
-          } else {
-            res.status(401).send('Bank transfer membership has expired')
-          }
+        })
+        console.log('second ' + transaction.data.agreement_transaction_list)
+        let list = transaction.data.agreement_transaction_list
+        if (list[list.length - 1].status == 'Completed') {
+          res.send({ token: { accessToken } })
+        } else if (
+          //sometimes the transaction list has a final record of updated payment:
+          list[list.length - 1].status == 'Updated' &&
+          list[list.length - 2].status == 'Completed'
+        ) {
+          res.send({ token: { accessToken } })
         } else {
-          // paypal membership check
-          try {
-            let agreementid = user.paypalagreementid
-            let today45ago = new Date(Date.now() + -45 * 24 * 3600 * 1000)
-              .toJSON()
-              .slice(0, 10)
-            let response = await axios({
-              method: 'post',
-              headers: {
-                'content-type': 'application/json',
-                'Access-Control-Allow-Credentials': true
-              },
-              auth: {
-                username: process.env.PAYPALID,
-                password: process.env.PAYPALPASSWORD
-              },
-              data: 'grant_type=client_credentials',
-              url: 'https://api.paypal.com/v1/oauth2/token'
-            })
-            let paypaltoken = response.data.access_token
-            let transaction = await axios({
-              method: 'get',
-              url:
-                'https://api.paypal.com/v1/payments/billing-agreements/' +
-                agreementid +
-                '/transactions?start_date=' +
-                today45ago +
-                '&end_date=' +
-                today,
-              headers: {
-                Authorization: 'Bearer ' + paypaltoken,
-                'Content-Type': 'application/json'
-              }
-            })
-            let list = transaction.data.agreement_transaction_list
-            if (list[list.length - 1].status == 'Completed') {
-              res.send({ token: { accessToken } })
-            } else if (
-              list[list.length - 1].status == 'Updated' &&
-              list[list.length - 2].status == 'Completed'
-            ) {
-              res.send({ token: { accessToken } })
-            } else {
-              res.send('Paypal membership has expired or has been suspended')
-            }
-          } catch (err) {
-            next(err)
-          }
+          res.status(401).send({
+            error: 'paypal membership expired or suspended, please contact us.'
+          })
         }
+      } catch (err) {
+        next(err)
       }
     }
   }
@@ -552,7 +562,7 @@ app.post('/user', async function(req, res, next) {
   }
   async function newuser(user) {
     if (user) {
-      res.send('exists')
+      return res.send('exists')
     } else {
       let hashed = await bcrypt.hash(req.body.password, 10)
       try {
@@ -994,14 +1004,13 @@ app.post('/resetvoting', async function(req, res, next) {
 })
 
 //error function triggered by next
-app.use(function(err, req, res, next) {
-  if (res.headersSent) {
-    return next(err)
-  }
-  res.status(500)
-  res.send('error', { error: err })
-  console.log('nexterr: ' + JSON.stringify(err))
-})
+// app.use(function(err, req, res, next) {
+//   if (res.headersSent) {
+//     return next(err)
+//   }
+//   res.status(500).send({ error: err })
+//   console.log('nexterr: ' + JSON.stringify(err))
+// })
 
 module.exports = {
   path: '/api',

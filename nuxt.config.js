@@ -5,11 +5,7 @@ import path from 'path'
 module.exports = {
   mode: 'universal',
   plugins: [],
-  build: {
-    parallel: true,
-    cache: true,
-    hardSource: true
-  },
+  build: {},
   serverMiddleware: ['./api'],
   css: ['@assets/coo.css'],
   modules: [

@@ -18,23 +18,24 @@
           <b-col cols="12" class="m-0 p-0 w-100">
             <!-- project-title -->
             <b-row class="m-0 p-0">
-              <b-col cols="3" lg="2" class="m-0 pt-2 pl-1 pr-1 text-center">
-                <img :src="projectImage(project.id)" class="m-0 p-0 img-100" />
+              <b-col cols="3" class="m-0 pt-2 px-1 p-lg-0 text-center">
+                <b-img
+                  :src="projectImage(project.id)"
+                  fluid
+                  block
+                  class="m-0 m-lg-n5 p-lg-5"
+                />
               </b-col>
-              <b-col cols="9" lg="10" class="m-0 pl-2">
-                <b-row class="m-0 p-0 space subheading up finger">
-                  <nuxt-link :to="'/project/' + project.id">{{
+              <b-col cols="9" lg="6" class="m-0 pl-2 text-center">
+                <span class="space subheading up"
+                  ><nuxt-link :to="'/project/' + project.id">{{
                     project.name
-                  }}</nuxt-link>
-                </b-row>
-                <b-row class="m-0 p-0">
-                  {{ project.brief }}
-                </b-row>
+                  }}</nuxt-link></span
+                >
+                <br />
+                <span>{{ project.brief }}</span>
               </b-col>
-            </b-row>
-            <!-- details -->
-            <b-row class="mt-3 ml-0 mr-0 p-0 w-100">
-              <b-col cols="12" class="m-0 p-0 w-100">
+              <b-col cols="12" lg="3" class="m-0 pl-2">
                 <p class="text-left mt-2">
                   &#127757;
                   <small class="up"
@@ -43,22 +44,11 @@
                     {{ location(project.place) }}
                   </small>
                 </p>
-                <div
-                  class="progress-bar bfreedom"
-                  :class="{
-                    'progress-zero': progress(project, 'h') == 0
-                  }"
-                  role="progressbar"
-                  :style="{
-                    width: progress(project, 'h') + '%'
-                  }"
-                  aria-valuenow="25"
-                  aria-valuemin="0"
-                  aria-valuemax="100"
-                >
-                  HUDGET: &nbsp;&nbsp;{{ progress(project, 'h') }}% of
-                  {{ Math.round(project.hudget) }}
-                </div>
+              </b-col>
+            </b-row>
+            <!-- details -->
+            <b-row class="mt-3 ml-0 mr-0 p-0 w-100">
+              <b-col cols="12" class="m-0 p-0 w-100">
                 <div v-if="project.stage == 7">
                   <div
                     class="progress-bar btrust coogray"
@@ -78,12 +68,28 @@
                     }}
                   </div>
                 </div>
+                <div
+                  class="progress-bar bfreedom"
+                  :class="{
+                    'progress-zero': progress(project, 'h') == 0
+                  }"
+                  role="progressbar"
+                  :style="{
+                    width: progress(project, 'h') + '%'
+                  }"
+                  aria-valuenow="25"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                >
+                  HUDGET: &nbsp;&nbsp;{{ progress(project, 'h') }}% of
+                  {{ Math.round(project.hudget) }}
+                </div>
               </b-col>
             </b-row>
             <!-- votebar -->
             <b-row class="ml-0 mr-0 p-0 w-100">
-              <b-col cols="12" class="m-0 p-0 w-100">
-                <p>VOTE FOR THIS PROJECT:</p>
+              <b-col cols="12" class="m-0 p-0 w-100 text-center">
+                <b>VOTE FOR THIS PROJECT:</b><br />
                 <votebar :voteprop="project" :proptype="'project'" />
               </b-col>
             </b-row>
