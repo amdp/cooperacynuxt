@@ -218,13 +218,17 @@ export const actions = {
   },
   newuserAction: async function(context, payload) {
     let { data } = await this.$axios.post(process.env.DBURL + '/user', payload)
-    let message = {
-      to: payload.email,
-      subject: 'user registration confirmation',
-      body: './assets/email/welcome.html'
+    if (data) {
+      let message = {
+        to: payload.email,
+        subject: 'User registration confirmation',
+        body: './assets/email/welcome.html'
+      }
+      this.$axios.post(process.env.DBURL + '/newuseremail', message)
+      return data
+    } else {
+      alert('Sorry, please try again only once')
     }
-    this.$axios.post(process.env.DBURL + '/newuseremail', message)
-    return data
   },
   updateUserAction: async function(context, payload) {
     let { data } = await this.$axios.put(process.env.DBURL + '/user', payload)
