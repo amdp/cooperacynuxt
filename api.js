@@ -323,10 +323,10 @@ app.post('/recoverpassword', async function(req, res, next) {
   } else if (req.body.token) {
     setuppassword()
   } else {
-    res.status(404).send('No mail nor token, exiting.')
+    res.status(500).send('No mail nor token, exiting.')
   }
   async function recoverpassword(user) {
-    //this happens when the user wants to change his password
+    //this happens when the users want to change their password
     if (user) {
       let token = jwt.sign(
         {
@@ -356,15 +356,21 @@ app.post('/recoverpassword', async function(req, res, next) {
           token +
           '\nOr please just ignore this email'
       }
-      transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          return console.error(error)
+      transporter.sendMail(mailOptions, (err, info) => {
+        if (err) {
+          res.status(500).send(err)
+          return console.error(err)
         }
-        console.log('Message %s sent: %s', info.messageId, info.response)
-        res.send('index')
+        console.log(
+          'Message %s to %s sent: %s',
+          info.messageId,
+          mailOptions.to,
+          info.response
+        )
+        res.status(200).send(info.response + ' to˝ ' + mailOptions.to)
       })
     } else {
-      res.send('No user with this email')
+      res.status(500).send('No user with this email')
     }
   }
   async function setuppassword() {
@@ -380,7 +386,7 @@ app.post('/recoverpassword', async function(req, res, next) {
       let query = 'UPDATE `user` SET `password`=? WHERE `id`=?'
       let param = [newhashedpassword, id]
       await mypool.execute(query, param)
-      res.send('updated')
+      res.status(200).send('updated')
     } catch (err) {
       next(err)
     }
