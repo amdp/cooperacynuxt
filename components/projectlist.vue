@@ -89,7 +89,10 @@
             <!-- votebar -->
             <b-row class="ml-0 mr-0 p-0 w-100">
               <b-col cols="12" class="m-0 p-0 w-100 text-center">
-                <b>VOTE FOR THIS PROJECT:</b><br />
+                <b-link v-b-modal.votemodal>
+                  VOTE FOR THIS PROJECT (?):
+                </b-link>
+                <br />
                 <votebar :voteprop="project" :proptype="'project'" />
               </b-col>
             </b-row>
@@ -97,6 +100,114 @@
         </b-row>
       </div>
     </div>
+    <!-- votes modal -->
+    <b-modal id="votemodal" title="VOTING IN COOPERACY" hide-header-close>
+      <p>
+        The <span class="equivalence">r</span><span class="trust">a</span
+        ><span class="care">i</span><span class="transparency">n</span
+        ><span class="freedom">b</span><span class="understanding">o</span
+        ><span class="diversity">w</span> votebar is the main expression of
+        Cooperacy members' distribution of power, resources and activities.
+        Learn how to influence the whole platform with your personal choices.
+      </p>
+      <p>
+        Note: The votes are gray when nobody voted, slightly in color when
+        someone else voted and in full color when You voted them. The
+        transparency vote is supposed to be always on, so it works in the
+        opposite way and it becomes gray when someone votes it (see below).
+      </p>
+      <b>Equivalence:</b>
+      <b-row class="px-4">
+        <b-col class="vote mx-3 w-25 bequivalence">&nbsp;</b-col>
+        <b-col class="vote mx-3 w-25 theyequivalence">&nbsp;</b-col>
+        <b-col class="vote mx-3 w-25 aaagray">&nbsp;</b-col>
+      </b-row>
+      <p>
+        It is the most basic vote. It determines the proportional allocation of
+        funds from the money pool in funded ideas, a favorable vote in proposals
+        (ideas proposed to make changes) and a vinculating pre-purchase to a
+        course, concert, ticket-based event.
+      </p>
+      <b>Trust:</b>
+      <b-row class="px-4">
+        <b-col class="vote mx-3 w-25 btrust">&nbsp;</b-col>
+        <b-col class="vote mx-3 w-25 theytrust">&nbsp;</b-col>
+        <b-col class="vote mx-3 w-25 aaagray">&nbsp;</b-col>
+      </b-row>
+      <p>
+        Trust votes make the project skip the business plan budget step and be
+        used for co-donations, a form of crowdfunding that sets equal shares for
+        financing a project.
+      </p>
+      <b>Care:</b>
+      <b-row class="px-4">
+        <b-col class="vote mx-3 w-25 bcare">&nbsp;</b-col>
+        <b-col class="vote mx-3 w-25 theycare">&nbsp;</b-col>
+        <b-col class="vote mx-3 w-25 aaagray">&nbsp;</b-col>
+      </b-row>
+      <p>
+        It’s a like, the project gains more visibility in search results and
+        influences the viewer to support it.
+      </p>
+      <b>Transparency:</b>
+      <b-row class="px-4">
+        <b-col class="vote mx-3 w-25 aaagray">&nbsp;</b-col>
+        <b-col class="vote mx-3 w-25 theytransparency">&nbsp;</b-col>
+        <b-col class="vote mx-3 w-25 btransparency">&nbsp;</b-col>
+      </b-row>
+      <p>
+        This vote is a very delicate one and it must be used with caution. It
+        states hidden information, corruption or spamming. You must write what
+        you think it's wrong or a solution to the issue. Beware, the project may
+        go into a testing state (see state). When nobody voted Transparency, the
+        user sees the color vivid, if somebody voted Transparency, the color
+        darkens.
+        <br />Remember: transparency voters are never anonymous.
+      </p>
+      <b>Freedom:</b>
+      <b-row class="px-4">
+        <b-col class="vote mx-3 w-25 bfreedom">&nbsp;</b-col>
+        <b-col class="vote mx-3 w-25 theyfreedom">&nbsp;</b-col>
+        <b-col class="vote mx-3 w-25 aaagray">&nbsp;</b-col>
+      </b-row>
+      <p>
+        Freedom-voting means you would like to work for the idea or participate
+        into the organization and the decision making. Clicking on the Freedom
+        vote makes you become a member, you can see it in your dashboard project
+        list, and your participation contributes to the project hudget level.
+      </p>
+      <b>Understanding:</b>
+      <b-row class="px-4">
+        <b-col class="vote mx-3 w-25 bunderstanding">&nbsp;</b-col>
+        <b-col class="vote mx-3 w-25 theyunderstanding">&nbsp;</b-col>
+        <b-col class="vote mx-3 w-25 aaagray">&nbsp;</b-col>
+      </b-row>
+      <p>
+        This vote refers to the idea comprehension, gives more visibility and
+        skips the fine tuning phase. Understanding votes can also be raised up
+        by the Cooperacy AI.
+      </p>
+      <b>Diversity:</b>
+      <b-row class="px-4">
+        <b-col class="vote mx-3 w-25 bdiversity">&nbsp;</b-col>
+        <b-col class="vote mx-3 w-25 theydiversity">&nbsp;</b-col>
+        <b-col class="vote mx-3 w-25 aaagray">&nbsp;</b-col>
+      </b-row>
+      <p>
+        When a project has a strong “bizardry” or diversity-votes, it has more
+        opportunities to go randomly in the approving stage. Moreover, the idea
+        with the highest “Bizardry” has equivalence-votes percentage raised by
+        50%.
+      </p>
+      <template slot="modal-footer" slot-scope="{ ok }">
+        <b-button
+          class="btn bhtransparency white btn-block border-0"
+          @click="ok"
+        >
+          OK
+        </b-button>
+      </template>
+    </b-modal>
   </b-container>
 </template>
 
