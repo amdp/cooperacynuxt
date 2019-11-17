@@ -15,6 +15,11 @@ export default {
     await store.dispatch('getProjectAction', '')
     await store.dispatch('getPlaceAction')
     await store.dispatch('getCountryAction')
+    if (store.state.auth.user) {
+      await store.dispatch('getUserProjectAction', {
+        userid: store.state.auth.user.id
+      })
+    }
   }
 }
 </script>

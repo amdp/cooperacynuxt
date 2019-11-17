@@ -26,14 +26,19 @@
               autocomplete="current-password"
             ></b-form-input>
           </b-form-group>
-          <b-button
-            type="submit"
-            class="btn bhcare white btn-block mt-3 border-0"
-            >LOGIN</b-button
-          ><br />
           <p>
-            Want to change password? Just enter a
-            <em>new password</em> above together with your email
+            <b-button
+              type="submit"
+              class="btn bhcare white btn-block mt-3 border-0"
+              id="loginbutton"
+            >
+              <span v-if="!logging"><b>LOGIN</b></span>
+              <b-spinner small v-if="logging" class="m-1"></b-spinner>
+            </b-button>
+          </p>
+          <p class="freedom">
+            Want to <b>change</b> password? Just enter your email and a
+            <em>new password</em> in the above fields
             <b-button
               class="btn bhunderstanding white btn-block border-0"
               @click="recover"
@@ -192,7 +197,8 @@ export default {
       formImageFile: null,
       formPaypalagreementid: 'bank',
       newaccountvar: false,
-      newaccountpaypal: false
+      newaccountpaypal: false,
+      logging: false
     }
   },
   computed: {
@@ -255,6 +261,7 @@ export default {
       }
     },
     async login() {
+      this.logging = true
       this.error = null
       this.$auth
         .loginWith('local', {
@@ -271,11 +278,16 @@ export default {
       var auth2 = gapi.auth2.getAuthInstance()
       auth2.signOut()
     },
-    recover() {
+    async recover() {
       this.$store.dispatch('recoverPasswordAction', {
         email: this.loginEmail,
         password: this.loginPassword
       })
+      alert(
+        'Cooperacy is sending you an email to ' +
+          this.loginEmail +
+          ' to set the new password that is now in the password field.'
+      )
     },
     async newuser() {
       var newuser = await this.$store.dispatch('newuserAction', {

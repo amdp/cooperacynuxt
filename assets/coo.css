@@ -53,6 +53,7 @@ a:hover {
   --ondiversity: #f7d;
   --theydiversity: #fcf;
   --offdiversity: #aaa;
+  --coogray: #777;
 }
 
 /*h cooperation colors, h* have hover*/
@@ -157,6 +158,9 @@ a:hover {
 }
 .bhdiversity:hover {
   background-color: var(--understanding);
+}
+.coogray {
+  color: var(--coogray);
 }
 
 .ae {
@@ -322,6 +326,10 @@ a:hover {
 .roundmodule {
   border-radius: 90px;
 }
+.t20 {
+  font-size: 20px;
+  font-weight: 200;
+}
 .t18 {
   font-size: 18px;
   font-weight: 200;
@@ -463,30 +471,11 @@ a.disabled {
   font-size: 20px;
   color: #777;
 }
-.progress-bar {
-  background-color: var(--trust);
-  color: #777;
-}
 .progress-zero {
   color: #777;
   padding-left: 2px;
 }
-.project-details div {
-  display: flex;
-  flex-direction: column;
-  margin: 0 0.5rem;
-}
-.project-details b,
-.project-details small {
-  font-size: 12px;
-}
-.project-details b {
-  font-weight: 700;
-}
-.project-details small {
-  font-weight: light;
-}
-.img-project {
+.img-100 {
   width: 100%;
 }
 .mobile-nav-box {
@@ -706,7 +695,7 @@ img.news {
   display: block;
   font-weight: 400;
 }
-.uservote {
+.rainbowcode {
   height: 2px;
 }
 .uservote:hover .showme {

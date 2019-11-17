@@ -28,7 +28,7 @@
               :src="userImage(comment.user)"
             />
           </div>
-          <p class="col-10 col-md-11" v-html="comment.content"></p>
+          <p class="col-10 col-md-11 freedom" v-html="comment.content"></p>
         </div>
         <div class="row">
           <div class="col-12 space t10 up text-right">
@@ -58,7 +58,6 @@
         </div>
         <div class="row m-0 p-0">
           <div class="col-12 mb-3">
-            <p>VOTE FOR THIS COMMENT:</p>
             <votebar
               :voteprop="comment"
               :proptype="'comment'"
@@ -97,7 +96,10 @@
                   :src="userImage(subcomment.user)"
                 />
               </div>
-              <div class="col-10 col-md-11" v-html="subcomment.content"></div>
+              <div
+                class="col-10 col-md-11 freedom"
+                v-html="subcomment.content"
+              ></div>
             </div>
             <div class="row">
               <div class="col-12 space t10 up text-right">
@@ -129,7 +131,6 @@
             </div>
             <div class="row m-0 p-0">
               <div class="col-12 mb-3">
-                <p>VOTE FOR THIS COMMENT:</p>
                 <votebar :voteprop="subcomment" :proptype="'comment'" />
               </div>
             </div>
@@ -251,7 +252,7 @@ export default {
       this.formPost = ''
     },
     reply(replycomment) {
-      check()
+      this.check()
       if (this.formswitch == replycomment.id) {
         this.formswitch = false //turns off the box
       } else {
@@ -261,7 +262,7 @@ export default {
       }
     },
     edit(editcomment) {
-      check()
+      this.check()
       if (this.formswitch == editcomment.id) {
         this.formswitch = false //turns off the box
       } else {
@@ -276,7 +277,7 @@ export default {
       }
     },
     remove(toberemoved) {
-      check()
+      this.check()
       this.$store.dispatch('commentFormAction', {
         id: toberemoved.id,
         parent: toberemoved.parent,
