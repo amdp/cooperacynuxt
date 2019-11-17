@@ -66,7 +66,7 @@
       <div class="g-signin2" data-onsuccess="googleOnSignIn" data-theme="dark"></div>
       <a href="#" @click="googleSignOut">Sign out</a>-->
       <div class="col-12 d-flex justify-content-center">
-        <b-form @submit.prevent="newuser" class="mt-3 was-validated">
+        <b-form @submit.prevent="newuser()" class="mt-3 was-validated">
           <b-form-group
             label-for="nameInput"
             label="Name:"

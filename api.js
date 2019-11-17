@@ -361,7 +361,7 @@ app.post('/recoverpassword', async function(req, res, next) {
           return console.error(error)
         }
         console.log('Message %s sent: %s', info.messageId, info.response)
-        res.render('index')
+        res.send('index')
       })
     } else {
       res.send('No user with this email')
@@ -993,7 +993,7 @@ app.use(function(err, req, res, next) {
     return next(err)
   }
   res.status(500)
-  res.render('error', { error: err })
+  res.send('error', { error: err })
   console.log('nexterr: ' + JSON.stringify(err))
 })
 
