@@ -276,7 +276,6 @@ app.post('/login', async function(req, res, next) {
             'Content-Type': 'application/json'
           }
         })
-        console.log('second ' + transaction.data.agreement_transaction_list)
         let list = transaction.data.agreement_transaction_list
         if (list[list.length - 1].status == 'Completed') {
           res.send({ token: { accessToken } })
