@@ -367,7 +367,7 @@ app.post('/recoverpassword', async function(req, res, next) {
           mailOptions.to,
           info.response
         )
-        res.status(200).send(info.response + ' to˝ ' + mailOptions.to)
+        res.status(200).send(info.response + ' to ' + mailOptions.to)
       })
     } else {
       res.status(500).send('No user with this email')
