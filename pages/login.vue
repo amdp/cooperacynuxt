@@ -262,17 +262,17 @@ export default {
     },
     async login() {
       this.logging = true
-      this.error = null
-      this.$auth
-        .loginWith('local', {
+      try {
+        await this.$auth.loginWith('local', {
           data: {
             email: this.loginEmail,
             password: this.loginPassword
           }
         })
-        .catch(e => {
-          this.error = e + ''
-        })
+      } catch (err) {
+        alert('Sorry, there seems to be something wrong: ' + err.response.data)
+        this.logging = false
+      }
     },
     googleSignOut() {
       var auth2 = gapi.auth2.getAuthInstance()
