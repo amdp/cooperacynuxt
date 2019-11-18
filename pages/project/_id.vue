@@ -21,14 +21,14 @@
             </p>
             <p>
               TAGS:
-              <span v-for="tag in this.$store.state.tag" :key="tag.id">{{
-                tag.name
-              }}</span>
-              <span
-                >- <b-link v-b-modal.addtagmodal class="ac">Add</b-link> or
+              <span v-for="tag in this.$store.state.tag" :key="tag.id">
+                {{ tag.name }}
+              </span>
+              <span>
+                - <b-link v-b-modal.addtagmodal class="ac">Add</b-link> or
                 <b-link v-b-modal.removetagmodal class="au">remove</b-link> a
-                tag</span
-              >
+                tag
+              </span>
             </p>
           </b-col>
           <b-col cols="12" md="3">
@@ -109,13 +109,20 @@
         </b-row>
         <b-row class="m-0 p-0 w-100">
           <b-col cols="12">
+            <b-row class="ml-0 mr-0 p-0 w-100">
+              <b-col cols="12" class="m-0 p-0 w-100 text-center">
+                <b-link v-b-modal.votemodal>
+                  VOTE FOR THIS PROJECT (?):
+                </b-link>
+                <br />
+                <votebar
+                  :voteprop="oneproject"
+                  :proptype="'project'"
+                  :voteId="oneproject.id"
+                />
+              </b-col>
+            </b-row>
             <div>
-              <p class="mt-2">VOTE FOR THIS PROJECT:</p>
-              <votebar
-                :voteprop="oneproject"
-                :proptype="'project'"
-                :voteId="oneproject.id"
-              />
               <div class="col-12 mt-4">
                 <b-link class="au" v-if="oneproject.stage != 1" @click="edit"
                   >Edit this project</b-link
@@ -145,7 +152,8 @@
       <h3 class="font-weight-normal text-center">COMMENTS AND QUESTIONS</h3>
       <comment />
     </div>
-
+    <!-- VOTEMODAL -->
+    <votemodal />
     <!-- ADD TAGS MODAL -->
     <b-modal id="addtagmodal" title="Add a new tag" hide-header-close>
       <p class="my-4">
@@ -203,10 +211,12 @@
 
 <script>
 import votebar from '@/components/votebar'
+import votemodal from '@/components/votemodal'
 import comment from '@/components/comment'
 
 export default {
   middleware: ['auth'],
+  components: { votebar: votebar, comment: comment, votemodal: votemodal },
   validate({ params }) {
     // Must be a number
     return /^\d+$/.test(params.id)
@@ -216,7 +226,6 @@ export default {
       title: 'Cooperacy - Project: ' + this.oneproject.name
     }
   },
-  components: { votebar: votebar, comment: comment },
   async fetch({ store, params }) {
     await store.dispatch('getCommentAction', {
       projectid: params.id,
