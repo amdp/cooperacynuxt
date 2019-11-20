@@ -2,7 +2,7 @@
   <div class="page-container mb-3">
     <br /><img class="page-header" src="~/assets/image/page/banners/news.png" />
     <div
-      class="row mt-2 page-container"
+      class="row mt-2 page-container p-3"
       v-for="news in this.$store.state.news"
       :key="news.id"
     >

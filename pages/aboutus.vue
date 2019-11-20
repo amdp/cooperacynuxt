@@ -153,9 +153,10 @@
         our bank account balance and inspect our paypal account. We have nothing
         to hide.<br />
         <span class="transparency up">Bank account:</span>
-        our IBAN is IT61D0623001623000043225634 - Filiale AG 23 Milano Cariparma
-        di via della Moscova, and the current bank balance is around 200 euros,
-        updated: 14 April 2018<br />
+        our bank information is: IBAN IT61D0623001623000043225634 BIC/SWIFT
+        CRPPIT2P277 - Filiale AG 23 00277 - Cariparma, via della Moscova 53
+        Milano 20121 and the current bank balance is around 800 euros, updated:
+        16 November 2019<br />
         <span class="transparency up">Paypal:</span>
         you can access our account from the standard paypal login with
         COOPERATION + password cooperation2016

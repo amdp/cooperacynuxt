@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- <b-link v-b-modal.entermodal class="noline finger"> -->
     <div class="circle mb-md-4">
       <svg
         xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -107,6 +108,7 @@
         </text>
       </svg>
     </div>
+    <!-- </b-link> -->
     <!--END CIRCLE-->
     <!--FADE IN AREA-->
     <div id="homefade" style="opacity:0">
