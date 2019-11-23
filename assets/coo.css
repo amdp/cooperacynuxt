@@ -225,7 +225,7 @@ img.news {
 .rainbowcode {
   height: 2px;
 }
-.uservote:hover .showme {
+.rainbowcode:hover .showme {
   display: block;
   font-weight: 400;
   font-size: 10px;

@@ -429,24 +429,25 @@ app.post('/place', async function(req, res, next) {
 })
 
 app.post('/project', async function(req, res, next) {
+  let param = [
+    req.body.name,
+    req.body.country,
+    req.body.place,
+    req.body.category,
+    req.body.brief,
+    req.body.content,
+    req.body.video,
+    req.body.anonymous,
+    req.body.parent,
+    req.body.stage,
+    req.body.budget,
+    req.body.hudget
+  ]
   if (req.body.id != 'new') {
     try {
+      param.push(req.body.id)
       let query =
-        'UPDATE `project` SET `name`=?,`country`=?,`place`=?,`brief`=?,`content`=?,`video`=?,`anonymous`=?,`parent`=?,`stage`=?,`budget`=?,`hudget`=? WHERE `project`.`id`=?'
-      let param = [
-        req.body.name,
-        req.body.country,
-        req.body.place,
-        req.body.brief,
-        req.body.content,
-        req.body.video,
-        req.body.anonymous,
-        req.body.parent,
-        req.body.stage,
-        req.body.budget,
-        req.body.hudget,
-        req.body.id
-      ]
+        'UPDATE `project` SET `name`=?,`country`=?,`place`=?,`category`=?,`brief`=?,`content`=?,`video`=?,`anonymous`=?,`parent`=?,`stage`=?,`budget`=?,`hudget`=? WHERE `project`.`id`=?'
       await mypool.execute(query, param)
       res.send({ id: req.body.id })
     } catch (err) {
@@ -455,8 +456,8 @@ app.post('/project', async function(req, res, next) {
   } else {
     try {
       let query = 'SELECT * FROM `project` WHERE `project`.`name`= ? LIMIT 1'
-      let param = [req.body.name]
-      const [project] = await mypool.execute(query, param)
+      let projectname = [req.body.name]
+      const [project] = await mypool.execute(query, projectname)
       if (project[0]) {
         res.send('exists')
       } else {
@@ -469,21 +470,9 @@ app.post('/project', async function(req, res, next) {
   async function addproject() {
     try {
       let query =
-        'INSERT INTO `project` (`name`,`country`,`place`,`brief`,`content`,`video`,`anonymous`,`parent`,`stage`,`budget`,`hudget`)' +
-        ' VALUES (?,?,?,?,?,?,?,?,?,?,?)'
-      let param = [
-        req.body.name,
-        req.body.country,
-        req.body.place,
-        req.body.brief,
-        req.body.content,
-        req.body.video,
-        req.body.anonymous,
-        req.body.parent,
-        req.body.stage,
-        req.body.budget,
-        req.body.hudget
-      ]
+        'INSERT INTO `project` (' +
+        '`name`,`country`,`place`,`category`,`brief`,`content`,`video`,`anonymous`,`parent`,`stage`,`budget`,`hudget`)' +
+        ' VALUES (?,?,?,?,?,?,?,?,?,?,?,?)'
       const [project] = await mypool.execute(query, param)
       res.send({ id: project.insertId })
     } catch (err) {
@@ -606,24 +595,24 @@ app.post('/tag', async function(req, res, next) {
 })
 
 app.post('/image', async function(req, res, next) {
+  console.log(' ' + JSON.stringify(req.body.proptype))
   try {
     var uploadPath =
       './assets/image/' + req.body.proptype + '/' + req.body.id + '.png'
-    req.files.file.mv(uploadPath)
+    await req.files.file.mv(uploadPath)
   } catch (err) {
-    next(err)
+    return next(err)
   }
   try {
-    jimp.read(uploadPath).then(function(uploadPath) {
-      return uploadPath
-        .resize(256, 256)
-        .quality(60)
-        .write(uploadPath)
-    })
-    res.send({ status: 'OK', id: req.body.id })
+    const imgfile = await jimp.read(uploadPath)
+    await imgfile
+      .resize(256, 256) //use Jimp.AUTO for height and then IF the height is > 256 reverse the Jimp.AUTO so max dim is 250
+      .quality(60)
+      .write(uploadPath)
   } catch (err) {
-    next(err)
+    return next(err)
   }
+  res.send({ status: 'OK', id: req.body.id })
 })
 
 app.post('/newuseremail', function(req, res) {
@@ -1004,9 +993,9 @@ app.post('/resetvoting', async function(req, res, next) {
 
 //error function triggered by next
 app.use(function(err, req, res, next) {
-  console.log('nexterr: ' + JSON.stringify(err))
+  console.log('nexterr: ' + JSON.stringify(err) + err.stack)
   if (res.headersSent) {
-    return next(err)
+    return next(err) //check  this out
   }
   res.status(500).send({ error: err })
 })

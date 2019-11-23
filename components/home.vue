@@ -111,6 +111,7 @@
     <!-- </b-link> -->
     <!--END CIRCLE-->
     <!--FADE IN AREA-->
+    <!-- Find other people to realize together what you want to do and possibly get funded -->
     <div id="homefade" style="opacity:0">
       <div class="row mb-4 p-2">
         <div class="col-lg-4 col-xs-12 subheading text-center">

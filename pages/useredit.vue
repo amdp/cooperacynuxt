@@ -129,11 +129,11 @@ export default {
         let formImageData = new FormData()
         formImageData.append('file', this.formImageFilename)
         formImageData.append('id', this.id)
+        formImageData.append('proptype', 'user')
         let res = await this.$store
           .dispatch('imageUploadAction', {
             formImageData: formImageData,
-            headers: { headers: { 'Content-Type': 'multipart/form-data' } },
-            proptype: 'user'
+            headers: { headers: { 'Content-Type': 'multipart/form-data' } }
           })
           .catch(err => {
             console.error(err)
@@ -157,6 +157,9 @@ export default {
           'Something went wrong. Please retry later, the server could have problems in processing your request.'
         )
       }
+      if (!this.formNewPassword) {
+        this.formNewPassword = this.formOldPassword
+      }
       var updateUser = await this.$store
         .dispatch('updateUserAction', {
           id: this.id,
@@ -173,10 +176,12 @@ export default {
       } // reloads the updated user information
     },
     userReload() {
-      this.$auth.fetchUser().catch(err => {
+      try {
+        this.$auth.fetchUser()
+      } catch (err) {
         console.error(err)
-      })
-      location.reload(true) // reloads the page
+      }
+      location.href = process.env.URLHOME + '/user' // reloads the user page
     }
   }
 }

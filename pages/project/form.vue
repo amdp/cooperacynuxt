@@ -20,8 +20,8 @@
         </b-form-group>
         <b-form-group
           label-for="countryInput"
-          label="Place:"
-          :description="placedesc"
+          label="Country:"
+          :description="countrydesc"
         >
           <b-form-select id="countryInput" v-model="formCountry">
             <option
@@ -31,15 +31,25 @@
               >{{ country.name }}</option
             >
           </b-form-select>
+        </b-form-group>
+        <b-form-group
+          label-for="placeInput"
+          label="Place:"
+          :description="placedesc"
+        >
           <b-form-select id="placeInput" v-model="formPlace" required>
             <option v-for="place in place" :key="place.id" :value="place.id">{{
               place.name
             }}</option>
           </b-form-select>
         </b-form-group>
-        <p>
-          If you do not find your place, please feel free to add a new
-          <b-link v-b-modal.placemodal class="ac">one</b-link>
+        <p class="diversity">
+          <i
+            ><strong>
+              If you do not find your place, please feel free to add a new
+              <b-link v-b-modal.placemodal class="ad">one</b-link></strong
+            ></i
+          >
         </p>
         <b-form-group
           label-for="briefInput"
@@ -269,7 +279,10 @@ export default {
         'Insert the amount the project participants should pay to participate (courses, concerts..) or leave 0 for free participation',
       hudgetdesc:
         'Insert the minimum number of paying participants so that the project is sustainable',
-      placedesc: 'Insert the country and location of your project idea',
+      countrydesc:
+        'Insert the country of your project idea, use Cooperacy for international',
+      placedesc:
+        'Insert the city or location of your project idea, use Cooperacy for online or global',
       totallabel: 0,
       formAnonymous: 0,
       formNewcountry: null,
@@ -282,7 +295,7 @@ export default {
         : null,
       formPlace: this.$store.state.edit.id
         ? this.$store.state.project[0].place
-        : 'Cooperacy',
+        : null,
       formBrief: this.$store.state.edit.id
         ? this.$store.state.project[0].brief
         : null,
@@ -295,10 +308,10 @@ export default {
         : null,
       formParent: this.$store.state.edit.id
         ? this.$store.state.project[0].parent
-        : 1,
+        : '1',
       formCategory: this.$store.state.edit.id
         ? this.$store.state.project[0].category
-        : null,
+        : '1',
       formStageFunding: 5,
       formBudget: this.$store.state.edit.id
         ? Math.round(this.$store.state.project[0].budget)
@@ -306,23 +319,6 @@ export default {
       formHudget: this.$store.state.edit.id
         ? this.$store.state.project[0].hudget
         : 2
-    }
-  },
-  mounted() {
-    if (
-      this.$store.state.edit.id &&
-      this.$store.state.project[0].anonymous == 1
-    ) {
-      return (this.formAnonymous = 1)
-    }
-    if (this.$store.state.edit.id && this.$store.state.project[0].stage != 5) {
-      return (this.formStageFunding = 7), this.funded()
-    }
-    if (this.$store.state.edit.id && this.$store.state.project[0].place) {
-      return (this.formPlace = this.$store.state.project[0].place)
-    }
-    if (this.$store.state.edit.id && this.$store.state.project[0].stage == 5) {
-      totalfreeproject()
     }
   },
   computed: {
@@ -349,6 +345,25 @@ export default {
       )
       return place.sort((a, b) => (a.name > b.name ? 1 : -1))
     }
+  },
+  mounted() {
+    if (
+      this.$store.state.edit.id &&
+      this.$store.state.project[0].anonymous == 1
+    ) {
+      return (this.formAnonymous = 1)
+    }
+    if (this.$store.state.edit.id && this.$store.state.project[0].stage != 5) {
+      return (this.formStageFunding = 7), this.funded()
+    }
+    if (this.$store.state.edit.id && this.$store.state.project[0].place) {
+      return (this.formPlace = this.$store.state.project[0].place)
+    }
+    if (this.$store.state.edit.id && this.$store.state.project[0].stage == 5) {
+      totalfreeproject()
+    }
+    this.formCountry = 1
+    this.formPlace = 1
   },
   methods: {
     funded() {
@@ -389,7 +404,7 @@ export default {
         })
       }
     },
-    projectForm() {
+    async projectForm() {
       // This function creates and sends database request body both for project creation and updating
       //'new' is set for a new project, if not the param.id is taken from url to update or copy old ones
       let projectid = 'new'
@@ -401,39 +416,44 @@ export default {
         name: this.formName,
         country: this.formCountry,
         place: this.formPlace,
+        category: this.formCategory,
         brief: this.formBrief,
-        content: '' + this.formContent,
-        video: '' + this.formVideo,
+        content: '' + this.formContent, //leave '' here
+        video: '' + this.formVideo, //leave '' here
         anonymous: this.formAnonymous,
         parent: this.formParent,
         stage: this.formStageFunding,
         budget: this.formBudget,
         hudget: this.formHudget
       }
-      //vuex action to the database, the 'res'[ponse] variable brings the recently created or edited project >id< from the server..
-      this.$store
-        .dispatch('projectFormAction', formBodyRequest)
+      let res
+      try {
+        //vuex action to the database, the 'res'[ponse] variable brings the recently created or edited project >id< from the server..
+        res = await this.$store.dispatch('projectFormAction', formBodyRequest)
+
         //..in order to use it in the image creation and to make the user a participant of its project:
-        .then(async res => {
-          if (res == 'exists') {
-            return this.$toast.show('Project already exists!', {
-              duration: 1000,
-              className: 'toast'
-            })
+        if (res == 'exists') {
+          return this.$toast.show('Project already exists!', {
+            duration: 1000,
+            className: 'toast'
+          })
+        }
+        if (projectid == 'new') {
+          let freedomvote = {
+            id: res,
+            condition: 'F',
+            user: this.$auth.user.id,
+            proptype: 'project'
           }
-          if (projectid == 'new') {
-            let freedomvote = {
-              id: res,
-              condition: 'F',
-              user: this.$auth.user.id,
-              proptype: 'project'
-            }
-            this.$store.dispatch('addVoteAction', freedomvote)
-          }
-          if (this.formImageFile) {
-            this.imageUpload(res)
-          } else this.doneToast(res)
-        })
+          this.$store.dispatch('addVoteAction', freedomvote)
+        }
+        if (this.formImageFile) {
+          this.imageUpload(res)
+        } else this.doneToast(res)
+      } catch (err) {
+        console.log(' ' + JSON.stringify(err))
+        alert(err)
+      }
     },
     async imageUpload(id) {
       let formImageData = new FormData()
@@ -443,15 +463,17 @@ export default {
       // for (var key of formImageData.entries()) {
       //   console.log(key[0] + ', ' + key[1])
       // }
-      let res = await this.$store
-        .dispatch('imageUploadAction', {
+      let res
+      try {
+        res = await this.$store.dispatch('imageUploadAction', {
           formImageData: formImageData,
           headers: { headers: { 'Content-Type': 'multipart/form-data' } },
           proptype: 'project'
         })
-        .catch(err => {
-          console.error(err)
-        })
+      } catch (err) {
+        console.log(err)
+        alert(err)
+      }
       if (res) {
         this.doneToast(res)
       }
