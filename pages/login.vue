@@ -34,6 +34,7 @@
             >
               <span v-if="!logging"><b>LOGIN</b></span>
               <b-spinner small v-if="logging" class="m-1"></b-spinner>
+              <span v-if="logging">Checking your paypal/bank membership..</span>
             </b-button>
           </p>
           <p class="freedom">

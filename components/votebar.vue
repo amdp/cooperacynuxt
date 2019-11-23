@@ -89,7 +89,7 @@ export default {
       if (this.proptype == 'user') {
         for (let i = 0; i < 7; i++) {
           ;(voteif[i].class =
-            'p-0 raimbowcode b' +
+            'p-0 rainbowcode b' +
             this.$store.state.condition[i] +
             ' ' +
             this.$store.state.condition[i]),

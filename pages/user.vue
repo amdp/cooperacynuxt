@@ -3,8 +3,12 @@
     <b-row class="mt-3">
       <b-col cols="6">
         <h5 class="mt-2 d-flex justify-content-center up">
-          WELCOME {{ this.$auth.user.name }}
+          {{ this.$auth.user.name }} {{ this.$auth.user.surname }}
         </h5>
+        <img
+          class="usercomment rounded-circle img-responsive"
+          :src="userImage(this.$auth.user.id)"
+        /><br />
         <nuxt-link to="/useredit" class="ad">
           Edit your information
         </nuxt-link>
@@ -90,6 +94,13 @@ export default {
   methods: {
     async resetvoting() {
       await this.$store.dispatch('resetVotingAction')
+    },
+    userImage(id) {
+      try {
+        return require('../assets/image/user/' + id + '.png')
+      } catch (e) {
+        return require('../assets/image/user/0.png')
+      }
     },
     rainbowcode() {
       if (this.$auth.user.rainbowcode) {

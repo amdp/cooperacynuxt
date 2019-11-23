@@ -227,18 +227,18 @@ export default {
     }
   },
   async fetch({ store, params }) {
-    await store.dispatch('getCommentAction', {
-      projectid: params.id,
-      userid: store.state.auth.user.id,
-      limit: ' LIMIT 1'
-    })
-    await store.dispatch('getTagAction', { projectid: params.id })
     await store.dispatch('getProjectAction', {
       projectid: params.id,
       userid: store.state.auth.user.id
     })
     await store.dispatch('getPlaceAction')
     await store.dispatch('getCountryAction')
+    await store.dispatch('getTagAction', { projectid: params.id })
+    await store.dispatch('getCommentAction', {
+      projectid: params.id,
+      userid: store.state.auth.user.id,
+      limit: ' LIMIT 1'
+    })
   },
   data() {
     return {
@@ -267,7 +267,7 @@ export default {
     projectImage() {
       try {
         return require('../../assets/image/project/' +
-          this.oneproject.id +
+          this.$route.params.id +
           '.png')
       } catch (e) {
         return require('../../assets/image/project/0.png')
