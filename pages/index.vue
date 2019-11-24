@@ -14,14 +14,14 @@ import entermodal from '@/components/entermodal'
 export default {
   components: { home: home, projectlist: projectlist, entermodal: entermodal },
   async fetch({ store, params }) {
-    await store.dispatch('getProjectAction', '')
-    await store.dispatch('getPlaceAction')
-    await store.dispatch('getCountryAction')
     if (store.state.auth.user) {
       await store.dispatch('getUserProjectAction', {
         userid: store.state.auth.user.id
       })
     }
+    await store.dispatch('getProjectAction', '')
+    await store.dispatch('getPlaceAction')
+    await store.dispatch('getCountryAction')
   }
 }
 </script>

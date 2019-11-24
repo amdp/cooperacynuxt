@@ -3,15 +3,15 @@
     <div
       class="justify-content-center m-0 p-0"
       v-for="type in projectTypes"
-      :key="type"
+      :key="type.id"
       fluid
     >
-      <h2 class="text-center mb-3 up" v-if="projectlist(type).length > 0">
-        {{ type }}
+      <h2 class="text-center mb-3 up" v-if="projectlist[type.name].length > 0">
+        {{ type.name }}
       </h2>
       <div
         class="p-3 ml-0 mr-0 mb-3 w-100 projectbox"
-        v-for="project in projectlist(type)"
+        v-for="project in projectlist[type.name]"
         :key="project.id"
       >
         <b-row class="m-0 p-0 w-100">
@@ -112,17 +112,25 @@ export default {
   data() {
     return {
       isHover: null,
-      projectTypes: ['projects', 'archived']
+      projectTypes: [
+        { id: 1, name: 'project' },
+        { id: 2, name: 'archived' }
+      ]
+    }
+  },
+  computed: {
+    projectlist() {
+      return {
+        project: this.$store.state.project.filter(
+          project => project.stage != 1
+        ),
+        archived: this.$store.state.project.filter(
+          project => project.stage == 1
+        )
+      }
     }
   },
   methods: {
-    projectlist(type) {
-      if (type == 'projects') {
-        return this.$store.state.project.filter(project => project.stage != 1)
-      } else {
-        return this.$store.state.project.filter(project => project.stage == 1)
-      }
-    },
     projectImage(id) {
       try {
         return require('../assets/image/project/' + id + '.png')

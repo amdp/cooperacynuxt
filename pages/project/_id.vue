@@ -239,6 +239,16 @@ export default {
       userid: store.state.auth.user.id,
       limit: ' LIMIT 1'
     })
+    await store.dispatch('getUservoteAction', {
+      userid: store.state.auth.user.id,
+      proptype: 'project'
+    })
+    await store.dispatch('getUservoteAction', {
+      userid: store.state.auth.user.id,
+      proptype: 'comment',
+      projectid: params.id,
+      limit: ' LIMIT 1'
+    })
   },
   data() {
     return {
