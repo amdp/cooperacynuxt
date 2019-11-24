@@ -79,6 +79,7 @@
               aria-valuenow="25"
               aria-valuemin="0"
               aria-valuemax="100"
+              v-if="oneproject.category != 4 || oneproject.hudget != 0"
             >
               HUDGET: &nbsp;&nbsp;{{ progress(oneproject, 'h') }}% of
               {{ Math.round(oneproject.hudget) }}

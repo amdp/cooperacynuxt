@@ -230,11 +230,12 @@
           >
             <b-form-select id="newcountryInput" v-model="formNewcountry">
               <option
-                v-for="country in country"
+                v-for="country in newcountry"
                 :key="country.id"
                 :value="country.id"
-                >{{ country.name }}</option
               >
+                {{ country.name }}
+              </option>
             </b-form-select>
             <b-form-input
               id="newplaceInput"
@@ -348,6 +349,10 @@ export default {
         place => place.country === this.formCountry
       )
       return place.sort((a, b) => (a.name > b.name ? 1 : -1))
+    },
+    newcountry() {
+      //avoids showing Cooperacy as possible entry
+      return this.$store.state.country.filter(country => country.id != 1)
     }
   },
   mounted() {
