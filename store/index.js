@@ -43,7 +43,7 @@ export const state = () => ({
     { id: 7, name: 'Arts Music Games Fun' }
   ],
   stage: [
-    { id: 1, name: 'historical' },
+    { id: 1, name: 'archived' },
     { id: 2, name: 'active' },
     { id: 3, name: 'approval' },
     { id: 4, name: 'testing' },

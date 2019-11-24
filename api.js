@@ -37,7 +37,7 @@ app.get('/project', async function(req, res, next) {
       query += ' WHERE `stage`=?'
       param.push(req.query.stage)
     }
-
+    query += ' ORDER BY `C` DESC'
     const [project] = await mypool.execute(query, param)
     res.send(project)
   } catch (err) {
@@ -603,7 +603,8 @@ app.post('/image', async function(req, res, next) {
   try {
     const imgfile = await jimp.read(uploadPath)
     await imgfile
-      .resize(256, 256) //use Jimp.AUTO for height and then IF the height is > 256 reverse the Jimp.AUTO so max dim is 250
+      .resize(256, jimp.AUTO)
+      .resize(jimp.AUTO, 256)
       .quality(60)
       .write(uploadPath)
   } catch (err) {

@@ -7,7 +7,7 @@
       ><span class="b diversity">w</span> votebar is the main expression of
       Cooperacy members' distribution of power, resources and activities. Learn
       how to influence the whole platform with your personal choices.<br />
-      In historical projects and proposals, it is used as a feedback.<br />
+      In archived projects and proposals, it is used as a feedback.<br />
       In comments it influences your personal
       <span class="b equivalence">r</span><span class="b trust">a</span
       ><span class="b care">i</span><span class="b transparency">n</span
@@ -28,9 +28,8 @@
       <b-col class="vote mx-3 w-25 aaagray">&nbsp;</b-col>
     </b-row>
     <p>
-      Influences the allocation of budget or buys a ticket for a course,
-      concert, event.
-      <br />COMMENTS: it works as a like button.
+      It signals support, so in the projects influences the allocation of budget
+      or buys a ticket for a course, concert, event.
     </p>
     <b>Trust:</b>
     <b-row class="px-4">
@@ -39,10 +38,8 @@
       <b-col class="vote mx-3 w-25 aaagray">&nbsp;</b-col>
     </b-row>
     <p>
-      It signals trust so the project may skip the business plan budget step.<br />
-      It can be used for co-donations, a form of crowdfunding that sets equal
-      shares for financing a project.
-      <br />COMMENTS: it is a trust feedback in the comment/member.
+      It signals trust, so in the projects may lead to skip the human resources
+      budget step.<br />
     </p>
     <b>Care:</b>
     <b-row class="px-4">
@@ -51,9 +48,7 @@
       <b-col class="vote mx-3 w-25 aaagray">&nbsp;</b-col>
     </b-row>
     <p>
-      It’s a signal that the project needs attention: the project gains more
-      visibility in search results.
-      <br />COMMENTS: it is an affectionate and caring feedback.
+      It signals care, so in the projects leads to more visibility.
     </p>
     <b>Transparency:</b>
     <b-row class="px-4">
@@ -62,9 +57,8 @@
       <b-col class="vote mx-3 w-25 btransparency">&nbsp;</b-col>
     </b-row>
     <p>
-      Attention: this vote signals hidden information, corruption or spamming
-      and darkens when voted.
-      <br />COMMENTS: it can signal misinformation or.. a joke :)
+      Attention: it signals hidden information, corruption or spamming and
+      darkens when voted so it can block the projects in a "pairing" stage.
       <br />Remember: transparency voters are never anonymous.
     </p>
     <b>Freedom:</b>
@@ -74,9 +68,8 @@
       <b-col class="vote mx-3 w-25 aaagray">&nbsp;</b-col>
     </b-row>
     <p>
-      Follow button, used for becoming a participant/contributor/future employee
-      of the project.
-      <br />COMMENTS: Signals free-spirit in the comment/member.
+      It signals choice and coolness, so in the projects is for becoming a
+      participant or future employee of the project.
     </p>
     <b>Understanding:</b>
     <b-row class="px-4">
@@ -85,10 +78,8 @@
       <b-col class="vote mx-3 w-25 aaagray">&nbsp;</b-col>
     </b-row>
     <p>
-      This vote signals comprehension, the project may skip the fine tuning
-      phase.<br />
-      Understanding votes can also be raised up by the Cooperacy AI.
-      <br />COMMENTS: it signals comprehension.
+      This vote signals comprehension, so in the projects it may lead to skip
+      the setup budget step.<br />
     </p>
     <b>Diversity:</b>
     <b-row class="px-4">
@@ -97,9 +88,9 @@
       <b-col class="vote mx-3 w-25 aaagray">&nbsp;</b-col>
     </b-row>
     <p>
-      When a project has a strong “bizardry” it can randomly go into the
-      approving stage.
-      <br />COMMENTS: it is something fun, crazy, artistic, bizarre!
+      It signals beauty, fun, “bizardry”, so in the projects it can randomly go
+      into the approving stage, but every 7 diversity votes lower the
+      equivalence ones by 1.
     </p>
     <template slot="modal-footer" slot-scope="{ ok }">
       <b-button class="btn bhtransparency white btn-block border-0" @click="ok">
