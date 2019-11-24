@@ -145,24 +145,12 @@ export const actions = {
     let { data } = await this.$axios.get(process.env.DBURL + '/userproject', {
       params: payload
     })
-    let gouser = { userid: payload.userid, proptype: 'project' }
-    if (payload.limit) {
-      gouser.projectid = payload.projectid
-      gouser.limit = payload.limit
-    }
-    await context.dispatch('getUservoteAction', gouser)
     context.commit('setProject', data)
   },
   getCommentAction: async function(context, payload) {
     let { data } = await this.$axios.get(process.env.DBURL + '/comment', {
       params: payload
     })
-    let gouser = { userid: payload.userid, proptype: 'comment' }
-    if (payload.limit) {
-      gouser.projectid = payload.projectid
-      gouser.limit = payload.limit
-    }
-    await context.dispatch('getUservoteAction', gouser)
     context.commit('setComment', data)
   },
   getTagAction: async function(context, payload) {
@@ -281,9 +269,6 @@ export const actions = {
       params: payload
     })
     let go = { body: data, proptype: payload.proptype }
-    if (payload.where) {
-      go.where = payload.where
-    }
     context.commit('setUservote', go)
   },
   addVoteAction: async function(context, payload) {

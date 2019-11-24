@@ -136,7 +136,7 @@ app.get('/tag', async function(req, res, next) {
     let query = 'SELECT * FROM `tag` where `project`=?'
     let param = [req.query.projectid]
     const [tag] = await mypool.execute(query, param)
-    res.send(tag)
+    res.status(200).send(tag)
   } catch (err) {
     next(err)
   }
@@ -145,9 +145,8 @@ app.get('/tag', async function(req, res, next) {
 app.get('/place', async function(req, res, next) {
   try {
     let query = 'SELECT `id`, `country`, `name` FROM `place`'
-    let param = []
-    const [place] = await mypool.execute(query, param)
-    res.send(place)
+    const [place] = await mypool.execute(query)
+    res.status(200).send(place)
   } catch (err) {
     next(err)
   }
@@ -156,9 +155,8 @@ app.get('/place', async function(req, res, next) {
 app.get('/country', async function(req, res, next) {
   try {
     let query = 'SELECT `id`, `name` FROM `country`'
-    let param = []
-    const [country] = await mypool.execute(query, param)
-    res.send(country)
+    const [country] = await mypool.execute(query)
+    res.status(200).send(country)
   } catch (err) {
     next(err)
   }
@@ -167,9 +165,8 @@ app.get('/country', async function(req, res, next) {
 app.get('/news', async function(req, res, next) {
   try {
     let query = 'SELECT * FROM `news` ORDER BY `news`.`date` DESC'
-    let param = []
-    const [news] = await mypool.execute(query, param)
-    res.send(news)
+    const [news] = await mypool.execute(query)
+    res.status(200).send(news)
   } catch (err) {
     next(err)
   }

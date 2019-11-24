@@ -59,12 +59,12 @@
     <p class="t12 mt-3 mb-3">
       <i
         >Your rainbow code is a way to discover yourself. Every user has always
-        28 points. Every one of them has the same points, but they are
-        distributed in the seven dimensions, starting with (E 4, T 4, C 4, I 4,
-        F 4, U 4, D 4) and having the opportunity to get as low as 0 and as high
-        as 7 according to changes available in the use of the platform and by
-        other users feedbacks. So every user will have a personal “color code”
-        made of their characteristics according to their behavior.</i
+        the same 28 points, but they are distributed in the seven dimensions,
+        starting with (E 4, T 4, C 4, I 4, F 4, U 4, D 4) and having the
+        opportunity to get as low as 1 and as high as 7 according to changes
+        available in the use of the platform and by other users feedbacks. So
+        every user will have a personal “rainbow code” made of their
+        characteristics according to their behavior.</i
       >
     </p>
     <projectlist />
@@ -81,11 +81,15 @@ export default {
     }
   },
   async fetch({ store, params }) {
+    await store.dispatch('getCountryAction')
+    await store.dispatch('getPlaceAction')
+    await store.dispatch('getUservoteAction', {
+      userid: store.state.auth.user.id,
+      proptype: 'project'
+    })
     await store.dispatch('getUserProjectAction', {
       userid: store.state.auth.user.id
     })
-    await store.dispatch('getPlaceAction')
-    await store.dispatch('getCountryAction')
   },
   components: { projectlist: projectlist },
   mounted() {

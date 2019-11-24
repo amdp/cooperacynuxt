@@ -99,6 +99,6 @@ report.*
 
 #project and user images
 /assets/image/project/*
-!/assets/image/project/0.png
+!/assets/image/project/0.png´
 /assets/image/user/*
 !/assets/image/user/0.png
