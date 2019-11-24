@@ -113,7 +113,7 @@ export default {
     return {
       isHover: null,
       projectTypes: [
-        { id: 1, name: 'project' },
+        { id: 1, name: 'projects' },
         { id: 2, name: 'archived' }
       ]
     }
@@ -121,7 +121,7 @@ export default {
   computed: {
     projectlist() {
       return {
-        project: this.$store.state.project.filter(
+        projects: this.$store.state.project.filter(
           project => project.stage != 1
         ),
         archived: this.$store.state.project.filter(

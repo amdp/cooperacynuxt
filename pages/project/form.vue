@@ -212,9 +212,12 @@
         </h6>
         <b-button
           type="submit"
-          class="btn btrust btn-block mt-3 mb-3 gray border-0"
-          >GO!</b-button
+          class="btn bhtrust btn-block mt-3 mb-3 gray border-0"
         >
+          <span v-if="!editing">GO!</span>
+          <b-spinner small v-if="editing" class="m-1"></b-spinner>
+          <span v-if="editing">Reloading the project..</span>
+        </b-button>
       </b-form>
       <!-- MODAL: ADD A NEW PLACE -->
       <b-modal id="placemodal" title="Add a new place" hide-header-close>
@@ -271,6 +274,7 @@ export default {
   },
   data() {
     return {
+      editing: false,
       country: this.$store.state.country,
       category: this.$store.state.category.filter(category => category.id != 0),
       budgetlabel: 'Fee:',
@@ -405,6 +409,7 @@ export default {
       }
     },
     async projectForm() {
+      this.editing = true
       // This function creates and sends database request body both for project creation and updating
       //'new' is set for a new project, if not the param.id is taken from url to update or copy old ones
       let projectid = 'new'
