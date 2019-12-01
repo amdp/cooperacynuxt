@@ -74,7 +74,7 @@
             size="sm"
           ></b-form-textarea>
         </b-form-group>
-        <div v-if="projectImage" class="row">
+        <div class="row">
           <div class="col-10">
             <b-form-group
               label-for="imageInput"
