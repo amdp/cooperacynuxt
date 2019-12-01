@@ -21,7 +21,7 @@
         <b-form-group
           label-for="countryInput"
           label="Country:"
-          :description="countrydesc"
+          description="Insert the country of your project idea, use Cooperacy for international"
         >
           <b-form-select id="countryInput" v-model="formCountry">
             <option
@@ -35,7 +35,7 @@
         <b-form-group
           label-for="placeInput"
           label="Place:"
-          :description="placedesc"
+          description="Insert the city or location of your project idea, use Cooperacy for online or global"
         >
           <b-form-select id="placeInput" v-model="formPlace" required>
             <option v-for="place in place" :key="place.id" :value="place.id">{{
@@ -90,22 +90,10 @@
             </b-form-group>
           </div>
           <div class="col-2">
-            Current: <br /><img class="currentImage" :src="projectImage" />
+            <span v-if="!projectImage"
+              >Current: <br /><img class="currentImage" :src="projectImage"
+            /></span>
           </div>
-        </div>
-        <div v-if="!projectImage">
-          <b-form-group
-            label-for="imageInput"
-            label="Image:"
-            description="The project image"
-          >
-            <b-form-file
-              id="imageInput"
-              v-model="formImageFile"
-              ref="formImageFile"
-              size="sm"
-            ></b-form-file>
-          </b-form-group>
         </div>
         <b-form-group
           label-for="videoInput"
@@ -124,7 +112,7 @@
         <b-form-group
           label-for="parentInput"
           label="Parent:"
-          description="Please insert eventual parent project id, if not sure leave it empty (Cooperacy)."
+          description="Please insert eventual parent project id, if not sure leave it empty (Cooperacy)"
         >
           <b-form-input
             id="parentInput"
@@ -151,7 +139,7 @@
         <b-form-group
           label-for="anonymousInput"
           label=""
-          description="The AFTF collective-intelligence methodology makes some info and all the comments or votes anonymous until the project is approved."
+          description="The AFTF collective-intelligence methodology makes some info and all the comments or votes anonymous until the project is approved"
         >
           <b-form-checkbox
             id="anonymousInput"
@@ -167,10 +155,11 @@
         </b-form-group>
 
         <h5 class="trust">BUDGET AND HUDGET</h5>
+
         <b-form-group
           label-for="stageInput"
           label=""
-          description="If you want to propose a free group cooperation, or a course, an event or similar with its own fee, you just leave it unchecked."
+          description="If you want to propose a free group cooperation, or a course, an event or similar with its own fee, you just leave it unchecked"
         >
           <b-form-checkbox
             id="stageInput"
@@ -179,7 +168,10 @@
             unchecked-value="5"
             switch
             class="m-3"
-            @input="funded()"
+            @input="
+              formBudget = 0
+              formFee = 0
+            "
           >
             FUNDED: when checked, this project idea asks for Cooperacy
             Funds</b-form-checkbox
@@ -187,29 +179,47 @@
         </b-form-group>
         <b-form-group
           label-for="budgetInput"
-          :label="budgetlabel"
-          :description="budgetdesc"
+          label="Budget:"
+          description="Insert the amount of budget needed for your project 
+          (Automatically calculated in case of fee-based projects)"
         >
           <b-form-input
             id="budgetInput"
             v-model="formBudget"
-            @keyup="totalfreeproject"
+            :readonly="this.formStageFunding == 5"
           ></b-form-input>
         </b-form-group>
         <b-form-group
           label-for="hudgetInput"
-          :label="hudgetlabel"
-          :description="hudgetdesc"
+          label="Hudget:"
+          description="Insert the number of professionals needed that will receive a remuneration from the budget"
+        >
+          <b-form-input id="hudgetInput" v-model="formHudget"></b-form-input>
+        </b-form-group>
+        <b-form-group
+          label-for="feeInput"
+          label="Attending Fee:"
+          description="Insert the price of the attending fee, leave 0 for free projects"
+          v-if="this.formStageFunding == 5"
         >
           <b-form-input
-            id="hudgetInput"
-            v-model="formHudget"
+            id="feeInput"
+            v-model="formFee"
             @keyup="totalfreeproject"
           ></b-form-input>
         </b-form-group>
-        <h6 class="trust" v-if="this.totallabel != -1">
-          TOTAL FREE PROJECT BUDGET: {{ totallabel }}
-        </h6>
+        <b-form-group
+          label-for="attendeeInput"
+          label="Minimum attendees:"
+          description="Insert the minimum amount of attendees to this course, event, fee-based service"
+          v-if="this.formStageFunding == 5"
+        >
+          <b-form-input
+            id="attendeeInput"
+            v-model="formAttendee"
+            @keyup="totalfreeproject"
+          ></b-form-input>
+        </b-form-group>
         <b-check
           v-if="formCategory != 4"
           id="termscheckbox"
@@ -301,16 +311,6 @@ export default {
       editing: false,
       country: this.$store.state.country,
       category: this.$store.state.category.filter(category => category.id != 0),
-      budgetlabel: 'Fee:',
-      hudgetlabel: 'Minimum participants:',
-      budgetdesc:
-        'Insert the amount the project participants should pay to participate (courses, concerts..) or leave 0 for free participation',
-      hudgetdesc:
-        'Insert the minimum number of paying participants so that the project is sustainable',
-      countrydesc:
-        'Insert the country of your project idea, use Cooperacy for international',
-      placedesc:
-        'Insert the city or location of your project idea, use Cooperacy for online or global',
       totallabel: 0,
       formAnonymous: 0,
       formNewcountry: null,
@@ -346,15 +346,19 @@ export default {
         : 0,
       formHudget: this.$store.state.edit.id
         ? this.$store.state.project[0].hudget
-        : 2
+        : 2,
+      formFee: this.$store.state.edit.id
+        ? this.$store.state.project[0].collect
+        : 0,
+      formAttendee: this.$store.state.edit.id
+        ? this.$store.state.project[0].budget /
+          this.$store.state.project[0].collect
+        : 0
     }
   },
   computed: {
     nameInputState() {
       return this.name.length > 4 ? true : false
-    },
-    budgetInputState() {
-      return this.bodget.length >= 1000 ? true : false
     },
     projectImage() {
       if (this.$store.state.project.id) {
@@ -386,7 +390,7 @@ export default {
       return (this.formAnonymous = 1)
     }
     if (this.$store.state.edit.id && this.$store.state.project[0].stage != 5) {
-      return (this.formStageFunding = 7), this.funded()
+      return (this.formStageFunding = 7)
     }
     if (this.$store.state.edit.id && this.$store.state.project[0].place) {
       return (this.formPlace = this.$store.state.project[0].place)
@@ -398,27 +402,9 @@ export default {
     this.formPlace = 1
   },
   methods: {
-    funded() {
-      if (this.formStageFunding == 5) {
-        this.budgetlabel = 'Fee:'
-        this.hudgetlabel = 'Minimum participants:'
-        this.budgetdesc =
-          'Insert the amount the project participants should pay to participate'
-        this.hudgetdesc =
-          'Insert the minimum number of paying participants so that the project is sustainable'
-        this.totallabel = this.formBudget * this.formHudget
-      } else {
-        this.budgetlabel = 'Budget:'
-        this.hudgetlabel = 'Hudget:'
-        this.budgetdesc = 'Insert the project budget'
-        this.hudgetdesc =
-          'Insert the project hudget, that is, the minimum number of human resources or followers the project needs'
-        this.totallabel = -1
-      }
-    },
     totalfreeproject() {
       if (this.formStageFunding == 5) {
-        this.totallabel = this.formBudget * this.formHudget
+        this.formBudget = this.formFee * this.formAttendee
       }
     },
     async addplace() {
@@ -459,7 +445,8 @@ export default {
         parent: this.formParent,
         stage: this.formStageFunding,
         budget: this.formBudget,
-        hudget: this.formHudget
+        hudget: this.formHudget,
+        collect: this.formFee
       }
       let res
       try {
