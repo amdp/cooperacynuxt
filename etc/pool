@@ -8,7 +8,7 @@ do
 --execute='SELECT @couser:=COUNT(`active`) FROM `coo`.`user` WHERE `active` = '1'; \
 SELECT @ideas:=COUNT(`stage`) FROM `coo`.`project` WHERE `stage` = '7'; \
 update `coo`.`project` \
-set collected = collected + 0.000000380517504 * @couser / @ideas \
+set collect = collect + 0.000000380517504 * @couser / @ideas \
 where stage = 7'
 sleep 1
 done
@@ -27,7 +27,7 @@ done
 #  console.log("Pooling on the river..")
 #  var query1 = 'SELECT @couser:=COUNT(`active`) FROM `coo`.`user`    WHERE `active` = "1";'
 #  var query2 = 'SELECT @ideas:=COUNT(`stage`)    FROM `coo`.`project` WHERE `stage`  = "7";'
-#  var query3 = 'UPDATE `coo`.`project` set collected = collected + 0.00002283105023 * @couser / @ideas where stage = "7";'
+#  var query3 = 'UPDATE `coo`.`project` set collect = collect + 0.00002283105023 * @couser / @ideas where stage = "7";'
 #  connection.query(query1,
 #    function(err, results, fields) {
 #      console.log(results); // results contains rows returned by server

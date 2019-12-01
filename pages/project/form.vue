@@ -210,6 +210,28 @@
         <h6 class="trust" v-if="this.totallabel != -1">
           TOTAL FREE PROJECT BUDGET: {{ totallabel }}
         </h6>
+        <b-check
+          v-if="formCategory != 4"
+          id="termscheckbox"
+          name="termscheckbox"
+          required
+        >
+          <span class="gray">
+            <i>
+              By clicking the GO! button you declare you read and are aware of
+              the
+              <nuxt-link to="/terms" class="au">terms and conditions</nuxt-link
+              >, you are not damaging the ecosystem or infringing anyone’s right
+              or copyright with this idea concept, visuals, needed actions,
+              financing and personal relations, and mostly important you are
+              aware that Cooperacy as a community will become the owner of all
+              this project rights and even though you can obtain funds and
+              salaries out of this project of mine but you are NOT going to get
+              any financial margins because you want them to go back to
+              Cooperacy and sustain other comembers ideas
+            </i>
+          </span>
+        </b-check>
         <b-button
           type="submit"
           class="btn bhtrust btn-block mt-3 mb-3 gray border-0"
@@ -275,6 +297,7 @@ export default {
   },
   data() {
     return {
+      terms: false,
       editing: false,
       country: this.$store.state.country,
       category: this.$store.state.category.filter(category => category.id != 0),
@@ -306,11 +329,11 @@ export default {
         : null,
       formContent: this.$store.state.edit.id
         ? this.$store.state.project[0].content
-        : null,
+        : '',
       formImageFile: null,
       formVideo: this.$store.state.edit.id
         ? this.$store.state.project[0].video
-        : null,
+        : '',
       formParent: this.$store.state.edit.id
         ? this.$store.state.project[0].parent
         : '1',
@@ -389,12 +412,14 @@ export default {
         this.hudgetlabel = 'Hudget:'
         this.budgetdesc = 'Insert the project budget'
         this.hudgetdesc =
-          'Insert the project hudget, that is, the number of human resources needed in the project'
+          'Insert the project hudget, that is, the minimum number of human resources or followers the project needs'
         this.totallabel = -1
       }
     },
     totalfreeproject() {
-      this.totallabel = this.formBudget * this.formHudget
+      if (this.formStageFunding == 5) {
+        this.totallabel = this.formBudget * this.formHudget
+      }
     },
     async addplace() {
       let result = await this.$store.dispatch('placeFormAction', {
@@ -456,6 +481,10 @@ export default {
             proptype: 'project'
           }
           this.$store.dispatch('addVoteAction', freedomvote)
+          this.$store.dispatch('professionalAction', {
+            project: res,
+            user: this.$auth.user.id
+          })
         }
         if (this.formImageFile) {
           this.imageUpload(res)

@@ -1302,9 +1302,9 @@ CREATE TABLE `project` (
   `anonymous` tinyint(1) NOT NULL DEFAULT '0',
   `parent` int(11) NOT NULL DEFAULT '1',
   `category` int(11) NOT NULL DEFAULT '1',
-  `collected` decimal(32,16) NOT NULL DEFAULT '0.0000000000000000',
+  `collect` decimal(32,16) NOT NULL DEFAULT '0.0000000000000000',
   `budget` decimal(32,16) NOT NULL DEFAULT '0.0000000000000000',
-  `participant` int(11) NOT NULL DEFAULT '2',
+  `professional` int(11) NOT NULL DEFAULT '2',
   `hudget` int(11) NOT NULL DEFAULT '2',
   `E` int(11) NOT NULL DEFAULT '0',
   `T` int(11) NOT NULL DEFAULT '0',
@@ -1322,7 +1322,7 @@ CREATE TABLE `project` (
   CONSTRAINT `project_ibfk_4` FOREIGN KEY (`place`) REFERENCES `place` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-INSERT INTO `project` (`id`, `stage`, `name`, `country`, `place`, `brief`, `content`, `video`, `anonymous`, `parent`, `category`, `collected`, `budget`, `participant`, `hudget`, `E`, `T`, `C`, `I`, `F`, `U`, `D`, `created`, `updated`) VALUES
+INSERT INTO `project` (`id`, `stage`, `name`, `country`, `place`, `brief`, `content`, `video`, `anonymous`, `parent`, `category`, `collect`, `budget`, `professional`, `hudget`, `E`, `T`, `C`, `I`, `F`, `U`, `D`, `created`, `updated`) VALUES
 (1,	7,	'Cooperacy',	1,	1,	'Cooperacy',	'Cooperacy is a scientific project aiming to spread the practice and the awareness of ecosystemic thinking and cooperation.',	'',	0,	1,	0,	1.5309958911948288,	7000.0000000000000000,	2,	7000,	5,	4,	2,	0,	4,	1,	4,	'2019-04-25 11:58:19',	'2019-11-17 13:52:01'),
 (375,	1,	'Corso di Chitarra a Milano',	1100,	260,	'Corso di chitarra a cura di Giovanna Littardi',	'    -',	'    ',	0,	1,	2,	0.0000000000000000,	30.0000000000000000,	2,	5,	3,	1,	1,	0,	0,	0,	0,	'2019-04-23 15:21:14',	'2019-11-17 13:52:10'),
 (389,	5,	'Cooperacy Research',	1,	1,	'The main research body of Cooperacy',	'Cooperation Science Research',	'',	0,	1,	4,	0.0000000000000000,	0.0000000000000000,	4,	1,	2,	2,	2,	0,	2,	2,	2,	'2019-04-22 18:34:25',	'2019-11-12 08:14:24'),
@@ -2233,19 +2233,19 @@ INSERT INTO `user` (`id`, `name`, `surname`, `email`, `password`, `E`, `T`, `C`,
 (237,	'Dumb237', 'User237', 'dumbuser237@dumb.user', 'dumbpassword',	0,	0,	0,	0,	0,	0,	0,	0,	0,	NULL,	NULL,	'2019-11-10 21:22:13',	'2019-10-28 15:45:16'),
 (238,	'Dumb238', 'User238', 'dumbuser238@dumb.user', 'dumbpassword',	0,	0,	0,	0,	0,	0,	0,	0,	0,	NULL,	NULL,	'2019-11-11 23:50:49',	'2019-11-09 15:28:43');
 
-DROP TABLE IF EXISTS `userproject`;
-CREATE TABLE `userproject` (
+DROP TABLE IF EXISTS `projectprofessional`;
+CREATE TABLE `projectprofessional` (
   `project` int(11) NOT NULL,
   `user` int(11) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   KEY `project` (`project`),
   KEY `user` (`user`),
-  CONSTRAINT `userproject_ibfk_4` FOREIGN KEY (`project`) REFERENCES `project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `userproject_ibfk_5` FOREIGN KEY (`user`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `projectprofessional_ibfk_4` FOREIGN KEY (`project`) REFERENCES `project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `projectprofessional_ibfk_5` FOREIGN KEY (`user`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-INSERT INTO `userproject` (`project`, `user`, `created`, `updated`) VALUES
+INSERT INTO `projectprofessional` (`project`, `user`, `created`, `updated`) VALUES
 (389,	7,	'2019-04-25 15:22:39',	'2019-04-25 15:22:58'),
 (401,	78,	'2019-04-25 15:22:39',	'2019-04-25 15:22:58'),
 (434,	22,	'2019-04-25 15:22:39',	'2019-04-25 15:22:58'),
