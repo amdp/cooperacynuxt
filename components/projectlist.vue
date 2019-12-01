@@ -250,7 +250,9 @@ export default {
     progress(project, hudget) {
       let projectProgress
       if (hudget) {
-        projectProgress = Math.round((project.F / project.hudget) * 100)
+        projectProgress = Math.round(
+          (project.professional / project.hudget) * 100
+        )
       } else {
         projectProgress = Math.round((project.collect / project.budget) * 100)
       }
