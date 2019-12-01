@@ -436,13 +436,14 @@ app.post('/project', async function(req, res, next) {
     req.body.parent,
     req.body.stage,
     req.body.budget,
-    req.body.hudget
+    req.body.hudget,
+    req.body.collect
   ]
   if (req.body.id != 'new') {
     try {
       param.push(req.body.id)
       let query =
-        'UPDATE `project` SET `name`=?,`country`=?,`place`=?,`category`=?,`brief`=?,`content`=?,`video`=?,`anonymous`=?,`parent`=?,`stage`=?,`budget`=?,`hudget`=? WHERE `project`.`id`=?'
+        'UPDATE `project` SET `name`=?,`country`=?,`place`=?,`category`=?,`brief`=?,`content`=?,`video`=?,`anonymous`=?,`parent`=?,`stage`=?,`budget`=?,`hudget`=?, `collect`=? WHERE `project`.`id`=?'
       await mypool.execute(query, param)
       res.send({ id: req.body.id })
     } catch (err) {
@@ -466,8 +467,8 @@ app.post('/project', async function(req, res, next) {
     try {
       let query =
         'INSERT INTO `project` (' +
-        '`name`,`country`,`place`,`category`,`brief`,`content`,`video`,`anonymous`,`parent`,`stage`,`budget`,`hudget`)' +
-        ' VALUES (?,?,?,?,?,?,?,?,?,?,?,?)'
+        '`name`,`country`,`place`,`category`,`brief`,`content`,`video`,`anonymous`,`parent`,`stage`,`budget`,`hudget`, `collect`)' +
+        ' VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)'
       const [project] = await mypool.execute(query, param)
       res.send({ id: project.insertId })
     } catch (err) {
