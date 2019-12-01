@@ -53,8 +53,17 @@ export const state = () => ({
   ],
   role: [
     { id: 0, name: 'user' },
-    { id: 2, name: 'admin' },
-    { id: 3, name: 'reporter' }
+    { id: 1, name: 'admin' },
+    { id: 2, name: 'reporter' }
+  ],
+  budgetstep: [
+    { id: 1, name: 'business plan' },
+    { id: 2, name: 'human resources' },
+    { id: 3, name: 'setup' },
+    { id: 4, name: 'production' },
+    { id: 5, name: 'kick off' },
+    { id: 6, name: 'fine tuning' },
+    { id: 7, name: 'celebrate' }
   ]
 })
 
@@ -190,6 +199,13 @@ export const actions = {
     } else {
       return data
     }
+  },
+  professionalAction: async function(context, payload) {
+    let { data } = await this.$axios.post(
+      process.env.DBURL + '/professional',
+      payload
+    )
+    return data
   },
   commentFormAction: async function(context, payload) {
     let { data } = await this.$axios.post(

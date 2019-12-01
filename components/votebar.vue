@@ -136,6 +136,7 @@ export default {
         return this.$router.push({ path: '/login' })
       }
       // CLIENT-SIDE: sends id, votetype, user and adds 1/-1 to the vuex store variable
+      // just to "turn the vote on"
       var add
       this.$store.state[this.proptype + 'uservote'].findIndex(
         // checks if the vote exists, adds accordingly
@@ -150,6 +151,7 @@ export default {
         add: add,
         proptype: this.proptype
       })
+      // ADD VOTING EFFECTS HERE?
 
       // SERVER-SIDE: prepares and sends async REST call (either comment or project)
       var request = {
@@ -161,6 +163,10 @@ export default {
       if (this.proptype == 'comment') {
         request.projectid = this.$route.params.id
         request.author = this.voteprop.user
+      }
+      if (this.proptype == 'project') {
+        request.category = this.voteprop.category
+        request.stage = this.voteprop.stage
       }
       this.$store.dispatch('addVoteAction', request).catch(err => {
         console.error(err)

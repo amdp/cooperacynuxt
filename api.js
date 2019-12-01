@@ -62,8 +62,8 @@ app.get('/comment', async function(req, res, next) {
 app.get('/userproject', async function(req, res, next) {
   try {
     let query =
-      'SELECT * FROM `project` WHERE `id` IN (SELECT `project` FROM `userproject` WHERE `user`=?)'
-    let param = [req.query.userid]
+      'SELECT * FROM `project` WHERE `id` IN (SELECT `project` FROM `projectvote` WHERE `user`=? and `condition`=?)'
+    let param = [req.query.userid, 'F']
     const [project] = await mypool.execute(query, param)
     res.send(project)
   } catch (err) {
@@ -92,7 +92,6 @@ app.get('/uservote', async function(req, res, next) {
 
 app.get('/user', async function(req, res, next) {
   req.headers.authorization = req.headers.authorization.slice(7)
-
   if (req.headers.authorization == 'undefined') {
     return res.status(500).send('JWT is undefined')
   } else {
@@ -254,7 +253,6 @@ app.post('/login', async function(req, res, next) {
           url: 'https://api.paypal.com/v1/oauth2/token'
         })
       } catch (err) {
-        console.log('errlog ' + JSON.stringify(err))
         next(err)
       }
       try {
@@ -592,7 +590,6 @@ app.post('/tag', async function(req, res, next) {
 })
 
 app.post('/image', async function(req, res, next) {
-  console.log(' ' + JSON.stringify(req.body.proptype))
   try {
     var uploadPath =
       './assets/image/' + req.body.proptype + '/' + req.body.id + '.png'
@@ -780,24 +777,6 @@ app.post('/vote', async function(req, res, next) {
         }
       }
     }
-    if (req.body.condition == 'F' && req.body.proptype == 'project') {
-      //meanwhile we add every platform effect the vote may have
-      try {
-        let query = 'INSERT INTO `userproject` (`user`,`project`) VALUES (?,?)'
-        let param = [req.body.user, req.body.id]
-        mypool.execute(query, param)
-      } catch (err) {
-        next(err)
-      }
-      try {
-        let query =
-          'UPDATE `project` SET `participant`=`participant`+1 where `project`.`id`=?'
-        let param = [req.body.id]
-        mypool.execute(query, param)
-      } catch (err) {
-        next(err)
-      }
-    }
   }
   async function removevote(votetoremove) {
     try {
@@ -839,7 +818,7 @@ app.post('/vote', async function(req, res, next) {
     } catch (err) {
       next(err)
     }
-    //finally, we revoke every platform effect the vote may have had:
+    //finally, we revoke every effect the vote may have had on the user:
     if (req.body.proptype == 'comment') {
       if (req.body.user != req.body.author) {
         try {
@@ -856,23 +835,45 @@ app.post('/vote', async function(req, res, next) {
         }
       }
     }
-    if (req.body.condition == 'F' && req.body.proptype == 'project') {
-      try {
-        let query =
-          'DELETE FROM `userproject` where `user` = ? and `project` = ?'
-        let param = [req.body.user, req.body.id]
-        mypool.execute(query, param)
-      } catch (err) {
-        next(err)
-      }
-      try {
-        let query =
-          'UPDATE `project` SET `participant`=`participant`-1 where `project`.`id`=?'
-        let param = [req.body.id]
-        mypool.execute(query, param)
-      } catch (err) {
-        next(err)
-      }
+  }
+})
+
+app.post('/professional', async function(req, res, next) {
+  try {
+    let query =
+      'DELETE FROM `projectprofessional` where `user`=? and `project`=? LIMIT 1'
+    let param = [req.body.user, req.body.project]
+    var [removed] = await mypool.execute(query, param)
+    console.log('removed: ' + JSON.stringify(removed))
+  } catch (err) {
+    next(err)
+  }
+  if (removed) {
+    try {
+      let query =
+        'UPDATE `project` SET `professional`=`professional`-1 where `project`.`id`=?'
+      let param = [req.body.project]
+      mypool.execute(query, param)
+    } catch (err) {
+      next(err)
+    }
+  } else {
+    console.log(' ' + JSON.stringify('no removed'))
+    try {
+      let query =
+        'INSERT INTO `projectprofessional` (`project`, `user`) VALUES (?,?)'
+      let param = [req.body.project, req.body.user]
+      mypool.execute(query, param)
+    } catch (err) {
+      next(err)
+    }
+    try {
+      let query =
+        'UPDATE `project` SET `professional`=`professional`+1 where `project`.`id`=?'
+      let param = [req.body.project]
+      mypool.execute(query, param)
+    } catch (err) {
+      next(err)
     }
   }
 })
@@ -913,9 +914,6 @@ app.post('/resetvoting', async function(req, res, next) {
           }
           const [result] = await mypool.execute(query, param)
           values[cc[c]] = result[0].count
-          if (userid == 7) {
-            console.log('cycleid ' + JSON.stringify(values[cc[c]]))
-          }
           if (values.E != undefined) {
             if (userid) {
               resetvote(userid, values, 'user')
@@ -991,11 +989,12 @@ app.post('/resetvoting', async function(req, res, next) {
 
 //error function triggered by next
 app.use(function(err, req, res, next) {
+  console.log('body: ' + JSON.stringify(req.body))
   console.log('nexterr: ' + JSON.stringify(err) + err.stack)
   if (res.headersSent) {
     return next(err) //check  this out
   }
-  res.status(500).send({ error: err })
+  res.status(500).send({ error: err + 'body: ' + JSON.stringify(req.body) })
 })
 
 module.exports = {

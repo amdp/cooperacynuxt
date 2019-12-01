@@ -28,24 +28,22 @@
               :src="userImage(comment.user)"
             />
           </div>
-          <p class="col-10 col-md-11 freedom" v-html="comment.content"></p>
+          <p class="col-10 col-md-11" v-html="comment.content"></p>
         </div>
         <div class="row">
-          <div class="col-12 space t10 up text-right">
+          <div class="col-12 space t10 up text-right graylight">
             <span v-if="!anonymous">
               {{ comment.name }} {{ comment.surname }}
             </span>
-            <span class="graylight">
-              #{{ comment.id }} {{ comment.created }}
-            </span>
+            <span> #{{ comment.id }} {{ comment.created }} </span>
             <br />
             <span
               v-if="$auth.user.id == comment.user"
               class="gray finger"
               @click="remove(comment)"
             >
-              Delete</span
-            >
+              Delete
+            </span>
             <span
               v-if="$auth.user.id == comment.user"
               class="gray finger"
@@ -96,27 +94,22 @@
                   :src="userImage(subcomment.user)"
                 />
               </div>
-              <div
-                class="col-10 col-md-11 freedom"
-                v-html="subcomment.content"
-              ></div>
+              <div class="col-10 col-md-11" v-html="subcomment.content"></div>
             </div>
             <div class="row">
-              <div class="col-12 space t10 up text-right">
+              <div class="col-12 space t10 up text-right graylight">
                 <span v-if="!anonymous">
                   {{ subcomment.name }} {{ subcomment.surname }}
                 </span>
-                <span class="graylight">
-                  #{{ subcomment.id }} {{ subcomment.created }}
-                </span>
+                <span> #{{ subcomment.id }} {{ subcomment.created }} </span>
                 <br />
                 <span
                   v-if="$auth.user.id == subcomment.user"
                   class="gray finger"
                   @click="remove(subcomment)"
                 >
-                  Delete</span
-                >
+                  Delete
+                </span>
                 <span
                   v-if="$auth.user.id == subcomment.user"
                   class="gray finger"

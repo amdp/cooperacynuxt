@@ -19,9 +19,9 @@
       Gray = nobody voted<br />
       Light color = someone else voted<br />
       Full color = You voted<br />
-      <i>The transparency vote works the opposite way (see below)</i>
+      <i>The transparency vote works the opposite way</i>
     </p>
-    <b>Equivalence:</b>
+    <b>Equivalence:</b><i> do you think this project deserves your money?</i>
     <b-row class="px-4">
       <b-col class="vote mx-3 w-25 bequivalence">&nbsp;</b-col>
       <b-col class="vote mx-3 w-25 theyequivalence">&nbsp;</b-col>
@@ -31,7 +31,8 @@
       It signals support, so in the projects influences the allocation of budget
       or buys a ticket for a course, concert, event.
     </p>
-    <b>Trust:</b>
+    <b>Trust:</b
+    ><i> do you think this project will work (timetable, costs, risks..)?</i>
     <b-row class="px-4">
       <b-col class="vote mx-3 w-25 btrust">&nbsp;</b-col>
       <b-col class="vote mx-3 w-25 theytrust">&nbsp;</b-col>
@@ -41,7 +42,7 @@
       It signals trust, so in the projects may lead to skip the human resources
       budget step.<br />
     </p>
-    <b>Care:</b>
+    <b>Care:</b><i> do you like this project?</i>
     <b-row class="px-4">
       <b-col class="vote mx-3 w-25 bcare">&nbsp;</b-col>
       <b-col class="vote mx-3 w-25 theycare">&nbsp;</b-col>
@@ -50,18 +51,18 @@
     <p>
       It signals care, so in the projects leads to more visibility.
     </p>
-    <b>Transparency:</b>
+    <b>Transparency:</b><i> do you think this project is transparent?</i>
     <b-row class="px-4">
       <b-col class="vote mx-3 w-25 aaagray">&nbsp;</b-col>
       <b-col class="vote mx-3 w-25 theytransparency">&nbsp;</b-col>
       <b-col class="vote mx-3 w-25 btransparency">&nbsp;</b-col>
     </b-row>
     <p>
-      Attention: it signals hidden information, corruption or spamming and
-      darkens when voted so it can block the projects in a "pairing" stage.
+      Attention: it signals hidden information, corruption or spamming so it can
+      block the projects in a "pairing" stage.
       <br />Remember: transparency voters are never anonymous.
     </p>
-    <b>Freedom:</b>
+    <b>Freedom:</b><i> do you want to follow or to work for this project?</i>
     <b-row class="px-4">
       <b-col class="vote mx-3 w-25 bfreedom">&nbsp;</b-col>
       <b-col class="vote mx-3 w-25 theyfreedom">&nbsp;</b-col>
@@ -71,7 +72,7 @@
       It signals choice and coolness, so in the projects is for becoming a
       participant or future employee of the project.
     </p>
-    <b>Understanding:</b>
+    <b>Understanding:</b><i> do you think this project is well explained?</i>
     <b-row class="px-4">
       <b-col class="vote mx-3 w-25 bunderstanding">&nbsp;</b-col>
       <b-col class="vote mx-3 w-25 theyunderstanding">&nbsp;</b-col>
@@ -81,7 +82,8 @@
       This vote signals comprehension, so in the projects it may lead to skip
       the setup budget step.<br />
     </p>
-    <b>Diversity:</b>
+    <b>Diversity:</b
+    ><i> do you think this project is innovative, artistic or bizarre?</i>
     <b-row class="px-4">
       <b-col class="vote mx-3 w-25 bdiversity">&nbsp;</b-col>
       <b-col class="vote mx-3 w-25 theydiversity">&nbsp;</b-col>

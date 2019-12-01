@@ -80,6 +80,7 @@ export default {
       title: 'Cooperacy ' + this.$auth.user.name + ' ' + this.$auth.user.surname
     }
   },
+  components: { projectlist: projectlist },
   async fetch({ store, params }) {
     await store.dispatch('getCountryAction')
     await store.dispatch('getPlaceAction')
@@ -91,7 +92,6 @@ export default {
       userid: store.state.auth.user.id
     })
   },
-  components: { projectlist: projectlist },
   mounted() {
     this.rainbowcode()
   },

@@ -5,7 +5,9 @@ import path from 'path'
 module.exports = {
   mode: 'universal',
   plugins: [],
-  build: {},
+  build: {
+    watch: ['@assets/']
+  },
   serverMiddleware: ['./api'],
   css: ['@assets/coo.css'],
   modules: [
