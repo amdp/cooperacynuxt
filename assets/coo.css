@@ -23,11 +23,17 @@ a:hover {
 
 /* navbar */
 .nav-container {
-  opacity: 1;
   z-index: 5;
   width: 100%;
   position: fixed;
   background-color: white;
+  height: auto;
+}
+.z-0 {
+  z-index: 0;
+}
+.fixer {
+  height: 60px !important;
 }
 .navbar {
   border-bottom: 1px #d3e0e9 solid;
@@ -285,8 +291,7 @@ video {
 }
 /* Navbar media queries */
 @media (max-width: 992px) {
-  .nav-menu-container,
-  .right-container {
+  .nav-only-desktop {
     display: none !important;
   }
 }

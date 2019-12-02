@@ -348,11 +348,13 @@ export default {
         ? this.$store.state.project[0].hudget
         : 2,
       formFee: this.$store.state.edit.id
-        ? this.$store.state.project[0].collect
+        ? Math.round(this.$store.state.project[0].collect)
         : 0,
       formAttendee: this.$store.state.edit.id
-        ? this.$store.state.project[0].budget /
-          this.$store.state.project[0].collect
+        ? Math.round(
+            this.$store.state.project[0].budget /
+              this.$store.state.project[0].collect
+          ) || 0
         : 0
     }
   },

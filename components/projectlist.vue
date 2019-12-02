@@ -134,15 +134,15 @@
                     v-if="$auth.user && $route.params.id"
                   >
                     <b-link class="au" v-if="project.stage != 1" @click="edit">
-                      Edit this project
-                    </b-link>
+                      Edit this project</b-link
+                    >&nbsp;
                     <b-link
                       class="ae"
                       v-if="project.stage != 1 && $auth.user.role == 1"
                       @click="archive"
                     >
-                      Archive this project
-                    </b-link>
+                      Archive this project</b-link
+                    >&nbsp;
                     <b-link
                       class="au"
                       v-if="project.stage == 1 && $auth.user.role == 1"
