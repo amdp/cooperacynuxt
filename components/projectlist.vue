@@ -133,34 +133,51 @@
                     class="col-12 mt-4"
                     v-if="$auth.user && $route.params.id"
                   >
-                    <b-link class="au" v-if="project.stage != 1" @click="edit">
+                    <b-link
+                      class="au"
+                      v-if="project.stage != 1"
+                      @click="edit()"
+                    >
                       Edit this project</b-link
                     >&nbsp;
                     <b-link
                       class="ae"
                       v-if="project.stage != 1 && $auth.user.role == 1"
-                      @click="archive"
+                      @click="archive()"
                     >
                       Archive this project</b-link
                     >&nbsp;
                     <b-link
                       class="au"
                       v-if="project.stage == 1 && $auth.user.role == 1"
-                      @click="unarchive"
+                      @click="unarchive()"
                     >
                       Resume this project
                     </b-link>
-                    <b-link class="at" @click="copy">Copy this project</b-link>
+                    <b-link class="at" @click="copy()"
+                      >Copy this project</b-link
+                    >
+                    <b-link v-b-modal.professionalmodal class="af"
+                      >Add/Remove a professional from the hudget</b-link
+                    >
                   </div>
                 </div>
               </b-col>
             </b-row>
           </b-col>
         </b-row>
-        <votemodal />
-        <tagmodal v-if="$route.params.id" :projectprop="project" />
+        <tagmodal
+          v-if="$route.params.id && $auth.user"
+          :projectprop="project"
+        />
+        <professionalmodal
+          v-if="$route.params.id && $auth.user"
+          :projectprop="project"
+          userlistprop="$store.state.userlist"
+        />
       </div>
     </div>
+    <votemodal />
   </b-container>
 </template>
 
@@ -204,23 +221,26 @@ export default {
     archive() {
       this.$store.dispatch('projectFormAction', {
         stage: 1,
-        id: this.oneproject.id,
-        name: this.oneproject.name,
-        brief: this.oneproject.brief,
-        content: this.oneproject.content,
-        video: this.oneproject.video,
-        anonymous: this.oneproject.anonymous,
-        parent: this.oneproject.parent,
-        budget: this.oneproject.budget,
-        hudget: this.oneproject.hudget,
-        country: this.oneproject.country,
-        place: this.oneproject.place,
-        category: this.oneproject.category
+        id: this.project.id,
+        name: this.project.name,
+        brief: this.project.brief,
+        content: this.project.content,
+        video: this.project.video,
+        anonymous: this.project.anonymous,
+        parent: this.project.parent,
+        budget: this.project.budget,
+        hudget: this.project.hudget,
+        country: this.project.country,
+        place: this.project.place,
+        category: this.project.category
       })
       this.$store.dispatch('getUserProjectAction', {
         userid: this.$auth.user.id
       })
       return this.$router.push({ path: '/user' })
+    },
+    professional() {
+      this.store.dispatch('addprofessional', { id: this.formProfessional })
     },
     edit() {
       this.$store.dispatch('editSwitchAction', { id: this.$route.params.id })
@@ -242,9 +262,9 @@ export default {
     },
     projectImage(id) {
       try {
-        return require('../assets/image/project/' + id + '.png')
+        return '/assets/image/project/' + id + '.png'
       } catch (e) {
-        return require('../assets/image/project/0.png')
+        return '/assets/image/project/0.png'
       }
     },
     progress(project, hudget) {

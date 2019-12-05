@@ -23,7 +23,11 @@
           Members List
         </nuxt-link>
         <br />
-        <span class="au" @click="resetvoting" v-if="this.$auth.user.role == 1">
+        <span
+          class="au"
+          @click="resetvoting()"
+          v-if="this.$auth.user.role == 1"
+        >
           Admin tool: Reset all Voting and Colorbar
         </span>
         <br /><br />
@@ -101,9 +105,9 @@ export default {
     },
     userImage(id) {
       try {
-        return require('../assets/image/user/' + id + '.png')
+        return '/assets/image/user/' + id + '.png'
       } catch (e) {
-        return require('../assets/image/user/0.png')
+        return '/assets/image/user/0.png'
       }
     },
     rainbowcode() {

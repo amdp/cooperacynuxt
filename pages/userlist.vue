@@ -1,7 +1,7 @@
 <template>
   <b-container fluid class="mb-5">
     <div v-if="this.$auth.user.role == 0">
-      <h2 class="col-12 text-center mb-3">MEMBERS LIST</h2>
+      <h2 class="col-12 text-center mb-3">COMEMBERS LIST</h2>
       <div class="mb-3">
         <b-table-simple hover small responsive>
           <b-thead>
@@ -38,7 +38,7 @@
       </div>
     </div>
     <div v-if="this.$auth.user.role == 1">
-      <h2 class="col-12 text-center mb-3">MEMBERS LIST (ADMIN LIST)</h2>
+      <h2 class="col-12 text-center mb-3">COMEMBERS LIST (ADMIN LIST)</h2>
       <div class="mb-3">
         <b-table-simple hover small responsive>
           <b-thead>
@@ -156,9 +156,9 @@ export default {
   methods: {
     userImage(id) {
       try {
-        return require('../assets/image/user/' + id + '.png')
+        return '/assets/image/user/' + id + '.png'
       } catch (e) {
-        return require('../assets/image/user/0.png')
+        return '/assets/image/user/0.png'
       }
     }
   }
