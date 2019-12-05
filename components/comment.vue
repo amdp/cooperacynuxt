@@ -225,9 +225,9 @@ export default {
     },
     userImage(commentuser) {
       try {
-        return require('../assets/image/user/' + commentuser + '.png')
+        return '/assets/image/user/' + commentuser + '.png'
       } catch (e) {
-        return require('../assets/image/user/0.png')
+        return '/assets/image/user/0.png'
       }
     },
     formpost() {

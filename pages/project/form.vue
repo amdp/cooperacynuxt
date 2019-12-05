@@ -365,11 +365,11 @@ export default {
     projectImage() {
       if (this.$store.state.project.id) {
         try {
-          return require('@/assets/image/project/' +
-            this.$store.state.project.id +
-            '.png')
+          return (
+            '/assets/image/project/' + this.$store.state.project.id + '.png'
+          )
         } catch (e) {
-          return require('../../assets/image/project/0.png')
+          return '/assets/image/project/0.png'
         }
       }
     },
