@@ -89,7 +89,7 @@ dist
 .todo
 
 # Service worker
-#sw.*
+sw.*
 
 #DS Store macos
 .DS_Store
