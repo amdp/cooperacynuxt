@@ -89,7 +89,7 @@ it will install all the required files.
 
 Copy the `'dumbenv'` file from the `'/etc'` folder to the root of the project, rename it to `'.env'` and edit it according to its suggestions.
 
-Then copy the `'static'` folder from the `'/etc'` folder to the root of the project
+Then copy the `'image'` folder from the `'/etc'` folder to the `'/static/assets/'` folder of the project
 
 Finally, to start the repo, run: ‘npm run dev‘:
 it will run nuxt in development mode.
