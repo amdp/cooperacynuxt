@@ -4,9 +4,7 @@
 
 ### CHALLENGE 2: INSTALL MYSQL AND APACHE
 
-Please install Mysql 5.7 ([https://dev.mysql.com/downloads/mysql/5.7.html#downloads](https://dev.mysql.com/downloads/mysql/5.7.html#downloads))
-
-On windows, [https://dev.mysql.com/downloads/windows/installer/5.7.html](https://dev.mysql.com/downloads/windows/installer/5.7.html) (Note: MySQL Installer is 32 bit, but will install both 32 bit and 64 bit binaries.)
+Please install Mysql 8 ([https://dev.mysql.com/doc/refman/8.0/en/general-installation-issues.html](https://dev.mysql.com/doc/refman/8.0/en/general-installation-issues.html))
 
 This step is not easy! If you find it difficult ASK!
 
