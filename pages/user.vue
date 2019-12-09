@@ -7,7 +7,7 @@
         </h5>
         <img
           class="usercomment rounded-circle img-responsive"
-          :src="userImage(this.$auth.user.id)"
+          :src="'/assets/image/user/' + this.$auth.user.id + '.png'"
         /><br />
         <nuxt-link to="/useredit" class="ad">
           Edit your information
@@ -102,13 +102,6 @@ export default {
   methods: {
     async resetvoting() {
       await this.$store.dispatch('resetVotingAction')
-    },
-    userImage(id) {
-      try {
-        return '/assets/image/user/' + id + '.png'
-      } catch (e) {
-        return '/assets/image/user/0.png'
-      }
     },
     rainbowcode() {
       if (this.$auth.user.rainbowcode) {

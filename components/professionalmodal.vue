@@ -38,8 +38,7 @@
 export default {
   data() {
     return {
-      formTag: '',
-      formRemoveTag: ''
+      formProfessional: ''
     }
   },
   props: {

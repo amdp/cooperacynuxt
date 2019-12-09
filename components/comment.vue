@@ -25,7 +25,7 @@
             <img
               v-if="!anonymous"
               class="usercomment rounded-circle img-responsive"
-              :src="userImage(comment.user)"
+              :src="'/assets/image/user/' + comment.user + '.png'"
             />
           </div>
           <p class="col-10 col-md-11" v-html="comment.content"></p>
@@ -91,7 +91,7 @@
                 <img
                   v-if="!anonymous"
                   class="usercomment rounded-circle"
-                  :src="userImage(subcomment.user)"
+                  :src="'/assets/image/user/' + subcomment.user + '.png'"
                 />
               </div>
               <div class="col-10 col-md-11" v-html="subcomment.content"></div>
@@ -221,13 +221,6 @@ export default {
         return subcomments
       } else {
         return []
-      }
-    },
-    userImage(commentuser) {
-      try {
-        return '/assets/image/user/' + commentuser + '.png'
-      } catch (e) {
-        return '/assets/image/user/0.png'
       }
     },
     formpost() {

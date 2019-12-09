@@ -59,7 +59,6 @@ export default {
       projectid: params.id,
       limit: ' LIMIT 1'
     })
-    console.log(' ' + JSON.stringify('ho'))
     await store.dispatch('getUserlistAction', '')
   }
 }
