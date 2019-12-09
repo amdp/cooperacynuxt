@@ -18,7 +18,10 @@
           <b-col cols="12" class="m-0 p-0 w-100">
             <b-row class="m-0 p-0 w-100">
               <b-col cols="12" md="3">
-                <img :src="projectImage(project.id)" class="img-100" />
+                <img
+                  :src="'/assets/image/project/' + project.id + '.png'"
+                  class="img-100"
+                />
               </b-col>
               <b-col cols="12 text-center" md="6">
                 <span class="space subheading up">
@@ -173,7 +176,7 @@
         <professionalmodal
           v-if="$route.params.id && $auth.user"
           :projectprop="project"
-          userlistprop="$store.state.userlist"
+          :userlistprop="$store.state.userlist"
         />
       </div>
     </div>
@@ -185,8 +188,14 @@
 import votebar from './votebar'
 import votemodal from './votemodal'
 import tagmodal from './tagmodal'
+import professionalmodal from './professionalmodal'
 export default {
-  components: { votebar: votebar, votemodal: votemodal, tagmodal: tagmodal },
+  components: {
+    votebar: votebar,
+    votemodal: votemodal,
+    tagmodal: tagmodal,
+    professionalmodal: professionalmodal
+  },
   data() {
     return {
       isHover: null,
@@ -259,13 +268,6 @@ export default {
         userid: this.$auth.user.id
       })
       return this.$router.push({ path: '/project/form' })
-    },
-    projectImage(id) {
-      try {
-        return '/assets/image/project/' + id + '.png'
-      } catch (e) {
-        return '/assets/image/project/0.png'
-      }
     },
     progress(project, hudget) {
       let projectProgress

@@ -4,6 +4,7 @@ var bodyParser = require('body-parser')
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 var axios = require('axios')
+var fs = require('fs')
 const fileUpload = require('express-fileupload')
 app.use(fileUpload())
 const jwt = require('jsonwebtoken')
@@ -591,22 +592,28 @@ app.post('/tag', async function(req, res, next) {
 })
 
 app.post('/image', async function(req, res, next) {
-  try {
-    var uploadPath =
-      './assets/image/' + req.body.proptype + '/' + req.body.id + '.png'
-    await req.files.file.mv(uploadPath)
-  } catch (err) {
-    return next(err)
-  }
-  try {
-    const imgfile = await jimp.read(uploadPath)
-    await imgfile
-      .resize(256, jimp.AUTO)
-      .resize(jimp.AUTO, 256)
-      .quality(60)
-      .write(uploadPath)
-  } catch (err) {
-    return next(err)
+  let uploadPath =
+    './static/assets/image/' + req.body.proptype + '/' + req.body.id + '.png'
+  if (req.files) {
+    try {
+      await req.files.file.mv(uploadPath)
+    } catch (err) {
+      return next(err)
+    }
+    try {
+      const imgfile = await jimp.read(uploadPath)
+      await imgfile
+        .resize(256, jimp.AUTO)
+        .resize(jimp.AUTO, 256)
+        .quality(60)
+        .write(uploadPath)
+    } catch (err) {
+      return next(err)
+    }
+  } else {
+    fs.symlink('./0.png', uploadPath, function(err) {
+      return next(err)
+    })
   }
   res.send({ status: 'OK', id: req.body.id })
 })

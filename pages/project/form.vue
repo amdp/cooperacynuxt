@@ -3,7 +3,7 @@
     <div class="col-2"></div>
     <div class="col-8">
       <h2 class="text-center mb-4 diversity">PROJECT FORM</h2>
-      <b-form @submit.prevent="projectForm" class="mt-3 was-validated">
+      <b-form @submit.prevent="projectForm()" class="mt-3 was-validated">
         <br />
         <h5 class="diversity">DESCRIPTION</h5>
         <b-form-group
@@ -90,8 +90,14 @@
             </b-form-group>
           </div>
           <div class="col-2">
-            <span v-if="!projectImage"
-              >Current: <br /><img class="currentImage" :src="projectImage"
+            <span
+              >Current: <br /><img
+                class="currentImage"
+                :src="
+                  '/assets/image/project/' +
+                    this.$store.state.project.id +
+                    '.png'
+                "
             /></span>
           </div>
         </div>
@@ -364,13 +370,7 @@ export default {
     },
     projectImage() {
       if (this.$store.state.project.id) {
-        try {
-          return (
-            '/assets/image/project/' + this.$store.state.project.id + '.png'
-          )
-        } catch (e) {
-          return '/assets/image/project/0.png'
-        }
+        return '/assets/image/project/' + this.$store.state.project.id + '.png'
       }
     },
     place() {
@@ -475,9 +475,7 @@ export default {
             user: this.$auth.user.id
           })
         }
-        if (this.formImageFile) {
-          this.imageUpload(res)
-        } else this.doneToast(res)
+        this.imageUpload(res)
       } catch (err) {
         console.log(' ' + JSON.stringify(err))
         alert(err)

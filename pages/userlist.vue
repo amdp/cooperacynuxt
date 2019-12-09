@@ -18,20 +18,23 @@
             <b-th>D</b-th>
           </b-thead>
           <b-tbody>
-            <b-tr v-for="member in memberlist" :key="member.id">
+            <b-tr v-for="user in userlist" :key="user.id">
               <b-td>
-                <img :src="userImage(member.id)" width="50px" />
+                <img
+                  :src="'/assets/image/user/' + user.id + '.png'"
+                  width="50px"
+                />
               </b-td>
-              <b-td>{{ member.id }}</b-td>
-              <b-td>{{ member.name }}</b-td>
-              <b-td>{{ member.surname }}</b-td>
-              <b-td>{{ member.E }}</b-td>
-              <b-td>{{ member.T }}</b-td>
-              <b-td>{{ member.C }}</b-td>
-              <b-td>{{ member.I }}</b-td>
-              <b-td>{{ member.F }}</b-td>
-              <b-td>{{ member.U }}</b-td>
-              <b-td>{{ member.D }}</b-td>
+              <b-td>{{ user.id }}</b-td>
+              <b-td>{{ user.name }}</b-td>
+              <b-td>{{ user.surname }}</b-td>
+              <b-td>{{ user.E }}</b-td>
+              <b-td>{{ user.T }}</b-td>
+              <b-td>{{ user.C }}</b-td>
+              <b-td>{{ user.I }}</b-td>
+              <b-td>{{ user.F }}</b-td>
+              <b-td>{{ user.U }}</b-td>
+              <b-td>{{ user.D }}</b-td>
             </b-tr>
           </b-tbody></b-table-simple
         >
@@ -61,24 +64,24 @@
             <b-th>UPDATED</b-th>
           </b-thead>
           <b-tbody>
-            <b-tr v-for="member in memberlist" :key="member.id">
-              <b-td><img :src="userImage(member.id)" width="50px"/></b-td>
-              <b-td>{{ member.id }}</b-td>
-              <b-td>{{ member.name }}</b-td>
-              <b-td>{{ member.surname }}</b-td>
-              <b-td>{{ member.E }}</b-td>
-              <b-td>{{ member.T }}</b-td>
-              <b-td>{{ member.C }}</b-td>
-              <b-td>{{ member.I }}</b-td>
-              <b-td>{{ member.F }}</b-td>
-              <b-td>{{ member.U }}</b-td>
-              <b-td>{{ member.D }}</b-td>
-              <b-td>{{ member.email }}</b-td>
-              <b-td>{{ member.role }}</b-td>
-              <b-td>{{ member.paymentdeadline }}</b-td>
-              <b-td>{{ member.paypalagreementid }}</b-td>
-              <b-td>{{ member.created }}</b-td>
-              <b-td>{{ member.updated }}</b-td>
+            <b-tr v-for="user in userlist" :key="user.id">
+              <b-td><img :src="userImage(user.id)" width="50px"/></b-td>
+              <b-td>{{ user.id }}</b-td>
+              <b-td>{{ user.name }}</b-td>
+              <b-td>{{ user.surname }}</b-td>
+              <b-td>{{ user.E }}</b-td>
+              <b-td>{{ user.T }}</b-td>
+              <b-td>{{ user.C }}</b-td>
+              <b-td>{{ user.I }}</b-td>
+              <b-td>{{ user.F }}</b-td>
+              <b-td>{{ user.U }}</b-td>
+              <b-td>{{ user.D }}</b-td>
+              <b-td>{{ user.email }}</b-td>
+              <b-td>{{ user.role }}</b-td>
+              <b-td>{{ user.paymentdeadline }}</b-td>
+              <b-td>{{ user.paypalagreementid }}</b-td>
+              <b-td>{{ user.created }}</b-td>
+              <b-td>{{ user.updated }}</b-td>
             </b-tr>
           </b-tbody></b-table-simple
         >
@@ -146,20 +149,11 @@ export default {
     await store.dispatch('getUserlistAction', '')
   },
   computed: {
-    memberlist() {
+    userlist() {
       return this.$store.state.userlist.filter(userlist => userlist.active == 1)
     },
     olduserlist() {
       return this.$store.state.userlist.filter(userlist => userlist.active == 0)
-    }
-  },
-  methods: {
-    userImage(id) {
-      try {
-        return '/assets/image/user/' + id + '.png'
-      } catch (e) {
-        return '/assets/image/user/0.png'
-      }
     }
   }
 }
