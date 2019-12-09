@@ -146,7 +146,7 @@
                     <b-link
                       class="ae"
                       v-if="project.stage != 1 && $auth.user.role == 1"
-                      @click="archive()"
+                      @click="archive(project)"
                     >
                       Archive this project</b-link
                     >&nbsp;
@@ -227,21 +227,21 @@ export default {
     }
   },
   methods: {
-    archive() {
+    archive(project) {
       this.$store.dispatch('projectFormAction', {
         stage: 1,
-        id: this.project.id,
-        name: this.project.name,
-        brief: this.project.brief,
-        content: this.project.content,
-        video: this.project.video,
-        anonymous: this.project.anonymous,
-        parent: this.project.parent,
-        budget: this.project.budget,
-        hudget: this.project.hudget,
-        country: this.project.country,
-        place: this.project.place,
-        category: this.project.category
+        id: project.id,
+        name: project.name,
+        brief: project.brief,
+        content: project.content,
+        video: project.video,
+        anonymous: project.anonymous,
+        parent: project.parent,
+        budget: project.budget,
+        hudget: project.hudget,
+        country: project.country,
+        place: project.place,
+        category: project.category
       })
       this.$store.dispatch('getUserProjectAction', {
         userid: this.$auth.user.id
