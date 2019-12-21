@@ -43,7 +43,8 @@ export default {
     })
     await store.dispatch('getPlaceAction')
     await store.dispatch('getCountryAction')
-    await store.dispatch('getTagAction', { projectid: params.id })
+    await store.dispatch('getTagAction', { project: params.id })
+    await store.dispatch('getProfessionalAction', { project: params.id })
     await store.dispatch('getUservoteAction', {
       userid: store.state.auth.user.id,
       proptype: 'project'

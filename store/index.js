@@ -5,6 +5,7 @@ export const state = () => ({
   userlist: [],
   projectuservote: [],
   commentuservote: [],
+  professional: [],
   tag: [],
   place: [],
   country: [],
@@ -70,6 +71,7 @@ export const state = () => ({
 export const getters = {}
 
 export const mutations = {
+  //crunch this with "set: (state, payload, statetoset) => {state[statetoset] = payload}"
   setProject: (state, payload) => {
     state.project = payload
   },
@@ -90,6 +92,9 @@ export const mutations = {
   },
   setEditSwitch: (state, payload) => {
     state.edit = payload
+  },
+  setProfessional: (state, payload) => {
+    state.professional = payload
   },
   setCCI: (state, payload) => {
     state['CCI' + payload.goyear] = payload.godata
@@ -161,6 +166,12 @@ export const actions = {
       params: payload
     })
     context.commit('setComment', data)
+  },
+  getProfessionalAction: async function(context, payload) {
+    let { data } = await this.$axios.get(process.env.DBURL + '/professional', {
+      params: payload
+    })
+    context.commit('setProfessional', data)
   },
   getTagAction: async function(context, payload) {
     let { data } = await this.$axios.get(process.env.DBURL + '/tag', {

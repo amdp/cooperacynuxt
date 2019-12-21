@@ -131,10 +131,24 @@ app.get('/userlist', async function(req, res, next) {
   }
 })
 
+app.get('/professional', async function(req, res, next) {
+  try {
+    let query =
+      'SELECT projectprofessional.*, user.name, user.surname' +
+      ' FROM projectprofessional LEFT JOIN user ON projectprofessional.user = user.id' +
+      ' where projectprofessional.project = ? ORDER BY id DESC'
+    let param = [req.query.project]
+    var [professional] = await mypool.execute(query, param)
+    res.send(professional)
+  } catch (err) {
+    next(err)
+  }
+})
+
 app.get('/tag', async function(req, res, next) {
   try {
     let query = 'SELECT * FROM `tag` where `project`=?'
-    let param = [req.query.projectid]
+    let param = [req.query.project]
     const [tag] = await mypool.execute(query, param)
     res.status(200).send(tag)
   } catch (err) {
@@ -852,11 +866,10 @@ app.post('/professional', async function(req, res, next) {
       'DELETE FROM `projectprofessional` where `user`=? and `project`=? LIMIT 1'
     let param = [req.body.user, req.body.project]
     var [removed] = await mypool.execute(query, param)
-    console.log('removed: ' + JSON.stringify(removed))
   } catch (err) {
     next(err)
   }
-  if (removed) {
+  if (removed.affectedRows == 1) {
     try {
       let query =
         'UPDATE `project` SET `professional`=`professional`-1 where `project`.`id`=?'
@@ -865,8 +878,8 @@ app.post('/professional', async function(req, res, next) {
     } catch (err) {
       next(err)
     }
+    res.status(200).send('removed')
   } else {
-    console.log(' ' + JSON.stringify('no removed'))
     try {
       let query =
         'INSERT INTO `projectprofessional` (`project`, `user`) VALUES (?,?)'
@@ -883,6 +896,7 @@ app.post('/professional', async function(req, res, next) {
     } catch (err) {
       next(err)
     }
+    res.status(200).send('added')
   }
 })
 

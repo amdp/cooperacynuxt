@@ -21,12 +21,23 @@
             </option>
           </b-form-select>
         </b-form-group>
+        <p class="understanding">
+          The following are already in the project and will be removed if
+          selected:
+        </p>
+        <span
+          v-for="professional in this.$store.state.professional"
+          :key="professional.id"
+          class="freedom"
+        >
+          {{ professional.name }} {{ professional.surname }}<br />
+        </span>
       </b-form>
-      <template slot="modal-footer" slot-scope="{ ok, cancel }">
+      <template slot="modal-footer">
         <b-button size="sm" class="bcare" @click="professional()">
-          ADD
+          ADD/REMOVE
         </b-button>
-        <b-button size="sm" class="btransparency" @click="cancel()">
+        <b-button size="sm" class="btransparency" @click="close()">
           CLOSE
         </b-button>
       </template>
@@ -46,36 +57,17 @@ export default {
     userlistprop: { required: true }
   },
   methods: {
-    async addtag() {
-      if (this.formTag) {
-        this.formTag = this.formTag.replace(/^[ ]+/gi, '') //removes spaces at the beginning of tag
-        await this.$store
-          .dispatch('tagFormAction', {
-            project: this.projectprop.id,
-            name: this.formTag,
-            tag: 'add'
-          })
-          .catch(err => {
-            console.error(err)
-          })
-        this.formTag = ''
-        this.$toast.success('Added!', { duration: 1000, className: 'toasts' })
-      }
+    async professional() {
+      this.$store.dispatch('professionalAction', {
+        project: this.projectprop.id,
+        user: this.formProfessional
+      })
+      this.$store.dispatch('getProfessionalAction', {
+        project: this.projectprop.id
+      })
     },
-    async removetag() {
-      if (this.formRemoveTag) {
-        alert(this.formRemoveTag)
-        await this.$store
-          .dispatch('removeTagAction', {
-            project: this.projectprop.id,
-            name: this.formRemoveTag
-          })
-          .catch(err => {
-            console.error(err)
-          })
-      }
-      this.formRemoveTag = ''
-      this.$toast.success('Removed!', { duration: 1000, className: 'toasts' })
+    close() {
+      location.href = process.env.URLHOME + '/project/' + this.projectprop.id
     }
   }
 }

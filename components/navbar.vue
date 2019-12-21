@@ -8,7 +8,7 @@
         class="navbar d-flex justify-content-start m-0 p-0"
         @mouseleave="navState = null"
       >
-        <div class="col-6 col-sm-4 col-lg-2 p-0" @click.native="hideNav">
+        <div class="col-6 col-sm-4 col-lg-2 p-0" @click="hideNav()">
           <nuxt-link
             to="/"
             tag="img"
@@ -143,7 +143,7 @@
           <div
             class="mt-2 d-flex flex-column"
             v-if="navState == 'project'"
-            @click="hideNav"
+            @click="hideNav()"
           >
             <nuxt-link class="mobile-menu-item" to="/aboutyou">
               ABOUT YOU
@@ -169,7 +169,7 @@
           <div
             class="mt-2 d-flex flex-column"
             v-if="navState == 'corporate'"
-            @click="hideNav"
+            @click="hideNav()"
           >
             <nuxt-link class="mobile-menu-item" to="/corporate">
               CORPORATE WORLD
@@ -198,7 +198,7 @@
           <div
             class="mt-2 d-flex flex-column"
             v-if="navState == 'science'"
-            @click="hideNav"
+            @click="hideNav()"
           >
             <nuxt-link class="mobile-menu-item" to="/cooperation">
               COOPERATION
@@ -215,16 +215,12 @@
             <nuxt-link class="mobile-menu-item" to="/news">NEWS</nuxt-link>
           </div>
         </div>
-        <nuxt-link
-          to="/login"
-          v-if="!this.$auth.loggedIn"
-          @click.native="hideNav"
-        >
+        <nuxt-link to="/login" v-if="!this.$auth.loggedIn" @click="hideNav()">
           <div class="mobile-nav-box">
             <p class="nav-item">LOGIN</p>
           </div>
         </nuxt-link>
-        <nuxt-link to="/user" @click.native="hideNav" v-else>
+        <nuxt-link to="/user" @click="hideNav()" v-else>
           <div class="mobile-nav-box">
             <p class="nav-item">
               {{ this.$auth.user.name + ' ' + this.$auth.user.surname }}
