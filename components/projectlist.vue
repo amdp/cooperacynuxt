@@ -83,7 +83,8 @@
                   }"
                   role="progressbar"
                   :style="{
-                    width: progress(project) + '%'
+                    width: progress(project) + '%',
+                    maxWidth: '100%'
                   }"
                   aria-valuenow="25"
                   aria-valuemin="0"
@@ -104,7 +105,8 @@
                   }"
                   role="progressbar"
                   :style="{
-                    width: progress(project, 'h') + '%'
+                    width: progress(project, 'h') + '%',
+                    maxWidth: '100%'
                   }"
                   aria-valuenow="25"
                   aria-valuemin="0"
