@@ -67,7 +67,7 @@
                 <b-container>
                   <small>
                     {{ category(project.category) }}
-                    <i>{{ stage(project.stage) }}-project</i> in
+                    <i>{{ stage(project.stage) }} project</i> in
                     {{ location(project.place) }}
                   </small>
                 </b-container>

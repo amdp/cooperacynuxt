@@ -576,6 +576,21 @@ app.post('/user', async function(req, res, next) {
         ]
         const [user] = await mypool.execute(query, param)
         res.send({ id: user[0].insertId })
+        try {
+          let queryA =
+            'INSERT INTO `projectvote` (`user`,`project`,`condition`) VALUES (?,?,?)'
+          let paramA = [user[0].insertId, '700', 'F'] //700 is the annoucements project id
+          mypool.execute(queryA, paramA)
+        } catch (err) {
+          next(err)
+        }
+        try {
+          let query = 'UPDATE `project` SET `F`=`F`+1 where `project`.`id`=?'
+          let param = ['700']
+          await mypool.execute(query, param)
+        } catch (err) {
+          next(err)
+        }
       } catch (err) {
         next(err)
       }
