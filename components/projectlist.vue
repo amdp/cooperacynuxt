@@ -140,17 +140,20 @@
                     v-if="$auth.user && $route.params.id"
                     class="col-12 mt-4"
                   >
-                    <span v-if="project.stage != 1 && improfessional">
+                    <span
+                      v-if="
+                        (project.stage != 1 && improfessional) ||
+                          $auth.user.role == 1
+                      "
+                    >
                       <b-link class="au" @click="edit()"
                         >Edit this project</b-link
-                      >
-                      &nbsp;</span
+                      >&nbsp;</span
                     >
                     <span v-if="project.stage != 1 && $auth.user.role == 1">
                       <b-link class="ae" @click="archive(project)"
                         >Archive this project</b-link
-                      >
-                      &nbsp;</span
+                      >&nbsp;</span
                     >
                     <span v-if="project.stage == 1 && $auth.user.role == 1"
                       ><b-link class="au" @click="unarchive()"
@@ -162,7 +165,12 @@
                         >Copy this project</b-link
                       >&nbsp;</span
                     >
-                    <span v-if="project.stage != 1 && improfessional">
+                    <span
+                      v-if="
+                        (project.stage != 1 && improfessional) ||
+                          $auth.user.role == 1
+                      "
+                    >
                       <b-link v-b-modal.professionalmodal class="af"
                         >Add/Remove professionals</b-link
                       >&nbsp;</span
