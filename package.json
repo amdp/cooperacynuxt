@@ -43,16 +43,8 @@
     "@nuxtjs/eslint-config": "^2.0.0",
     "babel-eslint": "^10.0.3",
     "eslint": "^6.8.0",
-    "eslint-config-prettier": "^6.7.0",
     "eslint-loader": "^3.0.3",
-    "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-vue": "^6.0.1",
-    "prettier": "^1.19.1",
     "vue-eslint-parser": "^7.0.0"
-  },
-  "prettier": {
-    "semi": false,
-    "singleQuote": true,
-    "jsxBracketSameLine": true
   }
 }

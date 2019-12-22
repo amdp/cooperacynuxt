@@ -2,8 +2,10 @@
   "git.ignoreLimitWarning": true,
   "prettier.semi": false,
   "prettier.disableLanguages": [],
-  "eslint.autoFixOnSave": true,
   "vetur.format.defaultFormatter.html": "prettier",
   "rest-client.fontSize": 12,
-  "workbench.enableExperiments": false
+  "workbench.enableExperiments": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
 }

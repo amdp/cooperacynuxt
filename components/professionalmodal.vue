@@ -2,7 +2,7 @@
   <b-container>
     <b-modal
       id="professionalmodal"
-      title="Add/remvoe a professional from the hudget"
+      title="Add/remove a professional from the hudget"
       hide-header-close
     >
       <b-form @submit.prevent="professional()">
@@ -26,11 +26,11 @@
           selected:
         </p>
         <span
-          v-for="professional in this.$store.state.professional"
-          :key="professional.id"
+          v-for="pro in this.$store.state.professional"
+          :key="pro.id"
           class="freedom"
         >
-          {{ professional.name }} {{ professional.surname }}<br />
+          {{ pro.name }} {{ pro.surname }}<br />
         </span>
       </b-form>
       <template slot="modal-footer">
@@ -47,15 +47,16 @@
 
 <script>
 export default {
+  props: {
+    projectprop: { required: true },
+    userlistprop: { required: true }
+  },
   data() {
     return {
       formProfessional: ''
     }
   },
-  props: {
-    projectprop: { required: true },
-    userlistprop: { required: true }
-  },
+
   methods: {
     async professional() {
       this.$store.dispatch('professionalAction', {

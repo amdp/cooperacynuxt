@@ -21,7 +21,9 @@ module.exports = {
     semi: [2, 'never'],
     'no-console': 'off',
     'vue/max-attributes-per-line': 'off',
-    'prettier/prettier': ['error']
+    'prettier/prettier': ['error'],
+    'vue/html-self-closing': 'off',
+    'vue/require-prop-types': 'off'
     //"prettier/prettier": ["error", { "singleQuote": true }, {"semi": false}]
   }
 }

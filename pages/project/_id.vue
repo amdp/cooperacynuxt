@@ -3,7 +3,9 @@
     <projectlist />
     <!-- COMMENTS -->
     <div class="comments-container w-100 mt-5">
-      <h3 class="font-weight-normal text-center">COMMENTS AND QUESTIONS</h3>
+      <h3 class="font-weight-normal text-center">
+        COMMENTS AND QUESTIONS
+      </h3>
       <comment />
     </div>
   </b-container>
@@ -11,30 +13,17 @@
 
 <script>
 import projectlist from '@/components/projectlist'
-import votebar from '@/components/votebar'
-import votemodal from '@/components/votemodal'
 import comment from '@/components/comment'
 
 export default {
   middleware: ['auth'],
   components: {
-    votebar: votebar,
     comment: comment,
-    votemodal: votemodal,
     projectlist: projectlist
   },
   validate({ params }) {
     // Must be a number
     return /^\d+$/.test(params.id)
-  },
-  head() {
-    return {
-      title:
-        'Cooperacy - Project: ' +
-        this.$store.state.project.filter(
-          project => project.id == this.$route.params.id
-        )[0].name
-    }
   },
   async fetch({ store, params }) {
     await store.dispatch('getProjectAction', {
@@ -61,6 +50,15 @@ export default {
       limit: ' LIMIT 1'
     })
     await store.dispatch('getUserlistAction', '')
+  },
+  head() {
+    return {
+      title:
+        'Cooperacy - Project: ' +
+        this.$store.state.project.filter(
+          project => project.id == this.$route.params.id
+        )[0].name
+    }
   }
 }
 </script>

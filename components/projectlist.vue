@@ -1,18 +1,18 @@
 <template>
   <b-container fluid class="justify-content-center m-0 p-0">
     <div
-      class="justify-content-center m-0 p-0"
       v-for="type in projectTypes"
       :key="type.id"
+      class="justify-content-center m-0 p-0"
       fluid
     >
-      <h2 class="text-center mb-3 up" v-if="projectlist[type.name].length > 0">
+      <h2 v-if="projectlist[type.name].length > 0" class="text-center mb-3 up">
         {{ type.name }}
       </h2>
       <div
-        class="p-3 ml-0 mr-0 mb-3 w-100 projectbox"
         v-for="project in projectlist[type.name]"
         :key="project.id"
+        class="p-3 ml-0 mr-0 mb-3 w-100 projectbox"
       >
         <b-row class="m-0 p-0 w-100 p-3">
           <b-col cols="12" class="m-0 p-0 w-100">
@@ -32,7 +32,9 @@
                 <small class="mb-2 up t12">
                   <i>{{ project.brief }}</i>
                 </small>
-                <p v-if="$route.params.id">{{ project.content }}</p>
+                <p v-if="$route.params.id">
+                  {{ project.content }}
+                </p>
                 <p v-if="$route.params.id">
                   TAGS:
                   <span v-for="tag in $store.state.tag" :key="tag.id">
@@ -99,6 +101,7 @@
             <b-row class="m-0 p-0 w-100">
               <b-col cols="12">
                 <div
+                  v-if="project.category != 4 || project.hudget != 0"
                   class="progress-bar bfreedom mt-2"
                   :class="{
                     'progress-zero': progress(project, 'h') == 0
@@ -111,7 +114,6 @@
                   aria-valuenow="25"
                   aria-valuemin="0"
                   aria-valuemax="100"
-                  v-if="project.category != 4 || project.hudget != 0"
                 >
                   HUDGET: &nbsp;&nbsp;{{ project.professional }} of
                   {{ project.hudget }}
@@ -129,41 +131,41 @@
                     <votebar
                       :voteprop="project"
                       :proptype="'project'"
-                      :voteId="project.id"
+                      :vote-id="project.id"
                     />
                   </b-col>
                 </b-row>
                 <div>
                   <div
-                    class="col-12 mt-4"
                     v-if="$auth.user && $route.params.id"
+                    class="col-12 mt-4"
                   >
-                    <b-link
-                      class="au"
-                      v-if="project.stage != 1"
-                      @click="edit()"
+                    <span v-if="project.stage != 1 && improfessional">
+                      <b-link class="au" @click="edit()"
+                        >Edit this project</b-link
+                      >
+                      &nbsp;</span
                     >
-                      Edit this project</b-link
-                    >&nbsp;
-                    <b-link
-                      class="ae"
-                      v-if="project.stage != 1 && $auth.user.role == 1"
-                      @click="archive(project)"
+                    <span v-if="project.stage != 1 && $auth.user.role == 1">
+                      <b-link class="ae" @click="archive(project)"
+                        >Archive this project</b-link
+                      >
+                      &nbsp;</span
                     >
-                      Archive this project</b-link
-                    >&nbsp;
-                    <b-link
-                      class="au"
-                      v-if="project.stage == 1 && $auth.user.role == 1"
-                      @click="unarchive()"
+                    <span v-if="project.stage == 1 && $auth.user.role == 1"
+                      ><b-link class="au" @click="unarchive()"
+                        >Resume this project</b-link
+                      >&nbsp;</span
                     >
-                      Resume this project
-                    </b-link>
-                    <b-link class="at" @click="copy()"
-                      >Copy this project</b-link
+                    <span
+                      ><b-link class="at" @click="copy()"
+                        >Copy this project</b-link
+                      >&nbsp;</span
                     >
-                    <b-link v-b-modal.professionalmodal class="af"
-                      >Add/Remove a professional from the hudget</b-link
+                    <span v-if="project.stage != 1 && improfessional">
+                      <b-link v-b-modal.professionalmodal class="af"
+                        >Add/Remove professionals</b-link
+                      >&nbsp;</span
                     >
                   </div>
                 </div>
@@ -229,6 +231,14 @@ export default {
     }
   },
   methods: {
+    improfessional() {
+      let mypro = this.$store.state.professional.filter(
+        pro =>
+          pro.user == this.$auth.user && pro.project == this.$route.params.id
+      )
+      if (mypro.length > 0) return true
+      else return false
+    },
     archive(project) {
       this.$store.dispatch('projectFormAction', {
         stage: 1,
@@ -243,7 +253,8 @@ export default {
         hudget: project.hudget,
         country: project.country,
         place: project.place,
-        category: project.category
+        category: project.category,
+        collect: project.collect
       })
       this.$store.dispatch('getUserProjectAction', {
         userid: this.$auth.user.id
