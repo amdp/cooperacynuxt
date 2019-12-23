@@ -107,54 +107,56 @@ export default {
       if (this.$auth.user.rainbowcode) {
         return
       }
-      var cc = ['D', 'U', 'F', 'I', 'C', 'T', 'E']
-      var sum = 0
-      var sum2 = 0
-      var sum3 = 0
-      var max = 0
-      var res = {}
-      var res2 = {}
-      var res3 = {}
+      let cc = ['D', 'U', 'F', 'I', 'C', 'T', 'E']
+      let sum = 0
+      let sum2 = 0
+      let sum3 = 0
+      let sumcc = 0
+      let max = 0
+      let res = {}
+      let res2 = {}
+      let res3 = {}
       for (let j = 0; j < cc.length; j++) {
         res[cc[j]] = this.$auth.user[cc[j]]
-      }
+      } // assigns to res current user cc values
       for (let j = 0; j < cc.length; j++) {
         sum += res[cc[j]]
-      }
+      } // sums them as 'sum'
+      res['I'] = Math.round(sum / 7 - res['I']) // special formula keeps I high
+      console.log(' ' + JSON.stringify(res))
       if (sum == 0) {
         for (let j = 0; j < cc.length; j++) {
           res[cc[j]] = 4
-        }
+        } // if sum is 0, the user has basic values (all 4)
       } else {
         for (let j = 0; j < cc.length; j++) {
           res2[cc[j]] = (res[cc[j]] * 21) / sum
-        }
+        } // if not, every value is standardized (*21/sum) in res2
         for (let j = 0; j < cc.length; j++) {
           if (max < res2[cc[j]]) {
             max = res2[cc[j]]
           }
-        }
+        } // max of res2 is found
         for (let j = 0; j < cc.length; j++) {
           res2[cc[j]] = res2[cc[j]] * (1 - Math.abs((max - 6) / max))
-        }
+        } // algo that starts to flattening values
         for (let j = 0; j < cc.length; j++) {
           sum2 += res2[cc[j]]
-        }
+        } // sum of res2 is made
         for (let j = 0; j < cc.length; j++) {
           res3[cc[j]] = Math.abs(6 - res2[cc[j]]) / 7
-        }
+        } // another flattening here in res3
         for (let j = 0; j < cc.length; j++) {
           sum3 += res3[cc[j]]
-        }
+        } // summing res3
         for (let j = 0; j < cc.length; j++) {
           res[cc[j]] = Math.round(
             (res3[cc[j]] / sum3) * (21 - sum2) + res2[cc[j]] + 1
           )
-        }
-        let sumcc = 0
+        } // standardizing res3 values thanks to res2 ones
         for (let j = 0; j < cc.length; j++) {
           sumcc += res[cc[j]]
-        }
+        } // final sum check
         if (sumcc < 28) res[cc[0]]++
         if (sumcc == 29) res[cc[6]]--
       }
