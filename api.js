@@ -800,12 +800,14 @@ app.post('/vote', async function (req, res, next) {
     // every 7 diversity votes one equivalence vote is lost
     if (req.body.proptype == 'project' && req.body.condition == 'D') {
       try {
-        let query = 'SELECT D from project where project.id = ?'
+        let query = 'SELECT `D` from `project` where `project`.`id` = ?'
         let param = [req.body.id]
-        let diversity = mypool.execute(query, param)
-        if ((diversity / 7 * 7 - Math.floor(diversity / 7) * 7) == 0) {
+        const [diversity] = await mypool.execute(query, param)
+        console.log('add ' + JSON.stringify(diversity[0].D))
+        if ((diversity[0].D / 7 * 7 - Math.floor(diversity[0].D / 7) * 7) == 0) {
           let query = 'UPDATE `project` SET `E` = `E` - 1 where `project`.`id`=?'
           let param = [req.body.id]
+          console.log('add ' + JSON.stringify('exec'))
           mypool.execute(query, param)
         }
       } catch (err) {
@@ -852,12 +854,13 @@ app.post('/vote', async function (req, res, next) {
     // so we recover it before removing the D vote:
     if (req.body.proptype == 'project' && req.body.condition == 'D') {
       try {
-        let query = 'SELECT D from project where project.id = ?'
+        let query = 'SELECT `D` from `project` where `project`.`id` = ?'
         let param = [req.body.id]
-        let diversity = mypool.execute(query, param)
-        if ((diversity / 7 * 7 - Math.floor(diversity / 7) * 7) == 0) {
+        const [diversity] = await mypool.execute(query, param)
+        if ((diversity[0].D / 7 * 7 - Math.floor(diversity[0].D / 7) * 7) == 0) {
           let query = 'UPDATE `project` SET `E` = `E` + 1 where `project`.`id`=?'
           let param = [req.body.id]
+          console.log('rem ' + JSON.stringify('exec'))
           mypool.execute(query, param)
         }
       } catch (err) {
