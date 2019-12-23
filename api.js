@@ -26,7 +26,7 @@ const mypool = pool.promise()
 
 /////// GET ///////
 
-app.get('/project', async function(req, res, next) {
+app.get('/project', async function (req, res, next) {
   try {
     let query = 'SELECT * FROM `project`'
     let param = []
@@ -46,7 +46,7 @@ app.get('/project', async function(req, res, next) {
   }
 })
 
-app.get('/comment', async function(req, res, next) {
+app.get('/comment', async function (req, res, next) {
   try {
     let query =
       'SELECT comment.*, user.name, user.surname FROM comment' +
@@ -60,7 +60,7 @@ app.get('/comment', async function(req, res, next) {
   }
 })
 
-app.get('/userproject', async function(req, res, next) {
+app.get('/userproject', async function (req, res, next) {
   try {
     let query =
       'SELECT * FROM `project` WHERE `id` IN (SELECT `project` FROM `projectvote` WHERE `user`=? and `condition`=?)'
@@ -72,7 +72,7 @@ app.get('/userproject', async function(req, res, next) {
   }
 })
 
-app.get('/uservote', async function(req, res, next) {
+app.get('/uservote', async function (req, res, next) {
   //gets the votes of projects and comments that have been cast by current user
   try {
     let query =
@@ -91,7 +91,7 @@ app.get('/uservote', async function(req, res, next) {
   }
 })
 
-app.get('/user', async function(req, res, next) {
+app.get('/user', async function (req, res, next) {
   req.headers.authorization = req.headers.authorization.slice(7)
   if (req.headers.authorization == 'undefined') {
     return res.status(500).send('JWT is undefined')
@@ -117,7 +117,7 @@ app.get('/user', async function(req, res, next) {
   }
 })
 
-app.get('/userlist', async function(req, res, next) {
+app.get('/userlist', async function (req, res, next) {
   try {
     let query =
       'SELECT `id`,`name`,`surname`,`email`,' +
@@ -131,7 +131,7 @@ app.get('/userlist', async function(req, res, next) {
   }
 })
 
-app.get('/professional', async function(req, res, next) {
+app.get('/professional', async function (req, res, next) {
   try {
     let query =
       'SELECT projectprofessional.*, user.name, user.surname' +
@@ -145,7 +145,7 @@ app.get('/professional', async function(req, res, next) {
   }
 })
 
-app.get('/tag', async function(req, res, next) {
+app.get('/tag', async function (req, res, next) {
   try {
     let query = 'SELECT * FROM `tag` where `project`=?'
     let param = [req.query.project]
@@ -156,7 +156,7 @@ app.get('/tag', async function(req, res, next) {
   }
 })
 
-app.get('/place', async function(req, res, next) {
+app.get('/place', async function (req, res, next) {
   try {
     let query = 'SELECT `id`, `country`, `name` FROM `place`'
     const [place] = await mypool.execute(query)
@@ -166,7 +166,7 @@ app.get('/place', async function(req, res, next) {
   }
 })
 
-app.get('/country', async function(req, res, next) {
+app.get('/country', async function (req, res, next) {
   try {
     let query = 'SELECT `id`, `name` FROM `country`'
     const [country] = await mypool.execute(query)
@@ -176,7 +176,7 @@ app.get('/country', async function(req, res, next) {
   }
 })
 
-app.get('/news', async function(req, res, next) {
+app.get('/news', async function (req, res, next) {
   try {
     let query = 'SELECT * FROM `news` ORDER BY `news`.`date` DESC'
     const [news] = await mypool.execute(query)
@@ -188,12 +188,12 @@ app.get('/news', async function(req, res, next) {
 
 /////// UPDATE ///////
 
-app.put('/user', async function(req, res, next) {
+app.put('/user', async function (req, res, next) {
   if (!req.body.name || !req.body.password) {
     res.status(400)
     res.send({ error: 'Bad data' })
   } else {
-    bcrypt.hash(req.body.password, 10, async function(err, hash) {
+    bcrypt.hash(req.body.password, 10, async function (err, hash) {
       req.body.password = hash
       try {
         let query =
@@ -216,7 +216,7 @@ app.put('/user', async function(req, res, next) {
 
 /////// POST ///////
 
-app.post('/login', async function(req, res, next) {
+app.post('/login', async function (req, res, next) {
   try {
     let query = 'SELECT * FROM `user` WHERE `user`.`email`= ? LIMIT 1'
     let param = [req.body.email]
@@ -311,7 +311,7 @@ app.post('/logout', (req, res) => {
   res.send({ status: 'OK' })
 })
 
-app.post('/checkpassword', async function(req, res, next) {
+app.post('/checkpassword', async function (req, res, next) {
   try {
     let query =
       'SELECT * FROM `user` AS `user` WHERE `user`.`id` =  ? and `user`.`email` = ? LIMIT 1'
@@ -329,7 +329,7 @@ app.post('/checkpassword', async function(req, res, next) {
   }
 })
 
-app.post('/recoverpassword', async function(req, res, next) {
+app.post('/recoverpassword', async function (req, res, next) {
   if (req.body.email) {
     try {
       let query = 'SELECT * FROM `user` WHERE `user`.`email`= ? LIMIT 1'
@@ -412,7 +412,7 @@ app.post('/recoverpassword', async function(req, res, next) {
   }
 })
 
-app.post('/place', async function(req, res, next) {
+app.post('/place', async function (req, res, next) {
   try {
     let query =
       'SELECT * FROM `place` WHERE `place`.`country`=? AND `place`.`name`=?  LIMIT 1'
@@ -438,7 +438,7 @@ app.post('/place', async function(req, res, next) {
   }
 })
 
-app.post('/project', async function(req, res, next) {
+app.post('/project', async function (req, res, next) {
   let param = [
     req.body.name,
     req.body.country,
@@ -492,7 +492,7 @@ app.post('/project', async function(req, res, next) {
   }
 })
 
-app.post('/comment', async function(req, res, next) {
+app.post('/comment', async function (req, res, next) {
   if (req.body.id == 'new') {
     try {
       let query =
@@ -550,7 +550,7 @@ app.post('/comment', async function(req, res, next) {
   }
 })
 
-app.post('/user', async function(req, res, next) {
+app.post('/user', async function (req, res, next) {
   try {
     let query = 'SELECT * FROM `user` WHERE `user`.`email`= ? LIMIT 1'
     let param = [req.body.email]
@@ -598,7 +598,7 @@ app.post('/user', async function(req, res, next) {
   }
 })
 
-app.post('/tag', async function(req, res, next) {
+app.post('/tag', async function (req, res, next) {
   if (req.body.tag == 'add') {
     try {
       let query = 'INSERT INTO `tag` (`project`,`name`) VALUES (?,?)'
@@ -620,7 +620,7 @@ app.post('/tag', async function(req, res, next) {
   }
 })
 
-app.post('/image', async function(req, res, next) {
+app.post('/image', async function (req, res, next) {
   let uploadPath =
     './static/assets/image/' + req.body.proptype + '/' + req.body.id + '.png'
   if (req.files) {
@@ -640,14 +640,14 @@ app.post('/image', async function(req, res, next) {
       return next(err)
     }
   } else {
-    fs.symlink('./0.png', uploadPath, function(err) {
+    fs.symlink('./0.png', uploadPath, function (err) {
       return next(err)
     })
   }
   res.send({ status: 'OK', id: req.body.id })
 })
 
-app.post('/newuseremail', function(req, res) {
+app.post('/newuseremail', function (req, res) {
   let transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 465,
@@ -672,7 +672,7 @@ app.post('/newuseremail', function(req, res) {
   })
 })
 
-app.post('/contactemail', function(req, res) {
+app.post('/contactemail', function (req, res) {
   const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 465,
@@ -716,7 +716,7 @@ app.post('/contactemail', function(req, res) {
 
 //CCI to be "vued", post is the future one, remove following app.get('/map'..
 
-app.post('/cci', async function(req, res, next) {
+app.post('/cci', async function (req, res, next) {
   try {
     let query = 'SELECT * FROM `CCI' + req.body.cciyear + '`'
     let param = []
@@ -726,7 +726,7 @@ app.post('/cci', async function(req, res, next) {
     next(err)
   }
 })
-app.get('/map', async function(req, res, next) {
+app.get('/map', async function (req, res, next) {
   try {
     let query = 'SELECT * FROM `CCI2017`'
     let param = []
@@ -742,7 +742,7 @@ app.get('/map', async function(req, res, next) {
   }
 })
 
-app.post('/vote', async function(req, res, next) {
+app.post('/vote', async function (req, res, next) {
   try {
     let query =
       'SELECT * from `' +
@@ -875,7 +875,7 @@ app.post('/vote', async function(req, res, next) {
   }
 })
 
-app.post('/professional', async function(req, res, next) {
+app.post('/professional', async function (req, res, next) {
   try {
     let query =
       'DELETE FROM `projectprofessional` where `user`=? and `project`=? LIMIT 1'
@@ -917,7 +917,7 @@ app.post('/professional', async function(req, res, next) {
 
 //admin
 
-app.post('/resetvoting', async function(req, res, next) {
+app.post('/resetvoting', async function (req, res, next) {
   var proptype = ['project', 'comment', 'user']
   for (let i = 0; i < proptype.length; i++) {
     try {
@@ -1025,7 +1025,7 @@ app.post('/resetvoting', async function(req, res, next) {
 })
 
 //error function triggered by next
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   console.log('body: ' + JSON.stringify(req.body))
   console.log('nexterr: ' + JSON.stringify(err) + err.stack)
   if (res.headersSent) {

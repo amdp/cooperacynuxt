@@ -161,6 +161,22 @@
 <script>
 export default {
   middleware: ['auth'],
+  data() {
+    return {
+      loginEmail: null,
+      loginPassword: null,
+      formName: null,
+      formSurname: null,
+      formEmail: null,
+      formPassword: null,
+      formImageFile: null,
+      formPaypalagreementid: 'bank',
+      newaccountvar: false,
+      newaccountpaypal: false,
+      logging: false,
+      offline: false
+    }
+  },
   head() {
     return {
       title: 'Cooperacy - Login',
@@ -183,23 +199,11 @@ export default {
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
         { name: 'google-signin-scope', content: 'profile email' },
-        { name: 'google-signin-client_id', content: `${process.env.GOOGLEID}` }
+        {
+          name: 'google-signin-client_id',
+          content: `${process.env.GOOGLEID}`
+        }
       ]
-    }
-  },
-  data() {
-    return {
-      loginEmail: null,
-      loginPassword: null,
-      formName: null,
-      formSurname: null,
-      formEmail: null,
-      formPassword: null,
-      formImageFile: null,
-      formPaypalagreementid: 'bank',
-      newaccountvar: false,
-      newaccountpaypal: false,
-      logging: false
     }
   },
   computed: {
@@ -264,12 +268,14 @@ export default {
     async login() {
       this.logging = true
       try {
-        await this.$auth.loginWith('local', {
+        trylogin = await this.$auth.loginWith('local', {
           data: {
             email: this.loginEmail,
             password: this.loginPassword
           }
         })
+        console.log(' ' + JSON.stringify(trylogin))
+        if (trylogin == 'offline') return alert('You are offline :(')
       } catch (err) {
         alert('Sorry, there seems to be something wrong: ' + err.response.data)
         this.logging = false
