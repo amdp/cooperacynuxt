@@ -803,11 +803,9 @@ app.post('/vote', async function (req, res, next) {
         let query = 'SELECT `D` from `project` where `project`.`id` = ?'
         let param = [req.body.id]
         const [diversity] = await mypool.execute(query, param)
-        console.log('add ' + JSON.stringify(diversity[0].D))
-        if ((diversity[0].D / 7 * 7 - Math.floor(diversity[0].D / 7) * 7) == 0) {
+        if ((diversity[0].D - Math.floor(diversity[0].D / 7) * 7) == 0) {
           let query = 'UPDATE `project` SET `E` = `E` - 1 where `project`.`id`=?'
           let param = [req.body.id]
-          console.log('add ' + JSON.stringify('exec'))
           mypool.execute(query, param)
         }
       } catch (err) {
@@ -826,7 +824,7 @@ app.post('/vote', async function (req, res, next) {
             req.body.condition +
             '`+1 where `user`.`id`=?'
           let param = [req.body.author]
-          mypool.execute(query, param)
+          await mypool.execute(query, param)
         } catch (err) {
           next(err)
         }
@@ -857,11 +855,10 @@ app.post('/vote', async function (req, res, next) {
         let query = 'SELECT `D` from `project` where `project`.`id` = ?'
         let param = [req.body.id]
         const [diversity] = await mypool.execute(query, param)
-        if ((diversity[0].D / 7 * 7 - Math.floor(diversity[0].D / 7) * 7) == 0) {
+        if ((diversity[0].D - Math.floor(diversity[0].D / 7) * 7) == 0) {
           let query = 'UPDATE `project` SET `E` = `E` + 1 where `project`.`id`=?'
           let param = [req.body.id]
-          console.log('rem ' + JSON.stringify('exec'))
-          mypool.execute(query, param)
+          await mypool.execute(query, param)
         }
       } catch (err) {
         next(err)

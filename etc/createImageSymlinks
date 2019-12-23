@@ -1,0 +1,8 @@
+#!/bin/bash
+
+for i in {1..1000}
+do
+  ln -s 0.png $i.png
+done
+
+#execute these lines both in /static/assets/image/project/ and in /static/assets/image/user/

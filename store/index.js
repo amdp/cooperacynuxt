@@ -123,14 +123,21 @@ export const mutations = {
     var votedProptype = state[payload.proptype].find(
       proptype => proptype.id == payload.id
     )
-    votedProptype[payload.cc] += payload.add //at this point we have updated the proptype, we proceed with the uservote table:
-    payload.add == 1
-      ? state[payload.proptype + 'uservote'].push({
+    if (payload.add > 0) { votedProptype[payload.cc] += payload.add }
+    if (payload.cc == 'D' && payload.proptype == 'project') {
+      if ((votedProptype.D - Math.floor(votedProptype.D / 7) * 7) == 0)
+        votedProptype.E -= payload.add
+    }
+    if (payload.add < 0) { votedProptype[payload.cc] += payload.add }
+    //at this point we have updated the proptype, we proceed with the uservote table:
+    if (payload.add == 1) {
+      state[payload.proptype + 'uservote'].push({
         user: payload.user,
         [payload.proptype]: payload.id,
         condition: payload.cc
       })
-      : state[payload.proptype + 'uservote'].splice(
+    } else {
+      state[payload.proptype + 'uservote'].splice(
         state[payload.proptype + 'uservote'].findIndex(
           uservote =>
             uservote[payload.proptype] == payload.id &&
@@ -138,6 +145,8 @@ export const mutations = {
         ),
         1
       )
+    }
+
   }
 }
 
