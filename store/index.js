@@ -32,7 +32,7 @@ export const state = () => ({
       id: 3,
       name: 'Ecosystem and Wellbeing'
     },
-    { id: 4, name: 'Voting Proposals and Reporting' },
+    { id: 4, name: 'Voting Proposals, Reporting' },
     {
       id: 5,
       name: 'Official Locations, Cities, Nations'
@@ -48,7 +48,7 @@ export const state = () => ({
     { id: 2, name: 'approval' },
     { id: 3, name: 'active' },
     { id: 4, name: 'testing' },
-    { id: 5, name: 'free' },
+    { id: 5, name: 'fee-based' },
     { id: 6, name: 'pairing' },
     { id: 7, name: 'idea' }
   ],

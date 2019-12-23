@@ -190,6 +190,7 @@
           :projectprop="project"
           :userlistprop="$store.state.userlist"
         />
+        <votebarmodal :projectprop="project" />
       </div>
     </div>
     <votemodal />
@@ -199,12 +200,14 @@
 <script>
 import votebar from './votebar'
 import votemodal from './votemodal'
+import votebarmodal from '@/components/votebarmodal'
 import tagmodal from './tagmodal'
 import professionalmodal from './professionalmodal'
 export default {
   components: {
     votebar: votebar,
     votemodal: votemodal,
+    votebarmodal: votebarmodal,
     tagmodal: tagmodal,
     professionalmodal: professionalmodal
   },

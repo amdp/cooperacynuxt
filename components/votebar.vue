@@ -20,7 +20,7 @@
       :key="vote.projectcc"
       :class="vote.class"
       :style="vote.style"
-      @click="voteswitch(vote.projectcc)"
+      @click="checkvote(vote.projectcc)"
     >
       <div class="showme showmeon t12 mt-1 mb-0 ml-0 mr-0 p-0">
         {{ vote.vlong }}: {{ vote.v }} {{ votevotes(vote.v) }}
@@ -88,7 +88,7 @@ export default {
       } // now we already have a 7 elements array so we just add json keys as needed:
       if (this.proptype == 'user') {
         for (let i = 0; i < 7; i++) {
-          ;(voteif[i].class =
+          ; (voteif[i].class =
             'p-0 rainbowcode b' +
             this.$store.state.condition[i] +
             ' ' +
@@ -102,7 +102,7 @@ export default {
       }
       if (this.proptype == 'project') {
         for (let i = 0; i < 7; i++) {
-          ;(voteif[i].class =
+          ; (voteif[i].class =
             'p-0 vote col b' +
             this.$store.state.condition[i] +
             ' ' +
@@ -112,7 +112,7 @@ export default {
       }
       if (this.proptype == 'comment') {
         for (let i = 0; i < 7; i++) {
-          ;(voteif[i].class =
+          ; (voteif[i].class =
             'p-0 vote col b' +
             this.$store.state.condition[i] +
             ' ' +
@@ -131,19 +131,32 @@ export default {
         return 'votes'
       }
     },
+    checkvote(cc) {
+      if (!this.$auth.user) {
+        return this.$router.push({ path: '/login' })
+      }
+      let add = this.$store.state['projectuservote'].findIndex(
+        // checks if the vote exists, adds accordingly
+        x => x[this.proptype] == this.voteprop.id && x.condition == cc
+      )
+      if (cc == 'I' && add == -1) {
+        let modal = 'votebarmodal' + this.voteprop.id
+        this.$root.$emit('bv::show::modal', modal, '#btnShow')
+      }
+      else this.voteswitch(cc)
+    },
     voteswitch(cc) {
       if (!this.$auth.user) {
         return this.$router.push({ path: '/login' })
       }
       // CLIENT-SIDE: sends id, votetype, user and adds 1/-1 to the vuex store variable
       // just to "turn the vote on"
-      var add
-      this.$store.state[this.proptype + 'uservote'].findIndex(
+      let add = this.$store.state[this.proptype + 'uservote'].findIndex(
         // checks if the vote exists, adds accordingly
         x => x[this.proptype] == this.voteprop.id && x.condition == cc
-      ) == -1
-        ? (add = 1)
-        : (add = -1)
+      )
+      if (add == -1) add = 1
+      else add = -1
       this.$store.commit('setVoteUpdate', {
         id: this.voteprop.id,
         cc: cc,
@@ -151,10 +164,9 @@ export default {
         add: add,
         proptype: this.proptype
       })
-      // ADD VOTING EFFECTS HERE?
 
       // SERVER-SIDE: prepares and sends async REST call (either comment or project)
-      var request = {
+      let request = {
         id: this.voteprop.id,
         condition: cc,
         user: this.$auth.user.id,
