@@ -238,24 +238,24 @@ export default {
         var that = this //important: we need to have a reference to the variables in the page and cannot call 'this' in nested functions
         paypal
           .Buttons({
-            onError: function(err) {
+            onError: function (err) {
               alert(err)
               console.log('err' + err)
               that.formPaypalagreementid = 'e' + JSON.stringify(err)
             },
-            onCancel: function(data) {
+            onCancel: function (data) {
               console.log('c' + JSON.stringify(data))
               that.formPaypalagreementid = 'c' + JSON.stringify(data)
             },
-            createSubscription: function(data, actions) {
+            createSubscription: function (data, actions) {
               return actions.subscription.create({
                 plan_id: 'P-9C681042E7918904VLURYYGQ'
               })
             },
-            onApprove: function(data, actions) {
+            onApprove: function (data, actions) {
               alert(
                 'You have successfully become a member with subscription ID ' +
-                  data.subscriptionID
+                data.subscriptionID
               )
               that.formPaypalagreementid = data.subscriptionID
               that.newuser()
@@ -268,16 +268,14 @@ export default {
     async login() {
       this.logging = true
       try {
-        trylogin = await this.$auth.loginWith('local', {
+        let trylogin = await this.$auth.loginWith('local', {
           data: {
             email: this.loginEmail,
             password: this.loginPassword
           }
         })
-        console.log(' ' + JSON.stringify(trylogin))
-        if (trylogin == 'offline') return alert('You are offline :(')
       } catch (err) {
-        alert('Sorry, there seems to be something wrong: ' + err.response.data)
+        alert('Sorry, there seems to be something wrong: ' + trylogin.response.data)
         this.logging = false
       }
     },
@@ -292,8 +290,8 @@ export default {
       })
       alert(
         'Cooperacy is sending you an email to ' +
-          this.loginEmail +
-          ' to set the new password that is now in the password field.'
+        this.loginEmail +
+        ' to set the new password that is now in the password field.'
       )
     },
     async newuser() {

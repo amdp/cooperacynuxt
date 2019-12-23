@@ -7,6 +7,7 @@
         </h5>
         <img
           class="usercomment rounded-circle img-responsive"
+          v-if="this.$auth.user.id"
           :src="'/assets/image/user/' + this.$auth.user.id + '.png'"
         /><br />
         <nuxt-link to="/useredit" class="ad">
@@ -123,7 +124,6 @@ export default {
         sum += res[cc[j]]
       } // sums them as 'sum'
       res['I'] = Math.round(sum / 7 - res['I']) // special formula keeps I high
-      console.log(' ' + JSON.stringify(res))
       if (sum == 0) {
         for (let j = 0; j < cc.length; j++) {
           res[cc[j]] = 4
