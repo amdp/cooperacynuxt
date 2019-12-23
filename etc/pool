@@ -18,12 +18,14 @@ do
 /usr/local/mysql/bin/mysql --user="cooperacy" \
 --password="whateveritis" \
 --database="coo" \
---execute='SELECT @allprojectD:=SUM(`D`) FROM `coo`.`project` WHERE `stage` = '7';
-CREATE TABLE IF NOT EXISTS BIZARRE AS (SELECT id, `D`/@allprojectD+(RAND()-RAND()) AS BIZARDRY FROM `coo`.`project` WHERE `stage` = '7');
-SELECT * FROM BIZARRE;
-SELECT @bizard:=id FROM BIZARRE WHERE BIZARDRY = (SELECT MAX(DISTINCT BIZARDRY) FROM BIZARRE);
-UPDATE coo.project SET stage = 3 WHERE ID = @bizard;
-DROP TABLE BIZARRE;'
+--execute='SELECT @allprojectD:=SUM(`D`) FROM `coo`.`project` WHERE `stage` = '7'; \
+SELECT @maxprojectE:=MAX(`E`) FROM `coo`.`project` WHERE `stage` = '7'; \
+CREATE TABLE IF NOT EXISTS BIZARRE \
+ AS (SELECT id, `D`/@allprojectD+(RAND()-RAND()) \
+  AS BIZARDRY FROM `coo`.`project` WHERE `stage` = '7'); \
+SELECT @bizard:=id FROM BIZARRE WHERE BIZARDRY = (SELECT MAX(DISTINCT BIZARDRY) FROM BIZARRE); \
+UPDATE coo.project SET E = @maxprojectE  WHERE ID = @bizard; \
+DROP TABLE BIZARRE;' \
 sleep 91d
 done
 

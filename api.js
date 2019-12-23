@@ -797,6 +797,22 @@ app.post('/vote', async function (req, res, next) {
       next(err)
     }
 
+    // every 7 diversity votes one equivalence vote is lost
+    if (req.body.proptype == 'project' && req.body.condition == 'D') {
+      try {
+        let query = 'SELECT D from project where project.id = ?'
+        let param = [req.body.id]
+        let diversity = mypool.execute(query, param)
+        if ((diversity / 7 * 7 - Math.floor(diversity / 7) * 7) == 0) {
+          let query = 'UPDATE `project` SET `E` = `E` - 1 where `project`.`id`=?'
+          let param = [req.body.id]
+          mypool.execute(query, param)
+        }
+      } catch (err) {
+        next(err)
+      }
+    }
+
     if (req.body.proptype == 'comment') {
       //only if it is a comment vote, the user colorbar is updated
       if (req.body.user != req.body.author) {
@@ -815,6 +831,7 @@ app.post('/vote', async function (req, res, next) {
       }
     }
   }
+
   async function removevote(votetoremove) {
     try {
       //the vote is archived (we await for it)
@@ -830,6 +847,24 @@ app.post('/vote', async function (req, res, next) {
     } catch (err) {
       next(err)
     }
+
+    // every 7 diversity votes one equivalence vote is lost, 
+    // so we recover it before removing the D vote:
+    if (req.body.proptype == 'project' && req.body.condition == 'D') {
+      try {
+        let query = 'SELECT D from project where project.id = ?'
+        let param = [req.body.id]
+        let diversity = mypool.execute(query, param)
+        if ((diversity / 7 * 7 - Math.floor(diversity / 7) * 7) == 0) {
+          let query = 'UPDATE `project` SET `E` = `E` + 1 where `project`.`id`=?'
+          let param = [req.body.id]
+          mypool.execute(query, param)
+        }
+      } catch (err) {
+        next(err)
+      }
+    }
+
     //then the relative project/comment condition value is updated
     try {
       let query =
