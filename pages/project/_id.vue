@@ -34,7 +34,7 @@ export default {
     await store.dispatch('getCountryAction')
     await store.dispatch('getTagAction', { project: params.id })
     await store.dispatch('getProfessionalAction', { project: params.id })
-    await store.dispatch('getUservoteAction', {
+    await store.dispatch('getUservoteAction', { //project
       userid: store.state.auth.user.id,
       proptype: 'project'
     })
@@ -43,7 +43,7 @@ export default {
       userid: store.state.auth.user.id,
       limit: ' LIMIT 1'
     })
-    await store.dispatch('getUservoteAction', {
+    await store.dispatch('getUservoteAction', { // comments
       userid: store.state.auth.user.id,
       proptype: 'comment',
       projectid: params.id,

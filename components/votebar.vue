@@ -62,9 +62,9 @@ export default {
         var uservoted
         if (this.$store.state[this.proptype + 'uservote']) {
           uservoted = this.$store.state[this.proptype + 'uservote'].findIndex(
-            x =>
-              x[this.proptype] == this.voteprop.id &&
-              x.condition == this.$store.state.cc[i]
+            v =>
+              v[this.proptype] == this.voteprop.id &&
+              v.condition == this.$store.state.cc[i]
           )
         } else {
           uservoted = 0

@@ -102,3 +102,4 @@ report.*
 !/static/assets/image/project/0.png´
 /static/assets/image/user/*
 !/static/assets/image/user/0.png
+/static/assets/sw*.*

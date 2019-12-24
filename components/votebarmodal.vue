@@ -3,11 +3,10 @@
     <b-modal :id="pmodal" hide-footer title="Are you sure?" hide-header-close>
       <p class="my-4">
         Warning! This is a downvote to declare hidden information, corruption,
-        cheating or spamming. You will send a message to communicate what others
-        do not see. The project may go into a "pairing" state where the
-        participants discuss. After 90 days of pairing, if nothing happens the
-        idea may be split or removed and in case part of the budget is turned
-        back to the money pool. Transparency voters are never anonymous.
+        cheating or spamming. The project may go into a "pairing" state where
+        the participants discuss. After 90 days of pairing, if nothing happens
+        the idea may be split or removed and in case part of the budget is
+        turned back to the money pool. Transparency voters are never anonymous.
         <br /><br />
         Are you sure you want to report a transparency infringement for the
         project "{{ projectprop.name }}"?
