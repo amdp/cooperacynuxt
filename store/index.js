@@ -27,7 +27,7 @@ export const state = () => ({
   category: [
     { id: 0, name: 'Main Cooperacy' },
     { id: 1, name: 'Wealth - General' },
-    { id: 2, name: 'Community' },
+    { id: 2, name: 'Communities, Locations, Cities, Nations' },
     {
       id: 3,
       name: 'Ecosystem and Wellbeing'
@@ -35,7 +35,7 @@ export const state = () => ({
     { id: 4, name: 'Voting Proposals, Reporting' },
     {
       id: 5,
-      name: 'Official Locations, Cities, Nations'
+      name: 'Evaluation purpose only'
     },
     {
       id: 6,
@@ -45,10 +45,10 @@ export const state = () => ({
   ],
   stage: [
     { id: 1, name: 'archived' },
-    { id: 2, name: 'approval' },
+    { id: 2, name: 'participation' },
     { id: 3, name: 'active' },
     { id: 4, name: 'testing' },
-    { id: 5, name: 'fee-based' },
+    { id: 5, name: 'approval' },
     { id: 6, name: 'pairing' },
     { id: 7, name: 'idea' }
   ],
