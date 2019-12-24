@@ -268,14 +268,15 @@ export default {
     async login() {
       this.logging = true
       try {
-        let trylogin = await this.$auth.loginWith('local', {
+        await this.$auth.loginWith('local', {
           data: {
             email: this.loginEmail,
             password: this.loginPassword
           }
         })
       } catch (err) {
-        alert('Sorry, there seems to be something wrong: ' + trylogin.response.data)
+        alert('Sorry, there seems to be something wrong: ' +
+          err.response.data + '.')
         this.logging = false
       }
     },

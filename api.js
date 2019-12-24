@@ -94,7 +94,7 @@ app.get('/uservote', async function (req, res, next) {
 app.get('/user', async function (req, res, next) {
   req.headers.authorization = req.headers.authorization.slice(7)
   if (req.headers.authorization == 'undefined') {
-    return res.status(500).send('JWT is undefined')
+    return res.status(500).send('Headers sent undefined')
   } else {
     try {
       jwt.verify(req.headers.authorization, process.env.JWTSECRET)
@@ -1066,7 +1066,7 @@ app.use(function (err, req, res, next) {
   if (res.headersSent) {
     return next(err) //check  this out
   }
-  res.status(500).send({ error: err + 'body: ' + JSON.stringify(req.body) })
+  res.status(500).send(err.stack)
 })
 
 module.exports = {
