@@ -155,13 +155,6 @@ export const actions = {
     let { data } = await this.$axios.get(process.env.DBURL + '/project', {
       params: payload
     })
-    if (payload.userid)
-      var gouser = { userid: payload.userid, proptype: 'project' }
-    if (payload.limit) {
-      gouser.projectid = payload.projectid
-      gouser.limit = payload.limit
-    }
-    if (payload.userid) await context.dispatch('getUservoteAction', gouser)
     context.commit('setProject', data)
   },
   getUserProjectAction: async function (context, payload) {
@@ -301,6 +294,7 @@ export const actions = {
   },
   getUservoteAction: async function (context, payload) {
     // this action GETS THE USER VOTE INFO,  addVoteAction IS THE REAL VOTING ACTION-FUNCTION
+    if (payload.reset) { return context.commit('setUservote', { body: [], proptype: 'project' }) }
     let { data } = await this.$axios.get(process.env.DBURL + '/uservote', {
       params: payload
     })

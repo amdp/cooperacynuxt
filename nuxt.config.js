@@ -35,17 +35,17 @@ module.exports = {
   },
   server: process.env.HTTPS
     ? {
-        port: process.env.PORT,
-        host: process.env.HOST,
-        https: {
-          key: fs.readFileSync(
-            path.resolve(process.env.HTTPSDIR, process.env.HTTPSKEY)
-          ),
-          cert: fs.readFileSync(
-            path.resolve(process.env.HTTPSDIR, process.env.HTTPSCERT)
-          )
-        }
+      port: process.env.PORT,
+      host: process.env.HOST,
+      https: {
+        key: fs.readFileSync(
+          path.resolve(process.env.HTTPSDIR, process.env.HTTPSKEY)
+        ),
+        cert: fs.readFileSync(
+          path.resolve(process.env.HTTPSDIR, process.env.HTTPSCERT)
+        )
       }
+    }
     : { host: process.env.HOST, port: process.env.PORT },
   pwa: {
     manifest: {

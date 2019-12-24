@@ -15,9 +15,7 @@ export default {
   },
   components: { projectlist: projectlist },
   async fetch({ store, params }) {
-    await store.dispatch('getProjectAction', {
-      userid: store.state.auth.user.id
-    })
+    await store.dispatch('getProjectAction', '')
   }
 }
 </script>

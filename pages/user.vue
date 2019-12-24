@@ -89,13 +89,14 @@ export default {
   async fetch({ store, params }) {
     await store.dispatch('getCountryAction')
     await store.dispatch('getPlaceAction')
+    await store.dispatch('getUserProjectAction', {
+      userid: store.state.auth.user.id
+    })
     await store.dispatch('getUservoteAction', {
       userid: store.state.auth.user.id,
       proptype: 'project'
     })
-    await store.dispatch('getUserProjectAction', {
-      userid: store.state.auth.user.id
-    })
+
   },
   mounted() {
     this.rainbowcode()

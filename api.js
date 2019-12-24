@@ -78,12 +78,10 @@ app.get('/uservote', async function (req, res, next) {
     let query =
       'select * from `' + req.query.proptype + 'vote` where `user` = ?'
     let param = [req.query.userid]
-
     if (req.query.limit) {
       query += ' AND `project`= ?'
       param = [req.query.userid, req.query.projectid]
     }
-
     const [uservote] = await mypool.execute(query, param)
     res.send(uservote)
   } catch (err) {
@@ -1062,6 +1060,7 @@ app.post('/resetvoting', async function (req, res, next) {
 //error function triggered by next
 app.use(function (err, req, res, next) {
   console.log('body: ' + JSON.stringify(req.body))
+  console.log('query: ' + JSON.stringify(req.body))
   console.log('nexterr: ' + JSON.stringify(err) + err.stack)
   if (res.headersSent) {
     return next(err) //check  this out

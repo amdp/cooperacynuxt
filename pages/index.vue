@@ -17,14 +17,15 @@ export default {
     await store.dispatch('getProjectAction', '')
     await store.dispatch('getPlaceAction')
     await store.dispatch('getCountryAction')
-    if (store.state.auth.user) {
-      store.dispatch('getUserProjectAction', {
-        userid: store.state.auth.user.id
-      })
-      store.dispatch('getUservoteAction', {
-        userid: store.state.auth.user.id
+    if (store.state.auth.loggedIn) {
+      await store.dispatch('getUservoteAction', {
+        userid: store.state.auth.user.id,
+        proptype: 'project'
       })
     }
+    else await store.dispatch('getUservoteAction', {
+      reset: true
+    })
   }
 }
 </script>
