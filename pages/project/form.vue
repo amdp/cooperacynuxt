@@ -171,7 +171,7 @@
             id="stageInput"
             v-model="formStageFunding"
             value="7"
-            unchecked-value="5"
+            unchecked-value="2"
             switch
             class="m-3"
             @input="
@@ -192,7 +192,7 @@
           <b-form-input
             id="budgetInput"
             v-model="formBudget"
-            :readonly="this.formStageFunding == 5"
+            :readonly="this.formStageFunding == 2"
           ></b-form-input>
         </b-form-group>
         <b-form-group
@@ -206,7 +206,7 @@
           label-for="feeInput"
           label="Attending Fee:"
           description="Insert the price of the attending fee, leave 0 for free projects"
-          v-if="this.formStageFunding == 5"
+          v-if="this.formStageFunding == 2"
         >
           <b-form-input
             id="feeInput"
@@ -218,7 +218,7 @@
           label-for="attendeeInput"
           label="Minimum attendees:"
           description="Insert the minimum amount of attendees to this course, event, fee-based service"
-          v-if="this.formStageFunding == 5"
+          v-if="this.formStageFunding == 2"
         >
           <b-form-input
             id="attendeeInput"
@@ -346,7 +346,7 @@ export default {
       formCategory: this.$store.state.edit.id
         ? this.$store.state.project[0].category
         : '1',
-      formStageFunding: 5,
+      formStageFunding: 2,
       formBudget: this.$store.state.edit.id
         ? Math.round(this.$store.state.project[0].budget)
         : 0,
@@ -358,9 +358,9 @@ export default {
         : 0,
       formAttendee: this.$store.state.edit.id
         ? Math.round(
-            this.$store.state.project[0].budget /
-              this.$store.state.project[0].collect
-          ) || 0
+          this.$store.state.project[0].budget /
+          this.$store.state.project[0].collect
+        ) || 0
         : 0
     }
   },
@@ -391,13 +391,13 @@ export default {
     ) {
       return (this.formAnonymous = 1)
     }
-    if (this.$store.state.edit.id && this.$store.state.project[0].stage != 5) {
+    if (this.$store.state.edit.id && this.$store.state.project[0].stage != 2) {
       return (this.formStageFunding = 7)
     }
     if (this.$store.state.edit.id && this.$store.state.project[0].place) {
       return (this.formPlace = this.$store.state.project[0].place)
     }
-    if (this.$store.state.edit.id && this.$store.state.project[0].stage == 5) {
+    if (this.$store.state.edit.id && this.$store.state.project[0].stage == 2) {
       totalfreeproject()
     }
     this.formCountry = 1
@@ -405,7 +405,7 @@ export default {
   },
   methods: {
     totalfreeproject() {
-      if (this.formStageFunding == 5) {
+      if (this.formStageFunding == 2) {
         this.formBudget = this.formFee * this.formAttendee
       }
     },
@@ -507,7 +507,7 @@ export default {
     doneToast(res) {
       this.$toast.success('Done!', { duration: 1000, className: 'toast' })
       this.$store.dispatch('editSwitchAction', false)
-      setTimeout(function() {
+      setTimeout(function () {
         if (res == 'OK') {
           location.href = process.env.URLHOME + '/project/' + res.id
         } else {

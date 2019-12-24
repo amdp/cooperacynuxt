@@ -54,7 +54,7 @@
                     >{{ project.anonymous ? 'ON' : 'OFF' }}
                   </small>
                   <br />
-                  <small v-if="project.stage == '5'">
+                  <small v-if="project.stage == '2'">
                     <strong>FEE: </strong> {{ Math.round(project.budget) }}
                     <br />
                   </small>
@@ -305,7 +305,7 @@ export default {
       return isNaN(projectProgress) ? 0 : projectProgress //add infinity or remove budget 0 ideas
     },
     collected(project) {
-      if (project.stage == 5) {
+      if (project.stage == 2) {
         return project.E * project.collect
       } else {
         return project.collect

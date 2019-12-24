@@ -288,8 +288,8 @@
         could be also voted anonymously<br />
         • Approval Stage: the idea reaches its budget or hudget, becomes a
         project, anonymity ends, budget phase starts;<br />
-        • Active Project: the project becomes an active one, its profits go back
-        to the collection fund;<br />
+        • Active or Participating Project: the project is an active one, its
+        profits go back to the collection fund;<br />
         • Archived Project: when the mission is accomplished or terminated the
         project “dies”. This is not a bitter end, it means the project goes in
         the archive in order to influence future modules and for future
