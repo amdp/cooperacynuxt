@@ -110,7 +110,7 @@ html with new functionalities.
 So the client reads the Vue file
 and renders the aboutus vue page.
 
-Go to 127.0.0.1/aboutus and you
+Go to 127.0.0.1/main/aboutus and you
 will see it.
 
 

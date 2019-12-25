@@ -11,7 +11,7 @@ You can conclude your overview with a brief look at the assets and at the only C
 If you want to learn all the technologies used, we are slowly creating a gamified crash guide, check the learning game:
 https://github.com/amdp/cooperacynuxt/blob/master/etc/learningGame.md
 
-The result is online at https://cooperacy.org. For detailed explanation on how things work on Cooperacy, check the Platform idea on https://cooperacy.org/platform. Have fun and happy coding!
+The result is online at https://cooperacy.org. For detailed explanation on how things work on Cooperacy, check the Platform idea on https://cooperacy.org/main/platform. Have fun and happy coding!
 
 ## Setup
 

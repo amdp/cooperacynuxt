@@ -115,12 +115,12 @@
     <div id="homefade" style="opacity:0">
       <div class="row mb-4 p-2">
         <div class="col-lg-4 col-xs-12 subheading text-center">
-          <nuxt-link to="/platform" class="noline transparency space"
+          <nuxt-link to="/main/platform" class="noline transparency space"
             >DISCOVER</nuxt-link
           >
         </div>
         <div class="col-lg-4 col-xs-12 subheading text-center">
-          <nuxt-link to="/cooperation" class="noline understanding space"
+          <nuxt-link to="/main/cooperation" class="noline understanding space"
             >LEARN</nuxt-link
           >
         </div>
@@ -136,7 +136,7 @@
       </p>
       <p class="base text-center mb-2">
         We're setting up a
-        <nuxt-link to="/platform" class="ae">platform</nuxt-link> in which,
+        <nuxt-link to="/main/platform" class="ae">platform</nuxt-link> in which,
         supported by money, people help each other to realise what they want for
         their lives taking decisions together in a productive way.
       </p>
@@ -144,7 +144,7 @@
         <nuxt-link to="/login" class="ae">Joining</nuxt-link> Cooperacy is
         entertaining and makes you learn how to develop enjoyable cooperations
         in your
-        <nuxt-link to="/aboutyou" class="ad">personal</nuxt-link> relations, in
+        <nuxt-link to="/main/aboutyou" class="ad">personal</nuxt-link> relations, in
         the
         <nuxt-link to="/coorporate" class="af">corporate</nuxt-link>
         world and at the

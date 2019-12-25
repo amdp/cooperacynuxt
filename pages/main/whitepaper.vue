@@ -3,7 +3,7 @@
     <div class="page-container">
       <br /><img
         class="page-header"
-        src="~/assets/image/page/banners/whitepaper.png"
+        src="~/assets/image/page/banners/main/whitepaper.png"
       />
       <p class="base understanding">
         This white paper explains how the Cooperacy platform works in detail.
@@ -149,7 +149,7 @@
         the idea are kept frozen during the approval project phase until it is
         turned into an active project. The budget release milestones deadlines
         are chosen according to the Cooperacy
-        <nuxt-link to="/governance" class="af">governance</nuxt-link>
+        <nuxt-link to="/main/governance" class="af">governance</nuxt-link>
         scheme.<br />
         Eventual contrasts not resolved in the 7 budget milestones are solved
         with a transparent voting kept live for three days, in which the

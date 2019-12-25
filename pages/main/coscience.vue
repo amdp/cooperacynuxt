@@ -2,7 +2,7 @@
   <div class="page-container">
     <br /><img
       class="page-header"
-      src="~/assets/image/page/banners/cooperationscience.png"
+      src="~/assets/image/page/banners/main/cooperationscience.png"
     />
     <p class="subheading understanding center space margin">
       COOPERATION SCIENCE FROM A INTERDISCIPLINARY APPROACH

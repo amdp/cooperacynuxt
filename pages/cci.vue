@@ -98,34 +98,37 @@
     </p>
     <p class="base">
       The Cooperation Context Index is a measure of the <i>possibility</i> of
-      <nuxt-link to="/cooperation" class="ae">cooperation</nuxt-link> in a
+      <nuxt-link to="/main/cooperation" class="ae">cooperation</nuxt-link> in a
       country, by analyzing and cross-checking more than 150 international
       official indexes.<br /><br />
 
       It is based on the Cooperation Science
-      <nuxt-link to="/coscience" class="au">framework</nuxt-link> and shows a
-      non-performative map of the prevalent condition of cooperation over the
+      <nuxt-link to="/main/coscience" class="au">framework</nuxt-link> and shows
+      a non-performative map of the prevalent condition of cooperation over the
       seven others:
-      <nuxt-link to="/cooperation#equivalence" class="ae">equivalence</nuxt-link
-      >, <nuxt-link to="/cooperation#trust" class="at">trust</nuxt-link>,
-      <nuxt-link to="/cooperation#care" class="ac">care</nuxt-link>,
-      <nuxt-link to="/cooperation#transparency" class="ai"
+      <nuxt-link to="/main/cooperation#equivalence" class="ae"
+        >equivalence</nuxt-link
+      >, <nuxt-link to="/main/cooperation#trust" class="at">trust</nuxt-link>,
+      <nuxt-link to="/main/cooperation#care" class="ac">care</nuxt-link>,
+      <nuxt-link to="/main/cooperation#transparency" class="ai"
         >transparency</nuxt-link
-      >, <nuxt-link to="/cooperation#freedom" class="af">freedom</nuxt-link>,
-      <nuxt-link to="/cooperation#understanding" class="au"
+      >,
+      <nuxt-link to="/main/cooperation#freedom" class="af">freedom</nuxt-link>,
+      <nuxt-link to="/main/cooperation#understanding" class="au"
         >understanding</nuxt-link
       >,
-      <nuxt-link to="/cooperation#diversity" class="ad">diversity</nuxt-link>;
-      and a level of the possibility to establish cooperations in each country
-      analyzed. The results can be consulted in the interactive map, that shows
-      139 countries with 2017 CCI index data and 39 with the 2016 one, with a
-      total of 178 countries. The impact of every condition of cooperation over
-      the whole index is similar, with the exception of the diversity condition
-      which is currently irrelevant, as its effect depends on the other
-      conditions. Usually high diversity becomes a plus when the CCI index is
-      higher than one. Countries with a CCI value of more than two leverage over
-      the diversity, while countries close to 0 and lower with a high diversity
-      have high risks to generate conflicts. <br /><br />
+      <nuxt-link to="/main/cooperation#diversity" class="ad"
+        >diversity</nuxt-link
+      >; and a level of the possibility to establish cooperations in each
+      country analyzed. The results can be consulted in the interactive map,
+      that shows 139 countries with 2017 CCI index data and 39 with the 2016
+      one, with a total of 178 countries. The impact of every condition of
+      cooperation over the whole index is similar, with the exception of the
+      diversity condition which is currently irrelevant, as its effect depends
+      on the other conditions. Usually high diversity becomes a plus when the
+      CCI index is higher than one. Countries with a CCI value of more than two
+      leverage over the diversity, while countries close to 0 and lower with a
+      high diversity have high risks to generate conflicts. <br /><br />
     </p>
 
     <p class="subheading understanding center space margin">THE INDEXES</p>

@@ -2,12 +2,12 @@
   <div class="page-container">
     <br /><img
       class="page-header"
-      src="~/assets/image/page/banners/cohackathon.png"
+      src="~/assets/image/page/banners/main/cohackathon.png"
     />
 
     <p class="subheading freedom center">HACKING AND COHACKING</p>
     <p class="base">
-      The <nuxt-link to="/cooperation" class="ae">cooperation</nuxt-link>-based
+      The <nuxt-link to="/main/cooperation" class="ae">cooperation</nuxt-link>-based
       hackathon represents the next step of the classic hackathon. In the
       classic version the company or the organization invites several developers
       and designers to create an application based on the some specific
@@ -31,7 +31,7 @@
     <p class="base">
       In the Cohackathon the competitive side is used only in the selection of
       the best ideas. Being a transparent process, sometimes this can lead to an
-      <nuxt-link to="/integration" class="ad">integration</nuxt-link> that makes
+      <nuxt-link to="/main/integration" class="ad">integration</nuxt-link> that makes
       more ideas to merge and become more powerful. The realisation of the
       prototypes and the final presentation are developed by everyone who wants
       to continue after the idea selection. The final award will be collectively
@@ -51,7 +51,7 @@
       which participate in the future dissemination of the output.<br /><br />
       When the company does not need an application solving its specific
       indications right away, a different, live, open meeting is possible: the
-      <nuxt-link to="/coopenspace" class="af">Open Space Cooperation</nuxt-link
+      <nuxt-link to="/main/coopenspace" class="af">Open Space Cooperation</nuxt-link
       >. <br /><br /><br />
     </p>
   </div>

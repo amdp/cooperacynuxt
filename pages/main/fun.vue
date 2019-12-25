@@ -1,14 +1,19 @@
 <template>
   <div class="page-container">
-    <br /><img class="page-header" src="~/assets/image/page/banners/fun.png" />
+    <br /><img
+      class="page-header"
+      src="~/assets/image/page/banners/main/fun.png"
+    />
     <br />
     <p class="subheading diversity center space margin">FUN</p>
     <p class="base">
       Fun and games make us feel together, especially if the gameplay is not too
       competitive. Fun enhances the bright side of the artistic zest and the
       power of creative innovation. Art brings our
-      <nuxt-link to="/cooperation#diversity" class="ad">diversity</nuxt-link> to
-      become beauty. Art, fun, games and innovation represent the generative
+      <nuxt-link to="/main/cooperation#diversity" class="ad"
+        >diversity</nuxt-link
+      >
+      to become beauty. Art, fun, games and innovation represent the generative
       side of our lives. This page is dedicated to fun, creativity and
       cooperation.
     </p>
@@ -167,7 +172,7 @@
       gameplay, or structured with an ecosystemic thinking approach. To learn
       more about the possibilities of integrating cooperation in your dynamics
       or your narratives, have a look at our
-      <nuxt-link to="/cooperation" class="au">learning area.</nuxt-link>
+      <nuxt-link to="/main/cooperation" class="au">learning area.</nuxt-link>
     </p>
     <br /><br /><br />
   </div>

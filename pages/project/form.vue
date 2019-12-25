@@ -236,7 +236,8 @@
             <i>
               By clicking the GO! button you declare you read and are aware of
               the
-              <nuxt-link to="/terms" class="au">terms and conditions</nuxt-link
+              <nuxt-link to="/main/terms" class="au"
+                >terms and conditions</nuxt-link
               >, you are not damaging the ecosystem or infringing anyone’s right
               or copyright with this idea concept, visuals, needed actions,
               financing and personal relations, and mostly important you are

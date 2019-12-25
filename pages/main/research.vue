@@ -2,7 +2,7 @@
   <div class="page-container">
     <br /><img
       class="page-header"
-      src="~/assets/image/page/banners/research.png"
+      src="~/assets/image/page/banners/main/research.png"
     />
     <p class="subheading understanding center space margin">
       COOPERACY RESEARCH ASSOCIATION
@@ -13,14 +13,17 @@
       2014.<br /><br />
 
       The research investigation questions what is
-      <nuxt-link to="/cooperation" class="ae">Cooperation</nuxt-link> and what
-      are its conditions, in order to
-      <nuxt-link to="/cooperation#understanding" class="au"
+      <nuxt-link to="/main/cooperation" class="ae">Cooperation</nuxt-link> and
+      what are its conditions, in order to
+      <nuxt-link to="/main/cooperation#understanding" class="au"
         >understand</nuxt-link
       >
       how to
-      <nuxt-link to="/cooperation#care" class="ac">coordinate</nuxt-link> human
-      <nuxt-link to="/cooperation#diversity" class="ad">diversity</nuxt-link>
+      <nuxt-link to="/main/cooperation#care" class="ac">coordinate</nuxt-link>
+      human
+      <nuxt-link to="/main/cooperation#diversity" class="ad"
+        >diversity</nuxt-link
+      >
       towards mutual enjoyment and better ecosystemic awareness.<br />
 
       During 2014, a group of 7 independent researchers investigated from
@@ -28,9 +31,9 @@
       developed by Alessandro Merletti De Palo based on an extensive literature
       review about Cooperation and its many different frameworks.<br /><br />
       The model, based on interdisciplinary systemic
-      <nuxt-link to="/coscience" class="au">approach</nuxt-link>, was confirmed
-      by the investigations results, and the subsequent paper was accepted at
-      the M.I.T. 2015
+      <nuxt-link to="/main/coscience" class="au">approach</nuxt-link>, was
+      confirmed by the investigations results, and the subsequent paper was
+      accepted at the M.I.T. 2015
       <a href="http://cci.mit.edu/" class="au">Collective Intelligence</a>
       Conference in Santa Clara, organized by the
       <a class="au" href="https://lsa.umich.edu/cscs"
@@ -83,9 +86,9 @@
       <a class="au" href="https://copenhagenletter.org/">Copenhagen Letter</a
       >.<br /><br />
       You can browse our
-      <nuxt-link to="/articles" class="au">project articles</nuxt-link>,
-      <nuxt-link to="/streams" class="au">research streams</nuxt-link> or
-      academic <nuxt-link to="/network" class="au">network</nuxt-link>.
+      <nuxt-link to="/main/articles" class="au">project articles</nuxt-link>,
+      <nuxt-link to="/main/streams" class="au">research streams</nuxt-link> or
+      academic <nuxt-link to="/main/network" class="au">network</nuxt-link>.
     </p>
   </div>
 </template>

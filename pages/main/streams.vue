@@ -2,7 +2,7 @@
   <div class="page-container">
     <br /><img
       class="page-header"
-      src="~/assets/image/page/banners/streams.png"
+      src="~/assets/image/page/banners/main/streams.png"
     />
 
     <p class="subheading understanding space center margin">RESEARCH STREAMS</p>

@@ -189,7 +189,7 @@ export default {
           defer: true
         },
         {
-          src: 'https://apis.google.com/js/platform.js',
+          src: 'https://apis.google.com/js/main/platform.js',
           async: true,
           defer: true
         },

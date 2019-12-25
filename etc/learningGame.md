@@ -14,7 +14,7 @@ so that you know your learning curve
 and keep track of your achievements.
 
 You can read about the platform here:
-https://cooperacy.org/platform
+https://cooperacy.org/main/platform
 
 **The official discussion channel is:**
 https://discord.gg/sKb5Ju

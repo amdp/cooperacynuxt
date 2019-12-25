@@ -30,7 +30,7 @@
         <p class="t16 space mb-2 text-center pl-4 pr-4">
           <em><strong>WE USE COOKIES</strong></em
           >: BY VISITING THIS SITE YOU ABIDE TO OUR
-          <nuxt-link class="ai" to="/terms">
+          <nuxt-link class="ai" to="/main/terms">
             PRIVACY POLICY AND AGREEMENTS</nuxt-link
           >
         </p>

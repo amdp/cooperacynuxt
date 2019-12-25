@@ -2,7 +2,7 @@
   <div class="page-container">
     <img
       class="page-header col-md-8"
-      src="~/assets/image/page/banners/platform.png"
+      src="~/assets/image/page/banners/main/platform.png"
     />
 
     <p class="subheading transparency center space">IMAGINE</p>
@@ -28,13 +28,17 @@
       The platform distributes the common money and resources to the ideas
       according to how much they are desired by the participants. Expressing
       their
-      <nuxt-link to="/cooperation#diversity" class="ae">preferences</nuxt-link>
+      <nuxt-link to="/main/cooperation#diversity" class="ae"
+        >preferences</nuxt-link
+      >
       through
-      <nuxt-link to="/cooperation#diversity" class="ae">transparent</nuxt-link>
+      <nuxt-link to="/main/cooperation#diversity" class="ae"
+        >transparent</nuxt-link
+      >
       votes, the common collected money goes
-      <nuxt-link to="/integration" class="ae">proportionally</nuxt-link> to the
-      ideas according to how many votes they received. Keeping it simple: people
-      propose <i>ideas</i>, <i>votes</i> allocate the common money.
+      <nuxt-link to="/main/integration" class="ae">proportionally</nuxt-link> to
+      the ideas according to how many votes they received. Keeping it simple:
+      people propose <i>ideas</i>, <i>votes</i> allocate the common money.
     </p>
 
     <p class="subheading center space transparency">REDISTRIBUTING PROFITS</p>
@@ -42,7 +46,9 @@
       Every idea is co-owned, so when it produces wealth, its profits go back to
       the platform collected money, in order to fund other ideas and to create a
       virtuous circle that slowly generates resources for
-      <nuxt-link to="/cooperation#equivalence" class="ae">everyone</nuxt-link>.
+      <nuxt-link to="/main/cooperation#equivalence" class="ae"
+        >everyone</nuxt-link
+      >.
     </p>
 
     <p class="subheading center space equivalence margin">
@@ -50,7 +56,7 @@
     </p>
     <p class="base">
       An artificial intelligence will learn from all the
-      <nuxt-link to="/research" class="au">data</nuxt-link> coming from the
+      <nuxt-link to="/main/research" class="au">data</nuxt-link> coming from the
       platform and suggest, in the long run, best practices in order to help the
       people to realise their ideas. Moreover, the participants can communicate
       their happiness, so that the "deep learning ecosystem" will base its
@@ -61,7 +67,7 @@
     <p class="base">
       <i
         >For more technical information about the platform, see its
-        <nuxt-link to="/whitepaper" class="au">white paper</nuxt-link>.</i
+        <nuxt-link to="/main/whitepaper" class="au">white paper</nuxt-link>.</i
       >
     </p>
 

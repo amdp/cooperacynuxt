@@ -2,7 +2,7 @@
   <div class="page-container">
     <br /><img
       class="page-header"
-      src="~/assets/image/page/banners/articles.png"
+      src="~/assets/image/page/banners/main/articles.png"
     />
 
     <p class="subheading understanding space center margin">PROJECT ARTICLES</p>
@@ -30,8 +30,8 @@
       Project page:
       <a
         class="au"
-        href="http://www.researchgate.net/project/Cooperation-Science"
-        >www.researchgate.net/project/Cooperation-Science</a
+        href="http://www.researchgate.net/project/main/cooperation-Science"
+        >www.researchgate.net/project/main/cooperation-Science</a
       ><br /><br />
       Our investigation is therefore currently being described qualitatively and
       quantitatively at a scientific level, never the less we cooperate with

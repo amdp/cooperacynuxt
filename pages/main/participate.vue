@@ -2,7 +2,7 @@
   <div class="page-container">
     <br /><img
       class="page-header"
-      src="~/assets/image/page/banners/participate.png"
+      src="~/assets/image/page/banners/main/participate.png"
     />
 
     <p class="base">
@@ -12,7 +12,7 @@
     <p class="subheading equivalence center space margin">THE PLATFORM</p>
     <p class="base">
       Our main effort is to finish the development of our ideas
-      <nuxt-link to="/platform" class="ae">platform</nuxt-link>. We have
+      <nuxt-link to="/main/platform" class="ae">platform</nuxt-link>. We have
       trialled some activities which have created surplus and this has been
       returned to the Cooperacy pool. We invite members to propose further ideas
       that will stimulate sustainable surplus growth. Although we have already
@@ -69,11 +69,11 @@
     <p class="base">
       Acroyoga merges acrobatic movements with simple yoga positions. It is
       based on the
-      <nuxt-link to="/cooperation" class="ae">cooperation</nuxt-link> and
-      <nuxt-link to="/cooperation#trust" class="at">trust</nuxt-link> between
-      two people and one supervisor. The cooperation in this case is based on
-      how the bodies balances depend on the reciprocal
-      <nuxt-link to="/cooperation#understanding" class="au"
+      <nuxt-link to="/main/cooperation" class="ae">cooperation</nuxt-link> and
+      <nuxt-link to="/main/cooperation#trust" class="at">trust</nuxt-link>
+      between two people and one supervisor. The cooperation in this case is
+      based on how the bodies balances depend on the reciprocal
+      <nuxt-link to="/main/cooperation#understanding" class="au"
         >understanding</nuxt-link
       >
       of the participants. It is an activity that highlights the values of
@@ -93,7 +93,8 @@
     <p class="base">
       This project was led by Igor Carravetta and Carola Ravaschino in 2016.
       During one of the first Cooperacy meetings, we were discussing how to test
-      the <nuxt-link to="/governance" class="af">voting system</nuxt-link> and
+      the
+      <nuxt-link to="/main/governance" class="af">voting system</nuxt-link> and
       do something together. The group voted and we funded and helped the weekly
       course from October to March. It has been an amazing experience. Igor and
       Carola are happy to start over, if you want just drop a
@@ -160,7 +161,7 @@
       Alessandro went back home, he kept on thinking about it. How do you call
       that special, enjoyable energy that you feel with your friends even when
       you do something useful? There was no specific emotion, but Alessandro
-      thought about the word "<nuxt-link to="/cooperation" class="ae">
+      thought about the word "<nuxt-link to="/main/cooperation" class="ae">
         cooperation </nuxt-link
       >". What is cooperation? Can we bring that emotion of doing things
       together with enjoyment at a worldwide level? He wanted to know more, but
@@ -185,8 +186,8 @@
       great with Cooperation Science! Our model was at two conferences by MIT in
       the US, and in 2017 we presented in Macao our international Cooperation
       Context Index by countries. Have a look at the
-      <nuxt-link to="/coscience" class="au">scientific</nuxt-link> part of our
-      website and, if you are an academic, please
+      <nuxt-link to="/main/coscience" class="au">scientific</nuxt-link> part of
+      our website and, if you are an academic, please
       <nuxt-link to="/login" class="at">join</nuxt-link> Cooperacy and our team
       of researchers!
     </p>

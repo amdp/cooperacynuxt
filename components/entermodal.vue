@@ -5,7 +5,7 @@
     <p v-html="journey[message].a"></p>
     <b-link class="finger noline" @click="move()">&lt;</b-link>
     <nuxt-link to="/login">JOIN</nuxt-link>
-    <nuxt-link to="/aboutyou">DISCOVER MORE</nuxt-link>
+    <nuxt-link to="/main/aboutyou">DISCOVER MORE</nuxt-link>
   </b-modal>
 
   <!-- People should see the projects but not vote!! -->

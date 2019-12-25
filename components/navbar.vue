@@ -48,45 +48,55 @@
             id="project"
             v-if="navState == 'project'"
           >
-            <nuxt-link class="menu-item" to="/aboutyou">ABOUT YOU</nuxt-link>
-            <nuxt-link class="menu-item" to="/aboutus">ABOUT US</nuxt-link>
-            <nuxt-link class="menu-item" to="/platform">THE PLATFORM</nuxt-link>
-            <nuxt-link class="menu-item" to="/governance">GOVERNANCE</nuxt-link>
+            <nuxt-link class="menu-item" to="/main/aboutyou"
+              >ABOUT YOU</nuxt-link
+            >
+            <nuxt-link class="menu-item" to="/main/aboutus">ABOUT US</nuxt-link>
+            <nuxt-link class="menu-item" to="/main/platform"
+              >THE PLATFORM</nuxt-link
+            >
+            <nuxt-link class="menu-item" to="/main/governance"
+              >GOVERNANCE</nuxt-link
+            >
           </div>
           <div
             class="navbar-links text-center"
             id="corporate"
             v-if="navState == 'corporate'"
           >
-            <nuxt-link class="menu-item" to="/corporate"
+            <nuxt-link class="menu-item" to="/main/corporate"
               >CORPORATE WORLD</nuxt-link
             >
-            <nuxt-link class="menu-item" to="/overview"
+            <nuxt-link class="menu-item" to="/main/overview"
               >MEASURING COOPERATION</nuxt-link
             >
-            <nuxt-link class="menu-item" to="/coopenspace"
+            <nuxt-link class="menu-item" to="/main/coopenspace"
               >CO-OPEN SPACE</nuxt-link
             >
-            <nuxt-link class="menu-item" to="/cohackathon"
+            <nuxt-link class="menu-item" to="/main/cohackathon"
               >CO-HACKATHON</nuxt-link
             >
-            <nuxt-link class="menu-item" to="/workshops">WORKSHOPS</nuxt-link>
+            <nuxt-link class="menu-item" to="/main/workshops"
+              >WORKSHOPS</nuxt-link
+            >
           </div>
           <div
             class="navbar-links text-center"
             id="science"
             v-if="navState == 'science'"
           >
-            <nuxt-link class="menu-item" to="/cooperation"
+            <nuxt-link class="menu-item" to="/main/cooperation"
               >COOPERATION</nuxt-link
             >
-            <nuxt-link class="menu-item" to="/integration"
+            <nuxt-link class="menu-item" to="/main/integration"
               >INTEGRATION</nuxt-link
             >
             <nuxt-link class="menu-item" to="/cci">
               COOPERATION CONTEXT INDEX
             </nuxt-link>
-            <nuxt-link class="menu-item" to="/research">RESEARCH</nuxt-link>
+            <nuxt-link class="menu-item" to="/main/research"
+              >RESEARCH</nuxt-link
+            >
             <nuxt-link class="menu-item" to="/news">NEWS</nuxt-link>
           </div>
         </div>
@@ -145,16 +155,16 @@
             v-if="navState == 'project'"
             @click="hideNav()"
           >
-            <nuxt-link class="mobile-menu-item" to="/aboutyou">
+            <nuxt-link class="mobile-menu-item" to="/main/aboutyou">
               ABOUT YOU
             </nuxt-link>
-            <nuxt-link class="mobile-menu-item" to="/aboutus"
+            <nuxt-link class="mobile-menu-item" to="/main/aboutus"
               >ABOUT US</nuxt-link
             >
-            <nuxt-link class="mobile-menu-item" to="/platform">
+            <nuxt-link class="mobile-menu-item" to="/main/platform">
               THE PLATFORM
             </nuxt-link>
-            <nuxt-link class="mobile-menu-item" to="/governance">
+            <nuxt-link class="mobile-menu-item" to="/main/governance">
               GOVERNANCE
             </nuxt-link>
           </div>
@@ -171,19 +181,19 @@
             v-if="navState == 'corporate'"
             @click="hideNav()"
           >
-            <nuxt-link class="mobile-menu-item" to="/corporate">
+            <nuxt-link class="mobile-menu-item" to="/main/corporate">
               CORPORATE WORLD
             </nuxt-link>
-            <nuxt-link class="mobile-menu-item" to="/overview">
+            <nuxt-link class="mobile-menu-item" to="/main/overview">
               MEASURING COOPERATION
             </nuxt-link>
-            <nuxt-link class="mobile-menu-item" to="/coopenspace">
+            <nuxt-link class="mobile-menu-item" to="/main/coopenspace">
               CO-OPEN SPACE
             </nuxt-link>
-            <nuxt-link class="mobile-menu-item" to="/cohackathon">
+            <nuxt-link class="mobile-menu-item" to="/main/cohackathon">
               CO-HACKATHON
             </nuxt-link>
-            <nuxt-link class="mobile-menu-item" to="/workshops">
+            <nuxt-link class="mobile-menu-item" to="/main/workshops">
               WORKSHOPS
             </nuxt-link>
           </div>
@@ -200,16 +210,16 @@
             v-if="navState == 'science'"
             @click="hideNav()"
           >
-            <nuxt-link class="mobile-menu-item" to="/cooperation">
+            <nuxt-link class="mobile-menu-item" to="/main/cooperation">
               COOPERATION
             </nuxt-link>
-            <nuxt-link class="mobile-menu-item" to="/integration">
+            <nuxt-link class="mobile-menu-item" to="/main/integration">
               INTEGRATION
             </nuxt-link>
             <nuxt-link class="mobile-menu-item" to="/cci">
               COOPERATION CONTEXT INDEX
             </nuxt-link>
-            <nuxt-link class="mobile-menu-item" to="/research"
+            <nuxt-link class="mobile-menu-item" to="/main/research"
               >RESEARCH</nuxt-link
             >
             <nuxt-link class="mobile-menu-item" to="/news">NEWS</nuxt-link>
@@ -255,14 +265,14 @@ export default {
     }
   },
   methods: {
-    resetNavState: function() {
+    resetNavState: function () {
       this.navState = null
     },
-    hideNav: function() {
+    hideNav: function () {
       this.isDropdownVisible = false
       this.resetNavState()
     },
-    toggleNav: function() {
+    toggleNav: function () {
       this.isDropdownVisible = !this.isDropdownVisible
       this.resetNavState()
     }

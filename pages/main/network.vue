@@ -2,7 +2,7 @@
   <div class="page-container">
     <br /><img
       class="page-header"
-      src="~/assets/image/page/banners/network.png"
+      src="~/assets/image/page/banners/main/network.png"
     />
 
     <p class="subheading understanding center space margin">NETWORK</p>

@@ -2,13 +2,13 @@
   <div class="page-container">
     <br /><img
       class="page-header"
-      src="~/assets/image/page/banners/governance.png"
+      src="~/assets/image/page/banners/main/governance.png"
     />
 
     <br /><br />
     <p class="base">
       The Cooperacy governance is the way
-      <nuxt-link to="/participate" class="ae">participants</nuxt-link> take
+      <nuxt-link to="/main/participate" class="ae">participants</nuxt-link> take
       decisions in Cooperacy, according to cooperation science insights.
     </p>
     <br /><br />
@@ -19,8 +19,8 @@
       The Cooperacy governance is made of projects, that can have upprojects or
       subprojects. The main project is called Cooperacy. Every project is based
       on the most simple form of
-      <nuxt-link to="/cooperation" class="ae">cooperation</nuxt-link>: two or more people
-      doing something together. <br />
+      <nuxt-link to="/main/cooperation" class="ae">cooperation</nuxt-link>: two
+      or more people doing something together. <br />
       It is advised every project should have maximum 148 people and two
       coordinators. A single coordinator is considered provisory, while projects
       may also decide to elect everyone as coordinator to experiment diffuse
@@ -44,14 +44,17 @@
       Participants may also oppose the coordinators decisions. If the opposing
       participants are at least two<SUP>1</SUP>, the coordinators should
       proportionally and creatively
-      <nuxt-link to="/integration" class="ad">integrate</nuxt-link> the opposition according
-      to the seven <nuxt-link to="/integration#solutions" class="ae">solutions</nuxt-link> or
-      alternatively start a voting phase.<br /><br />
+      <nuxt-link to="/main/integration" class="ad">integrate</nuxt-link> the
+      opposition according to the seven
+      <nuxt-link to="/main/integration#solutions" class="ae"
+        >solutions</nuxt-link
+      >
+      or alternatively start a voting phase.<br /><br />
 
       If just a single participants proposes or opposes, but nobody secondes,
       the single instance is recorded or, when possible, but not always,
       proportionally and creatively
-      <nuxt-link to="/integration" class="ad">integrated</nuxt-link>.<br />
+      <nuxt-link to="/main/integration" class="ad">integrated</nuxt-link>.<br />
 
       <br /><img
         style="width: 100%;"
@@ -74,8 +77,10 @@
       they want. If there is not a clear orientation<SUP>2</SUP> after the
       voting phase, the participants leave their choice to the coordinators.
       They may also choose with the coordinators which one of the seven possible
-      <nuxt-link to="/integration#solutions" class="af">solutions</nuxt-link> to apply for the realization
-      of the project’s will:<br /><br />
+      <nuxt-link to="/main/integration#solutions" class="af"
+        >solutions</nuxt-link
+      >
+      to apply for the realization of the project’s will:<br /><br />
       - Turns or experimentations, starting from the most voted<br />
       - Give a definite time to test the previous situation and then vote
       again<br />
@@ -87,7 +92,9 @@
       - Evaluate things through data, common values or objective criterias and
       vote again<br />
       - Combine using the
-      <nuxt-link to="/integration" class="af">proportional creative integration</nuxt-link>
+      <nuxt-link to="/main/integration" class="af"
+        >proportional creative integration</nuxt-link
+      >
       the different solutions or give people -or the same solutions- specific
       roles<br />
     </p>
@@ -103,7 +110,9 @@
       2: VOTING IS INFORMATIVE The voting results are indicators of the
       participants will, they do not explicitly determine a final decision,
       because winning and losing the voting process is substituted by
-      <nuxt-link to="/integration" class="af">proportional creative integration</nuxt-link>.
+      <nuxt-link to="/main/integration" class="af"
+        >proportional creative integration</nuxt-link
+      >.
     </p>
   </div>
 </template>

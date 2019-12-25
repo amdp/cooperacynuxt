@@ -2,7 +2,7 @@
   <div class="page-container">
     <br /><img
       class="page-header"
-      src="~/assets/image/page/banners/cooperation.png"
+      src="~/assets/image/page/banners/main/cooperation.png"
     />
 
     <br />
@@ -18,13 +18,16 @@
       circumstance from where different individual goals, or sometimes very
       similar desires, are fulfilled.<br /><br />
       According to our
-      <nuxt-link to="/articles" class="au">scientific model</nuxt-link>, the
-      social ecosystem in which cooperation may emerge should meet seven
+      <nuxt-link to="/main/articles" class="au">scientific model</nuxt-link>,
+      the social ecosystem in which cooperation may emerge should meet seven
       conditions.
     </p>
 
     <br />
-    <img class="page-header" src="~/assets/image/page/banners/diversity.png" />
+    <img
+      class="page-header"
+      src="~/assets/image/page/banners/main/diversity.png"
+    />
     <br />
 
     <p class="subheading diversity center space margin">WE'RE ALL DIFFERENT</p>
@@ -37,9 +40,9 @@
       lose beauty and innovation. Standardised jobs or constrained life
       dynamics, like workers in the industrial revolution factories, inhibit the
       emergence of cooperation. Having
-      <nuxt-link to="/fun" class="ad">fun</nuxt-link>, playing games and telling
-      different, intimate stories helps the emergence and the possibility of
-      cooperation.
+      <nuxt-link to="/main/fun" class="ad">fun</nuxt-link>, playing games and
+      telling different, intimate stories helps the emergence and the
+      possibility of cooperation.
     </p>
 
     <p class="subheading diversity center space margin">
@@ -50,9 +53,9 @@
       Anthropologically mankind reached high levels of survival and wealth also
       thanks to the natural tendency to pursue and develop different personal
       skills, generating the possibility to have more
-      <nuxt-link to="/integration#diversity" class="ad">roles</nuxt-link> and
-      functions for every participant in the community. Probably we are the most
-      diverse and role-differentiated creatures on earth.
+      <nuxt-link to="/main/integration#diversity" class="ad">roles</nuxt-link>
+      and functions for every participant in the community. Probably we are the
+      most diverse and role-differentiated creatures on earth.
     </p>
 
     <p class="subheading diversity center space margin">PERSONALITIES</p>
@@ -60,16 +63,17 @@
       The acknowledgement of different preferences, personalities and roles in
       the community is needed to create a good climate: when individuals have
       their personal identity
-      <nuxt-link to="/cooperation#care" class="ac">respected</nuxt-link> by the
-      group they accomplish great common results leading to
-      <nuxt-link to="/platform" class="ae">community-wide advantages</nuxt-link
+      <nuxt-link to="/main/cooperation#care" class="ac">respected</nuxt-link> by
+      the group they accomplish great common results leading to
+      <nuxt-link to="/main/platform" class="ae"
+        >community-wide advantages</nuxt-link
       >.
     </p>
 
     <br />
     <img
       class="page-header"
-      src="~/assets/image/page/banners/understanding.png"
+      src="~/assets/image/page/banners/main/understanding.png"
     />
     <br />
 
@@ -80,7 +84,7 @@
       When diversity brings different linguistic, behavioural, and cultural
       codes, we need the presence of common background that can act as a bridge
       to allow cooperation to emerge through
-      <nuxt-link to="/integration" class="au">integration</nuxt-link>.
+      <nuxt-link to="/main/integration" class="au">integration</nuxt-link>.
     </p>
 
     <p class="subheading understanding center space margin">
@@ -91,30 +95,35 @@
       occurs in groups when there is very low information flow, social and
       cultural diversities with lack of acceptance of the differences, usually
       forcing them into orthodoxy or uniformity. We propose different
-      <nuxt-link to="/integration#solutions" class="ad">solutions</nuxt-link> to
-      a state of conflict, that may arise due to misunderstanding even between
-      people who appreciate one another.
+      <nuxt-link to="/main/integration#solutions" class="ad"
+        >solutions</nuxt-link
+      >
+      to a state of conflict, that may arise due to misunderstanding even
+      between people who appreciate one another.
     </p>
 
     <p class="subheading understanding center space margin">COMMON CODES</p>
     <p class="base">
       Learning the beauty of a different way to interpret the reality and
       enjoying the pleasure of the difference is a great cooperation drive.
-      <nuxt-link to="/integration" class="ad">Integrating</nuxt-link> and
+      <nuxt-link to="/main/integration" class="ad">Integrating</nuxt-link> and
       explaining languages and cultures, personalities and habits, points of
       view and interpretations brings more understanding. While religions,
       traditions and languages may be different, values like love,
-      <nuxt-link to="/cooperation#care" class="ac">respect</nuxt-link>, safety
-      or concepts like friendship, birth and parenthood can be strong common
-      codes upon which we can build cross-diversity understanding. Enhancing
-      empathy, the special common code of feelings, we can generate deep
-      comprehension, leading everyone feel accepted and part of the community.
-      All these concepts help cooperation to emerge together with mutual
-      enjoyment.
+      <nuxt-link to="/main/cooperation#care" class="ac">respect</nuxt-link>,
+      safety or concepts like friendship, birth and parenthood can be strong
+      common codes upon which we can build cross-diversity understanding.
+      Enhancing empathy, the special common code of feelings, we can generate
+      deep comprehension, leading everyone feel accepted and part of the
+      community. All these concepts help cooperation to emerge together with
+      mutual enjoyment.
     </p>
 
     <br />
-    <img class="page-header" src="~/assets/image/page/banners/freedom.png" />
+    <img
+      class="page-header"
+      src="~/assets/image/page/banners/main/freedom.png"
+    />
     <br />
 
     <p class="subheading freedom center space margin">CHOICES</p>
@@ -125,7 +134,9 @@
       choice in a generic collaborative interaction make it impossible to make
       it become a cooperation: there is no mutual enjoyment. To solve these kind
       of contextual issues, a good personal space or even
-      <nuxt-link to="//integration#freedom" class="af">separation</nuxt-link>
+      <nuxt-link to="//main/integration#freedom" class="af"
+        >separation</nuxt-link
+      >
       are needed, even in a nice cooperation.
     </p>
 
@@ -139,7 +150,7 @@
       recognise ourselves, our preferences and our personal story in the choices
       we make during our lifetime. When cooperating, it is necessary to learn
       how to
-      <nuxt-link to="/integration" class="ad"
+      <nuxt-link to="/main/integration" class="ad"
         >proportionally and creatively integrate</nuxt-link
       >
       to balance freedom, care and equivalence.
@@ -157,7 +168,7 @@
     <br />
     <img
       class="page-header"
-      src="~/assets/image/page/banners/transparency.png"
+      src="~/assets/image/page/banners/main/transparency.png"
     />
     <br />
 
@@ -170,7 +181,7 @@
       it is not our personal interpretation of truth that we want the other to
       have access to. Usually, instead of communicating the truth, it is better
       to communicate the
-      <nuxt-link to="/integration#transparency" class="ai"
+      <nuxt-link to="/main/integration#transparency" class="ai"
         >contextual point of view</nuxt-link
       >
       with which we see things now or made a choice before.
@@ -193,12 +204,12 @@
       seems hard, but it is one of the ways in which you can change the world
       and your same personal life. The right social ecosystem usually has an
       embedded
-      <nuxt-link to="/governance" class="ai">governance</nuxt-link> which
+      <nuxt-link to="/main/governance" class="ai">governance</nuxt-link> which
       supports transparency and truth acceptance.
     </p>
 
     <br />
-    <img class="page-header" src="~/assets/image/page/banners/care.png" />
+    <img class="page-header" src="~/assets/image/page/banners/main/care.png" />
     <br />
 
     <p class="subheading care center space margin">COORDINATION</p>
@@ -209,10 +220,10 @@
       facilities, when our families fulfill some of our needs or desires, when
       we hug each other, we receive care. Care means coordinating something
       needed by you with something needed by others. In our page
-      <nuxt-link to="/aboutyou" class="ac">about You</nuxt-link>, we exposed
-      what you may find in Cooperacy that meets your personality, in
-      <nuxt-link to="/aboutus" class="ai">about us</nuxt-link> instead what we
-      do and could appreciate from you, in a transparent way.
+      <nuxt-link to="/main/aboutyou" class="ac">about You</nuxt-link>, we
+      exposed what you may find in Cooperacy that meets your personality, in
+      <nuxt-link to="/main/aboutus" class="ai">about us</nuxt-link> instead what
+      we do and could appreciate from you, in a transparent way.
     </p>
     <p class="subheading care center space margin">EVERYONE AROUND YOU</p>
     <p class="base">
@@ -220,7 +231,7 @@
       mutual enjoyment. Usually care is not perceived as something fun or
       productive, but everyone of us needs and likes to receive attention. When
       respect and esteem are shared amongst everyone, productivity levels raise
-      and even <nuxt-link to="/fun" class="ad">fun</nuxt-link> is better.
+      and even <nuxt-link to="/main/fun" class="ad">fun</nuxt-link> is better.
     </p>
     <p class="subheading care center space margin">ECOSYSTEMS</p>
     <p class="base">
@@ -235,11 +246,11 @@
       Humans, animals, plants, mountains, deserts and oceans: the whole planet
       is connected and every part of it is needed like the organs of your body.
       We believe the whole ecosystem is a
-      <nuxt-link to="/aboutus" class="ac">living being</nuxt-link>.
+      <nuxt-link to="/main/aboutus" class="ac">living being</nuxt-link>.
     </p>
 
     <br />
-    <img class="page-header" src="~/assets/image/page/banners/trust.png" />
+    <img class="page-header" src="~/assets/image/page/banners/main/trust.png" />
     <br />
 
     <p class="subheading trust center space margin">WHAT IS TRUST?</p>
@@ -248,8 +259,8 @@
       developed a powerful evolutionary tool: trust. In neuroscience, trust is
       represented by the probability, based on similar or past events, that an
       interaction will be pleasurable in its results, called rewards. Rewards
-      can be <nuxt-link to="/aboutyou" class="at">intrinsic</nuxt-link>, like
-      something you personally like to do, or extrinsic, like when you like
+      can be <nuxt-link to="/main/aboutyou" class="at">intrinsic</nuxt-link>,
+      like something you personally like to do, or extrinsic, like when you like
       money just because <i>then</i> using money you will do something you like.
       When your rewards are mainly linear and extrinsic, that is, external to
       your self identity, you start to lose your native personality. You may
@@ -275,8 +286,8 @@
       reliable person and I can be sure of what we can agree on. These two kinds
       of trust are connected with two special kinds of rewards: real and
       relational benefits. Our idea of a cooperation
-      <nuxt-link to="/platform" class="at">platform</nuxt-link> tries to address
-      trust and reliability balancing both levels of benefits.
+      <nuxt-link to="/main/platform" class="at">platform</nuxt-link> tries to
+      address trust and reliability balancing both levels of benefits.
     </p>
 
     <p class="subheading trust center space margin">BETRAYAL AND FEAR</p>
@@ -294,14 +305,14 @@
       network. Trust is very important, because when people are afraid or
       mistrust others, conflicts may arise quite often. As you can imagine,
       trust depends on the whole social ecosystem balance and
-      <nuxt-link to="/governance" class="af">governance</nuxt-link> for allowing
-      the emergence of cooperation and mutual enjoyment.
+      <nuxt-link to="/main/governance" class="af">governance</nuxt-link> for
+      allowing the emergence of cooperation and mutual enjoyment.
     </p>
 
     <br />
     <img
       class="page-header"
-      src="~/assets/image/page/banners/equivalence.png"
+      src="~/assets/image/page/banners/main/equivalence.png"
     />
     <br />
 
@@ -333,7 +344,7 @@
       which you're selfish while being altruist -and feel happy about it.<br />
       Cooperation is complex: it is way more than the simple idea of giving or
       getting and emerges when the two actions find their
-      <nuxt-link to="/integration" class="ae">integration</nuxt-link>.
+      <nuxt-link to="/main/integration" class="ae">integration</nuxt-link>.
     </p>
 
     <p class="subheading equivalence center space margin">
@@ -348,7 +359,7 @@
       good, it is usually called a win-win, but it is not enough. Cooperation is
       not a mere goods and services exchange, but a pleasant relational exchange
       too. These are the base concepts we rely on in our
-      <nuxt-link to="/platform" class="ae">platform</nuxt-link>.<br />
+      <nuxt-link to="/main/platform" class="ae">platform</nuxt-link>.<br />
       Cooperation emerges -and it has its evidence- when in a social ecosystem
       there are good benefits and good relations for everyone.<br /><br /><br />
     </p>
@@ -356,16 +367,19 @@
     <p class="base">
       To support your social context to become a social ecosystem, learn about
       the
-      <nuxt-link to="/integration" class="ad"
+      <nuxt-link to="/main/integration" class="ad"
         >proportional creative integration</nuxt-link
       >
       and the different
-      <nuxt-link to="/integration#solutions" class="ad">solutions</nuxt-link>
+      <nuxt-link to="/main/integration#solutions" class="ad"
+        >solutions</nuxt-link
+      >
       that can resolve eventual contextual contrasts, or join
       <nuxt-link to="/login" class="ae">Cooperacy</nuxt-link> and
-      <nuxt-link to="/participate" class="ae">participate</nuxt-link> in our
-      activities, our live webinars or our efforts in spreading the knowledge of
-      <nuxt-link to="/spread" class="ae">cooperation</nuxt-link>.
+      <nuxt-link to="/main/participate" class="ae">participate</nuxt-link> in
+      our activities, our live webinars or our efforts in spreading the
+      knowledge of
+      <nuxt-link to="/main/spread" class="ae">cooperation</nuxt-link>.
     </p>
   </div>
 </template>

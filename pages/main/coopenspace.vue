@@ -2,7 +2,7 @@
   <div class="page-container">
     <br /><img
       class="page-header"
-      src="~/assets/image/page/banners/coopenspace.png"
+      src="~/assets/image/page/banners/main/coopenspace.png"
     />
 
     <p class="subheading freedom center">
@@ -11,8 +11,8 @@
     <p class="base">
       The Open Space Cooperation is used by Cooperacy for enabling system
       thinking and complex approach in meetings. It merges
-      <nuxt-link to="/cooperation" class="af">Cooperation</nuxt-link>
-      <nuxt-link to="/research" class="af">Science</nuxt-link>, Open Space
+      <nuxt-link to="/main/cooperation" class="af">Cooperation</nuxt-link>
+      <nuxt-link to="/main/research" class="af">Science</nuxt-link>, Open Space
       Technology and the Journey Narratives. It can be organised with a dozens
       of participants till thousands of people, and it is based on three phases.
     </p>
@@ -28,13 +28,13 @@
     <p class="base">
       In a participants circle, a facilitator asks people to listen to their
       feelings and to express any concerns to the
-      <nuxt-link to="/cooperation#care" class="ac">context</nuxt-link>
+      <nuxt-link to="/main/cooperation#care" class="ac">context</nuxt-link>
       surrounding them. The facilitator also explains the Journey Narrative to
       the circle: the present situation is shown with all the
-      <nuxt-link to="/cooperation#freedom" class="af">limitations</nuxt-link>,
+      <nuxt-link to="/main/cooperation#freedom" class="af">limitations</nuxt-link>,
       the efforts done so far and the positive outcomes. The meeting continues
       with describing what would have happened in the future if the
-      <nuxt-link to="/cooperation#diversity" class="ad">preferences</nuxt-link>
+      <nuxt-link to="/main/cooperation#diversity" class="ad">preferences</nuxt-link>
       and desires of the participants would come true. Every desire is turned
       into a proposal. This leads to the ideas ecosystem.
     </p>
@@ -44,7 +44,7 @@
     <p class="base">
       The people start going to the center of the circle in order to express
       their ideas or to share
-      <nuxt-link to="/cooperation#transparency" class="ai"
+      <nuxt-link to="/main/cooperation#transparency" class="ai"
         >informations</nuxt-link
       >
       by topics. In case of a two-days event, an informative day comes before a
@@ -73,20 +73,20 @@
     <p class="subheading freedom center">III - THE FINAL CIRCLE</p>
     <p class="base">
       New
-      <nuxt-link to="/cooperation#understanding" class="au"
+      <nuxt-link to="/main/cooperation#understanding" class="au"
         >awareness</nuxt-link
       >
       is spread through the participants. The ideas proposed are listed and
       voted according to: costs and benefits; personal trust; emotional power;
       transparency; participants commitment; understandability; innovation and
       creative power of the idea, following the seven conditions of
-      <nuxt-link to="/cooperation" class="ae">cooperation</nuxt-link>. From the
+      <nuxt-link to="/main/cooperation" class="ae">cooperation</nuxt-link>. From the
       voting review a future agenda is made based on a common dictionary, a
       redistribution of workload and resources and a common roadmap.<br /><br />
       When the organisation need is to use a more quantitative or reflexive
       approach on a larger scale, without the need of a live event, observing
       both the people in different locations and their data, the
-      <nuxt-link to="/overview" class="af">Overview</nuxt-link> tool is a better
+      <nuxt-link to="/main/overview" class="af">Overview</nuxt-link> tool is a better
       choice.
     </p>
     <br />
