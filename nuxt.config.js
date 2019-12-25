@@ -11,7 +11,7 @@ module.exports = {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/toast',
-    '@nuxtjs/pwa',
+    //'@nuxtjs/pwa',
     '@nuxtjs/auth',
     'bootstrap-vue/nuxt'
     //['@nuxtjs/dotenv', { systemvars: true, path: '/' }],
