@@ -251,6 +251,10 @@ export const actions = {
     let { data } = await this.$axios.put(process.env.DBURL + '/user', payload)
     return data
   },
+  updatePaypalAction: async function (context, payload) {
+    let { data } = await this.$axios.put(process.env.DBURL + '/userpaypal', payload)
+    return data
+  },
   tagFormAction: async function (context, payload) {
     let { data } = await this.$axios.post(process.env.DBURL + '/tag', payload)
     return data

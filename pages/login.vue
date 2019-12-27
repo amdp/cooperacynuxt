@@ -275,9 +275,13 @@ export default {
           }
         })
       } catch (err) {
-        alert('Sorry, there seems to be something wrong: ' +
-          err.response.data + '.')
-        this.logging = false
+        if (err.response.data == 'expired') {
+          location.href = '/activate'
+        } else {
+          alert('Sorry, there seems to be something wrong: ' +
+            err.response.data + '.')
+          this.logging = false
+        }
       }
     },
     googleSignOut() {

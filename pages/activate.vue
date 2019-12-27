@@ -32,14 +32,18 @@
               autocomplete="current-password"
             ></b-form-input>
           </b-form-group>
-        </b-form>
-        <b-button
-          class="btn bhcare white btn-block border-0 mb-4"
-          @click="loadpaypal"
-        >
-          ACTIVATE WITH PAYPAL OR CREDIT CARD
-        </b-button>
 
+          <b-button
+            class="btn bhcare white btn-block border-0 mb-4"
+            @click="loadpaypal()"
+          >
+            ACTIVATE WITH PAYPAL OR CREDIT CARD
+          </b-button>
+          <div
+            class="d-flex justify-content-center"
+            id="paypal-button-container"
+          ></div>
+        </b-form>
         <p class="freedom">
           If you have problems, you can choose to
           <nuxt-link class="ac" to="/contact">contact us</nuxt-link>.
@@ -125,27 +129,27 @@ export default {
         var that = this //important: we need to have a reference to the variables in the page and cannot call 'this' in nested functions
         paypal
           .Buttons({
-            onError: function(err) {
+            onError: function (err) {
               alert(err)
               console.log('err' + err)
               that.formPaypalagreementid = 'e' + JSON.stringify(err)
             },
-            onCancel: function(data) {
+            onCancel: function (data) {
               console.log('c' + JSON.stringify(data))
               that.formPaypalagreementid = 'c' + JSON.stringify(data)
             },
-            createSubscription: function(data, actions) {
+            createSubscription: function (data, actions) {
               return actions.subscription.create({
                 plan_id: 'P-9C681042E7918904VLURYYGQ'
               })
             },
-            onApprove: function(data, actions) {
+            onApprove: function (data, actions) {
               alert(
                 'You have successfully become a member with subscription ID ' +
-                  data.subscriptionID
+                data.subscriptionID
               )
               that.formPaypalagreementid = data.subscriptionID
-              that.newuser()
+              that.updateuser()
             }
           })
           .render('#paypal-button-container')
@@ -153,32 +157,23 @@ export default {
       }
     },
     async updateuser() {
-      var newuser = await this.$store.dispatch('newuserAction', {
-        name: this.formName,
-        surname: this.formSurname,
-        email: this.formEmail,
-        password: this.formPassword,
-        paypalagreementid: this.formPaypalagreementid
-      })
-      if (newuser == 'exists') {
-        return this.$toast.show('Email already in use!', {
-          duration: 1000,
-          className: 'toast'
+      try {
+        let updateUser = await this.$store.dispatch('updatePaypalAction', {
+          email: this.loginEmail,
+          password: this.loginPassword,
+          paypalagreementid: this.formPaypalagreementid
         })
+      } catch (err) {
+        alert(err)
       }
-      if (this.formImageFile) {
-        //the newuser variable in response from the server sends the id of the recently created user
-        this.imageUpload(newuser.id).catch(err => console.error(err))
-      } else {
-        this.addedToast()
-      }
+      this.addedToast()
     },
     addedToast() {
-      this.$toast.success('New user added.', {
+      this.$toast.success('New paypal subscription authorized.', {
         duration: 1000,
         className: 'toast'
       })
-      //setTimeout(function(){location.href = location.href}, 1200)
+      setTimeout(function () { location.href = '/login' }, 1200)
     }
   }
 }

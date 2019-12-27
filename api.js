@@ -212,6 +212,44 @@ app.put('/user', async function (req, res, next) {
   }
 })
 
+app.put('/userpaypal', async function (req, res, next) {
+  console.log(' ' + JSON.stringify(req.body))
+  try {
+    let query = 'SELECT * FROM `user` WHERE `user`.`email`= ? LIMIT 1'
+    let param = [req.body.email]
+    const [user] = await mypool.execute(query, param)
+    if (user.length == 0) {
+      return res.status(401).send('wrong user/password')
+    }
+    logincheck(user[0])
+  } catch (err) {
+    next(err)
+  }
+  async function logincheck(user) {
+    try {
+      if (!bcrypt.compareSync(req.body.password, user.password)) {
+        return res.status(401).send('wrong user/password')
+      } else updatePaypal(user)
+    } catch (err) {
+      next(err)
+    }
+  }
+  async function updatePaypal(user) {
+    try {
+      let query =
+        'UPDATE `user` SET `paypalagreementid`=? WHERE `id`=?'
+      let param = [
+        req.body.paypalagreementid,
+        user.id
+      ]
+      const [userpaypal] = await mypool.execute(query, param)
+      res.status(200).send('updated: ' + userpaypal)
+    } catch (err) {
+      next(err)
+    }
+  }
+})
+
 /////// POST ///////
 
 app.post('/login', async function (req, res, next) {
@@ -239,12 +277,12 @@ app.post('/login', async function (req, res, next) {
       if (!user.paymentdeadline) {
         return res
           .status(500)
-          .send({ error: "The user hasn't been activated yet." })
+          .send({ error: "expired" })
       }
       if (user.paymentdeadline.toJSON().slice(0, 10) >= today) {
         res.send({ token: { accessToken } })
       } else {
-        res.status(401).send({ error: 'bank transfer membership has expired' })
+        res.status(401).send('expired')
       }
     } else {
       // paypal membership check
@@ -294,9 +332,9 @@ app.post('/login', async function (req, res, next) {
         ) {
           res.send({ token: { accessToken } })
         } else {
-          res.status(401).send({
-            error: 'paypal membership expired or suspended, please contact us.'
-          })
+          res.status(401).send(
+            'expired'
+          )
         }
       } catch (err) {
         next(err)
