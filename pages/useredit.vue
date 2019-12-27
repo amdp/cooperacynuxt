@@ -46,15 +46,27 @@
                 required
               ></b-form-input>
             </b-form-group>
-            <!-- add insert previous password and relative check -->
             <b-form-group
-              label-for="oldPasswordInput"
-              label="Old Password:"
+              label-for="newEmailInput"
+              label="New Email:"
+              description="Please insert in case a new email: 
+              this will be your new login account!"
+            >
+              <b-form-input
+                id="newEmailInput"
+                v-model="formNewEmail"
+                size="sm"
+                required
+              ></b-form-input>
+            </b-form-group>
+            <b-form-group
+              label-for="currentPasswordInput"
+              label="Current Password:"
               description="Please insert your current password or passphrase"
             >
               <b-form-input
-                id="oldPasswordInput"
-                v-model="formOldPassword"
+                id="currentPasswordInput"
+                v-model="formCurrentPassword"
                 size="sm"
                 type="password"
                 required
@@ -112,8 +124,9 @@ export default {
       formName: this.$auth.user.name,
       formSurname: this.$auth.user.surname,
       formEmail: this.$auth.user.email,
-      formOldPassword: null,
+      formCurrentPassword: null,
       formNewPassword: null,
+      formNewEmail: null,
       formImageFilename: null,
       id: this.$auth.user.id
     }
@@ -144,28 +157,31 @@ export default {
       }
     },
     async userUpdate() {
-      let checkOldPassword = await this.$store.dispatch(
-        'checkOldPasswordAction',
+      let checkCurrentPassword = await this.$store.dispatch(
+        'checkCurrentPasswordAction',
         {
           id: this.id,
           email: this.formEmail,
-          password: this.formOldPassword
+          password: this.formCurrentPassword
         }
       )
-      if (!checkOldPassword) {
+      if (!checkCurrentPassword) {
         return alert(
           'Something went wrong. Please retry later, the server could have problems in processing your request.'
         )
       }
       if (!this.formNewPassword) {
-        this.formNewPassword = this.formOldPassword
+        this.formNewPassword = this.formCurrentPassword
+      }
+      if (!this.formNewEmail) {
+        this.formNewEmail = this.formEmail
       }
       var updateUser = await this.$store
         .dispatch('updateUserAction', {
           id: this.id,
           name: this.formName,
           surname: this.formSurname,
-          email: this.formEmail,
+          email: this.formNewEmail,
           password: this.formNewPassword
         })
         .catch(err => {

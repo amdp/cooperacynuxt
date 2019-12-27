@@ -48,5 +48,5 @@ click on the tiny icon close to the same name:
 
 When you have done this step, just install Apache too
 or any other http server.
-At the end, edit the contributors.md
+At the end, edit the /etc/contributors.md file
 and add your email after your name! You did it!!

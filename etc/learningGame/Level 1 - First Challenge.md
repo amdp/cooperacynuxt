@@ -80,7 +80,7 @@ you tidy everything up and issue your
 pull request.
 
 **_As per your first challenge,
-edit the contributors.md file
+edit the /etc/contributors.md file
 and insert you in the "learners" list._**
 
 Finally, make a pull request and you're done!

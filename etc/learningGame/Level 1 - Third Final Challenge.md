@@ -111,5 +111,5 @@ If you see the colorful cooperacy circle
 you've done it! Send a screenshot in the discord
 server and celebrate!
 
-You passed the level! In the contributors.md move
+You passed the level! In the /etc/contributors.md move
 your line to the NUXTERS level!

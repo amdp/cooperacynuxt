@@ -282,7 +282,7 @@ export const actions = {
     )
     return data
   },
-  checkOldPasswordAction: async function (context, payload) {
+  checkCurrentPasswordAction: async function (context, payload) {
     let { data } = await this.$axios.post(
       process.env.DBURL + '/checkpassword',
       payload

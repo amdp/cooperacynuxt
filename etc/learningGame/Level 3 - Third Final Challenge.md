@@ -79,7 +79,7 @@ line and finally to add it to the `components:`
 line. Now you can even help the others
 in the lower level with their 
 difficulties, you gained the APPRENTICE level!
-Edit the contributors.md and put your
+Edit the /etc/contributors.md and put your
 name in the right position!
 
 You also demonstrated you passed the final 

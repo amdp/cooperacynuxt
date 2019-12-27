@@ -331,7 +331,14 @@ app.post('/login', async function (req, res, next) {
           list[list.length - 2].status == 'Completed'
         ) {
           res.send({ token: { accessToken } })
-        } else {
+        } else if (
+          //sometimes the transaction list has a final record of updated payment:
+          list[list.length - 1].status == 'Created' &&
+          list[list.length - 2].status == 'Completed'
+        ) {
+          res.send({ token: { accessToken } })
+        }
+        else {
           res.status(401).send(
             'expired'
           )
