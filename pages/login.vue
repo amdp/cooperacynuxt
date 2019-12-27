@@ -58,6 +58,16 @@
         >
       </div>
     </b-row> -->
+    <b-row>
+      <b-container class="justify-content-center">
+        <p class="base up text-center">
+          Want to make a <span class="diversity">gift</span>? Please use a
+          <nuxt-link to="/activate" class="ac">
+            Bank Transfer Activation
+          </nuxt-link>
+        </p>
+      </b-container>
+    </b-row>
     <div class="row">
       <div class="col-12 d-flex justify-content-center mt-4">
         <b-button

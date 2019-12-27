@@ -1,11 +1,18 @@
 <template>
   <b-container>
-    <b-row class="mt-5">
+    <b-row>
       <b-col class="justify-content-center">
         <p class="heading freedom">ACTIVATE YOUR MEMBERSHIP</p>
         <p>
           If you are a new member or if your membership has expired, you can
-          activate your membership here.<br />
+          activate your membership using this page forms.<br />
+          You can activate your membership with a bank transfer or make a
+          <span class="diversity">gift</span>
+          to a friend with a
+          <nuxt-link to="/activate#bank" class="ac"
+            >Bank Transfer Activation</nuxt-link
+          >. <br /><br />
+          <span class="base up freedom">PAYPAL</span><br />
           For Paypal Renewal, please fill in your email and password:
         </p>
         <b-form
@@ -45,10 +52,13 @@
           ></div>
         </b-form>
         <p class="freedom">
-          If you have problems, you can choose to
+          If you have problems, please
           <nuxt-link class="ac" to="/contact">contact us</nuxt-link>.
         </p>
-        <p>BANK TRANSFER ACTIVATION</p>
+        <br />
+        <p id="bank" name="bank" class="freedom base up">
+          BANK TRANSFER ACTIVATION
+        </p>
         <p>
           If you want to activate your membership or a friend membership through
           a bank transfer, please fill in the relative email in the following
@@ -76,11 +86,14 @@
           {{ bankCode }}
         </p>
         <p>
-          VERY IMPORTANT NOTE: Bank transfers without code will be processed as
-          donations to Cooperacy, so do not forget to insert name, surname and
-          email of the account in the fields and the resulting code in the bank
+          <span class="understanding">
+            <strong> VERY IMPORTANT NOTE:<br /> </strong>
+          </span>
+          Bank transfers without code will be processed as donations to
+          Cooperacy, so do not forget to insert the resulting code in the bank
           transfer.
         </p>
+        <br /><br />
       </b-col>
     </b-row>
   </b-container>
