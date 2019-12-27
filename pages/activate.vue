@@ -54,8 +54,18 @@
           a bank transfer, please fill in the relative email in the following
           input box:
         </p>
-        Email<br />
-        <b-input placeholder="email" v-model="bankEmail"></b-input>
+        <b-form-group
+          label-for="bankEmailInput"
+          label="Email:"
+          description="Insert your email or that of the person you want to donate a membership to"
+        >
+          <b-form-input
+            id="bankEmailInput"
+            v-model="formBankEmail"
+            size="sm"
+            required
+          ></b-form-input>
+        </b-form-group>
         <p>
           then send a bank transfer to Cooperacy - IBAN
           IT61D0623001623000043225634 BIC/SWIFT CRPPIT2P277 - Filiale AG 23
@@ -111,7 +121,7 @@ export default {
       formPaypalagreementid: 'bank',
       newaccountvar: false,
       newaccountpaypal: false,
-      bankEmail: null
+      formBankEmail: null
     }
   },
   computed: {
@@ -119,8 +129,10 @@ export default {
       return this.mail.length > 1 ? true : false
     }, //CHECK to be completed
     bankCode() {
-      let atnumber = 'numbersayingwheretheatsymbolisintheemailstring' //fix and avoid the mail to have 2 @ symbols
-      if (this.bankEmail) return this.bankEmail.replace('@', atnumber)
+      if (this.formBankEmail) {
+        let atnumber = this.formBankEmail.indexOf("@") + 1
+        return this.formBankEmail.replace('@', 'at' + atnumber + 'at') + " Cooperacy Bank Membership Activation"
+      }
     }
   },
   methods: {
