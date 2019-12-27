@@ -36,7 +36,7 @@
             <b-form-group
               label-for="emailInput"
               label="Email:"
-              description="Please insert a valid email that will be your username"
+              description="Please insert your current account email"
             >
               <b-form-input
                 id="emailInput"
@@ -50,7 +50,7 @@
             <b-form-group
               label-for="oldPasswordInput"
               label="Old Password:"
-              description="Please insert your old password or passphrase"
+              description="Please insert your current password or passphrase"
             >
               <b-form-input
                 id="oldPasswordInput"
@@ -120,7 +120,7 @@ export default {
   },
   methods: {
     async userEdit() {
-      if (!this.formImageFilename.name) {
+      if (!this.formImageFilename) {
         this.userUpdate() //if no new image has to be inserted, we proceed to update the user information
       } else {
         //alternatively, we upload the image: the server will name it with user id, resize it and transform it into a png
