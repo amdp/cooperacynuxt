@@ -77,8 +77,8 @@
       <p class="base trust">Trust</p>
       <p class="base">
         Trust votes make the project skip the human resources budget step.
-        Technical: if the project trust votes (Ti) are more than 75% of the
-        project equivalence votes (Ti > 75% Ei) the human resources budget step
+        Technical: if the project trust votes (Ti) are more than half of the
+        project equivalence votes (Ti > 50% Ei) the human resources budget step
         is automatically approved.
       </p>
       <br />
@@ -123,9 +123,10 @@
       <p class="base understanding">Understanding</p>
       <p class="base">
         This vote refers to the idea comprehension or nerditude and
-        automatically approves the Setup phase. Technical: if the
-        understanding-votes are above the 75th percentile (Ui > Ût + Ût/2) the
-        Setup budget release step is automatically approved.
+        automatically approves the Setup phase. Technical: if the project
+        understanding votes are more than the 70% of the top understanding voted
+        project (Ui > U(max)*70%) the Setup budget release step is automatically
+        approved.
       </p>
       <br />
       <p class="base diversity">Diversity</p>
