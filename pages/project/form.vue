@@ -437,19 +437,19 @@ export default {
       }
       var formBodyRequest = {
         id: projectid,
+        stage: this.formStageFunding,
         name: this.formName,
         country: this.formCountry,
         place: this.formPlace,
-        category: this.formCategory,
         brief: this.formBrief,
         content: '' + this.formContent, //leave '' here
         video: '' + this.formVideo, //leave '' here
         anonymous: this.formAnonymous,
         parent: this.formParent,
-        stage: this.formStageFunding,
+        category: this.formCategory,
+        collect: this.formFee,
         budget: this.formBudget,
         hudget: this.formHudget,
-        collect: this.formFee
       }
       let res
       try {

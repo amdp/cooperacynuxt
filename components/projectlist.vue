@@ -140,31 +140,34 @@
                     v-if="$auth.user && $route.params.id"
                     class="col-12 mt-4"
                   >
-                    <span
-                      v-if="
-                        (project.stage != 1 && improfessional) ||
-                          $auth.user.role == 1
-                      "
-                    >
-                      <b-link class="au" @click="edit()"
-                        >Edit this project</b-link
-                      >&nbsp;</span
-                    >
                     <span v-if="project.stage != 1 && $auth.user.role == 1">
                       <b-link class="ae" @click="archive(project)"
                         >Archive this project</b-link
                       >&nbsp;</span
                     >
                     <span v-if="project.stage == 1 && $auth.user.role == 1"
-                      ><b-link class="au" @click="unarchive()"
+                      ><b-link class="ae" @click="unarchive()"
                         >Resume this project</b-link
                       >&nbsp;</span
                     >
+
                     <span
-                      ><b-link class="at" @click="copy()"
+                      v-if="
+                        (project.stage == 5 && improfessional) ||
+                          $auth.user.role == 1
+                      "
+                    >
+                      <b-link v-b-modal.budgetstepmodal class="at"
+                        >Upload Budget Step Document</b-link
+                      >&nbsp;</span
+                    >
+
+                    <span
+                      ><b-link class="ai" @click="copy()"
                         >Copy this project</b-link
                       >&nbsp;</span
                     >
+
                     <span
                       v-if="
                         (project.stage != 1 && improfessional) ||
@@ -173,6 +176,17 @@
                     >
                       <b-link v-b-modal.professionalmodal class="af"
                         >Add/Remove professionals</b-link
+                      >&nbsp;</span
+                    >
+
+                    <span
+                      v-if="
+                        (project.stage != 1 && improfessional) ||
+                          $auth.user.role == 1
+                      "
+                    >
+                      <b-link class="au" @click="edit()"
+                        >Edit this project</b-link
                       >&nbsp;</span
                     >
                   </div>
@@ -189,6 +203,10 @@
           v-if="$route.params.id && $auth.user"
           :projectprop="project"
           :userlistprop="$store.state.userlist"
+        />
+        <budgetstepmodal
+          v-if="$route.params.id && $auth.user"
+          :projectprop="project"
         />
         <votebarmodal :projectprop="project" />
       </div>
@@ -252,20 +270,29 @@ export default {
     },
     archive(project) {
       this.$store.dispatch('projectFormAction', {
-        stage: 1,
         id: project.id,
+        stage: 1,
         name: project.name,
+        country: project.country,
+        place: project.place,
         brief: project.brief,
         content: project.content,
         video: project.video,
         anonymous: project.anonymous,
         parent: project.parent,
-        budget: project.budget,
-        hudget: project.hudget,
-        country: project.country,
-        place: project.place,
         category: project.category,
-        collect: project.collect
+        collect: project.collect,
+        budget: project.budget,
+        professional: project.professional,
+        hudget: project.hudget,
+        E: project.E,
+        T: project.T,
+        C: project.C,
+        I: project.I,
+        F: project.F,
+        U: project.U,
+        D: project.D,
+        created: project.created
       })
       this.$store.dispatch('getUserProjectAction', {
         userid: this.$auth.user.id

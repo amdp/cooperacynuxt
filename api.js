@@ -277,7 +277,7 @@ app.post('/login', async function (req, res, next) {
       if (!user.paymentdeadline) {
         return res
           .status(500)
-          .send({ error: "expired" })
+          .send('expired')
       }
       if (user.paymentdeadline.toJSON().slice(0, 10) >= today) {
         res.send({ token: { accessToken } })
@@ -483,31 +483,21 @@ app.post('/place', async function (req, res, next) {
 
 app.post('/project', async function (req, res, next) {
   let param = [
+    req.body.stage,
     req.body.name,
     req.body.country,
     req.body.place,
-    req.body.category,
     req.body.brief,
     req.body.content,
     req.body.video,
     req.body.anonymous,
     req.body.parent,
-    req.body.stage,
+    req.body.category,
+    req.body.collect,
     req.body.budget,
-    req.body.hudget,
-    req.body.collect
+    req.body.hudget
   ]
-  if (req.body.id != 'new') {
-    try {
-      param.push(req.body.id)
-      let query =
-        'UPDATE `project` SET `name`=?,`country`=?,`place`=?,`category`=?,`brief`=?,`content`=?,`video`=?,`anonymous`=?,`parent`=?,`stage`=?,`budget`=?,`hudget`=?, `collect`=? WHERE `project`.`id`=?'
-      await mypool.execute(query, param)
-      res.send({ id: req.body.id })
-    } catch (err) {
-      next(err)
-    }
-  } else {
+  if (req.body.id == 'new') {
     try {
       let query = 'SELECT * FROM `project` WHERE `project`.`name`= ? LIMIT 1'
       let projectname = [req.body.name]
@@ -521,12 +511,38 @@ app.post('/project', async function (req, res, next) {
       next(err)
     }
   }
+  else {
+    try {
+      param.push(req.body.id)
+      let query =
+        'UPDATE `project` SET `stage`=?, `name`=?,`country`=?,`place`=?,`brief`=?,`content`=?,`video`=?,`anonymous`=?,`parent`=?,`category`=?,`collect`=?,`budget`=?,`hudget`=? WHERE `project`.`id`=?'
+      await mypool.execute(query, param)
+      res.send({ id: req.body.id })
+    } catch (err) {
+      next(err)
+    }
+    if (req.body.stage == 1) { //archiving: we need to copy the state of the project before archiviation
+      param.splice(0, 1) //removes stage as we want it to be 0 (archived) in projectbudgetstep
+      param.push( //we already pushed req.body.id
+        req.body.professional,
+        req.body.E,
+        req.body.T,
+        req.body.C,
+        req.body.I,
+        req.body.F,
+        req.body.U,
+        req.body.D,
+        req.body.created,
+        0
+      )
+      console.log(' ' + JSON.stringify(param))
+      let archivequery = 'INSERT INTO `projectbudget` (`name`,`country`,`place`,`brief`,`content`,`video`,`anonymous`,`parent`, `category`,`collect`,`budget`,`hudget`,`projectid`,`professional`,`E`, `T`, `C`, `I`, `F`, `U`, `D`,`created`,`budgetstep`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
+    }
+  }
   async function addproject() {
     try {
       let query =
-        'INSERT INTO `project` (' +
-        '`name`,`country`,`place`,`category`,`brief`,`content`,`video`,`anonymous`,`parent`,`stage`,`budget`,`hudget`, `collect`)' +
-        ' VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)'
+        'INSERT INTO `project` (`stage`,`name`,`country`,`place`,`brief`,`content`,`video`,`anonymous`,`parent`,`category`,`collect`,`budget`,`hudget`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)'
       const [project] = await mypool.execute(query, param)
       res.send({ id: project.insertId })
     } catch (err) {
@@ -617,12 +633,12 @@ app.post('/user', async function (req, res, next) {
           hashed,
           req.body.paypalagreementid
         ]
-        const [user] = await mypool.execute(query, param)
-        res.send({ id: user[0].insertId })
+        const [useradded] = await mypool.execute(query, param)
+        res.send({ id: useradded.insertId })
         try {
           let queryA =
             'INSERT INTO `projectvote` (`user`,`project`,`condition`) VALUES (?,?,?)'
-          let paramA = [user[0].insertId, '700', 'F'] //700 is the annoucements project id
+          let paramA = [useradded.insertId, '700', 'F'] //700 is the annoucements project id
           mypool.execute(queryA, paramA)
         } catch (err) {
           next(err)
