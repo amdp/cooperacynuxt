@@ -13,9 +13,12 @@ module.exports = {
     '@nuxtjs/toast',
     //'@nuxtjs/pwa',
     '@nuxtjs/auth',
-    'bootstrap-vue/nuxt'
+    'bootstrap-vue/nuxt',
     //['@nuxtjs/dotenv', { systemvars: true, path: '/' }],
     //'@nuxtjs/proxy',
+    '@nuxtjs/google-analytics', {
+      id: 'UA-105334297-1'
+    }
   ],
   loading: {
     color: '#FF8800',
@@ -62,7 +65,7 @@ module.exports = {
         content:
           'width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1'
       },
-      { hid: 'description', name: 'description', content: pkg.description }
+      { hid: 'description', name: 'description', content: pkg.description },
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
