@@ -484,6 +484,7 @@ app.post('/place', async function (req, res, next) {
 app.post('/project', async function (req, res, next) {
   let param = [
     req.body.stage,
+    req.body.category,
     req.body.name,
     req.body.country,
     req.body.place,
@@ -492,7 +493,6 @@ app.post('/project', async function (req, res, next) {
     req.body.video,
     req.body.anonymous,
     req.body.parent,
-    req.body.category,
     req.body.collect,
     req.body.budget,
     req.body.hudget
@@ -510,20 +510,19 @@ app.post('/project', async function (req, res, next) {
     } catch (err) {
       next(err)
     }
-  }
-  else {
+  } else {
     try {
       param.push(req.body.id)
       let query =
-        'UPDATE `project` SET `stage`=?, `name`=?,`country`=?,`place`=?,`brief`=?,`content`=?,`video`=?,`anonymous`=?,`parent`=?,`category`=?,`collect`=?,`budget`=?,`hudget`=? WHERE `project`.`id`=?'
+        'UPDATE `project` SET `stage`=?,`category`=?,`name`=?,`country`=?,`place`=?,`brief`=?,`content`=?,`video`=?,`anonymous`=?,`parent`=?,`collect`=?,`budget`=?,`hudget`=? WHERE `project`.`id`=?'
       await mypool.execute(query, param)
-      res.send({ id: req.body.id })
     } catch (err) {
       next(err)
     }
-    if (req.body.stage == 1) { //archiving: we need to copy the state of the project before archiviation
-      param.splice(0, 1) //removes stage as we want it to be 0 (archived) in projectbudgetstep
+    if (req.body.stage == 1) { //if we archive, we need to copy the state of the project before archiviation
       param.push( //we already pushed req.body.id
+        req.body.budgetstep,
+        req.body.budgetstepdoc,
         req.body.professional,
         req.body.E,
         req.body.T,
@@ -532,17 +531,17 @@ app.post('/project', async function (req, res, next) {
         req.body.F,
         req.body.U,
         req.body.D,
-        req.body.created,
-        0
+        req.body.created
       )
-      console.log(' ' + JSON.stringify(param))
-      let archivequery = 'INSERT INTO `projectbudget` (`name`,`country`,`place`,`brief`,`content`,`video`,`anonymous`,`parent`, `category`,`collect`,`budget`,`hudget`,`projectid`,`professional`,`E`, `T`, `C`, `I`, `F`, `U`, `D`,`created`,`budgetstep`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
+      let query = 'INSERT INTO `projectregistry` (`stage`,`category`,`name`,`country`,`place`,`brief`,`content`,`video`,`anonymous`,`parent`,`collect`,`budget`,`hudget`,`projectid`,`budgetstep`,`budgetstepdoc`,`professional`,`E`, `T`, `C`, `I`, `F`, `U`, `D`,`created`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
+      await mypool.execute(query, param)
+      res.status(200).send({ id: req.body.id })
     }
   }
   async function addproject() {
     try {
       let query =
-        'INSERT INTO `project` (`stage`,`name`,`country`,`place`,`brief`,`content`,`video`,`anonymous`,`parent`,`category`,`collect`,`budget`,`hudget`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)'
+        'INSERT INTO `project` (`stage`,`category`,`name`,`country`,`place`,`brief`,`content`,`video`,`anonymous`,`parent`,`collect`,`budget`,`hudget`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)'
       const [project] = await mypool.execute(query, param)
       res.send({ id: project.insertId })
     } catch (err) {
@@ -799,6 +798,12 @@ app.get('/map', async function (req, res, next) {
   } catch (err) {
     next(err)
   }
+})
+
+app.post('/budgetstepdoc', async function (req, res, next) {
+  //inserire due nuovi valori nel project, budgetstep (last) e budgetstepdoc (last) 
+  //e aggiornarli tramite il trigger e questa funzione
+  res.status(200).send('OK')
 })
 
 app.post('/vote', async function (req, res, next) {

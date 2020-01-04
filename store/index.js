@@ -220,6 +220,13 @@ export const actions = {
     )
     return data
   },
+  budgetstepdocAction: async function (context, payload) {
+    let { data } = await this.$axios.post(
+      process.env.DBURL + '/budgetstepdoc',
+      payload
+    )
+    return data
+  },
   commentFormAction: async function (context, payload) {
     let { data } = await this.$axios.post(
       process.env.DBURL + '/comment',

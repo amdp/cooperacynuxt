@@ -1,37 +1,28 @@
 <template>
   <b-container>
-    <b-modal id="budgetstepmodal" title="In construction" hide-header-close>
-      <b-form @submit.prevent="professional()">
+    <b-modal
+      id="budgetstepmodal"
+      title="Add Budget Step Document"
+      hide-header-close
+    >
+      <p class="base">
+        Behind this step there is a delicate passage that your project will
+        face: it will wait for 7 days for the project document to be approved.
+        If nothing happens, your document is approved and you can go forward to
+        the next budget step.
+      </p>
+      <b-form @submit.prevent="budgetstepdoc()">
         <b-form-group
           label-for="professionalInput"
-          description="Add or remove a professional to your project"
+          description="Add a Budget Step Document to your project, inserting a link to a shared google document."
         >
           <span>{{ projectprop.name }}</span>
-          <b-form-select id="professionalInput" v-model="formProfessional">
-            <option
-              v-for="user in userlistprop.filter(user => user.active == 1)"
-              :key="user.id"
-              :value="user.id"
-            >
-              {{ user.name }} {{ user.surname }}
-            </option>
-          </b-form-select>
+          <b-form-input id="docInput" v-model="formDoc"></b-form-input>
         </b-form-group>
-        <p class="understanding">
-          The following are already in the project and will be removed if
-          selected:
-        </p>
-        <span
-          v-for="pro in this.$store.state.professional"
-          :key="pro.id"
-          class="freedom"
-        >
-          {{ pro.name }} {{ pro.surname }}<br />
-        </span>
       </b-form>
       <template slot="modal-footer">
-        <b-button size="sm" class="bcare" @click="professional()">
-          ADD/REMOVE
+        <b-button size="sm" class="bcare" @click="budgetstepdoc()">
+          ADD
         </b-button>
         <b-button size="sm" class="btransparency" @click="close()">
           CLOSE
@@ -48,18 +39,15 @@ export default {
   },
   data() {
     return {
-      formProfessional: ''
+      formDoc: ''
     }
   },
 
   methods: {
-    async professional() {
-      this.$store.dispatch('professionalAction', {
+    async budgetstepdoc() {
+      this.$store.dispatch('budgetstepdocAction', {
         project: this.projectprop.id,
-        user: this.formProfessional
-      })
-      this.$store.dispatch('getProfessionalAction', {
-        project: this.projectprop.id
+        user: this.$auth.user
       })
     },
     close() {

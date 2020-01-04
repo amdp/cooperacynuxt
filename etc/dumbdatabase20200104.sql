@@ -313,7 +313,6 @@ INSERT INTO `country` VALUES (1,'Cooperacy','2019-06-01 22:30:05','2019-06-01 22
 /*!40000 ALTER TABLE `country` ENABLE KEYS */;
 UNLOCK TABLES;
 
-
 --
 -- Table structure for table `news`
 --
@@ -376,8 +375,6 @@ INSERT INTO `place` VALUES (1,1,'Cooperacy','2019-06-01 22:29:43','2019-06-01 22
 /*!40000 ALTER TABLE `place` ENABLE KEYS */;
 UNLOCK TABLES;
 
-
-
 --
 -- Table structure for table `project`
 --
@@ -388,17 +385,19 @@ DROP TABLE IF EXISTS `project`;
 CREATE TABLE `project` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `stage` int(11) NOT NULL DEFAULT '7',
+  `category` int(11) NOT NULL DEFAULT '1',
   `name` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `country` int(11) NOT NULL,
   `place` int(11) NOT NULL DEFAULT '260',
   `brief` varchar(256) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `content` varchar(2046) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT '-',
-  `video` varchar(1024) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT '-',
+  `content` varchar(2046) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '-',
+  `video` varchar(1024) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '-',
   `anonymous` tinyint(1) NOT NULL DEFAULT '0',
   `parent` int(11) NOT NULL DEFAULT '1',
-  `category` int(11) NOT NULL DEFAULT '1',
   `collect` decimal(32,16) NOT NULL DEFAULT '0.0000000000000000',
   `budget` decimal(32,16) NOT NULL DEFAULT '0.0000000000000000',
+  `budgetstep` int(11) DEFAULT NULL,
+  `budgetstepdoc` varchar(45) COLLATE utf8_bin DEFAULT NULL,
   `professional` int(11) NOT NULL DEFAULT '2',
   `hudget` int(11) NOT NULL DEFAULT '2',
   `E` int(11) NOT NULL DEFAULT '0',
@@ -422,59 +421,37 @@ CREATE TABLE `project` (
 
 LOCK TABLES `project` WRITE;
 /*!40000 ALTER TABLE `project` DISABLE KEYS */;
-INSERT INTO `project` VALUES (1,7,'Cooperacy',1,1,'Cooperacy','Cooperacy is a scientific project aiming to spread the practice and the awareness of ecosystemic thinking and cooperation.','',0,1,1,2.6774494686463488,7000.0000000000000000,2,7,5,4,2,0,4,1,4,'2019-04-25 11:58:19','2020-01-01 16:49:51'),(375,1,'Corso di Chitarra a Milano',1100,260,'Corso di chitarra a cura di Giovanna Littardi','    -','    ',0,1,2,0.0000000000000000,0.0000000000000000,1,5,2,1,1,0,0,0,0,'2019-04-23 15:21:14','2019-12-22 17:29:12'),(378,7,'Cooperacy Management',1100,260,'Cooperacy planning, progress and project management','-','',0,1,4,0.2292907154903040,0.0000000000000000,1,5,1,1,1,0,1,0,0,'2019-04-23 13:43:29','2020-01-01 16:49:51'),(389,7,'Cooperacy Research',1,1,'The main research body of Cooperacy.','','',0,1,4,0.2292907154903040,0.0000000000000000,1,2,1,1,1,0,1,0,1,'2019-04-22 18:34:25','2020-01-01 16:49:51'),(401,2,'FB Page Editorial Plan',1100,260,'FB Page Editorial Plan','The aim of this discussion is collecting from all members relevant informations in order to populate our topics\' calendar for cooperacy.org Facebook page. Please contribute to it or share your opinions and doubts about the activity. Any contribution will be more than appreciated.','',1,402,2,0.0000000000000000,0.0000000000000000,1,2,1,1,0,0,0,1,1,'2019-04-22 18:34:25','2019-12-24 08:21:28'),(402,2,'The Messengers',1100,260,'The Communication Department of Cooperacy','Discussion board of Cooperacy Communication Department','',1,1,1,0.0000000000000000,0.0000000000000000,1,2,0,0,0,0,0,1,0,'2019-04-22 18:34:25','2019-12-24 08:21:28'),(434,2,'Platform Bugs',1100,260,'Website Bugs','You can signal here all the bugs you discover while using this website!','',0,378,4,0.0000000000000000,0.0000000000000000,1,2,2,1,2,0,1,0,1,'2019-04-22 18:34:25','2019-12-24 08:21:28'),(469,7,'FAQ for our website',1100,260,'Cooperacy FAQ page','','',0,402,2,0.0000000000000000,0.0000000000000000,1,2,0,0,0,0,0,0,0,'2019-04-22 18:34:25','2019-12-22 17:31:52'),(581,2,'Cooperacy Events',1,1,'Stay tuned for all the Cooperacy Events!','This project is born as a way to be notified about all the Cooperacy Events','',0,1,1,0.0000000000000000,0.0000000000000000,1,2,1,1,1,0,0,1,0,'2019-04-23 13:43:33','2019-12-24 08:21:28'),(700,2,'Announcements',1,1,'Announcements from Cooperacy','Freedom-vote this project to receive news and announcements about Cooperacy',' ',0,1,4,0.0000000000000000,0.0000000000000000,1,2,1,0,1,0,1,0,0,'2019-11-24 17:31:03','2019-12-24 08:21:28'),(732,2,'Lezioni di Acroyoga',1100,260,'Impara a fare Acroyoga e sostieni Cooperacy!','Gestito dall\'associazione Open Acroyoga','',0,1,1,0.0000000000000000,10.0000000000000000,1,5,0,0,0,0,0,0,0,'2019-04-22 18:34:25','2019-12-24 08:21:28'),(733,2,'Mercatino di frutta partecipata',1100,260,'Acquista con Cooperacy frutta buona e rivendila pagandoti il trasporto','Progetto già testato e riattivabile','',0,1,1,0.0000000000000000,0.0000000000000000,1,2,1,0,0,0,0,0,0,'2019-04-22 18:34:25','2019-12-24 08:21:28');
+INSERT INTO `project` VALUES (1,7,1,'Cooperacy',1,1,'Cooperacy','Cooperacy is a scientific project aiming to spread the practice and the awareness of ecosystemic thinking and cooperation.','',0,1,5.7643063956453888,7000.0000000000000000,NULL,NULL,2,7,5,5,3,0,5,2,5,'2019-04-25 11:58:19','2020-01-04 05:36:30'),(375,1,2,'Corso di Chitarra a Milano',1100,260,'Corso di chitarra a cura di Giovanna Littardi','    -','    ',0,1,0.0000000000000000,0.0000000000000000,NULL,NULL,1,5,2,1,1,0,0,0,0,'2019-04-23 15:21:14','2019-12-22 17:29:12'),(378,7,4,'Cooperacy Management',1100,260,'Cooperacy planning, progress and project management','-','',0,1,0.8466621008901120,0.0000000000000000,NULL,NULL,1,5,1,1,1,0,1,0,0,'2019-04-23 13:43:29','2020-01-04 05:36:30'),(389,7,4,'Cooperacy Research',1,1,'The main research body of Cooperacy.','','',0,1,0.8466621008901120,0.0000000000000000,NULL,NULL,1,2,1,1,1,0,1,0,1,'2019-04-22 18:34:25','2020-01-04 05:36:30'),(401,2,2,'FB Page Editorial Plan',1100,260,'FB Page Editorial Plan','The aim of this discussion is collecting from all members relevant informations in order to populate our topics\' calendar for cooperacy.org Facebook page. Please contribute to it or share your opinions and doubts about the activity. Any contribution will be more than appreciated.','',1,402,0.0000000000000000,0.0000000000000000,NULL,NULL,1,2,1,1,0,0,0,1,1,'2019-04-22 18:34:25','2019-12-24 08:21:28'),(402,2,1,'The Messengers',1100,260,'The Communication Department of Cooperacy','Discussion board of Cooperacy Communication Department','',1,1,0.0000000000000000,0.0000000000000000,NULL,NULL,1,2,0,0,0,0,0,1,0,'2019-04-22 18:34:25','2019-12-24 08:21:28'),(434,2,4,'Platform Bugs',1100,260,'Website Bugs','You can signal here all the bugs you discover while using this website!','',0,378,0.0000000000000000,0.0000000000000000,NULL,NULL,1,2,2,1,2,0,1,0,1,'2019-04-22 18:34:25','2019-12-24 08:21:28'),(469,7,2,'FAQ for our website',1100,260,'Cooperacy FAQ page','','',0,402,0.0000000000000000,0.0000000000000000,NULL,NULL,1,2,0,0,0,0,0,0,0,'2019-04-22 18:34:25','2019-12-22 17:31:52'),(581,2,1,'Cooperacy Events',1,1,'Stay tuned for all the Cooperacy Events!','This project is born as a way to be notified about all the Cooperacy Events','',0,1,0.0000000000000000,0.0000000000000000,NULL,NULL,1,2,1,1,1,0,0,1,0,'2019-04-23 13:43:33','2019-12-24 08:21:28'),(700,2,4,'Announcements',1,1,'Announcements from Cooperacy','Freedom-vote this project to receive news and announcements about Cooperacy',' ',0,1,0.0000000000000000,0.0000000000000000,NULL,NULL,1,2,1,0,1,0,1,0,0,'2019-11-24 17:31:03','2019-12-24 08:21:28'),(732,2,1,'Lezioni di Acroyoga',1100,260,'Impara a fare Acroyoga e sostieni Cooperacy!','Gestito dall\'associazione Open Acroyoga','',0,1,0.0000000000000000,10.0000000000000000,NULL,NULL,1,5,0,0,0,0,0,0,0,'2019-04-22 18:34:25','2019-12-24 08:21:28'),(733,2,1,'Mercatino di frutta partecipata',1100,260,'Acquista con Cooperacy frutta buona e rivendila pagandoti il trasporto','Progetto già testato e riattivabile','',0,1,0.0000000000000000,0.0000000000000000,NULL,NULL,1,2,1,0,0,0,0,0,0,'2019-04-22 18:34:25','2019-12-24 08:21:28');
 /*!40000 ALTER TABLE `project` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `projectbudget`
---
-
-DROP TABLE IF EXISTS `projectbudget`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `projectbudget` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `projectid` int(11) NOT NULL,
-  `budgetstep` int(11) NOT NULL DEFAULT '1',
-  `name` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `country` int(11) NOT NULL,
-  `place` int(11) NOT NULL DEFAULT '260',
-  `brief` varchar(256) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `content` varchar(2046) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT '-',
-  `video` varchar(1024) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT '-',
-  `anonymous` tinyint(1) NOT NULL DEFAULT '0',
-  `parent` int(11) NOT NULL DEFAULT '1',
-  `category` int(11) NOT NULL DEFAULT '1',
-  `collect` decimal(32,16) NOT NULL DEFAULT '0.0000000000000000',
-  `budget` decimal(32,16) NOT NULL DEFAULT '0.0000000000000000',
-  `professional` int(11) NOT NULL DEFAULT '2',
-  `hudget` int(11) NOT NULL DEFAULT '2',
-  `E` int(11) NOT NULL DEFAULT '0',
-  `T` int(11) NOT NULL DEFAULT '0',
-  `C` int(11) NOT NULL DEFAULT '0',
-  `I` int(11) NOT NULL DEFAULT '0',
-  `F` int(11) NOT NULL DEFAULT '0',
-  `U` int(11) NOT NULL DEFAULT '0',
-  `D` int(11) NOT NULL DEFAULT '0',
-  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `budgetstepdoc` varchar(45) COLLATE utf8_bin DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `place` (`place`),
-  KEY `projectbudgetstage_ibfk_5` (`budgetstep`),
-  CONSTRAINT `projectbudget_ibfk_4` FOREIGN KEY (`place`) REFERENCES `place` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=769 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `projectbudget`
---
-
-LOCK TABLES `projectbudget` WRITE;
-/*!40000 ALTER TABLE `projectbudget` DISABLE KEYS */;
-/*!40000 ALTER TABLE `projectbudget` ENABLE KEYS */;
-UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `gotobudgetsteps` BEFORE UPDATE ON `project` FOR EACH ROW BEGIN
+	IF new.collect >= new.budget AND new.stage = 7 THEN 
+		SET new.stage = 5;
+		SET new.budgetstep = 1;
+    		INSERT INTO `projectregistry` (`projectid`, `stage`,`category`,`name`, `country`, `place`, 
+			`brief`, `content`, `video`, `anonymous`, `parent`, `category`, 
+			`collect`, `budget`,`budgetstep`, `professional`, `hudget`,
+    			`E`, `T`, `C`, `I`, `F`, `U`, `D`,`created`)
+    VALUES (new.`id`, new.`name`, new.budgetstep,
+    new.`country`, new.`place`, new.`brief`, new.`content`, new.`video`, new.`anonymous`, new.`parent`, 
+    new.`category`, new.`collect`, new.`budget`, new.`professional`, new.`hudget`, 
+    new.`E`, new.`T`, new.`C`, new.`I`, new.`F`, new.`U`, new.`D`,new.`created`);
+	END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `projectprofessional`
@@ -508,6 +485,58 @@ INSERT INTO `projectprofessional` VALUES (1,401,78,'2019-04-25 15:22:39','2019-0
 UNLOCK TABLES;
 
 --
+-- Table structure for table `projectregistry`
+--
+
+DROP TABLE IF EXISTS `projectregistry`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `projectregistry` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `projectid` int(11) NOT NULL,
+  `stage` int(11) NOT NULL DEFAULT '5',
+  `category` int(11) NOT NULL DEFAULT '1',
+  `name` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `country` int(11) NOT NULL,
+  `place` int(11) NOT NULL DEFAULT '260',
+  `brief` varchar(256) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `content` varchar(2046) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '-',
+  `video` varchar(1024) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '-',
+  `anonymous` tinyint(1) NOT NULL DEFAULT '0',
+  `parent` int(11) NOT NULL DEFAULT '1',
+  `collect` decimal(32,16) NOT NULL DEFAULT '0.0000000000000000',
+  `budget` decimal(32,16) NOT NULL DEFAULT '0.0000000000000000',
+  `budgetstep` int(11) NOT NULL DEFAULT '1',
+  `budgetstepdoc` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `professional` int(11) NOT NULL DEFAULT '2',
+  `hudget` int(11) NOT NULL DEFAULT '2',
+  `E` int(11) NOT NULL DEFAULT '0',
+  `T` int(11) NOT NULL DEFAULT '0',
+  `C` int(11) NOT NULL DEFAULT '0',
+  `I` int(11) NOT NULL DEFAULT '0',
+  `F` int(11) NOT NULL DEFAULT '0',
+  `U` int(11) NOT NULL DEFAULT '0',
+  `D` int(11) NOT NULL DEFAULT '0',
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `place` (`place`),
+  KEY `projectregistry_ibfk_5_idx` (`projectid`),
+  CONSTRAINT `projectregistry_ibfk_4` FOREIGN KEY (`place`) REFERENCES `place` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `projectregistry_ibfk_5` FOREIGN KEY (`projectid`) REFERENCES `project` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=769 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `projectregistry`
+--
+
+LOCK TABLES `projectregistry` WRITE;
+/*!40000 ALTER TABLE `projectregistry` DISABLE KEYS */;
+/*!40000 ALTER TABLE `projectregistry` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `projectvote`
 --
 
@@ -526,7 +555,7 @@ CREATE TABLE `projectvote` (
   KEY `user` (`user`),
   CONSTRAINT `projectvote_ibfk_5` FOREIGN KEY (`project`) REFERENCES `project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `projectvote_ibfk_6` FOREIGN KEY (`user`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=1314 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=1319 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -535,7 +564,7 @@ CREATE TABLE `projectvote` (
 
 LOCK TABLES `projectvote` WRITE;
 /*!40000 ALTER TABLE `projectvote` DISABLE KEYS */;
-INSERT INTO `projectvote` VALUES (28,40,1,'E','2017-09-03 19:17:31','2019-04-22 15:15:16'),(31,40,1,'T','2017-09-03 19:22:26','2019-04-22 15:15:25'),(32,40,1,'F','2017-09-03 19:22:28','2019-04-22 15:16:03'),(42,40,1,'C','2017-09-03 19:40:52','2019-04-22 15:15:34'),(532,10,1,'D','2017-09-29 11:03:52','2019-04-22 15:16:20'),(533,10,1,'F','2017-09-29 11:03:59','2019-04-22 15:16:03'),(597,10,375,'E','2017-10-03 18:44:45','2019-04-22 15:15:16'),(598,10,375,'C','2017-10-03 18:44:48','2019-04-22 15:15:34'),(602,10,375,'T','2017-10-03 18:51:05','2019-04-22 15:15:25'),(638,12,1,'T','2017-12-06 16:41:24','2019-04-22 15:15:25'),(639,12,1,'E','2017-12-06 16:41:26','2019-04-22 15:15:16'),(640,12,1,'F','2017-12-06 16:41:37','2019-04-22 15:16:03'),(641,12,1,'D','2017-12-06 16:41:41','2019-04-22 15:16:20'),(656,105,1,'E','2017-12-13 21:47:33','2019-04-22 15:15:16'),(657,105,1,'T','2017-12-13 21:47:36','2019-04-22 15:15:25'),(659,105,1,'D','2017-12-13 21:47:59','2019-04-22 15:16:20'),(668,7,434,'T','2017-12-15 11:49:06','2019-04-22 15:15:25'),(669,7,434,'C','2017-12-15 11:49:06','2019-04-22 15:15:34'),(809,10,1,'E','2018-01-16 19:15:23','2019-04-22 15:15:16'),(815,7,581,'E','2018-05-31 10:05:36','2019-04-22 15:15:16'),(822,133,434,'C','2018-07-22 16:11:52','2019-04-22 15:15:34'),(825,133,434,'D','2018-07-22 16:12:00','2019-04-22 15:16:20'),(826,133,434,'F','2018-07-22 16:12:08','2019-04-22 15:16:03'),(829,133,434,'E','2018-07-22 16:12:23','2019-04-22 15:15:16'),(833,17,375,'E','2018-09-16 07:35:10','2019-04-22 15:15:16'),(937,7,581,'U','2019-04-23 15:43:33','2019-04-23 15:43:33'),(994,7,434,'E','2019-04-27 22:49:49','2019-04-27 22:49:49'),(1001,7,733,'E','2019-04-28 10:16:40','2019-04-28 10:16:40'),(1002,7,581,'T','2019-04-28 10:16:46','2019-04-28 10:16:46'),(1010,7,402,'U','2019-04-28 10:25:27','2019-04-28 10:25:27'),(1177,7,401,'T','2019-05-07 17:07:34','2019-05-07 17:07:34'),(1181,7,401,'U','2019-05-07 17:22:01','2019-05-07 17:22:01'),(1186,7,401,'D','2019-05-07 17:51:55','2019-05-07 17:51:55'),(1209,7,1,'E','2019-06-01 00:03:45','2019-06-01 00:03:45'),(1214,7,581,'C','2019-08-10 14:17:37','2019-08-10 14:17:37'),(1220,7,389,'D','2019-10-15 15:02:44','2019-10-15 15:02:44'),(1221,7,389,'C','2019-10-15 15:02:45','2019-10-15 15:02:45'),(1223,7,389,'T','2019-10-15 15:41:58','2019-10-15 15:41:58'),(1224,7,389,'E','2019-10-15 15:41:59','2019-10-15 15:41:59'),(1227,7,378,'C','2019-10-20 23:50:21','2019-10-20 23:50:21'),(1229,7,378,'E','2019-10-26 11:30:53','2019-10-26 11:30:53'),(1236,7,1,'F','2019-11-06 15:33:56','2019-11-06 15:33:56'),(1239,7,378,'F','2019-11-06 23:21:35','2019-11-06 23:21:35'),(1244,7,401,'E','2019-11-08 21:10:39','2019-11-08 21:10:39'),(1271,7,378,'T','2019-11-10 23:57:51','2019-11-10 23:57:51'),(1273,7,1,'T','2019-11-17 16:54:50','2019-11-17 16:54:50'),(1274,7,1,'C','2019-11-17 17:10:39','2019-11-17 17:10:39'),(1275,7,1,'U','2019-11-18 03:13:03','2019-11-18 03:13:03'),(1295,7,389,'F','2019-11-24 09:00:32','2019-11-24 09:00:32'),(1296,7,700,'F','2019-11-24 17:31:03','2019-11-24 17:31:03'),(1306,7,700,'E','2019-11-29 23:56:33','2019-11-29 23:56:33'),(1312,7,700,'C','2019-12-22 17:39:27','2019-12-22 17:39:27'),(1313,7,1,'D','2019-12-24 00:06:39','2019-12-24 00:06:39');
+INSERT INTO `projectvote` VALUES (28,40,1,'E','2017-09-03 19:17:31','2019-04-22 15:15:16'),(31,40,1,'T','2017-09-03 19:22:26','2019-04-22 15:15:25'),(32,40,1,'F','2017-09-03 19:22:28','2019-04-22 15:16:03'),(42,40,1,'C','2017-09-03 19:40:52','2019-04-22 15:15:34'),(532,10,1,'D','2017-09-29 11:03:52','2019-04-22 15:16:20'),(533,10,1,'F','2017-09-29 11:03:59','2019-04-22 15:16:03'),(597,10,375,'E','2017-10-03 18:44:45','2019-04-22 15:15:16'),(598,10,375,'C','2017-10-03 18:44:48','2019-04-22 15:15:34'),(602,10,375,'T','2017-10-03 18:51:05','2019-04-22 15:15:25'),(638,12,1,'T','2017-12-06 16:41:24','2019-04-22 15:15:25'),(639,12,1,'E','2017-12-06 16:41:26','2019-04-22 15:15:16'),(640,12,1,'F','2017-12-06 16:41:37','2019-04-22 15:16:03'),(641,12,1,'D','2017-12-06 16:41:41','2019-04-22 15:16:20'),(656,105,1,'E','2017-12-13 21:47:33','2019-04-22 15:15:16'),(657,105,1,'T','2017-12-13 21:47:36','2019-04-22 15:15:25'),(659,105,1,'D','2017-12-13 21:47:59','2019-04-22 15:16:20'),(668,7,434,'T','2017-12-15 11:49:06','2019-04-22 15:15:25'),(669,7,434,'C','2017-12-15 11:49:06','2019-04-22 15:15:34'),(809,10,1,'E','2018-01-16 19:15:23','2019-04-22 15:15:16'),(815,7,581,'E','2018-05-31 10:05:36','2019-04-22 15:15:16'),(822,133,434,'C','2018-07-22 16:11:52','2019-04-22 15:15:34'),(825,133,434,'D','2018-07-22 16:12:00','2019-04-22 15:16:20'),(826,133,434,'F','2018-07-22 16:12:08','2019-04-22 15:16:03'),(829,133,434,'E','2018-07-22 16:12:23','2019-04-22 15:15:16'),(833,17,375,'E','2018-09-16 07:35:10','2019-04-22 15:15:16'),(937,7,581,'U','2019-04-23 15:43:33','2019-04-23 15:43:33'),(994,7,434,'E','2019-04-27 22:49:49','2019-04-27 22:49:49'),(1001,7,733,'E','2019-04-28 10:16:40','2019-04-28 10:16:40'),(1002,7,581,'T','2019-04-28 10:16:46','2019-04-28 10:16:46'),(1010,7,402,'U','2019-04-28 10:25:27','2019-04-28 10:25:27'),(1177,7,401,'T','2019-05-07 17:07:34','2019-05-07 17:07:34'),(1181,7,401,'U','2019-05-07 17:22:01','2019-05-07 17:22:01'),(1186,7,401,'D','2019-05-07 17:51:55','2019-05-07 17:51:55'),(1209,7,1,'E','2019-06-01 00:03:45','2019-06-01 00:03:45'),(1214,7,581,'C','2019-08-10 14:17:37','2019-08-10 14:17:37'),(1220,7,389,'D','2019-10-15 15:02:44','2019-10-15 15:02:44'),(1221,7,389,'C','2019-10-15 15:02:45','2019-10-15 15:02:45'),(1223,7,389,'T','2019-10-15 15:41:58','2019-10-15 15:41:58'),(1224,7,389,'E','2019-10-15 15:41:59','2019-10-15 15:41:59'),(1227,7,378,'C','2019-10-20 23:50:21','2019-10-20 23:50:21'),(1229,7,378,'E','2019-10-26 11:30:53','2019-10-26 11:30:53'),(1236,7,1,'F','2019-11-06 15:33:56','2019-11-06 15:33:56'),(1239,7,378,'F','2019-11-06 23:21:35','2019-11-06 23:21:35'),(1244,7,401,'E','2019-11-08 21:10:39','2019-11-08 21:10:39'),(1271,7,378,'T','2019-11-10 23:57:51','2019-11-10 23:57:51'),(1273,7,1,'T','2019-11-17 16:54:50','2019-11-17 16:54:50'),(1274,7,1,'C','2019-11-17 17:10:39','2019-11-17 17:10:39'),(1275,7,1,'U','2019-11-18 03:13:03','2019-11-18 03:13:03'),(1295,7,389,'F','2019-11-24 09:00:32','2019-11-24 09:00:32'),(1296,7,700,'F','2019-11-24 17:31:03','2019-11-24 17:31:03'),(1306,7,700,'E','2019-11-29 23:56:33','2019-11-29 23:56:33'),(1312,7,700,'C','2019-12-22 17:39:27','2019-12-22 17:39:27'),(1313,7,1,'D','2019-12-24 00:06:39','2019-12-24 00:06:39'),(1314,133,1,'T','2020-01-02 07:55:29','2020-01-02 07:55:29'),(1315,133,1,'C','2020-01-02 07:55:29','2020-01-02 07:55:29'),(1316,133,1,'F','2020-01-02 07:55:33','2020-01-02 07:55:33'),(1317,133,1,'U','2020-01-02 07:55:34','2020-01-02 07:55:34'),(1318,133,1,'D','2020-01-02 07:55:36','2020-01-02 07:55:36');
 /*!40000 ALTER TABLE `projectvote` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -663,7 +692,7 @@ CREATE TABLE `user` (
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=248 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=250 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -834,7 +863,7 @@ UNLOCK TABLES;
 -- Dumping events for database 'coo'
 --
 /*!50106 SET @save_time_zone= @@TIME_ZONE */ ;
-/*!50106 DROP EVENT IF EXISTS `bizardry` */;
+/*!50106 DROP EVENT IF EXISTS `bizardryevent` */;
 DELIMITER ;;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;;
@@ -846,20 +875,13 @@ DELIMITER ;;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;;
 /*!50003 SET @saved_time_zone      = @@time_zone */ ;;
 /*!50003 SET time_zone             = 'SYSTEM' */ ;;
-/*!50106 CREATE*/ /*!50117 DEFINER=`root`@`localhost`*/ /*!50106 EVENT `bizardry` ON SCHEDULE EVERY 91 DAY STARTS '2020-03-20 03:50:00' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN 
-SELECT @allprojectD:=SUM(`D`) FROM `coo`.`project` WHERE `stage` = '7';
-SELECT @maxprojectE:=MAX(`E`) FROM `coo`.`project` WHERE `stage` = '7';
-CREATE TABLE IF NOT EXISTS BIZARRE  AS (SELECT id, `D`/@allprojectD+(RAND()-RAND())
-AS BIZARDRY FROM `coo`.`project` WHERE `stage` = '7');
-SELECT @bizard:=id FROM BIZARRE WHERE BIZARDRY = (SELECT MAX(DISTINCT BIZARDRY) FROM BIZARRE);
-UPDATE coo.project SET E = @maxprojectE  WHERE ID = @bizard; DROP TABLE BIZARRE; 
-END */ ;;
+/*!50106 CREATE*/ /*!50117 DEFINER=`root`@`localhost`*/ /*!50106 EVENT `bizardryevent` ON SCHEDULE EVERY 91 DAY STARTS '2020-03-20 03:00:00' ON COMPLETION NOT PRESERVE ENABLE DO CALL bizardry() */ ;;
 /*!50003 SET time_zone             = @saved_time_zone */ ;;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;;
 /*!50003 SET character_set_results = @saved_cs_results */ ;;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;;
-/*!50106 DROP EVENT IF EXISTS `pool` */;;
+/*!50106 DROP EVENT IF EXISTS `poolevent` */;;
 DELIMITER ;;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;;
@@ -871,13 +893,7 @@ DELIMITER ;;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;;
 /*!50003 SET @saved_time_zone      = @@time_zone */ ;;
 /*!50003 SET time_zone             = 'SYSTEM' */ ;;
-/*!50106 CREATE*/ /*!50117 DEFINER=`root`@`localhost`*/ /*!50106 EVENT `pool` ON SCHEDULE EVERY 7 SECOND STARTS '2019-12-31 19:21:18' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN 
-SELECT @pool:=COUNT(`active`) FROM `coo`.`user` WHERE `active` = 1; 
-SELECT @totalvotes:=SUM(`E`) FROM `coo`.`project` WHERE `stage` = 7; 
-UPDATE `coo`.`project` 
-SET collect = collect + 0.000002663622528 * @pool * `E` / @totalvotes  
-WHERE stage = 7 AND id <> 0;
-END */ ;;
+/*!50106 CREATE*/ /*!50117 DEFINER=`root`@`localhost`*/ /*!50106 EVENT `poolevent` ON SCHEDULE EVERY 7 SECOND STARTS '2020-01-04 06:37:27' ON COMPLETION NOT PRESERVE ENABLE DO CALL pool() */ ;;
 /*!50003 SET time_zone             = @saved_time_zone */ ;;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;;
@@ -889,6 +905,59 @@ DELIMITER ;
 --
 -- Dumping routines for database 'coo'
 --
+/*!50003 DROP PROCEDURE IF EXISTS `bizardry` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `bizardry`()
+BEGIN
+	DECLARE allprojectD int;
+	DECLARE maxprojectE int;
+    DECLARE bizarreID int;
+	SET allprojectD = (SELECT SUM(`D`) FROM `coo`.`project` WHERE `stage` = '7');
+    SET maxprojectE = (SELECT MAX(`E`) FROM `coo`.`project` WHERE `stage` = '7');
+	CREATE TABLE IF NOT EXISTS BIZARRE AS (SELECT id, `D`/@allprojectD+(RAND()-RAND())
+	AS BIZARDRY FROM `coo`.`project` WHERE `stage` = '7');
+	SET bizarreID = (SELECT id FROM BIZARRE WHERE BIZARDRY = (SELECT MAX(DISTINCT BIZARDRY) FROM BIZARRE));
+	UPDATE coo.project SET E = @maxprojectE  WHERE ID = bizarreID;
+	DROP TABLE BIZARRE;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `pool` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `pool`()
+BEGIN
+	DECLARE activeusers int;
+    DECLARE totalvotes int;
+	SET activeusers = (SELECT COUNT(`active`) FROM `coo`.`user` WHERE `active` = 1);
+    SET totalvotes = (SELECT SUM(`E`) FROM `coo`.`project` WHERE `stage` = 7);
+    UPDATE `coo`.`project` SET 
+	collect = collect + 0.000002663622528 * activeusers * `E` / totalvotes  
+	WHERE stage = 7 AND id <> 0;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -899,4 +968,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-01-01 17:50:10
+-- Dump completed on 2020-01-04  6:43:55

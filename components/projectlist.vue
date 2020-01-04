@@ -283,6 +283,8 @@ export default {
         category: project.category,
         collect: project.collect,
         budget: project.budget,
+        budgetstep: project.budgetstep,
+        budgetstepdoc: project.budgetstepdoc,
         professional: project.professional,
         hudget: project.hudget,
         E: project.E,
