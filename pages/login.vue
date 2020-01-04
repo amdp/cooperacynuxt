@@ -327,7 +327,7 @@ export default {
         //the newuser variable in response from the server sends the id of the recently created user
         this.imageUpload(newuser.id).catch(err => console.error(err))
       } else {
-        this.addedToast()
+        this.added()
       }
     },
     async imageUpload(id) {
@@ -344,15 +344,15 @@ export default {
           console.error(err)
         })
       if (res) {
-        this.addedToast()
+        this.added()
       }
     },
-    addedToast() {
+    added() {
       this.$toast.success('New user added.', {
         duration: 1000,
         className: 'toast'
       })
-      //setTimeout(function(){location.href = location.href}, 1200)
+      setTimeout(function () { location.href = '/main/thankyou' }, 1200)
     }
   }
 }

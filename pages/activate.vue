@@ -198,7 +198,7 @@ export default {
         duration: 1000,
         className: 'toast'
       })
-      setTimeout(function () { location.href = '/login' }, 1200)
+      setTimeout(function () { location.href = '/main/thankyou' }, 1200)
     }
   }
 }
