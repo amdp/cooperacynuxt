@@ -16,9 +16,7 @@ module.exports = {
     'bootstrap-vue/nuxt',
     //['@nuxtjs/dotenv', { systemvars: true, path: '/' }],
     //'@nuxtjs/proxy',
-    '@nuxtjs/google-analytics', {
-      id: 'UA-105334297-1'
-    }
+    ['@nuxtjs/google-analytics', { id: 'UA-105334297-1' }]
   ],
   loading: {
     color: '#FF8800',
