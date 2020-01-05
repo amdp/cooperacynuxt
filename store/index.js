@@ -58,13 +58,13 @@ export const state = () => ({
     { id: 2, name: 'reporter' }
   ],
   budgetstep: [
-    { id: 1, name: 'business plan' },
-    { id: 2, name: 'human resources' },
-    { id: 3, name: 'setup' },
-    { id: 4, name: 'production' },
-    { id: 5, name: 'kick off' },
-    { id: 6, name: 'fine tuning' },
-    { id: 7, name: 'celebrate' }
+    { id: 1, name: 'business plan', percentage: '0,03' },
+    { id: 2, name: 'human resources', percentage: '0,1' },
+    { id: 3, name: 'setup', percentage: '0,12' },
+    { id: 4, name: 'production', percentage: '0,5' },
+    { id: 5, name: 'kick off', percentage: '0,12' },
+    { id: 6, name: 'fine tuning', percentage: '0,1' },
+    { id: 7, name: 'celebrate', percentage: '0,03' }
   ]
 })
 

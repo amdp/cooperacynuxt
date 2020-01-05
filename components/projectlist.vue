@@ -285,6 +285,7 @@ export default {
         budget: project.budget,
         budgetstep: project.budgetstep,
         budgetstepdoc: project.budgetstepdoc,
+        fundingstep: project.fundingstep,
         professional: project.professional,
         hudget: project.hudget,
         E: project.E,

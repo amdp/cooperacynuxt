@@ -396,8 +396,9 @@ CREATE TABLE `project` (
   `parent` int(11) NOT NULL DEFAULT '1',
   `collect` decimal(32,16) NOT NULL DEFAULT '0.0000000000000000',
   `budget` decimal(32,16) NOT NULL DEFAULT '0.0000000000000000',
-  `budgetstep` int(11) DEFAULT NULL,
+  `budgetstep` int(11) NOT NULL DEFAULT '0',
   `budgetstepdoc` varchar(45) COLLATE utf8_bin DEFAULT NULL,
+  `fundingstep` int(11) NOT NULL DEFAULT '0',
   `professional` int(11) NOT NULL DEFAULT '2',
   `hudget` int(11) NOT NULL DEFAULT '2',
   `E` int(11) NOT NULL DEFAULT '0',
@@ -421,7 +422,7 @@ CREATE TABLE `project` (
 
 LOCK TABLES `project` WRITE;
 /*!40000 ALTER TABLE `project` DISABLE KEYS */;
-INSERT INTO `project` VALUES (1,7,1,'Cooperacy',1,1,'Cooperacy','Cooperacy is a scientific project aiming to spread the practice and the awareness of ecosystemic thinking and cooperation.','',0,1,5.7643063956453888,7000.0000000000000000,NULL,NULL,2,7,5,5,3,0,5,2,5,'2019-04-25 11:58:19','2020-01-04 05:36:30'),(375,1,2,'Corso di Chitarra a Milano',1100,260,'Corso di chitarra a cura di Giovanna Littardi','    -','    ',0,1,0.0000000000000000,0.0000000000000000,NULL,NULL,1,5,2,1,1,0,0,0,0,'2019-04-23 15:21:14','2019-12-22 17:29:12'),(378,7,4,'Cooperacy Management',1100,260,'Cooperacy planning, progress and project management','-','',0,1,0.8466621008901120,0.0000000000000000,NULL,NULL,1,5,1,1,1,0,1,0,0,'2019-04-23 13:43:29','2020-01-04 05:36:30'),(389,7,4,'Cooperacy Research',1,1,'The main research body of Cooperacy.','','',0,1,0.8466621008901120,0.0000000000000000,NULL,NULL,1,2,1,1,1,0,1,0,1,'2019-04-22 18:34:25','2020-01-04 05:36:30'),(401,2,2,'FB Page Editorial Plan',1100,260,'FB Page Editorial Plan','The aim of this discussion is collecting from all members relevant informations in order to populate our topics\' calendar for cooperacy.org Facebook page. Please contribute to it or share your opinions and doubts about the activity. Any contribution will be more than appreciated.','',1,402,0.0000000000000000,0.0000000000000000,NULL,NULL,1,2,1,1,0,0,0,1,1,'2019-04-22 18:34:25','2019-12-24 08:21:28'),(402,2,1,'The Messengers',1100,260,'The Communication Department of Cooperacy','Discussion board of Cooperacy Communication Department','',1,1,0.0000000000000000,0.0000000000000000,NULL,NULL,1,2,0,0,0,0,0,1,0,'2019-04-22 18:34:25','2019-12-24 08:21:28'),(434,2,4,'Platform Bugs',1100,260,'Website Bugs','You can signal here all the bugs you discover while using this website!','',0,378,0.0000000000000000,0.0000000000000000,NULL,NULL,1,2,2,1,2,0,1,0,1,'2019-04-22 18:34:25','2019-12-24 08:21:28'),(469,7,2,'FAQ for our website',1100,260,'Cooperacy FAQ page','','',0,402,0.0000000000000000,0.0000000000000000,NULL,NULL,1,2,0,0,0,0,0,0,0,'2019-04-22 18:34:25','2019-12-22 17:31:52'),(581,2,1,'Cooperacy Events',1,1,'Stay tuned for all the Cooperacy Events!','This project is born as a way to be notified about all the Cooperacy Events','',0,1,0.0000000000000000,0.0000000000000000,NULL,NULL,1,2,1,1,1,0,0,1,0,'2019-04-23 13:43:33','2019-12-24 08:21:28'),(700,2,4,'Announcements',1,1,'Announcements from Cooperacy','Freedom-vote this project to receive news and announcements about Cooperacy',' ',0,1,0.0000000000000000,0.0000000000000000,NULL,NULL,1,2,1,0,1,0,1,0,0,'2019-11-24 17:31:03','2019-12-24 08:21:28'),(732,2,1,'Lezioni di Acroyoga',1100,260,'Impara a fare Acroyoga e sostieni Cooperacy!','Gestito dall\'associazione Open Acroyoga','',0,1,0.0000000000000000,10.0000000000000000,NULL,NULL,1,5,0,0,0,0,0,0,0,'2019-04-22 18:34:25','2019-12-24 08:21:28'),(733,2,1,'Mercatino di frutta partecipata',1100,260,'Acquista con Cooperacy frutta buona e rivendila pagandoti il trasporto','Progetto già testato e riattivabile','',0,1,0.0000000000000000,0.0000000000000000,NULL,NULL,1,2,1,0,0,0,0,0,0,'2019-04-22 18:34:25','2019-12-24 08:21:28');
+INSERT INTO `project` VALUES (1,7,1,'Cooperacy',1,1,'Cooperacy','Cooperacy is a scientific project aiming to spread the practice and the awareness of ecosystemic thinking and cooperation.','',0,1,7.7616960465919488,7000.0000000000000000,0,NULL,0,2,7,5,5,3,0,5,2,5,'2019-04-25 11:58:19','2020-01-05 18:58:04'),(375,1,2,'Corso di Chitarra a Milano',1100,260,'Corso di chitarra a cura di Giovanna Littardi','    -','    ',0,1,0.0000000000000000,0.0000000000000000,0,NULL,0,1,5,2,1,1,0,0,0,0,'2019-04-23 15:21:14','2020-01-05 11:33:06'),(378,5,4,'Cooperacy Management',1100,260,'Cooperacy planning, progress and project management','-','',0,1,0.8466818878003200,0.0000000000000000,1,NULL,0,1,5,1,1,1,0,1,0,0,'2019-04-23 13:43:29','2020-01-04 14:55:49'),(389,5,4,'Cooperacy Research',1,1,'The main research body of Cooperacy.','','',0,1,0.8466818878003200,0.0000000000000000,1,NULL,0,1,2,1,1,1,0,1,0,1,'2019-04-22 18:34:25','2020-01-04 14:55:49'),(401,2,2,'FB Page Editorial Plan',1100,260,'FB Page Editorial Plan','The aim of this discussion is collecting from all members relevant informations in order to populate our topics\' calendar for cooperacy.org Facebook page. Please contribute to it or share your opinions and doubts about the activity. Any contribution will be more than appreciated.','',1,402,0.0000000000000000,0.0000000000000000,0,NULL,0,1,2,1,1,0,0,0,1,1,'2019-04-22 18:34:25','2020-01-05 11:33:06'),(402,2,1,'The Messengers',1100,260,'The Communication Department of Cooperacy','Discussion board of Cooperacy Communication Department','',1,1,0.0000000000000000,0.0000000000000000,0,NULL,0,1,2,0,0,0,0,0,1,0,'2019-04-22 18:34:25','2020-01-05 11:33:06'),(434,2,4,'Platform Bugs',1100,260,'Website Bugs','You can signal here all the bugs you discover while using this website!','',0,378,0.0000000000000000,0.0000000000000000,0,NULL,0,1,2,2,1,2,0,1,0,1,'2019-04-22 18:34:25','2020-01-05 11:33:06'),(469,5,2,'FAQ for our website',1100,260,'Cooperacy FAQ page','','',0,402,0.0000000000000000,0.0000000000000000,1,NULL,0,1,2,0,0,0,0,0,0,0,'2019-04-22 18:34:25','2019-12-22 17:31:52'),(581,2,1,'Cooperacy Events',1,1,'Stay tuned for all the Cooperacy Events!','This project is born as a way to be notified about all the Cooperacy Events','',0,1,0.0000000000000000,0.0000000000000000,0,NULL,0,1,2,1,1,1,0,0,1,0,'2019-04-23 13:43:33','2020-01-05 11:33:06'),(700,2,4,'Announcements',1,1,'Announcements from Cooperacy','Freedom-vote this project to receive news and announcements about Cooperacy',' ',0,1,0.0000000000000000,0.0000000000000000,0,NULL,0,1,2,1,0,1,0,1,0,0,'2019-11-24 17:31:03','2020-01-05 11:33:07'),(732,2,1,'Lezioni di Acroyoga',1100,260,'Impara a fare Acroyoga e sostieni Cooperacy!','Gestito dall\'associazione Open Acroyoga','',0,1,0.0000000000000000,10.0000000000000000,0,NULL,0,1,5,0,0,0,0,0,0,0,'2019-04-22 18:34:25','2020-01-05 11:33:07'),(733,2,1,'Mercatino di frutta partecipata',1100,260,'Acquista con Cooperacy frutta buona e rivendila pagandoti il trasporto','Progetto già testato e riattivabile','',0,1,0.0000000000000000,0.0000000000000000,0,NULL,0,1,2,1,0,0,0,0,0,0,'2019-04-22 18:34:25','2020-01-05 11:33:07');
 /*!40000 ALTER TABLE `project` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -436,15 +437,16 @@ DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `gotobudgetsteps` BEFORE UPDATE ON `project` FOR EACH ROW BEGIN
 	IF new.collect >= new.budget AND new.stage = 7 THEN 
 		SET new.stage = 5;
-		SET new.budgetstep = 1;
-    		INSERT INTO `projectregistry` (`projectid`, `stage`,`category`,`name`, `country`, `place`, 
-			`brief`, `content`, `video`, `anonymous`, `parent`, `category`, 
-			`collect`, `budget`,`budgetstep`, `professional`, `hudget`,
-    			`E`, `T`, `C`, `I`, `F`, `U`, `D`,`created`)
-    VALUES (new.`id`, new.`name`, new.budgetstep,
-    new.`country`, new.`place`, new.`brief`, new.`content`, new.`video`, new.`anonymous`, new.`parent`, 
-    new.`category`, new.`collect`, new.`budget`, new.`professional`, new.`hudget`, 
-    new.`E`, new.`T`, new.`C`, new.`I`, new.`F`, new.`U`, new.`D`,new.`created`);
+		IF new.budgetstep = 0 THEN SET new.budgetstep = 1; END IF;
+    		INSERT INTO `projectregistry` 
+            	(`projectid`,`stage`,`category`,`name`,`country`,`place`, 
+		`brief`, `content`,`video`,`anonymous`,`parent`,
+            	`collect`, `budget`,`budgetstep`,`fundingstep`, `professional`, `hudget`,
+            	`E`,`T`,`C`,`I`,`F`,`U`,`D`,`created`)
+    	VALUES (new.`id`,new.`stage`,new.`category`,new.`name`,new.`country`,new.`place`,
+    	new.`brief`,new.`content`,new.`video`,new.`anonymous`,new.`parent`, 
+	new.`collect`,new.`budget`,new.`budgetstep`,new.`fundingstep`,new.`professional`,new.`hudget`, 
+    	new.`E`,new.`T`,new.`C`,new.`I`,new.`F`,new.`U`,new.`D`,new.`created`);
 	END IF;
 END */;;
 DELIMITER ;
@@ -508,6 +510,7 @@ CREATE TABLE `projectregistry` (
   `budget` decimal(32,16) NOT NULL DEFAULT '0.0000000000000000',
   `budgetstep` int(11) NOT NULL DEFAULT '1',
   `budgetstepdoc` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  `fundingstep` int(11) NOT NULL DEFAULT '0',
   `professional` int(11) NOT NULL DEFAULT '2',
   `hudget` int(11) NOT NULL DEFAULT '2',
   `E` int(11) NOT NULL DEFAULT '0',
@@ -524,7 +527,7 @@ CREATE TABLE `projectregistry` (
   KEY `projectregistry_ibfk_5_idx` (`projectid`),
   CONSTRAINT `projectregistry_ibfk_4` FOREIGN KEY (`place`) REFERENCES `place` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `projectregistry_ibfk_5` FOREIGN KEY (`projectid`) REFERENCES `project` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=769 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=772 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -533,6 +536,7 @@ CREATE TABLE `projectregistry` (
 
 LOCK TABLES `projectregistry` WRITE;
 /*!40000 ALTER TABLE `projectregistry` DISABLE KEYS */;
+INSERT INTO `projectregistry` VALUES (769,378,5,4,'Cooperacy Management',1100,260,'Cooperacy planning, progress and project management','-','',0,1,0.8466818878003200,0.0000000000000000,1,NULL,0,1,5,1,1,1,0,1,0,0,'2019-04-23 13:43:29','2020-01-04 14:55:49'),(770,389,5,4,'Cooperacy Research',1,1,'The main research body of Cooperacy.','','',0,1,0.8466818878003200,0.0000000000000000,1,NULL,0,1,2,1,1,1,0,1,0,1,'2019-04-22 18:34:25','2020-01-04 14:55:49'),(771,469,5,2,'FAQ for our website',1100,260,'Cooperacy FAQ page','','',0,402,0.0000000000000000,0.0000000000000000,1,NULL,0,1,2,0,0,0,0,0,0,0,'2019-04-22 18:34:25','2020-01-04 14:55:49');
 /*!40000 ALTER TABLE `projectregistry` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -855,7 +859,8 @@ INSERT INTO `user` VALUES
 (235,	'Dumb235', 'User235', 'dumbuser235@dumb.user', 'dumbpassword',	0,	0,	0,	0,	0,	0,	0,	0,	0,	NULL,	NULL,	'2019-11-10 21:22:12',	'2019-10-23 04:23:44'),
 (236,	'Dumb236', 'User236', 'dumbuser236@dumb.user', 'dumbpassword',	0,	0,	0,	0,	0,	0,	0,	0,	0,	NULL,	NULL,	'2019-11-10 21:22:13',	'2019-10-25 22:32:11'),
 (237,	'Dumb237', 'User237', 'dumbuser237@dumb.user', 'dumbpassword',	0,	0,	0,	0,	0,	0,	0,	0,	0,	NULL,	NULL,	'2019-11-10 21:22:13',	'2019-10-28 15:45:16'),
-(238,	'Dumb238', 'User238', 'dumbuser238@dumb.user', 'dumbpassword',	0,	0,	0,	0,	0,	0,	0,	0,	0,	NULL,	NULL,	'2019-11-11 23:50:49',	'2019-11-09 15:28:43');
+(238,	'Dumb238', 'User238', 'dumbuser238@dumb.user', 'dumbpassword',	0,	0,	0,	0,	0,	0,	0,	0,	0,	NULL,	NULL,	'2019-11-11 23:50:49',	'2019-11-09 15:28:43'),
+(100,	'test', 'test', 'test@test.test', 'test',	0,	0,	0,	0,	0,	0,	0,	1,	1,	'2222-01-01 01:01:01',	'bank',	'2020-01-01 01:01:01',	'2019-11-09 15:28:43');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -893,7 +898,7 @@ DELIMITER ;;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;;
 /*!50003 SET @saved_time_zone      = @@time_zone */ ;;
 /*!50003 SET time_zone             = 'SYSTEM' */ ;;
-/*!50106 CREATE*/ /*!50117 DEFINER=`root`@`localhost`*/ /*!50106 EVENT `poolevent` ON SCHEDULE EVERY 7 SECOND STARTS '2020-01-04 06:37:27' ON COMPLETION NOT PRESERVE ENABLE DO CALL pool() */ ;;
+/*!50106 CREATE*/ /*!50117 DEFINER=`root`@`localhost`*/ /*!50106 EVENT `poolevent` ON SCHEDULE EVERY 7 SECOND STARTS '2020-01-05 19:56:33' ON COMPLETION NOT PRESERVE ENABLE DO CALL pool() */ ;;
 /*!50003 SET time_zone             = @saved_time_zone */ ;;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;;
@@ -968,4 +973,6 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-01-04  6:43:55
+-- Dump completed on 2020-01-05 19:58:17
+
+

@@ -523,6 +523,7 @@ app.post('/project', async function (req, res, next) {
       param.push( //we already pushed req.body.id
         req.body.budgetstep,
         req.body.budgetstepdoc,
+        req.body.fundingstep,
         req.body.professional,
         req.body.E,
         req.body.T,
@@ -533,7 +534,7 @@ app.post('/project', async function (req, res, next) {
         req.body.D,
         req.body.created
       )
-      let query = 'INSERT INTO `projectregistry` (`stage`,`category`,`name`,`country`,`place`,`brief`,`content`,`video`,`anonymous`,`parent`,`collect`,`budget`,`hudget`,`projectid`,`budgetstep`,`budgetstepdoc`,`professional`,`E`, `T`, `C`, `I`, `F`, `U`, `D`,`created`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
+      let query = 'INSERT INTO `projectregistry` (`stage`,`category`,`name`,`country`,`place`,`brief`,`content`,`video`,`anonymous`,`parent`,`collect`,`budget`,`hudget`,`projectid`,`budgetstep`,`budgetstepdoc`,`fundingstep`,`professional`,`E`, `T`, `C`, `I`, `F`, `U`, `D`,`created`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
       await mypool.execute(query, param)
       res.status(200).send({ id: req.body.id })
     }
@@ -801,10 +802,65 @@ app.get('/map', async function (req, res, next) {
 })
 
 app.post('/budgetstepdoc', async function (req, res, next) {
-  //inserire due nuovi valori nel project, budgetstep (last) e budgetstepdoc (last) 
-  //e aggiornarli tramite il trigger e questa funzione
-
-  res.status(200).send('OK')
+  try {// updates the project link to the budget step document
+    let query = 'UPDATE `project` SET `budgetstepdoc` = ? WHERE `id` = ?'
+    let param = [req.body.doc, req.body.project.id]
+    await mypool.execute(query, param)
+  } catch (err) {
+    next(err)
+  }
+  try {// creates new record in the project registry with the budget step document link
+    let query = 'INSERT INTO `projectregistry` (`projectid`,`stage`,`category`,`name`,`country`,`place`,`brief`,`content`,`video`,`anonymous`,`parent`,`collect`,`budget`,`budgetstep`,`fundingstep`,`professional`,`hudget`,`E`, `T`, `C`, `I`, `F`, `U`, `D`,`created`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
+    let param = [req.body.project.id, req.body.project.stage, req.body.project.category, req.body.project.name, req.body.project.country, req.body.project.place, req.body.project.brief, project.content, req.body.project.video, req.body.project.anonymous, req.body.project.parent, req.body.project.collect, req.body.project.budget, req.body.project.budgetstep, req.body.project.fundingstep, req.body.project.professional, req.body.project.hudget, req.body.project.E, req.body.project.T, req.body.project.C, req.body.project.I, req.body.project.F, req.body.project.U, req.body.project.D, req.body.project.created]
+    await mypool.execute(query, param)
+  } catch (err) {
+    next(err)
+  }
+  if ((req.body.project.budgetstep == 2 && req.body.project.T >= req.body.project.E * 0.7)
+    || (req.body.project.budgetstep == 3 && req.body.project.U >= req.body.project.E * 0.7)) {
+    try {// applies trust/uderstandingvotes rule, moves 1 budget step further, creates a new record in the registry
+      let query = 'UPDATE `project` SET `budgetstep` = `budgetstep` + 1 where `id`=?;'
+        + 'INSERT INTO `projectregistry`(`projectid`,`stage`,`category`,`name`,`country`,`place`,`brief`,`content`,'
+        + '`video`,`anonymous`,`parent`,`collect`,`budget`,`budgetstep`,`fundingstep`,`professional`,`hudget`,'
+        + '`E`, `T`, `C`, `I`,`F`, `U`, `D`,`created`) SELECT `id`,`stage`,`category`,`name`,`country`,`place`,`brief`,`content`,'
+        + '`video`,`anonymous`,`parent`,`collect`,`budget`,`budgetstep`,`fundingstep`,`professional`,`hudget`,'
+        + '`E`, `T`, `C`, `I`,`F`, `U`, `D`,`created` from `project` where `id`=?;'
+      let param = [req.body.project.id, req.body.project.id]
+      await mypool.execute(query, param)
+    } catch (err) {
+      next(err)
+    }
+  } else {// if no trustvote nor understandingvote rule can be applied, it creates one week deadline event
+    try {// at the end of which if E went down, project goes back to idea stage, 
+      // if I downvoted, it goes into pairing state,
+      // if at stage 7 it becomes an active project, 
+      // else it moves 1 budget step forward and creates a new registry record
+      let query = 'delimiter | DROP EVENT IF EXISTS budgetstepproject' + req.body.project.id + '|'
+        + 'CREATE EVENT budgetstepproject' + req.body.project.id + ' ON SCHEDULE AT CURRENT_TIMESTAMP + INTERVAL 1 WEEK DO BEGIN'
+        + 'DECLARE thisproject INT; DECLARE e0 INT; DECLARE e1 INT;'
+        + 'SET thisproject = ?; SET e1 = (SELECT `E` from project where id=thisproject);'
+        + 'SET e0 = (SELECT `E` from projectregistry where projectid=thisproject and'
+        + 'id = (SELECT max(id) from projectregistry where projectid=thisproject));'
+        + 'IF e1 < e0 THEN'
+        + 'UPDATE `project` SET `stage` = 7, `collect` = `collect` * e1/e0 where `id`=thisproject;'
+        + 'ELSEIF (SELECT I from project where id=thisproject) > 0 THEN'
+        + 'UPDATE `project` SET `stage` = 6 where `id`=thisproject;'
+        + 'ELSEIF (SELECT `budgetstep` from project where id=thisproject) = 7 THEN'
+        + 'UPDATE `project` SET `stage` = 2 where `id`=thisproject;'
+        + 'ELSE UPDATE `project` SET `budgetstep` = `budgetstep` + 1 where `id`=thisproject;'
+        + 'INSERT INTO `projectregistry`(`projectid`,`stage`,`category`,`name`,`country`,`place`,`brief`,`content`,'
+        + '`video`,`anonymous`,`parent`,`collect`,`budget`,`budgetstep`,`fundingstep`,`professional`,`hudget`,'
+        + '`E`, `T`, `C`, `I`,`F`, `U`, `D`,`created`) SELECT `id`,`stage`,`category`,`name`,`country`,`place`,`brief`,`content`,'
+        + '`video`,`anonymous`,`parent`,`collect`,`budget`,`budgetstep`,`fundingstep`,`professional`,`hudget`,'
+        + '`E`, `T`, `C`, `I`,`F`, `U`, `D`,`created` from `project` where `id`=thisproject;'
+        + 'END IF; END| delimiter ;'
+      let param = [req.body.project.id, req.body.project.id, req.body.project.id]
+      await mypool.execute(query, param)
+      res.status(200).send('OK')
+    } catch (err) {
+      next(err)
+    }
+  }
 })
 
 app.post('/vote', async function (req, res, next) {
@@ -922,6 +978,22 @@ app.post('/vote', async function (req, res, next) {
         const [diversity] = await mypool.execute(query, param)
         if ((diversity[0].D - Math.floor(diversity[0].D / 7) * 7) == 0) {
           let query = 'UPDATE `project` SET `E` = `E` + 1 where `project`.`id`=?'
+          let param = [req.body.id]
+          await mypool.execute(query, param)
+        }
+      } catch (err) {
+        next(err)
+      }
+    }
+
+    //if in pairing state, the state is removed if I=0
+    if (req.body.stage == 6 && req.body.proptype == 'project' && req.body.condition == 'I') {
+      try {
+        let query = 'SELECT `I` from `project` where `id` = ?'
+        let param = [req.body.id]
+        const [transparency] = await mypool.execute(query, param)
+        if (transparency[0].I == 0) {
+          let query = 'UPDATE `project` SET `stage` = 7 where `id`=?'
           let param = [req.body.id]
           await mypool.execute(query, param)
         }
