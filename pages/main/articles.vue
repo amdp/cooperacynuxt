@@ -30,8 +30,8 @@
       Project page:
       <a
         class="au"
-        href="http://www.researchgate.net/project/main/cooperation-Science"
-        >www.researchgate.net/project/main/cooperation-Science</a
+        href="https://www.researchgate.net/project/Cooperation-Science"
+        >https://www.researchgate.net/project/Cooperation-Science</a
       ><br /><br />
       Our investigation is therefore currently being described qualitatively and
       quantitatively at a scientific level, never the less we cooperate with

@@ -65,6 +65,15 @@ export const state = () => ({
     { id: 5, name: 'kick off', percentage: '0,12' },
     { id: 6, name: 'fine tuning', percentage: '0,1' },
     { id: 7, name: 'celebrate', percentage: '0,03' }
+  ],
+  socialrelation: [
+    { id: 1, name: 'institution' },
+    { id: 2, name: 'company' },
+    { id: 3, name: 'community' },
+    { id: 4, name: 'friends' },
+    { id: 5, name: 'family' },
+    { id: 6, name: 'couple' },
+    { id: 7, name: 'yourself' }
   ]
 })
 
@@ -223,6 +232,13 @@ export const actions = {
   budgetstepdocAction: async function (context, payload) {
     let { data } = await this.$axios.post(
       process.env.DBURL + '/budgetstepdoc',
+      payload
+    )
+    return data
+  },
+  fundingstepAction: async function (context, payload) {
+    let { data } = await this.$axios.post(
+      process.env.DBURL + '/fundingstep',
       payload
     )
     return data

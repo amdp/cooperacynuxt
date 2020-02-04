@@ -144,9 +144,9 @@
         <nuxt-link to="/login" class="ae">Joining</nuxt-link> Cooperacy is
         entertaining and makes you learn how to develop enjoyable cooperations
         in your
-        <nuxt-link to="/main/aboutyou" class="ad">personal</nuxt-link> relations, in
-        the
-        <nuxt-link to="/coorporate" class="af">corporate</nuxt-link>
+        <nuxt-link to="/main/aboutyou" class="ad">personal</nuxt-link>
+        relations, in the
+        <nuxt-link to="/main/corporate" class="af">corporate</nuxt-link>
         world and at the
         <nuxt-link to="/cci" class="au">international</nuxt-link> level.
       </p>
@@ -273,7 +273,7 @@ export default {
         {
           name: 'equivalenceD',
           display: 'none',
-          href: 'cooperation#equivalence',
+          href: 'main/cooperation#equivalence',
           matrix1: 'matrix(1 0 0 1 157 360)',
           matrix2: 'matrix(1 0 0 1 225 440)',
           style:
@@ -288,7 +288,7 @@ export default {
         {
           name: 'trustD',
           display: 'none',
-          href: 'cooperation#trust',
+          href: 'main/cooperation#trust',
           matrix1: 'matrix(1 0 0 1 278 360)',
           matrix2: 'matrix(1 0 0 1 208 443)',
           style:
@@ -303,7 +303,7 @@ export default {
         {
           name: 'careD',
           display: 'none',
-          href: 'cooperation#care',
+          href: 'main/cooperation#care',
           matrix1: 'matrix(1 0 0 1 286 360)',
           matrix2: 'matrix(1 0 0 1 182 443)',
           style:
@@ -318,7 +318,7 @@ export default {
         {
           name: 'transparencyD',
           display: 'none',
-          href: 'cooperation#transparency',
+          href: 'main/cooperation#transparency',
           matrix1: 'matrix(1 0 0 1 132 360)',
           matrix2: 'matrix(1 0 0 1 194 443)',
           style:
@@ -333,7 +333,7 @@ export default {
         {
           name: 'freedomD',
           display: 'none',
-          href: 'cooperation#freedom',
+          href: 'main/cooperation#freedom',
           matrix1: 'matrix(1 0 0 1 222 360)',
           matrix2: 'matrix(1 0 0 1 184 443)',
           style:
@@ -348,7 +348,7 @@ export default {
         {
           name: 'understandingD',
           display: 'none',
-          href: 'cooperation#understanding',
+          href: 'main/cooperation#understanding',
           matrix1: 'matrix(1 0 0 1 118 360)',
           matrix2: 'matrix(1 0 0 1 116 443)',
           style:
@@ -363,7 +363,7 @@ export default {
         {
           name: 'diversityD',
           display: 'none',
-          href: 'cooperation#diversity',
+          href: 'main/cooperation#diversity',
           matrix1: 'matrix(1 0 0 1 218 360)',
           matrix2: 'matrix(1 0 0 1 180 443)',
           style:

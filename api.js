@@ -863,6 +863,17 @@ app.post('/budgetstepdoc', async function (req, res, next) {
   }
 })
 
+app.post('/fundingstep', async function (req, res, next) {
+  try {
+    let query = 'UPDATE project SET fundingstep = fundingstep + 1 where id=?'
+    let param = [req.body.project.id]
+    await mypool.execute(query, param)
+    res.status(200).send('OK')
+  } catch (err) {
+    next(err)
+  }
+})
+
 app.post('/vote', async function (req, res, next) {
   try {
     let query =

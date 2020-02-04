@@ -134,7 +134,7 @@
       choice in a generic collaborative interaction make it impossible to make
       it become a cooperation: there is no mutual enjoyment. To solve these kind
       of contextual issues, a good personal space or even
-      <nuxt-link to="//main/integration#freedom" class="af"
+      <nuxt-link to="/main/integration#freedom" class="af"
         >separation</nuxt-link
       >
       are needed, even in a nice cooperation.

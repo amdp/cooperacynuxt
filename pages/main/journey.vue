@@ -36,8 +36,8 @@
       improvement and needed changes, the Cooperacy Journey provides a path that
       follows the seven conditions in order to bring forward all the group or
       organisation
-      <nuxt-link to="/services" class="af">development</nuxt-link> power. Some
-      companies that have strong rational or pyramidal structures need more
+      <nuxt-link to="/main/corporate" class="af">development</nuxt-link> power.
+      Some companies that have strong rational or pyramidal structures need more
       equivalence to foster innovation through better internal services instead
       of leadership changes, while some institutions need more diversity or
       freedom to shake a little bit the recurring or stagnant processes they

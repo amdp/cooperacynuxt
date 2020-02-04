@@ -189,6 +189,21 @@
                         >Edit this project</b-link
                       >&nbsp;</span
                     >
+
+                    <span
+                      v-if="
+                        (project.budgetstep - project.fundingstep > 1 &&
+                          improfessional) ||
+                          (project.stage == 2 &&
+                            project.fundingstep == 6 &&
+                            improfessional) ||
+                          $auth.user.role == 1
+                      "
+                    >
+                      <b-link class="ad" @click="fundingstep(project)"
+                        >Request funding step</b-link
+                      >&nbsp;</span
+                    >
                   </div>
                 </div>
               </b-col>
@@ -301,6 +316,18 @@ export default {
         userid: this.$auth.user.id
       })
       return this.$router.push({ path: '/user' })
+    },
+    fundingstep(project) {
+      project.fundingstep++
+      let payload = {
+        formName: this.$auth.user.name + ' ' + this.$auth.user.surname,
+        formEmail: this.$auth.user.email,
+        formSubject: 'Funding Step #' + project.fundingstep
+          + ' Request Notification from Project #' + project.id + ' ' + project.name,
+        formBody: 'In Project #' + project.id + ' ' + project.name + ' comember ' + this.$auth.user.name + ' ' + this.$auth.user.surname + ' has requested Funding Step #"' + project.fundingstep + '".'
+      }
+      this.$store.dispatch('contactEmailAction', payload)
+      this.$store.dispatch('fundingstep', project)
     },
     professional() {
       this.store.dispatch('addprofessional', { id: this.formProfessional })

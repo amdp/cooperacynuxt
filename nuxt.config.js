@@ -11,12 +11,13 @@ module.exports = {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/toast',
-    //'@nuxtjs/pwa',
     '@nuxtjs/auth',
+    'nuxt-webfontloader',
     'bootstrap-vue/nuxt',
+    ['@nuxtjs/google-analytics', { id: 'UA-105334297-1' }],
     //['@nuxtjs/dotenv', { systemvars: true, path: '/' }],
     //'@nuxtjs/proxy',
-    ['@nuxtjs/google-analytics', { id: 'UA-105334297-1' }]
+    //'@nuxtjs/pwa',    
   ],
   loading: {
     color: '#FF8800',
@@ -67,14 +68,13 @@ module.exports = {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      {
-        rel: 'stylesheet',
-        href:
-          'https://fonts.googleapis.com/css?family=Prompt:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap'
-      }
     ]
   },
-
+  webfontloader: {
+    google: {
+      families: ['Prompt:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap']
+    }
+  },
   auth: {
     strategies: {
       google: { client_id: process.env.GOOGLEID },

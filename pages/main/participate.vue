@@ -136,12 +136,12 @@
     </p>
     <p class="base">
       Cooperation science can
-      <nuxt-link to="/services" class="au">improve</nuxt-link> the productivity
-      of your company and the satisfaction of your employees. It could, on a
-      wider scale, even help the world to gain a more respectful awareness
-      accompained with better performances and more sustainability. Are you part
-      of the corporate world? Would you like to apply the Cooperation Science in
-      your company processes? Feel free to
+      <nuxt-link to="/main/corporate" class="au">improve</nuxt-link> the
+      productivity of your company and the satisfaction of your employees. It
+      could, on a wider scale, even help the world to gain a more respectful
+      awareness accompained with better performances and more sustainability.
+      Are you part of the corporate world? Would you like to apply the
+      Cooperation Science in your company processes? Feel free to
       <nuxt-link to="/contact" class="at">contact us</nuxt-link> and ask for
       more information!
     </p>
