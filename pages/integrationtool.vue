@@ -2,18 +2,20 @@
   <div class="row">
     <div class="col-2"></div>
     <div class="col-8">
-      <h2 class="text-center mb-4 equivalence">PAIRING TOOL</h2>
-      <b-form @submit.prevent="cooperationForm()" class="mt-3 was-validated">
+      <h2 class="text-center mb-4 equivalence">INTEGRATION TOOL</h2>
+      <b-form @submit.prevent="integrationForm()" class="mt-3 was-validated">
         <br />
-        <h5 class="equivalence">MAIN NATURE</h5>
+        <h5 class="text-center mb-4 diversity">
+          1. NATURE OF THE RELATIONAL CONTEXT
+        </h5>
         <b-form-group
           label-for="natureInput"
           label="Nature:"
-          description="Do you want to pair a Cooperacy Project or a Social Relation, like companies, communities, couples or friends?"
+          description="Do you want to integrate a Cooperacy Project or a Social Ecosystem, like companies, communities, couples or friends?"
         >
           <b-form-select id="natureInput" v-model="formNature" required>
             <option>A Cooperacy Project</option>
-            <option>A Social Relation</option>
+            <option>A Social Ecosystem</option>
           </b-form-select>
         </b-form-group>
 
@@ -33,40 +35,25 @@
         </b-form-group>
 
         <b-form-group
-          label-for="relationInput"
-          label="Social Relation:"
-          description="From You with Yourself, till Companies or Institutions like Nations, choose the relation in which you would like to apply the pairing tool based on Proportional Creative Integration."
-          v-if="formNature == 'A Social Relation'"
+          label-for="ecosystemInput"
+          label="Social Ecosystem:"
+          description="From You with Yourself, till Companies or Institutions like Nations, choose the ecosystem in which you would like to apply the Proportional Creative Integration."
+          v-if="formNature == 'A Social Ecosystem'"
         >
-          <b-form-select id="relationInput" v-model="formRelation">
+          <b-form-select id="ecosystemInput" v-model="formEcosystem">
             <option
-              v-for="relation in $store.state.socialrelation"
-              :key="relation.id"
-              :value="relation.id"
-              >{{ relation.name }}</option
+              v-for="ecosystem in $store.state.ecosystem"
+              :key="ecosystem.id"
+              :value="ecosystem.id"
+              >{{ ecosystem.name }}</option
             >
           </b-form-select>
         </b-form-group>
 
         <b-form-group
-          label-for="projectIDInput"
-          label="Project ID:"
-          description="What is the project ID?"
-          v-if="formNature == 'A Social Relation'"
-        >
-          <b-form-input
-            id="projectIDInput"
-            v-model="formProjectID"
-            size="sm"
-            required
-          >
-          </b-form-input>
-        </b-form-group>
-
-        <b-form-group
           label-for="countryInput"
           label="Country:"
-          description="Insert the country of your Social Relation, even if it is the nation itself."
+          description="Insert the country of your Ecosystem, even if it is the nation itself."
         >
           <b-form-select id="countryInput" v-model="formCountry">
             <option
@@ -80,7 +67,7 @@
         <b-form-group
           label-for="placeInput"
           label="Place:"
-          description="Insert the place or location of your Social Relation, like a city or a location."
+          description="Insert the place or location of your Social Ecosystem, like a city or a location."
         >
           <b-form-select id="placeInput" v-model="formPlace" required>
             <option v-for="place in place" :key="place.id" :value="place.id">{{
@@ -97,180 +84,156 @@
           >
         </p>
         <b-form-group
-          label-for="briefInput"
-          label="Brief:"
-          description="A one-line description of the project idea"
+          label-for="titleInput"
+          label="Title:"
+          description="A title representative of the situation"
         >
           <b-form-input
-            id="briefInput"
-            v-model="formBrief"
+            id="titleInput"
+            v-model="formTitle"
             size="sm"
             required
           ></b-form-input>
         </b-form-group>
         <b-form-group
-          label-for="contentInput"
-          label="Content:"
-          description="A longer description of the project idea"
+          label-for="descInput"
+          label="Description:"
+          description="A description of the current contrast"
         >
           <b-form-textarea
-            id="contentInput"
-            v-model="formContent"
+            id="descInput"
+            v-model="formDesc"
             size="sm"
           ></b-form-textarea>
         </b-form-group>
-        <div class="row">
-          <div class="col-10">
-            <b-form-group
-              label-for="imageInput"
-              label="Image:"
-              description="The project image"
-            >
-              <b-form-file
-                id="imageInput"
-                v-model="formImageFile"
-                ref="formImageFile"
-                size="sm"
-              ></b-form-file>
-            </b-form-group>
-          </div>
-          <div class="col-2">
-            <span
-              >Current: <br /><img
-                class="currentImage"
-                :src="
-                  '/assets/image/project/' +
-                    this.$store.state.project.id +
-                    '.png'
-                "
-            /></span>
-          </div>
-        </div>
+        <h5 class="text-center mb-4 understanding">
+          2. NATURE OF THE GROUP RELATION
+        </h5>
+
+        <p class="understanding it">
+          Feel free to slide in the next questions without caring too much about
+          the value, keeping in mind 0-25 is a little, 25-75 is on average and
+          75-100 is a lot. Note: if you are evaluating the relation with
+          yourself, think about the relation you have with the world.
+        </p>
+        In the Social Ecosystem context...
         <b-form-group
-          label-for="videoInput"
-          label="Video:"
-          description="Please insert a YouTube video link for the project idea"
+          label-for="diversityInput"
+          label="Do you find the participants are different one another?"
         >
           <b-form-input
-            id="videoInput"
-            v-model="formVideo"
-            size="sm"
+            id="diversityInput"
+            v-model="formDiversity"
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            value="value"
           ></b-form-input>
+          <em>Your answer: they are {{ formDiversity }}% different</em>
+        </b-form-group>
+        <b-form-group
+          label-for="understandingInput"
+          label="Do you find the participants understand each other?"
+        >
+          <b-form-input
+            id="understandingInput"
+            v-model="formUnderstanding"
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            value="value"
+          ></b-form-input>
+          <em>
+            Your answer: they understand each other {{ formUnderstanding }}% of
+            the time
+          </em>
+        </b-form-group>
+        <b-form-group
+          label-for="freedomInput"
+          label="Do you find the participants feel free?"
+        >
+          <b-form-input
+            id="freedomInput"
+            v-model="formFreedom"
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            value="value"
+          ></b-form-input>
+          <em> Your answer: they feel {{ formFreedom }}% free on average </em>
+        </b-form-group>
+        <b-form-group
+          label-for="transparencyInput"
+          label="Do you find the participants hide what they think or feel?"
+        >
+          <b-form-input
+            id="transparencyInput"
+            v-model="formTransparency"
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            value="value"
+          ></b-form-input>
+          <em>
+            Your answer: they hide {{ formTransparency }}% of what they think
+            and feel on average
+          </em>
+        </b-form-group>
+        <b-form-group
+          label-for="careInput"
+          label="Do the participants like the Social Ecosystem?"
+        >
+          <b-form-input
+            id="careInput"
+            v-model="formCare"
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            value="value"
+          ></b-form-input>
+          <em>
+            Your answer: {{ formCare }}% of them like the Social Ecosystem
+          </em>
+        </b-form-group>
+        <b-form-group
+          label-for="trustInput"
+          label="Do the participants trust each other?"
+        >
+          <b-form-input
+            id="trustInput"
+            v-model="formTrust"
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            value="value"
+          ></b-form-input>
+          <em> Your answer: they trust each other at {{ formTrust }}% </em>
+        </b-form-group>
+        <b-form-group
+          label-for="equivalenceInput"
+          label="Do the participants receive similar/comparable rewards (money, goods, services, relational benefits) for their efforts, or someone gets more and someone gets less?"
+        >
+          <b-form-input
+            id="equivalenceInput"
+            v-model="formEquivalence"
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            value="value"
+          ></b-form-input>
+          <em>
+            Your answer: they receive rewards that are {{ formEquivalence }}%
+            equivalent
+          </em>
         </b-form-group>
 
-        <h5 class="understanding">TECHNICAL</h5>
-
-        <b-form-group
-          label-for="parentInput"
-          label="Parent:"
-          description="Please insert eventual parent project id, if not sure leave it empty (Cooperacy)"
-        >
-          <b-form-input
-            id="parentInput"
-            v-model="formParent"
-            size="sm"
-            required
-          ></b-form-input>
-        </b-form-group>
-        <!-- FIX : the parent project id owner will be notified, except for the Cooperacy project -->
-        <b-form-group
-          label-for="categoryInput"
-          label="Category:"
-          description="Please choose the project idea category"
-        >
-          <b-form-select id="categoryInput" v-model="formCategory">
-            <option
-              v-for="category in category"
-              :key="category.id"
-              :value="category.id"
-              >{{ category.name }}</option
-            >
-          </b-form-select>
-        </b-form-group>
-        <b-form-group
-          label-for="anonymousInput"
-          label=""
-          description="The AFTF collective-intelligence methodology makes some info and all the comments or votes anonymous until the project is approved"
-        >
-          <b-form-checkbox
-            id="anonymousInput"
-            v-model="formAnonymous"
-            value="1"
-            unchecked-value="0"
-            switch
-            class="m-3"
-          >
-            Anonymous First Transparency Forever-after
-            methodology.</b-form-checkbox
-          >
-        </b-form-group>
-
-        <h5 class="trust">BUDGET AND HUDGET</h5>
-
-        <b-form-group
-          label-for="stageInput"
-          label=""
-          description="If you want to propose a free group cooperation, or a course, an event or similar with its own fee, you just leave it unchecked"
-        >
-          <b-form-checkbox
-            id="stageInput"
-            v-model="formStageFunding"
-            value="7"
-            unchecked-value="2"
-            switch
-            class="m-3"
-            @input="
-              formBudget = 0
-              formFee = 0
-            "
-          >
-            FUNDED: when checked, this project idea asks for Cooperacy
-            Funds</b-form-checkbox
-          >
-        </b-form-group>
-        <b-form-group
-          label-for="budgetInput"
-          label="Budget:"
-          description="Insert the amount of budget needed for your project 
-          (Automatically calculated in case of fee-based projects)"
-        >
-          <b-form-input
-            id="budgetInput"
-            v-model="formBudget"
-            :readonly="this.formStageFunding == 2"
-          ></b-form-input>
-        </b-form-group>
-        <b-form-group
-          label-for="hudgetInput"
-          label="Hudget:"
-          description="Insert the number of professionals needed that will receive a remuneration from the budget"
-        >
-          <b-form-input id="hudgetInput" v-model="formHudget"></b-form-input>
-        </b-form-group>
-        <b-form-group
-          label-for="feeInput"
-          label="Attending Fee:"
-          description="Insert the price of the attending fee, leave 0 for free projects"
-          v-if="this.formStageFunding == 2"
-        >
-          <b-form-input
-            id="feeInput"
-            v-model="formFee"
-            @keyup="totalfreeproject"
-          ></b-form-input>
-        </b-form-group>
-        <b-form-group
-          label-for="attendeeInput"
-          label="Minimum attendees:"
-          description="Insert the minimum amount of attendees to this course, event, fee-based service"
-          v-if="this.formStageFunding == 2"
-        >
-          <b-form-input
-            id="attendeeInput"
-            v-model="formAttendee"
-            @keyup="totalfreeproject"
-          ></b-form-input>
-        </b-form-group>
         <b-check
           v-if="formCategory != 4"
           id="termscheckbox"
@@ -280,17 +243,14 @@
           <span class="gray">
             <i>
               By clicking the GO! button you declare you read and are aware of
-              the
+              the Cooperacy
               <nuxt-link to="/main/terms" class="au"
                 >terms and conditions</nuxt-link
-              >, you are not damaging the ecosystem or infringing anyone’s right
-              or copyright with this idea concept, visuals, needed actions,
-              financing and personal relations, and mostly important you are
-              aware that Cooperacy as a community will become the owner of all
-              this project rights and even though you can obtain funds and
-              salaries out of this project of mine but you are NOT going to get
-              any financial margins because you want them to go back to
-              Cooperacy and sustain other comembers ideas
+              >, and that you acknowledge that this is an experimental tool
+              based on scientific research but that has no liability nor gives
+              you any warranty about your personal choices and future action
+              that you will bring forward after fulfilling this questionnaire
+              and reading its result.
             </i>
           </span>
         </b-check>
@@ -300,7 +260,7 @@
         >
           <span v-if="!editing">GO!</span>
           <b-spinner small v-if="editing" class="m-1"></b-spinner>
-          <span v-if="editing">Reloading the project..</span>
+          <span v-if="editing">Loading your form..</span>
         </b-button>
       </b-form>
       <!-- MODAL: ADD A NEW PLACE -->
@@ -330,7 +290,7 @@
         <template slot="modal-footer" slot-scope="{ ok, cancel }">
           <b-button size="sm" class="bcare" @click="addplace()">ADD</b-button>
           <b-button size="sm" class="btransparency" @click="cancel()"
-            >CANCEL</b-button
+            >CLOSE</b-button
           >
         </template>
       </b-modal>
@@ -359,56 +319,18 @@ export default {
   },
   data() {
     return {
-      formNature: false,
-      terms: false,
+      formNature: 'Social Ecosystem',
+      terms: null,
+      formDiversity: 50,
+      formUnderstanding: 50,
+      formFreedom: 50,
+      formTransparency: 50,
+      formCare: 50,
+      formTrust: 50,
+      formEquivalence: 50,
       editing: false,
       country: this.$store.state.country,
-      category: this.$store.state.category.filter(category => category.id != 0),
-      totallabel: 0,
-      formAnonymous: 0,
-      formNewcountry: null,
-      formNewplace: null,
-      formName: this.$store.state.edit.id
-        ? this.$store.state.project[0].name
-        : null,
-      formCountry: this.$store.state.edit.id
-        ? this.$store.state.project[0].country
-        : null,
-      formPlace: this.$store.state.edit.id
-        ? this.$store.state.project[0].place
-        : null,
-      formBrief: this.$store.state.edit.id
-        ? this.$store.state.project[0].brief
-        : null,
-      formContent: this.$store.state.edit.id
-        ? this.$store.state.project[0].content
-        : '',
-      formImageFile: null,
-      formVideo: this.$store.state.edit.id
-        ? this.$store.state.project[0].video
-        : '',
-      formParent: this.$store.state.edit.id
-        ? this.$store.state.project[0].parent
-        : '1',
-      formCategory: this.$store.state.edit.id
-        ? this.$store.state.project[0].category
-        : '1',
-      formStageFunding: 2,
-      formBudget: this.$store.state.edit.id
-        ? Math.round(this.$store.state.project[0].budget)
-        : 0,
-      formHudget: this.$store.state.edit.id
-        ? this.$store.state.project[0].hudget
-        : 2,
-      formFee: this.$store.state.edit.id
-        ? Math.round(this.$store.state.project[0].collect)
-        : 0,
-      formAttendee: this.$store.state.edit.id
-        ? Math.round(
-          this.$store.state.project[0].budget /
-          this.$store.state.project[0].collect
-        ) || 0
-        : 0
+      formEcosystem: null,
     }
   },
   computed: {
@@ -473,7 +395,7 @@ export default {
         })
       }
     },
-    async projectForm() {
+    async integrationForm() {
       this.editing = true
       // This function creates and sends database request body both for project creation and updating
       //'new' is set for a new project, if not the param.id is taken from url to update or copy old ones
@@ -487,7 +409,7 @@ export default {
         name: this.formName,
         country: this.formCountry,
         place: this.formPlace,
-        brief: this.formBrief,
+        brief: this.formTitle,
         content: '' + this.formContent, //leave '' here
         video: '' + this.formVideo, //leave '' here
         anonymous: this.formAnonymous,

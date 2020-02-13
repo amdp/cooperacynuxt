@@ -66,7 +66,7 @@ export const state = () => ({
     { id: 6, name: 'fine tuning', percentage: '0,1' },
     { id: 7, name: 'celebrate', percentage: '0,03' }
   ],
-  socialrelation: [
+  ecosystem: [
     { id: 1, name: 'institution' },
     { id: 2, name: 'company' },
     { id: 3, name: 'community' },
