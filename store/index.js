@@ -67,13 +67,13 @@ export const state = () => ({
     { id: 7, name: 'celebrate', percentage: '0,03' }
   ],
   ecosystem: [
-    { id: 1, name: 'institution' },
-    { id: 2, name: 'company' },
-    { id: 3, name: 'community' },
-    { id: 4, name: 'friends' },
-    { id: 5, name: 'family' },
-    { id: 6, name: 'couple' },
-    { id: 7, name: 'yourself' }
+    { id: 1, name: 'Institution' },
+    { id: 2, name: 'Company' },
+    { id: 3, name: 'Community' },
+    { id: 4, name: 'Friends' },
+    { id: 5, name: 'Family' },
+    { id: 6, name: 'Couple' },
+    { id: 7, name: 'Yourself' }
   ]
 })
 

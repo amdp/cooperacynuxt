@@ -14,8 +14,8 @@
           description="Do you want to integrate a Cooperacy Project or a Social Ecosystem, like companies, communities, couples or friends?"
         >
           <b-form-select id="natureInput" v-model="formNature" required>
-            <option>A Cooperacy Project</option>
-            <option>A Social Ecosystem</option>
+            <option value="0">A Cooperacy Project</option>
+            <option value="1">A Social Ecosystem</option>
           </b-form-select>
         </b-form-group>
 
@@ -23,7 +23,7 @@
           label-for="projectIDInput"
           label="Project ID:"
           description="What is the project ID?"
-          v-if="formNature == 'A Cooperacy Project'"
+          v-if="formNature == 0"
         >
           <b-form-input
             id="projectIDInput"
@@ -37,8 +37,8 @@
         <b-form-group
           label-for="ecosystemInput"
           label="Social Ecosystem:"
-          description="From You with Yourself, till Companies or Institutions like Nations, choose the ecosystem in which you would like to apply the Proportional Creative Integration."
-          v-if="formNature == 'A Social Ecosystem'"
+          description="A Social Ecosystem is any context in which there is a human relational presence. From the relationship you have with Yourself, till the relational networks of Companies or Institutions, choose the Social Ecosystem you want to observe and in which you would like to apply the Proportional Creative Integration."
+          v-if="formNature == 1"
         >
           <b-form-select id="ecosystemInput" v-model="formEcosystem">
             <option
@@ -53,7 +53,7 @@
         <b-form-group
           label-for="countryInput"
           label="Country:"
-          description="Insert the country of your Ecosystem, even if it is the nation itself."
+          description="Please insert the country of your Social Ecosystem, even if it is the nation itself."
         >
           <b-form-select id="countryInput" v-model="formCountry">
             <option
@@ -67,12 +67,15 @@
         <b-form-group
           label-for="placeInput"
           label="Place:"
-          description="Insert the place or location of your Social Ecosystem, like a city or a location."
+          description="Please insert the place of your Social Ecosystem, like a city or a location. In case of large companies and institutions, insert their headquarters location or the capital city in case of states and nations."
         >
           <b-form-select id="placeInput" v-model="formPlace" required>
-            <option v-for="place in place" :key="place.id" :value="place.id">{{
-              place.name
-            }}</option>
+            <option
+              v-for="place in myplace"
+              :key="place.id"
+              :value="place.id"
+              >{{ place.name }}</option
+            >
           </b-form-select>
         </b-form-group>
         <p class="diversity">
@@ -86,7 +89,7 @@
         <b-form-group
           label-for="titleInput"
           label="Title:"
-          description="A title representative of the situation"
+          description="Please insert a title representative of the situation"
         >
           <b-form-input
             id="titleInput"
@@ -98,7 +101,7 @@
         <b-form-group
           label-for="descInput"
           label="Description:"
-          description="A description of the current contrast"
+          description="Please insert a description of the current contrast"
         >
           <b-form-textarea
             id="descInput"
@@ -112,24 +115,20 @@
 
         <p class="diversity it">
           <strong>
-            Feel free to slide throught the bar in the next questions without
-            caring too much about the value, keeping in mind 0-25 is a little
-            and 75-100 is a lot.
+            If you are evaluating yourself, "the participants" are two: what you
+            are, giving yourself a crude look or asking your friends and what
+            you would like to be.
           </strong>
         </p>
-        <p class="understanding t12 it">
-          Note: if you are evaluating the relationship with yourself, refer to
-          "the participants" imagining a dialogue between what you really are
-          (be true and give yourself a crude look or ask your friends) versus
-          the idea of what you would like to be (today or in the future).
-        </p>
         <p class="text-center">
-          In the Social Ecosystem context you want to observe...
+          <strong>
+            In your Social Ecosystem...
+          </strong>
         </p>
         <b-form-group
-          class="text-right py-3"
+          class="py-3"
           label-for="diversityInput"
-          label="Do you find the participants (members, citizens..) are different one another (beliefs, age, language, etc)?"
+          label="Do you find the participants are different one another in their beliefs, age, language, wealth, etc?"
           label-align="left"
         >
           <b-form-input
@@ -141,12 +140,16 @@
             step="1"
             value="value"
           ></b-form-input>
-          <em> Your answer: {{ formDiversity }}% YES. </em>
+          <b-row>
+            <b-col class="text-left">VERY LITTLE</b-col>
+            <b-col class="text-center">SOMEHOW</b-col>
+            <b-col class="text-right">MOSTLY</b-col>
+          </b-row>
         </b-form-group>
         <b-form-group
-          class="text-right py-3"
+          class="py-3"
           label-for="understandingInput"
-          label="Do you find the participants understand and are at ease with each other?"
+          label="Do you find the participants understand each other?"
           label-align="left"
         >
           <b-form-input
@@ -158,13 +161,14 @@
             step="1"
             value="value"
           ></b-form-input>
-          <em>
-            Your answer: they understand each other {{ formUnderstanding }}% of
-            the time
-          </em>
+          <b-row>
+            <b-col class="text-left">VERY LITTLE</b-col>
+            <b-col class="text-center">SOMEHOW</b-col>
+            <b-col class="text-right">MOSTLY</b-col>
+          </b-row>
         </b-form-group>
         <b-form-group
-          class="text-right py-3"
+          class="py-3"
           label-for="freedomInput"
           label="Do you think the participants have the same degree of freedom?"
           label-align="left"
@@ -178,12 +182,16 @@
             step="1"
             value="value"
           ></b-form-input>
-          <em> Your answer: {{ formFreedom }}% YES.</em>
+          <b-row>
+            <b-col class="text-left">VERY LITTLE</b-col>
+            <b-col class="text-center">SOMEHOW</b-col>
+            <b-col class="text-right">MOSTLY</b-col>
+          </b-row>
         </b-form-group>
         <b-form-group
-          class="text-right py-3"
+          class="py-3"
           label-for="transparencyInput"
-          label="Do you find the participants hide what they think or feel?"
+          label="Do you find the participants show what they think or feel?"
           label-align="left"
         >
           <b-form-input
@@ -195,64 +203,35 @@
             step="1"
             value="value"
           ></b-form-input>
-          <em>
-            Your answer: they hide {{ formTransparency }}% of what they think
-            and feel on average.
-          </em>
+          <b-row>
+            <b-col class="text-left">VERY LITTLE</b-col>
+            <b-col class="text-center">SOMEHOW</b-col>
+            <b-col class="text-right">MOSTLY</b-col>
+          </b-row>
         </b-form-group>
         <b-form-group
-          class="text-right py-3"
-          label-for="careInput1"
-          label="Do the participants like their context, environment, surroundings?"
+          class="py-3"
+          label-for="careInput"
+          label="Are the participants satisfied with the money, goods, services, respect and care they receive from the social ecosystem?"
           label-align="left"
         >
           <b-form-input
-            id="careInput1"
-            v-model="formCare1"
+            id="careInput"
+            v-model="formCare"
             type="range"
             min="0"
             max="100"
             step="1"
             value="value"
           ></b-form-input>
-          <em> Your answer: {{ formCare1 }}% YES. </em>
+          <b-row>
+            <b-col class="text-left">VERY LITTLE</b-col>
+            <b-col class="text-center">SOMEHOW</b-col>
+            <b-col class="text-right">MOSTLY</b-col>
+          </b-row>
         </b-form-group>
         <b-form-group
-          class="text-right py-3"
-          label-for="careInput2"
-          label="Do the participants receive good benefits from the social ecosystem?"
-          label-align="left"
-        >
-          <b-form-input
-            id="careInput2"
-            v-model="formCare2"
-            type="range"
-            min="0"
-            max="100"
-            step="1"
-            value="value"
-          ></b-form-input>
-          <em> Your answer: {{ formCare2 }}% YES. </em>
-        </b-form-group>
-        <b-form-group
-          class="text-right py-3"
-          label-for="careInput3"
-          label="Do the participants enjoy the relational interaction between themselves?"
-          label-align="left"
-        >
-          <b-form-input
-            id="careInput3"
-            v-model="formCare3"
-            type="range"
-            min="0"
-            max="100"
-            step="1"
-            value="value"
-          ></b-form-input>
-          <em> Your answer: {{ formCare3 }}% YES. </em>
-        </b-form-group>
-        <b-form-group
-          class="text-right py-3"
+          class="py-3"
           label-for="trustInput"
           label="Do the participants trust each other?"
           label-align="left"
@@ -266,12 +245,16 @@
             step="1"
             value="value"
           ></b-form-input>
-          <em> Your answer: they trust each other at {{ formTrust }}% </em>
+          <b-row>
+            <b-col class="text-left">VERY LITTLE</b-col>
+            <b-col class="text-center">SOMEHOW</b-col>
+            <b-col class="text-right">MOSTLY</b-col>
+          </b-row>
         </b-form-group>
         <b-form-group
-          class="text-right py-3"
+          class="py-3"
           label-for="equivalenceInput"
-          label="Do the participants receive similar/comparable rewards (money, goods, services, relational benefits) for their efforts, or someone gets more and someone gets less?"
+          label="Are money, goods, services, respect and care the participants receive equivalent or proportional to their roles and efforts?"
         >
           <b-form-input
             id="equivalenceInput"
@@ -282,18 +265,173 @@
             step="1"
             value="value"
           ></b-form-input>
-          <em>
-            Your answer: they receive rewards that are {{ formEquivalence }}%
-            equivalent
-          </em>
+          <b-row>
+            <b-col class="text-left">VERY LITTLE</b-col>
+            <b-col class="text-center">SOMEHOW</b-col>
+            <b-col class="text-right">MOSTLY</b-col>
+          </b-row>
+        </b-form-group>
+        <h5 class="text-center mb-4 understanding">
+          3. NATURE OF THE ENVIRONMENT
+        </h5>
+
+        <p class="diversity it">
+          <strong>
+            The environment is a very important part of a Social Ecosystem, it
+            is like if there were one more participant in the interaction.
+            Please consider "environment" both the natural aspect and the
+            physical place, like a building or a house, where the participants
+            actions take place.
+          </strong>
+        </p>
+        <b-form-group
+          class="py-3"
+          label-for="diversityEnvInput"
+          label="Can the participants customize their environment or choose for their actions the space they are more inline with?"
+          label-align="left"
+        >
+          <b-form-input
+            id="diversityEnvInput"
+            v-model="formEnvDiversity"
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            value="value"
+          ></b-form-input>
+          <b-row>
+            <b-col class="text-left">VERY LITTLE</b-col>
+            <b-col class="text-center">SOMEHOW</b-col>
+            <b-col class="text-right">MOSTLY</b-col>
+          </b-row>
+        </b-form-group>
+        <b-form-group
+          class="py-3"
+          label-for="understandingEnvInput"
+          label="Do you find the participants know their environment?"
+          label-align="left"
+        >
+          <b-form-input
+            id="understandingEnvInput"
+            v-model="formEnvUnderstanding"
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            value="value"
+          ></b-form-input>
+          <b-row>
+            <b-col class="text-left">VERY LITTLE</b-col>
+            <b-col class="text-center">SOMEHOW</b-col>
+            <b-col class="text-right">MOSTLY</b-col>
+          </b-row>
+        </b-form-group>
+        <b-form-group
+          class="py-3"
+          label-for="freedomEnvInput"
+          label="Do the participants have enough space for themselves and are free to move inside the environment?"
+          label-align="left"
+        >
+          <b-form-input
+            id="freedomEnvInput"
+            v-model="formEnvFreedom"
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            value="value"
+          ></b-form-input>
+          <b-row>
+            <b-col class="text-left">VERY LITTLE</b-col>
+            <b-col class="text-center">SOMEHOW</b-col>
+            <b-col class="text-right">MOSTLY</b-col>
+          </b-row>
+        </b-form-group>
+        <b-form-group
+          class="py-3"
+          label-for="transparencyEnvInput"
+          label="Can the participants easily obtain the right informations about the environment?"
+          label-align="left"
+        >
+          <b-form-input
+            id="transparencyEnvInput"
+            v-model="formEnvTransparency"
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            value="value"
+          ></b-form-input>
+          <b-row>
+            <b-col class="text-left">VERY LITTLE</b-col>
+            <b-col class="text-center">SOMEHOW</b-col>
+            <b-col class="text-right">MOSTLY</b-col>
+          </b-row>
+        </b-form-group>
+        <b-form-group
+          class="py-3"
+          label-for="careEnvInput"
+          label="Do the participants like their environment?"
+          label-align="left"
+        >
+          <b-form-input
+            id="careEnvInput"
+            v-model="formEnvCare"
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            value="value"
+          ></b-form-input>
+          <b-row>
+            <b-col class="text-left">VERY LITTLE</b-col>
+            <b-col class="text-center">SOMEHOW</b-col>
+            <b-col class="text-right">MOSTLY</b-col>
+          </b-row>
+        </b-form-group>
+        <b-form-group
+          class="py-3"
+          label-for="trustEnvInput"
+          label="Do the participants feel safe in their environment and can rely on it?"
+          label-align="left"
+        >
+          <b-form-input
+            id="trustEnvInput"
+            v-model="formEnvTrust"
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            value="value"
+          ></b-form-input>
+          <b-row>
+            <b-col class="text-left">VERY LITTLE</b-col>
+            <b-col class="text-center">SOMEHOW</b-col>
+            <b-col class="text-right">MOSTLY</b-col>
+          </b-row>
+        </b-form-group>
+        <b-form-group
+          class="py-3"
+          label-for="equivalenceEnvInput"
+          label="Is the environment and its advantages distributed amongst the participants evenly or proportionally to their roles and efforts?"
+        >
+          <b-form-input
+            id="equivalenceEnvInput"
+            v-model="formEnvEquivalence"
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            value="value"
+          ></b-form-input>
+          <b-row>
+            <b-col class="text-left">VERY LITTLE</b-col>
+            <b-col class="text-center">SOMEHOW</b-col>
+            <b-col class="text-right">MOSTLY</b-col>
+          </b-row>
         </b-form-group>
 
-        <b-check
-          v-if="formCategory != 4"
-          id="termscheckbox"
-          name="termscheckbox"
-          required
-        >
+        <b-check id="termscheckbox" name="termscheckbox" required>
           <span class="gray">
             <i>
               By clicking the GO! button you declare you read and are aware of
@@ -373,8 +511,13 @@ export default {
   },
   data() {
     return {
-      formNature: 'Social Ecosystem',
-      terms: null,
+      formNature: 1,
+      formProjectID: null,
+      formEcosystem: null,
+      formCountry: 1,
+      formPlace: null,
+      formTitle: null,
+      formDesc: null,
       formDiversity: 50,
       formUnderstanding: 50,
       formFreedom: 50,
@@ -382,9 +525,18 @@ export default {
       formCare: 50,
       formTrust: 50,
       formEquivalence: 50,
+      formEnvDiversity: 50,
+      formEnvUnderstanding: 50,
+      formEnvFreedom: 50,
+      formEnvTransparency: 50,
+      formEnvCare: 50,
+      formEnvTrust: 50,
+      formEnvEquivalence: 50,
+      terms: null,
       editing: false,
       country: this.$store.state.country,
-      formEcosystem: null,
+      formNewcountry: null,
+      formNewplace: null,
     }
   },
   computed: {
@@ -396,7 +548,7 @@ export default {
         return '/assets/image/project/' + this.$store.state.project.id + '.png'
       }
     },
-    place() {
+    myplace() {
       let place = this.$store.state.place.filter(
         place => place.country === this.formCountry
       )
@@ -450,6 +602,7 @@ export default {
       }
     },
     async integrationForm() {
+      return null
       this.editing = true
       // This function creates and sends database request body both for project creation and updating
       //'new' is set for a new project, if not the param.id is taken from url to update or copy old ones
