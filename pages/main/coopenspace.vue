@@ -19,7 +19,7 @@
     <br /><br />
 
     <img
-      src="https://cooperacy.org/images/news/5a8a063bccce6.jpg"
+      src="~/assets/image/news/5a8a063bccce6.jpg"
       alt="null"
       class="img-responsive"
     /><br /><br />
@@ -31,10 +31,13 @@
       <nuxt-link to="/main/cooperation#care" class="ac">context</nuxt-link>
       surrounding them. The facilitator also explains the Journey Narrative to
       the circle: the present situation is shown with all the
-      <nuxt-link to="/main/cooperation#freedom" class="af">limitations</nuxt-link>,
-      the efforts done so far and the positive outcomes. The meeting continues
-      with describing what would have happened in the future if the
-      <nuxt-link to="/main/cooperation#diversity" class="ad">preferences</nuxt-link>
+      <nuxt-link to="/main/cooperation#freedom" class="af"
+        >limitations</nuxt-link
+      >, the efforts done so far and the positive outcomes. The meeting
+      continues with describing what would have happened in the future if the
+      <nuxt-link to="/main/cooperation#diversity" class="ad"
+        >preferences</nuxt-link
+      >
       and desires of the participants would come true. Every desire is turned
       into a proposal. This leads to the ideas ecosystem.
     </p>
@@ -80,14 +83,14 @@
       voted according to: costs and benefits; personal trust; emotional power;
       transparency; participants commitment; understandability; innovation and
       creative power of the idea, following the seven conditions of
-      <nuxt-link to="/main/cooperation" class="ae">cooperation</nuxt-link>. From the
-      voting review a future agenda is made based on a common dictionary, a
+      <nuxt-link to="/main/cooperation" class="ae">cooperation</nuxt-link>. From
+      the voting review a future agenda is made based on a common dictionary, a
       redistribution of workload and resources and a common roadmap.<br /><br />
       When the organisation need is to use a more quantitative or reflexive
       approach on a larger scale, without the need of a live event, observing
       both the people in different locations and their data, the
-      <nuxt-link to="/main/overview" class="af">Overview</nuxt-link> tool is a better
-      choice.
+      <nuxt-link to="/main/overview" class="af">Overview</nuxt-link> tool is a
+      better choice.
     </p>
     <br />
     <br />

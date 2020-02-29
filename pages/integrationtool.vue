@@ -110,16 +110,27 @@
           2. NATURE OF THE GROUP RELATION
         </h5>
 
-        <p class="understanding it">
-          Feel free to slide in the next questions without caring too much about
-          the value, keeping in mind 0-25 is a little, 25-75 is on average and
-          75-100 is a lot. Note: if you are evaluating the relation with
-          yourself, think about the relation you have with the world.
+        <p class="diversity it">
+          <strong>
+            Feel free to slide throught the bar in the next questions without
+            caring too much about the value, keeping in mind 0-25 is a little
+            and 75-100 is a lot.
+          </strong>
         </p>
-        In the Social Ecosystem context...
+        <p class="understanding t12 it">
+          Note: if you are evaluating the relationship with yourself, refer to
+          "the participants" imagining a dialogue between what you really are
+          (be true and give yourself a crude look or ask your friends) versus
+          the idea of what you would like to be (today or in the future).
+        </p>
+        <p class="text-center">
+          In the Social Ecosystem context you want to observe...
+        </p>
         <b-form-group
+          class="text-right py-3"
           label-for="diversityInput"
-          label="Do you find the participants are different one another?"
+          label="Do you find the participants (members, citizens..) are different one another (beliefs, age, language, etc)?"
+          label-align="left"
         >
           <b-form-input
             id="diversityInput"
@@ -130,11 +141,13 @@
             step="1"
             value="value"
           ></b-form-input>
-          <em>Your answer: they are {{ formDiversity }}% different</em>
+          <em> Your answer: {{ formDiversity }}% YES. </em>
         </b-form-group>
         <b-form-group
+          class="text-right py-3"
           label-for="understandingInput"
-          label="Do you find the participants understand each other?"
+          label="Do you find the participants understand and are at ease with each other?"
+          label-align="left"
         >
           <b-form-input
             id="understandingInput"
@@ -151,8 +164,10 @@
           </em>
         </b-form-group>
         <b-form-group
+          class="text-right py-3"
           label-for="freedomInput"
-          label="Do you find the participants feel free?"
+          label="Do you think the participants have the same degree of freedom?"
+          label-align="left"
         >
           <b-form-input
             id="freedomInput"
@@ -163,11 +178,13 @@
             step="1"
             value="value"
           ></b-form-input>
-          <em> Your answer: they feel {{ formFreedom }}% free on average </em>
+          <em> Your answer: {{ formFreedom }}% YES.</em>
         </b-form-group>
         <b-form-group
+          class="text-right py-3"
           label-for="transparencyInput"
           label="Do you find the participants hide what they think or feel?"
+          label-align="left"
         >
           <b-form-input
             id="transparencyInput"
@@ -180,29 +197,65 @@
           ></b-form-input>
           <em>
             Your answer: they hide {{ formTransparency }}% of what they think
-            and feel on average
+            and feel on average.
           </em>
         </b-form-group>
         <b-form-group
-          label-for="careInput"
-          label="Do the participants like the Social Ecosystem?"
+          class="text-right py-3"
+          label-for="careInput1"
+          label="Do the participants like their context, environment, surroundings?"
+          label-align="left"
         >
           <b-form-input
-            id="careInput"
-            v-model="formCare"
+            id="careInput1"
+            v-model="formCare1"
             type="range"
             min="0"
             max="100"
             step="1"
             value="value"
           ></b-form-input>
-          <em>
-            Your answer: {{ formCare }}% of them like the Social Ecosystem
-          </em>
+          <em> Your answer: {{ formCare1 }}% YES. </em>
         </b-form-group>
         <b-form-group
+          class="text-right py-3"
+          label-for="careInput2"
+          label="Do the participants receive good benefits from the social ecosystem?"
+          label-align="left"
+        >
+          <b-form-input
+            id="careInput2"
+            v-model="formCare2"
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            value="value"
+          ></b-form-input>
+          <em> Your answer: {{ formCare2 }}% YES. </em>
+        </b-form-group>
+        <b-form-group
+          class="text-right py-3"
+          label-for="careInput3"
+          label="Do the participants enjoy the relational interaction between themselves?"
+          label-align="left"
+        >
+          <b-form-input
+            id="careInput3"
+            v-model="formCare3"
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            value="value"
+          ></b-form-input>
+          <em> Your answer: {{ formCare3 }}% YES. </em>
+        </b-form-group>
+        <b-form-group
+          class="text-right py-3"
           label-for="trustInput"
           label="Do the participants trust each other?"
+          label-align="left"
         >
           <b-form-input
             id="trustInput"
@@ -216,6 +269,7 @@
           <em> Your answer: they trust each other at {{ formTrust }}% </em>
         </b-form-group>
         <b-form-group
+          class="text-right py-3"
           label-for="equivalenceInput"
           label="Do the participants receive similar/comparable rewards (money, goods, services, relational benefits) for their efforts, or someone gets more and someone gets less?"
         >
