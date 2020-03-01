@@ -4,7 +4,6 @@
   font-weight: 300;
 }
 body {
-  color: #777;
   background-color: #ffffff;
   font-size: 14px;
   overflow-x: hidden;
@@ -12,7 +11,7 @@ body {
   padding: 0px;
 }
 a {
-  color: #777;
+  color: #000;
 }
 a:hover {
   color: #f80;
@@ -170,7 +169,6 @@ hr.home-hr {
 }
 .label-default {
   background-color: #ffffff !important;
-  color: #777 !important;
 }
 .comment-content {
   overflow-wrap: break-word;
@@ -570,7 +568,6 @@ a.disabled {
   background-repeat: repeat-x;
   background-size: 2px 0.2em;
   background-position: 0 1.35em;
-  color: #777777;
 }
 .at {
   text-decoration: none;
@@ -578,7 +575,6 @@ a.disabled {
   background-repeat: repeat-x;
   background-size: 2px 0.2em;
   background-position: 0 1.35em;
-  color: #777777;
 }
 .ac {
   text-decoration: none;
@@ -586,7 +582,6 @@ a.disabled {
   background-repeat: repeat-x;
   background-size: 2px 0.2em;
   background-position: 0 1.35em;
-  color: #777777;
 }
 .ai {
   text-decoration: none;
@@ -594,7 +589,6 @@ a.disabled {
   background-repeat: repeat-x;
   background-size: 2px 0.2em;
   background-position: 0 1.35em;
-  color: #777777;
 }
 .af {
   text-decoration: none;
@@ -602,7 +596,6 @@ a.disabled {
   background-repeat: repeat-x;
   background-size: 2px 0.2em;
   background-position: 0 1.35em;
-  color: #777777;
 }
 .au {
   text-decoration: none;
@@ -610,7 +603,6 @@ a.disabled {
   background-repeat: repeat-x;
   background-size: 2px 0.2em;
   background-position: 0 1.35em;
-  color: #777777;
 }
 .ad {
   text-decoration: none;
@@ -618,7 +610,6 @@ a.disabled {
   background-repeat: repeat-x;
   background-size: 2px 0.2em;
   background-position: 0 1.35em;
-  color: #777777;
 }
 .ae:hover {
   text-decoration: none;
@@ -663,9 +654,6 @@ a.disabled {
 }
 .gray {
   color: #555555;
-}
-.lightgray {
-  color: #777;
 }
 .graylight {
   color: #cccccc;

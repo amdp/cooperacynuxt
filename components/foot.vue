@@ -20,7 +20,7 @@
     <b-row>
       <b-container fluid class="d-flex justify-content-center t16">
         <p class="t16 space m-0 text-center pl-4 pr-4">
-          &copy; COOPERACY RESEARCH ASSOCIATION 2015-2018 - VIA DELLA MOSCOVA,
+          &copy; COOPERACY RESEARCH ASSOCIATION 2015-2020 - VIA DELLA MOSCOVA,
           39 - 20121 MILAN ITALY EU - FISCAL CODE 97725540153
         </p>
       </b-container>
