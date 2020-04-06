@@ -2,6 +2,8 @@ const pkg = require('./package')
 require('dotenv').config()
 import fs from 'fs'
 import path from 'path'
+import en from './t/en.json'
+import it from './t/it.json'
 module.exports = {
   mode: 'universal',
   plugins: [],
@@ -14,6 +16,7 @@ module.exports = {
     '@nuxtjs/auth',
     'bootstrap-vue/nuxt',
     ['@nuxtjs/google-analytics', { id: 'UA-105334297-1' }],
+    'nuxt-i18n',
     //['@nuxtjs/dotenv', { systemvars: true, path: '/' }],
     //'@nuxtjs/proxy',
     //'@nuxtjs/pwa',    
@@ -52,6 +55,17 @@ module.exports = {
     manifest: {
       name: 'Cooperacy',
       lang: 'en'
+    }
+  },
+  i18n: {
+    locales: ['en', 'it'],
+    defaultLocale: 'en',
+    vueI18n: {
+      fallbackLocale: 'en',
+      messages: {
+        en: en,
+        it: it,
+      }
     }
   },
   head: {

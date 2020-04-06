@@ -67,10 +67,10 @@ export const state = () => ({
     { id: 7, name: 'celebrate', percentage: '0,03' }
   ],
   ecosystem: [
-    { id: 1, name: 'Institution' },
-    { id: 2, name: 'Company' },
-    { id: 3, name: 'Community' },
-    { id: 4, name: 'Friends' },
+    { id: 1, name: 'Nation' },
+    { id: 2, name: 'City, Region, State or Social Area' },
+    { id: 3, name: 'Company, Association or Institution' },
+    { id: 4, name: 'Friends or Community' },
     { id: 5, name: 'Family' },
     { id: 6, name: 'Couple' },
     { id: 7, name: 'Yourself' }
@@ -330,6 +330,10 @@ export const actions = {
   },
   addVoteAction: async function (context, payload) {
     let { data } = await this.$axios.post(process.env.DBURL + '/vote', payload)
+    return data
+  },
+  cooperationToolAction: async function (context, payload) {
+    let { data } = await this.$axios.post(process.env.DBURL + '/cooperationtool', payload)
     return data
   },
   //Admin stuff here: be careful

@@ -376,6 +376,9 @@ video {
   font-size: 8px;
   font-weight: 300;
 }
+.hb{
+  font-weight: 500;
+}
 .finger {
   cursor: pointer;
 }

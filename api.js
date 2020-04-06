@@ -184,6 +184,17 @@ app.get('/news', async function (req, res, next) {
   }
 })
 
+app.get('/cooperationtool', async function (req, res, next) {
+  try {
+    let query = 'SELECT * FROM `cooperationtool` WHERE `id`=?'
+    let param = [req.body.id]
+    const [survey] = await mypool.execute(query, param)
+    res.status(200).send(survey)
+  } catch (err) {
+    next(err)
+  }
+})
+
 /////// UPDATE ///////
 
 app.put('/user', async function (req, res, next) {
@@ -1095,6 +1106,36 @@ app.post('/professional', async function (req, res, next) {
       next(err)
     }
     res.status(200).send('added')
+  }
+})
+
+app.post('/cooperationtool', async function (req, res, next) {
+
+  if (!req.body.user) { req.body.user = 0 }
+  let survey = await surveyoutput()
+  res.status(200).send(survey)
+
+  async function insertion() {
+    try {
+      let query =
+        'INSERT INTO `cooperationtool` (`user`,`project`,`group`,`country`,`place`,`member`,`name`,`desc`,`D`,`U`,`F`,`I`,`C`,`T`,`E`,`HD`,`HU`,`HF`,`HI`,`HC`,`HT`,`HE`,`MD`,`MU`,`MF`,`MI`,`MC`,`MT`,`ME`,`P`,`PText`,`PD`,`PDText`,`PU`,`PUText`,`PF`,`PFText`,`PI`,`PIText`,`PC`,`PCText`,`PT`,`PTText`,`PE`,`PEText`,`PFinal`,`PFinalText`) VALUES (?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?)'
+      let param = [req.body.user, req.body.project, req.body.group, req.body.country, req.body.place, req.body.member, req.body.name, req.body.desc, req.body.D, req.body.U, req.body.F, req.body.I, req.body.C, req.body.T, req.body.E, req.body.HD, req.body.HU, req.body.HF, req.body.HI, req.body.HC, req.body.HT, req.body.HE, req.body.MD, req.body.MU, req.body.MF, req.body.MI, req.body.MC, req.body.MT, req.body.ME, req.body.P, req.body.PText, req.body.PD, req.body.PDText, req.body.PU, req.body.PUText, req.body.PF, req.body.PFText, req.body.PI, req.body.PIText, req.body.PC, req.body.PCText, req.body.PT, req.body.PTText, req.body.PE, req.body.PEText, req.body.PFinal, req.body.PFinalText]
+      const [inserted] = await mypool.execute(query, param)
+      return inserted
+    } catch (err) {
+      next(err)
+    }
+  }
+  async function surveyoutput() {
+    let inserted = await insertion()
+    try {
+      let query = 'SELECT * FROM `cooperationtool` WHERE `id`=?'
+      let param = [inserted.insertId]
+      const [survey] = await mypool.execute(query, param)
+      return survey[0]
+    } catch (err) {
+      next(err)
+    }
   }
 })
 
