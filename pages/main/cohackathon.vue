@@ -22,8 +22,8 @@
         class="au"
         href="https://www.wired.com/story/sociologists-examine-hackathons-and-see-exploitation/"
       >
-        sociologists
-      </a>
+        sociologists</a
+      >
       point out hackathons may be seen as a form of exploitation.
     </p>
     <br />
