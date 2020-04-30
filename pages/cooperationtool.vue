@@ -147,9 +147,9 @@
                 id="diversityInput"
                 v-model="formDiversity"
                 type="range"
-                min="-99"
-                max="99"
-                step="2"
+                min="0.01"
+                max="0.99"
+                step="0.01"
                 value="value"
               ></b-form-input>
               <b-row>
@@ -170,9 +170,9 @@
                 id="understandingInput"
                 v-model="formUnderstanding"
                 type="range"
-                min="-99"
-                max="99"
-                step="2"
+                min="0.01"
+                max="0.99"
+                step="0.01"
                 value="value"
               ></b-form-input>
               <b-row>
@@ -193,9 +193,9 @@
                 id="freedomInput"
                 v-model="formFreedom"
                 type="range"
-                min="-99"
-                max="99"
-                step="2"
+                min="0.01"
+                max="0.99"
+                step="0.01"
                 value="value"
               ></b-form-input>
               <b-row>
@@ -216,9 +216,9 @@
                 id="transparencyInput"
                 v-model="formTransparency"
                 type="range"
-                min="-99"
-                max="99"
-                step="2"
+                min="0.01"
+                max="0.99"
+                step="0.01"
                 value="value"
               ></b-form-input>
               <b-row>
@@ -239,9 +239,9 @@
                 id="careInput"
                 v-model="formCare"
                 type="range"
-                min="-99"
-                max="99"
-                step="2"
+                min="0.01"
+                max="0.99"
+                step="0.01"
                 value="value"
               ></b-form-input>
               <b-row>
@@ -262,9 +262,9 @@
                 id="trustInput"
                 v-model="formTrust"
                 type="range"
-                min="-99"
-                max="99"
-                step="2"
+                min="0.01"
+                max="0.99"
+                step="0.01"
                 value="value"
               ></b-form-input>
               <b-row>
@@ -284,9 +284,9 @@
                 id="equivalenceInput"
                 v-model="formEquivalence"
                 type="range"
-                min="-99"
-                max="99"
-                step="2"
+                min="0.01"
+                max="0.99"
+                step="0.01"
                 value="value"
               ></b-form-input>
               <b-row>
@@ -320,9 +320,9 @@
                   id="diversityMyInput"
                   v-model="formMyDiversity"
                   type="range"
-                  min="-99"
-                  max="99"
-                  step="2"
+                  min="0.01"
+                  max="0.99"
+                  step="0.01"
                   value="value"
                 ></b-form-input>
                 <b-row>
@@ -345,9 +345,9 @@
                   id="understandingMyInput"
                   v-model="formMyUnderstanding"
                   type="range"
-                  min="-99"
-                  max="99"
-                  step="2"
+                  min="0.01"
+                  max="0.99"
+                  step="0.01"
                   value="value"
                 ></b-form-input>
                 <b-row>
@@ -370,9 +370,9 @@
                   id="freedomMyInput"
                   v-model="formMyFreedom"
                   type="range"
-                  min="-99"
-                  max="99"
-                  step="2"
+                  min="0.01"
+                  max="0.99"
+                  step="0.01"
                   value="value"
                 ></b-form-input>
                 <b-row>
@@ -395,9 +395,9 @@
                   id="transparencyMyInput"
                   v-model="formMyTransparency"
                   type="range"
-                  min="-99"
-                  max="99"
-                  step="2"
+                  min="0.01"
+                  max="0.99"
+                  step="0.01"
                   value="value"
                 ></b-form-input>
                 <b-row>
@@ -420,9 +420,9 @@
                   id="careMyInput"
                   v-model="formMyCare"
                   type="range"
-                  min="-99"
-                  max="99"
-                  step="2"
+                  min="0.01"
+                  max="0.99"
+                  step="0.01"
                   value="value"
                 ></b-form-input>
                 <b-row>
@@ -445,9 +445,9 @@
                   id="trustMyInput"
                   v-model="formMyTrust"
                   type="range"
-                  min="-99"
-                  max="99"
-                  step="2"
+                  min="0.01"
+                  max="0.99"
+                  step="0.01"
                   value="value"
                 ></b-form-input>
                 <b-row>
@@ -469,9 +469,9 @@
                   id="equivalenceMyInput"
                   v-model="formMyEquivalence"
                   type="range"
-                  min="-99"
-                  max="99"
-                  step="2"
+                  min="0.01"
+                  max="0.99"
+                  step="0.01"
                   value="value"
                 ></b-form-input>
                 <b-row>
@@ -512,9 +512,9 @@
                 id="diversityEnvInput"
                 v-model="formEnvDiversity"
                 type="range"
-                min="-99"
-                max="99"
-                step="2"
+                min="0.01"
+                max="0.99"
+                step="0.01"
                 value="value"
               ></b-form-input>
               <b-row>
@@ -535,9 +535,9 @@
                 id="understandingEnvInput"
                 v-model="formEnvUnderstanding"
                 type="range"
-                min="-99"
-                max="99"
-                step="2"
+                min="0.01"
+                max="0.99"
+                step="0.01"
                 value="value"
               ></b-form-input>
               <b-row>
@@ -558,9 +558,9 @@
                 id="freedomEnvInput"
                 v-model="formEnvFreedom"
                 type="range"
-                min="-99"
-                max="99"
-                step="2"
+                min="0.01"
+                max="0.99"
+                step="0.01"
                 value="value"
               ></b-form-input>
               <b-row>
@@ -581,9 +581,9 @@
                 id="transparencyEnvInput"
                 v-model="formEnvTransparency"
                 type="range"
-                min="-99"
-                max="99"
-                step="2"
+                min="0.01"
+                max="0.99"
+                step="0.01"
                 value="value"
               ></b-form-input>
               <b-row>
@@ -604,9 +604,9 @@
                 id="careEnvInput"
                 v-model="formEnvCare"
                 type="range"
-                min="-99"
-                max="99"
-                step="2"
+                min="0.01"
+                max="0.99"
+                step="0.01"
                 value="value"
               ></b-form-input>
               <b-row>
@@ -627,9 +627,9 @@
                 id="trustEnvInput"
                 v-model="formEnvTrust"
                 type="range"
-                min="-99"
-                max="99"
-                step="2"
+                min="0.01"
+                max="0.99"
+                step="0.01"
                 value="value"
               ></b-form-input>
               <b-row>
@@ -649,9 +649,9 @@
                 id="equivalenceEnvInput"
                 v-model="formEnvEquivalence"
                 type="range"
-                min="-99"
-                max="99"
-                step="2"
+                min="0.01"
+                max="0.99"
+                step="0.01"
                 value="value"
               ></b-form-input>
               <b-row>
@@ -672,14 +672,12 @@
             <h5 class="text-center mt-5 mb-2 equivalence">
               {{ $t('cootool.grouppairing') }}
             </h5>
-            <p
-              class="text-center mb-5"
-              v-html="$t('cootool.grouppairingintro')"
-            ></p>
-            <b-check v-model="pairgroupcheckbox" class="text-center mb-5">
+            <b-check v-model="pairgroupcheckbox" class="text-center my-5">
               {{ $t('cootool.apply') }}
             </b-check>
+            <p class="mb-5" v-html="$t('cootool.grouppairingintro')"></p>
             <b-container class="m-0 p-0" v-if="pairgroupcheckbox">
+              <p class="mb-5" v-html="$t('cootool.grouppairingintro2')"></p>
               <b-form-group
                 class="py-3 t16"
                 label-for="basePairInput"
@@ -690,9 +688,9 @@
                   id="basePairInput"
                   v-model="formPairBase"
                   type="range"
-                  min="-99"
-                  max="99"
-                  step="2"
+                  min="0.01"
+                  max="0.99"
+                  step="0.01"
                   value="value"
                 ></b-form-input>
                 <b-row>
@@ -718,9 +716,9 @@
                   id="diversityPairInput"
                   v-model="formPairDiversity"
                   type="range"
-                  min="-99"
-                  max="99"
-                  step="2"
+                  min="0.01"
+                  max="0.99"
+                  step="0.01"
                   value="value"
                 ></b-form-input>
                 <b-row>
@@ -748,9 +746,9 @@
                   id="understandingPairInput"
                   v-model="formPairUnderstanding"
                   type="range"
-                  min="-99"
-                  max="99"
-                  step="2"
+                  min="0.01"
+                  max="0.99"
+                  step="0.01"
                   value="value"
                 ></b-form-input>
                 <b-row>
@@ -778,9 +776,9 @@
                   id="freedomPairInput"
                   v-model="formPairFreedom"
                   type="range"
-                  min="-99"
-                  max="99"
-                  step="2"
+                  min="0.01"
+                  max="0.99"
+                  step="0.01"
                   value="value"
                 ></b-form-input>
                 <b-row>
@@ -808,9 +806,9 @@
                   id="transparencyPairInput"
                   v-model="formPairTransparency"
                   type="range"
-                  min="-99"
-                  max="99"
-                  step="2"
+                  min="0.01"
+                  max="0.99"
+                  step="0.01"
                   value="value"
                 ></b-form-input>
                 <b-row>
@@ -838,9 +836,9 @@
                   id="carePairInput"
                   v-model="formPairCare"
                   type="range"
-                  min="-99"
-                  max="99"
-                  step="2"
+                  min="0.01"
+                  max="0.99"
+                  step="0.01"
                   value="value"
                 ></b-form-input>
                 <b-row>
@@ -866,9 +864,9 @@
                   id="trustPairInput"
                   v-model="formPairTrust"
                   type="range"
-                  min="-99"
-                  max="99"
-                  step="2"
+                  min="0.01"
+                  max="0.99"
+                  step="0.01"
                   value="value"
                 ></b-form-input>
                 <b-row>
@@ -893,9 +891,9 @@
                   id="equivalencePairInput"
                   v-model="formPairEquivalence"
                   type="range"
-                  min="-99"
-                  max="99"
-                  step="2"
+                  min="0.01"
+                  max="0.99"
+                  step="0.01"
                   value="value"
                 ></b-form-input>
                 <b-row>
@@ -924,9 +922,9 @@
                   id="finalPairInput"
                   v-model="formPairFinal"
                   type="range"
-                  min="-99"
-                  max="99"
-                  step="2"
+                  min="0.01"
+                  max="0.99"
+                  step="0.01"
                   value="value"
                 ></b-form-input>
                 <b-row>
@@ -1033,36 +1031,36 @@ export default {
       formMember: 3,
       formName: null,
       formDesc: null,
-      formDiversity: 50,
-      formUnderstanding: 50,
-      formFreedom: 50,
-      formTransparency: 50,
-      formCare: 50,
-      formTrust: 50,
-      formEquivalence: 50,
-      formEnvDiversity: 50,
-      formEnvUnderstanding: 50,
-      formEnvFreedom: 50,
-      formEnvTransparency: 50,
-      formEnvCare: 50,
-      formEnvTrust: 50,
-      formEnvEquivalence: 50,
-      formMyDiversity: 50,
-      formMyUnderstanding: 50,
-      formMyFreedom: 50,
-      formMyTransparency: 50,
-      formMyCare: 50,
-      formMyTrust: 50,
-      formMyEquivalence: 50,
-      formPairBase: 50,
+      formDiversity: 0.50,
+      formUnderstanding: 0.50,
+      formFreedom: 0.50,
+      formTransparency: 0.50,
+      formCare: 0.50,
+      formTrust: 0.50,
+      formEquivalence: 0.50,
+      formEnvDiversity: 0.50,
+      formEnvUnderstanding: 0.50,
+      formEnvFreedom: 0.50,
+      formEnvTransparency: 0.50,
+      formEnvCare: 0.50,
+      formEnvTrust: 0.50,
+      formEnvEquivalence: 0.50,
+      formMyDiversity: 0.50,
+      formMyUnderstanding: 0.50,
+      formMyFreedom: 0.50,
+      formMyTransparency: 0.50,
+      formMyCare: 0.50,
+      formMyTrust: 0.50,
+      formMyEquivalence: 0.50,
+      formPairBase: 0.50,
       formPairBaseText: null,
-      formPairDiversity: 50,
-      formPairUnderstanding: 50,
-      formPairFreedom: 50,
-      formPairTransparency: 50,
-      formPairCare: 50,
-      formPairTrust: 50,
-      formPairEquivalence: 50,
+      formPairDiversity: 0.50,
+      formPairUnderstanding: 0.50,
+      formPairFreedom: 0.50,
+      formPairTransparency: 0.50,
+      formPairCare: 0.50,
+      formPairTrust: 0.50,
+      formPairEquivalence: 0.50,
       formPairDiversityText: null,
       formPairUnderstandingText: null,
       formPairFreedomText: null,
@@ -1070,7 +1068,7 @@ export default {
       formPairCareText: null,
       formPairTrustText: null,
       formPairEquivalenceText: null,
-      formPairFinal: 50,
+      formPairFinal: 0.50,
       formPairFinalText: null,
       terms: null,
       editing: false,

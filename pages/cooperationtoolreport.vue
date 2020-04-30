@@ -20,7 +20,7 @@
         <p v-if="result.desc">Your Description:</p>
         <p v-html="result.desc"></p>
         <h2>Report:</h2>
-        <p v-if="result.D <= 25">
+        <p v-if="result.D <= 0.25">
           {{ $t('cootoolreport.stagnation') }}
           <br />
           {{ $t('cootoolreport.stagnationrisk') }}
