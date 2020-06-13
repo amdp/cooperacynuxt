@@ -17,7 +17,7 @@
       These Agreements are written in English.<br>
       To the extent any translated version of this agreement conflicts with the English version, the English version controls.<br><br>
 
-      Date of Last Revision: October 27, 2019<br><br>
+      Date of Last Revision: 2020 June 13<br><br>
     </p>
 
     <p class="base">Before your use of the Site, please carefully read these Agreements. By using the Site, YOU ACKNOWLEDGE THAT YOU HAVE READ, UNDERSTAND, ACCEPT AND AGREE TO BE BOUND BY THESE AGREEMENTS, AND THESE AGREEMENTS WILL APPLY TO YOU AND WILL CONSTITUTE A BINDING LEGAL CONTRACT BETWEEN YOU AND COOPERACY. IF YOU DO NOT AGREE TO ALL OF THE TERMS AND CONDITIONS OF THESE AGREEMENTS, DO NOT USE THE SITE.</p><br>
@@ -34,7 +34,7 @@
 
     <p class="base">All the participants of Cooperacy -including those of any of its Ideas or Projects- want to respect everyone’s privacy and applicable data protection and privacy laws. The dream is about a world in which every information is shared with no harm, but the path to that ideal has to respect the intimate needs and desires of everyone. So Cooperacy process created by humans are designed in a way that takes care of these aspects, starting from the communication of this privacy policy (“Policy”). It tells how Cooperacy, that is made of all of its participants, behaves as “data controller” and uses personal data every time this Policy is mentioned. “Personal data” means information about an identifiable individual. If there are special differences about a specific Cooperacy Project Policy that differ from this Policy, the Project Policy will list them. The differences will substitute this very Policy only in the cases or points listed in the Project Policy. When there is the possibility to choose wether to give or not personal information, Cooperacy will make it explicit, so that anybody will be able to freely choose according to their preferences. Software on any device may access personal information. Cooperacy products or services may link to other companies’ websites and services that have privacy policies of their own. Cooperacy and its participants are not responsible for the privacy practices of others and it is recommended to read their privacy notices. If there is disagreement with this Policy, use of Cooperacy products and services or providing Cooperacy with personal data is discouraged, not in the scopes nor responsibility of Cooperacy. Cooperacy collect personal data and other information when a purchase is made, during use or registration into Cooperacy's products and services, participation in campaigns or research or during other interaction with Cooperacy. Cooperacy products and services may require electronic activation, asking data about device and application type and unique device, application, network and subscription identifiers. Access to Cooperacy services online or Cooperacy web servers automatically creates visit records. IP-address, access times, the sites linked from, pages visited, the links and features used, the content viewed or requested, browser or application type, language or other similar information are collected. Cooperacy applications may contact Cooperacy or other servers periodically, for example to check for updates or to send Cooperacy information relating to service usage. Additionally, Cooperacy may invite to join voluntary product and service improvement or research programs where detailed information is collected. Information is provided during the creation of an account, a purchase, a request for services, a participation in research or campaigns or generally during every interaction with Cooperacy. A possible non-exhaustive list may include name, email address, phone number, street address, user names and passwords, feedback, information relating to personal devices, age, gender, language, bank account number, credit card details and other financial sensible data. All this information is used by Cooperacy to fulfil the goals every participant chose to support, that are to have a common ecosystem based on cooperation, equivalence, trust, care, transparency, freedom, understanding and diversity-inclusiveness. Cooperacy therefore maintains records of consents, preferences and settings related to location data, marketing data, personal data, data sharing, et cetera. Cooperacy also maintain records of purchases, downloads, contents provided, requests, agreements, payment and delivery details, personal contacts and communications and other interactions with Cooperacy, including the products and services provided by Cooperacy. Cooperacy may, in accordance with applicable law, record any communications with the Cooperacy customer care or with other similar contact points. Location-based services establish location through the use of satellite, mobile, Wi-Fi or other network based positioning methods. These technologies may involve exchanging location data and unique device or mobile, Wi-Fi or other network related identifiers with Cooperacy. Cooperacy products may operate on multiple device platforms, applications and services which may also collect location data. Cooperacy never use any information to identify anybody personally without their consent. This Policy represents clear communication about what Cooperacy do with personal data, especially the participants’. When you use Cooperacy location based services and features, for example location based search, navigation and routing, or request for map data or other location data, personal data is sent to Cooperacy to serve the user with the right content, which may also include location based advertising. Marketing and advertising are used here as per the common international meaning, and not to avoid any responsibility about the communication related to privacy, although Cooperacy want to free the world from induced needs and actions, so Cooperacy's marketing and advertising strategies every time possible are avoided, when present, they are not based on numeric profit acquisition and mainly human-focused. The purpose of collecting personal data is simply to better understand human diversity and provide individual diversity with equivalent possibility to fulfil personal expectations, desires, needs, or, simply put, to take care of everybody’s personality in order to help participants to have a fulfilling and pleasant life. Personal data provides Cooperacy products and services the possibility to process requests or to perform the agreements between the participants and Cooperacy, to ensure the functionality and security of Cooperacy products and services, to identify who interacts with Cooperacy as well as to prevent and investigate fraud and other misuses. Some services may require an account to help to manage content and preferences. Cooperacy may use personal data to better develop and manage products, services, customer care, sales and research. Cooperacy may combine personal data collected in connection with the use of a particular Cooperacy product and/or service with other personal data, unless such personal data was collected for a different purpose. Cooperacy may use personal data to communicate and inform, for example, services changes, notices or important alert relating to products and/or services, customer care related purposes, information about new products, services or functionalities, promotions, research, personalisations, recommendations, customised content, Cooperacy and possibly third party content. Cooperacy do not sell, lease, rent or otherwise disclose personal data to third parties unless otherwise stated here or in the projects specifications and privacy Policies, in which case the procedure applies only if there is a clear consent to proceed. Some Cooperacy services may allow to share somebody personal data with other users or customers of the service or with other services and their users or customers. Please consider carefully before disclosing any personal data or other information that might be accessible to others. Cooperacy may share personal data with other Cooperacy companies, institutions or authorised third parties who process personal data for Cooperacy. Examples range from billing through network service providers, delivery of purchases, provision of services including customer services, consumer data management and analysis, credit checks, research, marketing and other similar operations. When purchasing, requesting or subscribing a Cooperacy product or service with a network service provider plan, Cooperacy may need to exchange information with the network service provider to provide the desired service. Cooperacy may conduct joint marketing and other communications with operation-relevant partners, for example a mobile operator. To avoid duplicate or unnecessary communications or to better communicate and inform Cooperacy may need to match information that has been collected with information that a partner has collected where this is permitted by law. These authorised third parties are not permitted to use personal data for any other purposes. Cooperacy require them to act consistently with this Policy and to use appropriate security measures to protect personal data. Cooperacy products and services may be provided using resources and servers located in various countries around the world. Personal data may be transferred across international borders outside the country where the services are requested or used, including to countries that do not have laws providing specific protection for personal data or that have different legal rules on data protection. A simple transfer, for example, from the UE to the USA may have this characteristics. In such cases Cooperacy ensure that there is a legal basis for such a transfer and that adequate protection for personal data is provided as required by applicable law, for example, by using standard agreements approved by relevant authorities (where necessary) and by requiring the use of other appropriate technical and organisational information security measures. Cooperacy may be obligated by mandatory law to disclose personal data to certain authorities or other third parties, for example, to law enforcement agencies in the countries where Cooperacy or third parties acting on Cooperacy behalf operate or for national security reasons in the countries where products and services are object of interaction. Cooperacy may also disclose and otherwise process personal data in accordance with applicable law to defend Cooperacy’s legitimate interests, for example, in civil or criminal legal proceedings. If Cooperacy want to sell, buy, merge or otherwise reorganise products, services or businesses in certain countries, this may involve disclosing personal data to prospective or actual purchasers and their advisers, or receiving personal data from sellers and their advisers. Cooperacy products and services are typically intended for general audiences. Cooperacy do not knowingly collect information of children without the consent of their parents or guardians. Cooperacy takes reasonable steps to keep the personal data accurate and to delete incorrect or unnecessary personal data, encouraging to access personal data through personal account from time to time to ensure that the data is up to date. Privacy and security are key considerations in the creation and delivery of Cooperacy products and services specific responsibilities are assigned to address privacy and security related matters. Cooperacy enforce internal policies and guidelines through an appropriate selection of activities, including proactive and reactive risk management, security and privacy engineering, training and assessments, taking appropriate steps to address online security, physical security, risk of data loss and other such risks taking into consideration the risk represented by the processing and the nature of the data being protected. Also, Cooperacy limit access to Cooperacy's data bases containing personal data to authorised persons having a justified need to access such information. Cooperacy use cookies, web beacons and other similar technologies to operate and improve Cooperacy products, services, websites and offering, including personalisation and ads display. Some Cooperacy Sites may use third party advertising technologies to serve ads. Cooperacy domains may include third party elements that set cookies on behalf of a third party, for example relating to third party social network. Every user has the right to know what personal data Cooperacy hold, as well as the right to have incomplete, incorrect, unnecessary or outdated personal data deleted or updated, to unsubscribe from any marketing messages and to stop processing personal data for marketing purposes or on other compelling legal grounds. However, in these cases, important alerts may still be sent in order to respect and take car of the users. It is possible to exercise the listed rights and any other rights the local laws warrant as standards by contacting Cooperacy or by managing personal account or choices through available profile management tools on devices or in the Cooperacy services and product relative functionalities. In some cases, especially if the wish is to delete or stop processing personal data, this may also mean that Cooperacy may not be able to continue to provide the services or any other operation where the personal data is needed. In case you delete your personal data or your Values Asset or any other content produced by you, it is deleted in a manner similar to emptying the recycle bin on a computer. However, you understand that removed content may persist in backup copies for a reasonable period of time, accessed by technicians in case something goes wrong on the Site.</p><br>
 
-    <p class="base">Cooperacy, via della Moscova 39, 20121 Milano, Italy, Fiscal Code 97725540153 is the controller of the personal data related to Cooperacy products, services, websites, communications. Representative information: ilario@cooperacy.org</p><br>
+    <p class="base">Cooperacy, via della Moscova 39, 20121 Milano, Italy, Fiscal Code 97725540153 is the controller of the personal data related to Cooperacy products, services, websites, communications. Representative information: please use our contact form.</p><br>
 
     <p class="base">The list of personal data collected by Cooperacy has the following finalities:
       <br>
@@ -51,8 +51,335 @@
         <li>External platform content visualization: Google Fonts. Personal Data: usage data, different typologies of data according to what specified in the service related privacy policy.</li>
         <li>General Personal Data: cookies, usage data, personal preferences also expressed through voting, bank transaction data only relative to the provided service and the user, cooperacy user account, various as defined by Paypal privacy policy, Bank information and directions, Date of Birth, eventual VAT code, Bank privacy policy sensible data, name, surname, email, demographic and skills, different typologies of data according to what specified in the (external) services related privacy policy.</li>
       </ul>
+        <p class="base">
+          As per 2020 June 13 Cooperacy only uses the cookies relative to the services of Google Analytics for statistical purposes and the Google Font for its proper functionality. About personal sensible data, Cooperacy uses the informations the registered users provide during registration and after as described in this same page, but some other information like IP and relative country may be obtained in an automatic way.
+          Where not described in a different form, all the data requested or obtained by this website is considered mandatory for its functionality. As per an example, the website cannot function properly without the voting of the projects, and the voting represent a personal action and information of the user.
+          For any doubt, please contact our representative as described above.
+          The user is in any case responsible for any kind of information, expecially sensitive data, coming from third parties obtained, published or shared via this website and warrants by the same actions to be the owner or co-owner the relative rights of diffusion, releasing Cooperacy for any responsibility against third parties.
 
-      <p class="base">In addition, the Cooperacy affiliate or partner providing the product or service may be a controller of personal data. It is possible to find the identity of the controller and its contact details by reviewing the terms and conditions of such a product or service or by using contact information provided in the applicable Cooperacy Sites. In matters pertaining to Cooperacy’s privacy practices you may also contact Cooperacy at cooperacy@cooperacy.org. Cooperacy may, from time to time, change this Policy or change, modify or withdraw access to this site page at any time with or without notice. However, if this Policy is changed in a material, adverse way, Cooperacy will either post, communicate or inform a notice advising of such change, for example at the beginning of this document or on the Site's home page, or update the date of last edit of this document. It is recommended to visit this document from time to time to learn of any such changes. </p><br><br><br>
+          This document may be printed using the relative print command included in any browser functionalities.
+          
+          Being the main headquarters of Cooperacy in Milan, we address to the European GDPR with a specific part of this policy in Italian:
+
+          <br />Modalit&agrave; e luogo del trattamento dei Dati raccolti
+            <br /><br />
+            Il Titolare adotta le opportune misure di sicurezza volte ad
+            impedire l&rsquo;accesso, la divulgazione, la modifica o la
+            distruzione non autorizzate dei Dati Personali.
+            <br /><br />
+            Il trattamento viene effettuato mediante strumenti informatici e/o
+            telematici, con modalit&agrave; organizzative e con logiche
+            strettamente correlate alle finalit&agrave; indicate.&nbsp;
+            <br /><br />
+            Oltre al Titolare, in alcuni casi, potrebbero avere accesso ai Dati
+            altri soggetti coinvolti nell&rsquo;organizzazione di questo Sito
+            Web (personale amministrativo, commerciale, marketing, legali,
+            amministratori di sistema) ovvero soggetti esterni (come fornitori
+            di servizi tecnici terzi, corrieri postali, hosting provider,
+            societ&agrave; informatiche, agenzie di comunicazione) nominati
+            anche, se necessario, Responsabili del Trattamento da parte del
+            Titolare. L&rsquo;elenco aggiornato dei Responsabili potr&agrave;
+            sempre essere richiesto al Titolare del Trattamento.
+            <br /><br /><br />Base giuridica del trattamento<br /><br />
+            Il Titolare tratta Dati Personali relativi all&rsquo;Utente in caso
+            sussista una delle seguenti condizioni: l&rsquo;Utente ha prestato
+            il consenso per una o pi&ugrave; finalit&agrave; specifiche;&nbsp;
+            <br /><br />
+            Nota: in alcuni ordinamenti il Titolare pu&ograve; essere
+            autorizzato a trattare Dati Personali senza che debba sussistere il
+            consenso dell&rsquo;Utente o un&rsquo;altra delle basi giuridiche
+            specificate di seguito, fino a quando l&rsquo;Utente non si opponga
+            (&ldquo;opt-out&rdquo;) a tale trattamento.&nbsp;
+            <br /><br />
+            Ci&ograve; non &egrave; tuttavia applicabile qualora il trattamento
+            di Dati Personali sia regolato dalla legislazione europea in materia
+            di protezione dei Dati Personali;
+            <br /><br />
+            il trattamento &egrave; necessario all&#39;esecuzione di un
+            contratto con l&rsquo;Utente e/o all&#39;esecuzione di misure
+            precontrattuali;
+            <br /><br />
+            il trattamento &egrave; necessario per adempiere un obbligo legale
+            al quale &egrave; soggetto il Titolare;
+            <br /><br />
+            il trattamento &egrave; necessario per l&#39;esecuzione di un
+            compito di interesse pubblico o per l&#39;esercizio di pubblici
+            poteri di cui &egrave; investito il Titolare;
+            <br /><br />
+            il trattamento &egrave; necessario per il perseguimento del
+            legittimo interesse del Titolare o di terzi.
+            <br /><br />
+            &Egrave; comunque sempre possibile richiedere al Titolare di
+            chiarire la concreta base giuridica di ciascun trattamento ed in
+            particolare di specificare se il trattamento sia basato sulla legge,
+            previsto da un contratto o necessario per concludere un contratto.
+            <br /><br /><br />Luogo<br /><br />
+            I Dati sono trattati presso le sedi operative del Titolare ed in
+            ogni altro luogo in cui le parti coinvolte nel trattamento siano
+            localizzate. Per ulteriori informazioni, contatta il Titolare.
+            <br /><br />
+            I Dati Personali dell&rsquo;Utente potrebbero essere trasferiti in
+            un paese diverso da quello in cui l&rsquo;Utente si trova. Per
+            ottenere ulteriori informazioni sul luogo del trattamento
+            l&rsquo;Utente pu&ograve; fare riferimento alla sezione relativa ai
+            dettagli sul trattamento dei Dati Personali.
+            <br /><br />
+            <br />L&rsquo;Utente ha diritto a ottenere informazioni in merito
+            alla base giuridica del trasferimento di Dati al di fuori
+            dell&rsquo;Unione Europea o ad un&rsquo;organizzazione
+            internazionale di diritto internazionale pubblico o costituita da
+            due o pi&ugrave; paesi, come ad esempio l&rsquo;ONU, nonch&eacute;
+            in merito alle misure di sicurezza adottate dal Titolare per
+            proteggere i Dati. <br /><br />
+            <br />L&rsquo;Utente pu&ograve; verificare se abbia luogo uno dei
+            trasferimenti appena descritti esaminando la sezione di questo
+            documento relativa ai dettagli sul trattamento di Dati Personali o
+            chiedere informazioni al Titolare contattandolo agli estremi
+            riportati in apertura. <br /><br /><br />Periodo di conservazione<br /><br />
+            I Dati sono trattati e conservati per il tempo richiesto dalle
+            finalit&agrave; per le quali sono stati raccolti.Pertanto:
+            <br /><br />
+            <br />I Dati Personali raccolti per scopi collegati
+            all&rsquo;esecuzione di un contratto tra il Titolare e
+            l&rsquo;Utente saranno trattenuti sino a quando sia completata
+            l&rsquo;esecuzione di tale contratto. <br /><br />
+            I Dati Personali raccolti per finalit&agrave; riconducibili
+            all&rsquo;interesse legittimo del Titolare saranno trattenuti sino
+            al soddisfacimento di tale interesse.&nbsp;
+            <br /><br />
+            L&rsquo;Utente pu&ograve; ottenere ulteriori informazioni in merito
+            all&rsquo;interesse legittimo perseguito dal Titolare nelle relative
+            sezioni di questo documento o contattando il Titolare.
+            <br /><br />
+            Quando il trattamento &egrave; basato sul consenso
+            dell&rsquo;Utente, il Titolare pu&ograve; conservare i Dati
+            Personali pi&ugrave; a lungo sino a quando detto consenso non venga
+            revocato.&nbsp;
+            <br /><br />
+            Inoltre, il Titolare potrebbe essere obbligato a conservare i Dati
+            Personali per un periodo pi&ugrave; lungo in ottemperanza ad un
+            obbligo di legge o per ordine di un&rsquo;autorit&agrave;.
+            <br /><br />
+            <br />Al termine del periodo di conservazione i Dati Personali
+            saranno cancellati.&nbsp; <br /><br />
+            Pertanto, allo spirare di tale termine il diritto di accesso,
+            cancellazione, rettificazione ed il diritto alla portabilit&agrave;
+            dei Dati non potranno pi&ugrave; essere esercitati.
+            <br /><br />
+            <br />Finalit&agrave; del Trattamento dei Dati raccoltiI Dati
+            dell&rsquo;Utente sono raccolti per consentire al Titolare di
+            fornire il Servizio, adempiere agli obblighi di legge, rispondere a
+            richieste o azioni esecutive, tutelare i propri diritti ed interessi
+            (o quelli di Utenti o di terze parti), individuare eventuali
+            attivit&agrave; dolose o fraudolente, nonch&eacute; per le seguenti
+            finalit&agrave;: Statistica e Visualizzazione di contenuti da
+            piattaforme esterne. <br /><br />
+            <br />Per ottenere informazioni dettagliate sulle finalit&agrave;
+            del trattamento e sui Dati Personali trattati per ciascuna
+            finalit&agrave;, l&rsquo;Utente pu&ograve; fare riferimento alla
+            sezione &ldquo;Dettagli sul trattamento dei Dati Personali&rdquo;.
+            <br /><br />
+            <br />Dettagli sul trattamento dei Dati PersonaliI Dati Personali
+            sono raccolti per le seguenti finalit&agrave; ed utilizzando i
+            seguenti servizi: <br /><br /><br />Statistica<br /><br />
+            Visualizzazione di contenuti da piattaforme esterneDiritti
+            dell&rsquo;UtenteGli Utenti possono esercitare determinati diritti
+            con riferimento ai Dati trattati dal Titolare.<br />
+            <br /><br />
+            In particolare, l&rsquo;Utente ha il diritto di:<br />revocare il
+            consenso in ogni momento. L&rsquo;Utente pu&ograve; revocare il
+            consenso al trattamento dei propri Dati Personali precedentemente
+            espresso.&nbsp; <br /><br />Opporsi al trattamento dei propri
+            Dati.<br /><br />
+            L&rsquo;Utente pu&ograve; opporsi al trattamento dei propri Dati
+            quando esso avviene su una base giuridica diversa dal
+            consenso.&nbsp;Ulteriori dettagli sul diritto di opposizione sono
+            indicati nella sezione sottostante.
+            <br /><br />Accedere ai propri Dati.&nbsp;<br /><br />
+            L&rsquo;Utente ha diritto ad ottenere informazioni sui Dati trattati
+            dal Titolare, su determinati aspetti del trattamento ed a ricevere
+            una copia dei Dati trattati.verificare e chiedere la
+            rettificazione.&nbsp;
+            <br /><br />
+            L&rsquo;Utente pu&ograve; verificare la correttezza dei propri Dati
+            e richiederne l&rsquo;aggiornamento o la correzione.ottenere la
+            limitazione del trattamento.&nbsp;
+            <br /><br />
+            Quando ricorrono determinate condizioni, l&rsquo;Utente pu&ograve;
+            richiedere la limitazione del trattamento dei propri Dati.&nbsp;
+            <br /><br />
+            In tal caso il Titolare non tratter&agrave; i Dati per alcun altro
+            scopo se non la loro conservazione.ottenere la cancellazione o
+            rimozione dei propri Dati Personali.&nbsp;
+            <br /><br />
+            Quando ricorrono determinate condizioni, l&rsquo;Utente pu&ograve;
+            richiedere la cancellazione dei propri Dati da parte del Titolare.
+            <br /><br />
+            Ricevere i propri Dati o farli trasferire ad altro titolare.&nbsp;
+            <br /><br />
+            L&rsquo;Utente ha diritto di ricevere i propri Dati in formato
+            strutturato, di uso comune e leggibile da dispositivo automatico e,
+            ove tecnicamente fattibile, di ottenerne il trasferimento senza
+            ostacoli ad un altro titolare. Questa disposizione &egrave;
+            applicabile quando i Dati sono trattati con strumenti automatizzati
+            ed il trattamento &egrave; basato sul consenso dell&rsquo;Utente, su
+            un contratto di cui l&rsquo;Utente &egrave; parte o su misure
+            contrattuali ad esso connesse.proporre reclamo. L&rsquo;Utente
+            pu&ograve; proporre un reclamo all&rsquo;autorit&agrave; di
+            controllo della protezione dei dati personali competente o agire in
+            sede giudiziale.&nbsp;
+            <br /><br />Dettagli sul diritto di opposizione<br /><br />
+            Quando i Dati Personali sono trattati nell&rsquo;interesse pubblico,
+            nell&rsquo;esercizio di pubblici poteri di cui &egrave; investito il
+            Titolare oppure per perseguire un interesse legittimo del Titolare,
+            gli Utenti hanno diritto ad opporsi al trattamento per motivi
+            connessi alla loro situazione particolare.
+            <br /><br />
+            <br />Si fa presente agli Utenti che, ove i loro Dati fossero
+            trattati con finalit&agrave; di marketing diretto, possono opporsi
+            al trattamento senza fornire alcuna motivazione. Per scoprire se il
+            Titolare tratti dati con finalit&agrave; di marketing diretto gli
+            Utenti possono fare riferimento alle rispettive sezioni di questo
+            documento. <br /><br /><br />Come esercitare i diritti<br /><br />
+            Per esercitare i diritti dell&rsquo;Utente, gli Utenti possono
+            indirizzare una richiesta agli estremi di contatto del Titolare
+            indicati in questo documento. Le richieste sono depositate a titolo
+            gratuito e evase dal Titolare nel pi&ugrave; breve tempo possibile,
+            in ogni caso entro un mese.
+            <br /><br /><br />Ulteriori informazioni sul trattamento<br /><br />Difesa
+            in giudizio<br /><br />
+            I Dati Personali dell&rsquo;Utente possono essere utilizzati da
+            parte del Titolare in giudizio o nelle fasi preparatorie alla sua
+            eventuale instaurazione per la difesa da abusi nell&#39;utilizzo di
+            questo Sito Web o dei Servizi connessi da parte dell&rsquo;Utente.
+            L&rsquo;Utente dichiara di essere consapevole che il Titolare
+            potrebbe essere obbligato a rivelare i Dati per ordine delle
+            autorit&agrave; pubbliche.
+            <br /><br /><br />Informative specifiche<br /><br />
+            Su richiesta dell&rsquo;Utente, in aggiunta alle informazioni
+            contenute in questa privacy policy, questo Sito Web potrebbe fornire
+            all&#39;Utente delle informative aggiuntive e contestuali
+            riguardanti Servizi specifici, o la raccolta ed il trattamento di
+            Dati Personali.
+            <br /><br /><br />Log di sistema e manutenzione<br /><br />
+            Per necessit&agrave; legate al funzionamento ed alla manutenzione,
+            questo Sito Web e gli eventuali servizi terzi da essa utilizzati
+            potrebbero raccogliere log di sistema, ossia file che registrano le
+            interazioni e che possono contenere anche Dati Personali, quali
+            l&rsquo;indirizzo IP Utente.
+            <br /><br /><br />Informazioni non contenute in questa policy<br /><br />
+            Ulteriori informazioni in relazione al trattamento dei Dati
+            Personali potranno essere richieste in qualsiasi momento al Titolare
+            del Trattamento utilizzando gli estremi di contatto.
+            <br /><br /><br />Risposta alle richieste &ldquo;Do Not
+            Track&rdquo;<br /><br />
+            Questo Sito Web non supporta le richieste &ldquo;Do Not
+            Track&rdquo;.&nbsp;Per scoprire se gli eventuali servizi di terze
+            parti utilizzati le supportino, l&#39;Utente &egrave; invitato a
+            consultare le rispettive privacy policy.
+            <br /><br /><br />Modifiche a questa privacy policy<br /><br />
+            Il Titolare del Trattamento si riserva il diritto di apportare
+            modifiche alla presente privacy policy in qualunque momento
+            notificandolo agli Utenti su questa pagina e, se possibile, su
+            questo Sito Web nonch&eacute;, qualora tecnicamente e legalmente
+            fattibile, inviando una notifica agli Utenti attraverso uno degli
+            estremi di contatto di cui &egrave; in possesso. Si prega dunque di
+            consultare con frequenza questa pagina, facendo riferimento alla
+            data di ultima modifica indicata in fondo.
+            <br /><br />
+            <br />Qualora le modifiche interessino trattamenti la cui base
+            giuridica &egrave; il consenso, il Titolare provveder&agrave; a
+            raccogliere nuovamente il consenso dell&rsquo;Utente, se necessario.
+            <br /><br /><br />Definizioni e riferimenti legali<br /><br />Statistica<br /><br />
+            I servizi contenuti nella presente sezione permettono al Titolare
+            del Trattamento di monitorare e analizzare i dati di traffico e
+            servono a tener traccia del comportamento dell&rsquo;Utente.
+            <br /><br /><br />Google Analytics<br /><br />
+            Google Analytics &egrave; un servizio di analisi web fornito da
+            Google LLC oppure da Google Ireland Limited, a seconda della
+            posizione in cui questo Sito Web viene utilizzata,
+            (&ldquo;Google&rdquo;). Google utilizza i Dati Personali raccolti
+            allo scopo di tracciare ed esaminare l&rsquo;utilizzo di questo Sito
+            Web, compilare report e condividerli con gli altri servizi
+            sviluppati da Google.Google potrebbe utilizzare i Dati Personali per
+            contestualizzare e personalizzare gli annunci del proprio network
+            pubblicitario.
+            <br /><br />
+            Dati Personali trattati: Cookie; Dati di utilizzo.<br />Luogo del
+            trattamento: Stati Uniti - Irlanda &ndash; Privacy Policy:
+            <b-link href="https://policies.google.com/privacy?hl=it"
+              >https://policies.google.com/privacy?hl=it</b-link
+            >
+            &ndash; Opt Out:
+            <b-link href="https://adssettings.google.com/authenticated?hl=en"
+              >https://adssettings.google.com/authenticated?hl=en</b-link
+            >
+            oppure:
+            <b-link href="https://tools.google.com/dlpage/gaoptout?hl=it"
+              >https://tools.google.com/dlpage/gaoptout?hl=it</b-link
+            >. Soggetto aderente al Privacy Shield.
+            <br /><br /><br />Visualizzazione di contenuti da piattaforme
+            esterne<br /><br />
+            Questo tipo di servizi permette di visualizzare contenuti ospitati
+            su piattaforme esterne direttamente dalle pagine di questo Sito Web
+            e di interagire con essi. Questo tipo di servizio potrebbe comunque
+            raccogliere dati sul traffico web relativo alle pagine dove il
+            servizio &egrave; installato, anche quando gli utenti non lo
+            utilizzano.
+            <br /><br /><br />Google Fonts<br /><br />
+            Google Fonts &egrave; un servizio di visualizzazione di stili di
+            carattere gestito da Google LLC oppure da Google Ireland Limited, a
+            seconda della posizione in cui questo Sito Web viene utilizzata, che
+            permette a questo Sito Web di integrare tali contenuti
+            all&rsquo;interno delle proprie pagine.
+            <br /><br />
+            Dati Personali trattati: Dati di utilizzo; varie tipologie di Dati
+            secondo quanto specificato dalla privacy policy del servizio.<br />Luogo
+            del trattamento: Stati Uniti - Irlanda &ndash; Privacy Policy:
+            <b-link href="https://policies.google.com/privacy?hl=it"
+              >https://policies.google.com/privacy?hl=it</b-link
+            >
+            &ndash; Opt Out:
+            <b-link href="https://adssettings.google.com/authenticated?hl=en"
+              >https://adssettings.google.com/authenticated?hl=en</b-link
+            >
+            oppure:&nbsp;
+            <b-link href="https://tools.google.com/dlpage/gaoptout?hl=it"
+              >https://tools.google.com/dlpage/gaoptout?hl=it</b-link
+            >. Soggetto aderente al Privacy Shield. <br /><br />Linkedin
+            <br /><br />
+            Monitoraggio conversioni, retargeting e e analisi visite di LinkedIn
+            Insight Tag (LinkedIn Corporation)
+            <br /><br />
+            Linkedin Insight Tag &egrave; un codice JavaScript aggiunto al sito
+            per consentire una reportistica approfondita delle campagne e per
+            aiutarci a sbloccare informazioni preziose sui visitatori del sito.
+            Viene inoltre utilizzato per tenere traccia delle conversioni e il
+            retargeting &nbsp;dei visitatori del sito Web e per sbloccare
+            ulteriori informazioni sui membri che interagiscono con le nostre
+            pubblicit&agrave; su LinkedIn.
+            <br /><br />
+            Linkedin Insight Tag consente la raccolta di metadati quali
+            informazioni sull&#39;indirizzo IP, timestamp ed eventi come le
+            visualizzazioni di pagina. Tutti i dati sono crittografati. Il
+            cookie del browser di LinkedIn viene memorizzato nel browser di un
+            visitatore fino a quando non elimina il cookie o il cookie scade
+            (c&#39;&egrave; una scadenza di sei mesi a rotazione,
+            dall&#39;ultima volta che il browser del visitatore ha caricato il
+            tag).
+            <br /><br />
+            Luogo del trattamento: USA &ndash; policy:
+            <b-link href="https://www.linkedin.com/legal/cookie-policy"
+              >https://www.linkedin.com/legal/cookie-policy</b-link
+            >
+            - opt-out:
+            <b-link href="https://www.linkedin.com/psettings"
+              >https://www.linkedin.com/psettings</b-link
+            >
+          </p>
+
+
+      <p class="base">In addition, the Cooperacy affiliate or partner providing the product or service may be a controller of personal data. It is possible to find the identity of the controller and its contact details by reviewing the terms and conditions of such a product or service or by using contact information provided in the applicable Cooperacy Sites. In matters pertaining to Cooperacy’s privacy practices you may also contact Cooperacy using our contact form. Cooperacy may, from time to time, change this Policy or change, modify or withdraw access to this site page at any time with or without notice. However, if this Policy is changed in a material, adverse way, Cooperacy will either post, communicate or inform a notice advising of such change, for example at the beginning of this document or on the Site's home page, or update the date of last edit of this document. It is recommended to visit this document from time to time to learn of any such changes. </p><br><br><br>
 
       <p class="base">When you register on or use the Site, you represent and warrant that: (a) you are of sufficient legal age and have legal capacity to legally agree to the terms and conditions included in these Agreements; (b) if you register to the Site on behalf of a legal entity, you represent and warrant that you have full authority to bind such entity to these Agreements, (c) you own all right, title and interest in any information, idea, comment, feedback, suggestion, material or software program (“User Material”) posted or submitted in connection with the use of the Site or have full authority to do so on behalf of the owner of the User Material under these Agreements. You also consent to having your personal data transferred to and processed in Italy or anywhere Cooperacy may decide it is proper for its purposes.</p><br>
 
@@ -128,7 +455,7 @@
 
       <p class="base">These Agreements shall be governed and construed in accordance with the laws of Italy, without regard to its conflict of law provisions AND WILL SPECIFICALLY NOT BE GOVERNED BY THE UNITED NATIONS CONVENTIONS ON CONTRACTS FOR THE INTERNATIONAL SALE OF GOODS. Cooperacy's failure to enforce any right or provision of these Agreements will not be considered a waiver of those rights. If any provision of these Agreements is held to be invalid or unenforceable by a court, the remaining provisions of these Agreements will remain in effect. These Agreements (and any applicable Supplemental Terms) constitute the entire agreement between you and Cooperacy regarding the use of the Site and its content, and supersede and prevail over any other agreements Cooperacy might have between you and Cooperacy regarding the use of the Site and its content. Any dispute, controversy or claim arising out of or relating to these Agreements, or the breach, termination or validity thereof, shall be finally settled by arbitration in accordance with the Arbitration Rules of the Italian Chamber of Commerce. The seat of arbitration shall be Rome, Italy. The language of the arbitration shall be Italian. The procedural law of Italy shall apply where the rules are silent. The award shall be final and binding on the Parties. Notwithstanding the foregoing, nothing herein prevents Cooperacy from applying to the courts of any country for injunctive or other equitable relief to prevent or curtail any breach of these Agreements or for enforcement of an arbitral award.</p><br>
 
-      <p class="base">If you have any questions about these Agreements or your account, you may contact Cooperacy by email at cooperacy@cooperacy.org.</p><br>
+      <p class="base">If you have any questions about these Agreements or your account, you may contact Cooperacy by email using our contact form.</p><br>
 
       <p class="subheading transparency space">Supplemental Terms</p><br>
 

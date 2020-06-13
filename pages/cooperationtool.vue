@@ -127,11 +127,7 @@
             {{ $t('cootool.groupcoostatus') }}
           </h5>
 
-          <b-check v-model="groupcheckbox" class="text-center my-5">
-            {{ $t('cootool.apply') }}
-          </b-check>
-
-          <b-container class="m-0 p-0" v-if="groupcheckbox">
+          <b-container class="m-0 p-0">
             <p class="diversity it">
               <strong>
                 {{ $t('cootool.groupcoointro') }}
@@ -232,7 +228,7 @@
             <b-form-group
               class="py-3 t16"
               label-for="careInput"
-              :label="$t('cootool.C')"
+              :label="$t('cootool.CB')"
               label-align="left"
             >
               <b-form-input
@@ -1075,9 +1071,6 @@ export default {
       country: this.$store.state.country,
       formNewcountry: null,
       formNewplace: null,
-      groupcheckbox: false,
-      groupmecheckbox: false,
-      groupenvcheckbox: false,
       pairgroupcheckbox: false,
     }
   },

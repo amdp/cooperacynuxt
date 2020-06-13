@@ -19,6 +19,15 @@ import navbar from '@/components/navbar'
 import foot from '@/components/foot'
 
 export default {
+  head() {
+    return {
+      script: [
+        { src: '/gdpr/cookies.js', type: 'text/javascript' },
+        { src: '/gdpr/ga.js', type: 'text/javascript', 'data-starcookie': 'statistics' },
+        //{ src: '/gdpr/linkedin.js', type: 'text/plain', 'data-starcookie': 'statistics' },
+      ],
+    }
+  },
   components: { navbar, foot }
 }
 </script>

@@ -14,33 +14,34 @@
     "lintfix": "eslint --fix --ext .js,.vue --ignore-path .gitignore ."
   },
   "dependencies": {
-    "@intlify/vue-i18n-extensions": "^1.0.1",
+    "@intlify/vue-i18n-extensions": "^1.0.2",
     "@intlify/vue-i18n-loader": "^0.6.1",
+    "@nuxt/components": "^0.2.5",
     "@nuxtjs/auth": "^4.9.1",
-    "@nuxtjs/axios": "^5.10.3",
-    "@nuxtjs/google-analytics": "^2.2.3",
+    "@nuxtjs/axios": "^5.11.0",
+    "@nuxtjs/google-analytics": "^2.3.0",
     "@nuxtjs/pwa": "^3.0.0-beta.20",
     "@nuxtjs/toast": "^3.3.0",
-    "@popperjs/core": "^2.4.0",
+    "@popperjs/core": "^2.4.2",
     "bcryptjs": "^2.4.3",
     "bignumber.js": "^7.2.1",
     "body-parser": "^1.19.0",
-    "bootstrap": "^4.4.1",
-    "bootstrap-vue": "^2.13.0",
+    "bootstrap": "^4.5.0",
+    "bootstrap-vue": "^2.15.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-fileupload": "^1.1.6",
     "jimp": "^0.10.3",
-    "jquery": "^3.5.0",
+    "jquery": "^3.5.1",
     "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^2.2.0",
     "mysql": "^2.18.1",
     "mysql2": "^2.1.0",
-    "nodemailer": "^6.4.6",
+    "nodemailer": "^6.4.8",
     "nodemon": "^1.19.4",
     "nuxt": "^2.12.2",
-    "nuxt-i18n": "^6.11.0",
-    "typescript": "^3.8.3",
+    "nuxt-i18n": "^6.12.2",
+    "typescript": "^3.9.5",
     "vue-recaptcha": "^1.3.0"
   },
   "devDependencies": {
@@ -49,6 +50,6 @@
     "eslint": "^6.8.0",
     "eslint-loader": "^3.0.4",
     "eslint-plugin-vue": "^6.2.2",
-    "vue-eslint-parser": "^7.0.0"
+    "vue-eslint-parser": "^7.1.0"
   }
 }
