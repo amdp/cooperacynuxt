@@ -4,11 +4,11 @@ var cookiesPolicy = {
   popupTitleFontSize: "18px",
   popupTextFontSize: "11px",
   colorOfButton: "#00DDDD",
-  cookieGeneral: "blog.alessandrostella.it",
+  cookieGeneral: "cooperacy.org",
   cookieCheckPref: "preferences",
   cookieCheckStat: "statistics",
   cookieCheckMark: "marketing",
-  urlCookiePolicy: "/main/terms", //"https://cooperacy.org/main/terms",
+  urlCookiePolicy: "https://cooperacy.org/main/terms",
   cookieExpiresDays: 30,
   prefCheckValue: "checked",
   statCheckValue: "checked",
@@ -87,11 +87,11 @@ var cookiesPolicy = {
     var checkForPref =
       '<input type="checkbox" name="preferences" value="preferences" ' +
       cookiesPolicy.prefCheckValue +
-      '><span class="checkboxtext">Preferenze</span>';
+      '><span class="checkboxtext">Preferences</span>';
     var checkForStat =
       '<input type="checkbox" name="statistics" value="statistics" ' +
       cookiesPolicy.statCheckValue +
-      '><span class="checkboxtext">Statistiche</span>';
+      '><span class="checkboxtext">Statistics</span>';
     var checkForMark =
       '<input type="checkbox" name="marketing" value="marketing" ' +
       cookiesPolicy.markCheckValue +
@@ -120,15 +120,14 @@ var cookiesPolicy = {
       cookiesPolicy.popupTitle +
       "</h3>" +
       "<hr>" +
-      "<p>Per poter gestire al meglio la tua navigazione su questo sito " +
-      "verranno temporaneamente memorizzate alcune informazioni in piccoli file di testo denominati <strong>cookie</strong>. " +
-      "È molto importante che tu sia informato e che accetti la politica sulla privacy e sui cookie di questo sito Web. " +
-      "Per ulteriori informazioni, leggi la nostra politica sulla privacy e sui cookie.</p>" +
+      "<p>In this website " +
+      "few lines of text containing information will be used, called <strong>cookies</strong>. " +
+      "It is very important that you will become informed about this reading and accepting our privacy and cookie policy, together with our terms and conditins.</p>" +
       '<p><a href="' +
       cookiesPolicy.urlCookiePolicy +
-      '" title="Leggi la Policy">Politica sulla privacy e sui cookie</a></p>' +
+      '" title="Read our Terms">Read our Privacy Policy, Terms and Conditions, Cookie Policy</a></p>' +
       '<div id="checkboxContainer"> ' +
-      '<div class="singleCheckBox"><input type="checkbox" name="necesse" value="necesse" checked disabled><span class="checkboxtext">Cookie necessari</span></div> ' +
+      '<div class="singleCheckBox"><input type="checkbox" name="necesse" value="necesse" checked disabled><span class="checkboxtext">Needed Cookies</span></div> ' +
       '<div class="singleCheckBox">' +
       checkForPref +
       "</div>" +
@@ -139,7 +138,7 @@ var cookiesPolicy = {
       checkForMark +
       "</div>" +
       "</div>" +
-      '<button onClick="cookiesPolicy.loadScript()">OK, HO CAPITO E ACCETTO</button>' +
+      '<button onClick="cookiesPolicy.loadScript()">OK, I UNDERSTAND AND ACCEPT</button>' +
       "</div>";
     return htmlCode;
   },
