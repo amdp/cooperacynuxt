@@ -131,7 +131,7 @@
         </div>
       </div>
       <p class="base text-center">
-        Cooperacy is an open project aiming to spread and apply Cooperation
+        Cooperacy is an open project aiming to apply and spread Cooperation
         Science.
       </p>
       <p class="base text-center mb-2">
