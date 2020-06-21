@@ -9,7 +9,7 @@ module.exports = {
   plugins: [],
   build: {},
   serverMiddleware: ['./api'],
-  css: ['@assets/coo.css'],
+  css: ['@assets/coo.scss'],
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/toast',

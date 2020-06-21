@@ -121,7 +121,9 @@
             ></b-form-textarea>
           </b-form-group>
 
-          <!-- /////////////// GROUP COOPERATION STATUS /////////////// -->
+          <!-- /////// GROUP COOPERATION STATUS /////// -->
+          <!-- /////// GROUP COOPERATION STATUS /////// -->
+          <!-- /////// GROUP COOPERATION STATUS /////// -->
 
           <h5 class="text-center mt-5 equivalence">
             {{ $t('cootool.groupcoostatus') }}
@@ -135,11 +137,11 @@
             </p>
 
             <!-- /////////////// DIVERSITY /////////////// -->
-
+            
             <b-form-group
               class="py-3 t16"
               label-for="MDdiversityInput"
-              :label="$t('cootool.MD')"
+              :label="$t('cootool.D')"
               label-align="left"
             >
               <b-form-input
@@ -151,21 +153,13 @@
                 step="0.01"
                 value="value"
               ></b-form-input>
-              <b-row>
+              <b-row class="mb-3">
                 <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="6" class="text-center"></b-col>
+                <b-col cols="6" class="text-center">YOU</b-col>
                 <b-col cols="3" class="text-right">{{
                   $t('cootool.p1')
                 }}</b-col>
               </b-row>
-            </b-form-group>
-
-            <b-form-group
-              class="py-3 t16"
-              label-for="diversityInput"
-              :label="$t('cootool.D')"
-              label-align="left"
-            >
               <b-form-input
                 id="diversityInput"
                 v-model="formDiversity"
@@ -177,55 +171,7 @@
               ></b-form-input>
               <b-row>
                 <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="6" class="text-center"></b-col>
-                <b-col cols="3" class="text-right">{{
-                  $t('cootool.p1')
-                }}</b-col>
-              </b-row>
-            </b-form-group>
-
-            <b-form-group
-              class="py-3 t16"
-              label-for="MHdiversityInput"
-              :label="$t('cootool.MHD')"
-              label-align="left"
-            >
-              <b-form-input
-                id="MHdiversityInput"
-                v-model="formMHDiversity"
-                type="range"
-                min="0.01"
-                max="0.99"
-                step="0.01"
-                value="value"
-              ></b-form-input>
-              <b-row>
-                <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="6" class="text-center"></b-col>
-                <b-col cols="3" class="text-right">{{
-                  $t('cootool.p1')
-                }}</b-col>
-              </b-row>
-            </b-form-group>
-
-            <b-form-group
-              class="py-3 t16"
-              label-for="HdiversityInput"
-              :label="$t('cootool.HD')"
-              label-align="left"
-            >
-              <b-form-input
-                id="HdiversityInput"
-                v-model="formHDiversity"
-                type="range"
-                min="0.01"
-                max="0.99"
-                step="0.01"
-                value="value"
-              ></b-form-input>
-              <b-row>
-                <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="6" class="text-center"></b-col>
+                <b-col cols="6" class="text-center">THE PARTICIPANTS</b-col>
                 <b-col cols="3" class="text-right">{{
                   $t('cootool.p1')
                 }}</b-col>
@@ -237,7 +183,7 @@
             <b-form-group
               class="py-3 t16"
               label-for="MunderstandingInput"
-              :label="$t('cootool.MU')"
+              :label="$t('cootool.U')"
               label-align="left"
             >
               <b-form-input
@@ -251,43 +197,11 @@
               ></b-form-input>
               <b-row>
                 <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="6" class="text-center"></b-col>
+                <b-col cols="6" class="text-center">YOU</b-col>
                 <b-col cols="3" class="text-right">{{
                   $t('cootool.p1')
                 }}</b-col>
               </b-row>
-            </b-form-group>
-
-            <b-form-group
-              class="py-3 t16"
-              label-for="OunderstandingInput"
-              :label="$t('cootool.OU')"
-              label-align="left"
-            >
-              <b-form-input
-                id="OunderstandingInput"
-                v-model="formOUnderstanding"
-                type="range"
-                min="0.01"
-                max="0.99"
-                step="0.01"
-                value="value"
-              ></b-form-input>
-              <b-row>
-                <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="6" class="text-center"></b-col>
-                <b-col cols="3" class="text-right">{{
-                  $t('cootool.p1')
-                }}</b-col>
-              </b-row>
-            </b-form-group>
-
-            <b-form-group
-              class="py-3 t16"
-              label-for="understandingInput"
-              :label="$t('cootool.U')"
-              label-align="left"
-            >
               <b-form-input
                 id="understandingInput"
                 v-model="formUnderstanding"
@@ -299,55 +213,7 @@
               ></b-form-input>
               <b-row>
                 <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="6" class="text-center"></b-col>
-                <b-col cols="3" class="text-right">{{
-                  $t('cootool.p1')
-                }}</b-col>
-              </b-row>
-            </b-form-group>
-
-            <b-form-group
-              class="py-3 t16"
-              label-for="MHunderstandingInput"
-              :label="$t('cootool.MHU')"
-              label-align="left"
-            >
-              <b-form-input
-                id="MHunderstandingInput"
-                v-model="formMHUnderstanding"
-                type="range"
-                min="0.01"
-                max="0.99"
-                step="0.01"
-                value="value"
-              ></b-form-input>
-              <b-row>
-                <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="6" class="text-center"></b-col>
-                <b-col cols="3" class="text-right">{{
-                  $t('cootool.p1')
-                }}</b-col>
-              </b-row>
-            </b-form-group>
-
-            <b-form-group
-              class="py-3 t16"
-              label-for="HunderstandingInput"
-              :label="$t('cootool.HU')"
-              label-align="left"
-            >
-              <b-form-input
-                id="HunderstandingInput"
-                v-model="formHUnderstanding"
-                type="range"
-                min="0.01"
-                max="0.99"
-                step="0.01"
-                value="value"
-              ></b-form-input>
-              <b-row>
-                <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="6" class="text-center"></b-col>
+                <b-col cols="6" class="text-center">THE PARTICIPANTS</b-col>
                 <b-col cols="3" class="text-right">{{
                   $t('cootool.p1')
                 }}</b-col>
@@ -359,7 +225,7 @@
             <b-form-group
               class="py-3 t16"
               label-for="MfreedomInput"
-              :label="$t('cootool.MF')"
+              :label="$t('cootool.F')"
               label-align="left"
             >
               <b-form-input
@@ -373,19 +239,11 @@
               ></b-form-input>
               <b-row>
                 <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="6" class="text-center"></b-col>
+                <b-col cols="6" class="text-center">YOU</b-col>
                 <b-col cols="3" class="text-right">{{
                   $t('cootool.p1')
                 }}</b-col>
               </b-row>
-            </b-form-group>
-
-            <b-form-group
-              class="py-3 t16"
-              label-for="freedomInput"
-              :label="$t('cootool.F')"
-              label-align="left"
-            >
               <b-form-input
                 id="freedomInput"
                 v-model="formFreedom"
@@ -397,55 +255,7 @@
               ></b-form-input>
               <b-row>
                 <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="6" class="text-center"></b-col>
-                <b-col cols="3" class="text-right">{{
-                  $t('cootool.p1')
-                }}</b-col>
-              </b-row>
-            </b-form-group>
-
-            <b-form-group
-              class="py-3 t16"
-              label-for="HfreedomInput"
-              :label="$t('cootool.HF')"
-              label-align="left"
-            >
-              <b-form-input
-                id="HfreedomInput"
-                v-model="formHFreedom"
-                type="range"
-                min="0.01"
-                max="0.99"
-                step="0.01"
-                value="value"
-              ></b-form-input>
-              <b-row>
-                <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="6" class="text-center"></b-col>
-                <b-col cols="3" class="text-right">{{
-                  $t('cootool.p1')
-                }}</b-col>
-              </b-row>
-            </b-form-group>
-
-            <b-form-group
-              class="py-3 t16"
-              label-for="MHfreedomInput"
-              :label="$t('cootool.MHF')"
-              label-align="left"
-            >
-              <b-form-input
-                id="MHfreedomInput"
-                v-model="formMHFreedom"
-                type="range"
-                min="0.01"
-                max="0.99"
-                step="0.01"
-                value="value"
-              ></b-form-input>
-              <b-row>
-                <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="6" class="text-center"></b-col>
+                <b-col cols="6" class="text-center">THE PARTICIPANTS</b-col>
                 <b-col cols="3" class="text-right">{{
                   $t('cootool.p1')
                 }}</b-col>
@@ -457,7 +267,7 @@
             <b-form-group
               class="py-3 t16"
               label-for="MtransparencyInput"
-              :label="$t('cootool.MI')"
+              :label="$t('cootool.I')"
               label-align="left"
             >
               <b-form-input
@@ -471,43 +281,11 @@
               ></b-form-input>
               <b-row>
                 <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="6" class="text-center"></b-col>
+                <b-col cols="6" class="text-center">YOU</b-col>
                 <b-col cols="3" class="text-right">{{
                   $t('cootool.p1')
                 }}</b-col>
               </b-row>
-            </b-form-group>
-
-            <b-form-group
-              class="py-3 t16"
-              label-for="OtransparencyInput"
-              :label="$t('cootool.OI')"
-              label-align="left"
-            >
-              <b-form-input
-                id="OtransparencyInput"
-                v-model="formOTransparency"
-                type="range"
-                min="0.01"
-                max="0.99"
-                step="0.01"
-                value="value"
-              ></b-form-input>
-              <b-row>
-                <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="6" class="text-center"></b-col>
-                <b-col cols="3" class="text-right">{{
-                  $t('cootool.p1')
-                }}</b-col>
-              </b-row>
-            </b-form-group>
-
-            <b-form-group
-              class="py-3 t16"
-              label-for="transparencyInput"
-              :label="$t('cootool.I')"
-              label-align="left"
-            >
               <b-form-input
                 id="transparencyInput"
                 v-model="formTransparency"
@@ -519,67 +297,19 @@
               ></b-form-input>
               <b-row>
                 <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="6" class="text-center"></b-col>
+                <b-col cols="6" class="text-center">THE PARTICIPANTS</b-col>
                 <b-col cols="3" class="text-right">{{
                   $t('cootool.p1')
                 }}</b-col>
               </b-row>
             </b-form-group>
 
-            <b-form-group
-              class="py-3 t16"
-              label-for="MHtransparencyInput"
-              :label="$t('cootool.MHI')"
-              label-align="left"
-            >
-              <b-form-input
-                id="MHtransparencyInput"
-                v-model="formMHTransparency"
-                type="range"
-                min="0.01"
-                max="0.99"
-                step="0.01"
-                value="value"
-              ></b-form-input>
-              <b-row>
-                <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="6" class="text-center"></b-col>
-                <b-col cols="3" class="text-right">{{
-                  $t('cootool.p1')
-                }}</b-col>
-              </b-row>
-            </b-form-group>
+            <!-- /////////////// CARE AND TRUST EXPECTED /////////////// -->
 
             <b-form-group
               class="py-3 t16"
-              label-for="HtransparencyInput"
-              :label="$t('cootool.HI')"
-              label-align="left"
-            >
-              <b-form-input
-                id="HtransparencyInput"
-                v-model="formHTransparency"
-                type="range"
-                min="0.01"
-                max="0.99"
-                step="0.01"
-                value="value"
-              ></b-form-input>
-              <b-row>
-                <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="6" class="text-center"></b-col>
-                <b-col cols="3" class="text-right">{{
-                  $t('cootool.p1')
-                }}</b-col>
-              </b-row>
-            </b-form-group>
-
-            <!-- /////////////// CARE /////////////// -->
-
-            <b-form-group
-              class="py-3 t16"
-              label-for="MBcareInput"
-              :label="$t('cootool.MBC')"
+              label-for="BcareInput"
+              :label="$t('cootool.BC')"
               label-align="left"
             >
               <b-form-input
@@ -593,43 +323,11 @@
               ></b-form-input>
               <b-row>
                 <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="6" class="text-center"></b-col>
+                <b-col cols="6" class="text-center">YOU</b-col>
                 <b-col cols="3" class="text-right">{{
                   $t('cootool.p1')
                 }}</b-col>
               </b-row>
-            </b-form-group>
-
-            <b-form-group
-              class="py-3 t16"
-              label-for="MRcareInput"
-              :label="$t('cootool.MRC')"
-              label-align="left"
-            >
-              <b-form-input
-                id="MRcareInput"
-                v-model="formMRCare"
-                type="range"
-                min="0.01"
-                max="0.99"
-                step="0.01"
-                value="value"
-              ></b-form-input>
-              <b-row>
-                <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="6" class="text-center"></b-col>
-                <b-col cols="3" class="text-right">{{
-                  $t('cootool.p1')
-                }}</b-col>
-              </b-row>
-            </b-form-group>
-
-            <b-form-group
-              class="py-3 t16"
-              label-for="BcareInput"
-              :label="$t('cootool.BC')"
-              label-align="left"
-            >
               <b-form-input
                 id="BcareInput"
                 v-model="formBCare"
@@ -641,225 +339,7 @@
               ></b-form-input>
               <b-row>
                 <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="6" class="text-center"></b-col>
-                <b-col cols="3" class="text-right">{{
-                  $t('cootool.p1')
-                }}</b-col>
-              </b-row>
-            </b-form-group>
-
-            <b-form-group
-              class="py-3 t16"
-              label-for="RcareInput"
-              :label="$t('cootool.RC')"
-              label-align="left"
-            >
-              <b-form-input
-                id="RcareInput"
-                v-model="formRCare"
-                type="range"
-                min="0.01"
-                max="0.99"
-                step="0.01"
-                value="value"
-              ></b-form-input>
-              <b-row>
-                <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="6" class="text-center"></b-col>
-                <b-col cols="3" class="text-right">{{
-                  $t('cootool.p1')
-                }}</b-col>
-              </b-row>
-            </b-form-group>
-
-            <b-form-group
-              class="py-3 t16"
-              label-for="MHcareInput"
-              :label="$t('cootool.MHC')"
-              label-align="left"
-            >
-              <b-form-input
-                id="MHcareInput"
-                v-model="formMHCare"
-                type="range"
-                min="0.01"
-                max="0.99"
-                step="0.01"
-                value="value"
-              ></b-form-input>
-              <b-row>
-                <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="6" class="text-center"></b-col>
-                <b-col cols="3" class="text-right">{{
-                  $t('cootool.p1')
-                }}</b-col>
-              </b-row>
-            </b-form-group>
-
-            <b-form-group
-              class="py-3 t16"
-              label-for="HcareInput"
-              :label="$t('cootool.HC')"
-              label-align="left"
-            >
-              <b-form-input
-                id="HcareInput"
-                v-model="formHCare"
-                type="range"
-                min="0.01"
-                max="0.99"
-                step="0.01"
-                value="value"
-              ></b-form-input>
-              <b-row>
-                <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="6" class="text-center"></b-col>
-                <b-col cols="3" class="text-right">{{
-                  $t('cootool.p1')
-                }}</b-col>
-              </b-row>
-            </b-form-group>
-
-            <!-- /////////////// TRUST /////////////// -->
-
-            <b-form-group
-              class="py-3 t16"
-              label-for="MBtrustInput"
-              :label="$t('cootool.MBT')"
-              label-align="left"
-            >
-              <b-form-input
-                id="MBtrustInput"
-                v-model="formMBTrust"
-                type="range"
-                min="0.01"
-                max="0.99"
-                step="0.01"
-                value="value"
-              ></b-form-input>
-              <b-row>
-                <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="6" class="text-center"></b-col>
-                <b-col cols="3" class="text-right">{{
-                  $t('cootool.p1')
-                }}</b-col>
-              </b-row>
-            </b-form-group>
-
-            <b-form-group
-              class="py-3 t16"
-              label-for="OBtrustInput"
-              :label="$t('cootool.OBT')"
-              label-align="left"
-            >
-              <b-form-input
-                id="OBtrustInput"
-                v-model="formOBTrust"
-                type="range"
-                min="0.01"
-                max="0.99"
-                step="0.01"
-                value="value"
-              ></b-form-input>
-              <b-row>
-                <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="6" class="text-center"></b-col>
-                <b-col cols="3" class="text-right">{{
-                  $t('cootool.p1')
-                }}</b-col>
-              </b-row>
-            </b-form-group>
-
-            <b-form-group
-              class="py-3 t16"
-              label-for="MRtrustInput"
-              :label="$t('cootool.MRT')"
-              label-align="left"
-            >
-              <b-form-input
-                id="MRtrustInput"
-                v-model="formMRTrust"
-                type="range"
-                min="0.01"
-                max="0.99"
-                step="0.01"
-                value="value"
-              ></b-form-input>
-              <b-row>
-                <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="6" class="text-center"></b-col>
-                <b-col cols="3" class="text-right">{{
-                  $t('cootool.p1')
-                }}</b-col>
-              </b-row>
-            </b-form-group>
-
-            <b-form-group
-              class="py-3 t16"
-              label-for="ORtrustInput"
-              :label="$t('cootool.ORT')"
-              label-align="left"
-            >
-              <b-form-input
-                id="ORtrustInput"
-                v-model="formORTrust"
-                type="range"
-                min="0.01"
-                max="0.99"
-                step="0.01"
-                value="value"
-              ></b-form-input>
-              <b-row>
-                <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="6" class="text-center"></b-col>
-                <b-col cols="3" class="text-right">{{
-                  $t('cootool.p1')
-                }}</b-col>
-              </b-row>
-            </b-form-group>
-
-            <b-form-group
-              class="py-3 t16"
-              label-for="BtrustInput"
-              :label="$t('cootool.BT')"
-              label-align="left"
-            >
-              <b-form-input
-                id="BtrustInput"
-                v-model="formBTrust"
-                type="range"
-                min="0.01"
-                max="0.99"
-                step="0.01"
-                value="value"
-              ></b-form-input>
-              <b-row>
-                <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="6" class="text-center"></b-col>
-                <b-col cols="3" class="text-right">{{
-                  $t('cootool.p1')
-                }}</b-col>
-              </b-row>
-            </b-form-group>
-
-            <b-form-group
-              class="py-3 t16"
-              label-for="RtrustInput"
-              :label="$t('cootool.RT')"
-              label-align="left"
-            >
-              <b-form-input
-                id="RtrustInput"
-                v-model="formRTrust"
-                type="range"
-                min="0.01"
-                max="0.99"
-                step="0.01"
-                value="value"
-              ></b-form-input>
-              <b-row>
-                <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="6" class="text-center"></b-col>
+                <b-col cols="6" class="text-center">THE PARTICIPANTS</b-col>
                 <b-col cols="3" class="text-right">{{
                   $t('cootool.p1')
                 }}</b-col>
@@ -869,7 +349,7 @@
             <b-form-group
               class="py-3 t16"
               label-for="MBXtrustInput"
-              :label="$t('cootool.MBXT')"
+              :label="$t('cootool.BXT')"
               label-align="left"
             >
               <b-form-input
@@ -883,7 +363,63 @@
               ></b-form-input>
               <b-row>
                 <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="6" class="text-center"></b-col>
+                <b-col cols="6" class="text-center">YOU</b-col>
+                <b-col cols="3" class="text-right">{{
+                  $t('cootool.p1')
+                }}</b-col>
+              </b-row>
+              <b-form-input
+                id="BXtrustInput"
+                v-model="formBXTrust"
+                type="range"
+                min="0.01"
+                max="0.99"
+                step="0.01"
+                value="value"
+              ></b-form-input>
+              <b-row>
+                <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
+                <b-col cols="6" class="text-center">THE PARTICIPANTS</b-col>
+                <b-col cols="3" class="text-right">{{
+                  $t('cootool.p1')
+                }}</b-col>
+              </b-row>
+            </b-form-group>
+
+            <b-form-group
+              class="py-3 t16"
+              label-for="MRcareInput"
+              :label="$t('cootool.RC')"
+              label-align="left"
+            >
+              <b-form-input
+                id="MRcareInput"
+                v-model="formMRCare"
+                type="range"
+                min="0.01"
+                max="0.99"
+                step="0.01"
+                value="value"
+              ></b-form-input>
+              <b-row>
+                <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
+                <b-col cols="6" class="text-center">YOU</b-col>
+                <b-col cols="3" class="text-right">{{
+                  $t('cootool.p1')
+                }}</b-col>
+              </b-row>
+              <b-form-input
+                id="RcareInput"
+                v-model="formRCare"
+                type="range"
+                min="0.01"
+                max="0.99"
+                step="0.01"
+                value="value"
+              ></b-form-input>
+              <b-row>
+                <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
+                <b-col cols="6" class="text-center">THE PARTICIPANTS</b-col>
                 <b-col cols="3" class="text-right">{{
                   $t('cootool.p1')
                 }}</b-col>
@@ -893,7 +429,7 @@
             <b-form-group
               class="py-3 t16"
               label-for="MRXtrustInput"
-              :label="$t('cootool.MRXT')"
+              :label="$t('cootool.RXT')"
               label-align="left"
             >
               <b-form-input
@@ -907,43 +443,11 @@
               ></b-form-input>
               <b-row>
                 <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="6" class="text-center"></b-col>
+                <b-col cols="6" class="text-center">YOU</b-col>
                 <b-col cols="3" class="text-right">{{
                   $t('cootool.p1')
                 }}</b-col>
               </b-row>
-            </b-form-group>
-
-            <b-form-group
-              class="py-3 t16"
-              label-for="BXtrustInput"
-              :label="$t('cootool.BXT')"
-              label-align="left"
-            >
-              <b-form-input
-                id="BXtrustInput"
-                v-model="formBXTrust"
-                type="range"
-                min="0.01"
-                max="0.99"
-                step="0.01"
-                value="value"
-              ></b-form-input>
-              <b-row>
-                <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="6" class="text-center"></b-col>
-                <b-col cols="3" class="text-right">{{
-                  $t('cootool.p1')
-                }}</b-col>
-              </b-row>
-            </b-form-group>
-
-            <b-form-group
-              class="py-3 t16"
-              label-for="RXtrustInput"
-              :label="$t('cootool.RXT')"
-              label-align="left"
-            >
               <b-form-input
                 id="RXtrustInput"
                 v-model="formRXTrust"
@@ -955,7 +459,7 @@
               ></b-form-input>
               <b-row>
                 <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="6" class="text-center"></b-col>
+                <b-col cols="6" class="text-center">THE PARTICIPANTS</b-col>
                 <b-col cols="3" class="text-right">{{
                   $t('cootool.p1')
                 }}</b-col>
@@ -964,13 +468,13 @@
 
             <b-form-group
               class="py-3 t16"
-              label-for="MHtrustInput"
-              :label="$t('cootool.MHT')"
+              label-for="MHcareInput"
+              :label="$t('cootool.HC')"
               label-align="left"
             >
               <b-form-input
-                id="MHtrustInput"
-                v-model="formMHTrust"
+                id="MHcareInput"
+                v-model="formMHCare"
                 type="range"
                 min="0.01"
                 max="0.99"
@@ -979,7 +483,65 @@
               ></b-form-input>
               <b-row>
                 <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="6" class="text-center"></b-col>
+                <b-col cols="6" class="text-center">YOU</b-col>
+                <b-col cols="3" class="text-right">{{
+                  $t('cootool.p1')
+                }}</b-col>
+              </b-row>
+                            <b-form-input
+                id="HcareInput"
+                v-model="formHCare"
+                type="range"
+                min="0.01"
+                max="0.99"
+                step="0.01"
+                value="value"
+              ></b-form-input>
+              <b-row>
+                <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
+                <b-col cols="6" class="text-center">THE PARTICIPANTS</b-col>
+                <b-col cols="3" class="text-right">{{
+                  $t('cootool.p1')
+                }}</b-col>
+              </b-row>
+            </b-form-group>
+
+            <!-- /////////////// TRUST /////////////// -->
+
+            <b-form-group
+              class="py-3 t16"
+              label-for="MBtrustInput"
+              :label="$t('cootool.BT')"
+              label-align="left"
+            >
+              <b-form-input
+                id="MBtrustInput"
+                v-model="formMBTrust"
+                type="range"
+                min="0.01"
+                max="0.99"
+                step="0.01"
+                value="value"
+              ></b-form-input>
+              <b-row>
+                <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
+                <b-col cols="6" class="text-center">YOU</b-col>
+                <b-col cols="3" class="text-right">{{
+                  $t('cootool.p1')
+                }}</b-col>
+              </b-row>
+              <b-form-input
+                id="BtrustInput"
+                v-model="formBTrust"
+                type="range"
+                min="0.01"
+                max="0.99"
+                step="0.01"
+                value="value"
+              ></b-form-input>
+              <b-row>
+                <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
+                <b-col cols="6" class="text-center">THE PARTICIPANTS</b-col>
                 <b-col cols="3" class="text-right">{{
                   $t('cootool.p1')
                 }}</b-col>
@@ -988,13 +550,13 @@
 
             <b-form-group
               class="py-3 t16"
-              label-for="HtrustInput"
-              :label="$t('cootool.HT')"
+              label-for="MRtrustInput"
+              :label="$t('cootool.RT')"
               label-align="left"
             >
               <b-form-input
-                id="HtrustInput"
-                v-model="formHTrust"
+                id="MRtrustInput"
+                v-model="formMRTrust"
                 type="range"
                 min="0.01"
                 max="0.99"
@@ -1003,7 +565,23 @@
               ></b-form-input>
               <b-row>
                 <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="6" class="text-center"></b-col>
+                <b-col cols="6" class="text-center">YOU</b-col>
+                <b-col cols="3" class="text-right">{{
+                  $t('cootool.p1')
+                }}</b-col>
+              </b-row>
+              <b-form-input
+                id="RtrustInput"
+                v-model="formRTrust"
+                type="range"
+                min="0.01"
+                max="0.99"
+                step="0.01"
+                value="value"
+              ></b-form-input>
+              <b-row>
+                <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
+                <b-col cols="6" class="text-center">THE PARTICIPANTS</b-col>
                 <b-col cols="3" class="text-right">{{
                   $t('cootool.p1')
                 }}</b-col>
@@ -1015,7 +593,7 @@
             <b-form-group
               class="py-3 t16"
               label-for="MBequivalenceInput"
-              :label="$t('cootool.MBE')"
+              :label="$t('cootool.BE')"
             >
               <b-form-input
                 id="MBequivalenceInput"
@@ -1028,7 +606,23 @@
               ></b-form-input>
               <b-row>
                 <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="6" class="text-center"></b-col>
+                <b-col cols="6" class="text-center">YOU</b-col>
+                <b-col cols="3" class="text-right">{{
+                  $t('cootool.p1')
+                }}</b-col>
+              </b-row>
+              <b-form-input
+                id="BequivalenceInput"
+                v-model="formBEquivalence"
+                type="range"
+                min="0.01"
+                max="0.99"
+                step="0.01"
+                value="value"
+              ></b-form-input>
+              <b-row>
+                <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
+                <b-col cols="6" class="text-center">THE PARTICIPANTS</b-col>
                 <b-col cols="3" class="text-right">{{
                   $t('cootool.p1')
                 }}</b-col>
@@ -1038,7 +632,7 @@
             <b-form-group
               class="py-3 t16"
               label-for="MRequivalenceInput"
-              :label="$t('cootool.MRE')"
+              :label="$t('cootool.RE')"
             >
               <b-form-input
                 id="MRequivalenceInput"
@@ -1051,41 +645,11 @@
               ></b-form-input>
               <b-row>
                 <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="6" class="text-center"></b-col>
+                <b-col cols="6" class="text-center">YOU</b-col>
                 <b-col cols="3" class="text-right">{{
                   $t('cootool.p1')
                 }}</b-col>
               </b-row>
-            </b-form-group>
-
-            <b-form-group
-              class="py-3 t16"
-              label-for="BequivalenceInput"
-              :label="$t('cootool.BE')"
-            >
-              <b-form-input
-                id="BequivalenceInput"
-                v-model="formBEquivalence"
-                type="range"
-                min="0.01"
-                max="0.99"
-                step="0.01"
-                value="value"
-              ></b-form-input>
-              <b-row>
-                <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="6" class="text-center"></b-col>
-                <b-col cols="3" class="text-right">{{
-                  $t('cootool.p1')
-                }}</b-col>
-              </b-row>
-            </b-form-group>
-
-            <b-form-group
-              class="py-3 t16"
-              label-for="RequivalenceInput"
-              :label="$t('cootool.RE')"
-            >
               <b-form-input
                 id="RequivalenceInput"
                 v-model="formREquivalence"
@@ -1097,53 +661,7 @@
               ></b-form-input>
               <b-row>
                 <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="6" class="text-center"></b-col>
-                <b-col cols="3" class="text-right">{{
-                  $t('cootool.p1')
-                }}</b-col>
-              </b-row>
-            </b-form-group>
-
-            <b-form-group
-              class="py-3 t16"
-              label-for="MHequivalenceInput"
-              :label="$t('cootool.MHE')"
-            >
-              <b-form-input
-                id="MHequivalenceInput"
-                v-model="formMHEquivalence"
-                type="range"
-                min="0.01"
-                max="0.99"
-                step="0.01"
-                value="value"
-              ></b-form-input>
-              <b-row>
-                <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="6" class="text-center"></b-col>
-                <b-col cols="3" class="text-right">{{
-                  $t('cootool.p1')
-                }}</b-col>
-              </b-row>
-            </b-form-group>
-
-            <b-form-group
-              class="py-3 t16"
-              label-for="HequivalenceInput"
-              :label="$t('cootool.HE')"
-            >
-              <b-form-input
-                id="HequivalenceInput"
-                v-model="formHEquivalence"
-                type="range"
-                min="0.01"
-                max="0.99"
-                step="0.01"
-                value="value"
-              ></b-form-input>
-              <b-row>
-                <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="6" class="text-center"></b-col>
+                <b-col cols="6" class="text-center">THE PARTICIPANTS</b-col>
                 <b-col cols="3" class="text-right">{{
                   $t('cootool.p1')
                 }}</b-col>

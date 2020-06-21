@@ -18,6 +18,37 @@ a:hover {
   text-decoration: none;
 }
 
+$equivalence: #f80;
+$onequivalence: #f80;
+$theyequivalence: #fb7;
+$offequivalence: #aaa;
+$trust: #fc0;
+$ontrust: #fc0;
+$theytrust: #fea;
+$offtrust: #aaa;
+$care: #7d0;
+$oncare: #7d0;
+$theycare: #cf9;
+$offcare: #aaa;
+$transparency: #0dd;
+$ontransparency: #aaa;
+$offtransparency: #0dd;
+$theytransparency: #0aa;
+$freedom: #08d;
+$onfreedom: #08d;
+$theyfreedom: #adf;
+$offfreedom: #aaa;
+$understanding: #a7e;
+$onunderstanding: #a7e;
+$theyunderstanding: #dcf;
+$offunderstanding: #aaa;
+$diversity: #f7d;
+$ondiversity: #f7d;
+$theydiversity: #fcf;
+$offdiversity: #aaa;
+$coogray: #777;
+$aaagray: #aaa;
+
 /* navbar */
 .nav-container {
   z-index: 5;
@@ -243,11 +274,11 @@ img.news {
 }
 
 .toast {
-  background-color: var(--care) !important;
+  background-color: $care !important;
   color: #fff !important;
 }
 .toastunderstanding {
-  background-color: var(--understanding) !important;
+  background-color: $understanding !important;
   color: #fff !important;
 }
 img.about {
@@ -256,6 +287,10 @@ img.about {
 video {
   max-width: 90vw;
 }
+
+/***********************************************************
+            MEDIA QUERIES 
+***********************************************************/
 
 @media (max-width: 768px) {
   .page-container {
@@ -285,6 +320,7 @@ video {
     padding-top: 50px;
   }
 }
+
 /* Navbar media queries */
 @media (max-width: 992px) {
   .nav-only-desktop {
@@ -298,7 +334,7 @@ video {
   }
 }
 
-/* text dimensions and decorations */
+/* text dimensions + decorations */
 
 .base {
   text-align: justify;
@@ -344,6 +380,29 @@ video {
 .roundmodule {
   border-radius: 90px;
 }
+.hb{
+  font-weight: 500;
+}
+.finger {
+  cursor: pointer;
+}
+.it {
+  font-style: italic;
+}
+.b {
+  font-weight: 700;
+}
+.noline {
+  text-decoration: none !important;
+}
+a.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: default;
+}
+/***********************************************************
+            TEXT DIMENSIONS 
+***********************************************************/
 .t20 {
   font-size: 20px;
   font-weight: 300;
@@ -376,277 +435,225 @@ video {
   font-size: 8px;
   font-weight: 300;
 }
-.hb{
-  font-weight: 500;
-}
-.finger {
-  cursor: pointer;
-}
-.it {
-  font-style: italic;
-}
-.b {
-  font-weight: 700;
-}
-.noline {
-  text-decoration: none !important;
-}
-a.disabled {
-  opacity: 0.5;
-  pointer-events: none;
-  cursor: default;
-}
 
 /***********************************************************
             COLOR VARS 
 ***********************************************************/
 
-:root {
-  --equivalence: #f80;
-  --onequivalence: #f80;
-  --theyequivalence: #fb7;
-  --offequivalence: #aaa;
-  --trust: #fc0;
-  --ontrust: #fc0;
-  --theytrust: #fea;
-  --offtrust: #aaa;
-  --care: #7d0;
-  --oncare: #7d0;
-  --theycare: #cf9;
-  --offcare: #aaa;
-  --transparency: #0dd;
-  --ontransparency: #aaa;
-  --offtransparency: #0dd;
-  --theytransparency: #0aa;
-  --freedom: #08d;
-  --onfreedom: #08d;
-  --theyfreedom: #adf;
-  --offfreedom: #aaa;
-  --understanding: #a7e;
-  --onunderstanding: #a7e;
-  --theyunderstanding: #dcf;
-  --offunderstanding: #aaa;
-  --diversity: #f7d;
-  --ondiversity: #f7d;
-  --theydiversity: #fcf;
-  --offdiversity: #aaa;
-  --coogray: #777;
-  --aaagray: #aaa;
-}
 
 /*cooperation colors, h* have hover*/
 .equivalence,
 .hequivalence {
-  color: var(--equivalence);
+  color: $equivalence;
 }
 .bequivalence,
 .bhequivalence {
-  background-color: var(--equivalence);
+  background-color: $equivalence;
 }
 .hequivalence:hover {
-  color: var(--trust);
+  color: $trust;
 }
 .bhequivalence:hover {
-  background-color: var(--trust);
+  background-color: $trust;
 }
 .theyequivalence {
-  background-color: var(--theyequivalence);
+  background-color: $theyequivalence;
 }
 .trust,
 .htrust {
-  color: var(--trust);
+  color: $trust;
 }
 .htrust:hover {
-  color: var(--transparency);
+  color: $transparency;
 }
 .bhtrust:hover {
-  background-color: var(--transparency);
+  background-color: $transparency;
 }
 .btrust,
 .bhtrust {
-  background-color: var(--trust);
+  background-color: $trust;
 }
 .theytrust {
-  background-color: var(--theytrust);
+  background-color: $theytrust;
 }
 .care,
 .hcare {
-  color: var(--care);
+  color: $care;
 }
 .bcare,
 .bhcare {
-  background-color: var(--care);
+  background-color: $care;
 }
 .hcare:hover {
-  color: var(--diversity);
+  color: $diversity;
 }
 .bhcare:hover {
-  background-color: var(--diversity);
+  background-color: $diversity;
 }
 .theycare {
-  background-color: var(--theycare);
+  background-color: $theycare;
 }
 .transparency,
 .htransparency {
-  color: var(--transparency);
+  color: $transparency;
 }
 .btransparency,
 .bhtransparency {
-  background-color: var(--transparency);
+  background-color: $transparency;
 }
 .htransparency:hover {
-  color: var(--equivalence);
+  color: $equivalence;
 }
 .bhtransparency:hover {
-  background-color: var(--equivalence);
+  background-color: $equivalence;
 }
 .theytransparency {
-  background-color: var(--theytransparency);
+  background-color: $theytransparency;
 }
 .freedom,
 .hfreedom {
-  color: var(--freedom);
+  color: $freedom;
 }
 .bfreedom,
 .bhfreedom {
-  background-color: var(--freedom);
+  background-color: $freedom;
 }
 .hfreedom:hover {
-  color: var(--care);
+  color: $care;
 }
 .bhfreedom:hover {
-  background-color: var(--care);
+  background-color: $care;
 }
 .theyfreedom {
-  background-color: var(--theyfreedom);
+  background-color: $theyfreedom;
 }
 .understanding,
 .hunderstanding {
-  color: var(--understanding);
+  color: $understanding;
 }
 .understanding,
 .hunderstanding {
-  color: var(--understanding);
+  color: $understanding;
 }
 .bunderstanding,
 .bhunderstanding {
-  background-color: var(--understanding);
+  background-color: $understanding;
 }
 .hunderstanding:hover {
-  color: var(--freedom);
+  color: $freedom;
 }
 .bhunderstanding:hover {
-  background-color: var(--freedom);
+  background-color: $freedom;
 }
 .theyunderstanding {
-  background-color: var(--theyunderstanding);
+  background-color: $theyunderstanding;
 }
 .diversity,
 .hdiversity {
-  color: var(--diversity);
+  color: $diversity;
 }
 .bdiversity,
 .bhdiversity {
-  background-color: var(--diversity);
+  background-color: $diversity;
 }
 .hdiversity:hover {
-  color: var(--understanding);
+  color: $understanding;
 }
 .bhdiversity:hover {
-  background-color: var(--understanding);
+  background-color: $understanding;
 }
 .theydiversity {
-  background-color: var(--theydiversity);
+  background-color: $theydiversity;
 }
 .coogray {
-  color: var(--coogray);
+  color: $coogray;
 }
 .aaagray {
-  background-color: var(--aaagray);
+  background-color: $aaagray;
 }
 
 .ae {
   text-decoration: none;
-  background-image: linear-gradient(var(--equivalence) 50%, #ffffff 50%);
+  background-image: linear-gradient($equivalence 50%, #ffffff 50%);
   background-repeat: repeat-x;
   background-size: 2px 0.2em;
   background-position: 0 1.35em;
 }
 .at {
   text-decoration: none;
-  background-image: linear-gradient(var(--trust) 50%, #ffffff 50%);
+  background-image: linear-gradient($trust 50%, #ffffff 50%);
   background-repeat: repeat-x;
   background-size: 2px 0.2em;
   background-position: 0 1.35em;
 }
 .ac {
   text-decoration: none;
-  background-image: linear-gradient(var(--care) 50%, #ffffff 50%);
+  background-image: linear-gradient($care 50%, #ffffff 50%);
   background-repeat: repeat-x;
   background-size: 2px 0.2em;
   background-position: 0 1.35em;
 }
 .ai {
   text-decoration: none;
-  background-image: linear-gradient(var(--transparency) 50%, #ffffff 50%);
+  background-image: linear-gradient($transparency 50%, #ffffff 50%);
   background-repeat: repeat-x;
   background-size: 2px 0.2em;
   background-position: 0 1.35em;
 }
 .af {
   text-decoration: none;
-  background-image: linear-gradient(var(--freedom) 50%, #ffffff 50%);
+  background-image: linear-gradient($freedom 50%, #ffffff 50%);
   background-repeat: repeat-x;
   background-size: 2px 0.2em;
   background-position: 0 1.35em;
 }
 .au {
   text-decoration: none;
-  background-image: linear-gradient(var(--understanding) 50%, #ffffff 50%);
+  background-image: linear-gradient($understanding 50%, #ffffff 50%);
   background-repeat: repeat-x;
   background-size: 2px 0.2em;
   background-position: 0 1.35em;
 }
 .ad {
   text-decoration: none;
-  background-image: linear-gradient(var(--diversity) 50%, #ffffff 50%);
+  background-image: linear-gradient($diversity 50%, #ffffff 50%);
   background-repeat: repeat-x;
   background-size: 2px 0.2em;
   background-position: 0 1.35em;
 }
 .ae:hover {
   text-decoration: none;
-  color: var(--equivalence);
+  color: $equivalence;
   background-image: none;
 }
 .at:hover {
   text-decoration: none;
-  color: var(--trust);
+  color: $trust;
   background-image: none;
 }
 .ac:hover {
   text-decoration: none;
-  color: var(--care);
+  color: $care;
   background-image: none;
 }
 .ai:hover {
   text-decoration: none;
-  color: var(--transparency);
+  color: $transparency;
   background-image: none;
 }
 .af:hover {
   text-decoration: none;
-  color: var(--freedom);
+  color: $freedom;
   background-image: none;
 }
 .au:hover {
   text-decoration: none;
-  color: var(--understanding);
+  color: $understanding;
   background-image: none;
 }
 .ad:hover {
   text-decoration: none;
-  color: var(--diversity);
+  color: $diversity;
   background-image: none;
 }
 
@@ -674,22 +681,22 @@ a.disabled {
 /* Navbar colors */
 #project .menu-item:hover,
 .fa-discord:hover {
-  color: var(--equivalence);
+  color: $equivalence;
 }
 .project-active:after {
-  background-color: var(--equivalence);
+  background-color: $equivalence;
 }
 #corporate .menu-item:hover,
 .fa-facebook:hover {
-  color: var(--freedom);
+  color: $freedom;
 }
 .corporate-active:after {
-  background-color: var(--freedom);
+  background-color: $freedom;
 }
 #science .menu-item:hover,
 .fa-linkedin:hover {
-  color: var(--understanding);
+  color: $understanding;
 }
 .science-active:after {
-  background-color: var(--understanding);
+  background-color: $understanding;
 }
