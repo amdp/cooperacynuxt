@@ -11,6 +11,23 @@
             class="text-center mb-4 equivalence"
             v-html="$t('cootool.basic')"
           ></h5>
+          <b-row class="m-0 p-0 mb-3 text-center">
+            <b-col cols="12" v-html="$t('cootool.language')"></b-col>
+            <b-col cols="6">
+              <nuxt-link
+                :to="switchLocalePath('en')"
+                v-html="$t('cootool.language1')"
+              >
+              </nuxt-link>
+            </b-col>
+            <b-col cols="6">
+              <nuxt-link
+                :to="switchLocalePath('it')"
+                v-html="$t('cootool.language2')"
+              >
+              </nuxt-link>
+            </b-col>
+          </b-row>
           <b-form-group label-for="natureInput" :label="$t('cootool.nature')">
             <b-form-select id="natureInput" v-model="formNature" required>
               <option value="0" v-html="$t('cootool.group0')"></option>
@@ -137,7 +154,7 @@
             </p>
 
             <!-- /////////////// DIVERSITY /////////////// -->
-            
+
             <b-form-group
               class="py-3 t16"
               label-for="MDdiversityInput"
@@ -488,7 +505,7 @@
                   $t('cootool.p1')
                 }}</b-col>
               </b-row>
-                            <b-form-input
+              <b-form-input
                 id="HcareInput"
                 v-model="formHCare"
                 type="range"
@@ -1038,46 +1055,30 @@ export default {
       formDesc: null,
       formMDiversity: 0.50,
       formDiversity: 0.50,
-      formMHDiversity: 0.50,
-      formHDiversity: 0.50,
       formMUnderstanding: 0.50,
-      formOUnderstanding: 0.50,
       formUnderstanding: 0.50,
-      formMHUnderstanding: 0.50,
-      formHUnderstanding: 0.50,
       formMFreedom: 0.50,
       formFreedom: 0.50,
-      formMHFreedom: 0.50,
-      formHFreedom: 0.50,
       formMTransparency: 0.50,
-      formOTransparency: 0.50,
       formTransparency: 0.50,
-      formMHTransparency: 0.50,
-      formHTransparency: 0.50,
       formMBCare: 0.50,
-      formMRCare: 0.50,
       formBCare: 0.50,
+      formMBXTrust: 0.50,
+      formBXTrust: 0.50,
+      formMRCare: 0.50,
       formRCare: 0.50,
+      formMRXTrust: 0.50,
+      formRXTrust: 0.50,
       formMHCare: 0.50,
       formHCare: 0.50,
       formMBTrust: 0.50,
-      formOBTrust: 0.50,
-      formMRTrust: 0.50,
-      formORTrust: 0.50,
       formBTrust: 0.50,
+      formMRTrust: 0.50,
       formRTrust: 0.50,
-      formMBXTrust: 0.50,
-      formMRXTrust: 0.50,
-      formBXTrust: 0.50,
-      formRXTrust: 0.50,
-      formMHTrust: 0.50,
-      formHTrust: 0.50,
       formMBEquivalence: 0.50,
       formMREquivalence: 0.50,
       formBEquivalence: 0.50,
       formREquivalence: 0.50,
-      formMHEquivalence: 0.50,
-      formHEquivalence: 0.50,
       formPairBase: 0.50,
       formPairBaseText: null,
       formPairDiversity: 0.50,
@@ -1150,46 +1151,30 @@ export default {
         desc: this.formDesc,
         MD: this.formMDiversity,
         D: this.formDiversity,
-        MHD: this.formMHDiversity,
-        HD: this.formHDiversity,
         MU: this.formMUnderstanding,
-        OU: this.formOUnderstanding,
         U: this.formUnderstanding,
-        MHU: this.formMHUnderstanding,
-        HU: this.formHUnderstanding,
         MF: this.formMFreedom,
         F: this.formFreedom,
-        MHF: this.formMHFreedom,
-        HF: this.formHFreedom,
         MI: this.formMTransparency,
-        OI: this.formOTransparency,
         I: this.formTransparency,
-        MHI: this.formMHTransparency,
-        HI: this.formHTransparency,
         MBC: this.formMBCare,
-        MRC: this.formMRCare,
         BC: this.formBCare,
+        MBXT: this.formMBXTrust,
+        BXT: this.formBXTrust,
+        MRC: this.formMRCare,
         RC: this.formRCare,
+        MRXT: this.formMRXTrust,
+        RXT: this.formRXTrust,
         MHC: this.formMHCare,
         HC: this.formHCare,
         MBT: this.formMBTrust,
-        OBT: this.formOBTrust,
-        MRT: this.formMRTrust,
-        ORT: this.formORTrust,
         BT: this.formBTrust,
+        MRT: this.formMRTrust,
         RT: this.formRTrust,
-        MBXT: this.formMBXTrust,
-        MRXT: this.formMRXTrust,
-        BXT: this.formBXTrust,
-        RXT: this.formRXTrust,
-        MHT: this.formMHTrust,
-        HT: this.formHTrust,
         MBE: this.formMBEquivalence,
-        MRE: this.formMREquivalence,
         BE: this.formBEquivalence,
+        MRE: this.formMREquivalence,
         RE: this.formREquivalence,
-        MHE: this.formMHEquivalence,
-        HE: this.formHEquivalence,
         P: this.formPairBase,
         PText: this.formPairBaseText,
         PD: this.formPairDiversity,
