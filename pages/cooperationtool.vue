@@ -7,6 +7,7 @@
         <p v-if="$store.state.edit" v-html="$store.state.edit"></p>
         <b-form @submit.prevent="cooperationForm()" class="mt-3 was-validated">
           <br />
+          <p v-html="$t('cootool.intro')"></p>
           <h5
             class="text-center mb-4 equivalence"
             v-html="$t('cootool.basic')"
@@ -30,8 +31,8 @@
           </b-row>
           <b-form-group label-for="natureInput" :label="$t('cootool.nature')">
             <b-form-select id="natureInput" v-model="formNature" required>
-              <option value="0" v-html="$t('cootool.group0')"></option>
-              <option value="1" v-html="$t('cootool.group1')"></option>
+              <option value="0" v-html="$t('cootool.bgroup0')"></option>
+              <option value="1" v-html="$t('cootool.bgroup1')"></option>
             </b-form-select>
           </b-form-group>
 
@@ -66,13 +67,14 @@
             :label="$t('cootool.group')"
             v-if="formNature == 0"
           >
-            <b-form-select id="groupInput" v-model="formGroup">
-              <option
-                v-for="ecosystem in $store.state.ecosystem"
-                :key="ecosystem.id"
-                :value="ecosystem.id"
-                >{{ ecosystem.name }}</option
-              >
+            <b-form-select id="groupInput" v-model="formGroup" required>
+              <option value="1" v-html="$t('cootool.group1')"></option>
+              <option value="2" v-html="$t('cootool.group2')"></option>
+              <option value="3" v-html="$t('cootool.group3')"></option>
+              <option value="4" v-html="$t('cootool.group4')"></option>
+              <option value="5" v-html="$t('cootool.group5')"></option>
+              <option value="6" v-html="$t('cootool.group6')"></option>
+              <option value="7" v-html="$t('cootool.group7')"></option>
             </b-form-select>
           </b-form-group>
 
@@ -108,7 +110,7 @@
             <i>
               <strong>
                 {{ $t('cootool.newplace') }}
-                <a v-b-modal.placemodal class="ad finger">
+                <a v-b-modal.placemodal class="ad finger b">
                   {{ $t('cootool.one') }}
                 </a>
               </strong>
@@ -121,14 +123,14 @@
               size="sm"
               required
             ></b-form-input>
-            <b-form-group label-for="nameInput" :label="$t('cootool.name')">
-              <b-form-input
-                id="nameInput"
-                v-model="formName"
-                size="sm"
-                required
-              ></b-form-input>
-            </b-form-group>
+          </b-form-group>
+          <b-form-group label-for="nameInput" :label="$t('cootool.name')">
+            <b-form-input
+              id="nameInput"
+              v-model="formName"
+              size="sm"
+              required
+            ></b-form-input>
           </b-form-group>
           <b-form-group label-for="descInput" :label="$t('cootool.desc')">
             <b-form-textarea
@@ -147,7 +149,7 @@
           </h5>
 
           <b-container class="m-0 p-0">
-            <p class="diversity it">
+            <p class="diversity it" v-if="formGroup == 7">
               <strong>
                 {{ $t('cootool.groupcoointro') }}
               </strong>
@@ -170,7 +172,7 @@
                 step="0.01"
                 value="value"
               ></b-form-input>
-              <b-row class="mb-3">
+              <b-row>
                 <b-col cols="3" class="text-left">{{ $t('cootool.p0') }}</b-col>
                 <b-col cols="6" class="text-center">YOU</b-col>
                 <b-col cols="3" class="text-right">{{

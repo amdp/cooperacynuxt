@@ -65,15 +65,6 @@ export const state = () => ({
     { id: 5, name: 'kick off', percentage: '0,12' },
     { id: 6, name: 'fine tuning', percentage: '0,1' },
     { id: 7, name: 'celebrate', percentage: '0,03' }
-  ],
-  ecosystem: [
-    { id: 1, name: 'Nation' },
-    { id: 2, name: 'City, Region, State or Social Area' },
-    { id: 3, name: 'Company, Association or Institution' },
-    { id: 4, name: 'Friends or Community' },
-    { id: 5, name: 'Family' },
-    { id: 6, name: 'Couple' },
-    { id: 7, name: 'Yourself' }
   ]
 })
 
