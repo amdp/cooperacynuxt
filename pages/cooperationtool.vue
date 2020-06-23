@@ -2,8 +2,8 @@
   <b-container class="m-0 p-0">
     <b-row>
       <b-col cols="2"></b-col>
-      <b-col cols="7">
-        <h2 class="text-center mb-4 equivalence">COOPERATION TOOL</h2>
+      <b-col cols="8">
+        <h2 class="text-center my-3 equivalence">COOPERATION TOOL</h2>
         <p v-if="$store.state.edit" v-html="$store.state.edit"></p>
         <b-form @submit.prevent="cooperationForm()" class="mt-3 was-validated">
           <br />
