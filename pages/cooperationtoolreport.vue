@@ -7,7 +7,7 @@
         <br /><br />
         <p>
           These result have been calculated on 1 survey out of
-          {{ result.member }} people in the observed group.
+          {{ result.participant }} people in the observed group.
         </p>
         <p v-if="result.project">
           This group is relative to the Cooperacy Project nr.
@@ -20,45 +20,49 @@
         <p v-if="result.desc">Your Description:</p>
         <p v-html="result.desc"></p>
         <h2>Report:</h2>
-        <p v-if="result.D <= 0.25">
+        <p v-if="(result.MBD + result.MRD + result.BD + result.RD) / 4 <= 0.25">
           {{ $t('cootoolreport.stagnation') }}
           <br />
           {{ $t('cootoolreport.stagnationrisk') }}
-          {{ log4(result.D) }}%
+          {{
+            log4((result.MBD + result.MRD + result.BD + result.RD) / 4) * 100
+          }}%
         </p>
-        <p v-if="result.D - result.U > 0 && result.U > 25">
+        <p
+          v-if="
+            (result.MBD + result.MRD + result.BD + result.RD) / 4 -
+              (result.MBU + result.MRU + result.BU + result.RU) / 4 >
+              0 && (result.MBU + result.MRU + result.BU + result.RU) / 4 > 0.25
+          "
+        >
           {{ $t('cootoolreport.conflictD') }}
           <br />
           {{ $t('cootoolreport.conflictDrisk') }}
-          {{ Math.round(Math.pow((result.D - result.U) / 100, 0.5) * 100) }}%
+          {{
+            Math.round(
+              Math.pow(
+                (result.MBD + result.MRD + result.BD + result.RD) / 4 -
+                  (result.MBU + result.MRU + result.BU + result.RU) / 4,
+                0.5
+              ) * 100
+            )
+          }}%
         </p>
         <p v-if="result.U <= 25">
           {{ $t('cootoolreport.conflict') }}
           <br />
           {{ $t('cootoolreport.conflictrisk') }}
-          {{ log4(result.U) }}%
+          {{ log4((result.MBU + result.MRU + result.BU + result.RU) / 4) }}%
         </p>
-        <p>D: {{ result.D }}</p>
-        <p>U: {{ result.U }}</p>
-        <p>F: {{ result.F }}</p>
-        <p>I: {{ result.I }}</p>
-        <p>C: {{ result.C }}</p>
-        <p>T: {{ result.T }}</p>
-        <p>E: {{ result.E }}</p>
-        <p>HD: {{ result.HD }}</p>
-        <p>HU: {{ result.HU }}</p>
-        <p>HF: {{ result.HF }}</p>
-        <p>HI: {{ result.HI }}</p>
-        <p>HC: {{ result.HC }}</p>
-        <p>HT: {{ result.HT }}</p>
-        <p>HE: {{ result.HE }}</p>
-        <p>MD: {{ result.MD }}</p>
-        <p>MU: {{ result.MU }}</p>
-        <p>MF: {{ result.MF }}</p>
-        <p>MI: {{ result.MI }}</p>
-        <p>MC: {{ result.MC }}</p>
-        <p>MT: {{ result.MT }}</p>
-        <p>ME: {{ result.ME }}</p>
+        <p>D: {{ (result.MBD + result.MRD + result.BD + result.RD) / 4 }}</p>
+        <p>U: {{ (result.MBU + result.MRU + result.BU + result.RU) / 4 }}</p>
+        <p>F: {{ (result.MBF + result.MRF + result.BF + result.RF) / 4 }}</p>
+        <p>I: {{ (result.MBI + result.MRI + result.BI + result.RI) / 4 }}</p>
+        <p>C: {{ (result.MBC + result.MRC + result.BC + result.RC) / 4 }}</p>
+        <p>X: {{ (result.MBX + result.MRX + result.BX + result.RX) / 4 }}</p>
+        <p>H: {{ (result.MBH + result.MRH + result.BH + result.RH) / 4 }}</p>
+        <p>T: {{ (result.MBT + result.MRT + result.BT + result.RT) / 4 }}</p>
+        <p>E: {{ (result.MBE + result.MRE + result.BE + result.RE) / 4 }}</p>
         <p>P: {{ result.P }}</p>
         <p v-if="result.PText">Your comments:</p>
         <p v-html="result.PText" v-if="result.PText"></p>
@@ -108,7 +112,7 @@ export default {
       result: this.$store.state.edit,
       country: this.$store.state.country[this.$store.state.edit.country - 1].name,
       place: this.$store.state.place[this.$store.state.edit.place - 1].name,
-      group: this.$store.state.ecosystem[this.$store.state.edit.group - 1].name
+      // group: this.$store.state.ecosystem[this.$store.state.edit.group - 1].name
     }
   },
   methods: {

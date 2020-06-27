@@ -161,28 +161,28 @@
               <strong>
                 {{ $t('cootool.groupcoointro') }}
               </strong>
-              <strong>
-                {{ $t('cootool.groupcoointromyself') }}
-              </strong>
             </p>
 
-            <!-- /////////////// B DIVERSITY /////////////// -->
+            <!-- /////////////// DIVERSITY /////////////// -->
 
             <b-form-group
               class="py-3 t16"
-              label-for="MBDdiversityInput"
-              :label="$t('cootool.BD')"
+              label-for="MBdiversityInput"
+              :label="$t('cootool.D')"
               label-align="left"
             >
               <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p1') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
+                <b-col cols="12" class="text-center">{{
+                  $t('cootool.p1')
+                }}</b-col>
+                <b-col cols="7" class="text-left">{{ $t('cootool.pB') }}</b-col>
+                <b-col cols="1" class="text-center"></b-col>
+                <b-col cols="4" class="text-right"
                   >{{ Math.round(formMBDiversity * 100) }}%</b-col
                 >
               </b-row>
               <b-form-input
-                id="MBDdiversityInput"
+                id="MBdiversityInput"
                 v-model="formMBDiversity"
                 type="range"
                 min="0.01"
@@ -190,39 +190,32 @@
                 step="0.01"
               ></b-form-input>
               <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p0') }}</b-col>
+                <b-col cols="7" class="text-left">{{ $t('cootool.pR') }}</b-col>
                 <b-col cols="1" class="text-center"></b-col
                 ><b-col cols="4" class="text-right"
                   >{{ Math.round(formBDiversity * 100) }}%</b-col
                 >
               </b-row>
               <b-form-input
-                id="BDiversityInput"
+                id="BdiversityInput"
                 v-model="formBDiversity"
                 type="range"
                 min="0.01"
                 max="0.99"
                 step="0.01"
               ></b-form-input>
-            </b-form-group>
-
-            <!-- /////////////// R DIVERSITY /////////////// -->
-
-            <b-form-group
-              class="py-3 t16"
-              label-for="MRDdiversityInput"
-              :label="$t('cootool.RD')"
-              label-align="left"
-            >
               <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p1') }}</b-col>
+                <b-col cols="12" class="text-center">{{
+                  $t('cootool.p0')
+                }}</b-col>
+                <b-col cols="7" class="text-left">{{ $t('cootool.pB') }}</b-col>
                 <b-col cols="1" class="text-center"></b-col
                 ><b-col cols="4" class="text-right"
                   >{{ Math.round(formMRDiversity * 100) }}%</b-col
                 >
               </b-row>
               <b-form-input
-                id="MRDdiversityInput"
+                id="MRdiversityInput"
                 v-model="formMRDiversity"
                 type="range"
                 min="0.01"
@@ -230,14 +223,14 @@
                 step="0.01"
               ></b-form-input>
               <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p0') }}</b-col>
+                <b-col cols="7" class="text-left">{{ $t('cootool.pR') }}</b-col>
                 <b-col cols="1" class="text-center"></b-col
                 ><b-col cols="4" class="text-right"
                   >{{ Math.round(formRDiversity * 100) }}%</b-col
                 >
               </b-row>
               <b-form-input
-                id="RDiversityInput"
+                id="RdiversityInput"
                 v-model="formRDiversity"
                 type="range"
                 min="0.01"
@@ -246,24 +239,100 @@
               ></b-form-input>
             </b-form-group>
 
-            <!-- /////////////// B UNDERSTANDING /////////////// -->
+            <!-- /////////////// UNDERSTANDING /////////////// -->
 
             <b-form-group
               class="py-3 t16"
-              label-for="MBUnderstandingInput"
-              :label="$t('cootool.BU')"
+              label-for="MunderstandingInput"
+              :label="$t('cootool.U')"
+              label-align="left"
+            >
+              <b-row>
+                <b-col cols="12" class="text-center">{{
+                  $t('cootool.p1')
+                }}</b-col>
+                <b-col cols="7" class="text-left">{{ $t('cootool.pB') }}</b-col>
+                <b-col cols="1" class="text-center"></b-col
+                ><b-col cols="4" class="text-right"
+                  >{{ Math.round(formMUnderstanding * 100) }}%</b-col
+                >
+              </b-row>
+              <b-form-input
+                id="MunderstandingInput"
+                v-model="formMUnderstanding"
+                type="range"
+                min="0.01"
+                max="0.99"
+                step="0.01"
+              ></b-form-input>
+              <b-row>
+                <b-col cols="7" class="text-left">{{ $t('cootool.pR') }}</b-col>
+                <b-col cols="1" class="text-center"></b-col
+                ><b-col cols="4" class="text-right"
+                  >{{ Math.round(formUnderstanding * 100) }}%</b-col
+                >
+              </b-row>
+              <b-form-input
+                id="understandingInput"
+                v-model="formUnderstanding"
+                type="range"
+                min="0.01"
+                max="0.99"
+                step="0.01"
+              ></b-form-input>
+              <b-row>
+                <b-col cols="12" class="text-center">{{
+                  $t('cootool.p0')
+                }}</b-col>
+                <b-col cols="7" class="text-left">{{ $t('cootool.pB') }}</b-col>
+                <b-col cols="1" class="text-center"></b-col
+                ><b-col cols="4" class="text-right"
+                  >{{ Math.round(formMUnderstanding * 100) }}%</b-col
+                >
+              </b-row>
+              <b-form-input
+                id="MunderstandingInput"
+                v-model="formMUnderstanding"
+                type="range"
+                min="0.01"
+                max="0.99"
+                step="0.01"
+              ></b-form-input>
+              <b-row>
+                <b-col cols="7" class="text-left">{{ $t('cootool.pR') }}</b-col>
+                <b-col cols="1" class="text-center"></b-col
+                ><b-col cols="4" class="text-right"
+                  >{{ Math.round(formUnderstanding * 100) }}%</b-col
+                >
+              </b-row>
+              <b-form-input
+                id="understandingInput"
+                v-model="formUnderstanding"
+                type="range"
+                min="0.01"
+                max="0.99"
+                step="0.01"
+              ></b-form-input>
+            </b-form-group>
+
+            <!-- /////////////// FREEDOM /////////////// -->
+
+            <b-form-group
+              class="py-3 t16"
+              label-for="MfreedomInput"
+              :label="$t('cootool.F')"
               label-align="left"
             >
               <b-row>
                 <b-col cols="7" class="text-left">{{ $t('cootool.p1') }}</b-col>
                 <b-col cols="1" class="text-center"></b-col
                 ><b-col cols="4" class="text-right"
-                  >{{ Math.round(formMBUnderstanding * 100) }}%</b-col
+                  >{{ Math.round(formMFreedom * 100) }}%</b-col
                 >
               </b-row>
               <b-form-input
-                id="MBUnderstandingInput"
-                v-model="formMBUnderstanding"
+                id="MfreedomInput"
+                v-model="formMFreedom"
                 type="range"
                 min="0.01"
                 max="0.99"
@@ -273,12 +342,12 @@
                 <b-col cols="7" class="text-left">{{ $t('cootool.p0') }}</b-col>
                 <b-col cols="1" class="text-center"></b-col
                 ><b-col cols="4" class="text-right"
-                  >{{ Math.round(formBUnderstanding * 100) }}%</b-col
+                  >{{ Math.round(formFreedom * 100) }}%</b-col
                 >
               </b-row>
               <b-form-input
-                id="BUnderstandingInput"
-                v-model="formBUnderstanding"
+                id="freedomInput"
+                v-model="formFreedom"
                 type="range"
                 min="0.01"
                 max="0.99"
@@ -286,24 +355,24 @@
               ></b-form-input>
             </b-form-group>
 
-            <!-- /////////////// R UNDERSTANDING /////////////// -->
+            <!-- /////////////// TRANSPARENCY /////////////// -->
 
             <b-form-group
               class="py-3 t16"
-              label-for="MRUnderstandingInput"
-              :label="$t('cootool.RU')"
+              label-for="MtransparencyInput"
+              :label="$t('cootool.I')"
               label-align="left"
             >
               <b-row>
                 <b-col cols="7" class="text-left">{{ $t('cootool.p1') }}</b-col>
                 <b-col cols="1" class="text-center"></b-col
                 ><b-col cols="4" class="text-right"
-                  >{{ Math.round(formMRUnderstanding * 100) }}%</b-col
+                  >{{ Math.round(formMTransparency * 100) }}%</b-col
                 >
               </b-row>
               <b-form-input
-                id="MRUnderstandingInput"
-                v-model="formMRUnderstanding"
+                id="MtransparencyInput"
+                v-model="formMTransparency"
                 type="range"
                 min="0.01"
                 max="0.99"
@@ -313,12 +382,12 @@
                 <b-col cols="7" class="text-left">{{ $t('cootool.p0') }}</b-col>
                 <b-col cols="1" class="text-center"></b-col
                 ><b-col cols="4" class="text-right"
-                  >{{ Math.round(formRUnderstanding * 100) }}%</b-col
+                  >{{ Math.round(formTransparency * 100) }}%</b-col
                 >
               </b-row>
               <b-form-input
-                id="RUnderstandingInput"
-                v-model="formRUnderstanding"
+                id="transparencyInput"
+                v-model="formTransparency"
                 type="range"
                 min="0.01"
                 max="0.99"
@@ -326,171 +395,11 @@
               ></b-form-input>
             </b-form-group>
 
-            <!-- /////////////// B FREEDOM /////////////// -->
+            <!-- /////////////// CARE AND TRUST EXPECTED /////////////// -->
 
             <b-form-group
               class="py-3 t16"
-              label-for="MBFreedomInput"
-              :label="$t('cootool.BF')"
-              label-align="left"
-            >
-              <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p1') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
-                  >{{ Math.round(formMBFreedom * 100) }}%</b-col
-                >
-              </b-row>
-              <b-form-input
-                id="MBFreedomInput"
-                v-model="formMBFreedom"
-                type="range"
-                min="0.01"
-                max="0.99"
-                step="0.01"
-              ></b-form-input>
-              <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
-                  >{{ Math.round(formBFreedom * 100) }}%</b-col
-                >
-              </b-row>
-              <b-form-input
-                id="BFreedomInput"
-                v-model="formBFreedom"
-                type="range"
-                min="0.01"
-                max="0.99"
-                step="0.01"
-              ></b-form-input>
-            </b-form-group>
-
-            <!-- /////////////// R FREEDOM /////////////// -->
-
-            <b-form-group
-              class="py-3 t16"
-              label-for="MRFreedomInput"
-              :label="$t('cootool.RF')"
-              label-align="left"
-            >
-              <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p1') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
-                  >{{ Math.round(formMRFreedom * 100) }}%</b-col
-                >
-              </b-row>
-              <b-form-input
-                id="MRFreedomInput"
-                v-model="formMRFreedom"
-                type="range"
-                min="0.01"
-                max="0.99"
-                step="0.01"
-              ></b-form-input>
-              <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
-                  >{{ Math.round(formRFreedom * 100) }}%</b-col
-                >
-              </b-row>
-              <b-form-input
-                id="RFreedomInput"
-                v-model="formRFreedom"
-                type="range"
-                min="0.01"
-                max="0.99"
-                step="0.01"
-              ></b-form-input>
-            </b-form-group>
-
-            <!-- /////////////// B TRANSPARENCY /////////////// -->
-
-            <b-form-group
-              class="py-3 t16"
-              label-for="MBTransparencyInput"
-              :label="$t('cootool.BI')"
-              label-align="left"
-            >
-              <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p1') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
-                  >{{ Math.round(formMBTransparency * 100) }}%</b-col
-                >
-              </b-row>
-              <b-form-input
-                id="MBTransparencyInput"
-                v-model="formMBTransparency"
-                type="range"
-                min="0.01"
-                max="0.99"
-                step="0.01"
-              ></b-form-input>
-              <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
-                  >{{ Math.round(formBTransparency * 100) }}%</b-col
-                >
-              </b-row>
-              <b-form-input
-                id="BTransparencyInput"
-                v-model="formBTransparency"
-                type="range"
-                min="0.01"
-                max="0.99"
-                step="0.01"
-              ></b-form-input>
-            </b-form-group>
-
-            <!-- /////////////// R TRANSPARENCY /////////////// -->
-
-            <b-form-group
-              class="py-3 t16"
-              label-for="MRTransparencyInput"
-              :label="$t('cootool.RI')"
-              label-align="left"
-            >
-              <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p1') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
-                  >{{ Math.round(formMRTransparency * 100) }}%</b-col
-                >
-              </b-row>
-              <b-form-input
-                id="MRTransparencyInput"
-                v-model="formMRTransparency"
-                type="range"
-                min="0.01"
-                max="0.99"
-                step="0.01"
-              ></b-form-input>
-              <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
-                  >{{ Math.round(formRTransparency * 100) }}%</b-col
-                >
-              </b-row>
-              <b-form-input
-                id="RTransparencyInput"
-                v-model="formRTransparency"
-                type="range"
-                min="0.01"
-                max="0.99"
-                step="0.01"
-              ></b-form-input>
-            </b-form-group>
-
-            <!-- /////////////// B CARE /////////////// -->
-
-            <b-form-group
-              class="py-3 t16"
-              label-for="MBCareInput"
+              label-for="BcareInput"
               :label="$t('cootool.BC')"
               label-align="left"
             >
@@ -502,7 +411,7 @@
                 >
               </b-row>
               <b-form-input
-                id="MBCareInput"
+                id="MBcareInput"
                 v-model="formMBCare"
                 type="range"
                 min="0.01"
@@ -517,7 +426,7 @@
                 >
               </b-row>
               <b-form-input
-                id="BCareInput"
+                id="BcareInput"
                 v-model="formBCare"
                 type="range"
                 min="0.01"
@@ -526,11 +435,47 @@
               ></b-form-input>
             </b-form-group>
 
-            <!-- /////////////// R CARE /////////////// -->
+            <b-form-group
+              class="py-3 t16"
+              label-for="MBXtrustInput"
+              :label="$t('cootool.BXT')"
+              label-align="left"
+            >
+              <b-row>
+                <b-col cols="7" class="text-left">{{ $t('cootool.p1') }}</b-col>
+                <b-col cols="1" class="text-center"></b-col
+                ><b-col cols="4" class="text-right"
+                  >{{ Math.round(formMBXTrust * 100) }}%</b-col
+                >
+              </b-row>
+              <b-form-input
+                id="MBXtrustInput"
+                v-model="formMBXTrust"
+                type="range"
+                min="0.01"
+                max="0.99"
+                step="0.01"
+              ></b-form-input>
+              <b-row>
+                <b-col cols="7" class="text-left">{{ $t('cootool.p0') }}</b-col>
+                <b-col cols="1" class="text-center"></b-col
+                ><b-col cols="4" class="text-right"
+                  >{{ Math.round(formBXTrust * 100) }}%</b-col
+                >
+              </b-row>
+              <b-form-input
+                id="BXtrustInput"
+                v-model="formBXTrust"
+                type="range"
+                min="0.01"
+                max="0.99"
+                step="0.01"
+              ></b-form-input>
+            </b-form-group>
 
             <b-form-group
               class="py-3 t16"
-              label-for="MRCareInput"
+              label-for="MRcareInput"
               :label="$t('cootool.RC')"
               label-align="left"
             >
@@ -542,7 +487,7 @@
                 >
               </b-row>
               <b-form-input
-                id="MRCareInput"
+                id="MRcareInput"
                 v-model="formMRCare"
                 type="range"
                 min="0.01"
@@ -557,7 +502,7 @@
                 >
               </b-row>
               <b-form-input
-                id="RCareInput"
+                id="RcareInput"
                 v-model="formRCare"
                 type="range"
                 min="0.01"
@@ -566,24 +511,22 @@
               ></b-form-input>
             </b-form-group>
 
-            <!-- /////////////// B XPECTED /////////////// -->
-
             <b-form-group
               class="py-3 t16"
-              label-for="MBXpectedInput"
-              :label="$t('cootool.BX')"
+              label-for="MRXtrustInput"
+              :label="$t('cootool.RXT')"
               label-align="left"
             >
               <b-row>
                 <b-col cols="7" class="text-left">{{ $t('cootool.p1') }}</b-col>
                 <b-col cols="1" class="text-center"></b-col
                 ><b-col cols="4" class="text-right"
-                  >{{ Math.round(formMBXpected * 100) }}%</b-col
+                  >{{ Math.round(formMRXTrust * 100) }}%</b-col
                 >
               </b-row>
               <b-form-input
-                id="MBXpectedInput"
-                v-model="formMBXpected"
+                id="MRXtrustInput"
+                v-model="formMRXTrust"
                 type="range"
                 min="0.01"
                 max="0.99"
@@ -593,12 +536,12 @@
                 <b-col cols="7" class="text-left">{{ $t('cootool.p0') }}</b-col>
                 <b-col cols="1" class="text-center"></b-col
                 ><b-col cols="4" class="text-right"
-                  >{{ Math.round(formBXpected * 100) }}%</b-col
+                  >{{ Math.round(formRXTrust * 100) }}%</b-col
                 >
               </b-row>
               <b-form-input
-                id="BXpectedInput"
-                v-model="formBXpected"
+                id="RXtrustInput"
+                v-model="formRXTrust"
                 type="range"
                 min="0.01"
                 max="0.99"
@@ -606,24 +549,22 @@
               ></b-form-input>
             </b-form-group>
 
-            <!-- /////////////// R XPECTED /////////////// -->
-
             <b-form-group
               class="py-3 t16"
-              label-for="MRXpectedInput"
-              :label="$t('cootool.RX')"
+              label-for="MHcareInput"
+              :label="$t('cootool.HC')"
               label-align="left"
             >
               <b-row>
                 <b-col cols="7" class="text-left">{{ $t('cootool.p1') }}</b-col>
                 <b-col cols="1" class="text-center"></b-col
                 ><b-col cols="4" class="text-right"
-                  >{{ Math.round(formMRXpected * 100) }}%</b-col
+                  >{{ Math.round(formMHCare * 100) }}%</b-col
                 >
               </b-row>
               <b-form-input
-                id="MRXpectedInput"
-                v-model="formMRXpected"
+                id="MHcareInput"
+                v-model="formMHCare"
                 type="range"
                 min="0.01"
                 max="0.99"
@@ -633,12 +574,12 @@
                 <b-col cols="7" class="text-left">{{ $t('cootool.p0') }}</b-col>
                 <b-col cols="1" class="text-center"></b-col
                 ><b-col cols="4" class="text-right"
-                  >{{ Math.round(formRXpected * 100) }}%</b-col
+                  >{{ Math.round(formHCare * 100) }}%</b-col
                 >
               </b-row>
               <b-form-input
-                id="RXpectedInput"
-                v-model="formRXpected"
+                id="HcareInput"
+                v-model="formHCare"
                 type="range"
                 min="0.01"
                 max="0.99"
@@ -646,91 +587,11 @@
               ></b-form-input>
             </b-form-group>
 
-            <!-- /////////////// B HABITAT /////////////// -->
+            <!-- /////////////// TRUST /////////////// -->
 
             <b-form-group
               class="py-3 t16"
-              label-for="MBHabitatInput"
-              :label="$t('cootool.BH')"
-              label-align="left"
-            >
-              <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p1') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
-                  >{{ Math.round(formMBHabitat * 100) }}%</b-col
-                >
-              </b-row>
-              <b-form-input
-                id="MBHabitatInput"
-                v-model="formMBHabitat"
-                type="range"
-                min="0.01"
-                max="0.99"
-                step="0.01"
-              ></b-form-input>
-              <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
-                  >{{ Math.round(formBHabitat * 100) }}%</b-col
-                >
-              </b-row>
-              <b-form-input
-                id="BHabitatInput"
-                v-model="formBHabitat"
-                type="range"
-                min="0.01"
-                max="0.99"
-                step="0.01"
-              ></b-form-input>
-            </b-form-group>
-
-            <!-- /////////////// R HABITAT /////////////// -->
-
-            <b-form-group
-              class="py-3 t16"
-              label-for="MRHabitatInput"
-              :label="$t('cootool.RH')"
-              label-align="left"
-            >
-              <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p1') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
-                  >{{ Math.round(formMRHabitat * 100) }}%</b-col
-                >
-              </b-row>
-              <b-form-input
-                id="MRHabitatInput"
-                v-model="formMRHabitat"
-                type="range"
-                min="0.01"
-                max="0.99"
-                step="0.01"
-              ></b-form-input>
-              <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
-                  >{{ Math.round(formRHabitat * 100) }}%</b-col
-                >
-              </b-row>
-              <b-form-input
-                id="RHabitatInput"
-                v-model="formRHabitat"
-                type="range"
-                min="0.01"
-                max="0.99"
-                step="0.01"
-              ></b-form-input>
-            </b-form-group>
-
-            <!-- /////////////// B TRUST /////////////// -->
-
-            <b-form-group
-              class="py-3 t16"
-              label-for="MBTrustInput"
+              label-for="MBtrustInput"
               :label="$t('cootool.BT')"
               label-align="left"
             >
@@ -742,7 +603,7 @@
                 >
               </b-row>
               <b-form-input
-                id="MBTrustInput"
+                id="MBtrustInput"
                 v-model="formMBTrust"
                 type="range"
                 min="0.01"
@@ -757,7 +618,7 @@
                 >
               </b-row>
               <b-form-input
-                id="BTrustInput"
+                id="BtrustInput"
                 v-model="formBTrust"
                 type="range"
                 min="0.01"
@@ -766,11 +627,9 @@
               ></b-form-input>
             </b-form-group>
 
-            <!-- /////////////// R TRUST /////////////// -->
-
             <b-form-group
               class="py-3 t16"
-              label-for="MRTrustInput"
+              label-for="MRtrustInput"
               :label="$t('cootool.RT')"
               label-align="left"
             >
@@ -782,7 +641,7 @@
                 >
               </b-row>
               <b-form-input
-                id="MRTrustInput"
+                id="MRtrustInput"
                 v-model="formMRTrust"
                 type="range"
                 min="0.01"
@@ -797,7 +656,7 @@
                 >
               </b-row>
               <b-form-input
-                id="RTrustInput"
+                id="RtrustInput"
                 v-model="formRTrust"
                 type="range"
                 min="0.01"
@@ -806,11 +665,11 @@
               ></b-form-input>
             </b-form-group>
 
-            <!-- /////////////// B EQUIVALENCE /////////////// -->
+            <!-- /////////////// EQUIVALENCE /////////////// -->
 
             <b-form-group
               class="py-3 t16"
-              label-for="MBEquivalenceInput"
+              label-for="MBequivalenceInput"
               :label="$t('cootool.BE')"
             >
               <b-row>
@@ -821,7 +680,7 @@
                 >
               </b-row>
               <b-form-input
-                id="MBEquivalenceInput"
+                id="MBequivalenceInput"
                 v-model="formMBEquivalence"
                 type="range"
                 min="0.01"
@@ -836,7 +695,7 @@
                 >
               </b-row>
               <b-form-input
-                id="BEquivalenceInput"
+                id="BequivalenceInput"
                 v-model="formBEquivalence"
                 type="range"
                 min="0.01"
@@ -845,11 +704,9 @@
               ></b-form-input>
             </b-form-group>
 
-            <!-- /////////////// R EQUIVALENCE /////////////// -->
-
             <b-form-group
               class="py-3 t16"
-              label-for="MREquivalenceInput"
+              label-for="MRequivalenceInput"
               :label="$t('cootool.RE')"
             >
               <b-row>
@@ -860,7 +717,7 @@
                 >
               </b-row>
               <b-form-input
-                id="MREquivalenceInput"
+                id="MRequivalenceInput"
                 v-model="formMREquivalence"
                 type="range"
                 min="0.01"
@@ -875,7 +732,7 @@
                 >
               </b-row>
               <b-form-input
-                id="REquivalenceInput"
+                id="RequivalenceInput"
                 v-model="formREquivalence"
                 type="range"
                 min="0.01"
@@ -1229,30 +1086,22 @@ export default {
       formBDiversity: 0.50,
       formMRDiversity: 0.50,
       formRDiversity: 0.50,
-      formMBUnderstanding: 0.50,
-      formBUnderstanding: 0.50,
-      formMRUnderstanding: 0.50,
-      formRUnderstanding: 0.50,
-      formMBFreedom: 0.50,
-      formBFreedom: 0.50,
-      formMRFreedom: 0.50,
-      formRFreedom: 0.50,
-      formMBTransparency: 0.50,
-      formBTransparency: 0.50,
-      formMRTransparency: 0.50,
-      formRTransparency: 0.50,
+      formMUnderstanding: 0.50,
+      formUnderstanding: 0.50,
+      formMFreedom: 0.50,
+      formFreedom: 0.50,
+      formMTransparency: 0.50,
+      formTransparency: 0.50,
       formMBCare: 0.50,
       formBCare: 0.50,
+      formMBXTrust: 0.50,
+      formBXTrust: 0.50,
       formMRCare: 0.50,
       formRCare: 0.50,
-      formMBXpected: 0.50,
-      formBXpected: 0.50,
-      formMRXpected: 0.50,
-      formRXpected: 0.50,
-      formMBHabitat: 0.50,
-      formBHabitat: 0.50,
-      formMRHabitat: 0.50,
-      formRHabitat: 0.50,
+      formMRXTrust: 0.50,
+      formRXTrust: 0.50,
+      formMHCare: 0.50,
+      formHCare: 0.50,
       formMBTrust: 0.50,
       formBTrust: 0.50,
       formMRTrust: 0.50,
@@ -1331,34 +1180,24 @@ export default {
         participant: this.formParticipant,
         name: this.formName,
         desc: this.formDesc,
-        MBD: this.formMBDiversity,
-        BD: this.formBDiversity,
-        MRD: this.formMRDiversity,
-        RD: this.formRDiversity,
-        MBU: this.formMBUnderstanding,
-        BU: this.formBUnderstanding,
-        MRU: this.formMRUnderstanding,
-        RU: this.formRUnderstanding,
-        MBF: this.formMBFreedom,
-        BF: this.formBFreedom,
-        MRF: this.formMRFreedom,
-        RF: this.formRFreedom,
-        MBI: this.formMBTransparency,
-        BI: this.formBTransparency,
-        MRI: this.formMRTransparency,
-        RI: this.formRTransparency,
+        MD: this.formMDiversity,
+        D: this.formDiversity,
+        MU: this.formMUnderstanding,
+        U: this.formUnderstanding,
+        MF: this.formMFreedom,
+        F: this.formFreedom,
+        MI: this.formMTransparency,
+        I: this.formTransparency,
         MBC: this.formMBCare,
         BC: this.formBCare,
+        MBXT: this.formMBXTrust,
+        BXT: this.formBXTrust,
         MRC: this.formMRCare,
         RC: this.formRCare,
-        MBX: this.formMBXpected,
-        BX: this.formBXpected,
-        MRX: this.formMRXpected,
-        RX: this.formRXpected,
-        MBH: this.formMBHabitat,
-        BH: this.formBHabitat,
-        MRH: this.formMRHabitat,
-        RH: this.formRHabitat,
+        MRXT: this.formMRXTrust,
+        RXT: this.formRXTrust,
+        MHC: this.formMHCare,
+        HC: this.formHCare,
         MBT: this.formMBTrust,
         BT: this.formBTrust,
         MRT: this.formMRTrust,
