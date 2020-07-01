@@ -54,6 +54,7 @@
           {{ $t('cootoolreport.conflictrisk') }}
           {{ log4((result.MBU + result.MRU + result.BU + result.RU) / 4) }}%
         </p>
+        <p>{{ result.MBD + result.MRD }}</p>
         <p>D: {{ (result.MBD + result.MRD + result.BD + result.RD) / 4 }}</p>
         <p>U: {{ (result.MBU + result.MRU + result.BU + result.RU) / 4 }}</p>
         <p>F: {{ (result.MBF + result.MRF + result.BF + result.RF) / 4 }}</p>
@@ -112,8 +113,11 @@ export default {
       result: this.$store.state.edit,
       country: this.$store.state.country[this.$store.state.edit.country - 1].name,
       place: this.$store.state.place[this.$store.state.edit.place - 1].name,
-      // group: this.$store.state.ecosystem[this.$store.state.edit.group - 1].name
+      group: this.$t('cootool.group' + (this.$store.state.edit.group))
     }
+  },
+  mounted() {
+    alert(this.$t('cootool.group' + (this.$store.state.edit.group)))
   },
   methods: {
     log4(n) {

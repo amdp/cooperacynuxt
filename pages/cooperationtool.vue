@@ -157,10 +157,12 @@
           </h5>
 
           <b-container class="m-0 p-0">
-            <p class="diversity it" v-if="formGroup == 7">
+            <p class="diversity it">
               <strong>
                 {{ $t('cootool.groupcoointro') }}
               </strong>
+            </p>
+            <p class="diversity it" v-if="formGroup == 7">
               <strong>
                 {{ $t('cootool.groupcoointromyself') }}
               </strong>
@@ -175,9 +177,11 @@
               label-align="left"
             >
               <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p1') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
+                <b-col cols="6" class="text-left pr-0">{{
+                  $t('cootool.p1')
+                }}</b-col>
+                <b-col cols="2" class="text-center p-0"></b-col>
+                <b-col cols="4" class="text-right pl-0"
                   >{{ Math.round(formMBDiversity * 100) }}%</b-col
                 >
               </b-row>
@@ -190,9 +194,11 @@
                 step="0.01"
               ></b-form-input>
               <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
+                <b-col cols="6" class="text-left pr-0">{{
+                  $t('cootool.p0')
+                }}</b-col>
+                <b-col cols="2" class="text-center p-0"></b-col>
+                <b-col cols="4" class="text-right pl-0"
                   >{{ Math.round(formBDiversity * 100) }}%</b-col
                 >
               </b-row>
@@ -215,9 +221,11 @@
               label-align="left"
             >
               <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p1') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
+                <b-col cols="6" class="text-left pr-0">{{
+                  $t('cootool.p1')
+                }}</b-col>
+                <b-col cols="2" class="text-center p-0"></b-col>
+                <b-col cols="4" class="text-right pl-0"
                   >{{ Math.round(formMRDiversity * 100) }}%</b-col
                 >
               </b-row>
@@ -230,9 +238,11 @@
                 step="0.01"
               ></b-form-input>
               <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
+                <b-col cols="6" class="text-left pr-0">{{
+                  $t('cootool.p0')
+                }}</b-col>
+                <b-col cols="2" class="text-center p-0"></b-col>
+                <b-col cols="4" class="text-right pl-0"
                   >{{ Math.round(formRDiversity * 100) }}%</b-col
                 >
               </b-row>
@@ -255,9 +265,11 @@
               label-align="left"
             >
               <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p1') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
+                <b-col cols="6" class="text-left pr-0">{{
+                  $t('cootool.p1')
+                }}</b-col>
+                <b-col cols="2" class="text-center p-0"></b-col>
+                <b-col cols="4" class="text-right pl-0"
                   >{{ Math.round(formMBUnderstanding * 100) }}%</b-col
                 >
               </b-row>
@@ -270,9 +282,11 @@
                 step="0.01"
               ></b-form-input>
               <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
+                <b-col cols="6" class="text-left pr-0">{{
+                  $t('cootool.p0')
+                }}</b-col>
+                <b-col cols="2" class="text-center p-0"></b-col>
+                <b-col cols="4" class="text-right pl-0"
                   >{{ Math.round(formBUnderstanding * 100) }}%</b-col
                 >
               </b-row>
@@ -295,9 +309,11 @@
               label-align="left"
             >
               <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p1') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
+                <b-col cols="6" class="text-left pr-0">{{
+                  $t('cootool.p1')
+                }}</b-col>
+                <b-col cols="2" class="text-center p-0"></b-col>
+                <b-col cols="4" class="text-right pl-0"
                   >{{ Math.round(formMRUnderstanding * 100) }}%</b-col
                 >
               </b-row>
@@ -310,9 +326,11 @@
                 step="0.01"
               ></b-form-input>
               <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
+                <b-col cols="6" class="text-left pr-0">{{
+                  $t('cootool.p0')
+                }}</b-col>
+                <b-col cols="2" class="text-center p-0"></b-col>
+                <b-col cols="4" class="text-right pl-0"
                   >{{ Math.round(formRUnderstanding * 100) }}%</b-col
                 >
               </b-row>
@@ -335,9 +353,11 @@
               label-align="left"
             >
               <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p1') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
+                <b-col cols="6" class="text-left pr-0">{{
+                  $t('cootool.p1')
+                }}</b-col>
+                <b-col cols="2" class="text-center p-0"></b-col>
+                <b-col cols="4" class="text-right pl-0"
                   >{{ Math.round(formMBFreedom * 100) }}%</b-col
                 >
               </b-row>
@@ -350,9 +370,11 @@
                 step="0.01"
               ></b-form-input>
               <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
+                <b-col cols="6" class="text-left pr-0">{{
+                  $t('cootool.p0')
+                }}</b-col>
+                <b-col cols="2" class="text-center p-0"></b-col>
+                <b-col cols="4" class="text-right pl-0"
                   >{{ Math.round(formBFreedom * 100) }}%</b-col
                 >
               </b-row>
@@ -375,9 +397,11 @@
               label-align="left"
             >
               <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p1') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
+                <b-col cols="6" class="text-left pr-0">{{
+                  $t('cootool.p1')
+                }}</b-col>
+                <b-col cols="2" class="text-center p-0"></b-col>
+                <b-col cols="4" class="text-right pl-0"
                   >{{ Math.round(formMRFreedom * 100) }}%</b-col
                 >
               </b-row>
@@ -390,9 +414,11 @@
                 step="0.01"
               ></b-form-input>
               <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
+                <b-col cols="6" class="text-left pr-0">{{
+                  $t('cootool.p0')
+                }}</b-col>
+                <b-col cols="2" class="text-center p-0"></b-col>
+                <b-col cols="4" class="text-right pl-0"
                   >{{ Math.round(formRFreedom * 100) }}%</b-col
                 >
               </b-row>
@@ -415,9 +441,11 @@
               label-align="left"
             >
               <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p1') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
+                <b-col cols="6" class="text-left pr-0">{{
+                  $t('cootool.p1')
+                }}</b-col>
+                <b-col cols="2" class="text-center p-0"></b-col>
+                <b-col cols="4" class="text-right pl-0"
                   >{{ Math.round(formMBTransparency * 100) }}%</b-col
                 >
               </b-row>
@@ -430,9 +458,11 @@
                 step="0.01"
               ></b-form-input>
               <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
+                <b-col cols="6" class="text-left pr-0">{{
+                  $t('cootool.p0')
+                }}</b-col>
+                <b-col cols="2" class="text-center p-0"></b-col>
+                <b-col cols="4" class="text-right pl-0"
                   >{{ Math.round(formBTransparency * 100) }}%</b-col
                 >
               </b-row>
@@ -455,9 +485,11 @@
               label-align="left"
             >
               <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p1') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
+                <b-col cols="6" class="text-left pr-0">{{
+                  $t('cootool.p1')
+                }}</b-col>
+                <b-col cols="2" class="text-center p-0"></b-col>
+                <b-col cols="4" class="text-right pl-0"
                   >{{ Math.round(formMRTransparency * 100) }}%</b-col
                 >
               </b-row>
@@ -470,9 +502,11 @@
                 step="0.01"
               ></b-form-input>
               <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
+                <b-col cols="6" class="text-left pr-0">{{
+                  $t('cootool.p0')
+                }}</b-col>
+                <b-col cols="2" class="text-center p-0"></b-col>
+                <b-col cols="4" class="text-right pl-0"
                   >{{ Math.round(formRTransparency * 100) }}%</b-col
                 >
               </b-row>
@@ -495,9 +529,11 @@
               label-align="left"
             >
               <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p1') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
+                <b-col cols="6" class="text-left pr-0">{{
+                  $t('cootool.p1')
+                }}</b-col>
+                <b-col cols="2" class="text-center p-0"></b-col>
+                <b-col cols="4" class="text-right pl-0"
                   >{{ Math.round(formMBCare * 100) }}%</b-col
                 >
               </b-row>
@@ -510,9 +546,11 @@
                 step="0.01"
               ></b-form-input>
               <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
+                <b-col cols="6" class="text-left pr-0">{{
+                  $t('cootool.p0')
+                }}</b-col>
+                <b-col cols="2" class="text-center p-0"></b-col>
+                <b-col cols="4" class="text-right pl-0"
                   >{{ Math.round(formBCare * 100) }}%</b-col
                 >
               </b-row>
@@ -535,9 +573,11 @@
               label-align="left"
             >
               <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p1') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
+                <b-col cols="6" class="text-left pr-0">{{
+                  $t('cootool.p1')
+                }}</b-col>
+                <b-col cols="2" class="text-center p-0"></b-col>
+                <b-col cols="4" class="text-right pl-0"
                   >{{ Math.round(formMRCare * 100) }}%</b-col
                 >
               </b-row>
@@ -550,9 +590,11 @@
                 step="0.01"
               ></b-form-input>
               <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
+                <b-col cols="6" class="text-left pr-0">{{
+                  $t('cootool.p0')
+                }}</b-col>
+                <b-col cols="2" class="text-center p-0"></b-col>
+                <b-col cols="4" class="text-right pl-0"
                   >{{ Math.round(formRCare * 100) }}%</b-col
                 >
               </b-row>
@@ -575,9 +617,11 @@
               label-align="left"
             >
               <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p1') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
+                <b-col cols="6" class="text-left pr-0">{{
+                  $t('cootool.p1')
+                }}</b-col>
+                <b-col cols="2" class="text-center p-0"></b-col>
+                <b-col cols="4" class="text-right pl-0"
                   >{{ Math.round(formMBXpected * 100) }}%</b-col
                 >
               </b-row>
@@ -590,9 +634,11 @@
                 step="0.01"
               ></b-form-input>
               <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
+                <b-col cols="6" class="text-left pr-0">{{
+                  $t('cootool.p0')
+                }}</b-col>
+                <b-col cols="2" class="text-center p-0"></b-col>
+                <b-col cols="4" class="text-right pl-0"
                   >{{ Math.round(formBXpected * 100) }}%</b-col
                 >
               </b-row>
@@ -615,9 +661,11 @@
               label-align="left"
             >
               <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p1') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
+                <b-col cols="6" class="text-left pr-0">{{
+                  $t('cootool.p1')
+                }}</b-col>
+                <b-col cols="2" class="text-center p-0"></b-col>
+                <b-col cols="4" class="text-right pl-0"
                   >{{ Math.round(formMRXpected * 100) }}%</b-col
                 >
               </b-row>
@@ -630,9 +678,11 @@
                 step="0.01"
               ></b-form-input>
               <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
+                <b-col cols="6" class="text-left pr-0">{{
+                  $t('cootool.p0')
+                }}</b-col>
+                <b-col cols="2" class="text-center p-0"></b-col>
+                <b-col cols="4" class="text-right pl-0"
                   >{{ Math.round(formRXpected * 100) }}%</b-col
                 >
               </b-row>
@@ -655,9 +705,11 @@
               label-align="left"
             >
               <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p1') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
+                <b-col cols="6" class="text-left pr-0">{{
+                  $t('cootool.p1')
+                }}</b-col>
+                <b-col cols="2" class="text-center p-0"></b-col>
+                <b-col cols="4" class="text-right pl-0"
                   >{{ Math.round(formMBHabitat * 100) }}%</b-col
                 >
               </b-row>
@@ -670,9 +722,11 @@
                 step="0.01"
               ></b-form-input>
               <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
+                <b-col cols="6" class="text-left pr-0">{{
+                  $t('cootool.p0')
+                }}</b-col>
+                <b-col cols="2" class="text-center p-0"></b-col>
+                <b-col cols="4" class="text-right pl-0"
                   >{{ Math.round(formBHabitat * 100) }}%</b-col
                 >
               </b-row>
@@ -695,9 +749,11 @@
               label-align="left"
             >
               <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p1') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
+                <b-col cols="6" class="text-left pr-0">{{
+                  $t('cootool.p1')
+                }}</b-col>
+                <b-col cols="2" class="text-center p-0"></b-col>
+                <b-col cols="4" class="text-right pl-0"
                   >{{ Math.round(formMRHabitat * 100) }}%</b-col
                 >
               </b-row>
@@ -710,9 +766,11 @@
                 step="0.01"
               ></b-form-input>
               <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
+                <b-col cols="6" class="text-left pr-0">{{
+                  $t('cootool.p0')
+                }}</b-col>
+                <b-col cols="2" class="text-center p-0"></b-col>
+                <b-col cols="4" class="text-right pl-0"
                   >{{ Math.round(formRHabitat * 100) }}%</b-col
                 >
               </b-row>
@@ -735,9 +793,11 @@
               label-align="left"
             >
               <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p1') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
+                <b-col cols="6" class="text-left pr-0">{{
+                  $t('cootool.p1')
+                }}</b-col>
+                <b-col cols="2" class="text-center p-0"></b-col>
+                <b-col cols="4" class="text-right pl-0"
                   >{{ Math.round(formMBTrust * 100) }}%</b-col
                 >
               </b-row>
@@ -750,9 +810,11 @@
                 step="0.01"
               ></b-form-input>
               <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
+                <b-col cols="6" class="text-left pr-0">{{
+                  $t('cootool.p0')
+                }}</b-col>
+                <b-col cols="2" class="text-center p-0"></b-col>
+                <b-col cols="4" class="text-right pl-0"
                   >{{ Math.round(formBTrust * 100) }}%</b-col
                 >
               </b-row>
@@ -775,9 +837,11 @@
               label-align="left"
             >
               <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p1') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
+                <b-col cols="6" class="text-left pr-0">{{
+                  $t('cootool.p1')
+                }}</b-col>
+                <b-col cols="2" class="text-center p-0"></b-col>
+                <b-col cols="4" class="text-right pl-0"
                   >{{ Math.round(formMRTrust * 100) }}%</b-col
                 >
               </b-row>
@@ -790,9 +854,11 @@
                 step="0.01"
               ></b-form-input>
               <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
+                <b-col cols="6" class="text-left pr-0">{{
+                  $t('cootool.p0')
+                }}</b-col>
+                <b-col cols="2" class="text-center p-0"></b-col>
+                <b-col cols="4" class="text-right pl-0"
                   >{{ Math.round(formRTrust * 100) }}%</b-col
                 >
               </b-row>
@@ -814,9 +880,11 @@
               :label="$t('cootool.BE')"
             >
               <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p1') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
+                <b-col cols="6" class="text-left pr-0">{{
+                  $t('cootool.p1')
+                }}</b-col>
+                <b-col cols="2" class="text-center p-0"></b-col>
+                <b-col cols="4" class="text-right pl-0"
                   >{{ Math.round(formMBEquivalence * 100) }}%</b-col
                 >
               </b-row>
@@ -829,9 +897,11 @@
                 step="0.01"
               ></b-form-input>
               <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
+                <b-col cols="6" class="text-left pr-0">{{
+                  $t('cootool.p0')
+                }}</b-col>
+                <b-col cols="2" class="text-center p-0"></b-col>
+                <b-col cols="4" class="text-right pl-0"
                   >{{ Math.round(formBEquivalence * 100) }}%</b-col
                 >
               </b-row>
@@ -853,9 +923,11 @@
               :label="$t('cootool.RE')"
             >
               <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p1') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
+                <b-col cols="6" class="text-left pr-0">{{
+                  $t('cootool.p1')
+                }}</b-col>
+                <b-col cols="2" class="text-center p-0"></b-col>
+                <b-col cols="4" class="text-right pl-0"
                   >{{ Math.round(formMREquivalence * 100) }}%</b-col
                 >
               </b-row>
@@ -868,9 +940,11 @@
                 step="0.01"
               ></b-form-input>
               <b-row>
-                <b-col cols="7" class="text-left">{{ $t('cootool.p0') }}</b-col>
-                <b-col cols="1" class="text-center"></b-col
-                ><b-col cols="4" class="text-right"
+                <b-col cols="6" class="text-left pr-0">{{
+                  $t('cootool.p0')
+                }}</b-col>
+                <b-col cols="2" class="text-center p-0"></b-col>
+                <b-col cols="4" class="text-right pl-0"
                   >{{ Math.round(formREquivalence * 100) }}%</b-col
                 >
               </b-row>
@@ -910,7 +984,8 @@
                   <b-col cols="4" class="text-center"
                     >{{ Math.round(formPairBase * 100) }}%</b-col
                   >
-                  <b-col cols="4" class="text-right"></b-col>
+
+                  <b-col cols="4" class="text-right pl-0"></b-col>
                 </b-row>
                 <b-form-input
                   id="basePairInput"
@@ -935,7 +1010,8 @@
                   <b-col cols="4" class="text-center"
                     >{{ Math.round(formPairDiversity * 100) }}%</b-col
                   >
-                  <b-col cols="4" class="text-right"></b-col>
+
+                  <b-col cols="4" class="text-right pl-0"></b-col>
                 </b-row>
                 <b-form-input
                   id="diversityPairInput"
@@ -962,7 +1038,8 @@
                   <b-col cols="4" class="text-center"
                     >{{ Math.round(formPairUnderstanding * 100) }}%</b-col
                   >
-                  <b-col cols="4" class="text-right"></b-col>
+
+                  <b-col cols="4" class="text-right pl-0"></b-col>
                 </b-row>
                 <b-form-input
                   id="understandingPairInput"
@@ -989,7 +1066,8 @@
                   <b-col cols="4" class="text-center"
                     >{{ Math.round(formPairFreedom * 100) }}%</b-col
                   >
-                  <b-col cols="4" class="text-right"></b-col>
+
+                  <b-col cols="4" class="text-right pl-0"></b-col>
                 </b-row>
                 <b-form-input
                   id="freedomPairInput"
@@ -1016,7 +1094,8 @@
                   <b-col cols="4" class="text-center"
                     >{{ Math.round(formPairTransparency * 100) }}%</b-col
                   >
-                  <b-col cols="4" class="text-right"></b-col>
+
+                  <b-col cols="4" class="text-right pl-0"></b-col>
                 </b-row>
                 <b-form-input
                   id="transparencyPairInput"
@@ -1043,7 +1122,8 @@
                   <b-col cols="4" class="text-center"
                     >{{ Math.round(formPairCare * 100) }}%</b-col
                   >
-                  <b-col cols="4" class="text-right"></b-col>
+
+                  <b-col cols="4" class="text-right pl-0"></b-col>
                 </b-row>
                 <b-form-input
                   id="carePairInput"
@@ -1068,7 +1148,8 @@
                   <b-col cols="4" class="text-center"
                     >{{ Math.round(formPairTrust * 100) }}%</b-col
                   >
-                  <b-col cols="4" class="text-right"></b-col>
+
+                  <b-col cols="4" class="text-right pl-0"></b-col>
                 </b-row>
                 <b-form-input
                   id="trustPairInput"
@@ -1092,7 +1173,8 @@
                   <b-col cols="4" class="text-center"
                     >{{ Math.round(formPairEquivalence * 100) }}%</b-col
                   >
-                  <b-col cols="4" class="text-right"></b-col>
+
+                  <b-col cols="4" class="text-right pl-0"></b-col>
                 </b-row>
                 <b-form-input
                   id="equivalencePairInput"
@@ -1120,7 +1202,8 @@
                   <b-col cols="4" class="text-center"
                     >{{ Math.round(formPairFinal * 100) }}%</b-col
                   >
-                  <b-col cols="4" class="text-right"></b-col>
+
+                  <b-col cols="4" class="text-right pl-0"></b-col>
                 </b-row>
                 <b-form-input
                   id="finalPairInput"
