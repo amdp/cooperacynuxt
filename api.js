@@ -195,6 +195,16 @@ app.get('/cooperationtool', async function (req, res, next) {
   }
 })
 
+app.get('/cooperation', async function (req, res, next) {
+  try {
+    let query = 'SELECT `id`, `group`, `country`, `place`, `participant`,`name`, `desc` FROM `cooperationtool`'
+    const [survey] = await mypool.execute(query)
+    res.status(200).send(survey)
+  } catch (err) {
+    next(err)
+  }
+})
+
 /////// UPDATE ///////
 
 app.put('/user', async function (req, res, next) {

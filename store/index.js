@@ -9,6 +9,7 @@ export const state = () => ({
   tag: [],
   place: [],
   country: [],
+  cooperation: [],
   news: [],
   edit: false,
   CCI2017: [],
@@ -86,6 +87,9 @@ export const mutations = {
   },
   setCountry: (state, payload) => {
     state.country = payload
+  },
+  setCooperation: (state, payload) => {
+    state.cooperation = payload
   },
   setNews: (state, payload) => {
     state.news = payload
@@ -326,6 +330,10 @@ export const actions = {
   cooperationToolAction: async function (context, payload) {
     let { data } = await this.$axios.post(process.env.DBURL + '/cooperationtool', payload)
     return data
+  },
+  getCooperationAction: async function (context, payload) {
+    let { data } = await this.$axios.get(process.env.DBURL + '/cooperation')
+    context.commit('setCooperation', data)
   },
   //Admin stuff here: be careful
   resetVotingAction: async function () {

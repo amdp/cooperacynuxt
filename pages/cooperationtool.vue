@@ -54,12 +54,29 @@
             label-for="prevSurveyInput"
             :label="$t('cootool.prevsurvey')"
           >
-            <b-form-input
-              id="prevSurveyInput"
-              v-model="formPrevSurvey"
-              size="sm"
-            >
-            </b-form-input>
+            <b-form-select id="prevSurveyInput" v-model="formPrevSurvey">
+              <option value="Null"></option>
+              <option
+                v-for="cooperation in $store.state.cooperation"
+                :key="cooperation.id"
+                :value="cooperation.id"
+                v-html="
+                  cooperation.id +
+                    ' ' +
+                    cooperation.name +
+                    ' ' +
+                    cooperation.participant +
+                    ' ' +
+                    cooperation.group +
+                    ' ' +
+                    cooperation.country +
+                    ' ' +
+                    cooperation.place +
+                    ' ' +
+                    cooperation.desc
+                "
+              ></option>
+            </b-form-select>
           </b-form-group>
 
           <b-form-group
@@ -1294,6 +1311,7 @@ export default {
   async fetch({ store, params }) {
     await store.dispatch('getPlaceAction')
     await store.dispatch('getCountryAction')
+    await store.dispatch('getCooperationAction')
     if (store.state.edit.id) {
     }
   },
