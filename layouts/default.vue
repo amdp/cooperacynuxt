@@ -28,6 +28,9 @@ export default {
       ],
     }
   },
+  created() {
+    this.$colorMode.preference = 'light'
+  },
   components: { navbar, foot }
 }
 </script>
