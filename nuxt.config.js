@@ -21,6 +21,9 @@ module.exports = {
     //'@nuxtjs/proxy',
     //'@nuxtjs/pwa',    
   ],
+  buildModules: [
+    '@nuxtjs/color-mode',
+  ],
   loading: {
     color: '#FF8800',
     failedColor: 'black',

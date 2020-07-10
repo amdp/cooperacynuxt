@@ -1,22 +1,4 @@
 @import url('https://fonts.googleapis.com/css?family=Prompt:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap');
-* {
-  font-family: 'Prompt', sans-serif;
-  font-weight: 300;
-}
-body {
-  background-color: #ffffff;
-  font-size: 14px;
-  overflow-x: hidden;
-  margin: 0px;
-  padding: 0px;
-}
-a {
-  color: #000;
-}
-a:hover {
-  color: #f80;
-  text-decoration: none;
-}
 
 $equivalence: #f80;
 $onequivalence: #f80;
@@ -48,13 +30,311 @@ $theydiversity: #fcf;
 $offdiversity: #aaa;
 $coogray: #777;
 $aaagray: #aaa;
+$graylight: #ccc;
+$front: #000;
+$back: #fff;
+
+.dark-mode{
+  $front: #eee;
+  $back: #000;
+}
+
+* {
+  font-family: 'Prompt', sans-serif;
+  font-weight: 300;
+  color: $front;
+}
+
+body {
+  background-color: $back;
+  font-size: 14px;
+  overflow-x: hidden;
+  margin: 0px;
+  padding: 0px;
+}
+
+a {
+  color: $front;
+}
+a:hover {
+  color: $equivalence;
+  text-decoration: none;
+}
+
+/***********************************************************
+            COLOR VARS 
+***********************************************************/
+
+
+/*cooperation colors, h* have hover*/
+
+.ontransparency, .offdiversity, .offunderstanding, .offfreedom, .offcare, .offtrust, .offequivalence { background-color: $aaagray;}
+.offtransparency {background-color: $offtransparency;}
+
+.equivalence,
+.hequivalence {
+  color: $equivalence;
+}
+.bequivalence,
+.bhequivalence,
+.onequivalence {
+  background-color: $equivalence;
+}
+.hequivalence:hover {
+  color: $trust;
+}
+.bhequivalence:hover {
+  background-color: $trust;
+}
+.theyequivalence {
+  background-color: $theyequivalence;
+}
+.trust,
+.htrust {
+  color: $trust;
+}
+.htrust:hover {
+  color: $transparency;
+}
+.bhtrust:hover {
+  background-color: $transparency;
+}
+.btrust,
+.bhtrust,
+.ontrust {
+  background-color: $trust;
+}
+.theytrust {
+  background-color: $theytrust;
+}
+.care,
+.hcare {
+  color: $care;
+}
+.bcare,
+.bhcare,
+.oncare {
+  background-color: $care;
+}
+.hcare:hover {
+  color: $diversity;
+}
+.bhcare:hover {
+  background-color: $diversity;
+}
+.theycare {
+  background-color: $theycare;
+}
+.transparency,
+.htransparency {
+  color: $transparency;
+}
+.btransparency,
+.bhtransparency {
+  background-color: $transparency;
+}
+.htransparency:hover {
+  color: $equivalence;
+}
+.bhtransparency:hover {
+  background-color: $equivalence;
+}
+.theytransparency {
+  background-color: $theytransparency;
+}
+.freedom,
+.hfreedom {
+  color: $freedom;
+}
+.bfreedom,
+.bhfreedom,
+.onfreedom {
+  background-color: $freedom;
+}
+.hfreedom:hover {
+  color: $care;
+}
+.bhfreedom:hover {
+  background-color: $care;
+}
+.theyfreedom {
+  background-color: $theyfreedom;
+}
+.understanding,
+.hunderstanding {
+  color: $understanding;
+}
+.bunderstanding,
+.bhunderstanding,
+.onunderstanding {
+  background-color: $understanding;
+}
+.hunderstanding:hover {
+  color: $freedom;
+}
+.bhunderstanding:hover {
+  background-color: $freedom;
+}
+.theyunderstanding {
+  background-color: $theyunderstanding;
+}
+.diversity,
+.hdiversity {
+  color: $diversity;
+}
+.bdiversity,
+.bhdiversity,
+.ondiversity {
+  background-color: $diversity;
+}
+.hdiversity:hover {
+  color: $understanding;
+}
+.bhdiversity:hover {
+  background-color: $understanding;
+}
+.theydiversity {
+  background-color: $theydiversity;
+}
+.coogray {
+  color: $coogray;
+}
+.aaagray {
+  background-color: $aaagray;
+}
+
+.ae {
+  text-decoration: none;
+  background-image: linear-gradient($equivalence 50%, $back 50%);
+  background-repeat: repeat-x;
+  background-size: 2px 0.2em;
+  background-position: 0 1.35em;
+}
+.at {
+  text-decoration: none;
+  background-image: linear-gradient($trust 50%, $back 50%);
+  background-repeat: repeat-x;
+  background-size: 2px 0.2em;
+  background-position: 0 1.35em;
+}
+.ac {
+  text-decoration: none;
+  background-image: linear-gradient($care 50%, $back 50%);
+  background-repeat: repeat-x;
+  background-size: 2px 0.2em;
+  background-position: 0 1.35em;
+}
+.ai {
+  text-decoration: none;
+  background-image: linear-gradient($transparency 50%, $back 50%);
+  background-repeat: repeat-x;
+  background-size: 2px 0.2em;
+  background-position: 0 1.35em;
+}
+.af {
+  text-decoration: none;
+  background-image: linear-gradient($freedom 50%, $back 50%);
+  background-repeat: repeat-x;
+  background-size: 2px 0.2em;
+  background-position: 0 1.35em;
+}
+.au {
+  text-decoration: none;
+  background-image: linear-gradient($understanding 50%, $back 50%);
+  background-repeat: repeat-x;
+  background-size: 2px 0.2em;
+  background-position: 0 1.35em;
+}
+.ad {
+  text-decoration: none;
+  background-image: linear-gradient($diversity 50%, $back 50%);
+  background-repeat: repeat-x;
+  background-size: 2px 0.2em;
+  background-position: 0 1.35em;
+}
+.ae:hover {
+  text-decoration: none;
+  color: $equivalence;
+  background-image: none;
+}
+.at:hover {
+  text-decoration: none;
+  color: $trust;
+  background-image: none;
+}
+.ac:hover {
+  text-decoration: none;
+  color: $care;
+  background-image: none;
+}
+.ai:hover {
+  text-decoration: none;
+  color: $transparency;
+  background-image: none;
+}
+.af:hover {
+  text-decoration: none;
+  color: $freedom;
+  background-image: none;
+}
+.au:hover {
+  text-decoration: none;
+  color: $understanding;
+  background-image: none;
+}
+.ad:hover {
+  text-decoration: none;
+  color: $diversity;
+  background-image: none;
+}
+
+/* text colors */
+
+.bblack {
+  background-color: $front;
+}
+.gray {
+  color: $coogray;
+}
+.graylight {
+  color: $graylight;
+}
+.white,
+.white:hover {
+  color: $back;
+}
+.bwhite {
+  background-color: $back;
+}
+/* Navbar colors */
+#project .menu-item:hover,
+.fa-discord:hover {
+  color: $equivalence;
+}
+.project-active:after {
+  background-color: $equivalence;
+}
+#corporate .menu-item:hover,
+.fa-facebook:hover {
+  color: $freedom;
+}
+.corporate-active:after {
+  background-color: $freedom;
+}
+#science .menu-item:hover,
+.fa-linkedin:hover {
+  color: $understanding;
+}
+.science-active:after {
+  background-color: $understanding;
+}
 
 /* navbar */
 .nav-container {
   z-index: 5;
   width: 100%;
   position: fixed;
-  background-color: white;
+  background-color: $back;
   height: auto;
 }
 .z-0 {
@@ -64,7 +344,7 @@ $aaagray: #aaa;
   height: 60px !important;
 }
 .navbar {
-  border-bottom: 1px #d3e0e9 solid;
+  border-bottom: 1px $aaagray solid;
 }
 .img-logo {
   z-index: 6;
@@ -93,7 +373,7 @@ $aaagray: #aaa;
   height: 30px;
 }
 #login-btn {
-  border-bottom: 0.8px solid #666666;
+  border-bottom: 0.8px solid $aaagray;
 }
 .navbar-links {
   margin-top: 0.2rem;
@@ -125,11 +405,11 @@ $aaagray: #aaa;
   display: inline-block;
 }
 .projectbox {
-  border: 1px solid #777;
+  border: 1px solid $coogray;
   border-radius: 20px;
 }
 .progress-zero {
-  color: #777;
+  color: $coogray;
   padding-left: 2px;
 }
 .img-100 {
@@ -137,7 +417,7 @@ $aaagray: #aaa;
 }
 .mobile-nav-box {
   padding: 0.5rem 0;
-  border-bottom: 1px solid #dee2e6 !important;
+  border-bottom: 1px solid $aaagray !important;
 }
 .mobile-menu-items {
   margin-bottom: 0.25rem;
@@ -185,7 +465,7 @@ $aaagray: #aaa;
 
 hr.home-hr {
   border: none;
-  background-color: #666666;
+  background-color: $coogray;
   width: 50px;
   height: 2px !important;
 }
@@ -199,7 +479,7 @@ hr.home-hr {
   text-align: left;
 }
 .label-default {
-  background-color: #ffffff !important;
+  background-color: $back !important;
 }
 .comment-content {
   overflow-wrap: break-word;
@@ -275,11 +555,11 @@ img.news {
 
 .toast {
   background-color: $care !important;
-  color: #fff !important;
+  color: $back !important;
 }
 .toastunderstanding {
   background-color: $understanding !important;
-  color: #fff !important;
+  color: $back !important;
 }
 img.about {
   width: 100%;
@@ -360,7 +640,7 @@ video {
   letter-spacing: 2px;
 }
 .foot {
-  border-top: 1px solid #cccccc;
+  border-top: 1px solid $aaagray;
 }
 .up {
   text-transform: uppercase;
@@ -434,269 +714,4 @@ a.disabled {
 .t8 {
   font-size: 8px;
   font-weight: 300;
-}
-
-/***********************************************************
-            COLOR VARS 
-***********************************************************/
-
-
-/*cooperation colors, h* have hover*/
-.equivalence,
-.hequivalence {
-  color: $equivalence;
-}
-.bequivalence,
-.bhequivalence {
-  background-color: $equivalence;
-}
-.hequivalence:hover {
-  color: $trust;
-}
-.bhequivalence:hover {
-  background-color: $trust;
-}
-.theyequivalence {
-  background-color: $theyequivalence;
-}
-.trust,
-.htrust {
-  color: $trust;
-}
-.htrust:hover {
-  color: $transparency;
-}
-.bhtrust:hover {
-  background-color: $transparency;
-}
-.btrust,
-.bhtrust {
-  background-color: $trust;
-}
-.theytrust {
-  background-color: $theytrust;
-}
-.care,
-.hcare {
-  color: $care;
-}
-.bcare,
-.bhcare {
-  background-color: $care;
-}
-.hcare:hover {
-  color: $diversity;
-}
-.bhcare:hover {
-  background-color: $diversity;
-}
-.theycare {
-  background-color: $theycare;
-}
-.transparency,
-.htransparency {
-  color: $transparency;
-}
-.btransparency,
-.bhtransparency {
-  background-color: $transparency;
-}
-.htransparency:hover {
-  color: $equivalence;
-}
-.bhtransparency:hover {
-  background-color: $equivalence;
-}
-.theytransparency {
-  background-color: $theytransparency;
-}
-.freedom,
-.hfreedom {
-  color: $freedom;
-}
-.bfreedom,
-.bhfreedom {
-  background-color: $freedom;
-}
-.hfreedom:hover {
-  color: $care;
-}
-.bhfreedom:hover {
-  background-color: $care;
-}
-.theyfreedom {
-  background-color: $theyfreedom;
-}
-.understanding,
-.hunderstanding {
-  color: $understanding;
-}
-.understanding,
-.hunderstanding {
-  color: $understanding;
-}
-.bunderstanding,
-.bhunderstanding {
-  background-color: $understanding;
-}
-.hunderstanding:hover {
-  color: $freedom;
-}
-.bhunderstanding:hover {
-  background-color: $freedom;
-}
-.theyunderstanding {
-  background-color: $theyunderstanding;
-}
-.diversity,
-.hdiversity {
-  color: $diversity;
-}
-.bdiversity,
-.bhdiversity {
-  background-color: $diversity;
-}
-.hdiversity:hover {
-  color: $understanding;
-}
-.bhdiversity:hover {
-  background-color: $understanding;
-}
-.theydiversity {
-  background-color: $theydiversity;
-}
-.coogray {
-  color: $coogray;
-}
-.aaagray {
-  background-color: $aaagray;
-}
-
-.ae {
-  text-decoration: none;
-  background-image: linear-gradient($equivalence 50%, #ffffff 50%);
-  background-repeat: repeat-x;
-  background-size: 2px 0.2em;
-  background-position: 0 1.35em;
-}
-.at {
-  text-decoration: none;
-  background-image: linear-gradient($trust 50%, #ffffff 50%);
-  background-repeat: repeat-x;
-  background-size: 2px 0.2em;
-  background-position: 0 1.35em;
-}
-.ac {
-  text-decoration: none;
-  background-image: linear-gradient($care 50%, #ffffff 50%);
-  background-repeat: repeat-x;
-  background-size: 2px 0.2em;
-  background-position: 0 1.35em;
-}
-.ai {
-  text-decoration: none;
-  background-image: linear-gradient($transparency 50%, #ffffff 50%);
-  background-repeat: repeat-x;
-  background-size: 2px 0.2em;
-  background-position: 0 1.35em;
-}
-.af {
-  text-decoration: none;
-  background-image: linear-gradient($freedom 50%, #ffffff 50%);
-  background-repeat: repeat-x;
-  background-size: 2px 0.2em;
-  background-position: 0 1.35em;
-}
-.au {
-  text-decoration: none;
-  background-image: linear-gradient($understanding 50%, #ffffff 50%);
-  background-repeat: repeat-x;
-  background-size: 2px 0.2em;
-  background-position: 0 1.35em;
-}
-.ad {
-  text-decoration: none;
-  background-image: linear-gradient($diversity 50%, #ffffff 50%);
-  background-repeat: repeat-x;
-  background-size: 2px 0.2em;
-  background-position: 0 1.35em;
-}
-.ae:hover {
-  text-decoration: none;
-  color: $equivalence;
-  background-image: none;
-}
-.at:hover {
-  text-decoration: none;
-  color: $trust;
-  background-image: none;
-}
-.ac:hover {
-  text-decoration: none;
-  color: $care;
-  background-image: none;
-}
-.ai:hover {
-  text-decoration: none;
-  color: $transparency;
-  background-image: none;
-}
-.af:hover {
-  text-decoration: none;
-  color: $freedom;
-  background-image: none;
-}
-.au:hover {
-  text-decoration: none;
-  color: $understanding;
-  background-image: none;
-}
-.ad:hover {
-  text-decoration: none;
-  color: $diversity;
-  background-image: none;
-}
-
-/* text colors */
-
-.bblack {
-  background-color: #000000;
-}
-.gray {
-  color: #555555;
-}
-.graylight {
-  color: #cccccc;
-}
-.white,
-.white:hover {
-  color: #ffffff;
-}
-.bgray {
-  background-color: #eeeeee;
-}
-.bwhite {
-  background-color: #ffffff;
-}
-/* Navbar colors */
-#project .menu-item:hover,
-.fa-discord:hover {
-  color: $equivalence;
-}
-.project-active:after {
-  background-color: $equivalence;
-}
-#corporate .menu-item:hover,
-.fa-facebook:hover {
-  color: $freedom;
-}
-.corporate-active:after {
-  background-color: $freedom;
-}
-#science .menu-item:hover,
-.fa-linkedin:hover {
-  color: $understanding;
-}
-.science-active:after {
-  background-color: $understanding;
 }

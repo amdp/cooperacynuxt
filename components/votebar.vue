@@ -2,12 +2,11 @@
   <b-container fluid class="p-0 m-0" v-if="this.proptype == 'user'">
     <b-row class="p-0 w-100 m-0">
       <b-col cols="12" class="p-0 m-0 d-flex">
-        <div
+        <b-container
           v-for="vote in this.vote"
           :key="vote.userkey"
           :class="vote.class"
-          :style="vote.style"
-        ></div>
+        ></b-container>
       </b-col>
     </b-row>
   </b-container>
@@ -15,33 +14,31 @@
     class="w-100 mt-2 mb-2 ml-0 mr-0 p-0 up position-relative"
     v-else-if="this.proptype == 'project'"
   >
-    <div
+    <b-container
       v-for="vote in this.vote"
       :key="vote.projectcc"
       :class="vote.class"
-      :style="vote.style"
       @click="checkvote(vote.projectcc)"
     >
-      <div class="showme showmeon t12 mt-1 mb-0 ml-0 mr-0 p-0">
+      <b-container class="showme showmeon t12 mt-1 mb-0 ml-0 mr-0 p-0">
         {{ vote.vlong }}: {{ vote.v }} {{ votevotes(vote.v) }}
-      </div>
-    </div>
+      </b-container>
+    </b-container>
   </b-row>
   <b-row
     class="w-100 mt-2 mb-2 ml-0 mr-0 p-0 up"
     v-else-if="this.proptype == 'comment'"
   >
-    <div
+    <b-container
       v-for="vote in this.vote"
       :key="vote.commentcc"
       :class="vote.class"
-      :style="vote.style"
       @click="voteswitch(vote.commentcc)"
     >
-      <div class="showme showmeon t12 mt-3 mb-0 ml-0 mr-0 p-0">
+      <b-container class="showme showmeon t12 mt-3 mb-0 ml-0 mr-0 p-0">
         {{ vote.vlong }}: {{ vote.v }} {{ votevotes(vote.v) }}
-      </div>
-    </div>
+      </b-container>
+    </b-container>
   </b-row>
 </template>
 
@@ -54,7 +51,7 @@ export default {
   },
   computed: {
     vote() {
-      //need to avoid this to cycle through user votebar, which have always the same color
+      //need to avoid this to cycle through user bars in the userbar, which have always the same color
       let voteif = []
       for (let i = 0; i < 7; i++) {
         // choosing the style to apply if the user voted this project/comment specific vote color:
@@ -70,12 +67,12 @@ export default {
           uservoted = 0
         }
         if (uservoted != -1) {
-          votestyle = 'var(--on' + this.$store.state.condition[i] + ')'
+          votestyle = 'on' + this.$store.state.condition[i]
         } else {
           if (this.voteprop[this.$store.state.cc[i]] != 0) {
-            votestyle = 'var(--they' + this.$store.state.condition[i] + ')'
+            votestyle = 'they' + this.$store.state.condition[i]
           } else {
-            votestyle = 'var(--off' + this.$store.state.condition[i] + ')'
+            votestyle = 'off' + this.$store.state.condition[i]
           }
         }
         // applying the right style to vote:
@@ -83,7 +80,7 @@ export default {
           // for all vote:
           v: this.voteprop[this.$store.state.cc[i]],
           vlong: this.$store.state.condition[i],
-          style: 'background-color: ' + votestyle
+          style: votestyle
         })
       } // now we already have a 7 elements array so we just add json keys as needed:
       if (this.proptype == 'user') {
@@ -103,8 +100,8 @@ export default {
       if (this.proptype == 'project') {
         for (let i = 0; i < 7; i++) {
           ; (voteif[i].class =
-            'p-0 vote col b' +
-            this.$store.state.condition[i] +
+            'p-0 vote col ' +
+            voteif[i].style +
             ' ' +
             this.$store.state.condition[i]),
             (voteif[i].projectcc = this.$store.state.cc[i])
@@ -113,8 +110,8 @@ export default {
       if (this.proptype == 'comment') {
         for (let i = 0; i < 7; i++) {
           ; (voteif[i].class =
-            'p-0 vote col b' +
-            this.$store.state.condition[i] +
+            'p-0 vote col ' +
+            voteif[i].style +
             ' ' +
             this.$store.state.condition[i]),
             (voteif[i].commentcc = this.$store.state.cc[i])
