@@ -116,16 +116,23 @@
               {{ this.$auth.user.name + ' ' + this.$auth.user.surname }}
             </nuxt-link>
             <div class="social-icons">
-              <a href="https://www.facebook.com/cooperacy.org/">
+              <a href="https://www.facebook.com/cooperacy.org/" target="_blank">
                 <img src="../assets/icons/facebook.svg" id="facebook" />
               </a>
-              <a href="https://www.linkedin.com/company/cooperacy/">
+              <a
+                href="https://www.linkedin.com/company/cooperacy/"
+                target="_blank"
+              >
                 <img src="../assets/icons/linkedin.svg" id="linkedin" />
               </a>
               <a
                 href="https://www.youtube.com/channel/UCbeRtTRYXwsbSPc9JvSMvtQ"
+                target="_blank"
               >
                 <img src="../assets/icons/youtube.svg" id="youtube" />
+              </a>
+              <a @click="colormode()">
+                <img src="../assets/icons/moonbyadriencoquet.svg" id="moon" />
               </a>
             </div>
           </div>
@@ -275,6 +282,13 @@ export default {
     toggleNav: function () {
       this.isDropdownVisible = !this.isDropdownVisible
       this.resetNavState()
+    },
+    colormode: function () {
+      if (this.$colorMode.preference == 'light') {
+        this.$colorMode.preference = 'dark'
+      } else {
+        this.$colorMode.preference = 'light'
+      }
     }
   }
 }

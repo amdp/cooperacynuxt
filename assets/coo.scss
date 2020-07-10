@@ -34,11 +34,6 @@ $graylight: #ccc;
 $front: #000;
 $back: #fff;
 
-.dark-mode{
-  $front: #eee;
-  $back: #000;
-}
-
 * {
   font-family: 'Prompt', sans-serif;
   font-weight: 300;
@@ -51,6 +46,11 @@ body {
   overflow-x: hidden;
   margin: 0px;
   padding: 0px;
+}
+
+.dark-mode * {
+  color: #eee;
+  background-color: #000;
 }
 
 a {
