@@ -6,7 +6,9 @@
           v-for="vote in this.vote"
           :key="vote.userkey"
           :class="vote.class"
-        ></b-container>
+          :style="vote.style"
+          ><!-- :style needed for rainbow color condition width --></b-container
+        >
       </b-col>
     </b-row>
   </b-container>
@@ -51,33 +53,38 @@ export default {
   },
   computed: {
     vote() {
-      //need to avoid this to cycle through user bars in the userbar, which have always the same color
       let voteif = []
       for (let i = 0; i < 7; i++) {
         // choosing the style to apply if the user voted this project/comment specific vote color:
         var votestyle
         var uservoted
+        // this if checks if there are votes in projects or comments, avoids rainbowbar
         if (this.$store.state[this.proptype + 'uservote']) {
           uservoted = this.$store.state[this.proptype + 'uservote'].findIndex(
             v =>
               v[this.proptype] == this.voteprop.id &&
               v.condition == this.$store.state.cc[i]
           )
+          //here, if there is no vote in that condition, the result is -1
         } else {
+          // this happens if there is no projectuservote nor commentuservote, remember no votes => -1
           uservoted = 0
         }
+        // now, if the uservote is different than -1, it means the user voted for it, so it should be turned ON
         if (uservoted != -1) {
           votestyle = 'on' + this.$store.state.condition[i]
         } else {
+          // in case it is -1, we should check if there are ANY OTHER VOTES in that condition, which means others voted for it
           if (this.voteprop[this.$store.state.cc[i]] != 0) {
             votestyle = 'they' + this.$store.state.condition[i]
           } else {
+            // in case it is -1 and NO OTHER VOTES have been cast, it should be turned OFF
             votestyle = 'off' + this.$store.state.condition[i]
           }
         }
         // applying the right style to vote:
         voteif.push({
-          // for all vote:
+          // for all votes:
           v: this.voteprop[this.$store.state.cc[i]],
           vlong: this.$store.state.condition[i],
           style: votestyle
