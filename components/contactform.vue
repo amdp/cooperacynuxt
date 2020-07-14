@@ -119,7 +119,6 @@
 </template>
 
 <script>
-import VueRecaptcha from 'vue-recaptcha'
 export default {
   name: 'contactForm',
   data() {
@@ -132,9 +131,6 @@ export default {
       recaptchaToken: null,
       envrecaptcha: process.env.RECAPTCHA
     }
-  },
-  components: {
-    VueRecaptcha
   },
   methods: {
     submit() {

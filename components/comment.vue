@@ -151,11 +151,8 @@
 </template>
 
 <script>
-import votebar from '@/components/votebar'
-import comment from '@/components/comment'
 
 export default {
-  components: { votebar: votebar, comment: comment },
   data() {
     return {
       formswitch: false,

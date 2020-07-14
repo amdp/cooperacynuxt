@@ -7,12 +7,7 @@
 </template>
 
 <script>
-import home from '@/components/home'
-import projectlist from '@/components/projectlist'
-import entermodal from '@/components/entermodal'
-
 export default {
-  components: { home: home, projectlist: projectlist, entermodal: entermodal },
   async fetch({ store, params }) {
     await store.dispatch('getProjectAction', '')
     await store.dispatch('getPlaceAction')

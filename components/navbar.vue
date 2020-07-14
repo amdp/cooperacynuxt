@@ -253,9 +253,7 @@
 </template>
 
 <script>
-import votebar from './votebar'
 export default {
-  components: { votebar },
   data() {
     return {
       navState: null,

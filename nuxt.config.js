@@ -10,6 +10,7 @@ module.exports = {
   build: {},
   serverMiddleware: ['./api'],
   css: ['@assets/coo.scss'],
+  components: true,
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/toast',

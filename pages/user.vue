@@ -77,7 +77,6 @@
 </template>
 
 <script>
-import projectlist from '@/components/projectlist'
 export default {
   middleware: ['auth'],
   head() {
@@ -85,7 +84,6 @@ export default {
       title: 'Cooperacy ' + this.$auth.user.name + ' ' + this.$auth.user.surname
     }
   },
-  components: { projectlist: projectlist },
   async fetch({ store, params }) {
     await store.dispatch('getCountryAction')
     await store.dispatch('getPlaceAction')

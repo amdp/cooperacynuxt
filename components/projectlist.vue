@@ -231,21 +231,7 @@
 </template>
 
 <script>
-import votebar from './votebar'
-import votemodal from './votemodal'
-import votebarmodal from '@/components/votebarmodal'
-import tagmodal from './tagmodal'
-import professionalmodal from './professionalmodal'
-import budgetstepmodal from './budgetstepmodal'
 export default {
-  components: {
-    votebar: votebar,
-    votemodal: votemodal,
-    votebarmodal: votebarmodal,
-    tagmodal: tagmodal,
-    professionalmodal: professionalmodal,
-    budgetstepmodal: budgetstepmodal
-  },
   data() {
     return {
       isHover: null,

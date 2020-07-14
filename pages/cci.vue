@@ -164,8 +164,6 @@
 </template>
 
 <script>
-import ccimap from '@/components/ccimap'
-
 export default {
   head() {
     return {
@@ -177,7 +175,6 @@ export default {
       ]
     }
   },
-  components: { ccimap: ccimap },
   async fetch({ store, params }) {
     await store.dispatch('getCCIAction', { cciyear: '2017' })
     await store.dispatch('getCCIAction', { cciyear: '2016' })

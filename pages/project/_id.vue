@@ -12,15 +12,8 @@
 </template>
 
 <script>
-import projectlist from '@/components/projectlist'
-import comment from '@/components/comment'
-
 export default {
   middleware: ['auth'],
-  components: {
-    comment: comment,
-    projectlist: projectlist
-  },
   validate({ params }) {
     // Must be a number
     return /^\d+$/.test(params.id)

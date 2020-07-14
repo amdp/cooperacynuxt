@@ -15,9 +15,6 @@
 </template>
 
 <script>
-import navbar from '@/components/navbar'
-import foot from '@/components/foot'
-
 export default {
   head() {
     return {
@@ -31,6 +28,5 @@ export default {
   created() {
     this.$colorMode.preference = 'light'
   },
-  components: { navbar, foot }
 }
 </script>
