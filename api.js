@@ -195,9 +195,9 @@ app.get('/cooperationtool', async function (req, res, next) {
   }
 })
 
-app.get('/cooperation', async function (req, res, next) {
+app.get('/survey', async function (req, res, next) {
   try {
-    let query = 'SELECT `id`, `group`, `country`, `place`, `participant`,`name`, `desc` FROM `cooperationtool`'
+    let query = 'SELECT `id`, `project`, `group`, `country`, `place`, `participant`,`name`, `desc` FROM `cooperationtool` ORDER BY `id`'
     const [survey] = await mypool.execute(query)
     res.status(200).send(survey)
   } catch (err) {

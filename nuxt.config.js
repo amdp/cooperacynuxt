@@ -22,7 +22,7 @@ module.exports = {
     //'@nuxtjs/pwa',    
   ],
   buildModules: [
-    '@nuxtjs/color-mode',
+    ['@nuxtjs/color-mode', { preference: 'light' }]
   ],
   loading: {
     color: '#FF8800',
