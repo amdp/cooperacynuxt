@@ -121,7 +121,7 @@
 <script>
 import VueRecaptcha from 'vue-recaptcha'
 export default {
-  name: 'contactForm',
+  name: 'contactform',
   data() {
     return {
       formName: null,

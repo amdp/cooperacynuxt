@@ -69,7 +69,7 @@
                   ' ' +
                   survey.name +
                   ' ' +
-                  survey.participant +
+                  survey.project +
                   ' ' +
                   survey.group +
                   ' ' +
@@ -77,7 +77,8 @@
                   ' ' +
                   survey.place +
                   ' ' +
-                  survey.desc
+                  survey.participant +
+                  ' '
               "
             ></option>
           </b-form-select>
@@ -192,55 +193,51 @@
             v-html="$t('cootool.D')"
           ></p>
           <p class="m-0" v-html="$t('cootool.MBD')"></p>
-          <p class="text-center p-0 m-0 mt-2">
-            &nbsp; {{ Math.round(formMBDiversity * 100) }}%
-          </p>
-          <input
+          <p class="text-center p-0 m-0 mt-2">{{ formMBDiversity }}%</p>
+          <vue-slider
+            :tooltip="'none'"
+            :height="7"
+            :dotSize="21"
             v-model="formMBDiversity"
-            type="range"
-            class="mb-4 sliderD"
-            min="0.01"
-            max="0.99"
-            step="0.01"
+            class="mb-4"
+            :min="1"
+            :process-style="{ backgroundColor: 'var(--diversity)' }"
           />
           <p class="m-0" v-html="$t('cootool.BD')"></p>
-          <p class="text-center p-0 m-0 mt-2">
-            &nbsp; {{ Math.round(formBDiversity * 100) }}%
-          </p>
-          <input
+          <p class="text-center p-0 m-0 mt-2">{{ formBDiversity }}%</p>
+          <vue-slider
+            :tooltip="'none'"
+            :height="7"
+            :dotSize="21"
             v-model="formBDiversity"
-            type="range"
             class="mb-4"
-            min="0.01"
-            max="0.99"
-            step="0.01"
+            :min="1"
+            :process-style="{ backgroundColor: 'var(--diversity)' }"
           />
 
           <!-- /////////////// R DIVERSITY /////////////// -->
 
           <p class="m-0" v-html="$t('cootool.MRD')"></p>
-          <p class="text-center p-0 m-0 mt-2">
-            &nbsp; {{ Math.round(formMRDiversity * 100) }}%
-          </p>
-          <input
+          <p class="text-center p-0 m-0 mt-2">{{ formMRDiversity }}%</p>
+          <vue-slider
+            :tooltip="'none'"
+            :height="7"
+            :dotSize="21"
             v-model="formMRDiversity"
-            type="range"
             class="mb-4"
-            min="0.01"
-            max="0.99"
-            step="0.01"
+            :min="1"
+            :process-style="{ backgroundColor: 'var(--diversity)' }"
           />
           <p class="m-0" v-html="$t('cootool.RD')"></p>
-          <p class="text-center p-0 m-0 mt-2">
-            &nbsp; {{ Math.round(formRDiversity * 100) }}%
-          </p>
-          <input
+          <p class="text-center p-0 m-0 mt-2">{{ formRDiversity }}%</p>
+          <vue-slider
+            :tooltip="'none'"
+            :height="7"
+            :dotSize="21"
             v-model="formRDiversity"
-            type="range"
             class="mb-4"
-            min="0.01"
-            max="0.99"
-            step="0.01"
+            :min="1"
+            :process-style="{ backgroundColor: 'var(--diversity)' }"
           />
 
           <!-- /////////////// B UNDERSTANDING /////////////// -->
@@ -250,55 +247,51 @@
           ></p>
 
           <p class="m-0" v-html="$t('cootool.MBU')"></p>
-          <p class="text-center p-0 m-0 mt-2">
-            &nbsp; {{ Math.round(formMBUnderstanding * 100) }}%
-          </p>
-          <input
+          <p class="text-center p-0 m-0 mt-2">{{ formMBUnderstanding }}%</p>
+          <vue-slider
+            :tooltip="'none'"
+            :height="7"
+            :dotSize="21"
             v-model="formMBUnderstanding"
-            type="range"
             class="mb-4"
-            min="0.01"
-            max="0.99"
-            step="0.01"
+            :min="1"
+            :process-style="{ backgroundColor: 'var(--understanding)' }"
           />
           <p class="m-0" v-html="$t('cootool.BU')"></p>
-          <p class="text-center p-0 m-0 mt-2">
-            &nbsp; {{ Math.round(formBUnderstanding * 100) }}%
-          </p>
-          <input
+          <p class="text-center p-0 m-0 mt-2">{{ formBUnderstanding }}%</p>
+          <vue-slider
+            :tooltip="'none'"
+            :height="7"
+            :dotSize="21"
             v-model="formBUnderstanding"
-            type="range"
             class="mb-4"
-            min="0.01"
-            max="0.99"
-            step="0.01"
+            :min="1"
+            :process-style="{ backgroundColor: 'var(--understanding)' }"
           />
 
           <!-- /////////////// R UNDERSTANDING /////////////// -->
 
           <p class="m-0" v-html="$t('cootool.MRU')"></p>
-          <p class="text-center p-0 m-0 mt-2">
-            &nbsp; {{ Math.round(formMRUnderstanding * 100) }}%
-          </p>
-          <input
+          <p class="text-center p-0 m-0 mt-2">{{ formMRUnderstanding }}%</p>
+          <vue-slider
+            :tooltip="'none'"
+            :height="7"
+            :dotSize="21"
             v-model="formMRUnderstanding"
-            type="range"
             class="mb-4"
-            min="0.01"
-            max="0.99"
-            step="0.01"
+            :min="1"
+            :process-style="{ backgroundColor: 'var(--understanding)' }"
           />
           <p class="m-0" v-html="$t('cootool.RU')"></p>
-          <p class="text-center p-0 m-0 mt-2">
-            &nbsp; {{ Math.round(formRUnderstanding * 100) }}%
-          </p>
-          <input
+          <p class="text-center p-0 m-0 mt-2">{{ formRUnderstanding }}%</p>
+          <vue-slider
+            :tooltip="'none'"
+            :height="7"
+            :dotSize="21"
             v-model="formRUnderstanding"
-            type="range"
             class="mb-4"
-            min="0.01"
-            max="0.99"
-            step="0.01"
+            :min="1"
+            :process-style="{ backgroundColor: 'var(--understanding)' }"
           />
 
           <!-- /////////////// B FREEDOM /////////////// -->
@@ -308,55 +301,51 @@
           ></p>
 
           <p class="m-0" v-html="$t('cootool.MBF')"></p>
-          <p class="text-center p-0 m-0 mt-2">
-            &nbsp; {{ Math.round(formMBFreedom * 100) }}%
-          </p>
-          <input
+          <p class="text-center p-0 m-0 mt-2">{{ formMBFreedom }}%</p>
+          <vue-slider
+            :tooltip="'none'"
+            :height="7"
+            :dotSize="21"
             v-model="formMBFreedom"
-            type="range"
             class="mb-4"
-            min="0.01"
-            max="0.99"
-            step="0.01"
+            :min="1"
+            :process-style="{ backgroundColor: 'var(--freedom)' }"
           />
           <p class="m-0" v-html="$t('cootool.BF')"></p>
-          <p class="text-center p-0 m-0 mt-2">
-            &nbsp; {{ Math.round(formBFreedom * 100) }}%
-          </p>
-          <input
+          <p class="text-center p-0 m-0 mt-2">{{ formBFreedom }}%</p>
+          <vue-slider
+            :tooltip="'none'"
+            :height="7"
+            :dotSize="21"
             v-model="formBFreedom"
-            type="range"
             class="mb-4"
-            min="0.01"
-            max="0.99"
-            step="0.01"
+            :min="1"
+            :process-style="{ backgroundColor: 'var(--freedom)' }"
           />
 
           <!-- /////////////// R FREEDOM /////////////// -->
 
           <p class="m-0" v-html="$t('cootool.MRF')"></p>
-          <p class="text-center p-0 m-0 mt-2">
-            &nbsp; {{ Math.round(formMRFreedom * 100) }}%
-          </p>
-          <input
+          <p class="text-center p-0 m-0 mt-2">{{ formMRFreedom }}%</p>
+          <vue-slider
+            :tooltip="'none'"
+            :height="7"
+            :dotSize="21"
             v-model="formMRFreedom"
-            type="range"
             class="mb-4"
-            min="0.01"
-            max="0.99"
-            step="0.01"
+            :min="1"
+            :process-style="{ backgroundColor: 'var(--freedom)' }"
           />
           <p class="m-0" v-html="$t('cootool.RF')"></p>
-          <p class="text-center p-0 m-0 mt-2">
-            &nbsp; {{ Math.round(formRFreedom * 100) }}%
-          </p>
-          <input
+          <p class="text-center p-0 m-0 mt-2">{{ formRFreedom }}%</p>
+          <vue-slider
+            :tooltip="'none'"
+            :height="7"
+            :dotSize="21"
             v-model="formRFreedom"
-            type="range"
             class="mb-4"
-            min="0.01"
-            max="0.99"
-            step="0.01"
+            :min="1"
+            :process-style="{ backgroundColor: 'var(--freedom)' }"
           />
 
           <!-- /////////////// B TRANSPARENCY /////////////// -->
@@ -366,273 +355,253 @@
           ></p>
 
           <p class="m-0" v-html="$t('cootool.MBI')"></p>
-          <p class="text-center p-0 m-0 mt-2">
-            &nbsp; {{ Math.round(formMBTransparency * 100) }}%
-          </p>
-          <input
+          <p class="text-center p-0 m-0 mt-2">{{ formMBTransparency }}%</p>
+          <vue-slider
+            :tooltip="'none'"
+            :height="7"
+            :dotSize="21"
             v-model="formMBTransparency"
-            type="range"
             class="mb-4"
-            min="0.01"
-            max="0.99"
-            step="0.01"
+            :min="1"
+            :process-style="{ backgroundColor: 'var(--transparency)' }"
           />
           <p class="m-0" v-html="$t('cootool.BI')"></p>
-          <p class="text-center p-0 m-0 mt-2">
-            &nbsp; {{ Math.round(formBTransparency * 100) }}%
-          </p>
-          <input
+          <p class="text-center p-0 m-0 mt-2">{{ formBTransparency }}%</p>
+          <vue-slider
+            :tooltip="'none'"
+            :height="7"
+            :dotSize="21"
             v-model="formBTransparency"
-            type="range"
             class="mb-4"
-            min="0.01"
-            max="0.99"
-            step="0.01"
+            :min="1"
+            :process-style="{ backgroundColor: 'var(--transparency)' }"
           />
 
           <!-- /////////////// R TRANSPARENCY /////////////// -->
 
           <p class="m-0" v-html="$t('cootool.MRI')"></p>
-          <p class="text-center p-0 m-0 mt-2">
-            &nbsp; {{ Math.round(formMRTransparency * 100) }}%
-          </p>
-          <input
+          <p class="text-center p-0 m-0 mt-2">{{ formMRTransparency }}%</p>
+          <vue-slider
+            :tooltip="'none'"
+            :height="7"
+            :dotSize="21"
             v-model="formMRTransparency"
-            type="range"
             class="mb-4"
-            min="0.01"
-            max="0.99"
-            step="0.01"
+            :min="1"
+            :process-style="{ backgroundColor: 'var(--transparency)' }"
           />
           <p class="m-0" v-html="$t('cootool.RI')"></p>
-          <p class="text-center p-0 m-0 mt-2">
-            &nbsp; {{ Math.round(formRTransparency * 100) }}%
-          </p>
-          <input
+          <p class="text-center p-0 m-0 mt-2">{{ formRTransparency }}%</p>
+          <vue-slider
+            :tooltip="'none'"
+            :height="7"
+            :dotSize="21"
             v-model="formRTransparency"
-            type="range"
             class="mb-4"
-            min="0.01"
-            max="0.99"
-            step="0.01"
+            :min="1"
+            :process-style="{ backgroundColor: 'var(--transparency)' }"
           />
 
           <!-- /////////////// B CARE - HABITAT /////////////// -->
           <p class="hb text-center mt-3 t20 care" v-html="$t('cootool.C')"></p>
 
           <p class="m-0" v-html="$t('cootool.MBH')"></p>
-          <p class="text-center p-0 m-0 mt-2">
-            &nbsp; {{ Math.round(formMBHabitat * 100) }}%
-          </p>
-          <input
+          <p class="text-center p-0 m-0 mt-2">{{ formMBHabitat }}%</p>
+          <vue-slider
+            :tooltip="'none'"
+            :height="7"
+            :dotSize="21"
             v-model="formMBHabitat"
-            type="range"
             class="mb-4"
-            min="0.01"
-            max="0.99"
-            step="0.01"
+            :min="1"
+            :process-style="{ backgroundColor: 'var(--care)' }"
           />
           <p class="m-0" v-html="$t('cootool.BH')"></p>
-          <p class="text-center p-0 m-0 mt-2">
-            &nbsp; {{ Math.round(formBHabitat * 100) }}%
-          </p>
-          <input
+          <p class="text-center p-0 m-0 mt-2">{{ formBHabitat }}%</p>
+          <vue-slider
+            :tooltip="'none'"
+            :height="7"
+            :dotSize="21"
             v-model="formBHabitat"
-            type="range"
             class="mb-4"
-            min="0.01"
-            max="0.99"
-            step="0.01"
+            :min="1"
+            :process-style="{ backgroundColor: 'var(--care)' }"
           />
 
           <!-- /////////////// R CARE - HABITAT /////////////// -->
 
           <p class="m-0" v-html="$t('cootool.MRH')"></p>
-          <p class="text-center p-0 m-0 mt-2">
-            &nbsp; {{ Math.round(formMRHabitat * 100) }}%
-          </p>
-          <input
+          <p class="text-center p-0 m-0 mt-2">{{ formMRHabitat }}%</p>
+          <vue-slider
+            :tooltip="'none'"
+            :height="7"
+            :dotSize="21"
             v-model="formMRHabitat"
-            type="range"
             class="mb-4"
-            min="0.01"
-            max="0.99"
-            step="0.01"
+            :min="1"
+            :process-style="{ backgroundColor: 'var(--care)' }"
           />
           <p class="m-0" v-html="$t('cootool.RH')"></p>
-          <p class="text-center p-0 m-0 mt-2">
-            &nbsp; {{ Math.round(formRHabitat * 100) }}%
-          </p>
-          <input
+          <p class="text-center p-0 m-0 mt-2">{{ formRHabitat }}%</p>
+          <vue-slider
+            :tooltip="'none'"
+            :height="7"
+            :dotSize="21"
             v-model="formRHabitat"
-            type="range"
             class="mb-4"
-            min="0.01"
-            max="0.99"
-            step="0.01"
+            :min="1"
+            :process-style="{ backgroundColor: 'var(--care)' }"
           />
 
           <!-- /////////////// B CARE /////////////// -->
 
           <p class="m-0" v-html="$t('cootool.MBC')"></p>
-          <p class="text-center p-0 m-0 mt-2">
-            &nbsp; {{ Math.round(formMBCare * 100) }}%
-          </p>
-          <input
+          <p class="text-center p-0 m-0 mt-2">{{ formMBCare }}%</p>
+          <vue-slider
+            :tooltip="'none'"
+            :height="7"
+            :dotSize="21"
             v-model="formMBCare"
-            type="range"
             class="mb-4"
-            min="0.01"
-            max="0.99"
-            step="0.01"
+            :min="1"
+            :process-style="{ backgroundColor: 'var(--care)' }"
           />
           <p class="m-0" v-html="$t('cootool.BC')"></p>
-          <p class="text-center p-0 m-0 mt-2">
-            &nbsp; {{ Math.round(formBCare * 100) }}%
-          </p>
-          <input
+          <p class="text-center p-0 m-0 mt-2">{{ formBCare }}%</p>
+          <vue-slider
+            :tooltip="'none'"
+            :height="7"
+            :dotSize="21"
             v-model="formBCare"
-            type="range"
             class="mb-4"
-            min="0.01"
-            max="0.99"
-            step="0.01"
+            :min="1"
+            :process-style="{ backgroundColor: 'var(--care)' }"
           />
 
           <!-- /////////////// R CARE /////////////// -->
 
           <p class="m-0" v-html="$t('cootool.MRC')"></p>
-          <p class="text-center p-0 m-0 mt-2">
-            &nbsp; {{ Math.round(formMRCare * 100) }}%
-          </p>
-          <input
+          <p class="text-center p-0 m-0 mt-2">{{ formMRCare }}%</p>
+          <vue-slider
+            :tooltip="'none'"
+            :height="7"
+            :dotSize="21"
             v-model="formMRCare"
-            type="range"
             class="mb-4"
-            min="0.01"
-            max="0.99"
-            step="0.01"
+            :min="1"
+            :process-style="{ backgroundColor: 'var(--care)' }"
           />
           <p class="m-0" v-html="$t('cootool.RC')"></p>
-          <p class="text-center p-0 m-0 mt-2">
-            &nbsp; {{ Math.round(formRCare * 100) }}%
-          </p>
-          <input
+          <p class="text-center p-0 m-0 mt-2">{{ formRCare }}%</p>
+          <vue-slider
+            :tooltip="'none'"
+            :height="7"
+            :dotSize="21"
             v-model="formRCare"
-            type="range"
             class="mb-4"
-            min="0.01"
-            max="0.99"
-            step="0.01"
+            :min="1"
+            :process-style="{ backgroundColor: 'var(--care)' }"
           />
 
           <!-- /////////////// B TRUST - XPECTED /////////////// -->
           <p class="hb text-center mt-3 t20 trust" v-html="$t('cootool.T')"></p>
 
           <p class="m-0" v-html="$t('cootool.MBX')"></p>
-          <p class="text-center p-0 m-0 mt-2">
-            &nbsp; {{ Math.round(formMBXpected * 100) }}%
-          </p>
-          <input
+          <p class="text-center p-0 m-0 mt-2">{{ formMBXpected }}%</p>
+          <vue-slider
+            :tooltip="'none'"
+            :height="7"
+            :dotSize="21"
             v-model="formMBXpected"
-            type="range"
             class="mb-4"
-            min="0.01"
-            max="0.99"
-            step="0.01"
+            :min="1"
+            :process-style="{ backgroundColor: 'var(--trust)' }"
           />
           <p class="m-0" v-html="$t('cootool.BX')"></p>
-          <p class="text-center p-0 m-0 mt-2">
-            &nbsp; {{ Math.round(formBXpected * 100) }}%
-          </p>
-          <input
+          <p class="text-center p-0 m-0 mt-2">{{ formBXpected }}%</p>
+          <vue-slider
+            :tooltip="'none'"
+            :height="7"
+            :dotSize="21"
             v-model="formBXpected"
-            type="range"
             class="mb-4"
-            min="0.01"
-            max="0.99"
-            step="0.01"
+            :min="1"
+            :process-style="{ backgroundColor: 'var(--trust)' }"
           />
 
           <!-- /////////////// R TRUST - XPECTED /////////////// -->
 
           <p class="m-0" v-html="$t('cootool.MRX')"></p>
-          <p class="text-center p-0 m-0 mt-2">
-            &nbsp; {{ Math.round(formMRXpected * 100) }}%
-          </p>
-          <input
+          <p class="text-center p-0 m-0 mt-2">{{ formMRXpected }}%</p>
+          <vue-slider
+            :tooltip="'none'"
+            :height="7"
+            :dotSize="21"
             v-model="formMRXpected"
-            type="range"
             class="mb-4"
-            min="0.01"
-            max="0.99"
-            step="0.01"
+            :min="1"
+            :process-style="{ backgroundColor: 'var(--trust)' }"
           />
           <p class="m-0" v-html="$t('cootool.RX')"></p>
-          <p class="text-center p-0 m-0 mt-2">
-            &nbsp; {{ Math.round(formRXpected * 100) }}%
-          </p>
-          <input
+          <p class="text-center p-0 m-0 mt-2">{{ formRXpected }}%</p>
+          <vue-slider
+            :tooltip="'none'"
+            :height="7"
+            :dotSize="21"
             v-model="formRXpected"
-            type="range"
             class="mb-4"
-            min="0.01"
-            max="0.99"
-            step="0.01"
+            :min="1"
+            :process-style="{ backgroundColor: 'var(--trust)' }"
           />
 
           <!-- /////////////// B TRUST /////////////// -->
 
           <p class="m-0" v-html="$t('cootool.MBT')"></p>
-          <p class="text-center p-0 m-0 mt-2">
-            &nbsp; {{ Math.round(formMBTrust * 100) }}%
-          </p>
-          <input
+          <p class="text-center p-0 m-0 mt-2">{{ formMBTrust }}%</p>
+          <vue-slider
+            :tooltip="'none'"
+            :height="7"
+            :dotSize="21"
             v-model="formMBTrust"
-            type="range"
             class="mb-4"
-            min="0.01"
-            max="0.99"
-            step="0.01"
+            :min="1"
+            :process-style="{ backgroundColor: 'var(--trust)' }"
           />
           <p class="m-0" v-html="$t('cootool.BT')"></p>
-          <p class="text-center p-0 m-0 mt-2">
-            &nbsp; {{ Math.round(formBTrust * 100) }}%
-          </p>
-          <input
+          <p class="text-center p-0 m-0 mt-2">{{ formBTrust }}%</p>
+          <vue-slider
+            :tooltip="'none'"
+            :height="7"
+            :dotSize="21"
             v-model="formBTrust"
-            type="range"
             class="mb-4"
-            min="0.01"
-            max="0.99"
-            step="0.01"
+            :min="1"
+            :process-style="{ backgroundColor: 'var(--trust)' }"
           />
 
           <!-- /////////////// R TRUST /////////////// -->
 
           <p class="m-0" v-html="$t('cootool.MRT')"></p>
-          <p class="text-center p-0 m-0 mt-2">
-            &nbsp; {{ Math.round(formMRTrust * 100) }}%
-          </p>
-          <input
+          <p class="text-center p-0 m-0 mt-2">{{ formMRTrust }}%</p>
+          <vue-slider
+            :tooltip="'none'"
+            :height="7"
+            :dotSize="21"
             v-model="formMRTrust"
-            type="range"
             class="mb-4"
-            min="0.01"
-            max="0.99"
-            step="0.01"
+            :min="1"
+            :process-style="{ backgroundColor: 'var(--trust)' }"
           />
           <p class="m-0" v-html="$t('cootool.RT')"></p>
-          <p class="text-center p-0 m-0 mt-2">
-            &nbsp; {{ Math.round(formRTrust * 100) }}%
-          </p>
-          <input
+          <p class="text-center p-0 m-0 mt-2">{{ formRTrust }}%</p>
+          <vue-slider
+            :tooltip="'none'"
+            :height="7"
+            :dotSize="21"
             v-model="formRTrust"
-            type="range"
             class="mb-4"
-            min="0.01"
-            max="0.99"
-            step="0.01"
+            :min="1"
+            :process-style="{ backgroundColor: 'var(--trust)' }"
           />
 
           <!-- /////////////// B EQUIVALENCE /////////////// -->
@@ -642,55 +611,51 @@
           ></p>
 
           <p class="m-0" v-html="$t('cootool.MBE')"></p>
-          <p class="text-center p-0 m-0 mt-2">
-            &nbsp; {{ Math.round(formMBEquivalence * 100) }}%
-          </p>
-          <input
+          <p class="text-center p-0 m-0 mt-2">{{ formMBEquivalence }}%</p>
+          <vue-slider
+            :tooltip="'none'"
+            :height="7"
+            :dotSize="21"
             v-model="formMBEquivalence"
-            type="range"
             class="mb-4"
-            min="0.01"
-            max="0.99"
-            step="0.01"
+            :min="1"
+            :process-style="{ backgroundColor: 'var(--equivalence)' }"
           />
           <p class="m-0" v-html="$t('cootool.BE')"></p>
-          <p class="text-center p-0 m-0 mt-2">
-            &nbsp; {{ Math.round(formBEquivalence * 100) }}%
-          </p>
-          <input
+          <p class="text-center p-0 m-0 mt-2">{{ formBEquivalence }}%</p>
+          <vue-slider
+            :tooltip="'none'"
+            :height="7"
+            :dotSize="21"
             v-model="formBEquivalence"
-            type="range"
             class="mb-4"
-            min="0.01"
-            max="0.99"
-            step="0.01"
+            :min="1"
+            :process-style="{ backgroundColor: 'var(--equivalence)' }"
           />
 
           <!-- /////////////// R EQUIVALENCE /////////////// -->
 
           <p class="m-0" v-html="$t('cootool.MRE')"></p>
-          <p class="text-center p-0 m-0 mt-2">
-            &nbsp; {{ Math.round(formMREquivalence * 100) }}%
-          </p>
-          <input
+          <p class="text-center p-0 m-0 mt-2">{{ formMREquivalence }}%</p>
+          <vue-slider
+            :tooltip="'none'"
+            :height="7"
+            :dotSize="21"
             v-model="formMREquivalence"
-            type="range"
             class="mb-4"
-            min="0.01"
-            max="0.99"
-            step="0.01"
+            :min="1"
+            :process-style="{ backgroundColor: 'var(--equivalence)' }"
           />
           <p class="m-0" v-html="$t('cootool.RE')"></p>
-          <p class="text-center p-0 m-0 mt-2">
-            &nbsp; {{ Math.round(formREquivalence * 100) }}%
-          </p>
-          <input
+          <p class="text-center p-0 m-0 mt-2">{{ formREquivalence }}%</p>
+          <vue-slider
+            :tooltip="'none'"
+            :height="7"
+            :dotSize="21"
             v-model="formREquivalence"
-            type="range"
             class="mb-4"
-            min="0.01"
-            max="0.99"
-            step="0.01"
+            :min="1"
+            :process-style="{ backgroundColor: 'var(--equivalence)' }"
           />
 
           <!-- /////////////// PAIRING /////////////// -->
@@ -708,32 +673,30 @@
             <b-container class="m-0 p-0" v-if="pairgroupcheckbox">
               <p class="mb-5" v-html="$t('cootool.grouppairingintro2')"></p>
               <p class="m-0" v-html="$t('cootool.PBase')"></p>
-              <p class="text-center m-0 p-0">
-                &nbsp; {{ Math.round(formPairBase * 100) }}%
-              </p>
-              <input
+              <p class="text-center m-0 p-0">{{ formPairBase }}%</p>
+              <vue-slider
+                :tooltip="'none'"
+                :height="7"
+                :dotSize="21"
                 v-model="formPairBase"
-                type="range"
                 class="mb-4"
-                min="0.01"
-                max="0.99"
-                step="0.01"
+                :min="1"
+                :process-style="{ backgroundColor: 'var(--equivalence)' }"
               />
               <br />
               {{ $t('cootool.details') }}
               <b-form-textarea v-model="formPairBaseText"></b-form-textarea>
 
               <p class="m-0" v-html="$t('cootool.PD')"></p>
-              <p class="text-center m-0 p-0">
-                &nbsp; {{ Math.round(formPairDiversity * 100) }}%
-              </p>
-              <input
+              <p class="text-center m-0 p-0">{{ formPairDiversity }}%</p>
+              <vue-slider
+                :tooltip="'none'"
+                :height="7"
+                :dotSize="21"
                 v-model="formPairDiversity"
-                type="range"
                 class="mb-4"
-                min="0.01"
-                max="0.99"
-                step="0.01"
+                :min="1"
+                :process-style="{ backgroundColor: 'var(--diversity)' }"
               />
               <br />
               {{ $t('cootool.details') }}
@@ -742,16 +705,15 @@
               ></b-form-textarea>
 
               <p class="m-0" v-html="$t('cootool.PU')"></p>
-              <p class="text-center m-0 p-0">
-                &nbsp; {{ Math.round(formPairUnderstanding * 100) }}%
-              </p>
-              <input
+              <p class="text-center m-0 p-0">{{ formPairUnderstanding }}%</p>
+              <vue-slider
+                :tooltip="'none'"
+                :height="7"
+                :dotSize="21"
                 v-model="formPairUnderstanding"
-                type="range"
                 class="mb-4"
-                min="0.01"
-                max="0.99"
-                step="0.01"
+                :min="1"
+                :process-style="{ backgroundColor: 'var(--understanding)' }"
               />
               <br />
               {{ $t('cootool.details') }}
@@ -760,32 +722,30 @@
               ></b-form-textarea>
 
               <p class="m-0" v-html="$t('cootool.PF')"></p>
-              <p class="text-center m-0 p-0">
-                &nbsp; {{ Math.round(formPairFreedom * 100) }}%
-              </p>
-              <input
+              <p class="text-center m-0 p-0">{{ formPairFreedom }}%</p>
+              <vue-slider
+                :tooltip="'none'"
+                :height="7"
+                :dotSize="21"
                 v-model="formPairFreedom"
-                type="range"
                 class="mb-4"
-                min="0.01"
-                max="0.99"
-                step="0.01"
+                :min="1"
+                :process-style="{ backgroundColor: 'var(--freedom)' }"
               />
               <br />
               {{ $t('cootool.details') }}
               <b-form-textarea v-model="formPairFreedomText"></b-form-textarea>
 
               <p class="m-0" v-html="$t('cootool.PI')"></p>
-              <p class="text-center m-0 p-0">
-                &nbsp; {{ Math.round(formPairTransparency * 100) }}%
-              </p>
-              <input
+              <p class="text-center m-0 p-0">{{ formPairTransparency }}%</p>
+              <vue-slider
+                :tooltip="'none'"
+                :height="7"
+                :dotSize="21"
                 v-model="formPairTransparency"
-                type="range"
                 class="mb-4"
-                min="0.01"
-                max="0.99"
-                step="0.01"
+                :min="1"
+                :process-style="{ backgroundColor: 'var(--transparency)' }"
               />
               <br />
               {{ $t('cootool.details') }}
@@ -794,48 +754,45 @@
               ></b-form-textarea>
 
               <p class="m-0" v-html="$t('cootool.PC')"></p>
-              <p class="text-center m-0 p-0">
-                &nbsp; {{ Math.round(formPairCare * 100) }}%
-              </p>
-              <input
+              <p class="text-center m-0 p-0">{{ formPairCare }}%</p>
+              <vue-slider
+                :tooltip="'none'"
+                :height="7"
+                :dotSize="21"
                 v-model="formPairCare"
-                type="range"
                 class="mb-4"
-                min="0.01"
-                max="0.99"
-                step="0.01"
+                :min="1"
+                :process-style="{ backgroundColor: 'var(--care)' }"
               />
               <br />
               {{ $t('cootool.details') }}
               <b-form-textarea v-model="formPairCareText"></b-form-textarea>
 
               <p class="m-0" v-html="$t('cootool.PT')"></p>
-              <p class="text-center m-0 p-0">
-                &nbsp; {{ Math.round(formPairTrust * 100) }}%
-              </p>
-              <input
+              <p class="text-center m-0 p-0">{{ formPairTrust }}%</p>
+              <vue-slider
+                :tooltip="'none'"
+                :height="7"
+                :dotSize="21"
                 v-model="formPairTrust"
-                type="range"
                 class="mb-4"
-                min="0.01"
-                max="0.99"
-                step="0.01"
+                :min="1"
+                :process-style="{ backgroundColor: 'var(--trust)' }"
               />
               <br />
               {{ $t('cootool.details') }}
               <b-form-textarea v-model="formPairTrustText"></b-form-textarea>
 
               <p class="m-0" v-html="$t('cootool.PE')"></p>
-              <p class="text-center m-0 p-0">
-                &nbsp; {{ Math.round(formPairEquivalence * 100) }}%
-              </p>
-              <input
+              <p class="text-center m-0 p-0">{{ formPairEquivalence }}%</p>
+              <vue-slider
+                :tooltip="'none'"
+                :height="7"
+                :dotSize="21"
                 v-model="formPairEquivalence"
-                type="range"
                 class="mb-4"
-                min="0.01"
-                max="0.99"
-                step="0.01"
+                :min="1"
+                :process-style="{ backgroundColor: 'var(--equivalence)' }"
               />
               <br />
               {{ $t('cootool.details') }}
@@ -845,16 +802,15 @@
 
               <p v-html="$t('cootool.AFinalNote')" class="t16"></p>
               <p class="m-0" v-html="$t('cootool.PFinal')"></p>
-              <p class="text-center m-0 p-0">
-                &nbsp; {{ Math.round(formPairFinal * 100) }}%
-              </p>
-              <input
+              <p class="text-center m-0 p-0">{{ formPairFinal }}%</p>
+              <vue-slider
+                :tooltip="'none'"
+                :height="7"
+                :dotSize="21"
                 v-model="formPairFinal"
-                type="range"
                 class="mb-4"
-                min="0.01"
-                max="0.99"
-                step="0.01"
+                :min="1"
+                :process-style="{ backgroundColor: 'var(--equivalence)' }"
               />
               <br />
               {{ $t('cootool.explain') }}
@@ -916,7 +872,11 @@
 </template>
 
 <script>
+import VueSlider from 'vue-slider-component/dist-css/vue-slider-component.umd.min'
+import 'vue-slider-component/dist-css/vue-slider-component.css'
+import 'vue-slider-component/theme/default.css'
 export default {
+  components: { VueSlider },
   head() {
     return {
       title: 'Cooperacy - The Cooperation Tool'
@@ -941,51 +901,51 @@ export default {
       formParticipant: 3,
       formName: null,
       formDesc: null,
-      formMBDiversity: 0.50,
-      formBDiversity: 0.50,
-      formMRDiversity: 0.50,
-      formRDiversity: 0.50,
-      formMBUnderstanding: 0.50,
-      formBUnderstanding: 0.50,
-      formMRUnderstanding: 0.50,
-      formRUnderstanding: 0.50,
-      formMBFreedom: 0.50,
-      formBFreedom: 0.50,
-      formMRFreedom: 0.50,
-      formRFreedom: 0.50,
-      formMBTransparency: 0.50,
-      formBTransparency: 0.50,
-      formMRTransparency: 0.50,
-      formRTransparency: 0.50,
-      formMBCare: 0.50,
-      formBCare: 0.50,
-      formMRCare: 0.50,
-      formRCare: 0.50,
-      formMBXpected: 0.50,
-      formBXpected: 0.50,
-      formMRXpected: 0.50,
-      formRXpected: 0.50,
-      formMBHabitat: 0.50,
-      formBHabitat: 0.50,
-      formMRHabitat: 0.50,
-      formRHabitat: 0.50,
-      formMBTrust: 0.50,
-      formBTrust: 0.50,
-      formMRTrust: 0.50,
-      formRTrust: 0.50,
-      formMBEquivalence: 0.50,
-      formMREquivalence: 0.50,
-      formBEquivalence: 0.50,
-      formREquivalence: 0.50,
-      formPairBase: 0.50,
+      formMBDiversity: 50,
+      formBDiversity: 50,
+      formMRDiversity: 50,
+      formRDiversity: 50,
+      formMBUnderstanding: 50,
+      formBUnderstanding: 50,
+      formMRUnderstanding: 50,
+      formRUnderstanding: 50,
+      formMBFreedom: 50,
+      formBFreedom: 50,
+      formMRFreedom: 50,
+      formRFreedom: 50,
+      formMBTransparency: 50,
+      formBTransparency: 50,
+      formMRTransparency: 50,
+      formRTransparency: 50,
+      formMBCare: 50,
+      formBCare: 50,
+      formMRCare: 50,
+      formRCare: 50,
+      formMBXpected: 50,
+      formBXpected: 50,
+      formMRXpected: 50,
+      formRXpected: 50,
+      formMBHabitat: 50,
+      formBHabitat: 50,
+      formMRHabitat: 50,
+      formRHabitat: 50,
+      formMBTrust: 50,
+      formBTrust: 50,
+      formMRTrust: 50,
+      formRTrust: 50,
+      formMBEquivalence: 50,
+      formMREquivalence: 50,
+      formBEquivalence: 50,
+      formREquivalence: 50,
+      formPairBase: 50,
       formPairBaseText: null,
-      formPairDiversity: 0.50,
-      formPairUnderstanding: 0.50,
-      formPairFreedom: 0.50,
-      formPairTransparency: 0.50,
-      formPairCare: 0.50,
-      formPairTrust: 0.50,
-      formPairEquivalence: 0.50,
+      formPairDiversity: 50,
+      formPairUnderstanding: 50,
+      formPairFreedom: 50,
+      formPairTransparency: 50,
+      formPairCare: 50,
+      formPairTrust: 50,
+      formPairEquivalence: 50,
       formPairDiversityText: null,
       formPairUnderstandingText: null,
       formPairFreedomText: null,
@@ -993,7 +953,7 @@ export default {
       formPairCareText: null,
       formPairTrustText: null,
       formPairEquivalenceText: null,
-      formPairFinal: 0.50,
+      formPairFinal: 50,
       formPairFinalText: null,
       terms: null,
       editing: false,
@@ -1045,18 +1005,18 @@ export default {
       if (this.$store.state.survey) {
         lastsurveyid = this.$store.state.survey[this.$store.state.survey.length - 1].id
       }
-      if (formNature == 1) {
+      if (this.formNature == 1) {
         //insert data from coo project
       }
-      if (formPrevSurvey) {
-        this.formProjectID = prevsurvey.project
-        this.formGroup = prevsurvey.group
-        this.formCountry = prevsurvey.country
-        this.formPlace = prevsurvey.place
-        this.formParticipant = prevsurvey.participant
-        this.formName = prevsurvey.name
-        this.formDesc = prevsurvey.desc
-        this.formID = prevsurvey.id
+      if (this.formPrevSurvey) {
+        this.formProjectID = this.prevsurvey.project
+        this.formGroup = this.prevsurvey.group
+        this.formCountry = this.prevsurvey.country
+        this.formPlace = this.prevsurvey.place
+        this.formParticipant = this.prevsurvey.participant
+        this.formName = this.prevsurvey.name
+        this.formDesc = this.prevsurvey.desc
+        this.formID = this.prevsurvey.id
       }
       var formBodyRequest = {
         id: this.formID,
