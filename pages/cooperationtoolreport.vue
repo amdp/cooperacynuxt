@@ -6,7 +6,7 @@
         <h1 class="up text-center" v-html="result.name"></h1>
         <br /><br />
         <p>
-          These result have been calculated on 1 survey out of
+          These result have been calculated on {{ surveynum }} surveys out of
           {{ result.participant }} people in the observed group.
         </p>
         <p v-if="result.project">
@@ -110,14 +110,22 @@ export default {
   },
   data() {
     return {
-      result: this.$store.state.edit,
-      country: this.$store.state.country[this.$store.state.edit.country - 1].name,
-      place: this.$store.state.place[this.$store.state.edit.place - 1].name,
-      group: this.$t('cootool.group' + (this.$store.state.edit.group))
+      country: this.result ? this.$store.state.country[this.result.country - 1].name : null,
+      place: this.result ? this.$store.state.place[this.result.place - 1].name : null,
+      surveynum: this.parallel ? this.parallel.length : null,
+      group: this.result ? this.$t('cootool.group' + (this.result.group)) : null
+    }
+  },
+  computed: {
+    result: function () {
+      return this.$store.state.edit.main
+    },
+    parallel: function () {
+      return this.$store.state.edit.parallel
     }
   },
   mounted() {
-    alert(this.$t('cootool.group' + (this.$store.state.edit.group)))
+
   },
   methods: {
     log4(n) {

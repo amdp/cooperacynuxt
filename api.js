@@ -196,8 +196,8 @@ app.get('/cooperationtool', async function (req, res, next) {
 })
 
 app.get('/survey', async function (req, res, next) {
-  try {
-    let query = 'SELECT `id`, `project`, `group`, `country`, `place`, `participant`,`name`, `desc` FROM `cooperationtool` ORDER BY `id`'
+  try { //this should filter the surveys with same project or same survey fields together
+    let query = 'SELECT `surveyid`, `group`, `country`, `place`, `participant`,`name`, `desc` FROM `cooperationtool` WHERE `project` IS NULL GROUP BY `surveyid`, `group`, `country`, `place`, `participant`,`name`, `desc` ORDER BY `surveyid`'
     const [survey] = await mypool.execute(query)
     res.status(200).send(survey)
   } catch (err) {
@@ -234,7 +234,6 @@ app.put('/user', async function (req, res, next) {
 })
 
 app.put('/userpaypal', async function (req, res, next) {
-  console.log(' ' + JSON.stringify(req.body))
   try {
     let query = 'SELECT * FROM `user` WHERE `user`.`email`= ? LIMIT 1'
     let param = [req.body.email]
@@ -1122,30 +1121,56 @@ app.post('/professional', async function (req, res, next) {
 app.post('/cooperationtool', async function (req, res, next) {
 
   if (!req.body.user) { req.body.user = 0 }
-  let survey = await surveyoutput()
-  res.status(200).send(survey)
+  let surveyoutput = await survey()
+  res.status(200).send(surveyoutput)
+
+  async function survey() {
+    let currentsurvey = await insertion()
+    let parallel = await parallelsurvey(currentsurvey)
+    return { main: currentsurvey, parallel: parallel }
+  }
 
   async function insertion() {
     try {
       let query =
-        'INSERT INTO `cooperationtool` (`user`,`project`,`group`,`country`,`place`,`participant`,`name`,`desc`,`MBD`,`BD`,`MRD`,`RD`,`MBU`,`BU`,`MRU`,`RU`,`MBF`,`BF`,`MRF`,`RF`,`MBI`,`BI`,`MRI`,`RI`,`MBC`,`BC`,`MRC`,`RC`,`MBX`,`BX`,`MRX`,`RX`,`MBH`,`BH`,`MRH`,`RH`,`MBT`,`BT`,`MRT`,`RT`,`MBE`,`BE`,`MRE`,`RE`,`P`,`PText`,`PD`,`PDText`,`PU`,`PUText`,`PF`,`PFText`,`PI`,`PIText`,`PC`,`PCText`,`PT`,`PTText`,`PE`,`PEText`,`PFinal`,`PFinalText`) VALUES (?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?)'
-      let param = [req.body.user, req.body.project, req.body.group, req.body.country, req.body.place, req.body.participant, req.body.name, req.body.desc, req.body.MBD, req.body.BD, req.body.MRD, req.body.RD, req.body.MBU, req.body.BU, req.body.MRU, req.body.RU, req.body.MBF, req.body.BF, req.body.MRF, req.body.RF, req.body.MBI, req.body.BI, req.body.MRI, req.body.RI, req.body.MBC, req.body.BC, req.body.MRC, req.body.RC, req.body.MBX, req.body.BX, req.body.MRX, req.body.RX, req.body.MBH, req.body.BH, req.body.MRH, req.body.RH, req.body.MBT, req.body.BT, req.body.MRT, req.body.RT, req.body.MBE, req.body.BE, req.body.MRE, req.body.RE, req.body.P, req.body.PText, req.body.PD, req.body.PDText, req.body.PU, req.body.PUText, req.body.PF, req.body.PFText, req.body.PI, req.body.PIText, req.body.PC, req.body.PCText, req.body.PT, req.body.PTText, req.body.PE, req.body.PEText, req.body.PFinal, req.body.PFinalText]
+        'INSERT INTO `cooperationtool` (`id`,`user`,`surveyid`,`project`,`group`,`country`,`place`,`month`,`participant`,`name`,`desc`,`MBD`,`BD`,`MRD`,`RD`,`MBU`,`BU`,`MRU`,`RU`,`MBF`,`BF`,`MRF`,`RF`,`MBI`,`BI`,`MRI`,`RI`,`MBC`,`BC`,`MRC`,`RC`,`MBX`,`BX`,`MRX`,`RX`,`MBH`,`BH`,`MRH`,`RH`,`MBT`,`BT`,`MRT`,`RT`,`MBE`,`BE`,`MRE`,`RE`,`P`,`PText`,`PD`,`PDText`,`PU`,`PUText`,`PF`,`PFText`,`PI`,`PIText`,`PC`,`PCText`,`PT`,`PTText`,`PE`,`PEText`,`PFinal`,`PFinalText`) VALUES (?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?)'
+      let param = [req.body.id, req.body.user, req.body.surveyid, req.body.project, req.body.group, req.body.country, req.body.place, req.body.month, req.body.participant, req.body.name, req.body.desc, req.body.MBD, req.body.BD, req.body.MRD, req.body.RD, req.body.MBU, req.body.BU, req.body.MRU, req.body.RU, req.body.MBF, req.body.BF, req.body.MRF, req.body.RF, req.body.MBI, req.body.BI, req.body.MRI, req.body.RI, req.body.MBC, req.body.BC, req.body.MRC, req.body.RC, req.body.MBX, req.body.BX, req.body.MRX, req.body.RX, req.body.MBH, req.body.BH, req.body.MRH, req.body.RH, req.body.MBT, req.body.BT, req.body.MRT, req.body.RT, req.body.MBE, req.body.BE, req.body.MRE, req.body.RE, req.body.P, req.body.PText, req.body.PD, req.body.PDText, req.body.PU, req.body.PUText, req.body.PF, req.body.PFText, req.body.PI, req.body.PIText, req.body.PC, req.body.PCText, req.body.PT, req.body.PTText, req.body.PE, req.body.PEText, req.body.PFinal, req.body.PFinalText]
       const [inserted] = await mypool.execute(query, param)
-      return inserted
+      //if the survey is new, it has no "surveyid", so we should add it
+      if (!req.body.surveyid) {
+        query = 'UPDATE `cooperationtool` SET `surveyid` = ? WHERE `id` = ?'
+        param = [inserted.insertId, inserted.insertId]
+        await mypool.execute(query, param)
+      }
+      query = 'SELECT * FROM `cooperationtool` WHERE `id`=? LIMIT 1'
+      param = [inserted.insertId]
+      const [currentsurvey] = await mypool.execute(query, param)
+      return currentsurvey[0]
     } catch (err) {
       next(err)
     }
   }
-  async function surveyoutput() {
-    let inserted = await insertion()
-    try {
-      let query = 'SELECT * FROM `cooperationtool` WHERE `id`=?'
-      let param = [inserted.insertId]
-      const [survey] = await mypool.execute(query, param)
-      return survey[0]
-    } catch (err) {
-      next(err)
+
+  async function parallelsurvey(currentsurvey) {
+    let parallel
+    let query = 'SELECT * FROM `cooperationtool` WHERE `project`=?'
+    let param = [currentsurvey.project]
+    if (currentsurvey.project) {
+      try {
+        [parallel] = await mypool.execute(query, param)
+      } catch (err) {
+        next(err)
+      }
+    } else {
+      query = 'SELECT * FROM `cooperationtool` WHERE `surveyid`=?'
+      param = [currentsurvey.surveyid]
+      try {
+        [parallel] = await mypool.execute(query, param)
+      } catch (err) {
+        next(err)
+      }
     }
+    return parallel
   }
 })
 

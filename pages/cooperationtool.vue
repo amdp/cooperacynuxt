@@ -45,31 +45,48 @@
             v-html="$t('cootool.project')"
             v-if="formNature == 1"
           ></p>
-          <!-- change this into a option select with list of projects -->
-          <input
+          <!-- PROJECTS -->
+          <b-form-select
+            v-model="formPrevProjectID"
             v-if="formNature == 1"
-            v-model="formProjectID"
-            size="sm"
             required
-          />
-
+          >
+            <option :value="nihil"></option>
+            <option
+              v-for="project in $store.state.project"
+              :key="project.id"
+              :value="project.id"
+              v-html="
+                project.id +
+                  ' ' +
+                  project.name +
+                  ' ' +
+                  project.parent +
+                  ' ' +
+                  project.category +
+                  ' ' +
+                  project.country +
+                  ' ' +
+                  project.place
+              "
+            ></option>
+          </b-form-select>
+          <!-- SURVEYS -->
           <p
             class="pt-3 m-1"
             v-html="$t('cootool.prevsurvey')"
             v-if="formNature == 0"
           ></p>
-          <b-form-select v-model="formPrevSurvey" v-if="formNature == 0">
-            <option value="Null"></option>
+          <b-form-select v-model="formPrevSurveyID" v-if="formNature == 0">
+            <option :value="nihil"></option>
             <option
               v-for="survey in $store.state.survey"
               :key="survey.id"
-              :value="survey.id"
+              :value="survey.surveyid"
               v-html="
-                survey.id +
+                survey.name +
                   ' ' +
-                  survey.name +
-                  ' ' +
-                  survey.project +
+                  survey.surveyid +
                   ' ' +
                   survey.group +
                   ' ' +
@@ -77,8 +94,7 @@
                   ' ' +
                   survey.place +
                   ' ' +
-                  survey.participant +
-                  ' '
+                  survey.participant
               "
             ></option>
           </b-form-select>
@@ -86,11 +102,11 @@
           <p
             class="pt-3 m-1"
             v-html="$t('cootool.group')"
-            v-if="formNature == 0 && !formPrevSurvey"
+            v-if="formNature == 0 && !formPrevSurveyID"
           ></p>
           <b-form-select
             v-model="formGroup"
-            v-if="formNature == 0 && !formPrevSurvey"
+            v-if="formNature == 0 && !formPrevSurveyID"
             required
           >
             <option value="1" v-html="$t('cootool.group1')"></option>
@@ -105,11 +121,11 @@
           <p
             class="pt-3 m-1"
             v-html="$t('cootool.country')"
-            v-if="formNature == 0 && !formPrevSurvey"
+            v-if="formNature == 0 && !formPrevSurveyID"
           ></p>
           <b-form-select
             v-model="formCountry"
-            v-if="formNature == 0 && !formPrevSurvey"
+            v-if="formNature == 0 && !formPrevSurveyID"
           >
             <option
               v-for="country in country"
@@ -122,32 +138,38 @@
           <p
             class="pt-3 m-1"
             v-html="$t('cootool.place')"
-            v-if="formNature == 0 && !formPrevSurvey"
+            v-if="formNature == 0 && !formPrevSurveyID"
           ></p>
           <b-form-select
             v-model="formPlace"
-            v-if="formNature == 0 && !formPrevSurvey"
+            v-if="formNature == 0 && !formPrevSurveyID"
             required
           >
-            <option v-for="place in Mplace" :key="place.id" :value="place.id">{{
-              place.name
-            }}</option>
+            <option
+              v-for="place in selectPlace"
+              :key="place.id"
+              :value="place.id"
+              >{{ place.name }}</option
+            >
           </b-form-select>
 
-          <p class="it" v-if="formNature == 0 && !formPrevSurvey">
+          <p class="it" v-if="formNature == 0 && !formPrevSurveyID">
             {{ $t('cootool.newplace') }}
             <a v-b-modal.placemodal class="ad finger b">
               {{ $t('cootool.one') }}
             </a>
           </p>
 
+          <p class="pt-3 m-1" v-html="$t('cootool.month')"></p>
+          <b-form-input v-model="formMonth" size="sm" required></b-form-input>
+
           <p
             class="pt-3 m-1"
             v-html="$t('cootool.participant')"
-            v-if="formNature == 0 && !formPrevSurvey"
+            v-if="formNature == 0 && !formPrevSurveyID"
           ></p>
           <b-form-input
-            v-if="formNature == 0 && !formPrevSurvey"
+            v-if="formNature == 0 && !formPrevSurveyID"
             v-model="formParticipant"
             size="sm"
             required
@@ -156,10 +178,10 @@
           <p
             class="pt-3 m-1"
             v-html="$t('cootool.name')"
-            v-if="formNature == 0 && !formPrevSurvey"
+            v-if="formNature == 0 && !formPrevSurveyID"
           ></p>
           <b-form-input
-            v-if="formNature == 0 && !formPrevSurvey"
+            v-if="formNature == 0 && !formPrevSurveyID"
             v-model="formName"
             size="sm"
             required
@@ -168,10 +190,10 @@
           <p
             class="pt-3 m-1"
             v-html="$t('cootool.desc')"
-            v-if="formNature == 0 && !formPrevSurvey"
+            v-if="formNature == 0 && !formPrevSurveyID"
           ></p>
           <b-form-textarea
-            v-if="formNature == 0 && !formPrevSurvey"
+            v-if="formNature == 0 && !formPrevSurveyID"
             v-model="formDesc"
             size="sm"
           ></b-form-textarea>
@@ -886,18 +908,21 @@ export default {
     await store.dispatch('getPlaceAction')
     await store.dispatch('getCountryAction')
     await store.dispatch('getSurveyAction')
+    await store.dispatch('getProjectAction')
     if (store.state.edit.id) {
     }
   },
   data() {
     return {
+      nihil: null,
       formNature: 0,
-      formPrevSurvey: null,
-      formProjectID: null,
+      formPrevSurveyID: null,
+      formPrevProjectID: null,
       formID: null,
       formGroup: 4,
       formCountry: 1,
       formPlace: 1,
+      formMonth: 1,
       formParticipant: 3,
       formName: null,
       formDesc: null,
@@ -965,9 +990,11 @@ export default {
   },
   computed: {
     nameInputState() {
-      return this.name.length > 4 ? true : false
+      return this.name.length > 3 ? true : false
     },
-    Mplace() {
+    // return this.formMonth > 0 ? true : false
+    // return this.formParticipant > 0 ? true : false
+    selectPlace() {
       let place = this.$store.state.place.filter(
         place => place.country === this.formCountry
       )
@@ -998,92 +1025,91 @@ export default {
     },
     async cooperationForm() {
       this.editing = true
-      if (this.$store.state.edit.id) {
-        //left for other future functionalities
+      if (this.formPrevProjectID) {
+        let [projectChosen] = this.$store.state.project.filter(project => project.id == this.formPrevProjectID)
+        this.formGroup = 0
+        this.formCountry = projectChosen.country
+        this.formPlace = projectChosen.place
+        this.formParticipant = projectChosen.professional
+        this.formName = projectChosen.name
+        this.formDesc = projectChosen.brief
       }
-      let lastsurveyid
-      if (this.$store.state.survey) {
-        lastsurveyid = this.$store.state.survey[this.$store.state.survey.length - 1].id
-      }
-      if (this.formNature == 1) {
-        //insert data from coo project
-      }
-      if (this.formPrevSurvey) {
-        this.formProjectID = this.prevsurvey.project
-        this.formGroup = this.prevsurvey.group
-        this.formCountry = this.prevsurvey.country
-        this.formPlace = this.prevsurvey.place
-        this.formParticipant = this.prevsurvey.participant
-        this.formName = this.prevsurvey.name
-        this.formDesc = this.prevsurvey.desc
-        this.formID = this.prevsurvey.id
+      let prevsurvey = null
+      if (this.formPrevSurveyID) {
+        [prevsurvey] = this.$store.state.survey.filter(survey => survey.id == this.formPrevSurveyID)
+        this.formGroup = prevsurvey.group
+        this.formCountry = prevsurvey.country
+        this.formPlace = prevsurvey.place
+        this.formParticipant = prevsurvey.participant
+        this.formName = prevsurvey.name
+        this.formDesc = prevsurvey.desc
       }
       var formBodyRequest = {
-        id: this.formID,
-        project: this.formProjectID,
+        id: null,
+        user: this.$auth.user ? this.$auth.user.id : null,
+        surveyid: prevsurvey ? prevsurvey.id : null,
+        project: this.formPrevProjectID,
         group: this.formGroup,
         country: this.formCountry,
         place: this.formPlace,
+        month: this.formMonth,
         participant: this.formParticipant,
         name: this.formName,
         desc: this.formDesc,
-        MBD: this.formMBDiversity,
-        BD: this.formBDiversity,
-        MRD: this.formMRDiversity,
-        RD: this.formRDiversity,
-        MBU: this.formMBUnderstanding,
-        BU: this.formBUnderstanding,
-        MRU: this.formMRUnderstanding,
-        RU: this.formRUnderstanding,
-        MBF: this.formMBFreedom,
-        BF: this.formBFreedom,
-        MRF: this.formMRFreedom,
-        RF: this.formRFreedom,
-        MBI: this.formMBTransparency,
-        BI: this.formBTransparency,
-        MRI: this.formMRTransparency,
-        RI: this.formRTransparency,
-        MBC: this.formMBCare,
-        BC: this.formBCare,
-        MRC: this.formMRCare,
-        RC: this.formRCare,
-        MBX: this.formMBXpected,
-        BX: this.formBXpected,
-        MRX: this.formMRXpected,
-        RX: this.formRXpected,
-        MBH: this.formMBHabitat,
-        BH: this.formBHabitat,
-        MRH: this.formMRHabitat,
-        RH: this.formRHabitat,
-        MBT: this.formMBTrust,
-        BT: this.formBTrust,
-        MRT: this.formMRTrust,
-        RT: this.formRTrust,
-        MBE: this.formMBEquivalence,
-        BE: this.formBEquivalence,
-        MRE: this.formMREquivalence,
-        RE: this.formREquivalence,
-        P: this.formPairBase,
+        MBD: this.formMBDiversity / 100,
+        BD: this.formBDiversity / 100,
+        MRD: this.formMRDiversity / 100,
+        RD: this.formRDiversity / 100,
+        MBU: this.formMBUnderstanding / 100,
+        BU: this.formBUnderstanding / 100,
+        MRU: this.formMRUnderstanding / 100,
+        RU: this.formRUnderstanding / 100,
+        MBF: this.formMBFreedom / 100,
+        BF: this.formBFreedom / 100,
+        MRF: this.formMRFreedom / 100,
+        RF: this.formRFreedom / 100,
+        MBI: this.formMBTransparency / 100,
+        BI: this.formBTransparency / 100,
+        MRI: this.formMRTransparency / 100,
+        RI: this.formRTransparency / 100,
+        MBC: this.formMBCare / 100,
+        BC: this.formBCare / 100,
+        MRC: this.formMRCare / 100,
+        RC: this.formRCare / 100,
+        MBX: this.formMBXpected / 100,
+        BX: this.formBXpected / 100,
+        MRX: this.formMRXpected / 100,
+        RX: this.formRXpected / 100,
+        MBH: this.formMBHabitat / 100,
+        BH: this.formBHabitat / 100,
+        MRH: this.formMRHabitat / 100,
+        RH: this.formRHabitat / 100,
+        MBT: this.formMBTrust / 100,
+        BT: this.formBTrust / 100,
+        MRT: this.formMRTrust / 100,
+        RT: this.formRTrust / 100,
+        MBE: this.formMBEquivalence / 100,
+        BE: this.formBEquivalence / 100,
+        MRE: this.formMREquivalence / 100,
+        RE: this.formREquivalence / 100,
+        P: this.formPairBase / 100,
         PText: this.formPairBaseText,
-        PD: this.formPairDiversity,
+        PD: this.formPairDiversity / 100,
         PDText: this.formPairDiversityText,
-        PU: this.formPairUnderstanding,
+        PU: this.formPairUnderstanding / 100,
         PUText: this.formPairUnderstandingText,
-        PF: this.formPairFreedom,
+        PF: this.formPairFreedom / 100,
         PFText: this.formPairFreedomText,
-        PI: this.formPairTransparency,
+        PI: this.formPairTransparency / 100,
         PIText: this.formPairTransparencyText,
-        PC: this.formPairCare,
+        PC: this.formPairCare / 100,
         PCText: this.formPairCareText,
-        PT: this.formPairTrust,
+        PT: this.formPairTrust / 100,
         PTText: this.formPairTrustText,
-        PE: this.formPairEquivalence,
+        PE: this.formPairEquivalence / 100,
         PEText: this.formPairEquivalenceText,
-        PFinal: this.formPairFinal,
-        PFinalText: this.formPairFinalText
-      }
-      if (this.$auth.user) {
-        formBodyRequest.user = this.$auth.user.id
+        PFinal: this.formPairFinal / 100,
+        PFinalText: this.formPairFinalText,
       }
       let res
       try {
