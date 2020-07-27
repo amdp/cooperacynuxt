@@ -92,7 +92,10 @@
     "checkboxlink": "terms and conditions",
     "checkboxend": ", and that you acknowledge that this is an experimental tool based on scientific research which has no liability nor gives you any warranty about your personal choices and future action after fulfilling this questionnaire and reading its result.",
     "go": "GO!",
-    "loading": "loading"
+    "loading": "loading",
+    "choice": "Please choose the type of report you want to visualize:",
+    "choicesurvey": "Group report",
+    "choiceproject": "Cooperacy Project Report"
   },
   "cootoolreport": {
     "stagnation": "Your diversity is very low, you may risk involution or stagnation.",

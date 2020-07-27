@@ -332,7 +332,7 @@ export const actions = {
     return data
   },
   getSurveyAction: async function (context, payload) {
-    let { data } = await this.$axios.get(process.env.DBURL + '/survey')
+    let { data } = await this.$axios.get(process.env.DBURL + '/survey', { params: payload })
     context.commit('setSurvey', data)
   },
   //Admin stuff here: be careful

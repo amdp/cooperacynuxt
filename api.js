@@ -184,24 +184,50 @@ app.get('/news', async function (req, res, next) {
   }
 })
 
-app.get('/cooperationtool', async function (req, res, next) {
-  try {
-    let query = 'SELECT * FROM `cooperationtool` WHERE `id`=?'
-    let param = [req.body.id]
-    const [survey] = await mypool.execute(query, param)
-    res.status(200).send(survey)
-  } catch (err) {
-    next(err)
-  }
-})
-
 app.get('/survey', async function (req, res, next) {
-  try { //this should filter the surveys with same project or same survey fields together
-    let query = 'SELECT `surveyid`, `group`, `country`, `place`, `participant`,`name`, `desc` FROM `cooperationtool` WHERE `project` IS NULL GROUP BY `surveyid`, `group`, `country`, `place`, `participant`,`name`, `desc` ORDER BY `surveyid`'
-    const [survey] = await mypool.execute(query)
-    res.status(200).send(survey)
-  } catch (err) {
-    next(err)
+  if (!req.query.id) {
+    try {
+      let query = 'SELECT `surveyid`, `group`, `country`, `place`, `participant`,`name`, `desc` FROM `cooperationtool` WHERE `project` IS NULL GROUP BY `surveyid`, `group`, `country`, `place`, `participant`,`name`, `desc` ORDER BY `surveyid`'
+      const [survey] = await mypool.execute(query)
+      res.status(200).send(survey)
+    } catch (err) {
+      next(err)
+    }
+  } else {
+    try {
+      let query = 'SELECT * FROM `cooperationtool` WHERE `id`=? LIMIT 1'
+      let param = [req.query.id]
+      const [survey] = await mypool.execute(query, param)
+      const parallel = await parallelsurvey(survey[0])
+      let mysurvey = { main: survey[0], parallel: parallel[0] }
+      res.status(200).send(mysurvey)
+    } catch (err) {
+      next(err)
+    }
+
+    async function parallelsurvey(currentsurvey) {
+      let parallel
+      if (currentsurvey.project) {
+        //in an if, keep query and param out of the "try"
+        let query = 'SELECT COUNT(`id`) as surveynum,`surveyid`,`group`,`country`,`place`,AVG(`month`) AS month,`participant`,`name`,`desc`,AVG(`MBD`) AS MBD,AVG(`BD`) AS BD,AVG(`MRD`) AS MRD,AVG(`RD`) AS RD,AVG(`MBU`) AS MBU,AVG(`BU`) AS BU,AVG(`MRU`) AS MRU,AVG(`RU`) AS RU,AVG(`MBF`) AS MBF,AVG(`BF`) AS BF,AVG(`MRF`) AS MRF,AVG(`RF`) AS RF,AVG(`MBI`) AS MBI,AVG(`BI`) AS BI,AVG(`MRI`) AS MRI,AVG(`RI`) AS RI,AVG(`MBC`) AS MBC,AVG(`BC`) AS BC,AVG(`MRC`) AS MRC,AVG(`RC`) AS RC,AVG(`MBX`) AS MBX,AVG(`BX`) AS BX,AVG(`MRX`) AS MRX,AVG(`RX`) AS RX,AVG(`MBH`) AS MBH,AVG(`BH`) AS BH,AVG(`MRH`) AS MRH,AVG(`RH`) AS RH,AVG(`MBT`) AS MBT,AVG(`BT`) AS BT,AVG(`MRT`) AS MRT,AVG(`RT`) AS RT,AVG(`MBE`) AS MBE,AVG(`BE`) AS BE,AVG(`MRE`) AS MRE,AVG(`RE`) AS RE,AVG(`P`) AS P,GROUP_CONCAT(`PText`) AS PText,AVG(`PD`) AS PD,GROUP_CONCAT(`PDText`) AS PDText,AVG(`PU`) AS PU,GROUP_CONCAT(`PUText`) AS PUText,AVG(`PF`) AS PF,GROUP_CONCAT(`PFText`) AS PFText,AVG(`PI`) AS PI,GROUP_CONCAT(`PIText`) AS PIText,AVG(`PC`) AS PC,GROUP_CONCAT(`PCText`) AS PCText,AVG(`PT`) AS PT,GROUP_CONCAT(`PTText`) AS PTText,AVG(`PE`) AS PE,GROUP_CONCAT(`PEText`) AS PEText,AVG(`PFinal`) AS PFinal,GROUP_CONCAT(`PFinalText`) AS PFinalText  from `cooperationtool` WHERE `project` = ? GROUP BY `surveyid`,`project`,`group`,`country`,`place`,`participant`,`name`,`desc`'
+        let param = [currentsurvey.project]
+        try {
+          [parallel] = await mypool.execute(query, param)
+        } catch (err) {
+          next(err)
+        }
+      } else {
+        //in an if, keep query and param out of the "try"
+        query = 'SELECT COUNT(`id`) as surveynum,`surveyid`,`group`,`country`,`place`,AVG(`month`) AS month,`participant`,`name`,`desc`,AVG(`MBD`) AS MBD,AVG(`BD`) AS BD,AVG(`MRD`) AS MRD,AVG(`RD`) AS RD,AVG(`MBU`) AS MBU,AVG(`BU`) AS BU,AVG(`MRU`) AS MRU,AVG(`RU`) AS RU,AVG(`MBF`) AS MBF,AVG(`BF`) AS BF,AVG(`MRF`) AS MRF,AVG(`RF`) AS RF,AVG(`MBI`) AS MBI,AVG(`BI`) AS BI,AVG(`MRI`) AS MRI,AVG(`RI`) AS RI,AVG(`MBC`) AS MBC,AVG(`BC`) AS BC,AVG(`MRC`) AS MRC,AVG(`RC`) AS RC,AVG(`MBX`) AS MBX,AVG(`BX`) AS BX,AVG(`MRX`) AS MRX,AVG(`RX`) AS RX,AVG(`MBH`) AS MBH,AVG(`BH`) AS BH,AVG(`MRH`) AS MRH,AVG(`RH`) AS RH,AVG(`MBT`) AS MBT,AVG(`BT`) AS BT,AVG(`MRT`) AS MRT,AVG(`RT`) AS RT,AVG(`MBE`) AS MBE,AVG(`BE`) AS BE,AVG(`MRE`) AS MRE,AVG(`RE`) AS RE,AVG(`P`) AS P,GROUP_CONCAT(`PText`) AS PText,AVG(`PD`) AS PD,GROUP_CONCAT(`PDText`) AS PDText,AVG(`PU`) AS PU,GROUP_CONCAT(`PUText`) AS PUText,AVG(`PF`) AS PF,GROUP_CONCAT(`PFText`) AS PFText,AVG(`PI`) AS PI,GROUP_CONCAT(`PIText`) AS PIText,AVG(`PC`) AS PC,GROUP_CONCAT(`PCText`) AS PCText,AVG(`PT`) AS PT,GROUP_CONCAT(`PTText`) AS PTText,AVG(`PE`) AS PE,GROUP_CONCAT(`PEText`) AS PEText,AVG(`PFinal`) AS PFinal,GROUP_CONCAT(`PFinalText`) AS PFinalText from `cooperationtool` WHERE `surveyid` = ? GROUP BY `surveyid`,`project`,`group`,`country`,`place`,`participant`,`name`,`desc`'
+        param = [currentsurvey.surveyid]
+        try {
+          [parallel] = await mypool.execute(query, param)
+        } catch (err) {
+          next(err)
+        }
+      }
+      return parallel
+    }
   }
 })
 
@@ -1119,16 +1145,9 @@ app.post('/professional', async function (req, res, next) {
 })
 
 app.post('/cooperationtool', async function (req, res, next) {
-
   if (!req.body.user) { req.body.user = 0 }
-  let surveyoutput = await survey()
-  res.status(200).send(surveyoutput)
-
-  async function survey() {
-    let currentsurvey = await insertion()
-    let parallel = await parallelsurvey(currentsurvey)
-    return { main: currentsurvey, parallel: parallel }
-  }
+  let surveyoutput = await insertion()
+  res.status(200).json({ id: surveyoutput })
 
   async function insertion() {
     try {
@@ -1142,35 +1161,10 @@ app.post('/cooperationtool', async function (req, res, next) {
         param = [inserted.insertId, inserted.insertId]
         await mypool.execute(query, param)
       }
-      query = 'SELECT * FROM `cooperationtool` WHERE `id`=? LIMIT 1'
-      param = [inserted.insertId]
-      const [currentsurvey] = await mypool.execute(query, param)
-      return currentsurvey[0]
+      return inserted.insertId
     } catch (err) {
       next(err)
     }
-  }
-
-  async function parallelsurvey(currentsurvey) {
-    let parallel
-    let query = 'SELECT * FROM `cooperationtool` WHERE `project`=?'
-    let param = [currentsurvey.project]
-    if (currentsurvey.project) {
-      try {
-        [parallel] = await mypool.execute(query, param)
-      } catch (err) {
-        next(err)
-      }
-    } else {
-      query = 'SELECT * FROM `cooperationtool` WHERE `surveyid`=?'
-      param = [currentsurvey.surveyid]
-      try {
-        [parallel] = await mypool.execute(query, param)
-      } catch (err) {
-        next(err)
-      }
-    }
-    return parallel
   }
 })
 

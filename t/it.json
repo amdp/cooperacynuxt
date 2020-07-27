@@ -92,7 +92,18 @@
     "checkboxlink": "termini e condizioni di Cooperacy",
     "checkboxend": ", e che riconosci che questo è uno strumento sperimentale basato su ricerca scientifica ma che non ha alcuna responsabilità né vi da alcuna garanzia rispetto alle vostre scelte personali e azioni future che vorrete portare avanti dopo aver completato questo questionario e dopo averne letto i relativi risultati.",
     "go": "VAI!",
-    "loading": "sto elaborando..."
+    "loading": "sto elaborando...",
+    "choice": "Scegli che tipo di report vuoi visualizzare:",
+    "choicesurvey": "Report di un gruppo",
+    "choiceproject": "Report di un progetto"
+  },
+  "cootoolreport": {
+    "stagnation": "Your diversity is very low, you may risk involution or stagnation.",
+    "stagnationrisk": "Stagnation risk: ",
+    "conflict": "Your understanding is very low, you may risk conflicts.",
+    "conflictrisk": "Conflict risk: ",
+    "conflictD": "Your diversity is high while your uderstanding is not as much: you may risk conflicts.",
+    "conflictDrisk": "Conflict risk: "
   },
   "addplace": {
     "newplace": "Aggiungi un nuovo luogo:",

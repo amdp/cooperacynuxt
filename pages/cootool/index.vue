@@ -1,0 +1,89 @@
+<template>
+  <b-form @submit.prevent="surveygo()" class="mt-3 was-validated">
+    <p class="pt-3 m-1" v-html="$t('cootool.choice')"></p>
+    <b-form-select v-model="choice" required>
+      <option value="0" v-html="$t('cootool.choicesurvey')"></option>
+      <option value="1" v-html="$t('cootool.choiceproject')"></option>
+    </b-form-select>
+    <b-form-select v-model="surveyID" v-if="choice == 0">
+      <option
+        v-for="survey in $store.state.survey"
+        :key="survey.id"
+        :value="survey.surveyid"
+        v-html="
+          survey.name +
+          ' ' +
+          survey.surveyid +
+          ' ' +
+          survey.group +
+          ' ' +
+          survey.country +
+          ' ' +
+          survey.place +
+          ' ' +
+          survey.participant
+        "
+      ></option>
+    </b-form-select>
+    <b-form-select v-model="projectID" required v-if="choice == 1">
+      <option
+        v-for="project in $store.state.project"
+        :key="project.id"
+        :value="project.id"
+        v-html="
+          project.id +
+          ' ' +
+          project.name +
+          ' ' +
+          project.parent +
+          ' ' +
+          project.category +
+          ' ' +
+          project.country +
+          ' ' +
+          project.place
+        "
+      ></option>
+    </b-form-select>
+    <b-button
+      type="submit"
+      class="btn bhequivalence btn-block mt-3 mb-3 gray border-0"
+    >
+      <p class="m-0" v-if="!editing">
+        {{ $t('cootool.go') }}
+      </p>
+      <b-spinner small v-if="editing" class="m-1"></b-spinner>
+      <p class="m-0" v-if="editing">
+        {{ $t('cootool.loading') }}
+      </p>
+    </b-button>
+  </b-form>
+</template>
+<script>
+export default {
+  head() {
+    return {
+      title: 'Cooperacy - Cooperation Tool Surveys'
+    }
+  },
+  data() {
+    return {
+      choice: null,
+      projectID: null,
+      surveyID: null,
+      editing: false
+    }
+  },
+  async fetch({ store, params }) {
+    await store.dispatch('getProjectAction')
+    await store.dispatch('getSurveyAction')
+  },
+  methods: {
+    surveygo() {
+      this.editing = false
+      let id = this.surveyID ? this.surveyID : this.projectID
+      this.$router.push({ path: '/cootool/' + id })
+    }
+  }
+}
+</script>

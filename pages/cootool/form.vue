@@ -4,7 +4,6 @@
       <b-col cols="1" md="2"></b-col>
       <b-col cols="10" md="8">
         <p class="text-center t32 hb equivalence">COOPERATION TOOL</p>
-        <p v-if="$store.state.edit" v-html="$store.state.edit"></p>
         <b-form @submit.prevent="cooperationForm()" class="mt-3 was-validated">
           <p v-html="$t('cootool.intro')"></p>
           <p
@@ -58,16 +57,16 @@
               :value="project.id"
               v-html="
                 project.id +
-                  ' ' +
-                  project.name +
-                  ' ' +
-                  project.parent +
-                  ' ' +
-                  project.category +
-                  ' ' +
-                  project.country +
-                  ' ' +
-                  project.place
+                ' ' +
+                project.name +
+                ' ' +
+                project.parent +
+                ' ' +
+                project.category +
+                ' ' +
+                project.country +
+                ' ' +
+                project.place
               "
             ></option>
           </b-form-select>
@@ -85,16 +84,16 @@
               :value="survey.surveyid"
               v-html="
                 survey.name +
-                  ' ' +
-                  survey.surveyid +
-                  ' ' +
-                  survey.group +
-                  ' ' +
-                  survey.country +
-                  ' ' +
-                  survey.place +
-                  ' ' +
-                  survey.participant
+                ' ' +
+                survey.surveyid +
+                ' ' +
+                survey.group +
+                ' ' +
+                survey.country +
+                ' ' +
+                survey.place +
+                ' ' +
+                survey.participant
               "
             ></option>
           </b-form-select>
@@ -909,8 +908,6 @@ export default {
     await store.dispatch('getCountryAction')
     await store.dispatch('getSurveyAction')
     await store.dispatch('getProjectAction')
-    if (store.state.edit.id) {
-    }
   },
   data() {
     return {
@@ -1036,7 +1033,7 @@ export default {
       }
       let prevsurvey = null
       if (this.formPrevSurveyID) {
-        [prevsurvey] = this.$store.state.survey.filter(survey => survey.id == this.formPrevSurveyID)
+        [prevsurvey] = this.$store.state.survey.filter(survey => survey.surveyid == this.formPrevSurveyID)
         this.formGroup = prevsurvey.group
         this.formCountry = prevsurvey.country
         this.formPlace = prevsurvey.place
@@ -1047,7 +1044,7 @@ export default {
       var formBodyRequest = {
         id: null,
         user: this.$auth.user ? this.$auth.user.id : null,
-        surveyid: prevsurvey ? prevsurvey.id : null,
+        surveyid: prevsurvey ? prevsurvey.surveyid : null,
         project: this.formPrevProjectID,
         group: this.formGroup,
         country: this.formCountry,
@@ -1056,59 +1053,59 @@ export default {
         participant: this.formParticipant,
         name: this.formName,
         desc: this.formDesc,
-        MBD: this.formMBDiversity / 100,
-        BD: this.formBDiversity / 100,
-        MRD: this.formMRDiversity / 100,
-        RD: this.formRDiversity / 100,
-        MBU: this.formMBUnderstanding / 100,
-        BU: this.formBUnderstanding / 100,
-        MRU: this.formMRUnderstanding / 100,
-        RU: this.formRUnderstanding / 100,
-        MBF: this.formMBFreedom / 100,
-        BF: this.formBFreedom / 100,
-        MRF: this.formMRFreedom / 100,
-        RF: this.formRFreedom / 100,
-        MBI: this.formMBTransparency / 100,
-        BI: this.formBTransparency / 100,
-        MRI: this.formMRTransparency / 100,
-        RI: this.formRTransparency / 100,
-        MBC: this.formMBCare / 100,
-        BC: this.formBCare / 100,
-        MRC: this.formMRCare / 100,
-        RC: this.formRCare / 100,
-        MBX: this.formMBXpected / 100,
-        BX: this.formBXpected / 100,
-        MRX: this.formMRXpected / 100,
-        RX: this.formRXpected / 100,
-        MBH: this.formMBHabitat / 100,
-        BH: this.formBHabitat / 100,
-        MRH: this.formMRHabitat / 100,
-        RH: this.formRHabitat / 100,
-        MBT: this.formMBTrust / 100,
-        BT: this.formBTrust / 100,
-        MRT: this.formMRTrust / 100,
-        RT: this.formRTrust / 100,
-        MBE: this.formMBEquivalence / 100,
-        BE: this.formBEquivalence / 100,
-        MRE: this.formMREquivalence / 100,
-        RE: this.formREquivalence / 100,
-        P: this.formPairBase / 100,
+        MBD: this.formMBDiversity,
+        BD: this.formBDiversity,
+        MRD: this.formMRDiversity,
+        RD: this.formRDiversity,
+        MBU: this.formMBUnderstanding,
+        BU: this.formBUnderstanding,
+        MRU: this.formMRUnderstanding,
+        RU: this.formRUnderstanding,
+        MBF: this.formMBFreedom,
+        BF: this.formBFreedom,
+        MRF: this.formMRFreedom,
+        RF: this.formRFreedom,
+        MBI: this.formMBTransparency,
+        BI: this.formBTransparency,
+        MRI: this.formMRTransparency,
+        RI: this.formRTransparency,
+        MBC: this.formMBCare,
+        BC: this.formBCare,
+        MRC: this.formMRCare,
+        RC: this.formRCare,
+        MBX: this.formMBXpected,
+        BX: this.formBXpected,
+        MRX: this.formMRXpected,
+        RX: this.formRXpected,
+        MBH: this.formMBHabitat,
+        BH: this.formBHabitat,
+        MRH: this.formMRHabitat,
+        RH: this.formRHabitat,
+        MBT: this.formMBTrust,
+        BT: this.formBTrust,
+        MRT: this.formMRTrust,
+        RT: this.formRTrust,
+        MBE: this.formMBEquivalence,
+        BE: this.formBEquivalence,
+        MRE: this.formMREquivalence,
+        RE: this.formREquivalence,
+        P: this.formPairBase,
         PText: this.formPairBaseText,
-        PD: this.formPairDiversity / 100,
+        PD: this.formPairDiversity,
         PDText: this.formPairDiversityText,
-        PU: this.formPairUnderstanding / 100,
+        PU: this.formPairUnderstanding,
         PUText: this.formPairUnderstandingText,
-        PF: this.formPairFreedom / 100,
+        PF: this.formPairFreedom,
         PFText: this.formPairFreedomText,
-        PI: this.formPairTransparency / 100,
+        PI: this.formPairTransparency,
         PIText: this.formPairTransparencyText,
-        PC: this.formPairCare / 100,
+        PC: this.formPairCare,
         PCText: this.formPairCareText,
-        PT: this.formPairTrust / 100,
+        PT: this.formPairTrust,
         PTText: this.formPairTrustText,
-        PE: this.formPairEquivalence / 100,
+        PE: this.formPairEquivalence,
         PEText: this.formPairEquivalenceText,
-        PFinal: this.formPairFinal / 100,
+        PFinal: this.formPairFinal,
         PFinalText: this.formPairFinalText,
       }
       let res
@@ -1118,13 +1115,11 @@ export default {
         console.log(err)
         alert(err)
       }
-
       if (res) {
         this.$toast.success('Done!', { duration: 1000, className: 'toast' })
-        await this.$store.commit('setEditSwitch', res)
         let that = this
         setTimeout(function () {
-          that.$router.push({ path: '/cooperationtoolreport' })
+          that.$router.push({ path: '/cootool/' + res.id })
         }, 1200)
       } else { alert('Something went wrong, try again') }
     }
