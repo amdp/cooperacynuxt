@@ -199,7 +199,7 @@ app.get('/survey', async function (req, res, next) {
       let param = [req.query.id]
       const [survey] = await mypool.execute(query, param)
       const parallel = await parallelsurvey(survey[0])
-      let mysurvey = { main: survey[0], parallel: parallel[0] }
+      let mysurvey = { main: survey, parallel: parallel }
       res.status(200).send(mysurvey)
     } catch (err) {
       next(err)

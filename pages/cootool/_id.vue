@@ -5,33 +5,32 @@
       <b-col cols="8">
         <h1
           class="up text-center"
-          v-html="this.$store.state.survey.main.name"
+          v-html="this.$store.state.survey.main[0].name"
         ></h1>
         <br /><br />
         <p>
           These result have been calculated on
-          {{ this.$store.state.survey.parallel.surveynum }} anonymous surveys
-          out of {{ this.$store.state.survey.main.participant }} people in the
-          observed group.
+          {{ this.$store.state.survey.parallel[0].surveynum }} anonymous surveys
+          out of {{ this.$store.state.survey.main[0].participant }} people in
+          the observed group.
         </p>
-        <p v-if="this.$store.state.survey.main.project">
+        <p v-if="this.$store.state.survey.main[0].project">
           This group is relative to the Cooperacy Project nr.
-          {{ this.$store.state.survey.main.project }}
+          {{ this.$store.state.survey.main[0].project }}
         </p>
         <p>
           This group is a
           {{ group }} located in {{ place }}, {{ country }}.
         </p>
-        <p v-if="this.$store.state.survey.main.desc">Your Description:</p>
-        <p v-html="this.$store.state.survey.main.desc"></p>
+        <p v-if="this.$store.state.survey.main[0].desc">Your Description:</p>
+        <p v-html="this.$store.state.survey.main[0].desc"></p>
         <h2>Report:</h2>
 
         <!-- REPORT STARTS HERE -->
         <!-- MAIN -->
-        <b-container v-for="type in resultType" :key="type">
-          {{ type }}
+        <b-container v-for="type in resultType" :key="type.id">
           <b-container
-            v-for="result in $store.state.survey[type]"
+            v-for="result in $store.state.survey[type.name]"
             :key="result.id"
           >
             <p>
@@ -39,23 +38,23 @@
             </p>
             <p
               v-if="
-                (result.MBD + result.MRD + result.BD + result.RD) / 400 <= 0.25
+                (result.MBD + result.MRD + result.BD + result.RD) / 4 <= 0.25
               "
             >
               {{ $t('cootoolreport.stagnation') }}
               <br />
               {{ $t('cootoolreport.stagnationrisk') }}
               {{
-                log4((result.MBD + result.MRD + result.BD + result.RD) / 400) *
+                log4((result.MBD + result.MRD + result.BD + result.RD) / 4) *
                 100
               }}%
             </p>
             <p
               v-if="
-                (result.MBD + result.MRD + result.BD + result.RD) / 400 -
-                  (result.MBU + result.MRU + result.BU + result.RU) / 400 >
+                (result.MBD + result.MRD + result.BD + result.RD) / 4 -
+                  (result.MBU + result.MRU + result.BU + result.RU) / 4 >
                   0 &&
-                (result.MBU + result.MRU + result.BU + result.RU) / 400 > 0.25
+                (result.MBU + result.MRU + result.BU + result.RU) / 4 > 0.25
               "
             >
               {{ $t('cootoolreport.conflictD') }}
@@ -64,8 +63,8 @@
               {{
                 Math.round(
                   Math.pow(
-                    (result.MBD + result.MRD + result.BD + result.RD) / 400 -
-                      (result.MBU + result.MRU + result.BU + result.RU) / 400,
+                    (result.MBD + result.MRD + result.BD + result.RD) / 4 -
+                      (result.MBU + result.MRU + result.BU + result.RU) / 4,
                     0.5
                   ) * 100
                 )
@@ -77,33 +76,33 @@
               {{ $t('cootoolreport.conflictrisk') }}
               {{ log4((result.MBU + result.MRU + result.BU + result.RU) / 4) }}%
             </p>
-            <p>XX: {{ (result.MBD + result.MRD) / 200 }}</p>
+            <p>XX: {{ (result.MBD + result.MRD) / 2 }}</p>
             <p>
-              D: {{ (result.MBD + result.MRD + result.BD + result.RD) / 400 }}
+              D: {{ (result.MBD + result.MRD + result.BD + result.RD) / 4 }}
             </p>
             <p>
-              U: {{ (result.MBU + result.MRU + result.BU + result.RU) / 400 }}
+              U: {{ (result.MBU + result.MRU + result.BU + result.RU) / 4 }}
             </p>
             <p>
-              F: {{ (result.MBF + result.MRF + result.BF + result.RF) / 400 }}
+              F: {{ (result.MBF + result.MRF + result.BF + result.RF) / 4 }}
             </p>
             <p>
-              I: {{ (result.MBI + result.MRI + result.BI + result.RI) / 400 }}
+              I: {{ (result.MBI + result.MRI + result.BI + result.RI) / 4 }}
             </p>
             <p>
-              C: {{ (result.MBC + result.MRC + result.BC + result.RC) / 400 }}
+              C: {{ (result.MBC + result.MRC + result.BC + result.RC) / 4 }}
             </p>
             <p>
-              X: {{ (result.MBX + result.MRX + result.BX + result.RX) / 400 }}
+              X: {{ (result.MBX + result.MRX + result.BX + result.RX) / 4 }}
             </p>
             <p>
-              H: {{ (result.MBH + result.MRH + result.BH + result.RH) / 400 }}
+              H: {{ (result.MBH + result.MRH + result.BH + result.RH) / 4 }}
             </p>
             <p>
-              T: {{ (result.MBT + result.MRT + result.BT + result.RT) / 400 }}
+              T: {{ (result.MBT + result.MRT + result.BT + result.RT) / 4 }}
             </p>
             <p>
-              E: {{ (result.MBE + result.MRE + result.BE + result.RE) / 400 }}
+              E: {{ (result.MBE + result.MRE + result.BE + result.RE) / 4 }}
             </p>
             <p>PAIRING</p>
             <p>P: {{ result.P }}</p>
@@ -156,18 +155,27 @@ export default {
   //use params.id to update survey, also with pairing tool
   data() {
     return {
-      resultType: ['main', 'parallel']
+      resultType: [
+        { id: 1, name: 'main' },
+        { id: 2, name: 'parallel' }
+      ]
     }
   },
+  created() {
+    console.log('yo ' + JSON.stringify(this.$store.state.survey))
+  },
   computed: {
+    // result() {
+    //   return this.$store.state.survey.main[0]
+    // },
     country() {
-      return this.$store.state.country[this.$store.state.survey.main.country - 1].name
+      return this.$store.state.country[this.$store.state.survey.main[0].country - 1].name
     },
     place() {
-      return this.$store.state.place[this.$store.state.survey.main.place - 1].name
+      return this.$store.state.place[this.$store.state.survey.main[0].place - 1].name
     },
     group() {
-      return this.$t('cootool.group' + (this.$store.state.survey.main.group))
+      return this.$t('cootool.group' + (this.$store.state.survey.main[0].group))
     },
   },
   methods: {
