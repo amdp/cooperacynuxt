@@ -865,7 +865,7 @@
 
     <!-- MODAL: ADD A NEW PLACE -->
 
-    <b-modal title="Add a new place" hide-header-close>
+    <b-modal title="Add a new place" id="placemodal" hide-header-close>
       <p class="M-4">{{ $t('addplace.newplace') }}</p>
       <b-form @submit.prevent="addplace">
         <p class="m-0" v-html="$t('addplace.insert')"></p>
@@ -885,6 +885,9 @@
           $t('addplace.add')
         }}</b-button>
         <b-button size="sm" class="btransparency" @click="cancel()">{{
+          $t('addplace.close')
+        }}</b-button>
+        <b-button size="sm" style="display: none" @click="ok()">{{
           $t('addplace.close')
         }}</b-button>
       </template>
