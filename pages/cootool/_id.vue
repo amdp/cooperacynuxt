@@ -138,19 +138,19 @@
           <b-form @submit.prevent="cooperationForm()" class="mt-3 was-validated">
           
 
-          <!-- /////////////// PAIRING /////////////// -->
-          <!-- /////////////// PAIRING /////////////// -->
-          <!-- /////////////// PAIRING /////////////// -->
+          <!-- /////////////// PAIRING ///////////////  /////////////////////////////////////// -->
 
-          <b-container class="m-0 p-0">
+          <!-- /////////////// PAIRING ///////////////  /////////////////////////////////////// -->
+          
+          <!-- /////////////// PAIRING ///////////////  /////////////////////////////////////// -->
+
+          <b-container class="m-0 p-0 t16 justify">
             <h5 class="text-center mt-5 mb-2 equivalence">
               {{ $t('cootool.grouppairing') }}
             </h5>
-            <p class="mb-5" v-html="$t('cootool.grouppairingintro')"></p>
-            <b-container class="m-0 p-0">
-              <p class="mb-5" v-html="$t('cootool.grouppairingintro2')"></p>
+              <p class="mb-5" v-html="$t('cootool.grouppairingintro') + $t('cootool.grouppairingintro2')"></p>
               <p class="m-0" v-html="$t('cootool.PBase')"></p>
-              <p class="text-center m-0 p-0">{{ formPairBase }}%</p>
+              <p class="text-center m-0 p-0 mt-2">{{ formPairBase }}%</p>
               <vue-slider
                 :tooltip="'none'"
                 :height="7"
@@ -165,7 +165,7 @@
               <b-form-textarea v-model="formPairBaseText"></b-form-textarea>
 
               <p class="m-0" v-html="$t('cootool.PD')"></p>
-              <p class="text-center m-0 p-0">{{ formPairDiversity }}%</p>
+              <p class="text-center m-0 p-0 mt-2">{{ formPairDiversity }}%</p>
               <vue-slider
                 :tooltip="'none'"
                 :height="7"
@@ -182,7 +182,7 @@
               ></b-form-textarea>
 
               <p class="m-0" v-html="$t('cootool.PU')"></p>
-              <p class="text-center m-0 p-0">{{ formPairUnderstanding }}%</p>
+              <p class="text-center m-0 p-0 mt-2">{{ formPairUnderstanding }}%</p>
               <vue-slider
                 :tooltip="'none'"
                 :height="7"
@@ -199,7 +199,7 @@
               ></b-form-textarea>
 
               <p class="m-0" v-html="$t('cootool.PF')"></p>
-              <p class="text-center m-0 p-0">{{ formPairFreedom }}%</p>
+              <p class="text-center m-0 p-0 mt-2">{{ formPairFreedom }}%</p>
               <vue-slider
                 :tooltip="'none'"
                 :height="7"
@@ -214,7 +214,7 @@
               <b-form-textarea v-model="formPairFreedomText"></b-form-textarea>
 
               <p class="m-0" v-html="$t('cootool.PI')"></p>
-              <p class="text-center m-0 p-0">{{ formPairTransparency }}%</p>
+              <p class="text-center m-0 p-0 mt-2">{{ formPairTransparency }}%</p>
               <vue-slider
                 :tooltip="'none'"
                 :height="7"
@@ -231,7 +231,7 @@
               ></b-form-textarea>
 
               <p class="m-0" v-html="$t('cootool.PC')"></p>
-              <p class="text-center m-0 p-0">{{ formPairCare }}%</p>
+              <p class="text-center m-0 p-0 mt-2">{{ formPairCare }}%</p>
               <vue-slider
                 :tooltip="'none'"
                 :height="7"
@@ -246,7 +246,7 @@
               <b-form-textarea v-model="formPairCareText"></b-form-textarea>
 
               <p class="m-0" v-html="$t('cootool.PT')"></p>
-              <p class="text-center m-0 p-0">{{ formPairTrust }}%</p>
+              <p class="text-center m-0 p-0 mt-2">{{ formPairTrust }}%</p>
               <vue-slider
                 :tooltip="'none'"
                 :height="7"
@@ -261,7 +261,7 @@
               <b-form-textarea v-model="formPairTrustText"></b-form-textarea>
 
               <p class="m-0" v-html="$t('cootool.PE')"></p>
-              <p class="text-center m-0 p-0">{{ formPairEquivalence }}%</p>
+              <p class="text-center m-0 p-0 mt-2">{{ formPairEquivalence }}%</p>
               <vue-slider
                 :tooltip="'none'"
                 :height="7"
@@ -279,7 +279,7 @@
 
               <p v-html="$t('cootool.AFinalNote')" class="t16"></p>
               <p class="m-0" v-html="$t('cootool.PFinal')"></p>
-              <p class="text-center m-0 p-0">{{ formPairFinal }}%</p>
+              <p class="text-center m-0 p-0 mt-2">{{ formPairFinal }}%</p>
               <vue-slider
                 :tooltip="'none'"
                 :height="7"
@@ -292,7 +292,6 @@
               <br />
               {{ $t('cootool.explain') }}
               <b-form-textarea v-model="formPairFinalText"></b-form-textarea>
-            </b-container>
           </b-container>
 
           <b-check name="termscheckbox" required>
@@ -306,11 +305,11 @@
             type="submit"
             class="btn bhtrust btn-block mt-3 mb-3 gray border-0"
           >
-            <p class="m-0" v-if="!editing">
+            <p class="m-0 btransparent" v-if="!editing">
               {{ $t('cootool.go') }}
             </p>
-            <b-spinner small v-if="editing" class="m-1"></b-spinner>
-            <p class="m-0" v-if="editing">
+            <b-spinner small v-if="editing" class="m-1 btransparent"></b-spinner>
+            <p class="m-0 btransparent" v-if="editing">
               {{ $t('cootool.loading') }}
             </p>
           </b-button>
@@ -347,7 +346,6 @@ export default {
       ],
       nihil: null,
       formPairBase: Math.round(this.$store.state.survey.main[0].P * 100),
-      formPairBaseText: this.$store.state.survey.main[0].PText,
       formPairDiversity: Math.round(this.$store.state.survey.main[0].PD * 100),
       formPairUnderstanding: Math.round(this.$store.state.survey.main[0].PU * 100),
       formPairFreedom: Math.round(this.$store.state.survey.main[0].PF * 100),
@@ -355,6 +353,8 @@ export default {
       formPairCare: Math.round(this.$store.state.survey.main[0].PC * 100),
       formPairTrust: Math.round(this.$store.state.survey.main[0].PT * 100),
       formPairEquivalence: Math.round(this.$store.state.survey.main[0].PE * 100),
+            formPairFinal: Math.round(this.$store.state.survey.main[0].PFinal * 100),
+            formPairBaseText: this.$store.state.survey.main[0].PText,
       formPairDiversityText: this.$store.state.survey.main[0].PDText,
       formPairUnderstandingText: this.$store.state.survey.main[0].PUText,
       formPairFreedomText: this.$store.state.survey.main[0].PFText,
@@ -362,7 +362,6 @@ export default {
       formPairCareText: this.$store.state.survey.main[0].PCText,
       formPairTrustText: this.$store.state.survey.main[0].PTText,
       formPairEquivalenceText: this.$store.state.survey.main[0].PEText,
-      formPairFinal: Math.round(this.$store.state.survey.main[0].PFinal * 100),
       formPairFinalText: this.$store.state.survey.main[0].PFinalText,
       terms: null,
       editing: false,
@@ -468,7 +467,7 @@ export default {
         alert(err)
       }
       if (res) {
-        this.$toast.success('Done!', { duration: 1000, className: 'toast' })
+        this.$toast.success('Done!', { duration: 10000, className: 'toast' })
         let that = this
         setTimeout(function () {
           that.$router.go(0)

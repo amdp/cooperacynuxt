@@ -253,9 +253,9 @@
           type="submit"
           class="btn bhtrust btn-block mt-3 mb-3 gray border-0"
         >
-          <span v-if="!editing">GO!</span>
-          <b-spinner small v-if="editing" class="m-1"></b-spinner>
-          <span v-if="editing">Reloading the project..</span>
+          <span v-if="!editing" class="btransparent">GO!</span>
+          <b-spinner small v-if="editing" class="m-1 btransparent"></b-spinner>
+          <span v-if="editing" class="btransparent">Reloading the project..</span>
         </b-button>
       </b-form>
       <!-- MODAL: ADD A NEW PLACE -->
@@ -287,6 +287,7 @@
           <b-button size="sm" class="btransparency" @click="cancel()"
             >CANCEL</b-button
           >
+          <b-button size="sm" class="none" @click="ok()">ADD</b-button>
         </template>
       </b-modal>
     </div>

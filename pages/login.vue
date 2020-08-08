@@ -12,6 +12,9 @@
               id="loginEmail"
               v-model="loginEmail"
               size="sm"
+              type="email"
+              placeholder="Your email"
+              class="form-control"
               required
               autocomplete="current-email"
             ></b-form-input>
@@ -32,9 +35,9 @@
               class="btn bhcare white btn-block mt-3 border-0"
               id="loginbutton"
             >
-              <span v-if="!logging"><b>LOGIN</b></span>
-              <b-spinner small v-if="logging" class="m-1"></b-spinner>
-              <span v-if="logging">Checking your paypal/bank membership..</span>
+              <span v-if="!logging" class="btransparent">LOGIN</span>
+              <b-spinner small v-if="logging" class="m-1 btransparent"></b-spinner>
+              <span v-if="logging" class="btransparent">Checking your paypal/bank membership..</span>
             </b-button>
           </p>
           <p class="freedom">
@@ -117,6 +120,9 @@
               v-model="formEmail"
               size="sm"
               autocomplete="email"
+              type="email"
+              placeholder="Your email"
+              class="form-control"
               required
             ></b-form-input>
           </b-form-group>

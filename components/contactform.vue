@@ -130,7 +130,7 @@ export default {
       formBody: null,
       response: [],
       recaptchaToken: null,
-      envrecaptcha: process.env.RECAPTCHA
+      envrecaptcha: process.env.RECAPTCHA,
     }
   },
   components: {

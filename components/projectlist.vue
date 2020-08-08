@@ -12,7 +12,7 @@
       <div
         v-for="project in projectlist[type.name]"
         :key="project.id"
-        class="p-3 ml-0 mr-0 mb-3 w-100 projectbox"
+        :class="projectbox(project)"
       >
         <b-row class="m-0 p-0 w-100 p-3">
           <b-col cols="12" class="m-0 p-0 w-100">
@@ -270,6 +270,14 @@ export default {
       )
       if (mypro.length > 0) return true
       else return false
+    },
+    projectbox(project){
+      let boxclass
+      let categorycolor = ['','e','t','c','i','f','u','d'] //order these according categories
+      for  (let i=0;i<7;i++){
+        if (project.category == i) {boxclass = 'p-3 ml-0 mr-0 mb-3 w-100 '+categorycolor[i]+'projectbox'}
+      }
+      return boxclass
     },
     archive(project) {
       this.$store.dispatch('projectFormAction', {

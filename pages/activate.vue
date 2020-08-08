@@ -25,6 +25,9 @@
               id="loginEmail"
               v-model="loginEmail"
               size="sm"
+              type="email"
+              placeholder="Your email"
+              class="form-control"
               required
               autocomplete="current-email"
             ></b-form-input>
@@ -73,6 +76,9 @@
             id="bankEmailInput"
             v-model="formBankEmail"
             size="sm"
+            type="email"
+            placeholder="Your email"
+            class="form-control"
             required
           ></b-form-input>
         </b-form-group>

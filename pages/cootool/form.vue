@@ -1,11 +1,11 @@
 <template>
-  <b-container class="m-0 p-0m t16">
+  <b-container class="m-0 p-0m t16 justify">
     <b-row>
       <b-col cols="1" md="2"></b-col>
       <b-col cols="10" md="8">
-        <p class="text-center t32 hb equivalence">COOPERATION TOOL</p>
+        <p class="text-center t32 hb equivalence">COOPERATION TOOL FORM</p>
         <b-form @submit.prevent="cooperationForm()" class="mt-3 was-validated">
-          <p v-html="$t('cootool.intro')"></p>
+          <p v-html="$t('cootool.introform')"></p>
           <p
             class="text-center mb-4 t24 hb equivalence"
             v-html="$t('cootool.basic')"
@@ -679,166 +679,6 @@
             :process-style="{ backgroundColor: 'var(--equivalence)' }"
           />
 
-          <!-- /////////////// PAIRING /////////////// -->
-          <!-- /////////////// PAIRING /////////////// -->
-          <!-- /////////////// PAIRING /////////////// -->
-
-          <b-container class="m-0 p-0">
-            <h5 class="text-center mt-5 mb-2 equivalence">
-              {{ $t('cootool.grouppairing') }}
-            </h5>
-            <b-check v-model="pairgroupcheckbox" class="text-center M-5">
-              {{ $t('cootool.apply') }}
-            </b-check>
-            <p class="mb-5" v-html="$t('cootool.grouppairingintro')"></p>
-            <b-container class="m-0 p-0" v-if="pairgroupcheckbox">
-              <p class="mb-5" v-html="$t('cootool.grouppairingintro2')"></p>
-              <p class="m-0" v-html="$t('cootool.PBase')"></p>
-              <p class="text-center m-0 p-0">{{ formPairBase }}%</p>
-              <vue-slider
-                :tooltip="'none'"
-                :height="7"
-                :dotSize="21"
-                v-model="formPairBase"
-                class="mb-4"
-                :min="1"
-                :process-style="{ backgroundColor: 'var(--equivalence)' }"
-              />
-              <br />
-              {{ $t('cootool.details') }}
-              <b-form-textarea v-model="formPairBaseText"></b-form-textarea>
-
-              <p class="m-0" v-html="$t('cootool.PD')"></p>
-              <p class="text-center m-0 p-0">{{ formPairDiversity }}%</p>
-              <vue-slider
-                :tooltip="'none'"
-                :height="7"
-                :dotSize="21"
-                v-model="formPairDiversity"
-                class="mb-4"
-                :min="1"
-                :process-style="{ backgroundColor: 'var(--diversity)' }"
-              />
-              <br />
-              {{ $t('cootool.details') }}
-              <b-form-textarea
-                v-model="formPairDiversityText"
-              ></b-form-textarea>
-
-              <p class="m-0" v-html="$t('cootool.PU')"></p>
-              <p class="text-center m-0 p-0">{{ formPairUnderstanding }}%</p>
-              <vue-slider
-                :tooltip="'none'"
-                :height="7"
-                :dotSize="21"
-                v-model="formPairUnderstanding"
-                class="mb-4"
-                :min="1"
-                :process-style="{ backgroundColor: 'var(--understanding)' }"
-              />
-              <br />
-              {{ $t('cootool.details') }}
-              <b-form-textarea
-                v-model="formPairUnderstandingText"
-              ></b-form-textarea>
-
-              <p class="m-0" v-html="$t('cootool.PF')"></p>
-              <p class="text-center m-0 p-0">{{ formPairFreedom }}%</p>
-              <vue-slider
-                :tooltip="'none'"
-                :height="7"
-                :dotSize="21"
-                v-model="formPairFreedom"
-                class="mb-4"
-                :min="1"
-                :process-style="{ backgroundColor: 'var(--freedom)' }"
-              />
-              <br />
-              {{ $t('cootool.details') }}
-              <b-form-textarea v-model="formPairFreedomText"></b-form-textarea>
-
-              <p class="m-0" v-html="$t('cootool.PI')"></p>
-              <p class="text-center m-0 p-0">{{ formPairTransparency }}%</p>
-              <vue-slider
-                :tooltip="'none'"
-                :height="7"
-                :dotSize="21"
-                v-model="formPairTransparency"
-                class="mb-4"
-                :min="1"
-                :process-style="{ backgroundColor: 'var(--transparency)' }"
-              />
-              <br />
-              {{ $t('cootool.details') }}
-              <b-form-textarea
-                v-model="formPairTransparencyText"
-              ></b-form-textarea>
-
-              <p class="m-0" v-html="$t('cootool.PC')"></p>
-              <p class="text-center m-0 p-0">{{ formPairCare }}%</p>
-              <vue-slider
-                :tooltip="'none'"
-                :height="7"
-                :dotSize="21"
-                v-model="formPairCare"
-                class="mb-4"
-                :min="1"
-                :process-style="{ backgroundColor: 'var(--care)' }"
-              />
-              <br />
-              {{ $t('cootool.details') }}
-              <b-form-textarea v-model="formPairCareText"></b-form-textarea>
-
-              <p class="m-0" v-html="$t('cootool.PT')"></p>
-              <p class="text-center m-0 p-0">{{ formPairTrust }}%</p>
-              <vue-slider
-                :tooltip="'none'"
-                :height="7"
-                :dotSize="21"
-                v-model="formPairTrust"
-                class="mb-4"
-                :min="1"
-                :process-style="{ backgroundColor: 'var(--trust)' }"
-              />
-              <br />
-              {{ $t('cootool.details') }}
-              <b-form-textarea v-model="formPairTrustText"></b-form-textarea>
-
-              <p class="m-0" v-html="$t('cootool.PE')"></p>
-              <p class="text-center m-0 p-0">{{ formPairEquivalence }}%</p>
-              <vue-slider
-                :tooltip="'none'"
-                :height="7"
-                :dotSize="21"
-                v-model="formPairEquivalence"
-                class="mb-4"
-                :min="1"
-                :process-style="{ backgroundColor: 'var(--equivalence)' }"
-              />
-              <br />
-              {{ $t('cootool.details') }}
-              <b-form-textarea
-                v-model="formPairEquivalenceText"
-              ></b-form-textarea>
-
-              <p v-html="$t('cootool.AFinalNote')" class="t16"></p>
-              <p class="m-0" v-html="$t('cootool.PFinal')"></p>
-              <p class="text-center m-0 p-0">{{ formPairFinal }}%</p>
-              <vue-slider
-                :tooltip="'none'"
-                :height="7"
-                :dotSize="21"
-                v-model="formPairFinal"
-                class="mb-4"
-                :min="1"
-                :process-style="{ backgroundColor: 'var(--equivalence)' }"
-              />
-              <br />
-              {{ $t('cootool.explain') }}
-              <b-form-textarea v-model="formPairFinalText"></b-form-textarea>
-            </b-container>
-          </b-container>
-
           <b-check name="termscheckbox" required>
             <span class="diversity it"> {{ $t('cootool.checkbox') }}</span>
             <nuxt-link to="/main/terms" class="au">
@@ -850,11 +690,11 @@
             type="submit"
             class="btn bhtrust btn-block mt-3 mb-3 gray border-0"
           >
-            <p class="m-0" v-if="!editing">
+            <p class="m-0 btransparent" v-if="!editing">
               {{ $t('cootool.go') }}
             </p>
-            <b-spinner small v-if="editing" class="m-1"></b-spinner>
-            <p class="m-0" v-if="editing">
+            <b-spinner small v-if="editing" class="m-1 btransparent"></b-spinner>
+            <p class="m-0 btransparent" v-if="editing">
               {{ $t('cootool.loading') }}
             </p>
           </b-button>
@@ -962,30 +802,11 @@ export default {
       formMREquivalence: 50,
       formBEquivalence: 50,
       formREquivalence: 50,
-      formPairBase: 50,
-      formPairBaseText: null,
-      formPairDiversity: 50,
-      formPairUnderstanding: 50,
-      formPairFreedom: 50,
-      formPairTransparency: 50,
-      formPairCare: 50,
-      formPairTrust: 50,
-      formPairEquivalence: 50,
-      formPairDiversityText: null,
-      formPairUnderstandingText: null,
-      formPairFreedomText: null,
-      formPairTransparencyText: null,
-      formPairCareText: null,
-      formPairTrustText: null,
-      formPairEquivalenceText: null,
-      formPairFinal: 50,
-      formPairFinalText: null,
       terms: null,
       editing: false,
       country: this.$store.state.country,
       formNewcountry: null,
       formNewplace: null,
-      pairgroupcheckbox: false,
     }
   },
   computed: {
@@ -1092,24 +913,24 @@ export default {
         BE: this.formBEquivalence / 100,
         MRE: this.formMREquivalence / 100,
         RE: this.formREquivalence / 100,
-        P: this.formPairBase / 100,
-        PText: this.formPairBaseText,
-        PD: this.formPairDiversity / 100,
-        PDText: this.formPairDiversityText,
-        PU: this.formPairUnderstanding / 100,
-        PUText: this.formPairUnderstandingText,
-        PF: this.formPairFreedom / 100,
-        PFText: this.formPairFreedomText,
-        PI: this.formPairTransparency / 100,
-        PIText: this.formPairTransparencyText,
-        PC: this.formPairCare / 100,
-        PCText: this.formPairCareText,
-        PT: this.formPairTrust / 100,
-        PTText: this.formPairTrustText,
-        PE: this.formPairEquivalence / 100,
-        PEText: this.formPairEquivalenceText,
-        PFinal: this.formPairFinal / 100,
-        PFinalText: this.formPairFinalText,
+        P: 0.5,
+        PText: null,
+        PD: 0.5,
+        PDText: null,
+        PU: 0.5,
+        PUText: null,
+        PF: 0.5,
+        PFText: null,
+        PI: 0.5,
+        PIText: null,
+        PC: 0.5,
+        PCText: null,
+        PT: 0.5,
+        PTText: null,
+        PE: 0.5,
+        PEText: null,
+        PFinal: 0.5,
+        PFinalText: null,
       }
       let res
       try {
@@ -1119,7 +940,7 @@ export default {
         alert(err)
       }
       if (res) {
-        this.$toast.success('Done!', { duration: 1000, className: 'toast' })
+        this.$toast.success('Done!', { duration: 10000, className: 'toast' })
         let that = this
         setTimeout(function () {
           that.$router.push({ path: '/cootool/' + res.id })

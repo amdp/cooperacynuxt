@@ -24,12 +24,16 @@
           Members List
         </nuxt-link>
         <br />
+        <nuxt-link to="/cootool/" class="au">
+          Cooperation Tool
+        </nuxt-link>
+        <br />
         <span
           class="au"
           @click="resetvoting()"
           v-if="this.$auth.user.role == 1"
         >
-          Admin tool: Reset all Voting and Colorbar
+          <br />Admin tool: Reset all Voting and Colorbar
         </span>
         <br /><br />
         <span class="au" @click="$auth.logout()">LOGOUT</span>

@@ -1,6 +1,7 @@
 {
   "cootool": {
-    "intro": "Welcome to the Cooperacy Cooperation and Pairing Tool! In this page you can evaluate your group - be it a group of friends, your colleagues at work or your family - to measure if you are in a 'cooperation state', that is, if you are enjoying time spent together and if your group evolves in a resilient way. Once you answer the questions, you may want to share this page and the ID of your questionnaire with the other people in your group who should also fill it out: to have the most diverse and complete evaluation of the group is dependent on the number of people who participate. Feel free to utilize the 'Pairing' section of the questionnaire which is meant to be a tool for solving conflicts or to help the group in its decision making process.",
+    "intro": "Welcome to the Cooperacy Cooperation Tool! <br/ > Please use the <nuxt-link to=\"/cootool/form\" class=\"ae\">Cooperation Tool Form</nuxt-link> to evaluate your group cooperation, be it a group of friends, your colleagues at work, your family or even a large scale community. <br />Use the search instead if you want to have a look at a previous survey and review the results.",
+    "introform": "Once answered the questions you can share its name and ID together with the link to this page within your group: the more will fill it in, the more your evaluation will be accurate.",
     "basic": "BASIC INFORMATION",
     "language": "Choose your preferred language:",
     "language1": "English",
@@ -38,7 +39,7 @@
     "T": "TRUST",
     "E": "EQUIVALENCE",
     "MBD": "How much difference there is between you and the participants in terms of wealth (1% means very low difference, 100% means difference is very high in terms of wealth)?",
-    "MRD": "How much difference there is between you and the participants in terms of emotionality, gender, sexual orientation, language, culture, beliefs (1% means very low difference, 100% means difference is very high)?",
+    "MRD": "How much difference there is between you and the participants in terms of emotionality, gender, sexual orientation, language, culture, beliefs?",
     "MBU": "How much do you understand the participants when dealing with thinking and organizing?",
     "MRU": "How much do you understand the participants in terms of emotions and empathy?",
     "MBF": "How much do you feel free within the group, in terms of personal space and freedom of action?",
@@ -74,8 +75,8 @@
     "BE": "Considering the same amount of efforts, how similar are the money or the results all the participants, including you, gain from the group compared to those of the others?",
     "RE": "How similar are the enjoyment and the quality of the relations all the participants, including you, experience compared to those of the others?",
     "grouppairing": "PAIRING",
-    "grouppairingintro": "PAIRING: READ BEFORE APPLYING<br />Use this part of the survey to pair your group, that is, to resolve internal conflicts. <br />You will also find final methodology advices. To proceed, click on 'apply'. <br />",
-    "grouppairingintro2": "<br />The pairing tool is an innovative tool by Cooperacy that brings people to 'pair' themselves (e.g. tuning in to the various beliefs present in a given group to understand and align with their fundamental principles) and then establish a methodology to take decisions.<br /><br />The main question is 'how do we decide together'? While the secret of self awareness held by gurus and spiritual masters leads to asking 'Who am I?', the secret of social coordination lies in the question 'How do we decide together?'<br />It is an invitation to establish a practical methodology in order to make choises together before taking a collective action. So the question isn't WHAT the group should do, but HOW the group decides what to do. Every group of people, even large 'social ecosystems', can decide its own 'how'. In our pairing tool, we propose a systematic way to do it, but just asking yourself and your group about it should be enough: 'How do we decide together?'",
+    "grouppairingintro": "Now you can use this other minor survey to pair your group, that is, to resolve internal conflicts or to raise a higher possibility of cooperation.<br />",
+    "grouppairingintro2": "To 'pair', i.e. 'tune' or 'coordinate' the people in a group starts from establishing a methodology to take decisions.<br /><br />The main question is 'how do we decide together'?<br />The question isn't WHAT the group should do, but HOW the group decides what to do. Every group of people, even large 'social ecosystems', can decide its own 'how'. It is an invitation to learn to develop a practical methodology in order to agree together on the choices to make before taking collective actions.",
     "PBase": "To what extent do you follow any methodology in order to take collective decisions?",
     "details": "If you want, add some details:",
     "PD": "Be creative, brainstorm! If you can't find the right solution, remember creativity may solve your situation. Sometimes the group want to be perfect, just and to do the most righteous thing, but the creative mind can find a different, efficient and apparently unthinkable solution. Try this approach. How useful is it?",

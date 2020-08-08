@@ -35,7 +35,7 @@
             :id="value.name"
             :class="value.animation"
             :style="{ opacity: value.opacity, 'z-index': '2' }"
-            fill="none"
+            fill-opacity="0"
             :stroke="value.stroke"
             stroke-width="24"
             stroke-miterlimit="10"
@@ -53,8 +53,8 @@
             <nuxt-link :to="description.href" class="noline finger">
               <text
                 :transform="description.matrix1"
-                fill="#555555"
                 font-size="65"
+                class="svgtext"
               >
                 {{ description.value }}
               </text>
@@ -68,8 +68,8 @@
               <text
                 :transform="description.matrix2"
                 stroke="#555555"
-                fill="#555555"
                 font-size="25"
+                class="svgtext"
               >
                 {{ description.text }}
               </text>
@@ -85,9 +85,8 @@
           opacity="0"
           :display="this.dtypo"
           style="animation: fade-in 3s forwards;"
-          fill="#555555"
           font-size="80"
-          class="font-weight-light"
+          class="font-weight-light svgtext"
         >
           COOPERACY
         </text>
@@ -99,10 +98,10 @@
           opacity="0"
           :display="this.dpayoff"
           style="animation: fade-in 3s 1s forwards;"
-          fill="#555555"
           font-size="28"
           stroke="#555555"
           textLength="475"
+          class="svgtext"
         >
           ENTER THE JOURNEY
         </text>
@@ -161,49 +160,6 @@
     </div>
   </div>
 </template>
-
-<style>
-/* HOME PAGE CIRCLE AND FADING ANIMATIONS, SEE ALSO STYLE SPECIFICATION IN SINGLE PREVIOUS ELEMENTS */
-#coocircle {
-  transform-origin: center center;
-  -webkit-transform-origin: center center;
-  animation: wheel 5s ease-out;
-}
-@keyframes wheel {
-  0% {
-    transform: rotateZ(0deg);
-  }
-  100% {
-    transform: rotateZ(1080deg);
-  }
-}
-/* ACTIVADED AT THE END OF ROTATION */
-.allin {
-  animation: fade-in 4s cubic-bezier(0.14, 0.65, 0.25, 0.98) forwards;
-  animation-delay: 2300ms;
-}
-@keyframes fade-in {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-/* FADE IN AREA, ALSO ACTIVADED AT THE END OF ROTATION */
-#homefade {
-  animation: fadeino 3s forwards;
-  animation-delay: 1s;
-}
-@keyframes fadeino {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-</style>
 
 <script>
 export default {

@@ -1,6 +1,17 @@
 <template>
-  <b-form @submit.prevent="surveygo()" class="mt-3 was-validated">
-    <p class="pt-3 m-1" v-html="$t('cootool.choice')"></p>
+
+<b-container class="t16 justify">
+  <b-row>
+      <b-col cols="1" md="2"></b-col>
+      <b-col cols="10" md="8">
+        <p class="text-center t32 hb equivalence">COOPERATION TOOL</p>
+        <p v-html="$t('cootool.intro')"></p>
+
+  <b-form @submit.prevent="surveygo()" class="mt-4 was-validated">
+    <p class="m-0 p-0 text-center t16 hb equivalence">
+      SEARCH TOOL
+    </p>
+    <p class="mb-1" v-html="$t('cootool.choice')"></p>
     <b-form-select v-model="choice" required>
       <option value="0" v-html="$t('cootool.choicesurvey')"></option>
       <option value="1" v-html="$t('cootool.choiceproject')"></option>
@@ -47,18 +58,26 @@
     </b-form-select>
     <b-button
       type="submit"
-      class="btn bhequivalence btn-block mt-3 mb-3 gray border-0"
+      class="btn bhequivalence btn-block mt-3 mb-5 gray border-0"
     >
-      <p class="m-0" v-if="!editing">
+      <p class="m-0 btransparent" v-if="!editing">
         {{ $t('cootool.go') }}
       </p>
-      <b-spinner small v-if="editing" class="m-1"></b-spinner>
-      <p class="m-0" v-if="editing">
+      <b-spinner small v-if="editing" class="m-1 btransparent"></b-spinner>
+      <p class="m-0 btransparent" v-if="editing">
         {{ $t('cootool.loading') }}
       </p>
     </b-button>
   </b-form>
+      </b-col>
+      <b-col cols="1" md="2"></b-col>
+  </b-row>
+</b-container>
+
 </template>
+
+
+
 <script>
 export default {
   head() {

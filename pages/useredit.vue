@@ -43,6 +43,9 @@
                 v-model="formEmail"
                 size="sm"
                 autocomplete="email"
+                type="email"
+                placeholder="Your email"
+                class="form-control"
                 required
               ></b-form-input>
             </b-form-group>
@@ -56,6 +59,9 @@
                 id="newEmailInput"
                 v-model="formNewEmail"
                 size="sm"
+                type="email"
+                placeholder="Your email"
+                class="form-control"
                 required
               ></b-form-input>
             </b-form-group>

@@ -36,7 +36,7 @@ export const state = () => ({
     { id: 4, name: 'Voting Proposals, Reporting' },
     {
       id: 5,
-      name: 'Free Evaluation Purposes'
+      name: 'Free Project or Evaluation Purposes'
     },
     {
       id: 6,

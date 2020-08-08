@@ -24,11 +24,11 @@
       type="submit"
       class="btn bhequivalence btn-block mt-3 mb-3 gray border-0"
     >
-      <p class="m-0" v-if="!editing">
+      <p class="m-0 btransparent" v-if="!editing">
         {{ $t('cootool.go') }}
       </p>
-      <b-spinner small v-if="editing" class="m-1"></b-spinner>
-      <p class="m-0" v-if="editing">
+      <b-spinner small v-if="editing" class="m-1 btransparent"></b-spinner>
+      <p class="m-0 btransparent" v-if="editing">
         {{ $t('cootool.loading') }}
       </p>
     </b-button>
