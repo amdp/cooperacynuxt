@@ -25,7 +25,7 @@
     <b-row class="px-4">
       <b-col class="vote mx-3 w-25 bequivalence">&nbsp;</b-col>
       <b-col class="vote mx-3 w-25 theyequivalence">&nbsp;</b-col>
-      <b-col class="vote mx-3 w-25 aaagray">&nbsp;</b-col>
+      <b-col class="vote mx-3 w-25 baaagray">&nbsp;</b-col>
     </b-row>
     <p>
       It signals support, so in the projects influences the allocation of budget
@@ -36,7 +36,7 @@
     <b-row class="px-4">
       <b-col class="vote mx-3 w-25 btrust">&nbsp;</b-col>
       <b-col class="vote mx-3 w-25 theytrust">&nbsp;</b-col>
-      <b-col class="vote mx-3 w-25 aaagray">&nbsp;</b-col>
+      <b-col class="vote mx-3 w-25 baaagray">&nbsp;</b-col>
     </b-row>
     <p>
       It signals trust, so in the projects may lead to skip the human resources
@@ -46,14 +46,14 @@
     <b-row class="px-4">
       <b-col class="vote mx-3 w-25 bcare">&nbsp;</b-col>
       <b-col class="vote mx-3 w-25 theycare">&nbsp;</b-col>
-      <b-col class="vote mx-3 w-25 aaagray">&nbsp;</b-col>
+      <b-col class="vote mx-3 w-25 baaagray">&nbsp;</b-col>
     </b-row>
     <p>
       It signals care, so in the projects leads to more visibility.
     </p>
     <b>Transparency:</b><i> do you think this project is transparent?</i>
     <b-row class="px-4">
-      <b-col class="vote mx-3 w-25 aaagray">&nbsp;</b-col>
+      <b-col class="vote mx-3 w-25 baaagray">&nbsp;</b-col>
       <b-col class="vote mx-3 w-25 theytransparency">&nbsp;</b-col>
       <b-col class="vote mx-3 w-25 btransparency">&nbsp;</b-col>
     </b-row>
@@ -66,7 +66,7 @@
     <b-row class="px-4">
       <b-col class="vote mx-3 w-25 bfreedom">&nbsp;</b-col>
       <b-col class="vote mx-3 w-25 theyfreedom">&nbsp;</b-col>
-      <b-col class="vote mx-3 w-25 aaagray">&nbsp;</b-col>
+      <b-col class="vote mx-3 w-25 baaagray">&nbsp;</b-col>
     </b-row>
     <p>
       It signals choice and coolness, so in the projects is for becoming a
@@ -76,7 +76,7 @@
     <b-row class="px-4">
       <b-col class="vote mx-3 w-25 bunderstanding">&nbsp;</b-col>
       <b-col class="vote mx-3 w-25 theyunderstanding">&nbsp;</b-col>
-      <b-col class="vote mx-3 w-25 aaagray">&nbsp;</b-col>
+      <b-col class="vote mx-3 w-25 baaagray">&nbsp;</b-col>
     </b-row>
     <p>
       This vote signals comprehension, so in the projects it may lead to skip
@@ -87,7 +87,7 @@
     <b-row class="px-4">
       <b-col class="vote mx-3 w-25 bdiversity">&nbsp;</b-col>
       <b-col class="vote mx-3 w-25 theydiversity">&nbsp;</b-col>
-      <b-col class="vote mx-3 w-25 aaagray">&nbsp;</b-col>
+      <b-col class="vote mx-3 w-25 baaagray">&nbsp;</b-col>
     </b-row>
     <p>
       It signals beauty, fun, “bizardry”, so in the projects it can randomly go

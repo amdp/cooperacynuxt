@@ -15,18 +15,7 @@
           <b-row class="m-0 p-0 mb-3 text-center">
             <b-col cols="12">
               <span v-html="$t('cootool.language')"></span>
-              <nuxt-link
-                class="au"
-                :to="switchLocalePath('en')"
-                v-html="$t('cootool.language1')"
-              >
-              </nuxt-link
-              >,
-              <nuxt-link
-                class="au"
-                :to="switchLocalePath('it')"
-                v-html="$t('cootool.language2')"
-              >
+              <nuxt-link class="au" to="#foot" v-html="$t('cootool.foot')">
               </nuxt-link>
             </b-col>
           </b-row>
@@ -693,7 +682,11 @@
             <p class="m-0 btransparent" v-if="!editing">
               {{ $t('cootool.go') }}
             </p>
-            <b-spinner small v-if="editing" class="m-1 btransparent"></b-spinner>
+            <b-spinner
+              small
+              v-if="editing"
+              class="m-1 btransparent"
+            ></b-spinner>
             <p class="m-0 btransparent" v-if="editing">
               {{ $t('cootool.loading') }}
             </p>
@@ -727,7 +720,7 @@
         <b-button size="sm" class="btransparency" @click="cancel()">{{
           $t('addplace.close')
         }}</b-button>
-        <b-button size="sm" style="display: none" @click="ok()">{{
+        <b-button size="sm" style="display: none;" @click="ok()">{{
           $t('addplace.close')
         }}</b-button>
       </template>
@@ -743,7 +736,7 @@ export default {
   components: { VueSlider },
   head() {
     return {
-      title: 'Cooperacy - The Cooperation Tool'
+      title: 'Cooperacy - The Cooperation Tool',
     }
   },
   async fetch({ store, params }) {
@@ -817,37 +810,39 @@ export default {
     // return this.formParticipant > 0 ? true : false
     selectPlace() {
       let place = this.$store.state.place.filter(
-        place => place.country === this.formCountry
+        (place) => place.country === this.formCountry
       )
       return place.sort((a, b) => (a.name > b.name ? 1 : -1))
     },
     newcountry() {
       //avoids showing Cooperacy as possible entry
-      return this.$store.state.country.filter(country => country.id != 1)
-    }
+      return this.$store.state.country.filter((country) => country.id != 1)
+    },
   },
   methods: {
     async addplace() {
       let result = await this.$store.dispatch('placeFormAction', {
         country: this.formNewcountry,
-        name: this.formNewplace
+        name: this.formNewplace,
       })
       if (result == 'exists') {
         this.$toast.success('This place already exists!', {
           duration: 1000,
-          className: 'toastunderstanding'
+          className: 'toastunderstanding',
         })
       } else {
         this.$toast.success(this.formNewplace + ' added!', {
           duration: 1000,
-          className: 'toast'
+          className: 'toast',
         })
       }
     },
     async cooperationForm() {
       this.editing = true
       if (this.formPrevProjectID) {
-        let [projectChosen] = this.$store.state.project.filter(project => project.id == this.formPrevProjectID)
+        let [projectChosen] = this.$store.state.project.filter(
+          (project) => project.id == this.formPrevProjectID
+        )
         this.formGroup = 0
         this.formCountry = projectChosen.country
         this.formPlace = projectChosen.place
@@ -857,7 +852,9 @@ export default {
       }
       let prevsurvey = null
       if (this.formPrevSurveyID) {
-        [prevsurvey] = this.$store.state.survey.filter(survey => survey.surveyid == this.formPrevSurveyID)
+        ;[prevsurvey] = this.$store.state.survey.filter(
+          (survey) => survey.surveyid == this.formPrevSurveyID
+        )
         this.formGroup = prevsurvey.group
         this.formCountry = prevsurvey.country
         this.formPlace = prevsurvey.place
@@ -934,7 +931,10 @@ export default {
       }
       let res
       try {
-        res = await this.$store.dispatch('cooperationToolAction', formBodyRequest)
+        res = await this.$store.dispatch(
+          'cooperationToolAction',
+          formBodyRequest
+        )
       } catch (err) {
         console.log(err)
         alert(err)
@@ -945,9 +945,10 @@ export default {
         setTimeout(function () {
           that.$router.push({ path: '/cootool/' + res.id })
         }, 1200)
-      } else { alert('Something went wrong, try again') }
-    }
-  }
+      } else {
+        alert('Something went wrong, try again')
+      }
+    },
+  },
 }
-
 </script>

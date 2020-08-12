@@ -3,7 +3,7 @@
     "intro": "Benvenuto al Cooperacy Cooperation Tool! <br/ > Utilizza pure il <nuxt-link to=\"/cootool/form\" class=\"ae\">Cooperation Tool Form</nuxt-link> per valutare la cooperazione del tuo gruppo, sia esso un gruppo di amici, i tuoi colleghi a lavoro, la tua famiglia o anche comunità su grande scala. Utilizza invece il form di ricerca se vuoi rivedere un precedente questionario e i suoi risultati.",
     "introform": "Una volta completato il questionario potete condividerne il nome e l'ID insieme al link a questa pagina nel vostro gruppo: più sono coloro che vi partecipano e più la valutazione sarà accurata.",
     "basic": "INFORMAZIONI DI BASE",
-    "language": "Scegli la tua lingua preferita:",
+    "language": "Ricordati che puoi scegliere la tua lingua preferita alla fine della pagina nel ",
     "language1": "Inglese",
     "language2": "Italiano",
     "nature": "Vuoi valutare un gruppo generico, come una società, una organizzazione, un gruppo di amici, oppure vuoi valutarne uno relativo a un progetto interno a Cooperacy?",
@@ -12,6 +12,7 @@
     "project": "Qual è l'ID del progetto?",
     "prevsurvey": "C'è un questionario precedente a cui vuoi fare riferimento?",
     "group": "Che livello di gruppo vuoi valutare?",
+    "group0": "Progetto di Cooperacy",
     "group1": "Nazione",
     "group2": "Città, Regione, Stato o Area Sociale",
     "group3": "Impresa, Associazione o Istituzione",
@@ -74,7 +75,7 @@
     "RT": "Quanto volete bene o vi fidate emotivamente degli altri?",
     "BE": "A parità di impegno, quanto sono simili il denaro o i risultati ottenuti personalmnente dai partecipanti del gruppo tra loro (0% non simile, 100% uguale)?",
     "RE": "Quanto sono simili la qualità delle relazioni e il piacere di far parte del gruppo tra tutti i partecipanti, incluso te?",
-    "grouppairing": "ALLINEAMENTO",
+    "grouppairing": "PAIRING TOOL",
     "grouppairingintro": "Ora puoi utilizzare quest'altra breve serie di domande per allineare il tuo gruppo, e cioè per risolvere conflitti interni o per aumentare una più alta possibilità di cooperazione.<br />",
     "grouppairingintro2": "'Allineare', 'sintonizzare', 'coordinare' le persone in un gruppo inizia dallo stabilire una metodologia per prendere decisioni.<br /> La domanda principale è: 'Come decidiamo insieme'? <br />La domanda non ha a che vedere con COSA il gruppo dovrebbe fare, ma su COME il gruppo decide cosa fare. Ogni gruppo di persone, anche 'ecosistemi sociali' molto grandi, possono decidere il proprio 'come'. È un invito a imparare a sviluppare un metodo pratico in modo da concordare le scelte insieme prima di intraprendere azioni collettive.",
     "PBase": "In che misura seguite una metodologia per prendere decisioni insieme?",
@@ -99,12 +100,12 @@
     "choiceproject": "Report di un progetto"
   },
   "cootoolreport": {
-    "stagnation": "Your diversity is very low, you may risk involution or stagnation.",
-    "stagnationrisk": "Stagnation risk: ",
-    "conflict": "Your understanding is very low, you may risk conflicts.",
-    "conflictrisk": "Conflict risk: ",
-    "conflictD": "Your diversity is high while your uderstanding is not as much: you may risk conflicts.",
-    "conflictDrisk": "Conflict risk: "
+    "stagnation": "La diversità del gruppo è molto bassa: c'è rischio di involuzione o stagnazione.",
+    "stagnationrisk": "Rischio di stagnazione: ",
+    "conflict": "La comprensione nel gruppo è molto bassa: c'è rischio di conflitti.",
+    "conflictrisk": "Rischio di conflitti: ",
+    "conflictD": "La diversità del gruppo necessita più comprensione: c'è rischio di conflitti.",
+    "conflictDrisk": "Rischio di conflitti: "
   },
   "addplace": {
     "newplace": "Aggiungi un nuovo luogo:",

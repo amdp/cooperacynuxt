@@ -1,5 +1,5 @@
 <template>
-  <b-container fluid class="p-0">
+  <b-container fluid class="p-0" id="foot">
     <b-row>
       <b-container fluid class="foot d-flex justify-content-center t16">
         <p class="base text-center space m-0 my-2 pr-4 pl-4">
@@ -33,6 +33,12 @@
           <nuxt-link class="ai" to="/main/terms">
             PRIVACY POLICY AND AGREEMENTS</nuxt-link
           >
+          <nuxt-link :to="switchLocalePath('it')">
+            <b-img src="../assets/icons/italy.svg" width="25px" />
+          </nuxt-link>
+          <nuxt-link :to="switchLocalePath('en')">
+            <b-img src="../assets/icons/uk.svg" width="28px" />
+          </nuxt-link>
         </p>
       </b-container>
     </b-row>

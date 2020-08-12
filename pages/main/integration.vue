@@ -96,51 +96,89 @@
     </p>
 
     <p
-      class="subheading equivalence center space margin"
-      name="equivalence"
-      id="equivalence"
+      class="subheading diversity center space margin"
+      name="diversity"
+      id="diversity"
     >
-      EQUIVALENCE: TURNS AND EXPERIMENTATION
+      DIVERSITY: CREATIVITY, EXPERIMENTATION AND ROLES
     </p>
     <p class="base">
-      Allow experimentation and use turns so that different proposed solutions
-      have their space and
-      <nuxt-link to="/main/cooperation#equivalence" class="ae"
-        >equivalent</nuxt-link
+      Sometimes contrasts are based on two visions about a problem that are
+      right and try to do the best. They collide because they want to do what is
+      just. Give yourself some brainstorming time and be
+      <nuxt-link to="/main/fun" class="ad">creative</nuxt-link>, you may find a
+      new, strong, effective solution.<br />If the contrast is instead based on
+      individuals with
+      <nuxt-link to="/main/cooperation#diversity" class="ad"
+        >different</nuxt-link
       >
-      importance. Enjoy the way others would do things: you will learn how they
-      think. Understanding others will let them follow you if they make a
-      mistake or if their solution is not so enjoyable.
+      personalities, cultures and the like, every one of them should have the
+      possibility to experiment solutions based on their personal preferences
+      and knowledge or have a role that corresponds to their values, beliefs and
+      vision. Everyone will feel part of the group that way. With possibility of
+      experimentation and roles
+      <nuxt-link to="/main/cooperation" class="ae">cooperation</nuxt-link> and
+      <nuxt-link to="/main/cooperation#understanding" class="au"
+        >understanding</nuxt-link
+      >
+      emerge and mutual enjoyment fulfills the group.
     </p>
 
-    <p class="subheading trust center space margin" name="trust" id="trust">
-      TRUST: TIME AND EVALUATION
+    <p
+      class="subheading understanding center space margin"
+      name="understanding"
+      id="understanding"
+    >
+      UNDERSTANDING: COMMON CODES
     </p>
     <p class="base">
-      Give time its pace. Allow experience and adaptation to fix the situation
-      and evaluate the results after a given amount of time. Sometimes fear may
-      make people think in a negative way about events in the future. Faith in
-      your solution and in those of others allows things to set up.
-      <nuxt-link to="/main/cooperation#trust" class="at">Trust</nuxt-link> is
-      important also in evaluations: when you see the solution tested has
-      evidently damaged the group for a relevant amount of time, it will be
-      easier to agree to a change.
+      Does your group talk? Are the people ready to explain what they think?
+      Does everyone listen? Finally, do the individuals comprehend each other?
+      Talk, explain, listen, comprehend are four difficult steps in the way to
+      understanding. In order to invoke those magic steps, the group may focus
+      on the values and the beliefs in common. The values or the motivations
+      could be profoundly similar even in a wide difference of personal views.
+      Everyone of us is
+      <nuxt-link to="/main/cooperation#diversity" class="ad"
+        >different</nuxt-link
+      >, and everyone of us sees things with a different perspective, trying to
+      be happy in this very complex world. The key in creating the feeling of
+      cooperation is
+      <nuxt-link to="/main/cooperation#understanding" class="au"
+        >understanding</nuxt-link
+      >
+      that everyone sees the world with complete different codes, so when you
+      reciprocally share the way you see things it's possible to comprehend each
+      other and find the right
+      <nuxt-link to="/main/integration" class="ad">integration</nuxt-link>.
     </p>
 
-    <p class="subheading care center space margin" name="care" id="care">
-      CARE: BETTER CONTEXTS, BETTER FEELINGS
+    <p
+      class="subheading freedom center space margin"
+      name="freedom"
+      id="freedom"
+    >
+      FREEDOM: THE RIGHT SPACE TO EVERYONE
     </p>
     <p class="base">
-      <nuxt-link to="/main/cooperation#care" class="ac">Care</nuxt-link> means
-      respect and good coordination. The context, the environment and the
-      services should be observed. Are you in a beautiful place? Are plants or
-      animals respected around you? Are there colors? Is there good food and
-      water? Are you feeling good? Are you tired and need a pause? Are you
-      afraid of something? Are you happy instead? Can you find an area of your
-      body in which that happiness is?<br />
-      These questions seem to be a lot but they are very important. They can
-      create a funny and bright mood and give you time to relax a bit and be
-      more comprehensive with each other.
+      Giving the right
+      <nuxt-link to="/main/cooperation#freedom" class="af">space</nuxt-link> is
+      a way to make people feel at ease without separating them. Nothing is
+      worse than forcing to be together people who do not want to. If you are a
+      few, try a pause or simply some space or distance between the people in
+      conflict for a determined amount of time. If you are many, you can
+      experience a live setup that foster cooperation organising an
+      <nuxt-link to="/main/coopenspace" class="ac"
+        >Open Space Cooperation</nuxt-link
+      >.
+    </p>
+
+    <p class="base">
+      <nuxt-link to="/login" class="ae">Join</nuxt-link> and
+      <nuxt-link to="/main/participate" class="at">Participate</nuxt-link> in
+      Cooperacy to see how these solutions can be of help in
+      <nuxt-link to="/main/spread" class="ae">spreading</nuxt-link> the good
+      energy of cooperation.
     </p>
 
     <p
@@ -174,88 +212,58 @@
       talk for 5 minutes, no more, without interruption."
     </p>
 
-    <p
-      class="subheading freedom center space margin"
-      name="freedom"
-      id="freedom"
-    >
-      FREEDOM: THE RIGHT SPACE TO EVERYONE
+    <p class="subheading care center space margin" name="care" id="care">
+      CARE: BETTER CONTEXTS, BETTER FEELINGS
     </p>
     <p class="base">
-      Giving the right
-      <nuxt-link to="/main/cooperation#freedom" class="af">space</nuxt-link> is
-      a way to make people feel at ease without separating them. Nothing is
-      worse than forcing to be together people who do not want to. If you are a
-      few, try a pause or simply some space or distance between the people in
-      conflict for a determined amount of time. If you are many, you can
-      experience a live setup that foster cooperation organising an
-      <nuxt-link to="/main/coopenspace" class="ac"
-        >Open Space Cooperation</nuxt-link
-      >.
+      <nuxt-link to="/main/cooperation#care" class="ac">Care</nuxt-link> means
+      respect and good coordination. The context, the environment and the
+      services should be observed. Are you in a beautiful place? Are plants or
+      animals respected around you? Are there colors? Is there good food and
+      water? Are you feeling good? Are you tired and need a pause? Are you
+      afraid of something? Are you happy instead? Can you find an area of your
+      body in which that happiness is?<br />
+      These questions seem to be a lot but they are very important. They can
+      create a funny and bright mood and give you time to relax a bit and be
+      more comprehensive with each other.
+    </p>
+
+    <p class="subheading trust center space margin" name="trust" id="trust">
+      TRUST: TIME, MEASURES, EVALUATION
+    </p>
+    <p class="base">
+      Give time its pace. Allow experience and adaptation to fix the situation
+      and evaluate the results after a given amount of time. Sometimes fear may
+      make people think in a negative way about events in the future. Faith in
+      your solution and in those of others allows things to set up.
+      <nuxt-link to="/main/cooperation#trust" class="at">Trust</nuxt-link> is
+      important also in evaluations: when you test the solution and evaluate it
+      with common and measurable criterias it will be easier to agree on a
+      change or to decide together to trust your current approach.
     </p>
 
     <p
-      class="subheading understanding center space margin"
-      name="understanding"
-      id="understanding"
+      class="subheading equivalence center space margin"
+      name="equivalence"
+      id="equivalence"
     >
-      UNDERSTANDING: COMMON CODES
+      EQUIVALENCE: TURNS, COMBINATIONS, BALANCE
     </p>
     <p class="base">
-      Ask yourself what are the values you believe in when you have a contrast.
-      The values or the motivations could be profoundly similar even in a wide
-      difference of personal views. Choose together common and measurable
-      criterias to evaluate the situation. Everyone of us is
-      <nuxt-link to="/main/cooperation#diversity" class="ad"
-        >different</nuxt-link
-      >, and everyone of us sees things with a different perspective, trying to
-      be happy in this very complex world. The key in creating the feeling of
-      cooperation is
-      <nuxt-link to="/main/cooperation#understanding" class="au"
-        >understanding</nuxt-link
+      Is everyone allowed to play, relax or experiment? Do someone in the group
+      work all the time while others don't? Is everyone respected in their
+      views? Are there gaps and wide differences about the benefits they receive
+      from the group? Turns may cycle good things and bad things and distribute
+      them amongst the participants while sometimes different approaches may be
+      combined into a single solutions, like joining innovation and safety, or
+      business and caring. It is important to generate balance giving
+      <nuxt-link to="/main/cooperation#equivalence" class="ae"
+        >equivalent</nuxt-link
       >
-      that everyone sees the world with complete different codes, so when you
-      reciprocally share the way you see things it's possible to comprehend each
-      other and find the right
-      <nuxt-link to="/main/integration" class="ad">integration</nuxt-link>.
-    </p>
-
-    <p
-      class="subheading diversity center space margin"
-      name="diversity"
-      id="diversity"
-    >
-      DIVERSITY: INTEGRATION AND ROLES
-    </p>
-    <p class="base">
-      Sometimes contrasts are based on two visions about a problem which do not
-      exclude that much one another. Combining the two perspective in a
-      <nuxt-link to="/main/integration" class="ad">creative</nuxt-link> way may
-      result in a strong, effective and powerful solution.<br />If the contrast
-      is instead based on individuals with
-      <nuxt-link to="/main/cooperation#diversity" class="ad"
-        >different</nuxt-link
-      >
-      expertises, every one of them should have a role, based on their personal
-      preferences and knowledge so that everyone has a responsibility in which
-      they believe and its proper
-      <nuxt-link to="/main/cooperation#freedom" class="af">space</nuxt-link> and
-      responsibilities. Setting up some space between different skills is the
-      way to integrate people's ideas. Everyone will feel part of the group
-      without overlapping on each other. When the context is nice and there's
-      the right
-      <nuxt-link to="/main/cooperation#care" class="ac">coordination</nuxt-link>
-      of roles,
-      <nuxt-link to="/main/cooperation" class="ae">cooperation</nuxt-link>
-      emerges and mutual enjoyment fulfills the group.
-    </p>
-
-    <p class="base">
-      <nuxt-link to="/login" class="ae">Join</nuxt-link> and
-      <nuxt-link to="/main/participate" class="at">Participate</nuxt-link> in
-      Cooperacy to see how these solutions can be of help in
-      <nuxt-link to="/main/spread" class="ae">spreading</nuxt-link> the good
-      energy of cooperation.
+      importance for all the members of the group, maintaining their individual
+      differences. Enjoy the way others would do things: you will learn how they
+      think. Understanding others will let them follow you if they make a
+      mistake or if their solution is not so enjoyable.
     </p>
   </div>
 </template>
@@ -263,8 +271,8 @@
 export default {
   head() {
     return {
-      title: 'Cooperacy - Proportional Creative Integration'
+      title: 'Cooperacy - Proportional Creative Integration',
     }
-  }
+  },
 }
 </script>

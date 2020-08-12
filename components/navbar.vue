@@ -8,25 +8,32 @@
         class="navbar d-flex justify-content-start m-0 p-0"
         @mouseleave="navState = null"
       >
-        <div class="col-6 col-sm-4 col-lg-3 p-0 align-items-start" @click="hideNav()">
+        <div
+          class="col-6 col-sm-4 col-lg-3 p-0 align-items-start"
+          @click="hideNav()"
+        >
           <nuxt-link to="/">
-          <svg version="1.1"  
-          xmlns="http://www.w3.org/2000/svg" 
-          xmlns:xlink="http://www.w3.org/1999/xlink"   
-          x="0px" y="0px"
-          viewBox="0 0 1300 200"
-          xml:space="preserve">
-            <g>
-	            <text transform="matrix(1 0 0 1 43 110)">
-                <tspan x="0" y="0" class="logo svgtext">C</tspan>
-                <tspan x="170" y="0" class="logo svgtext">OPERACY</tspan>
-              </text>
-	            <g>
-                <image style="overflow:visible;"
-                width="82" 
-                height="82"
-                transform="matrix(1 0 0 1 126 29)"
-                xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIEAAACBCAYAAADnoNlQAAAACXBIWXMAAAsSAAALEgHS3X78AAAA
+            <svg
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              x="0px"
+              y="0px"
+              viewBox="0 0 1300 200"
+              xml:space="preserve"
+            >
+              <g>
+                <text transform="matrix(1 0 0 1 43 110)">
+                  <tspan x="0" y="0" class="logo svgtext">C</tspan>
+                  <tspan x="170" y="0" class="logo svgtext">OPERACY</tspan>
+                </text>
+                <g>
+                  <image
+                    style="overflow: visible;"
+                    width="81"
+                    height="81"
+                    transform="matrix(1 0 0 1 126 29)"
+                    xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIEAAACBCAYAAADnoNlQAAAACXBIWXMAAAsSAAALEgHS3X78AAAA
                 GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAGR5JREFUeNrsXQuMXNV5PufOWpFS
                 qRmZVqhNG4YM5WEeHpNAaIni2UIkSBp5V0mTJlR4NlHS1Bh2FwyYmLA7cXgEkuwuJmkeojumbRS1
                 SB6rjUqbEo9LSwgkeEzAtQhTTyhRSsDLRKqiyDP3nv7n3Nd53ntnd2Zndn2PdHyfMzu+3/d//+Pc
@@ -140,15 +147,14 @@
                 JECGOoFMAo1LaMGyCuCXX8y/tTns13hNvfP28r9n9x1Sd7EdYe+1LzIpkASeFTNIZSXYJymAXDRy
                 /zQBsCnwZP9L+TPra+m6rtkXH1/+6BKdD4lWIbd6hCgIZWMD6Ah3SQIc5Q5QDYhwEPbU/jv/W/W1
                 ei3XzduvLzuwlCWuu6AB5Vn0nY2EDf2GBSnduISRBCJZ6P0KdfjMYVg26Xrj3I319XLtTotXoG95
-                bKmosfIccYmiqoWFah5JWi9esn7ANrX/F2AAQvoAvZmUK8EAAAAASUVORK5CYII=" 
-                />
-            	</g>
-	            <text transform="matrix(1 0 0 1 50 170)" class="lets svgtext">
-                LET’S DO IT TOGETHER
-              </text>
-            </g>
-          </svg>
-
+                bKmosfIccYmiqoWFah5JWi9esn7ANrX/F2AAQvoAvZmUK8EAAAAASUVORK5CYII="
+                  />
+                </g>
+                <text transform="matrix(1 0 0 1 50 170)" class="lets svgtext">
+                  LET’S DO IT TOGETHER
+                </text>
+              </g>
+            </svg>
           </nuxt-link>
         </div>
         <div class="col-6 d-flex flex-column h-100 nav-only-desktop">
@@ -392,7 +398,7 @@ export default {
   data() {
     return {
       navState: null,
-      isDropdownVisible: false
+      isDropdownVisible: false,
     }
   },
   computed: {
@@ -402,7 +408,7 @@ export default {
       } catch (e) {
         return 'not found'
       }
-    }
+    },
   },
   methods: {
     resetNavState: function () {
@@ -422,7 +428,7 @@ export default {
       } else {
         this.$colorMode.preference = 'light'
       }
-    }
-  }
+    },
+  },
 }
 </script>

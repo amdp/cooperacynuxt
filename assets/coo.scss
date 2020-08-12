@@ -116,7 +116,7 @@ a:hover {
 .equivalence,
 .hequivalence {
   color: $equivalence;
-}
+  fill: $equivalence;}
 .bequivalence,
 .bhequivalence,
 .onequivalence {
@@ -124,6 +124,7 @@ a:hover {
 }
 .hequivalence:hover {
   color: $trust;
+  fill: $trust;
 }
 .bhequivalence:hover {
   background-color: $trust;
@@ -134,9 +135,11 @@ a:hover {
 .trust,
 .htrust {
   color: $trust;
+  fill: $trust;
 }
 .htrust:hover {
   color: $transparency;
+  fill: $transparency;
 }
 .bhtrust:hover {
   background-color: $transparency;
@@ -152,6 +155,7 @@ a:hover {
 .care,
 .hcare {
   color: $care;
+  fill: $care;
 }
 .bcare,
 .bhcare,
@@ -160,6 +164,7 @@ a:hover {
 }
 .hcare:hover {
   color: $diversity;
+  fill: $diversity;
 }
 .bhcare:hover {
   background-color: $diversity;
@@ -170,6 +175,7 @@ a:hover {
 .transparency,
 .htransparency {
   color: $transparency;
+  fill: $transparency;
 }
 .btransparency,
 .bhtransparency {
@@ -177,6 +183,7 @@ a:hover {
 }
 .htransparency:hover {
   color: $equivalence;
+  fill: $equivalence;
 }
 .bhtransparency:hover {
   background-color: $equivalence;
@@ -187,6 +194,7 @@ a:hover {
 .freedom,
 .hfreedom {
   color: $freedom;
+  fill: $freedom;
 }
 .bfreedom,
 .bhfreedom,
@@ -195,6 +203,7 @@ a:hover {
 }
 .hfreedom:hover {
   color: $care;
+  fill: $care;
 }
 .bhfreedom:hover {
   background-color: $care;
@@ -205,6 +214,7 @@ a:hover {
 .understanding,
 .hunderstanding {
   color: $understanding;
+  fill: $understanding;
 }
 .bunderstanding,
 .bhunderstanding,
@@ -213,6 +223,7 @@ a:hover {
 }
 .hunderstanding:hover {
   color: $freedom;
+  fill: $freedom;
 }
 .bhunderstanding:hover {
   background-color: $freedom;
@@ -223,6 +234,7 @@ a:hover {
 .diversity,
 .hdiversity {
   color: $diversity;
+  fill: $diversity;
 }
 .bdiversity,
 .bhdiversity,
@@ -231,6 +243,7 @@ a:hover {
 }
 .hdiversity:hover {
   color: $understanding;
+  fill: $understanding;
 }
 .bhdiversity:hover {
   background-color: $understanding;
@@ -240,8 +253,13 @@ a:hover {
 }
 .coogray {
   color: $coogray;
+  fill: $coogray;
 }
-.aaagray {
+.aaagray{
+  color: $aaagray;
+  fill: $aaagray;
+}
+.baaagray {
   background-color: $aaagray;
 }
 
@@ -374,6 +392,7 @@ a:hover {
 .white,
 .white:hover {
   color: $back;
+  fill: $back;
 }
 .bwhite {
   background-color: $back;
@@ -403,6 +422,24 @@ a:hover {
 b-form-select .was-validated, .custom-select:valid, .custom-select.is-valid{
   background-color: transparent !important;
 }
+
+.o50{
+  opacity: 50%;
+}
+.o25{
+  opacity: 25%;
+}
+.o75{
+  opacity: 75%;
+}
+.stroke {
+  text-shadow: 
+  -1px -1px 0 #555,
+  1px -1px 0 #555,
+  -1px 1px 0 #555,
+  1px 1px 0 #555;
+}
+
 /***********************************/
 /***********************************/
 /***********************************/

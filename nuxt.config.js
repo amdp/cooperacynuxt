@@ -18,7 +18,6 @@ module.exports = {
     'bootstrap-vue/nuxt',
     ['@nuxtjs/google-analytics', { id: 'UA-105334297-1' }],
     'nuxt-i18n',
-    //['@nuxtjs/dotenv', { systemvars: true, path: '/' }],
     //'@nuxtjs/proxy',
     //'@nuxtjs/pwa',    
   ],

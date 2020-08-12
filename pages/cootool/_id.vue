@@ -1,154 +1,142 @@
 <template>
   <b-container class="m-0 p-0">
     <b-row>
-      <b-col cols="2"></b-col>
-      <b-col cols="8">
+      <b-col cols="1"></b-col>
+      <b-col cols="10">
         <h1
           class="up text-center"
           v-html="this.$store.state.survey.main[0].name"
         ></h1>
-        <br /><br />
         <p>
           These result have been calculated on
-          {{ this.$store.state.survey.parallel[0].surveynum }} anonymous surveys
-          out of {{ this.$store.state.survey.main[0].participant }} people in
-          the observed group.
-        </p>
-        <p v-if="this.$store.state.survey.main[0].project">
-          This group is relative to the Cooperacy Project nr.
-          {{ this.$store.state.survey.main[0].project }}
+          {{ $store.state.survey.parallel[0].surveynum }} anonymous surveys out
+          of {{ $store.state.survey.main[0].participant }} people in the
+          observed group.
         </p>
         <p>
           This group is a
           {{ group }} located in {{ place }}, {{ country }}.
+          <span v-if="$store.state.survey.main[0].project">
+            ID:
+            {{ $store.state.survey.main[0].project }}
+          </span>
         </p>
-        <p v-if="this.$store.state.survey.main[0].desc">Your Description:</p>
-        <p v-html="this.$store.state.survey.main[0].desc"></p>
-        <h2>Report:</h2>
-
+        <p v-if="this.$store.state.survey.main[0].desc">
+          Your Description:
+          <span v-html="this.$store.state.survey.main[0].desc"> </span>
+        </p>
         <!-- REPORT STARTS HERE -->
         <!-- MAIN -->
-        <b-container v-for="type in resultType" :key="type.id">
+        <b-container v-for="type in resultType" :key="type.id" class="m-0 p-0">
           <b-container
             v-for="result in $store.state.survey[type.name]"
             :key="result.id"
+            class="m-0 p-0"
           >
-            <p>
-              If your group would be based only on your survey:
-            </p>
-            <p
+            <b-container
               v-if="
-                (result.MBD + result.MRD + result.BD + result.RD) / 4 <= 0.25
+                type.name == 'main' ||
+                $store.state.survey.parallel[0].surveynum > 1
               "
+              class="m-0 p-0"
             >
-              {{ $t('cootoolreport.stagnation') }}
-              <br />
-              {{ $t('cootoolreport.stagnationrisk') }}
-              {{
-                log4((result.MBD + result.MRD + result.BD + result.RD) / 4) *
-                100
-              }}%
-            </p>
-            <p
-              v-if="
-                (result.MBD + result.MRD + result.BD + result.RD) / 4 -
-                  (result.MBU + result.MRU + result.BU + result.RU) / 4 >
-                  0 &&
-                (result.MBU + result.MRU + result.BU + result.RU) / 4 > 0.25
-              "
-            >
-              {{ $t('cootoolreport.conflictD') }}
-              <br />
-              {{ $t('cootoolreport.conflictDrisk') }}
-              {{
-                Math.round(
-                  Math.pow(
-                    (result.MBD + result.MRD + result.BD + result.RD) / 4 -
-                      (result.MBU + result.MRU + result.BU + result.RU) / 4,
-                    0.5
-                  ) * 100
-                )
-              }}%
-            </p>
-            <p v-if="result.U <= 25">
-              {{ $t('cootoolreport.conflict') }}
-              <br />
-              {{ $t('cootoolreport.conflictrisk') }}
-              {{ log4((result.MBU + result.MRU + result.BU + result.RU) / 4) }}%
-            </p>
-            <p>XX: {{ (result.MBD + result.MRD) / 2 }}</p>
-            <p>
-              D: {{ (result.MBD + result.MRD + result.BD + result.RD) / 4 }}
-            </p>
-            <p>
-              U: {{ (result.MBU + result.MRU + result.BU + result.RU) / 4 }}
-            </p>
-            <p>
-              F: {{ (result.MBF + result.MRF + result.BF + result.RF) / 4 }}
-            </p>
-            <p>
-              I: {{ (result.MBI + result.MRI + result.BI + result.RI) / 4 }}
-            </p>
-            <p>
-              C: {{ (result.MBC + result.MRC + result.BC + result.RC) / 4 }}
-            </p>
-            <p>
-              X: {{ (result.MBX + result.MRX + result.BX + result.RX) / 4 }}
-            </p>
-            <p>
-              H: {{ (result.MBH + result.MRH + result.BH + result.RH) / 4 }}
-            </p>
-            <p>
-              T: {{ (result.MBT + result.MRT + result.BT + result.RT) / 4 }}
-            </p>
-            <p>
-              E: {{ (result.MBE + result.MRE + result.BE + result.RE) / 4 }}
-            </p>
-            <p>PAIRING</p>
-            <p>P: {{ result.P }}</p>
-            <p v-if="result.PText">Your comments:</p>
-            <p v-html="result.PText" v-if="result.PText"></p>
-            <p>PD: {{ result.PD }}</p>
-            <p v-if="result.PDText">Your comments:</p>
-            <p v-html="result.PDText" v-if="result.PDText"></p>
-            <p>PU: {{ result.PU }}</p>
-            <p v-if="result.PUText">Your comments:</p>
-            <p v-html="result.PUText" v-if="result.PUText"></p>
-            <p>PF: {{ result.PF }}</p>
-            <p v-if="result.PFText">Your comments:</p>
-            <p v-html="result.PFText" v-if="result.PFText"></p>
-            <p>PI: {{ result.PI }}</p>
-            <p v-if="result.PIText">Your comments:</p>
-            <p v-html="result.PIText" v-if="result.PIText"></p>
-            <p>PC: {{ result.PC }}</p>
-            <p v-if="result.PCText">Your comments:</p>
-            <p v-html="result.PCText" v-if="result.PCText"></p>
-            <p>PT: {{ result.PT }}</p>
-            <p v-if="result.PTText">Your comments:</p>
-            <p v-html="result.PTText" v-if="result.PTText"></p>
-            <p>PE: {{ result.PE }}</p>
-            <p v-if="result.PEText">Your comments:</p>
-            <p v-html="result.PEText" v-if="result.PEText"></p>
-            <p>PFinal: {{ result.PFinal }}</p>
-            <p v-if="result.PFinalText">Your comments:</p>
-            <p v-html="result.PFinalText" v-if="result.PFinalText"></p>
+              <p
+                v-if="type.name == 'main'"
+                class="t20 hb diversity text-center"
+              >
+                YOUR SURVEY
+              </p>
+              <p
+                v-if="
+                  type.name == 'parallel' &&
+                  $store.state.survey.parallel[0].surveynum > 1
+                "
+                class="t20 hb equivalence text-center"
+              >
+                {{ $store.state.survey.parallel[0].surveynum - 1 }} PARALLEL
+                GROUP SURVEYS
+              </p>
+              <reportsvg :result="result" />
+              <p class="trust hb t20 text-center">CURRENT PAIRING RESULTS</p>
+              <reportsvgpairing :result="result" />
+              <p v-if="result.PText">Your comments on pairing:</p>
+              <p v-html="result.PText" v-if="result.PText"></p>
+              <p v-html="result.PDText" v-if="result.PDText"></p>
+              <p v-html="result.PUText" v-if="result.PUText"></p>
+              <p v-html="result.PFText" v-if="result.PFText"></p>
+              <p v-html="result.PIText" v-if="result.PIText"></p>
+              <p v-html="result.PCText" v-if="result.PCText"></p>
+              <p v-html="result.PTText" v-if="result.PTText"></p>
+              <p v-html="result.PEText" v-if="result.PEText"></p>
+              <p v-html="result.PFinalText" v-if="result.PFinalText"></p>
+
+              <p
+                v-if="
+                  (result.MBD + result.MRD + result.BD + result.RD) / 4 <= 0.25
+                "
+              >
+                {{ $t('cootoolreport.stagnation') }}
+                <br />
+                {{ $t('cootoolreport.stagnationrisk') }}
+                {{
+                  log4((result.MBD + result.MRD + result.BD + result.RD) / 4) *
+                  100
+                }}%
+              </p>
+              <p
+                v-if="
+                  (result.MBD + result.MRD + result.BD + result.RD) / 4 -
+                    (result.MBU + result.MRU + result.BU + result.RU) / 4 >
+                    0 &&
+                  (result.MBU + result.MRU + result.BU + result.RU) / 4 > 0.25
+                "
+              >
+                {{ $t('cootoolreport.conflictD') }}
+                <br />
+                {{ $t('cootoolreport.conflictDrisk') }}
+                {{
+                  Math.round(
+                    Math.pow(
+                      (result.MBD + result.MRD + result.BD + result.RD) / 4 -
+                        (result.MBU + result.MRU + result.BU + result.RU) / 4,
+                      0.5
+                    ) * 100
+                  )
+                }}%
+              </p>
+              <p v-if="result.U <= 25">
+                {{ $t('cootoolreport.conflict') }}
+                <br />
+                {{ $t('cootoolreport.conflictrisk') }}
+                {{
+                  log4((result.MBU + result.MRU + result.BU + result.RU) / 4)
+                }}%
+              </p>
+            </b-container>
           </b-container>
         </b-container>
         <b-container>
-          <b-form @submit.prevent="cooperationForm()" class="mt-3 was-validated">
-          
+          <b-form
+            @submit.prevent="cooperationForm()"
+            class="mt-3 was-validated"
+          >
+            <!-- /////////////// PAIRING ///////////////  /////////////////////////////////////// -->
 
-          <!-- /////////////// PAIRING ///////////////  /////////////////////////////////////// -->
+            <!-- /////////////// PAIRING ///////////////  /////////////////////////////////////// -->
 
-          <!-- /////////////// PAIRING ///////////////  /////////////////////////////////////// -->
-          
-          <!-- /////////////// PAIRING ///////////////  /////////////////////////////////////// -->
+            <!-- /////////////// PAIRING ///////////////  /////////////////////////////////////// -->
 
-          <b-container class="m-0 p-0 t16 justify">
-            <h5 class="text-center mt-5 mb-2 equivalence">
-              {{ $t('cootool.grouppairing') }}
-            </h5>
-              <p class="mb-5" v-html="$t('cootool.grouppairingintro') + $t('cootool.grouppairingintro2')"></p>
+            <b-container class="m-0 p-0 t16 justify">
+              <h5 class="text-center mt-5 mb-2 trust">
+                {{ $t('cootool.grouppairing') }}
+              </h5>
+              <p
+                class="mb-5"
+                v-html="
+                  $t('cootool.grouppairingintro') +
+                  $t('cootool.grouppairingintro2')
+                "
+              ></p>
               <p class="m-0" v-html="$t('cootool.PBase')"></p>
               <p class="text-center m-0 p-0 mt-2">{{ formPairBase }}%</p>
               <vue-slider
@@ -158,7 +146,7 @@
                 v-model="formPairBase"
                 class="mb-4"
                 :min="1"
-                :process-style="{ backgroundColor: 'var(--equivalence)' }"
+                :process-style="{ backgroundColor: 'var(--trust)' }"
               />
               <br />
               {{ $t('cootool.details') }}
@@ -182,7 +170,9 @@
               ></b-form-textarea>
 
               <p class="m-0" v-html="$t('cootool.PU')"></p>
-              <p class="text-center m-0 p-0 mt-2">{{ formPairUnderstanding }}%</p>
+              <p class="text-center m-0 p-0 mt-2">
+                {{ formPairUnderstanding }}%
+              </p>
               <vue-slider
                 :tooltip="'none'"
                 :height="7"
@@ -214,7 +204,9 @@
               <b-form-textarea v-model="formPairFreedomText"></b-form-textarea>
 
               <p class="m-0" v-html="$t('cootool.PI')"></p>
-              <p class="text-center m-0 p-0 mt-2">{{ formPairTransparency }}%</p>
+              <p class="text-center m-0 p-0 mt-2">
+                {{ formPairTransparency }}%
+              </p>
               <vue-slider
                 :tooltip="'none'"
                 :height="7"
@@ -287,49 +279,54 @@
                 v-model="formPairFinal"
                 class="mb-4"
                 :min="1"
-                :process-style="{ backgroundColor: 'var(--equivalence)' }"
+                :process-style="{ backgroundColor: 'var(--diversity)' }"
               />
               <br />
               {{ $t('cootool.explain') }}
               <b-form-textarea v-model="formPairFinalText"></b-form-textarea>
-          </b-container>
+            </b-container>
 
-          <b-check name="termscheckbox" required>
-            <span class="diversity it"> {{ $t('cootool.checkbox') }}</span>
-            <nuxt-link to="/main/terms" class="au">
-              {{ $t('cootool.checkboxlink') }}
-            </nuxt-link>
-            <span class="diversity it">{{ $t('cootool.checkboxend') }}</span>
-          </b-check>
-          <b-button
-            type="submit"
-            class="btn bhtrust btn-block mt-3 mb-3 gray border-0"
-          >
-            <p class="m-0 btransparent" v-if="!editing">
-              {{ $t('cootool.go') }}
-            </p>
-            <b-spinner small v-if="editing" class="m-1 btransparent"></b-spinner>
-            <p class="m-0 btransparent" v-if="editing">
-              {{ $t('cootool.loading') }}
-            </p>
-          </b-button>
-        </b-form>
+            <b-check name="termscheckbox" required>
+              <span class="diversity it"> {{ $t('cootool.checkbox') }}</span>
+              <nuxt-link to="/main/terms" class="au">
+                {{ $t('cootool.checkboxlink') }}
+              </nuxt-link>
+              <span class="diversity it">{{ $t('cootool.checkboxend') }}</span>
+            </b-check>
+            <b-button
+              type="submit"
+              class="btn bhtrust btn-block mt-3 mb-3 gray border-0"
+            >
+              <p class="m-0 btransparent" v-if="!editing">
+                {{ $t('cootool.go') }}
+              </p>
+              <b-spinner
+                small
+                v-if="editing"
+                class="m-1 btransparent"
+              ></b-spinner>
+              <p class="m-0 btransparent" v-if="editing">
+                {{ $t('cootool.loading') }}
+              </p>
+            </b-button>
+          </b-form>
         </b-container>
       </b-col>
-      <b-col cols="2"></b-col>
+      <b-col cols="1"></b-col>
     </b-row>
   </b-container>
 </template>
 
 <script>
-  import VueSlider from 'vue-slider-component/dist-css/vue-slider-component.umd.min'
+import VueSlider from 'vue-slider-component/dist-css/vue-slider-component.umd.min'
 import 'vue-slider-component/dist-css/vue-slider-component.css'
 import 'vue-slider-component/theme/default.css'
+import * as d3 from 'd3'
 export default {
   components: { VueSlider },
   head() {
     return {
-      title: 'Cooperacy - The Cooperation Tool Result Page'
+      title: 'Cooperacy - The Cooperation Tool Result Page',
     }
   },
   async fetch({ store, params }) {
@@ -342,19 +339,25 @@ export default {
     return {
       resultType: [
         { id: 1, name: 'main' },
-        { id: 2, name: 'parallel' }
+        { id: 2, name: 'parallel' },
       ],
       nihil: null,
       formPairBase: Math.round(this.$store.state.survey.main[0].P * 100),
       formPairDiversity: Math.round(this.$store.state.survey.main[0].PD * 100),
-      formPairUnderstanding: Math.round(this.$store.state.survey.main[0].PU * 100),
+      formPairUnderstanding: Math.round(
+        this.$store.state.survey.main[0].PU * 100
+      ),
       formPairFreedom: Math.round(this.$store.state.survey.main[0].PF * 100),
-      formPairTransparency: Math.round(this.$store.state.survey.main[0].PI * 100),
+      formPairTransparency: Math.round(
+        this.$store.state.survey.main[0].PI * 100
+      ),
       formPairCare: Math.round(this.$store.state.survey.main[0].PC * 100),
       formPairTrust: Math.round(this.$store.state.survey.main[0].PT * 100),
-      formPairEquivalence: Math.round(this.$store.state.survey.main[0].PE * 100),
-            formPairFinal: Math.round(this.$store.state.survey.main[0].PFinal * 100),
-            formPairBaseText: this.$store.state.survey.main[0].PText,
+      formPairEquivalence: Math.round(
+        this.$store.state.survey.main[0].PE * 100
+      ),
+      formPairFinal: Math.round(this.$store.state.survey.main[0].PFinal * 100),
+      formPairBaseText: this.$store.state.survey.main[0].PText,
       formPairDiversityText: this.$store.state.survey.main[0].PDText,
       formPairUnderstandingText: this.$store.state.survey.main[0].PUText,
       formPairFreedomText: this.$store.state.survey.main[0].PFText,
@@ -367,26 +370,38 @@ export default {
       editing: false,
     }
   },
+  mounted() {},
   computed: {
     country() {
-      return this.$store.state.country[this.$store.state.survey.main[0].country - 1].name
+      let [country] = this.$store.state.country.filter(
+        (country) => country.id == this.$store.state.survey.main[0].country
+      )
+      return country.name
     },
     place() {
-      return this.$store.state.place[this.$store.state.survey.main[0].place - 1].name
+      let [place] = this.$store.state.place.filter(
+        (place) => place.id == this.$store.state.survey.main[0].place
+      )
+      return place.name
     },
     group() {
-      return this.$t('cootool.group' + (this.$store.state.survey.main[0].group))
+      return this.$t('cootool.group' + this.$store.state.survey.main[0].group)
     },
   },
   methods: {
+    //other functions
     log4(n) {
       let n4 = Math.round((-1 * (Math.log(n / 100) / Math.log(4)) - 1) * 100)
-      if (n4 >= 0.99) { n4 = 99 }
+      if (n4 >= 0.99) {
+        n4 = 99
+      }
       return n4
     },
     delta(n) {
       let nDelta = Math.round(n ^ 0.5)
-      if (nDelta >= 0.99) { nDelta = 99 }
+      if (nDelta >= 0.99) {
+        nDelta = 99
+      }
       return nDelta
     },
     async cooperationForm() {
@@ -461,7 +476,10 @@ export default {
       }
       let res
       try {
-        res = await this.$store.dispatch('cooperationToolAction', formBodyRequest)
+        res = await this.$store.dispatch(
+          'cooperationToolAction',
+          formBodyRequest
+        )
       } catch (err) {
         console.log(err)
         alert(err)
@@ -472,9 +490,10 @@ export default {
         setTimeout(function () {
           that.$router.go(0)
         }, 1200)
-      } else { alert('Something went wrong, try again') }
-    }
-  }
+      } else {
+        alert('Something went wrong, try again')
+      }
+    },
+  },
 }
-
 </script>
