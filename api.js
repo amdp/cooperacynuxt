@@ -242,12 +242,20 @@ app.put('/user', async function (req, res, next) {
       req.body.password = hash
       try {
         let query =
-          'UPDATE `user` SET `name`=?,`surname`=?,`email`=?,`password`=? WHERE `id`=?'
+          'UPDATE `user` SET `name`=?,`surname`=?,`email`=?,`password`=?,`nickname`=?,`sexidentity`=?,`birthsex`=?,`birthdate`=?,`birthcountry`=?,`birthplace`=?,`nationality`=?,`nationalities`=? where `id`=?'
         let param = [
           req.body.name,
           req.body.surname,
           req.body.email,
           req.body.password,
+          req.body.nickname,
+          req.body.sexidentity,
+          req.body.birthsex,
+          req.body.birthdate,
+          req.body.birthcountry,
+          req.body.birthplace,
+          req.body.nationality,
+          req.body.nationalities,
           req.body.id
         ]
         const [user] = await mypool.execute(query, param)
@@ -671,13 +679,21 @@ app.post('/user', async function (req, res, next) {
       let hashed = await bcrypt.hash(req.body.password, 10)
       try {
         let query =
-          'INSERT INTO `user` (`name`,`surname`,`email`,`password`,`paypalagreementid`) VALUES (?,?,?,?,?)'
+          'INSERT INTO `user` (`name`,`surname`,`email`,`password`,`paypalagreementid`,`nickname`,`sexidentity`,`birthsex`,`birthdate`,`birthcountry`,`birthplace`,`nationality`,`nationalities`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)'
         let param = [
           req.body.name,
           req.body.surname,
           req.body.email,
           hashed,
-          req.body.paypalagreementid
+          req.body.paypalagreementid,
+          req.body.nickname,
+          req.body.sexidentity,
+          req.body.birthsex,
+          req.body.birthdate,
+          req.body.birthcountry,
+          req.body.birthplace,
+          req.body.nationality,
+          req.body.nationalities,
         ]
         const [useradded] = await mypool.execute(query, param)
         res.send({ id: useradded.insertId })
@@ -1154,7 +1170,7 @@ app.post('/cooperationtool', async function (req, res, next) {
       let query =
         'INSERT INTO `cooperationtool` (`id`,`user`,`surveyid`,`project`,`group`,`country`,`place`,`month`,`participant`,`name`,`desc`,`MBD`,`BD`,`MRD`,`RD`,`MBU`,`BU`,`MRU`,`RU`,`MBF`,`BF`,`MRF`,`RF`,`MBI`,`BI`,`MRI`,`RI`,`MBC`,`BC`,`MRC`,`RC`,`MBX`,`BX`,`MRX`,`RX`,`MBH`,`BH`,`MRH`,`RH`,`MBT`,`BT`,`MRT`,`RT`,`MBE`,`BE`,`MRE`,`RE`,`P`,`PText`,`PD`,`PDText`,`PU`,`PUText`,`PF`,`PFText`,`PI`,`PIText`,`PC`,`PCText`,`PT`,`PTText`,`PE`,`PEText`,`PFinal`,`PFinalText`) VALUES (?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?)'
       let param = [req.body.id, req.body.user, req.body.surveyid, req.body.project, req.body.group, req.body.country, req.body.place, req.body.month, req.body.participant, req.body.name, req.body.desc, req.body.MBD, req.body.BD, req.body.MRD, req.body.RD, req.body.MBU, req.body.BU, req.body.MRU, req.body.RU, req.body.MBF, req.body.BF, req.body.MRF, req.body.RF, req.body.MBI, req.body.BI, req.body.MRI, req.body.RI, req.body.MBC, req.body.BC, req.body.MRC, req.body.RC, req.body.MBX, req.body.BX, req.body.MRX, req.body.RX, req.body.MBH, req.body.BH, req.body.MRH, req.body.RH, req.body.MBT, req.body.BT, req.body.MRT, req.body.RT, req.body.MBE, req.body.BE, req.body.MRE, req.body.RE, req.body.P, req.body.PText, req.body.PD, req.body.PDText, req.body.PU, req.body.PUText, req.body.PF, req.body.PFText, req.body.PI, req.body.PIText, req.body.PC, req.body.PCText, req.body.PT, req.body.PTText, req.body.PE, req.body.PEText, req.body.PFinal, req.body.PFinalText]
-      if (req.body.pairing){
+      if (req.body.pairing) {
         query = 'UPDATE `cooperationtool` SET `id` = ?,`user` = ?,`surveyid` = ?,`project` = ?,`group` = ?,`country` = ?,`place` = ?,`month` = ?,`participant` = ?,`name` = ?,`desc` = ?,`MBD` = ?,`BD` = ?,`MRD` = ?,`RD` = ?,`MBU` = ?,`BU` = ?,`MRU` = ?,`RU` = ?,`MBF` = ?,`BF` = ?,`MRF` = ?,`RF` = ?,`MBI` = ?,`BI` = ?,`MRI` = ?,`RI` = ?,`MBC` = ?,`BC` = ?,`MRC` = ?,`RC` = ?,`MBX` = ?,`BX` = ?,`MRX` = ?,`RX` = ?,`MBH` = ?,`BH` = ?,`MRH` = ?,`RH` = ?,`MBT` = ?,`BT` = ?,`MRT` = ?,`RT` = ?,`MBE` = ?,`BE` = ?,`MRE` = ?,`RE` = ?,`P` = ?,`PText` = ?,`PD` = ?,`PDText` = ?,`PU` = ?,`PUText` = ?,`PF` = ?,`PFText` = ?,`PI` = ?,`PIText` = ?,`PC` = ?,`PCText` = ?,`PT` = ?,`PTText` = ?,`PE` = ?,`PEText` = ?,`PFinal` = ?,`PFinalText` = ? WHERE `id` = ?'
         param.push(req.body.id)
         await mypool.execute(query, param)

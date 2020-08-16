@@ -321,7 +321,6 @@
 import VueSlider from 'vue-slider-component/dist-css/vue-slider-component.umd.min'
 import 'vue-slider-component/dist-css/vue-slider-component.css'
 import 'vue-slider-component/theme/default.css'
-import * as d3 from 'd3'
 export default {
   components: { VueSlider },
   head() {

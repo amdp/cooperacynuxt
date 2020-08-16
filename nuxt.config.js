@@ -6,7 +6,6 @@ import en from './t/en.json'
 import it from './t/it.json'
 module.exports = {
   mode: 'universal',
-  plugins: [],
   build: {},
   serverMiddleware: ['./api'],
   css: ['@assets/coo.scss'],

@@ -1,4 +1,8 @@
 {
+  "main": {
+    "one": "un altro",
+    "newplace": "Se non trovi il luogo nell'elenco, sentiti libero di aggiungerne"
+  },
   "cootool": {
     "intro": "Benvenuto al Cooperacy Cooperation Tool! <br/ > Utilizza pure il <nuxt-link to=\"/cootool/form\" class=\"ae\">Cooperation Tool Form</nuxt-link> per valutare la cooperazione del tuo gruppo, sia esso un gruppo di amici, i tuoi colleghi a lavoro, la tua famiglia o anche comunità su grande scala. Utilizza invece il form di ricerca se vuoi rivedere un precedente questionario e i suoi risultati.",
     "introform": "Una volta completato il questionario potete condividerne il nome e l'ID insieme al link a questa pagina nel vostro gruppo: più sono coloro che vi partecipano e più la valutazione sarà accurata.",
@@ -22,8 +26,6 @@
     "group7": "Te stesso (sperimentale)",
     "country": "In che nazione è il tuo gruppo?",
     "place": "Qual è il luogo (es. la città dove vivi, la sede generale della società, la capitale per le nazioni...) del tuo gruppo?",
-    "newplace": "Se non trovi il luogo nell'elenco, sentiti libero di aggiungerne",
-    "one": "un altro",
     "name": "Qual è il nome del tuo gruppo?",
     "participant": "Qual è approssimativamente il numero dei partecipanti del tuo gurppo?",
     "month": "Per quanti mesi hai fatto parte del gruppo finora?",
@@ -112,5 +114,10 @@
     "insert": "Inserisci un luogo dopo aver scelto una nazione:",
     "add": "AGGIUNGI",
     "close": "CHIUDI"
+  },
+  "login": {
+    "female": "F - Female",
+    "male": "M - Male",
+    "intersex": "X - Intersex"
   }
 }

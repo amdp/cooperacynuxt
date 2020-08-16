@@ -62,7 +62,6 @@
                 type="email"
                 placeholder="Your email"
                 class="form-control"
-                required
               ></b-form-input>
             </b-form-group>
             <b-form-group
@@ -105,6 +104,147 @@
                 accept="image/*"
               ></b-form-file>
             </b-form-group>
+            <b-form-group
+              label-for="nicknameInput"
+              label="Nickname:"
+              description="Please insert your nickname if you have one"
+            >
+              <b-form-input
+                id="nicknameInput"
+                v-model="formNickname"
+                size="sm"
+              ></b-form-input>
+            </b-form-group>
+            <b-form-group
+              label-for="sexInput"
+              label="Sexual Identity:"
+              description="Please insert your sex according to your current personal identity"
+            >
+              <b-form-select
+                id="sexidentityInput"
+                v-model="formSexidentity"
+                size="sm"
+                required
+              >
+                <b-form-select-option v-html="$t('login.female')" value="F">
+                  F - Female
+                </b-form-select-option>
+                <b-form-select-option v-html="$t('login.male')" value="M">
+                  M - Male
+                </b-form-select-option>
+                <b-form-select-option v-html="$t('login.intersex')" value="X">
+                  X - Intersex
+                </b-form-select-option>
+              </b-form-select>
+            </b-form-group>
+            <b-form-group
+              label-for="sexInput"
+              label="Biological Sex at Birth:"
+              description="Please insert your biological sex at birth"
+            >
+              <b-form-select
+                id="birthsexInput"
+                v-model="formBirthsex"
+                size="sm"
+                required
+              >
+                <b-form-select-option v-html="$t('login.female')" value="F">
+                  F - Female
+                </b-form-select-option>
+                <b-form-select-option v-html="$t('login.male')" value="M">
+                  M - Male
+                </b-form-select-option>
+                <b-form-select-option v-html="$t('login.intersex')" value="X">
+                  X - Intersex
+                </b-form-select-option>
+              </b-form-select>
+            </b-form-group>
+            <b-form-group
+              label-for="birthdateInput"
+              label="Birthdate:"
+              description="Please insert your birthdate"
+            >
+              <b-form-input
+                id="brithdateInput"
+                v-model="formBirthdate"
+                size="sm"
+                type="datetime-local"
+                required
+              ></b-form-input>
+            </b-form-group>
+            <b-form-group
+              label-for="birthcountryInput"
+              label="Country of birth:"
+              description="Insert the country of birth"
+            >
+              <b-form-select
+                id="birthcountryInput"
+                v-model="formBirthcountry"
+                required
+              >
+                <option
+                  v-for="country in country"
+                  :key="country.id"
+                  :value="country.id"
+                  >{{ country.name }}</option
+                >
+              </b-form-select>
+            </b-form-group>
+            <b-form-group
+              label-for="birthplaceInput"
+              label="Birthplace:"
+              description="Insert the city or location of your birth"
+            >
+              <b-form-select
+                id="birthplaceInput"
+                v-model="formBirthplace"
+                required
+              >
+                <option
+                  v-for="place in place"
+                  :key="place.id"
+                  :value="place.id"
+                  >{{ place.name }}</option
+                >
+              </b-form-select>
+            </b-form-group>
+
+            <p class="it diversity">
+              {{ $t('main.newplace') }}
+              <a v-b-modal.placemodal class="ad finger b">
+                {{ $t('main.one') }}
+              </a>
+            </p>
+
+            <b-form-group
+              label-for="nationalityInput"
+              label="Country of nationality:"
+              description="Insert the country of your nationality"
+            >
+              <b-form-select
+                id="nationalityInput"
+                v-model="formNationality"
+                required
+              >
+                <option
+                  v-for="country in country"
+                  :key="country.id"
+                  :value="country.id"
+                  >{{ country.name }}</option
+                >
+              </b-form-select>
+            </b-form-group>
+            <b-form-group
+              label-for="nationalitiesInput"
+              label="Other countries of nationality:"
+              description="Please insert the name of any other country in which you have a nationality"
+            >
+              <b-form-input
+                id="nationalitiesInput"
+                v-model="formNationalities"
+                size="sm"
+              ></b-form-input>
+            </b-form-group>
             <b-button
               type="submit"
               class="btn bhcare btn-block mt-3 mb-3 white border-0"
@@ -114,6 +254,7 @@
         </div>
       </div>
     </div>
+    <placemodal />
   </div>
 </template>
 
@@ -122,11 +263,16 @@ export default {
   middleware: ['auth'],
   head() {
     return {
-      title: 'Cooperacy - Edit User Information'
+      title: 'Cooperacy - Edit User Information',
     }
+  },
+  async fetch({ store, params }) {
+    await store.dispatch('getPlaceAction')
+    await store.dispatch('getCountryAction')
   },
   data() {
     return {
+      country: this.$store.state.country.filter((country) => country.id != 1),
       formName: this.$auth.user.name,
       formSurname: this.$auth.user.surname,
       formEmail: this.$auth.user.email,
@@ -134,8 +280,24 @@ export default {
       formNewPassword: null,
       formNewEmail: null,
       formImageFilename: null,
-      id: this.$auth.user.id
+      id: this.$auth.user.id,
+      formNickname: this.$auth.user.nickname,
+      formSexidentity: this.$auth.user.sexidentity,
+      formBirthsex: this.$auth.user.birthsex,
+      formBirthdate: this.$auth.user.birthdate.substring(0, 16),
+      formBirthcountry: this.$auth.user.birthcountry,
+      formBirthplace: this.$auth.user.birthplace,
+      formNationality: this.$auth.user.nationality,
+      formNationalities: this.$auth.user.nationalities,
     }
+  },
+  computed: {
+    place() {
+      let place = this.$store.state.place.filter(
+        (place) => place.country == this.formBirthcountry
+      )
+      return place.sort((a, b) => (a.name > b.name ? 1 : -1))
+    },
   },
   methods: {
     async userEdit() {
@@ -152,9 +314,9 @@ export default {
         let res = await this.$store
           .dispatch('imageUploadAction', {
             formImageData: formImageData,
-            headers: { headers: { 'Content-Type': 'multipart/form-data' } }
+            headers: { headers: { 'Content-Type': 'multipart/form-data' } },
           })
-          .catch(err => {
+          .catch((err) => {
             console.error(err)
           })
         if (res) {
@@ -168,7 +330,7 @@ export default {
         {
           id: this.id,
           email: this.formEmail,
-          password: this.formCurrentPassword
+          password: this.formCurrentPassword,
         }
       )
       if (!checkCurrentPassword) {
@@ -188,9 +350,17 @@ export default {
           name: this.formName,
           surname: this.formSurname,
           email: this.formNewEmail,
-          password: this.formNewPassword
+          password: this.formNewPassword,
+          nickname: this.formNickname,
+          sexidentity: this.formSexidentity,
+          birthsex: this.formBirthsex,
+          birthdate: this.formBirthdate,
+          birthcountry: this.formBirthcountry,
+          birthplace: this.formBirthplace,
+          nationality: this.formNationality,
+          nationalities: this.formNationalities,
         })
-        .catch(err => {
+        .catch((err) => {
           console.error(err)
         })
       if (updateUser) {
@@ -204,7 +374,7 @@ export default {
         console.error(err)
       }
       location.href = process.env.URLHOME + '/user' // reloads the user page
-    }
-  }
+    },
+  },
 }
 </script>

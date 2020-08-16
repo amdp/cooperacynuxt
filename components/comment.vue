@@ -7,13 +7,14 @@
         label="New Post:"
         description="Make a question, discuss a topic!"
       >
-        <b-button type="submit" style="display: none"></b-button>
+        <b-button type="submit" style="display: none;"></b-button>
         <b-form-input
           id="postInput"
           v-model="formPost"
           size="sm"
           @keyup="check()"
-        ></b-form-input>
+        >
+        </b-form-input>
       </b-form-group>
     </b-form>
 
@@ -63,11 +64,11 @@
             />
           </div>
         </div>
-        <!-- POSTS EDIT/REPLY FORM BOX -->
+        <!-- POST EDIT/REPLY FORM BOX -->
         <div class="row" v-if="formswitch == comment.id">
           <div class="col-12">
             <b-form @submit.prevent="formcomment(comment, editreplyid)">
-              <b-button type="submit" style="display: none"></b-button>
+              <b-button type="submit" style="display: none;"></b-button>
               <b-form-input
                 id="commentInput"
                 v-model="formComment"
@@ -79,7 +80,7 @@
             </b-form>
           </div>
         </div>
-        <!-- COMMENTS -->
+        <!-- COMMENT -->
         <div
           class="row mt-2"
           v-for="subcomment in sub(comment, comment.id)"
@@ -127,11 +128,11 @@
                 <votebar :voteprop="subcomment" :proptype="'comment'" />
               </div>
             </div>
-            <!-- COMMENTS EDIT/REPLY FORM BOX -->
+            <!-- COMMENT EDIT/REPLY FORM BOX -->
             <div class="row" v-if="formswitch == subcomment.id">
               <div class="col-12">
                 <b-form @submit.prevent="formcomment(subcomment, editreplyid)">
-                  <b-button type="submit" style="display: none"></b-button>
+                  <b-button type="submit" style="display: none;"></b-button>
                   <b-form-input
                     id="commentInput"
                     v-model="formComment"
@@ -151,32 +152,36 @@
 </template>
 
 <script>
-
 export default {
   data() {
     return {
       formswitch: false,
       editreplyid: false,
       formComment: '',
-      formPost: ''
+      formPost: '',
     }
   }, //if formswitch = a comment id, textbox appears
   computed: {
     up() {
       if (this.$store.state.comment) {
-        return this.$store.state.comment.filter(comment => comment.parent === 0)
+        return this.$store.state.comment.filter(
+          (comment) => comment.parent === 0
+        )
       } else {
         return []
       }
     },
     anonymous() {
       let thisproject = this.$store.state.project.filter(
-        project => project.id == this.$route.params.id
+        (project) => project.id == this.$route.params.id
       )
       if (thisproject[0].anonymous == 1) {
         return true
       }
-    }
+    },
+    members() {
+      return this.$store.state.userlist
+    },
   },
   methods: {
     formcomment(comment, editreplyid) {
@@ -195,7 +200,7 @@ export default {
           parent: parent,
           project: this.$route.params.id,
           user: this.$auth.user.id,
-          content: this.formComment
+          content: this.formComment,
         })
         this.reply(comment.id)
       } else {
@@ -204,7 +209,7 @@ export default {
           parent: comment.parent,
           project: this.$route.params.id,
           user: this.$auth.user.id,
-          content: this.formComment
+          content: this.formComment,
         })
         this.edit(comment.id)
       }
@@ -212,7 +217,7 @@ export default {
     sub(comment, id) {
       if (this.$store.state.comment) {
         let subcomments = this.$store.state.comment.filter(
-          comment => comment.parent === id && comment.id != id
+          (comment) => comment.parent === id && comment.id != id
         )
         subcomments.reverse()
         return subcomments
@@ -230,7 +235,7 @@ export default {
         parent: 0,
         project: this.$route.params.id,
         user: this.$auth.user.id,
-        content: this.formPost
+        content: this.formPost,
       })
       this.formPost = ''
     },
@@ -266,7 +271,7 @@ export default {
         parent: toberemoved.parent,
         project: this.$route.params.id,
         user: this.$auth.user.id,
-        content: 'removed by author'
+        content: 'removed by author',
       })
       this.edit(toberemoved.id)
     },
@@ -274,7 +279,7 @@ export default {
       if (!this.$auth.user) {
         return this.$router.push({ path: '/login' })
       }
-    }
-  }
+    },
+  },
 }
 </script>

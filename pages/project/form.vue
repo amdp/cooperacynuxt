@@ -43,14 +43,14 @@
             }}</option>
           </b-form-select>
         </b-form-group>
-        <p class="diversity">
-          <i
-            ><strong>
-              If you do not find your place, please feel free to add a new
-              <b-link v-b-modal.placemodal class="ad">one</b-link></strong
-            ></i
-          >
+
+        <p class="it diversity">
+          {{ $t('main.newplace') }}
+          <a v-b-modal.placemodal class="ad finger b">
+            {{ $t('main.one') }}
+          </a>
         </p>
+
         <b-form-group
           label-for="briefInput"
           label="Brief:"
@@ -95,8 +95,8 @@
                 class="currentImage"
                 :src="
                   '/assets/image/project/' +
-                    this.$store.state.project.id +
-                    '.png'
+                  this.$store.state.project.id +
+                  '.png'
                 "
             /></span>
           </div>
@@ -255,41 +255,13 @@
         >
           <span v-if="!editing" class="btransparent">GO!</span>
           <b-spinner small v-if="editing" class="m-1 btransparent"></b-spinner>
-          <span v-if="editing" class="btransparent">Reloading the project..</span>
+          <span v-if="editing" class="btransparent"
+            >Reloading the project..</span
+          >
         </b-button>
       </b-form>
       <!-- MODAL: ADD A NEW PLACE -->
-      <b-modal id="placemodal" title="Add a new place" hide-header-close>
-        <p class="my-4">Add a new place:</p>
-        <b-form @submit.prevent="addplace">
-          <b-form-group
-            label-for="newcountryInput"
-            label="Country:"
-            description="Insert a place name after choosing a country"
-          >
-            <b-form-select id="newcountryInput" v-model="formNewcountry">
-              <option
-                v-for="country in newcountry"
-                :key="country.id"
-                :value="country.id"
-              >
-                {{ country.name }}
-              </option>
-            </b-form-select>
-            <b-form-input
-              id="newplaceInput"
-              v-model="formNewplace"
-            ></b-form-input>
-          </b-form-group>
-        </b-form>
-        <template slot="modal-footer" slot-scope="{ ok, cancel }">
-          <b-button size="sm" class="bcare" @click="addplace()">ADD</b-button>
-          <b-button size="sm" class="btransparency" @click="cancel()"
-            >CANCEL</b-button
-          >
-          <b-button size="sm" class="none" @click="ok()">ADD</b-button>
-        </template>
-      </b-modal>
+      <placemodal />
     </div>
   </div>
 </template>
@@ -299,7 +271,7 @@ export default {
   middleware: ['auth'],
   head() {
     return {
-      title: 'Cooperacy - Project Form'
+      title: 'Cooperacy - Project Form',
     }
   },
   async fetch({ store, params }) {
@@ -309,7 +281,7 @@ export default {
       await store.dispatch('getProjectAction', {
         projectid: store.state.edit.id,
         limit: ' LIMIT 1',
-        userid: store.state.auth.user.id
+        userid: store.state.auth.user.id,
       })
     }
   },
@@ -318,7 +290,9 @@ export default {
       terms: false,
       editing: false,
       country: this.$store.state.country,
-      category: this.$store.state.category.filter(category => category.id != 0),
+      category: this.$store.state.category.filter(
+        (category) => category.id != 0
+      ),
       totallabel: 0,
       formAnonymous: 0,
       formNewcountry: null,
@@ -328,10 +302,10 @@ export default {
         : null,
       formCountry: this.$store.state.edit.id
         ? this.$store.state.project[0].country
-        : null,
+        : 1,
       formPlace: this.$store.state.edit.id
         ? this.$store.state.project[0].place
-        : null,
+        : 1,
       formBrief: this.$store.state.edit.id
         ? this.$store.state.project[0].brief
         : null,
@@ -360,10 +334,10 @@ export default {
         : 0,
       formAttendee: this.$store.state.edit.id
         ? Math.round(
-          this.$store.state.project[0].budget /
-          this.$store.state.project[0].collect
-        ) || 0
-        : 0
+            this.$store.state.project[0].budget /
+              this.$store.state.project[0].collect
+          ) || 0
+        : 0,
     }
   },
   computed: {
@@ -377,55 +351,29 @@ export default {
     },
     place() {
       let place = this.$store.state.place.filter(
-        place => place.country === this.formCountry
+        (place) => place.country == this.formCountry
       )
       return place.sort((a, b) => (a.name > b.name ? 1 : -1))
     },
-    newcountry() {
-      //avoids showing Cooperacy as possible entry
-      return this.$store.state.country.filter(country => country.id != 1)
-    }
   },
   mounted() {
     if (
       this.$store.state.edit.id &&
       this.$store.state.project[0].anonymous == 1
     ) {
-      return (this.formAnonymous = 1)
+      this.formAnonymous = 1
     }
     if (this.$store.state.edit.id && this.$store.state.project[0].stage != 2) {
-      return (this.formStageFunding = 7)
-    }
-    if (this.$store.state.edit.id && this.$store.state.project[0].place) {
-      return (this.formPlace = this.$store.state.project[0].place)
+      this.formStageFunding = 7
     }
     if (this.$store.state.edit.id && this.$store.state.project[0].stage == 2) {
       totalfreeproject()
     }
-    this.formCountry = 1
-    this.formPlace = 1
   },
   methods: {
     totalfreeproject() {
       if (this.formStageFunding == 2) {
         this.formBudget = this.formFee * this.formAttendee
-      }
-    },
-    async addplace() {
-      let result = await this.$store.dispatch('placeFormAction', {
-        country: this.formNewcountry,
-        name: this.formNewplace
-      })
-      if (result == 'exists') {
-        this.$toast.success('This place already exists!', {
-          duration: 1000,
-          className: 'toastunderstanding'
-        })
-      } else {
-        this.$toast.success(this.formNewplace + ' added!', {
-          duration: 1000,
-          className: 'toast'
-        })
       }
     },
     async projectForm() {
@@ -461,7 +409,7 @@ export default {
         if (res == 'exists') {
           return this.$toast.show('Project already exists!', {
             duration: 1000,
-            className: 'toast'
+            className: 'toast',
           })
         }
         if (projectid == 'new') {
@@ -469,12 +417,12 @@ export default {
             id: res,
             condition: 'F',
             user: this.$auth.user.id,
-            proptype: 'project'
+            proptype: 'project',
           }
           this.$store.dispatch('addVoteAction', freedomvote)
           this.$store.dispatch('professionalAction', {
             project: res,
-            user: this.$auth.user.id
+            user: this.$auth.user.id,
           })
         }
         this.imageUpload(res)
@@ -496,7 +444,7 @@ export default {
         res = await this.$store.dispatch('imageUploadAction', {
           formImageData: formImageData,
           headers: { headers: { 'Content-Type': 'multipart/form-data' } },
-          proptype: 'project'
+          proptype: 'project',
         })
       } catch (err) {
         console.log(err)
@@ -516,7 +464,7 @@ export default {
           location.href = process.env.URLHOME + '/project/' + res
         }
       }, 1200)
-    }
-  }
+    },
+  },
 }
 </script>

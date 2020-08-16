@@ -141,10 +141,10 @@
             >
           </b-form-select>
 
-          <p class="it" v-if="formNature == 0 && !formPrevSurveyID">
-            {{ $t('cootool.newplace') }}
+          <p class="it diversity" v-if="formNature == 0 && !formPrevSurveyID">
+            {{ $t('main.newplace') }}
             <a v-b-modal.placemodal class="ad finger b">
-              {{ $t('cootool.one') }}
+              {{ $t('main.one') }}
             </a>
           </p>
 
@@ -695,36 +695,7 @@
       </b-col>
       <b-col cols="1" md="2"></b-col>
     </b-row>
-
-    <!-- MODAL: ADD A NEW PLACE -->
-
-    <b-modal title="Add a new place" id="placemodal" hide-header-close>
-      <p class="M-4">{{ $t('addplace.newplace') }}</p>
-      <b-form @submit.prevent="addplace">
-        <p class="m-0" v-html="$t('addplace.insert')"></p>
-        <b-form-select v-model="formNewcountry">
-          <option
-            v-for="country in newcountry"
-            :key="country.id"
-            :value="country.id"
-          >
-            {{ country.name }}
-          </option>
-        </b-form-select>
-        <input v-model="formNewplace" />
-      </b-form>
-      <template slot="modal-footer" slot-scope="{ ok, cancel }">
-        <b-button size="sm" class="bcare" @click="addplace()">{{
-          $t('addplace.add')
-        }}</b-button>
-        <b-button size="sm" class="btransparency" @click="cancel()">{{
-          $t('addplace.close')
-        }}</b-button>
-        <b-button size="sm" style="display: none;" @click="ok()">{{
-          $t('addplace.close')
-        }}</b-button>
-      </template>
-    </b-modal>
+    <placemodal />
   </b-container>
 </template>
 

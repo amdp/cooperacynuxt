@@ -36,8 +36,14 @@
               id="loginbutton"
             >
               <span v-if="!logging" class="btransparent">LOGIN</span>
-              <b-spinner small v-if="logging" class="m-1 btransparent"></b-spinner>
-              <span v-if="logging" class="btransparent">Checking your paypal/bank membership..</span>
+              <b-spinner
+                small
+                v-if="logging"
+                class="m-1 btransparent"
+              ></b-spinner>
+              <span v-if="logging" class="btransparent"
+                >Checking your paypal/bank membership..</span
+              >
             </b-button>
           </p>
           <p class="freedom">
@@ -152,6 +158,147 @@
               size="sm"
             ></b-form-file>
           </b-form-group>
+          <b-form-group
+            label-for="nicknameInput"
+            label="Nickname:"
+            description="Please insert your nickname if you have one"
+          >
+            <b-form-input
+              id="nicknameInput"
+              v-model="formNickname"
+              size="sm"
+            ></b-form-input>
+          </b-form-group>
+          <b-form-group
+            label-for="sexInput"
+            label="Sexual Identity:"
+            description="Please insert your sex according to your current personal identity"
+          >
+            <b-form-select
+              id="sexidentityInput"
+              v-model="formSexidentity"
+              size="sm"
+              required
+            >
+              <b-form-select-option v-html="$t('login.female')" value="F">
+                F - Female
+              </b-form-select-option>
+              <b-form-select-option v-html="$t('login.male')" value="M">
+                M - Male
+              </b-form-select-option>
+              <b-form-select-option v-html="$t('login.intersex')" value="X">
+                X - Intersex
+              </b-form-select-option>
+            </b-form-select>
+          </b-form-group>
+          <b-form-group
+            label-for="sexInput"
+            label="Biological Sex at Birth:"
+            description="Please insert your biological sex at birth"
+          >
+            <b-form-select
+              id="birthsexInput"
+              v-model="formBirthsex"
+              size="sm"
+              required
+            >
+              <b-form-select-option v-html="$t('login.female')" value="F">
+                F - Female
+              </b-form-select-option>
+              <b-form-select-option v-html="$t('login.male')" value="M">
+                M - Male
+              </b-form-select-option>
+              <b-form-select-option v-html="$t('login.intersex')" value="X">
+                X - Intersex
+              </b-form-select-option>
+            </b-form-select>
+          </b-form-group>
+          <b-form-group
+            label-for="birthdateInput"
+            label="Birthdate:"
+            description="Please insert your birthdate"
+          >
+            <b-form-input
+              id="brithdateInput"
+              v-model="formBirthdate"
+              size="sm"
+              type="datetime-local"
+              required
+            ></b-form-input>
+          </b-form-group>
+          <b-form-group
+            label-for="birthcountryInput"
+            label="Country of birth:"
+            description="Insert the country of birth"
+          >
+            <b-form-select
+              id="birthcountryInput"
+              v-model="formBirthcountry"
+              required
+            >
+              <option
+                v-for="country in country"
+                :key="country.id"
+                :value="country.id"
+                >{{ country.name }}</option
+              >
+            </b-form-select>
+          </b-form-group>
+          <b-form-group
+            label-for="birthplaceInput"
+            label="Birthplace:"
+            description="Insert the city or location of your birth"
+          >
+            <b-form-select
+              id="birthplaceInput"
+              v-model="formBirthplace"
+              required
+            >
+              <option
+                v-for="place in place"
+                :key="place.id"
+                :value="place.id"
+                >{{ place.name }}</option
+              >
+            </b-form-select>
+          </b-form-group>
+
+          <p class="it diversity">
+            {{ $t('main.newplace') }}
+            <a v-b-modal.placemodal class="ad finger b">
+              {{ $t('main.one') }}
+            </a>
+          </p>
+
+          <b-form-group
+            label-for="nationalityInput"
+            label="Country of nationality:"
+            description="Insert the country of your nationality"
+          >
+            <b-form-select
+              id="nationalityInput"
+              v-model="formNationality"
+              required
+            >
+              <option
+                v-for="country in country"
+                :key="country.id"
+                :value="country.id"
+                >{{ country.name }}</option
+              >
+            </b-form-select>
+          </b-form-group>
+          <b-form-group
+            label-for="nationalitiesInput"
+            label="Other countries of nationality:"
+            description="Please insert the name of any other country in which you have a nationality"
+          >
+            <b-form-input
+              id="nationalitiesInput"
+              v-model="formNationalities"
+              size="sm"
+            ></b-form-input>
+          </b-form-group>
           <b-button
             type="submit"
             class="btn bhcare btn-block mt-3 white border-0"
@@ -171,27 +318,16 @@
       </div>
     </div>
     <b-row v-else class="mb-5"></b-row>
+    <placemodal />
   </div>
 </template>
 
 <script>
 export default {
   middleware: ['auth'],
-  data() {
-    return {
-      loginEmail: null,
-      loginPassword: null,
-      formName: null,
-      formSurname: null,
-      formEmail: null,
-      formPassword: null,
-      formImageFile: null,
-      formPaypalagreementid: 'bank',
-      newaccountvar: false,
-      newaccountpaypal: false,
-      logging: false,
-      offline: false
-    }
+  async fetch({ store, params }) {
+    await store.dispatch('getPlaceAction')
+    await store.dispatch('getCountryAction')
   },
   head() {
     return {
@@ -202,14 +338,14 @@ export default {
             'https://www.paypal.com/sdk/js?client-id=' +
             process.env.PAYPALID +
             '&vault=true&currency=EUR&debug=false',
-          defer: true
+          defer: true,
         },
         {
           src: 'https://apis.google.com/js/main/platform.js',
           async: true,
-          defer: true
+          defer: true,
         },
-        { src: '/login/google.js' }
+        { src: '/login/google.js' },
       ], //CHECK https://github.com/nuxt/nuxt.js/issues/2000 better not to have it in the static folder tho
       meta: [
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -217,12 +353,46 @@ export default {
         { name: 'google-signin-scope', content: 'profile email' },
         {
           name: 'google-signin-client_id',
-          content: `${process.env.GOOGLEID}`
-        }
-      ]
+          content: `${process.env.GOOGLEID}`,
+        },
+      ],
+    }
+  },
+  data() {
+    return {
+      loginEmail: null,
+      loginPassword: null,
+      formName: null,
+      formSurname: null,
+      formEmail: null,
+      formPassword: null,
+      formImageFile: null,
+      formPaypalagreementid: 'bank',
+      formNickname: null,
+      formSexidentity: null,
+      formBirthsex: null,
+      formBirthdate: null,
+      formBirthcountry: null,
+      formBirthplace: null,
+      formNationality: null,
+      formNationalities: null,
+      newaccountvar: false,
+      newaccountpaypal: false,
+      logging: false,
+      offline: false,
     }
   },
   computed: {
+    place() {
+      let place = this.$store.state.place.filter(
+        (place) => place.country === this.formBirthcountry
+      )
+      return place.sort((a, b) => (a.name > b.name ? 1 : -1))
+    },
+    country() {
+      //avoids showing Cooperacy as possible entry
+      return this.$store.state.country.filter((country) => country.id != 1)
+    },
     mailInputState() {
       return this.mail.length > 1 ? true : false
     }, //CHECK to be completed
@@ -231,19 +401,19 @@ export default {
       {
         key: 'google',
         name: 'Google',
-        color: 'login-button border-0 bhequivalence'
+        color: 'login-button border-0 bhequivalence',
       },
       {
         key: 'facebook',
         name: 'Facebook',
-        color: 'login-button border-0 bhfreedom'
+        color: 'login-button border-0 bhfreedom',
       },
       {
         key: 'github',
         name: 'GitHub',
-        color: 'login-button border-0 bhunderstanding'
-      }
-    ]
+        color: 'login-button border-0 bhunderstanding',
+      },
+    ],
   },
   methods: {
     newaccount() {
@@ -265,17 +435,17 @@ export default {
             },
             createSubscription: function (data, actions) {
               return actions.subscription.create({
-                plan_id: 'P-9C681042E7918904VLURYYGQ'
+                plan_id: 'P-9C681042E7918904VLURYYGQ',
               })
             },
             onApprove: function (data, actions) {
               alert(
                 'You have successfully become a member with subscription ID ' +
-                data.subscriptionID
+                  data.subscriptionID
               )
               that.formPaypalagreementid = data.subscriptionID
               that.newuser()
-            }
+            },
           })
           .render('#paypal-button-container')
         this.newaccountpaypal = true
@@ -287,15 +457,18 @@ export default {
         await this.$auth.loginWith('local', {
           data: {
             email: this.loginEmail,
-            password: this.loginPassword
-          }
+            password: this.loginPassword,
+          },
         })
       } catch (err) {
         if (err.response.data == 'expired') {
           location.href = '/activate'
         } else {
-          alert('Sorry, there seems to be something wrong: ' +
-            err.response.data + '.')
+          alert(
+            'Sorry, there seems to be something wrong: ' +
+              err.response.data +
+              '.'
+          )
           this.logging = false
         }
       }
@@ -307,12 +480,12 @@ export default {
     async recover() {
       this.$store.dispatch('recoverPasswordAction', {
         email: this.loginEmail,
-        password: this.loginPassword
+        password: this.loginPassword,
       })
       alert(
         'Cooperacy is sending you an email to ' +
-        this.loginEmail +
-        ' to set the new password that is now in the password field.'
+          this.loginEmail +
+          ' to set the new password that is now in the password field.'
       )
     },
     async newuser() {
@@ -321,17 +494,25 @@ export default {
         surname: this.formSurname,
         email: this.formEmail,
         password: this.formPassword,
-        paypalagreementid: this.formPaypalagreementid
+        paypalagreementid: this.formPaypalagreementid,
+        nickname: this.formNickname,
+        sexidentity: this.formSexidentity,
+        birthsex: this.formBirthsex,
+        birthdate: this.formBirthdate,
+        birthcountry: this.formBirthcountry,
+        birthplace: this.formBirthplace,
+        nationality: this.formNationality,
+        nationalities: this.formNationalities,
       })
       if (newuser == 'exists') {
         return this.$toast.show('Email already in use!', {
           duration: 1000,
-          className: 'toast'
+          className: 'toast',
         })
       }
       if (this.formImageFile) {
         //the newuser variable in response from the server sends the id of the recently created user
-        this.imageUpload(newuser.id).catch(err => console.error(err))
+        this.imageUpload(newuser.id).catch((err) => console.error(err))
       } else {
         this.added()
       }
@@ -340,13 +521,13 @@ export default {
       let formImageData = new FormData()
       formImageData.append('file', this.formImageFile)
       formImageData.append('id', id)
+      formImageData.append('proptype', 'user')
       let res = await this.$store
         .dispatch('imageUploadAction', {
           formImageData: formImageData,
           headers: { headers: { 'Content-Type': 'multipart/form-data' } },
-          proptype: 'user'
         })
-        .catch(err => {
+        .catch((err) => {
           console.error(err)
         })
       if (res) {
@@ -354,12 +535,14 @@ export default {
       }
     },
     added() {
-      this.$toast.success('New user added.', {
+      this.$toast.show('New user added.', {
         duration: 1000,
-        className: 'toast'
+        className: 'toast',
       })
-      setTimeout(function () { location.href = '/main/thankyou' }, 1200)
-    }
-  }
+      setTimeout(function () {
+        location.href = '/main/thankyou'
+      }, 1200)
+    },
+  },
 }
 </script>
