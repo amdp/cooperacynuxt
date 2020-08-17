@@ -77,47 +77,82 @@
             <!-- BUDGET BAR -->
             <b-row class="m-0 p-0 w-100">
               <b-col cols="12">
-                <div
-                  v-if="project.stage == 7"
-                  class="progress-bar btrust coogray"
-                  :class="{
-                    'progress-zero': progress(project) == 0
-                  }"
-                  role="progressbar"
-                  :style="{
-                    width: progress(project) + '%',
-                    maxWidth: '100%'
-                  }"
-                  aria-valuenow="25"
-                  aria-valuemin="0"
-                  aria-valuemax="100"
+                <b-progress
+                  v-if="project.stage == 7 || project.stage == 2"
+                  max="1"
+                  class="mt-2"
                 >
-                  BUDGET: &nbsp;&nbsp;{{ Math.round(collected(project)) }} of
-                  €{{ Math.round(project.budget) }}
-                </div>
+                  <b-progress-bar
+                    :value="(Math.round(collected(project)) /
+                        Math.round(project.budget))"
+                    :label="
+                      (Math.round(collected(project)) /
+                        Math.round(project.budget)) *
+                        100 +
+                      '%'
+                    "
+                    class="btrust"
+                  ></b-progress-bar>
+                  <b-progress-bar
+                    :value="
+                      1 -
+                      Math.round(collected(project)) /
+                        Math.round(project.budget)
+                    "
+                    :label="
+                      '-' +
+                      (1 -
+                        Math.round(collected(project)) /
+                          Math.round(project.budget)) *
+                        100 +
+                      '%'
+                    "
+                    class="theytrust std"
+                  ></b-progress-bar>
+                </b-progress>
+                <span v-if="project.stage == 7 || project.stage == 2">
+                  BUDGET: €{{ Math.round(collected(project)) }} of €{{
+                    Math.round(project.budget)
+                  }}
+                </span>
               </b-col>
             </b-row>
             <!-- HUDGET BAR -->
             <b-row class="m-0 p-0 w-100">
               <b-col cols="12">
-                <div
+                <b-progress
                   v-if="project.category != 4 || project.hudget != 0"
-                  class="progress-bar bfreedom mt-2"
-                  :class="{
-                    'progress-zero': progress(project, 'h') == 0
-                  }"
-                  role="progressbar"
-                  :style="{
-                    width: progress(project, 'h') + '%',
-                    maxWidth: '100%'
-                  }"
-                  aria-valuenow="25"
-                  aria-valuemin="0"
-                  aria-valuemax="100"
+                  max="1"
+                  class="mt-2"
                 >
-                  HUDGET: &nbsp;&nbsp;{{ project.professional }} of
-                  {{ project.hudget }}
-                </div>
+                  <b-progress-bar
+                    :value="project.professional / project.hudget"
+                    :label="
+                      Math.round(
+                        (project.professional / project.hudget) * 100
+                      ) + '%'
+                    "
+                    class="bfreedom"
+                  ></b-progress-bar>
+                  <b-progress-bar
+                    :value="
+                      negprogress(1 - project.professional / project.hudget)
+                    "
+                    :label="
+                      '-' +
+                      Math.round(
+                        negprogress(1 - project.professional / project.hudget) *
+                          100
+                      ) +
+                      '%'
+                    "
+                    class="theyfreedom"
+                  ></b-progress-bar>
+                </b-progress>
+                <span v-if="project.category != 4 || project.hudget != 0"
+                  >HUDGET: {{ project.professional }} of
+                  {{ project.hudget }} professionals needed</span
+                >
               </b-col>
             </b-row>
             <b-row class="m-0 p-0 w-100">
@@ -154,7 +189,7 @@
                     <span
                       v-if="
                         (project.stage == 5 && improfessional) ||
-                          $auth.user.role == 1
+                        $auth.user.role == 1
                       "
                     >
                       <b-link v-b-modal.budgetstepmodal class="at"
@@ -171,7 +206,7 @@
                     <span
                       v-if="
                         (project.stage != 1 && improfessional) ||
-                          $auth.user.role == 1
+                        $auth.user.role == 1
                       "
                     >
                       <b-link v-b-modal.professionalmodal class="af"
@@ -182,7 +217,7 @@
                     <span
                       v-if="
                         (project.stage != 1 && improfessional) ||
-                          $auth.user.role == 1
+                        $auth.user.role == 1
                       "
                     >
                       <b-link class="au" @click="edit()"
@@ -194,10 +229,10 @@
                       v-if="
                         (project.budgetstep - project.fundingstep > 1 &&
                           improfessional) ||
-                          (project.stage == 2 &&
-                            project.fundingstep == 6 &&
-                            improfessional) ||
-                          $auth.user.role == 1
+                        (project.stage == 2 &&
+                          project.fundingstep == 6 &&
+                          improfessional) ||
+                        $auth.user.role == 1
                       "
                     >
                       <b-link class="ad" @click="fundingstep(project)"
@@ -237,8 +272,8 @@ export default {
       isHover: null,
       projectTypes: [
         { id: 1, name: 'projects' },
-        { id: 2, name: 'archived' }
-      ]
+        { id: 2, name: 'archived' },
+      ],
     }
   },
   computed: {
@@ -246,36 +281,39 @@ export default {
       if (this.$route.params.id) {
         return {
           projects: this.$store.state.project.filter(
-            project => project.id == this.$route.params.id
+            (project) => project.id == this.$route.params.id
           ),
-          archived: []
+          archived: [],
         }
       } else {
         return {
           projects: this.$store.state.project.filter(
-            project => project.stage != 1
+            (project) => project.stage != 1
           ),
           archived: this.$store.state.project.filter(
-            project => project.stage == 1
-          )
+            (project) => project.stage == 1
+          ),
         }
       }
-    }
+    },
   },
   methods: {
     improfessional() {
       let mypro = this.$store.state.professional.filter(
-        pro =>
+        (pro) =>
           pro.user == this.$auth.user && pro.project == this.$route.params.id
       )
       if (mypro.length > 0) return true
       else return false
     },
-    projectbox(project){
+    projectbox(project) {
       let boxclass
-      let categorycolor = ['','e','t','c','i','f','u','d'] //order these according categories
-      for  (let i=0;i<7;i++){
-        if (project.category == i) {boxclass = 'p-3 ml-0 mr-0 mb-3 w-100 '+categorycolor[i]+'projectbox'}
+      let categorycolor = ['', 'e', 't', 'c', 'i', 'f', 'u', 'd'] //order these according categories
+      for (let i = 0; i < 7; i++) {
+        if (project.category == i) {
+          boxclass =
+            'p-3 ml-0 mr-0 mb-3 w-100 ' + categorycolor[i] + 'projectbox'
+        }
       }
       return boxclass
     },
@@ -306,10 +344,10 @@ export default {
         F: project.F,
         U: project.U,
         D: project.D,
-        created: project.created
+        created: project.created,
       })
       this.$store.dispatch('getUserProjectAction', {
-        userid: this.$auth.user.id
+        userid: this.$auth.user.id,
       })
       return this.$router.push({ path: '/user' })
     },
@@ -318,9 +356,25 @@ export default {
       let payload = {
         formName: this.$auth.user.name + ' ' + this.$auth.user.surname,
         formEmail: this.$auth.user.email,
-        formSubject: 'Funding Step #' + project.fundingstep
-          + ' Request Notification from Project #' + project.id + ' ' + project.name,
-        formBody: 'In Project #' + project.id + ' ' + project.name + ' comember ' + this.$auth.user.name + ' ' + this.$auth.user.surname + ' has requested Funding Step #"' + project.fundingstep + '".'
+        formSubject:
+          'Funding Step #' +
+          project.fundingstep +
+          ' Request Notification from Project #' +
+          project.id +
+          ' ' +
+          project.name,
+        formBody:
+          'In Project #' +
+          project.id +
+          ' ' +
+          project.name +
+          ' comember ' +
+          this.$auth.user.name +
+          ' ' +
+          this.$auth.user.surname +
+          ' has requested Funding Step #"' +
+          project.fundingstep +
+          '".',
       }
       this.$store.dispatch('contactEmailAction', payload)
       this.$store.dispatch('fundingstep', project)
@@ -339,23 +393,16 @@ export default {
     copy() {
       this.$store.dispatch('editSwitchAction', {
         id: this.$route.params.id,
-        copy: true
+        copy: true,
       })
       this.$store.dispatch('getUserProjectAction', {
-        userid: this.$auth.user.id
+        userid: this.$auth.user.id,
       })
       return this.$router.push({ path: '/project/form' })
     },
-    progress(project, hudget) {
-      let projectProgress
-      if (hudget) {
-        projectProgress = Math.round(
-          (project.professional / project.hudget) * 100
-        )
-      } else {
-        projectProgress = Math.round((project.collect / project.budget) * 100)
-      }
-      return isNaN(projectProgress) ? 0 : projectProgress //add infinity or remove budget 0 ideas
+    negprogress(num) {
+      num < 0 ? (num = 0) : (num = num)
+      return num
     },
     collected(project) {
       if (project.stage == 2) {
@@ -365,16 +412,17 @@ export default {
       }
     },
     stage(id) {
-      return this.$store.state.stage.find(stage => stage.id == id).name
+      return this.$store.state.stage.find((stage) => stage.id == id).name
     },
     category(id) {
-      return this.$store.state.category.find(category => category.id == id).name
+      return this.$store.state.category.find((category) => category.id == id)
+        .name
     },
     location(id) {
-      let projectPlace = this.$store.state.place.find(place => place.id == id)
+      let projectPlace = this.$store.state.place.find((place) => place.id == id)
       if (projectPlace) {
         let projectCountry = this.$store.state.country.find(
-          country => country.id == projectPlace.country
+          (country) => country.id == projectPlace.country
         )
         if (projectCountry) {
           return projectPlace.name + ', ' + projectCountry.name
@@ -382,7 +430,7 @@ export default {
       } else {
         return 'Unknown'
       }
-    }
-  }
+    },
+  },
 }
 </script>

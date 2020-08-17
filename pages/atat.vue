@@ -1,25 +1,14 @@
 <template>
-  <div>
-    <Mentionable :keys="['@']" :items="items" offset="6" @click="alert('ooo')">
-      <textarea v-model="text" />
-    </Mentionable>
-  </div>
+  <at :members="members">
+    <div contenteditable></div>
+  </at>
 </template>
+
 <script>
 export default {
   data() {
     return {
-      text: '',
-      items: [
-        {
-          value: 'cat',
-          label: 'Mr Cat',
-        },
-        {
-          value: 'dog',
-          label: 'Mr Dog',
-        },
-      ],
+      members: ['Roxie Miles', 'grace.carroll', '小浩'],
     }
   },
 }

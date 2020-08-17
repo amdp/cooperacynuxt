@@ -71,7 +71,7 @@ $aaagray: #aaa;
 $graylight: #ccc;
 $front: #000;
 $back: #fff;
-$frontdark: #fcfcfc;
+$frontdark: #fff;
 
 * {
   font-family: 'Prompt', sans-serif;
@@ -95,6 +95,10 @@ body {
   fill: $frontdark;
 }
 
+.std{
+  color: $front; 
+}
+
 a {
   color: $front;
 }
@@ -102,6 +106,8 @@ a:hover {
   color: $equivalence;
   text-decoration: none;
 }
+
+
 
 /***********************************************************
             COLOR VARS 
