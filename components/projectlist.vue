@@ -318,9 +318,9 @@ export default {
     },
     projectbox(project) {
       let boxclass
-      let categorycolor = ['', 'e', 't', 'c', 'i', 'f', 'u', 'd'] //order these according categories
+      let categorycolor = ['e', 't', 'c', 'i', 'f', 'u', 'd'] //order these according categories
       for (let i = 0; i < 7; i++) {
-        if (project.category == i) {
+        if (project.category == i + 1) {
           boxclass =
             'p-3 ml-0 mr-0 mb-3 w-100 ' + categorycolor[i] + 'projectbox'
         }
