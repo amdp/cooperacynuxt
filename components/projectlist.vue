@@ -65,7 +65,7 @@
                   </small>
                   <br />
                 </b-container>
-                <b-container>
+                <b-container @click="babba(project)">
                   <small>
                     {{ category(project.category) }}
                     <i>{{ stage(project.stage) }} project</i> in
@@ -87,22 +87,15 @@
                   class="mt-2"
                 >
                   <b-progress-bar
-                    :value="(Math.round(collected(project)) /
-                        Math.round(project.budget))"
+                    :value="collected(project) / project.budget"
                     :label="
-                      (Math.round(collected(project)) /
-                        Math.round(project.budget)) *
-                        100 +
+                      (collected(project) / project.budget).toFixed(3) * 100 +
                       '%'
                     "
                     class="btrust"
                   ></b-progress-bar>
                   <b-progress-bar
-                    :value="
-                      1 -
-                      Math.round(collected(project)) /
-                        Math.round(project.budget)
-                    "
+                    :value="1 - Math.round(collected(project) / project.budget)"
                     class="theytrust std"
                   ></b-progress-bar>
                 </b-progress>
@@ -148,7 +141,12 @@
                     class="theyfreedom"
                   ></b-progress-bar>
                 </b-progress>
-                <span v-if="project.category != 4 && project.hudget != 0"
+                <span
+                  v-if="
+                    project.category != 4 &&
+                    project.hudget != 0 &&
+                    project.stage != 1
+                  "
                   >HUDGET: {{ project.professional }} of
                   {{ project.hudget }} professionals needed</span
                 >
@@ -430,9 +428,9 @@ export default {
         return (
           parseFloat(project.collect) +
           this.incremental *
-            this.collect *
-            this.updatesec *
-            (project.E / this.totalE)
+          this.collect *
+          this.updatesec *
+          (project.E / this.totalE)
         )
       }
     },
