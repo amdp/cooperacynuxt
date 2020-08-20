@@ -1,6 +1,6 @@
 <template>
   <b-container fluid class="justify-content-center m-0 p-0">
-    <div
+    <b-container
       v-for="type in projectTypes"
       :key="type.id"
       class="justify-content-center m-0 p-0"
@@ -9,10 +9,11 @@
       <h2 v-if="projectlist[type.name].length > 0" class="text-center mb-3 up">
         {{ type.name }}
       </h2>
-      <div
+      <b-container
         v-for="project in projectlist[type.name]"
         :key="project.id"
         :class="projectbox(project)"
+        class="m-0 p-0"
       >
         <b-row class="m-0 p-0 w-100 p-3">
           <b-col cols="12" class="m-0 p-0 w-100">
@@ -78,7 +79,10 @@
             <b-row class="m-0 p-0 w-100">
               <b-col cols="12">
                 <b-progress
-                  v-if="project.stage == 7 || project.stage == 2"
+                  v-if="
+                    (project.stage == 7 || project.stage == 2) &&
+                    project.budget != 0
+                  "
                   max="1"
                   class="mt-2"
                 >
@@ -99,21 +103,20 @@
                       Math.round(collected(project)) /
                         Math.round(project.budget)
                     "
-                    :label="
-                      '-' +
-                      (1 -
-                        Math.round(collected(project)) /
-                          Math.round(project.budget)) *
-                        100 +
-                      '%'
-                    "
                     class="theytrust std"
                   ></b-progress-bar>
                 </b-progress>
-                <span v-if="project.stage == 7 || project.stage == 2">
-                  BUDGET: €{{ Math.round(collected(project)) }} of €{{
+                <span v-if="project.stage == 7 && project.budget != 0">
+                  BUDGET: €{{ collected(project).toFixed(7) }} of €{{
                     Math.round(project.budget)
                   }}
+                  collected
+                </span>
+                <span v-if="project.stage == 2 && project.budget != 0">
+                  BUDGET: €{{ collected(project).toFixed(0) }} of €{{
+                    Math.round(project.budget)
+                  }}
+                  collected
                 </span>
               </b-col>
             </b-row>
@@ -121,7 +124,11 @@
             <b-row class="m-0 p-0 w-100">
               <b-col cols="12">
                 <b-progress
-                  v-if="project.category != 4 || project.hudget != 0"
+                  v-if="
+                    project.category != 4 &&
+                    project.hudget != 0 &&
+                    project.stage != 1
+                  "
                   max="1"
                   class="mt-2"
                 >
@@ -138,18 +145,10 @@
                     :value="
                       negprogress(1 - project.professional / project.hudget)
                     "
-                    :label="
-                      '-' +
-                      Math.round(
-                        negprogress(1 - project.professional / project.hudget) *
-                          100
-                      ) +
-                      '%'
-                    "
                     class="theyfreedom"
                   ></b-progress-bar>
                 </b-progress>
-                <span v-if="project.category != 4 || project.hudget != 0"
+                <span v-if="project.category != 4 && project.hudget != 0"
                   >HUDGET: {{ project.professional }} of
                   {{ project.hudget }} professionals needed</span
                 >
@@ -170,19 +169,19 @@
                     />
                   </b-col>
                 </b-row>
-                <div>
-                  <div
+                <b-row class="m-0 p-0 mt-3 w-100">
+                  <b-col
+                    cols="12"
+                    class="mt4 m-0 p-0 text-center"
                     v-if="$auth.user && $route.params.id"
-                    class="col-12 mt-4"
                   >
                     <span v-if="project.stage != 1 && $auth.user.role == 1">
                       <b-link class="ae" @click="archive(project)"
-                        >Archive this project</b-link
+                        >Archive</b-link
                       >&nbsp;</span
                     >
                     <span v-if="project.stage == 1 && $auth.user.role == 1"
-                      ><b-link class="ae" @click="unarchive()"
-                        >Resume this project</b-link
+                      ><b-link class="ae" @click="unarchive()">Resume</b-link
                       >&nbsp;</span
                     >
 
@@ -198,8 +197,7 @@
                     >
 
                     <span
-                      ><b-link class="ai" @click="copy()"
-                        >Copy this project</b-link
+                      ><b-link class="ai" @click="copy()">Copy</b-link
                       >&nbsp;</span
                     >
 
@@ -220,8 +218,7 @@
                         $auth.user.role == 1
                       "
                     >
-                      <b-link class="au" @click="edit()"
-                        >Edit this project</b-link
+                      <b-link class="au" @click="edit()">Edit</b-link
                       >&nbsp;</span
                     >
 
@@ -239,8 +236,8 @@
                         >Request funding step</b-link
                       >&nbsp;</span
                     >
-                  </div>
-                </div>
+                  </b-col>
+                </b-row>
               </b-col>
             </b-row>
           </b-col>
@@ -259,8 +256,8 @@
           :projectprop="project"
         />
         <votebarmodal :projectprop="project" />
-      </div>
-    </div>
+      </b-container>
+    </b-container>
     <votemodal />
   </b-container>
 </template>
@@ -274,6 +271,11 @@ export default {
         { id: 1, name: 'projects' },
         { id: 2, name: 'archived' },
       ],
+      incremental: -1,
+      updatesec: 3, //sets how frequently the budget is updated
+      interval: null,
+      collect: null,
+      totalE: 0,
     }
   },
   computed: {
@@ -296,6 +298,16 @@ export default {
         }
       }
     },
+  },
+  mounted() {
+    for (let i = 0; i < this.$store.state.project.length; i++) {
+      this.totalE += this.$store.state.project[i].E
+    }
+    for (let i = 0; i < this.$store.state.userlist.length; i++) {
+      this.collect +=
+        this.$store.state.userlist[i].fee / (2592000 * this.updatesec)
+    }
+    this.increment()
   },
   methods: {
     improfessional() {
@@ -404,11 +416,24 @@ export default {
       num < 0 ? (num = 0) : (num = num)
       return num
     },
+    increment() {
+      this.interval = setInterval(() => {
+        this.incremental++
+      }, this.updatesec * 1000)
+    },
     collected(project) {
       if (project.stage == 2) {
         return project.E * project.collect
       } else {
-        return project.collect
+        // here we add to project.collect (the amount collected so far) the increment of every second,
+        // times the update seconds interval times the % of the project E-votes over the total of the E-votes
+        return (
+          parseFloat(project.collect) +
+          this.incremental *
+            this.collect *
+            this.updatesec *
+            (project.E / this.totalE)
+        )
       }
     },
     stage(id) {
@@ -431,6 +456,9 @@ export default {
         return 'Unknown'
       }
     },
+  },
+  destroyed() {
+    clearInterval(this.interval)
   },
 }
 </script>

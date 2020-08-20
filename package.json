@@ -16,7 +16,8 @@
   "dependencies": {
     "@intlify/vue-i18n-extensions": "^1.0.2",
     "@intlify/vue-i18n-loader": "^0.6.1",
-    "@nuxt/components": "^0.2.5",
+    "@nuxt/components": "^1.1.0",
+    "@nuxt/webpack": "^2.14.3",
     "@nuxtjs/auth": "^4.9.1",
     "@nuxtjs/axios": "^5.12.1",
     "@nuxtjs/color-mode": "^1.0.3",

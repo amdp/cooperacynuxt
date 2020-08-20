@@ -12,15 +12,16 @@ export default {
     await store.dispatch('getProjectAction', '')
     await store.dispatch('getPlaceAction')
     await store.dispatch('getCountryAction')
+    await store.dispatch('getUserlistAction', '')
     if (store.state.auth.loggedIn) {
       await store.dispatch('getUservoteAction', {
         userid: store.state.auth.user.id,
-        proptype: 'project'
+        proptype: 'project',
       })
-    }
-    else await store.dispatch('getUservoteAction', {
-      reset: true
-    })
-  }
+    } else
+      await store.dispatch('getUservoteAction', {
+        reset: true,
+      })
+  },
 }
 </script>

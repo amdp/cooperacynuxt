@@ -367,7 +367,7 @@ export default {
       this.formStageFunding = 7
     }
     if (this.$store.state.edit.id && this.$store.state.project[0].stage == 2) {
-      totalfreeproject()
+      this.totalfreeproject()
     }
   },
   methods: {

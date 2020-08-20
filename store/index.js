@@ -27,7 +27,7 @@ export const state = () => ({
   cc: ['E', 'T', 'C', 'I', 'F', 'U', 'D'],
   category: [
     { id: 0, name: 'Main Cooperacy' },
-    { id: 1, name: 'Wealth - General' },
+    { id: 1, name: 'Funded or Fee based' },
     { id: 2, name: 'Communities, Locations, Cities, Nations' },
     {
       id: 3,
