@@ -40,13 +40,13 @@
     "nodemailer": "^6.4.11",
     "nodemon": "^2.0.4",
     "nuxt": "^2.14.2",
-    "nuxt-i18n": "^6.13.9",
+    "nuxt-i18n": "^6.13.11",
     "sass-loader": "^8.0.2",
     "typescript": "^3.9.7",
     "v-tooltip": "^2.0.3",
     "vue-mention": "^0.1.7",
     "vue-recaptcha": "^1.3.0",
-    "vue-slider-component": "^3.2.4"
+    "vue-slider-component": "^3.2.5"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^2.0.2",
