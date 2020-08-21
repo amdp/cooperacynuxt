@@ -7,6 +7,7 @@ import it from './t/it.json'
 module.exports = {
   mode: 'universal',
   build: {},
+  plugins: [],
   serverMiddleware: ['./api'],
   css: ['@assets/coo.scss'],
   components: true,
@@ -17,8 +18,6 @@ module.exports = {
     'bootstrap-vue/nuxt',
     ['@nuxtjs/google-analytics', { id: 'UA-105334297-1' }],
     'nuxt-i18n',
-    //'@nuxtjs/proxy',
-    //'@nuxtjs/pwa',    
   ],
   buildModules: [
     ['@nuxtjs/color-mode', { preference: 'light' }]

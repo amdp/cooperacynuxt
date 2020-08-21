@@ -118,7 +118,7 @@ app.get('/user', async function (req, res, next) {
 app.get('/userlist', async function (req, res, next) {
   try {
     let query =
-      'SELECT * FROM `user`'
+      'SELECT * FROM `user` ORDER BY `name`'
     let param = []
     const [userlist] = await mypool.execute(query, param)
     res.send(userlist)

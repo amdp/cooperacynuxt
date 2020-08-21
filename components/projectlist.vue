@@ -270,7 +270,7 @@ export default {
         { id: 2, name: 'archived' },
       ],
       incremental: -1,
-      updatesec: 3, //sets how frequently the budget is updated
+      updatesec: 1, //sets how frequently the collected budget is updated
       interval: null,
       collect: null,
       totalE: 0,
@@ -302,12 +302,34 @@ export default {
       this.totalE += this.$store.state.project[i].E
     }
     for (let i = 0; i < this.$store.state.userlist.length; i++) {
-      this.collect +=
-        this.$store.state.userlist[i].fee / (2592000 * this.updatesec)
+      if (this.$store.state.userlist[i].active) {
+        this.collect += parseFloat(this.$store.state.userlist[i].fee)
+      }
     }
     this.increment()
   },
   methods: {
+    increment() {
+      this.interval = setInterval(() => {
+        this.incremental++
+      }, this.updatesec * 1000)
+    },
+    collected(project) {
+      if (project.stage == 2) {
+        return project.E * project.collect
+      } else {
+        // here we add to project.collect (the amount collected so far) the increment of every second,
+        // times the update seconds interval times the % of the project E-votes over the total of the E-votes
+        return (
+          parseFloat(project.collect) +
+          this.incremental *
+          this.collect *
+          (0.000000380517504 + 0.000015) * //the 0.000015 balances the database response time 
+          this.updatesec *
+          (project.E / this.totalE)
+        )
+      }
+    },
     improfessional() {
       let mypro = this.$store.state.professional.filter(
         (pro) =>
@@ -413,26 +435,6 @@ export default {
     negprogress(num) {
       num < 0 ? (num = 0) : (num = num)
       return num
-    },
-    increment() {
-      this.interval = setInterval(() => {
-        this.incremental++
-      }, this.updatesec * 1000)
-    },
-    collected(project) {
-      if (project.stage == 2) {
-        return project.E * project.collect
-      } else {
-        // here we add to project.collect (the amount collected so far) the increment of every second,
-        // times the update seconds interval times the % of the project E-votes over the total of the E-votes
-        return (
-          parseFloat(project.collect) +
-          this.incremental *
-          this.collect *
-          this.updatesec *
-          (project.E / this.totalE)
-        )
-      }
     },
     stage(id) {
       return this.$store.state.stage.find((stage) => stage.id == id).name

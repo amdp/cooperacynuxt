@@ -8,13 +8,15 @@
         description="Make a question, discuss a topic!"
       >
         <b-button type="submit" style="display: none;"></b-button>
-        <b-form-input
-          id="postInput"
-          v-model="formPost"
-          size="sm"
-          @keyup="check()"
-        >
-        </b-form-input>
+        <Mentionable :keys="['@']" :items="members" offset="1">
+          <b-form-input
+            id="postInput"
+            v-model="formPost"
+            size="sm"
+            @keyup="check()"
+          >
+          </b-form-input>
+        </Mentionable>
       </b-form-group>
     </b-form>
 
@@ -152,7 +154,9 @@
 </template>
 
 <script>
+import { Mentionable } from 'vue-mention'
 export default {
+  components: { Mentionable },
   data() {
     return {
       formswitch: false,
@@ -180,7 +184,15 @@ export default {
       }
     },
     members() {
-      return this.$store.state.userlist
+      let members = []
+      for (let i = 0; i < this.$store.state.userlist.length; i++) {
+        if (this.$store.state.userlist[i].active)
+          members.push({
+            value: this.$store.state.userlist[i].name + ' ' + this.$store.state.userlist[i].surname,
+            label: this.$store.state.userlist[i].name + ' ' + this.$store.state.userlist[i].surname
+          })
+      }
+      return members
     },
   },
   methods: {
