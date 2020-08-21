@@ -324,7 +324,7 @@ export default {
           parseFloat(project.collect) +
           this.incremental *
           this.collect *
-          (0.000000380517504 + 0.00000) * //the x in (0.000000380517504 + x) balances the database response time 
+          0.000000380517504 *
           this.updatesec *
           (project.E / this.totalE)
         )
