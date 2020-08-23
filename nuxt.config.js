@@ -15,9 +15,9 @@ module.exports = {
     '@nuxtjs/axios',
     '@nuxtjs/toast',
     '@nuxtjs/auth',
+    'nuxt-i18n',
     'bootstrap-vue/nuxt',
     ['@nuxtjs/google-analytics', { id: 'UA-105334297-1' }],
-    'nuxt-i18n',
   ],
   buildModules: [
     ['@nuxtjs/color-mode', { preference: 'light' }]

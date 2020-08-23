@@ -20,7 +20,7 @@
       v-for="vote in this.vote"
       :key="vote.projectcc"
       :class="vote.class"
-      @click="checkvote(vote.projectcc)"
+      @click="checkprojectvote(vote.projectcc)"
     >
       <b-container class="showme showmeon t12 mt-1 mb-0 ml-0 mr-0 p-0">
         {{ vote.vlong }}: {{ vote.v }} {{ votevotes(vote.v) }}
@@ -135,19 +135,38 @@ export default {
         return 'votes'
       }
     },
-    checkvote(cc) {
+    checkprojectvote(cc) {
       if (!this.$auth.user) {
         return this.$router.push({ path: '/login' })
       }
-      let add = this.$store.state['projectuservote'].findIndex(
-        // checks if the vote exists, adds accordingly
+      let exists = this.$store.state['projectuservote'].findIndex(
+        // checks if the vote exists
         x => x[this.proptype] == this.voteprop.id && x.condition == cc
       )
-      if (cc == 'I' && add == -1) {
-        let modal = 'votebarmodal' + this.voteprop.id
-        this.$root.$emit('bv::show::modal', modal, '#btnShow')
+      let modal = 'votebarmodal' + this.voteprop.id
+      if (cc == 'I' && exists == -1) {
+        return this.$root.$emit('bv::show::modal', modal, '#btnShow')
       }
-      else this.voteswitch(cc)
+      if (cc == 'E' && exists != -1 && this.voteprop.stage == 6) {
+        let Icheck = this.$store.state['projectuservote'].findIndex(
+          // checks if there is a I vote
+          x => x[this.proptype] == this.voteprop.id && x.condition == 'I'
+        )
+        // if there is a I vote, we should remove it together with the Evote
+        if (Icheck != -1) {
+          this.voteswitch('I')
+          return this.voteswitch('E')
+        }
+        else return this.vosteswitch('E')
+      }
+      // keep the following budgetstep alert AFTER the this.voteprop.stage == 6 (pairing) check
+      if (cc == 'E' && exists != -1) {
+        if (this.voteprop.budgetstep > 1) {
+          alert('With your unvoting, you release part of the project budget to the Cooperacy general pool. This project will go back into the idea stage, until the full budget is collected again, then start back from the last budget step it is now.')
+        }
+        return this.voteswitch(cc)
+      }
+      else return this.voteswitch(cc)
     },
     voteswitch(cc) {
       if (!this.$auth.user) {
@@ -155,12 +174,13 @@ export default {
       }
       // CLIENT-SIDE: sends id, votetype, user and adds 1/-1 to the vuex store variable
       // just to "turn the vote on"
-      let add = this.$store.state[this.proptype + 'uservote'].findIndex(
-        // checks if the vote exists, adds accordingly
+      let add
+      let exists = this.$store.state[this.proptype + 'uservote'].findIndex(
+        // checks if the vote exists
         x => x[this.proptype] == this.voteprop.id && x.condition == cc
       )
-      if (add == -1) add = 1
-      else add = -1
+      if (exists == -1) add = 1 //adds the vote if it does not exist
+      else add = -1 // removes the vote if exists
       this.$store.commit('setVoteUpdate', {
         id: this.voteprop.id,
         cc: cc,

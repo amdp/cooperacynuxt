@@ -16,6 +16,12 @@
             @keyup="check()"
           >
           </b-form-input>
+
+          <template #item-@="{ item }">
+            <div class="user" @focus="gaga()">
+              {{ item.value }}
+            </div>
+          </template>
         </Mentionable>
       </b-form-group>
     </b-form>
@@ -189,13 +195,17 @@ export default {
         if (this.$store.state.userlist[i].active)
           members.push({
             value: this.$store.state.userlist[i].name + ' ' + this.$store.state.userlist[i].surname,
-            label: this.$store.state.userlist[i].name + ' ' + this.$store.state.userlist[i].surname
+            label: this.$store.state.userlist[i].name + ' ' + this.$store.state.userlist[i].surname,
+            id: this.$store.state.userlist[i].id
           })
       }
       return members
     },
   },
   methods: {
+    gaga() {
+      alert('test')
+    },
     formcomment(comment, editreplyid) {
       if (comment.parent === 0) {
         var parent = comment.id

@@ -156,7 +156,7 @@
               <b-col cols="12">
                 <b-row class="ml-0 mr-0 p-0 w-100">
                   <b-col cols="12" class="m-0 p-0 w-100 text-center">
-                    <b-link v-b-modal.votemodal>
+                    <b-link v-b-modal.voteinfomodal>
                       VOTE FOR THIS PROJECT (?):
                     </b-link>
                     <br />
@@ -256,7 +256,7 @@
         <votebarmodal :projectprop="project" />
       </b-container>
     </b-container>
-    <votemodal />
+    <voteinfomodal />
   </b-container>
 </template>
 

@@ -11,14 +11,14 @@
         Are you sure you want to report a transparency infringement for the
         project "{{ projectprop.name }}"?
       </p>
-      <b-form @submit.prevent="voteswitch('I')">
+      <b-form @submit.prevent="voteswitchmodal('I')">
         <b-form-group
-          label-for="tmessage"
+          label-for="imessage"
           description="Insert a message about what you think it's not transparent"
         >
           <b-form-input
-            id="tmessage"
-            v-model="formTmessage"
+            id="imessage"
+            v-model="formImessage"
             required
           ></b-form-input>
         </b-form-group>
@@ -41,15 +41,16 @@ export default {
   },
   data() {
     return {
-      formTmessage: '',
+      formImessage: '',
       pmodal: 'votebarmodal' + this.projectprop.id,
     }
   },
   methods: {
     close() {
+      console.log(this.$parent)
       return this.$root.$emit('bv::hide::modal', 'votebarmodal' + this.projectprop.id, '#btnShow')
     },
-    voteswitch(cc) {
+    voteswitchmodal(cc) {
       let payload = {
         formName: this.$auth.user.name + ' ' + this.$auth.user.surname,
         formEmail: this.$auth.user.email,
@@ -57,7 +58,28 @@ export default {
         formBody: 'In Project #' + this.projectprop.id + ' ' + this.projectprop.name + ' comember ' + this.$auth.user.name + ' ' + this.$auth.user.surname + ' has described this Transparency Infringement: "' + this.formTmessage + '".'
       }
       this.$store.dispatch('contactEmailAction', payload)
-      this.$parent.voteswitch(cc)
+
+      // CLIENT SIDE: sets the vote on frontend
+      this.$store.commit('setVoteUpdate', {
+        id: this.projectprop.id,
+        cc: cc,
+        user: this.$auth.user.id,
+        add: 1,
+        proptype: 'project'
+      })
+
+      // SERVER-SIDE: prepares and sends async REST call (either comment or project)
+      let request = {
+        id: this.projectprop.id,
+        condition: cc,
+        user: this.$auth.user.id,
+        proptype: 'project',
+        category: this.projectprop.category,
+        stage: this.projectprop.stage
+      }
+      this.$store.dispatch('addVoteAction', request).catch(err => {
+        console.error(err)
+      })
       this.$root.$emit('bv::hide::modal', 'votebarmodal' + this.projectprop.id, '#btnShow')
     }
   }

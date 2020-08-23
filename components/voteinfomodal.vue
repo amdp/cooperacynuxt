@@ -1,5 +1,5 @@
 <template>
-  <b-modal id="votemodal" title="VOTING IN COOPERACY" hide-header-close>
+  <b-modal id="voteinfomodal" title="VOTING IN COOPERACY" hide-header-close>
     <p>
       The <span class="b equivalence">r</span><span class="b trust">a</span
       ><span class="b care">i</span><span class="b transparency">n</span
