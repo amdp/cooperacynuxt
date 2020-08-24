@@ -89,7 +89,7 @@
                   <b-progress-bar
                     :value="collected(project) / project.budget"
                     :label="
-                      (collected(project) / project.budget).toFixed(3) * 100 +
+                      Math.round((collected(project) / project.budget) * 100) +
                       '%'
                     "
                     class="btrust"
@@ -157,7 +157,12 @@
                 <b-row class="ml-0 mr-0 p-0 w-100">
                   <b-col cols="12" class="m-0 p-0 w-100 text-center">
                     <b-link v-b-modal.voteinfomodal>
-                      VOTE FOR THIS PROJECT (?):
+                      <span v-if="project.stage != 1">
+                        VOTE FOR THIS PROJECT (?):
+                      </span>
+                      <span v-if="project.stage == 1">
+                        GIVE FEEDBACK FOR THIS PROJECT (?):
+                      </span>
                     </b-link>
                     <br />
                     <votebar

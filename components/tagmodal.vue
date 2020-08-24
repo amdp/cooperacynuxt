@@ -24,6 +24,7 @@
         <b-button size="sm" class="btransparency" @click="cancel()">
           CLOSE
         </b-button>
+        <b-button size="sm" class="none" @click="ok()">OK</b-button>
       </template>
     </b-modal>
     <b-modal id="removetagmodal" title="Remove a tag" hide-header-close>
@@ -50,6 +51,7 @@
         <b-button size="sm" class="btransparency" @click="cancel()">
           CLOSE
         </b-button>
+        <b-button size="sm" class="none" @click="ok()">OK</b-button>
       </template>
     </b-modal>
   </b-container>

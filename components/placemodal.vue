@@ -21,10 +21,10 @@
     </b-form>
     <template slot="modal-footer" slot-scope="{ ok, cancel }">
       <b-button size="sm" class="bcare" @click="addplace()">ADD</b-button>
-      <b-button size="sm" class="btransparency" @click="cancel()"
-        >CANCEL</b-button
-      >
-      <b-button size="sm" class="none" @click="ok()">ADD</b-button>
+      <b-button size="sm" class="btransparency" @click="cancel()">
+        CANCEL
+      </b-button>
+      <b-button size="sm" class="none" @click="ok()">OK</b-button>
     </template>
   </b-modal>
 </template>

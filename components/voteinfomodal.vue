@@ -7,8 +7,9 @@
       ><span class="b diversity">w</span> votebar is the main expression of
       Cooperacy members' distribution of power, resources and activities. Learn
       how to influence the whole platform with your personal choices.<br />
-      In archived projects and proposals, it is used as a feedback.<br />
-      In comments it influences your personal
+      In <strong>archived</strong> projects and proposals, it is used as a
+      feedback.<br />
+      In <strong>comments</strong> it influences your personal
       <span class="b equivalence">r</span><span class="b trust">a</span
       ><span class="b care">i</span><span class="b transparency">n</span
       ><span class="b freedom">b</span><span class="b understanding">o</span
@@ -94,8 +95,14 @@
       into the approving stage, but every 7 diversity votes lower the
       equivalence ones by 1.
     </p>
-    <template slot="modal-footer" slot-scope="{ ok }">
-      <b-button class="btn bhtransparency white btn-block border-0" @click="ok">
+    <template slot="modal-footer" slot-scope="{ ok, cancel }">
+      <b-button size="sm" class="none" @click="cancel()">
+        CANCEL
+      </b-button>
+      <b-button
+        class="btn bhtransparency white btn-block border-0"
+        @click="ok()"
+      >
         OK
       </b-button>
     </template>
