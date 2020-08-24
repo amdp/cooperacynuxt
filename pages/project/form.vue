@@ -90,14 +90,8 @@
             </b-form-group>
           </div>
           <div class="col-2">
-            <span
-              >Current: <br /><img
-                class="currentImage"
-                :src="
-                  '/assets/image/project/' +
-                  this.$store.state.project.id +
-                  '.png'
-                "
+            <span v-if="this.$store.state.edit.id">
+              Current: <br /><img class="currentImage" :src="currentImage"
             /></span>
           </div>
         </div>
@@ -284,9 +278,16 @@ export default {
         userid: store.state.auth.user.id,
       })
     }
+    if (!store.state.edit.id) {//will retrieve only funded projects to limit the author
+      await store.dispatch('getProjectAction', {
+        limitnum: ' 1 ', //change this and next limitnum to set author limit
+        author: store.state.auth.user.id + ' LIMIT ',
+      })
+    }
   },
   data() {
     return {
+      limitnum: 1, //change this and previous limitnum to set author limit
       terms: false,
       editing: false,
       country: this.$store.state.country,
@@ -334,9 +335,9 @@ export default {
         : 0,
       formAttendee: this.$store.state.edit.id
         ? Math.round(
-            this.$store.state.project[0].budget /
-              this.$store.state.project[0].collect
-          ) || 0
+          this.$store.state.project[0].budget /
+          this.$store.state.project[0].collect
+        ) || 0
         : 0,
     }
   },
@@ -348,6 +349,11 @@ export default {
       if (this.$store.state.project.id) {
         return '/assets/image/project/' + this.$store.state.project.id + '.png'
       }
+    },
+    currentImage() {
+      return '/assets/image/project/' +
+        this.$store.state.edit.id +
+        '.png'
     },
     place() {
       let place = this.$store.state.place.filter(
@@ -377,6 +383,9 @@ export default {
       }
     },
     async projectForm() {
+      if (this.$store.state.project.length >= this.limitnum && this.formStageFunding == 7) {
+        return alert('Sorry, Cooperacy allows only ' + this.limitnum + ' funded project per user at this moment.')
+      }
       this.editing = true
       // This function creates and sends database request body both for project creation and updating
       //'new' is set for a new project, if not the param.id is taken from url to update or copy old ones
@@ -399,6 +408,9 @@ export default {
         collect: this.formFee,
         budget: this.formBudget,
         hudget: this.formHudget,
+      }
+      if (!this.$store.state.edit.id) {
+        formBodyRequest.author = this.$auth.user.id
       }
       let res
       try {
@@ -436,6 +448,7 @@ export default {
       formImageData.append('file', this.formImageFile)
       formImageData.append('id', id)
       formImageData.append('proptype', 'project')
+      if (this.$store.state.edit) formImageData.append('current', id)
       // for (var key of formImageData.entries()) {
       //   console.log(key[0] + ', ' + key[1])
       // }

@@ -31,10 +31,16 @@ app.get('/project', async function (req, res, next) {
     let query = 'SELECT * FROM `project`'
     let param = []
 
+    if (req.query.author) {
+      query += ' WHERE `stage`=? and `budget`>? and `author`=?'
+      param = [7, 0, req.query.author + req.query.limitnum]
+    }
+
     if (req.query.limit) {
       query += ' WHERE `id`=?'
       param = [req.query.projectid + req.query.limit]
-    } else if (req.query.stage) {
+    }
+    if (req.query.stage) {
       query += ' WHERE `stage`=?'
       param.push(req.query.stage)
     }
@@ -563,14 +569,6 @@ app.post('/project', async function (req, res, next) {
       next(err)
     }
   } else {
-    try {
-      param.push(req.body.id)
-      let query =
-        'UPDATE `project` SET `stage`=?,`category`=?,`name`=?,`country`=?,`place`=?,`brief`=?,`content`=?,`video`=?,`anonymous`=?,`parent`=?,`collect`=?,`budget`=?,`hudget`=? WHERE `project`.`id`=?'
-      await mypool.execute(query, param)
-    } catch (err) {
-      next(err)
-    }
     if (req.body.stage == 1) { //if we archive, we need to copy the state of the project before archiviation
       param.push( //we already pushed req.body.id
         req.body.budgetstep,
@@ -588,13 +586,22 @@ app.post('/project', async function (req, res, next) {
       )
       let query = 'INSERT INTO `projectregistry` (`stage`,`category`,`name`,`country`,`place`,`brief`,`content`,`video`,`anonymous`,`parent`,`collect`,`budget`,`hudget`,`projectid`,`budgetstep`,`budgetstepdoc`,`fundingstep`,`professional`,`E`, `T`, `C`, `I`, `F`, `U`, `D`,`created`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
       await mypool.execute(query, param)
-      res.status(200).send({ id: req.body.id })
     }
+    try {
+      param.push(req.body.id)
+      let query =
+        'UPDATE `project` SET `stage`=?,`category`=?,`name`=?,`country`=?,`place`=?,`brief`=?,`content`=?,`video`=?,`anonymous`=?,`parent`=?,`collect`=?,`budget`=?,`hudget`=? WHERE `project`.`id`=?'
+      await mypool.execute(query, param)
+    } catch (err) {
+      next(err)
+    }
+    res.status(200).send({ id: req.body.id })
   }
   async function addproject() {
     try {
+      param.unshift(req.body.author)
       let query =
-        'INSERT INTO `project` (`stage`,`category`,`name`,`country`,`place`,`brief`,`content`,`video`,`anonymous`,`parent`,`collect`,`budget`,`hudget`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)'
+        'INSERT INTO `project` (`author`,`stage`,`category`,`name`,`country`,`place`,`brief`,`content`,`video`,`anonymous`,`parent`,`collect`,`budget`,`hudget`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
       const [project] = await mypool.execute(query, param)
       res.send({ id: project.insertId })
     } catch (err) {
@@ -758,7 +765,8 @@ app.post('/image', async function (req, res, next) {
     } catch (err) {
       return next(err)
     }
-  } else {
+  }
+  if (!req.body.current) {
     fs.symlink('./0.png', uploadPath, function (err) {
       return next(err)
     })

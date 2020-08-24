@@ -161,7 +161,7 @@ export default {
       }
       // keep the following budgetstep alert AFTER the this.voteprop.stage == 6 (pairing) check
       if (cc == 'E' && exists != -1) {
-        if (this.voteprop.budgetstep > 1) {
+        if (this.voteprop.budgetstep > 0) {
           alert('With your unvoting, you release part of the project budget to the Cooperacy general pool. This project will go back into the idea stage, until the full budget is collected again, then start back from the last budget step it is now.')
         }
         return this.voteswitch(cc)
