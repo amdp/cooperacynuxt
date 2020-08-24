@@ -40,7 +40,7 @@
     "nodemailer": "^6.4.11",
     "nodemon": "^2.0.4",
     "nuxt": "^2.14.2",
-    "nuxt-i18n": "^6.13.11",
+    "nuxt-i18n": "^6.13.12",
     "sass-loader": "^8.0.2",
     "typescript": "^3.9.7",
     "v-tooltip": "^2.0.3",
