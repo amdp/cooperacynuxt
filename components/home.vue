@@ -111,7 +111,36 @@
     <!--END CIRCLE-->
     <!--FADE IN AREA-->
     <!-- Find other people to realize together what you want to do and possibly get funded -->
-    <div id="homefade" style="opacity:0">
+    <b-container class="mb-3 none">
+      <b-form @submit.prevent="projectSearch()" class="mt-3">
+        <b-row class="m-0 p-0">
+          <b-col cols="10" class="m-0 p-0 align-middle">
+            <b-form-input
+              v-model="formSearch"
+              size="sm"
+              placeholder="Build a house in the countryside"
+              required
+            ></b-form-input>
+          </b-col>
+          <b-col cols="2" class="m-0 p-0 align-middle">
+            <b-button
+              type="submit"
+              class="btn bhequivalence btn-block m-0 pt-0 border-0"
+            >
+              <p class="m-0 pt-2 btransparent white t12" v-if="!searching">
+                SEARCH
+              </p>
+              <b-spinner
+                small
+                v-if="searching"
+                class="m-0 p-0 btransparent"
+              ></b-spinner>
+            </b-button>
+          </b-col>
+        </b-row>
+      </b-form>
+    </b-container>
+    <div id="homefade" style="opacity: 0;">
       <div class="row mb-4 p-2">
         <div class="col-lg-4 col-xs-12 subheading text-center">
           <nuxt-link to="/main/platform" class="noline transparency space"
@@ -165,6 +194,8 @@
 export default {
   data() {
     return {
+      searching: false,
+      formSearch: null,
       dtypo: '',
       dpayoff: '', // TYPO AND PAYOFF DISAPPEAR WHEN HOVERING ON CIRCLE PATHS
       values: [
@@ -442,6 +473,11 @@ export default {
       this.dtypo = 'none'
       this.dpayoff = 'none' // main payoff disappears
       this.descriptions[v].display = 'inline' // right description appears
+    },
+    async projectSearch() {
+      this.searching = true
+      let res = await this.$store.dispatch('projectSearchAction', { search: this.formSearch })
+      alert('a ' + JSON.stringify(res))
     }
   }
 }

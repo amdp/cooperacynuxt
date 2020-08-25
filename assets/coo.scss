@@ -745,7 +745,13 @@ a.disabled {
 .t12 {
   font-size: 12px;
 }
+.t13 {
+  font-size: 13px;
+}
 .t14 {
+  font-size: 14px;
+}
+.t15 {
   font-size: 14px;
 }
 .t16 {
@@ -820,6 +826,9 @@ a.disabled {
   }
 }
 
+.littlespinner {
+  max-height: 10px;
+}
 
 /***********************************************************
             MEDIA QUERIES 
@@ -863,6 +872,11 @@ a.disabled {
     display: none;
   }
 }
+
+/***********************************************************
+            TOOLTIP / MENTIONS 
+***********************************************************/
+
 .tooltip {
   display: block !important;
   z-index: 10000;

@@ -206,6 +206,15 @@ export const actions = {
     let go = { godata: data, goyear: payload.cciyear }
     context.commit('setCCI', go)
   },
+  projectSearchAction: async function (context, payload) {
+    console.log('p ' + JSON.stringify(payload))
+    let { data } = await this.$axios.get(
+      process.env.DBURL + '/projectsearch',
+      {
+        params: payload
+      })
+    return data
+  },
   projectFormAction: async function (context, payload) {
     let { data } = await this.$axios.post(
       process.env.DBURL + '/project',

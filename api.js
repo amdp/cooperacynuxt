@@ -52,6 +52,16 @@ app.get('/project', async function (req, res, next) {
   }
 })
 
+app.get('/projectsearch', async function (req, res, next) {
+  try {
+    let query = 'SELECT *, MATCH (`name`) AGAINST (\'' + req.query.search + '\' IN NATURAL LANGUAGE MODE) AS score FROM `project` WHERE MATCH (`name`) AGAINST(\'' + req.query.search + '\' IN NATURAL LANGUAGE MODE);'
+    const [project] = await mypool.execute(query)
+    res.send(project)
+  } catch (err) {
+    next(err)
+  }
+})
+
 app.get('/comment', async function (req, res, next) {
   try {
     let query =
