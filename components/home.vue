@@ -112,7 +112,7 @@
     <!--FADE IN AREA-->
     <!-- Find other people to realize together what you want to do and possibly get funded -->
     <b-container class="mb-3">
-      <b-form @submit.prevent="projectSearch()" class="mt-3">
+      <b-form @submit.prevent="projectSearch()" class="mt-3 none">
         <b-row class="m-0 p-0">
           <b-col cols="10" class="m-0 p-0">
             <b-form-input
