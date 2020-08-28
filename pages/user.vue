@@ -91,6 +91,7 @@ export default {
   async fetch({ store, params }) {
     await store.dispatch('getCountryAction')
     await store.dispatch('getPlaceAction')
+    await store.dispatch('getFundingvar')
     await store.dispatch('getUserProjectAction', {
       userid: store.state.auth.user.id
     })

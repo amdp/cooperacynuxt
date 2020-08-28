@@ -23,6 +23,7 @@ export default {
       projectid: params.id,
       userid: store.state.auth.user.id
     })
+    await store.dispatch('getFundingvar')
     await store.dispatch('getPlaceAction')
     await store.dispatch('getCountryAction')
     await store.dispatch('getTagAction', { project: params.id })

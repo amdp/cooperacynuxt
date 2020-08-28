@@ -7,41 +7,41 @@
           :key="vote.userkey"
           :class="vote.class"
           :style="vote.style"
-          ><!-- :style needed for rainbow color condition width --></b-container
+          ><!-- :style needed for rainbow color condition width, do not remove --></b-container
         >
       </b-col>
     </b-row>
   </b-container>
-  <b-row
-    class="w-100 mt-2 mb-2 ml-0 mr-0 p-0 up position-relative"
-    v-else-if="this.proptype == 'project'"
-  >
-    <b-container
-      v-for="vote in this.vote"
-      :key="vote.projectcc"
-      :class="vote.class"
-      @click="checkprojectvote(vote.projectcc)"
-    >
-      <b-container class="showme showmeon t12 mt-1 mb-0 ml-0 mr-0 p-0">
-        {{ vote.vlong }}: {{ vote.v }} {{ votevotes(vote.v) }}
-      </b-container>
-    </b-container>
-  </b-row>
-  <b-row
-    class="w-100 mt-2 mb-2 ml-0 mr-0 p-0 up"
-    v-else-if="this.proptype == 'comment'"
-  >
-    <b-container
-      v-for="vote in this.vote"
-      :key="vote.commentcc"
-      :class="vote.class"
-      @click="voteswitch(vote.commentcc)"
-    >
-      <b-container class="showme showmeon t12 mt-3 mb-0 ml-0 mr-0 p-0">
-        {{ vote.vlong }}: {{ vote.v }} {{ votevotes(vote.v) }}
-      </b-container>
-    </b-container>
-  </b-row>
+  <b-container class="m-0 p-0 up" v-else-if="this.proptype == 'project'">
+    <b-row class="m-0 p-0">
+      <b-col
+        v-for="vote in this.vote"
+        :key="vote.projectcc"
+        :class="vote.class + ' p-0 m-1'"
+        @mouseover="voteinfo('project', vote.vlong, vote.projectcc, vote.v)"
+        @click="checkprojectvote(vote.projectcc)"
+      >
+      </b-col>
+    </b-row>
+    <b-row class="t12 m-0 p-0">
+      <b-col cols="12" v-html="voteinfocontent"></b-col>
+    </b-row>
+  </b-container>
+  <b-container class="m-0 p-0 up" v-else-if="this.proptype == 'comment'">
+    <b-row class="m-0 p-0">
+      <b-col
+        v-for="vote in this.vote"
+        :key="vote.commentcc"
+        :class="vote.class + ' p-0 m-1'"
+        @mouseover="voteinfo('comment', vote.vlong, vote.commentcc, vote.v)"
+        @click="voteswitch(vote.commentcc)"
+      >
+      </b-col>
+    </b-row>
+    <b-row class="t12 mb-0 ml-0 mr-0 p-0 text-center">
+      <b-col cols="12" v-html="voteinfocontent"></b-col>
+    </b-row>
+  </b-container>
 </template>
 
 <script>
@@ -50,6 +50,9 @@ export default {
   props: {
     voteprop: { required: true },
     proptype: { required: true }
+  },
+  data() {
+    return { voteinfocontent: null, }
   },
   computed: {
     vote() {
@@ -107,7 +110,7 @@ export default {
       if (this.proptype == 'project') {
         for (let i = 0; i < 7; i++) {
           ; (voteif[i].class =
-            'p-0 vote col ' +
+            'vote ' +
             voteif[i].style +
             ' ' +
             this.$store.state.condition[i]),
@@ -117,7 +120,7 @@ export default {
       if (this.proptype == 'comment') {
         for (let i = 0; i < 7; i++) {
           ; (voteif[i].class =
-            'p-0 vote col ' +
+            'vote ' +
             voteif[i].style +
             ' ' +
             this.$store.state.condition[i]),
@@ -128,11 +131,41 @@ export default {
     }
   },
   methods: {
-    votevotes(v) {
-      if (v == 1) {
-        return 'vote'
-      } else {
-        return 'votes'
+    voteinfo(proptype, vlong, cc, v) {
+      this.voteinfocontent = vlong + 'votes: ' + v + ' - '
+      if (proptype == 'project') {
+        if (cc == 'E') {
+          return this.voteinfocontent += 'USE THIS VOTE TO GIVE POOL MONEY OR BUY THE TICKET FOR THIS PROJECT'
+        } else if (cc == 'T') {
+          return this.voteinfocontent += 'USE THIS VOTE IF YOU TRUST THIS PROJECT (AND TO FASTEN FUNDING)'
+        } else if (cc == 'C') {
+          return this.voteinfocontent += 'USE THIS VOTE TO PROMOTE THE VISIBILITY OF THIS PROJECT'
+        } else if (cc == 'I') {
+          return this.voteinfocontent += 'WARNING: USE THIS VOTE TO SIGNAL SERIOUS LACK OF TRANSPARENCY IN THE PROJECT'
+        } else if (cc == 'F') {
+          return this.voteinfocontent += 'USE THIS VOTE TO PARTICIPATE, FOLLOW OR WORK FOR THE PROJECT'
+        } else if (cc == 'U') {
+          return this.voteinfocontent += 'USE THIS VOTE IF THE PROJECT IS EASILY UNDERSTANDABLE (AND TO FASTEN FUNDING)'
+        } else if (cc == 'D') {
+          return this.voteinfocontent += 'USE THIS VOTE IF THE PROJECT IS FUN, BIZARRE, ALTERNATIVE (AND TO MAKE FUNDING BIZARRE)'
+        }
+      }
+      if (proptype == 'comment') {
+        if (cc == 'E') {
+          return this.voteinfocontent += 'THIS VOTES INDICATE GENERAL LIKE'
+        } else if (cc == 'T') {
+          return this.voteinfocontent += 'THIS VOTES INDICATE TRUST'
+        } else if (cc == 'C') {
+          return this.voteinfocontent += 'THIS VOTES INDICATE CARE, LIKE A HEART'
+        } else if (cc == 'I') {
+          return this.voteinfocontent += 'THIS VOTES SIGNAL LACK OF TRANSPARENCY'
+        } else if (cc == 'F') {
+          return this.voteinfocontent += 'THIS VOTES INDICATE YOU FOLLOW THE DISCUSSION'
+        } else if (cc == 'U') {
+          return this.voteinfocontent += 'THIS VOTES INDICATE UNDERSTANDING'
+        } else if (cc == 'D') {
+          return this.voteinfocontent += 'THIS VOTES INDICATE FUN, LAUGH, BIZARDRY'
+        }
       }
     },
     checkprojectvote(cc) {

@@ -12,6 +12,7 @@ export default {
     await store.dispatch('getProjectAction', '')
     await store.dispatch('getPlaceAction')
     await store.dispatch('getCountryAction')
+    await store.dispatch('getFundingvar')
     await store.dispatch('getUserlistAction', '')
     if (store.state.auth.loggedIn) {
       await store.dispatch('getUservoteAction', {

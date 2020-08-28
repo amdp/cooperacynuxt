@@ -632,29 +632,19 @@ img.news {
   height: 10px;
   position: static;
   cursor: pointer;
-  margin-right: 3px;
   border-radius: 3px;
 }
-.vote:hover .showme {
+.vote:hover {
   display: block;
   font-weight: 400;
 }
 .rainbowcode {
   height: 2px;
 }
-.rainbowcode:hover .showme {
+.rainbowcode:hover {
   display: block;
   font-weight: 400;
   font-size: 10px;
-}
-.showme,
-.showmeon {
-  display: none;
-}
-.showmeon {
-  position: absolute;
-  left: 5px;
-  top: 7px;
 }
 
 .toast {
@@ -772,6 +762,9 @@ a.disabled {
 .t32 {
   font-size: 32px;
 }
+.t44 {
+  font-size: 32px;
+}
 .hb{
   font-weight: 500;
 }
@@ -780,6 +773,9 @@ a.disabled {
 }
 .b {
   font-weight: 700;
+}
+.underline {
+  text-decoration: underline;
 }
 
 /***********************************************************

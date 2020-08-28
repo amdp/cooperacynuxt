@@ -2,6 +2,11 @@ export const state = () => ({
   project: [],
   comment: [],
   vote: [],
+  fundingvar: {
+    totalE: null,
+    totaluser: null,
+    totalfee: null,
+  },
   userlist: [],
   projectuservote: [],
   commentuservote: [],
@@ -40,9 +45,9 @@ export const state = () => ({
     },
     {
       id: 6,
-      name: 'Science, Research, Education and Groups of Professionals'
+      name: 'Science, Education and Guilds'
     },
-    { id: 7, name: 'Arts Music Games Fun' }
+    { id: 7, name: 'Art, Music, Sports & Fun' }
   ],
   stage: [
     { id: 1, name: 'archived' },
@@ -78,6 +83,11 @@ export const mutations = {
   },
   setComment: (state, payload) => {
     state.comment = payload
+  },
+  setFundingvar: (state, payload) => {
+    state.fundingvar.totalE = payload.totalE
+    state.fundingvar.totaluser = payload.totaluser
+    state.fundingvar.totalfee = payload.totalfee
   },
   setTag: (state, payload) => {
     state.tag = payload
@@ -155,6 +165,10 @@ export const mutations = {
 }
 
 export const actions = {
+  getFundingvar: async function (context) {
+    let { data } = await this.$axios.get(process.env.DBURL + '/fundingvar')
+    context.commit('setFundingvar', data)
+  },
   getProjectAction: async function (context, payload) {
     let { data } = await this.$axios.get(process.env.DBURL + '/project', {
       params: payload
@@ -205,15 +219,6 @@ export const actions = {
     let { data } = await this.$axios.post(process.env.DBURL + '/CCI', payload)
     let go = { godata: data, goyear: payload.cciyear }
     context.commit('setCCI', go)
-  },
-  projectSearchAction: async function (context, payload) {
-    console.log('p ' + JSON.stringify(payload))
-    let { data } = await this.$axios.get(
-      process.env.DBURL + '/projectsearch',
-      {
-        params: payload
-      })
-    return data
   },
   projectFormAction: async function (context, payload) {
     let { data } = await this.$axios.post(

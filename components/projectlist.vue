@@ -1,5 +1,6 @@
 <template>
   <b-container fluid class="justify-content-center m-0 p-0">
+    <voteinfomodal />
     <b-container
       v-for="type in projectTypes"
       :key="type.id"
@@ -12,23 +13,36 @@
       <b-container
         v-for="project in projectlist[type.name]"
         :key="project.id"
-        :class="projectbox(project)"
+        :class="'p-1 ml-0 mr-0 mb-3 w-100 ' + projectbox(project)"
         class="m-0 p-0"
       >
-        <b-row class="m-0 p-0 w-100 p-3">
+        <b-row class="m-0 p-0 w-100 p-0">
           <b-col cols="12" class="m-0 p-0 w-100">
-            <b-row class="m-0 p-0 w-100">
-              <b-col cols="12" md="3">
+            <b-row class="m-0 p-0 w-100" v-if="$route.params.id">
+              <b-col cols="4"></b-col>
+              <b-col cols="4">
                 <img
                   :src="'/assets/image/project/' + project.id + '.png'"
                   class="img-100"
                 />
               </b-col>
-              <b-col cols="12 text-center" md="6">
-                <span class="space subheading up">
-                  <nuxt-link :to="'/project/' + project.id">
+              <b-col cols="4"></b-col>
+            </b-row>
+            <b-row class="m-0 p-0 w-100">
+              <b-col cols="12 text-center">
+                <nuxt-link :to="'/project/' + project.id">
+                  <span
+                    class="space subheading up"
+                    v-if="type.name == 'projects'"
+                  >
                     {{ project.name }}
-                  </nuxt-link> </span
+                  </span>
+                  <span
+                    class="space subheading up o25"
+                    v-if="type.name == 'archived'"
+                  >
+                    {{ project.name }}
+                  </span> </nuxt-link
                 ><br />
                 <small class="mb-2 up t12">
                   <i>{{ project.brief }}</i>
@@ -48,13 +62,14 @@
                   </span>
                 </p>
               </b-col>
-              <b-col cols="12" md="3">
+            </b-row>
+            <b-row class="m-0 p-0 w-100 text-center">
+              <b-col cols="12">
                 <b-container v-if="$route.params.id">
                   <small>
                     <strong>AFTF: </strong
                     >{{ project.anonymous ? 'ON' : 'OFF' }}
                   </small>
-                  <br />
                   <small v-if="project.stage == '2'">
                     <strong>FEE: </strong> {{ Math.round(project.budget) }}
                     <br />
@@ -72,7 +87,6 @@
                     {{ location(project.place) }}
                   </small>
                 </b-container>
-                <br />
               </b-col>
             </b-row>
             <!-- BUDGET BAR -->
@@ -92,11 +106,11 @@
                       Math.round((collected(project) / project.budget) * 100) +
                       '%'
                     "
-                    class="btrust"
+                    :class="'b' + budgetbar(project.stage)"
                   ></b-progress-bar>
                   <b-progress-bar
                     :value="1 - Math.round(collected(project) / project.budget)"
-                    class="theytrust std"
+                    :class="'they' + budgetbar(project.stage) + ' std'"
                   ></b-progress-bar>
                 </b-progress>
                 <span v-if="project.stage == 7 && project.budget != 0">
@@ -152,42 +166,42 @@
                 >
               </b-col>
             </b-row>
+            <!-- VOTEBAR -->
+            <b-row class="m-0 p-2 w-100">
+              <b-col cols="12" class="m-0 p-0 w-100 text-center">
+                <b-link v-b-modal.voteinfomodal>
+                  <span v-if="project.stage != 1">
+                    VOTE FOR THIS PROJECT (<span class="underline">INFO</span>):
+                  </span>
+                  <span v-if="project.stage == 1">
+                    GIVE FEEDBACK FOR THIS PROJECT (?):
+                  </span>
+                </b-link>
+                <br />
+                <votebar
+                  :voteprop="project"
+                  :proptype="'project'"
+                  :vote-id="project.id"
+                />
+              </b-col>
+            </b-row>
+            <!-- INFO -->
             <b-row class="m-0 p-0 w-100">
               <b-col cols="12">
-                <b-row class="ml-0 mr-0 p-0 w-100">
-                  <b-col cols="12" class="m-0 p-0 w-100 text-center">
-                    <b-link v-b-modal.voteinfomodal>
-                      <span v-if="project.stage != 1">
-                        VOTE FOR THIS PROJECT (?):
-                      </span>
-                      <span v-if="project.stage == 1">
-                        GIVE FEEDBACK FOR THIS PROJECT (?):
-                      </span>
-                    </b-link>
-                    <br />
-                    <votebar
-                      :voteprop="project"
-                      :proptype="'project'"
-                      :vote-id="project.id"
-                    />
-                  </b-col>
-                </b-row>
-                <b-row class="m-0 p-0 mt-3 w-100">
-                  <b-col
-                    cols="12"
-                    class="mt4 m-0 p-0 text-center"
-                    v-if="$auth.user && $route.params.id"
-                  >
+                <b-row
+                  class="m-0 p-0 w-100"
+                  v-if="$auth.user && $route.params.id"
+                >
+                  <b-col cols="12" class="m-0 p-0 text-center">
                     <span v-if="project.stage != 1 && $auth.user.role == 1">
                       <b-link class="ae" @click="archive(project)"
                         >Archive</b-link
-                      >&nbsp;</span
-                    >
+                      >&nbsp;
+                    </span>
                     <span v-if="project.stage == 1 && $auth.user.role == 1"
                       ><b-link class="ae" @click="unarchive()">Resume</b-link
-                      >&nbsp;</span
-                    >
-
+                      >&nbsp;
+                    </span>
                     <span
                       v-if="
                         (project.stage == 5 && improfessional) ||
@@ -196,14 +210,11 @@
                     >
                       <b-link v-b-modal.budgetstepmodal class="at"
                         >Upload Budget Step Document</b-link
-                      >&nbsp;</span
-                    >
-
+                      >&nbsp;
+                    </span>
                     <span
-                      ><b-link class="ai" @click="copy()">Copy</b-link
-                      >&nbsp;</span
-                    >
-
+                      ><b-link class="ai" @click="copy()">Copy</b-link>&nbsp;
+                    </span>
                     <span
                       v-if="
                         (project.stage != 1 && improfessional) ||
@@ -212,19 +223,16 @@
                     >
                       <b-link v-b-modal.professionalmodal class="af"
                         >Add/Remove professionals</b-link
-                      >&nbsp;</span
-                    >
-
+                      >&nbsp;
+                    </span>
                     <span
                       v-if="
                         (project.stage != 1 && improfessional) ||
                         $auth.user.role == 1
                       "
                     >
-                      <b-link class="au" @click="edit()">Edit</b-link
-                      >&nbsp;</span
-                    >
-
+                      <b-link class="au" @click="edit()">Edit</b-link>&nbsp;
+                    </span>
                     <span
                       v-if="
                         (project.budgetstep - project.fundingstep > 1 &&
@@ -237,8 +245,8 @@
                     >
                       <b-link class="ad" @click="fundingstep(project)"
                         >Request funding step</b-link
-                      >&nbsp;</span
-                    >
+                      >&nbsp;
+                    </span>
                   </b-col>
                 </b-row>
               </b-col>
@@ -261,7 +269,6 @@
         <votebarmodal :projectprop="project" />
       </b-container>
     </b-container>
-    <voteinfomodal />
   </b-container>
 </template>
 
@@ -277,8 +284,6 @@ export default {
       incremental: -1,
       updatesec: 1, //sets how frequently the collected budget is updated
       interval: null,
-      collect: null,
-      totalE: 0,
     }
   },
   computed: {
@@ -303,14 +308,6 @@ export default {
     },
   },
   mounted() {
-    for (let i = 0; i < this.$store.state.project.length; i++) {
-      this.totalE += this.$store.state.project[i].E
-    }
-    for (let i = 0; i < this.$store.state.userlist.length; i++) {
-      if (this.$store.state.userlist[i].active) {
-        this.collect += parseFloat(this.$store.state.userlist[i].fee)
-      }
-    }
     this.increment()
   },
   methods: {
@@ -328,12 +325,17 @@ export default {
         return (
           parseFloat(project.collect) +
           this.incremental *
-          this.collect *
+          this.$store.state.fundingvar.totalfee *
           0.000000380517504 *
           this.updatesec *
-          (project.E / this.totalE)
+          (project.E / this.$store.state.fundingvar.totalE)
         )
       }
+    },
+    budgetbar(stage) {
+      let color
+      stage == 2 ? color = 'trust' : color = 'equivalence'
+      return color
     },
     improfessional() {
       let mypro = this.$store.state.professional.filter(
@@ -349,7 +351,7 @@ export default {
       for (let i = 0; i < 7; i++) {
         if (project.category == i + 1) {
           boxclass =
-            'p-3 ml-0 mr-0 mb-3 w-100 ' + categorycolor[i] + 'projectbox'
+            categorycolor[i] + 'projectbox'
         }
       }
       return boxclass

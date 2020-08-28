@@ -111,18 +111,18 @@
     <!--END CIRCLE-->
     <!--FADE IN AREA-->
     <!-- Find other people to realize together what you want to do and possibly get funded -->
-    <b-container class="mb-3 none">
+    <b-container class="mb-3">
       <b-form @submit.prevent="projectSearch()" class="mt-3">
         <b-row class="m-0 p-0">
-          <b-col cols="10" class="m-0 p-0 align-middle">
+          <b-col cols="10" class="m-0 p-0">
             <b-form-input
               v-model="formSearch"
               size="sm"
-              placeholder="Build a house in the countryside"
+              placeholder="What do you want to do together?"
               required
             ></b-form-input>
           </b-col>
-          <b-col cols="2" class="m-0 p-0 align-middle">
+          <b-col cols="2" class="m-0 p-0">
             <b-button
               type="submit"
               class="btn bhequivalence btn-block m-0 pt-0 border-0"
@@ -474,10 +474,10 @@ export default {
       this.dpayoff = 'none' // main payoff disappears
       this.descriptions[v].display = 'inline' // right description appears
     },
-    async projectSearch() {
+    projectSearch() {
       this.searching = true
-      let res = await this.$store.dispatch('projectSearchAction', { search: this.formSearch })
-      alert('a ' + JSON.stringify(res))
+      this.$store.dispatch('getProjectAction', { search: this.formSearch })
+      return this.$router.push({ path: '/project' })
     }
   }
 }
