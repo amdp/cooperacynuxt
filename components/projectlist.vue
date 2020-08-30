@@ -1,5 +1,9 @@
 <template>
-  <b-container fluid class="justify-content-center m-0 p-0">
+  <b-container
+    fluid
+    class="justify-content-center m-0 p-0"
+    ref="projectlistcomponent"
+  >
     <voteinfomodal />
     <b-container
       v-for="type in projectTypes"

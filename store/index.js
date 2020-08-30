@@ -77,7 +77,12 @@ export const state = () => ({
 export const getters = {}
 
 export const mutations = {
-  //crunch this with "set: (state, payload, statetoset) => {state[statetoset] = payload}"
+  projectSort: (state, sorting) => {
+    let projectsorting = state.project
+    projectsorting.sort((a, b) => (a[sorting] < b[sorting] ? 1 : -1))
+    state.project = projectsorting
+  },
+  //crunch the following sets with "set: (state, payload, statetoset) => {state[statetoset] = payload}"
   setProject: (state, payload) => {
     state.project = payload
   },
