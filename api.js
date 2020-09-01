@@ -27,35 +27,36 @@ const mypool = pool.promise()
 /////// GET ///////
 
 app.get('/project', async function (req, res, next) {
+  //SEARCH
   if (req.query.search) {
     try {
-      let query = 'SELECT *, MATCH (`name`) AGAINST (\'' + req.query.search + '\' IN NATURAL LANGUAGE MODE) AS score FROM `project` WHERE MATCH (`name`) AGAINST(\'' + req.query.search + '\' IN NATURAL LANGUAGE MODE);'
-      const [project] = await mypool.execute(query)
+      let query = 'SELECT *, MATCH (`name`) AGAINST (\'' + req.query.search + '\' IN NATURAL LANGUAGE MODE) AS score FROM `project` WHERE MATCH (`name`) AGAINST(\'' + req.query.search + '\' IN NATURAL LANGUAGE MODE) LIMIT ?;'
+      let param = [req.query.limit]
+      const [project] = await mypool.execute(query, param)
       return res.status(200).send(project)
     } catch (err) {
       next(err)
     }
   }
+  //NON-SEARCH
+
   try {
-    let query = 'SELECT * FROM `project`'
-    let param = []
-
-    if (req.query.author) {
-      query += ' WHERE `stage`=? and `budget`>? and `author`=?'
-      param = [7, 0, req.query.author + req.query.limitnum]
-    }
-
-    if (req.query.limit) {
-      query += ' WHERE `id`=?'
+    if (req.query.author) {//!used to control the number of funded project of an author!
+      let query = 'SELECT * FROM `project` WHERE `stage`=? and `budget`>? and `author`=? ORDER BY C DESC LIMIT ?'
+      let param = [7, 0, req.query.author, req.query.limitauth]
+      const [project] = await mypool.execute(query, param)
+      res.status(200).send(project)
+    } else if (req.query.projectid) {//SINGLE PROJECT
+      let query = 'SELECT * FROM `project` WHERE `id`=? ORDER BY `C` DESC LIMIT ?'
       param = [req.query.projectid + req.query.limit]
+      const [project] = await mypool.execute(query, param)
+      res.status(200).send(project)
+    } else {//HOME
+      let query = 'SELECT * FROM `project` WHERE `project`.`stage`<>1 ORDER BY `C` DESC LIMIT ?'
+      param = [req.query.limit]
+      const [project] = await mypool.execute(query, param)
+      res.status(200).send(project)
     }
-    if (req.query.stage) {
-      query += ' WHERE `stage`=?'
-      param.push(req.query.stage)
-    }
-    query += ' ORDER BY `C` DESC'
-    const [project] = await mypool.execute(query, param)
-    res.status(200).send(project)
   } catch (err) {
     next(err)
   }

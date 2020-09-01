@@ -476,7 +476,7 @@ export default {
     },
     projectSearch() {
       this.searching = true
-      this.$store.dispatch('getProjectAction', { search: this.formSearch })
+      this.$store.dispatch('getProjectAction', { search: this.formSearch, limit: 3 })
       return this.$router.push({ path: '/project' })
     }
   }

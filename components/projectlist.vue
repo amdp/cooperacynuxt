@@ -12,12 +12,14 @@
       fluid
     >
       <h2 v-if="projectlist[type.name].length > 0" class="text-center mb-3 up">
-        {{ type.name }}
+        <span class="hb" v-if="$route.path == '/'">RECENT</span>
+        <span class="hb">{{ type.name }}</span>
+        <span class="hb" v-if="$route.path == '/user'">YOU FOLLOW</span>
       </h2>
       <b-container
         v-for="project in projectlist[type.name]"
         :key="project.id"
-        :class="'p-1 ml-0 mr-0 mb-3 w-100 ' + projectbox(project)"
+        :class="'p-1 mx-auto mb-3 w-100 ' + projectbox(project)"
         class="m-0 p-0"
       >
         <b-row class="m-0 p-0 w-100 p-0">
@@ -273,6 +275,9 @@
         <votebarmodal :projectprop="project" />
       </b-container>
     </b-container>
+    <p class="text-center" @click="more($store.state.project.length)">
+      More...
+    </p>
   </b-container>
 </template>
 
@@ -281,6 +286,8 @@ export default {
   data() {
     return {
       isHover: null,
+      projectnum: 7,
+      projectcounter: 1,
       projectTypes: [
         { id: 1, name: 'projects' },
         { id: 2, name: 'archived' },
@@ -315,6 +322,9 @@ export default {
     this.increment()
   },
   methods: {
+    more(howmany) {
+      alert(howmany)
+    },
     increment() {
       this.interval = setInterval(() => {
         this.incremental++

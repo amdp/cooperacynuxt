@@ -71,7 +71,7 @@ export default {
     async projectSearch() {
       this.searching = true
       await this.$store.dispatch('getFundingvar')
-      await this.$store.dispatch('getProjectAction', { search: this.formSearch })
+      await this.$store.dispatch('getProjectAction', { search: this.formSearch, limit: 3 })
       this.searching = false
     },
     info(cc) {

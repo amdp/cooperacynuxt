@@ -9,7 +9,7 @@
 <script>
 export default {
   async fetch({ store, params }) {
-    await store.dispatch('getProjectAction', '')
+    await store.dispatch('getProjectAction', { limit: 7 })
     await store.dispatch('getPlaceAction')
     await store.dispatch('getCountryAction')
     await store.dispatch('getFundingvar')

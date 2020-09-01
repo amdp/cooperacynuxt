@@ -1,10 +1,11 @@
 <template>
   <b-container fluid class="m-0 p-0">
-    <b-row class="m-0 p-0">
+    <b-row class="m-0 p-0 w-100 fixed">
       <navbar />
     </b-row>
-    <b-row fluid class="main justify-content-center w-100 m-0 pl-0 pr-0">
-      <b-col cols="11" lg="8" class="p-0 m-0">
+    <b-row fluid class="justify-content-center w-100 m-0 pl-0 pr-0">
+      <navbar />
+      <b-col cols="11" lg="8" class="p-0 m-0 mt-3">
         <nuxt />
       </b-col>
     </b-row>

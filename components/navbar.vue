@@ -1,8 +1,7 @@
 <template>
-  <b-container class="p-0 m-0">
-    <div class="w-100 nav-container z-0 fixer"></div>
+  <b-container fluid class="p-0 m-0">
     <!--  dekstop nav -->
-    <div class="w-100 nav-container">
+    <b-container fluid class="m-0 p-0 nav-container">
       <b-navbar
         toggleable="lg"
         class="navbar d-flex justify-content-start m-0 p-0"
@@ -389,7 +388,7 @@
       <b-col v-if="this.$auth.loggedIn" cols="12" class="p-0 fluid">
         <votebar :voteprop="$auth.user" :proptype="'user'" />
       </b-col>
-    </div>
+    </b-container>
   </b-container>
 </template>
 

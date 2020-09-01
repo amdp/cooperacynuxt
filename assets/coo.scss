@@ -453,17 +453,8 @@ b-form-select .was-validated, .custom-select:valid, .custom-select.is-valid{
 
 /* navbar */
 .nav-container {
-  z-index: 50;
-  width: 100%;
-  position: fixed;
   background-color: $back;
   height: auto;
-}
-.z-0 {
-  z-index: 0;
-}
-.fixer {
-  height: 50px !important;
 }
 .navbar {
   border-bottom: 1px $aaagray solid;
@@ -542,13 +533,10 @@ b-form-select .was-validated, .custom-select:valid, .custom-select.is-valid{
 
 .fixed {
   position: fixed;
-  z-index: 9999;
+  z-index: 50;
 }
 .navbar-brand {
   width: 5%;
-}
-.main {
-  padding-top: 90px;
 }
 
 /* other */
@@ -851,9 +839,7 @@ a.disabled {
 @media (min-width: 1200px) {
 }
 @media (max-width: 576px) and (orientation: portrait) {
-  .main {
-    padding-top: 50px;
-  }
+
 }
 
 /* Navbar media queries */

@@ -274,20 +274,20 @@ export default {
     if (store.state.edit.id) {
       await store.dispatch('getProjectAction', {
         projectid: store.state.edit.id,
-        limit: ' LIMIT 1',
+        limit: 1,
         userid: store.state.auth.user.id,
       })
     }
     if (!store.state.edit.id) {//will retrieve only funded projects to limit the author
       await store.dispatch('getProjectAction', {
-        limitnum: ' 1 ', //change this and next limitnum to set author limit
-        author: store.state.auth.user.id + ' LIMIT ',
+        limitauth: 1, //change this and next limitnum to set author limit
+        author: store.state.auth.user.id,
       })
     }
   },
   data() {
     return {
-      limitnum: 1, //change this and previous limitnum to set author limit
+      limitauth: 1, //change this and previous limitnum to set author limit
       terms: false,
       editing: false,
       country: this.$store.state.country,
@@ -383,8 +383,8 @@ export default {
       }
     },
     async projectForm() {
-      if (this.$store.state.project.length >= this.limitnum && this.formStageFunding == 7) {
-        return alert('Sorry, Cooperacy allows only ' + this.limitnum + ' funded project per user at this moment.')
+      if (this.$store.state.project.length >= this.limitauth && this.formStageFunding == 7) {
+        return alert('Sorry, Cooperacy allows only ' + this.limitauth + ' funded project per user at this moment.')
       }
       this.editing = true
       // This function creates and sends database request body both for project creation and updating
