@@ -6,17 +6,17 @@
       hide-header-close
     >
       <p class="base">
-        Behind this step there is a delicate passage that your project will
-        face: it will wait for 7 days for the project document to be approved.
-        If nothing happens, your document is approved and you can go forward to
-        the next budget step.
+        Behind this step there is a delicate passage that your cooperation will
+        face: it will wait for 7 days for the cooperation document to be
+        approved. If nothing happens, your document is approved and you can go
+        forward to the next budget step.
       </p>
       <b-form @submit.prevent="budgetstepdoc()">
         <b-form-group
           label-for="professionalInput"
-          description="Add a Budget Step Document to your project, inserting a link to a shared google document."
+          description="Add a Budget Step Document to your cooperation, inserting a link to a shared google document."
         >
-          <span>{{ projectprop.name }}</span>
+          <span>{{ cooperationprop.name }}</span>
           <b-form-input id="docInput" v-model="formDoc"></b-form-input>
         </b-form-group>
       </b-form>
@@ -35,7 +35,7 @@
 <script>
 export default {
   props: {
-    projectprop: { required: true }
+    cooperationprop: { required: true }
   },
   data() {
     return {
@@ -46,13 +46,13 @@ export default {
   methods: {
     async budgetstepdoc() {
       this.$store.dispatch('budgetstepdocAction', {
-        project: this.projectprop,
+        cooperation: this.cooperationprop,
         user: this.$auth.user,
         doc: this.formDoc
       })
     },
     close() {
-      location.href = process.env.URLHOME + '/project/' + this.projectprop.id
+      location.href = process.env.URLHOME + '/cooperation/' + this.cooperationprop.id
     }
   }
 }

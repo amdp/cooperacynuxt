@@ -3,16 +3,16 @@
 ![Image](/assets/image/github/image3.png)
 
 
-### FINAL CHALLENGE LEVEL THREE: VUE COMPONENTS AND A NEW COOPERACY PROJECT
+### FINAL CHALLENGE LEVEL THREE: VUE COMPONENTS AND A NEW COOPERACY COOPERATION
 
 Very well!! The rest of Vue you must learn should
 be learnt by doing. We just need one final step:
 components. At the same time, in Cooperacy we have 
-some projects in the home page that are general,
+some cooperations in the home page that are general,
 while you can see, if you log in, YOUR created 
-and archived projects. 
+and archived cooperations. 
 So let's create our first Cooperacy
-project. Login and click on "add a new project" 
+cooperation. Login and click on "add a new cooperation" 
 link.
 
 
@@ -21,7 +21,7 @@ a confirmation go back to your profile clicking
 on the image close to your name in the header.
 
 
-You see your project there, right?
+You see your cooperation there, right?
 Well, now just for the sake of an experiment,
 let's add the homepage logo into your user
 page. How?
@@ -32,7 +32,7 @@ Let's start having a look at the component folder.
 We will add the `home.vue` component.
 Go to the user.vue page. Add after:
 
-`<projectlist />`
+`<cooperationlist />`
 
 the component:
 
@@ -43,7 +43,7 @@ but not after the closing `</div></template>`.
 
 Now go to the script part and add after:
 
-`import projectlist from '@/components/projectlist'`
+`import cooperationlist from '@/components/cooperationlist'`
 
 the line
 
@@ -54,14 +54,14 @@ what else? As a final step, edit the
 component line:
 
 ```
-components: { projectlist: projectlist, },
+components: { cooperationlist: cooperationlist, },
 ```
 
 into:
 
 ```
  components: { 
-  projectlist: projectlist, 
+  cooperationlist: cooperationlist, 
   home: home,
  },
 ```

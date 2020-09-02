@@ -9,13 +9,13 @@
     "basic": "INFORMAZIONI DI BASE",
     "language": "Ricordati che puoi scegliere la tua lingua preferita alla fine della pagina nel ",
     "foot": "footer",
-    "nature": "Vuoi valutare un gruppo generico, come una società, una organizzazione, un gruppo di amici, oppure vuoi valutarne uno relativo a un progetto interno a Cooperacy?",
+    "nature": "Vuoi valutare un gruppo generico, come una società, una organizzazione, un gruppo di amici, oppure vuoi valutarne uno relativo a una cooperazione interna a Cooperacy?",
     "bgroup0": "Un gruppo",
-    "bgroup1": "Un gruppo relativo a un progetto di Cooperacy",
-    "project": "Qual è l'ID del progetto?",
+    "bgroup1": "Un gruppo relativo a una cooperazione in Cooperacy",
+    "cooperation": "Qual è l'ID della cooperazione?",
     "prevsurvey": "C'è un questionario precedente a cui vuoi fare riferimento?",
     "group": "Che livello di gruppo vuoi valutare?",
-    "group0": "Progetto di Cooperacy",
+    "group0": "Cooperazione in Cooperacy",
     "group1": "Nazione",
     "group2": "Città, Regione, Stato o Area Sociale",
     "group3": "Impresa, Associazione o Istituzione",
@@ -98,7 +98,7 @@
     "loading": "sto elaborando...",
     "choice": "Scegli che tipo di report vuoi visualizzare:",
     "choicesurvey": "Report di un gruppo",
-    "choiceproject": "Report di un progetto"
+    "choicecooperation": "Report di una cooperazione"
   },
   "cootoolreport": {
     "stagnation": "La diversità del gruppo è molto bassa: c'è rischio di involuzione o stagnazione.",

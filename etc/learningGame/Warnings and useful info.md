@@ -42,7 +42,7 @@ script side, you have something like:
 ```
   computed: {
     getImage(){return require('../assets/image/'
-    + project.image + '.png')},
+    + cooperation.image + '.png')},
     ...
   }
 ```

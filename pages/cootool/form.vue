@@ -30,32 +30,32 @@
 
           <p
             class="pt-3 m-1"
-            v-html="$t('cootool.project')"
+            v-html="$t('cootool.cooperation')"
             v-if="formNature == 1"
           ></p>
-          <!-- PROJECTS -->
+          <!-- COOPERATIONS -->
           <b-form-select
-            v-model="formPrevProjectID"
+            v-model="formPrevCooperationID"
             v-if="formNature == 1"
             required
           >
             <option :value="nihil"></option>
             <option
-              v-for="project in $store.state.project"
-              :key="project.id"
-              :value="project.id"
+              v-for="cooperation in $store.state.cooperation"
+              :key="cooperation.id"
+              :value="cooperation.id"
               v-html="
-                project.id +
+                cooperation.id +
                 ' ' +
-                project.name +
+                cooperation.name +
                 ' ' +
-                project.parent +
+                cooperation.parent +
                 ' ' +
-                project.category +
+                cooperation.category +
                 ' ' +
-                project.country +
+                cooperation.country +
                 ' ' +
-                project.place
+                cooperation.place
               "
             ></option>
           </b-form-select>
@@ -714,14 +714,14 @@ export default {
     await store.dispatch('getPlaceAction')
     await store.dispatch('getCountryAction')
     await store.dispatch('getSurveyAction')
-    await store.dispatch('getProjectAction')
+    await store.dispatch('getCooperationAction')
   },
   data() {
     return {
       nihil: null,
       formNature: 0,
       formPrevSurveyID: null,
-      formPrevProjectID: null,
+      formPrevCooperationID: null,
       formID: null,
       formGroup: 4,
       formCountry: 1,
@@ -810,16 +810,16 @@ export default {
     },
     async cooperationForm() {
       this.editing = true
-      if (this.formPrevProjectID) {
-        let [projectChosen] = this.$store.state.project.filter(
-          (project) => project.id == this.formPrevProjectID
+      if (this.formPrevCooperationID) {
+        let [cooperationChosen] = this.$store.state.cooperation.filter(
+          (cooperation) => cooperation.id == this.formPrevCooperationID
         )
         this.formGroup = 0
-        this.formCountry = projectChosen.country
-        this.formPlace = projectChosen.place
-        this.formParticipant = projectChosen.professional
-        this.formName = projectChosen.name
-        this.formDesc = projectChosen.brief
+        this.formCountry = cooperationChosen.country
+        this.formPlace = cooperationChosen.place
+        this.formParticipant = cooperationChosen.professional
+        this.formName = cooperationChosen.name
+        this.formDesc = cooperationChosen.brief
       }
       let prevsurvey = null
       if (this.formPrevSurveyID) {
@@ -837,7 +837,7 @@ export default {
         id: null,
         user: this.$auth.user ? this.$auth.user.id : null,
         surveyid: prevsurvey ? prevsurvey.surveyid : null,
-        project: this.formPrevProjectID,
+        cooperation: this.formPrevCooperationID,
         group: this.formGroup,
         country: this.formCountry,
         place: this.formPlace,

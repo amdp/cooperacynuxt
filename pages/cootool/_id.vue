@@ -16,9 +16,9 @@
         <p>
           This group is a
           {{ group }} located in {{ place }}, {{ country }}.
-          <span v-if="$store.state.survey.main[0].project">
+          <span v-if="$store.state.survey.main[0].cooperation">
             ID:
-            {{ $store.state.survey.main[0].project }}
+            {{ $store.state.survey.main[0].cooperation }}
           </span>
         </p>
         <p v-if="this.$store.state.survey.main[0].desc">
@@ -369,7 +369,7 @@ export default {
       editing: false,
     }
   },
-  mounted() {},
+  mounted() { },
   computed: {
     country() {
       let [country] = this.$store.state.country.filter(
@@ -410,7 +410,7 @@ export default {
         id: this.$store.state.survey.main[0].id,
         user: this.$store.state.survey.main[0].user,
         surveyid: this.$store.state.survey.main[0].surveyid,
-        project: this.$store.state.survey.main[0].project,
+        cooperation: this.$store.state.survey.main[0].cooperation,
         group: this.$store.state.survey.main[0].group,
         country: this.$store.state.survey.main[0].country,
         place: this.$store.state.survey.main[0].place,

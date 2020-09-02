@@ -26,36 +26,50 @@ const mypool = pool.promise()
 
 /////// GET ///////
 
-app.get('/project', async function (req, res, next) {
+app.get('/cooperation', async function (req, res, next) {
+  //USE DIRECT DATABASE QUERY FOR EVERYTHING THAT IS USELESS TO FILTER IN FRONTEND,
+  //LIKE COOPERATIONS LIST FOR USER DASHBOARD OR SINGLE COOPERATION
+  //FILTER THE REST IN FRONTEND UNTIL THE DATABASE GETS TOO LONG TO LOAD
+
   //SEARCH
   if (req.query.search) {
     try {
-      let query = 'SELECT *, MATCH (`name`) AGAINST (\'' + req.query.search + '\' IN NATURAL LANGUAGE MODE) AS score FROM `project` WHERE MATCH (`name`) AGAINST(\'' + req.query.search + '\' IN NATURAL LANGUAGE MODE) LIMIT ?;'
+      let query = 'SELECT *, MATCH (`name`) AGAINST (\'' + req.query.search + '\' IN NATURAL LANGUAGE MODE) AS score FROM `cooperation` WHERE MATCH (`name`) AGAINST(\'' + req.query.search + '\' IN NATURAL LANGUAGE MODE) LIMIT ?;'
       let param = [req.query.limit]
-      const [project] = await mypool.execute(query, param)
-      return res.status(200).send(project)
+      const [cooperation] = await mypool.execute(query, param)
+      return res.status(200).send(cooperation)
     } catch (err) {
       next(err)
     }
   }
-  //NON-SEARCH
 
+  //NON-SEARCH
   try {
-    if (req.query.author) {//!used to control the number of funded project of an author!
-      let query = 'SELECT * FROM `project` WHERE `stage`=? and `budget`>? and `author`=? ORDER BY C DESC LIMIT ?'
+    if (req.query.author) {//!used to control the number of funded cooperation of an author!
+      let query = 'SELECT * FROM `cooperation` WHERE `stage`=? and `budget`>? and `author`=? ORDER BY C DESC LIMIT ?'
       let param = [7, 0, req.query.author, req.query.limitauth]
-      const [project] = await mypool.execute(query, param)
-      res.status(200).send(project)
-    } else if (req.query.projectid) {//SINGLE PROJECT
-      let query = 'SELECT * FROM `project` WHERE `id`=? ORDER BY `C` DESC LIMIT ?'
-      param = [req.query.projectid + req.query.limit]
-      const [project] = await mypool.execute(query, param)
-      res.status(200).send(project)
-    } else {//HOME
-      let query = 'SELECT * FROM `project` WHERE `project`.`stage`<>1 ORDER BY `C` DESC LIMIT ?'
+      const [cooperation] = await mypool.execute(query, param)
+      res.status(200).send(cooperation)
+    } else if (req.query.cooperationid) {//SINGLE cooperation
+      let query = 'SELECT * FROM `cooperation` WHERE `id`=? LIMIT 1'
+      param = [req.query.cooperationid]
+      const [cooperation] = await mypool.execute(query, param)
+      res.status(200).send(cooperation)
+    } else if (req.query.limit) {
+      let query = 'SELECT * FROM `cooperation` WHERE `cooperation`.`stage`<>1 ORDER BY `C` DESC LIMIT ?'
       param = [req.query.limit]
-      const [project] = await mypool.execute(query, param)
-      res.status(200).send(project)
+      const [cooperation] = await mypool.execute(query, param)
+      res.status(200).send(cooperation)
+    } else if (req.query.cooperationtool) {// selecting cooperation in cooperationtool table
+      let query = 'SELECT `cooperationtool`.`id` as coosurveyid, `cooperation`.* FROM `cooperation`' +
+        'RIGHT JOIN `cooperationtool` ON `cooperation`.`id` = `cooperationtool`.`cooperation`' +
+        'WHERE `cooperation`.`stage`<>1 ORDER BY `id` DESC'
+      const [cooperation] = await mypool.execute(query)
+      res.status(200).send(cooperation)
+    } else {// selecting non-archived cooperation from dropdown
+      let query = 'SELECT * FROM `cooperation` WHERE `cooperation`.`stage`<>1 ORDER BY `id` DESC'
+      const [cooperation] = await mypool.execute(query)
+      res.status(200).send(cooperation)
     }
   } catch (err) {
     next(err)
@@ -67,8 +81,8 @@ app.get('/comment', async function (req, res, next) {
     let query =
       'SELECT comment.*, user.name, user.surname FROM comment' +
       ' LEFT JOIN user ON comment.user = user.id' +
-      ' WHERE comment.project = ? ORDER BY id DESC'
-    let param = [req.query.projectid]
+      ' WHERE comment.cooperation = ? ORDER BY id DESC'
+    let param = [req.query.cooperationid]
     const [comment] = await mypool.execute(query, param)
     res.status(200).send(comment)
   } catch (err) {
@@ -79,7 +93,7 @@ app.get('/comment', async function (req, res, next) {
 app.get('/fundingvar', async function (req, res, next) {
   let fundingvar = {}
   try {
-    let query = 'SELECT SUM(`E`) as `totalE` FROM `project`'
+    let query = 'SELECT SUM(`E`) as `totalE` FROM `cooperation`'
     const [result1] = await mypool.execute(query)
     fundingvar.totalE = result1[0].totalE
     query = 'SELECT COUNT(`user`.`active`) as `totaluser` from `user` where `user`.`active` = 1'
@@ -94,27 +108,27 @@ app.get('/fundingvar', async function (req, res, next) {
   res.status(200).send(fundingvar)
 })
 
-app.get('/userproject', async function (req, res, next) {
+app.get('/usercooperation', async function (req, res, next) {
   try {
     let query =
-      'SELECT * FROM `project` WHERE `id` IN (SELECT `project` FROM `projectvote` WHERE `user`=? and `condition`=?)'
+      'SELECT * FROM `cooperation` WHERE `id` IN (SELECT `cooperation` FROM `cooperationvote` WHERE `user`=? and `condition`=?)'
     let param = [req.query.userid, 'F']
-    const [project] = await mypool.execute(query, param)
-    res.status(200).send(project)
+    const [cooperation] = await mypool.execute(query, param)
+    res.status(200).send(cooperation)
   } catch (err) {
     next(err)
   }
 })
 
 app.get('/uservote', async function (req, res, next) {
-  //gets the votes of projects and comments that have been cast by current user
+  //gets the votes of cooperations and comments that have been cast by current user
   try {
     let query =
       'select * from `' + req.query.proptype + 'vote` where `user` = ?'
     let param = [req.query.userid]
     if (req.query.limit) {
-      query += ' AND `project`= ?'
-      param = [req.query.userid, req.query.projectid]
+      query += ' AND `cooperation`= ?'
+      param = [req.query.userid, req.query.cooperationid]
     }
     const [uservote] = await mypool.execute(query, param)
     res.status(200).send(uservote)
@@ -164,10 +178,10 @@ app.get('/userlist', async function (req, res, next) {
 app.get('/professional', async function (req, res, next) {
   try {
     let query =
-      'SELECT projectprofessional.*, user.name, user.surname' +
-      ' FROM projectprofessional LEFT JOIN user ON projectprofessional.user = user.id' +
-      ' where projectprofessional.project = ? ORDER BY id DESC'
-    let param = [req.query.project]
+      'SELECT cooperationprofessional.*, user.name, user.surname' +
+      ' FROM cooperationprofessional LEFT JOIN user ON cooperationprofessional.user = user.id' +
+      ' where cooperationprofessional.cooperation = ? ORDER BY id DESC'
+    let param = [req.query.cooperation]
     var [professional] = await mypool.execute(query, param)
     res.status(200).send(professional)
   } catch (err) {
@@ -177,8 +191,8 @@ app.get('/professional', async function (req, res, next) {
 
 app.get('/tag', async function (req, res, next) {
   try {
-    let query = 'SELECT * FROM `tag` where `project`=?'
-    let param = [req.query.project]
+    let query = 'SELECT * FROM `tag` where `cooperation`=?'
+    let param = [req.query.cooperation]
     const [tag] = await mypool.execute(query, param)
     res.status(200).send(tag)
   } catch (err) {
@@ -219,7 +233,7 @@ app.get('/news', async function (req, res, next) {
 app.get('/survey', async function (req, res, next) {
   if (!req.query.id) {
     try {
-      let query = 'SELECT `surveyid`, `group`, `country`, `place`, `participant`,`name`, `desc` FROM `cooperationtool` WHERE `project` IS NULL GROUP BY `surveyid`, `group`, `country`, `place`, `participant`,`name`, `desc` ORDER BY `surveyid`'
+      let query = 'SELECT `surveyid`, `group`, `country`, `place`, `participant`,`name`, `desc` FROM `cooperationtool` WHERE `cooperation` IS NULL GROUP BY `surveyid`, `group`, `country`, `place`, `participant`,`name`, `desc` ORDER BY `surveyid`'
       const [survey] = await mypool.execute(query)
       res.status(200).send(survey)
     } catch (err) {
@@ -230,6 +244,7 @@ app.get('/survey', async function (req, res, next) {
       let query = 'SELECT * FROM `cooperationtool` WHERE `id`=? LIMIT 1'
       let param = [req.query.id]
       const [survey] = await mypool.execute(query, param)
+      console.log(' ' + JSON.stringify(survey))
       const parallel = await parallelsurvey(survey[0])
       let mysurvey = { main: survey, parallel: parallel }
       res.status(200).send(mysurvey)
@@ -239,18 +254,18 @@ app.get('/survey', async function (req, res, next) {
 
     async function parallelsurvey(currentsurvey) {
       let parallel
-      if (currentsurvey.project) {
+      if (currentsurvey.cooperation) {//this is for survey about Cooperacy cooperations
         //in an if, keep query and param out of the "try"
-        let query = 'SELECT COUNT(`id`) as surveynum,`surveyid`,`group`,`country`,`place`,AVG(`month`) AS month,`participant`,`name`,`desc`,AVG(`MBD`) AS MBD,AVG(`BD`) AS BD,AVG(`MRD`) AS MRD,AVG(`RD`) AS RD,AVG(`MBU`) AS MBU,AVG(`BU`) AS BU,AVG(`MRU`) AS MRU,AVG(`RU`) AS RU,AVG(`MBF`) AS MBF,AVG(`BF`) AS BF,AVG(`MRF`) AS MRF,AVG(`RF`) AS RF,AVG(`MBI`) AS MBI,AVG(`BI`) AS BI,AVG(`MRI`) AS MRI,AVG(`RI`) AS RI,AVG(`MBC`) AS MBC,AVG(`BC`) AS BC,AVG(`MRC`) AS MRC,AVG(`RC`) AS RC,AVG(`MBX`) AS MBX,AVG(`BX`) AS BX,AVG(`MRX`) AS MRX,AVG(`RX`) AS RX,AVG(`MBH`) AS MBH,AVG(`BH`) AS BH,AVG(`MRH`) AS MRH,AVG(`RH`) AS RH,AVG(`MBT`) AS MBT,AVG(`BT`) AS BT,AVG(`MRT`) AS MRT,AVG(`RT`) AS RT,AVG(`MBE`) AS MBE,AVG(`BE`) AS BE,AVG(`MRE`) AS MRE,AVG(`RE`) AS RE,AVG(`P`) AS P,GROUP_CONCAT(`PText`) AS PText,AVG(`PD`) AS PD,GROUP_CONCAT(`PDText`) AS PDText,AVG(`PU`) AS PU,GROUP_CONCAT(`PUText`) AS PUText,AVG(`PF`) AS PF,GROUP_CONCAT(`PFText`) AS PFText,AVG(`PI`) AS PI,GROUP_CONCAT(`PIText`) AS PIText,AVG(`PC`) AS PC,GROUP_CONCAT(`PCText`) AS PCText,AVG(`PT`) AS PT,GROUP_CONCAT(`PTText`) AS PTText,AVG(`PE`) AS PE,GROUP_CONCAT(`PEText`) AS PEText,AVG(`PFinal`) AS PFinal,GROUP_CONCAT(`PFinalText`) AS PFinalText  from `cooperationtool` WHERE `project` = ? GROUP BY `surveyid`,`project`,`group`,`country`,`place`,`participant`,`name`,`desc`'
-        let param = [currentsurvey.project]
+        let query = 'SELECT COUNT(`id`) as surveynum,`surveyid`,`group`,`country`,`place`,AVG(`month`) AS month,`participant`,`name`,`desc`,AVG(`MBD`) AS MBD,AVG(`BD`) AS BD,AVG(`MRD`) AS MRD,AVG(`RD`) AS RD,AVG(`MBU`) AS MBU,AVG(`BU`) AS BU,AVG(`MRU`) AS MRU,AVG(`RU`) AS RU,AVG(`MBF`) AS MBF,AVG(`BF`) AS BF,AVG(`MRF`) AS MRF,AVG(`RF`) AS RF,AVG(`MBI`) AS MBI,AVG(`BI`) AS BI,AVG(`MRI`) AS MRI,AVG(`RI`) AS RI,AVG(`MBC`) AS MBC,AVG(`BC`) AS BC,AVG(`MRC`) AS MRC,AVG(`RC`) AS RC,AVG(`MBX`) AS MBX,AVG(`BX`) AS BX,AVG(`MRX`) AS MRX,AVG(`RX`) AS RX,AVG(`MBH`) AS MBH,AVG(`BH`) AS BH,AVG(`MRH`) AS MRH,AVG(`RH`) AS RH,AVG(`MBT`) AS MBT,AVG(`BT`) AS BT,AVG(`MRT`) AS MRT,AVG(`RT`) AS RT,AVG(`MBE`) AS MBE,AVG(`BE`) AS BE,AVG(`MRE`) AS MRE,AVG(`RE`) AS RE,AVG(`P`) AS P,GROUP_CONCAT(`PText`) AS PText,AVG(`PD`) AS PD,GROUP_CONCAT(`PDText`) AS PDText,AVG(`PU`) AS PU,GROUP_CONCAT(`PUText`) AS PUText,AVG(`PF`) AS PF,GROUP_CONCAT(`PFText`) AS PFText,AVG(`PI`) AS PI,GROUP_CONCAT(`PIText`) AS PIText,AVG(`PC`) AS PC,GROUP_CONCAT(`PCText`) AS PCText,AVG(`PT`) AS PT,GROUP_CONCAT(`PTText`) AS PTText,AVG(`PE`) AS PE,GROUP_CONCAT(`PEText`) AS PEText,AVG(`PFinal`) AS PFinal,GROUP_CONCAT(`PFinalText`) AS PFinalText  from `cooperationtool` WHERE `cooperation` = ? GROUP BY `surveyid`,`cooperation`,`group`,`country`,`place`,`participant`,`name`,`desc`'
+        let param = [currentsurvey.cooperation]
         try {
           [parallel] = await mypool.execute(query, param)
         } catch (err) {
           next(err)
         }
-      } else {
+      } else {//this is for survey about generic groups
         //in an if, keep query and param out of the "try"
-        query = 'SELECT COUNT(`id`) as surveynum,`surveyid`,`group`,`country`,`place`,AVG(`month`) AS month,`participant`,`name`,`desc`,AVG(`MBD`) AS MBD,AVG(`BD`) AS BD,AVG(`MRD`) AS MRD,AVG(`RD`) AS RD,AVG(`MBU`) AS MBU,AVG(`BU`) AS BU,AVG(`MRU`) AS MRU,AVG(`RU`) AS RU,AVG(`MBF`) AS MBF,AVG(`BF`) AS BF,AVG(`MRF`) AS MRF,AVG(`RF`) AS RF,AVG(`MBI`) AS MBI,AVG(`BI`) AS BI,AVG(`MRI`) AS MRI,AVG(`RI`) AS RI,AVG(`MBC`) AS MBC,AVG(`BC`) AS BC,AVG(`MRC`) AS MRC,AVG(`RC`) AS RC,AVG(`MBX`) AS MBX,AVG(`BX`) AS BX,AVG(`MRX`) AS MRX,AVG(`RX`) AS RX,AVG(`MBH`) AS MBH,AVG(`BH`) AS BH,AVG(`MRH`) AS MRH,AVG(`RH`) AS RH,AVG(`MBT`) AS MBT,AVG(`BT`) AS BT,AVG(`MRT`) AS MRT,AVG(`RT`) AS RT,AVG(`MBE`) AS MBE,AVG(`BE`) AS BE,AVG(`MRE`) AS MRE,AVG(`RE`) AS RE,AVG(`P`) AS P,GROUP_CONCAT(`PText`) AS PText,AVG(`PD`) AS PD,GROUP_CONCAT(`PDText`) AS PDText,AVG(`PU`) AS PU,GROUP_CONCAT(`PUText`) AS PUText,AVG(`PF`) AS PF,GROUP_CONCAT(`PFText`) AS PFText,AVG(`PI`) AS PI,GROUP_CONCAT(`PIText`) AS PIText,AVG(`PC`) AS PC,GROUP_CONCAT(`PCText`) AS PCText,AVG(`PT`) AS PT,GROUP_CONCAT(`PTText`) AS PTText,AVG(`PE`) AS PE,GROUP_CONCAT(`PEText`) AS PEText,AVG(`PFinal`) AS PFinal,GROUP_CONCAT(`PFinalText`) AS PFinalText from `cooperationtool` WHERE `surveyid` = ? GROUP BY `surveyid`,`project`,`group`,`country`,`place`,`participant`,`name`,`desc`'
+        query = 'SELECT COUNT(`id`) as surveynum,`surveyid`,`group`,`country`,`place`,AVG(`month`) AS month,`participant`,`name`,`desc`,AVG(`MBD`) AS MBD,AVG(`BD`) AS BD,AVG(`MRD`) AS MRD,AVG(`RD`) AS RD,AVG(`MBU`) AS MBU,AVG(`BU`) AS BU,AVG(`MRU`) AS MRU,AVG(`RU`) AS RU,AVG(`MBF`) AS MBF,AVG(`BF`) AS BF,AVG(`MRF`) AS MRF,AVG(`RF`) AS RF,AVG(`MBI`) AS MBI,AVG(`BI`) AS BI,AVG(`MRI`) AS MRI,AVG(`RI`) AS RI,AVG(`MBC`) AS MBC,AVG(`BC`) AS BC,AVG(`MRC`) AS MRC,AVG(`RC`) AS RC,AVG(`MBX`) AS MBX,AVG(`BX`) AS BX,AVG(`MRX`) AS MRX,AVG(`RX`) AS RX,AVG(`MBH`) AS MBH,AVG(`BH`) AS BH,AVG(`MRH`) AS MRH,AVG(`RH`) AS RH,AVG(`MBT`) AS MBT,AVG(`BT`) AS BT,AVG(`MRT`) AS MRT,AVG(`RT`) AS RT,AVG(`MBE`) AS MBE,AVG(`BE`) AS BE,AVG(`MRE`) AS MRE,AVG(`RE`) AS RE,AVG(`P`) AS P,GROUP_CONCAT(`PText`) AS PText,AVG(`PD`) AS PD,GROUP_CONCAT(`PDText`) AS PDText,AVG(`PU`) AS PU,GROUP_CONCAT(`PUText`) AS PUText,AVG(`PF`) AS PF,GROUP_CONCAT(`PFText`) AS PFText,AVG(`PI`) AS PI,GROUP_CONCAT(`PIText`) AS PIText,AVG(`PC`) AS PC,GROUP_CONCAT(`PCText`) AS PCText,AVG(`PT`) AS PT,GROUP_CONCAT(`PTText`) AS PTText,AVG(`PE`) AS PE,GROUP_CONCAT(`PEText`) AS PEText,AVG(`PFinal`) AS PFinal,GROUP_CONCAT(`PFinalText`) AS PFinalText from `cooperationtool` WHERE `surveyid` = ? GROUP BY `surveyid`,`cooperation`,`group`,`country`,`place`,`participant`,`name`,`desc`'
         param = [currentsurvey.surveyid]
         try {
           [parallel] = await mypool.execute(query, param)
@@ -567,7 +582,7 @@ app.post('/place', async function (req, res, next) {
   }
 })
 
-app.post('/project', async function (req, res, next) {
+app.post('/cooperation', async function (req, res, next) {
   let param = [
     req.body.stage,
     req.body.category,
@@ -585,19 +600,19 @@ app.post('/project', async function (req, res, next) {
   ]
   if (req.body.id == 'new') {
     try {
-      let query = 'SELECT * FROM `project` WHERE `project`.`name`= ? LIMIT 1'
-      let projectname = [req.body.name]
-      const [project] = await mypool.execute(query, projectname)
-      if (project[0]) {
+      let query = 'SELECT * FROM `cooperation` WHERE `cooperation`.`name`= ? LIMIT 1'
+      let cooperationname = [req.body.name]
+      const [cooperation] = await mypool.execute(query, cooperationname)
+      if (cooperation[0]) {
         res.status(200).send('exists')
       } else {
-        addproject()
+        addcooperation()
       }
     } catch (err) {
       next(err)
     }
   } else {
-    if (req.body.stage == 1) { //if we archive, we need to copy the state of the project before archiviation
+    if (req.body.stage == 1) { //if we archive, we need to copy the state of the cooperation before archiviation
       param.push( //we already pushed req.body.id
         req.body.budgetstep,
         req.body.budgetstepdoc,
@@ -612,26 +627,26 @@ app.post('/project', async function (req, res, next) {
         req.body.D,
         req.body.created
       )
-      let query = 'INSERT INTO `projectregistry` (`stage`,`category`,`name`,`country`,`place`,`brief`,`content`,`video`,`anonymous`,`parent`,`collect`,`budget`,`hudget`,`projectid`,`budgetstep`,`budgetstepdoc`,`fundingstep`,`professional`,`E`, `T`, `C`, `I`, `F`, `U`, `D`,`created`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
+      let query = 'INSERT INTO `cooperationregistry` (`stage`,`category`,`name`,`country`,`place`,`brief`,`content`,`video`,`anonymous`,`parent`,`collect`,`budget`,`hudget`,`cooperationid`,`budgetstep`,`budgetstepdoc`,`fundingstep`,`professional`,`E`, `T`, `C`, `I`, `F`, `U`, `D`,`created`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
       await mypool.execute(query, param)
     }
     try {
       param.push(req.body.id)
       let query =
-        'UPDATE `project` SET `stage`=?,`category`=?,`name`=?,`country`=?,`place`=?,`brief`=?,`content`=?,`video`=?,`anonymous`=?,`parent`=?,`collect`=?,`budget`=?,`hudget`=? WHERE `project`.`id`=?'
+        'UPDATE `cooperation` SET `stage`=?,`category`=?,`name`=?,`country`=?,`place`=?,`brief`=?,`content`=?,`video`=?,`anonymous`=?,`parent`=?,`collect`=?,`budget`=?,`hudget`=? WHERE `cooperation`.`id`=?'
       await mypool.execute(query, param)
     } catch (err) {
       next(err)
     }
     res.status(200).send({ id: req.body.id })
   }
-  async function addproject() {
+  async function addcooperation() {
     try {
       param.unshift(req.body.author)
       let query =
-        'INSERT INTO `project` (`author`,`stage`,`category`,`name`,`country`,`place`,`brief`,`content`,`video`,`anonymous`,`parent`,`collect`,`budget`,`hudget`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
-      const [project] = await mypool.execute(query, param)
-      res.status(200).send({ id: project.insertId })
+        'INSERT INTO `cooperation` (`author`,`stage`,`category`,`name`,`country`,`place`,`brief`,`content`,`video`,`anonymous`,`parent`,`collect`,`budget`,`hudget`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
+      const [cooperation] = await mypool.execute(query, param)
+      res.status(200).send({ id: cooperation.insertId })
     } catch (err) {
       next(err)
     }
@@ -642,10 +657,10 @@ app.post('/comment', async function (req, res, next) {
   if (req.body.id == 'new') {
     try {
       let query =
-        'INSERT INTO `comment` (`parent`,`project`,`user`,`content`) VALUES (?,?,?,?)'
+        'INSERT INTO `comment` (`parent`,`cooperation`,`user`,`content`) VALUES (?,?,?,?)'
       let param = [
         req.body.parent,
-        req.body.project,
+        req.body.cooperation,
         req.body.user,
         req.body.content
       ]
@@ -657,10 +672,10 @@ app.post('/comment', async function (req, res, next) {
   } else {
     try {
       let query =
-        'UPDATE `comment` SET `parent`=?, `project`=?, `user`=?, `content`=? WHERE `comment`.`id`=?'
+        'UPDATE `comment` SET `parent`=?, `cooperation`=?, `user`=?, `content`=? WHERE `comment`.`id`=?'
       let param = [
         req.body.parent,
-        req.body.project,
+        req.body.cooperation,
         req.body.user,
         req.body.content,
         req.body.id
@@ -732,14 +747,14 @@ app.post('/user', async function (req, res, next) {
         res.status(200).send({ id: useradded.insertId })
         try {
           let queryA =
-            'INSERT INTO `projectvote` (`user`,`project`,`condition`) VALUES (?,?,?)'
-          let paramA = [useradded.insertId, '700', 'F'] //700 is the annoucements project id
+            'INSERT INTO `cooperationvote` (`user`,`cooperation`,`condition`) VALUES (?,?,?)'
+          let paramA = [useradded.insertId, '700', 'F'] //700 is the annoucements cooperation id
           mypool.execute(queryA, paramA)
         } catch (err) {
           next(err)
         }
         try {
-          let query = 'UPDATE `project` SET `F`=`F`+1 where `project`.`id`=?'
+          let query = 'UPDATE `cooperation` SET `F`=`F`+1 where `cooperation`.`id`=?'
           let param = ['700']
           await mypool.execute(query, param)
         } catch (err) {
@@ -755,8 +770,8 @@ app.post('/user', async function (req, res, next) {
 app.post('/tag', async function (req, res, next) {
   if (req.body.tag == 'add') {
     try {
-      let query = 'INSERT INTO `tag` (`project`,`name`) VALUES (?,?)'
-      let param = [req.body.project, req.body.name]
+      let query = 'INSERT INTO `tag` (`cooperation`,`name`) VALUES (?,?)'
+      let param = [req.body.cooperation, req.body.name]
       const [tag] = await mypool.execute(query, param)
       res.status(200).send(tag)
     } catch (err) {
@@ -764,8 +779,8 @@ app.post('/tag', async function (req, res, next) {
     }
   } else {
     try {
-      let query = 'DELETE FROM `tag` where `project` = ? and `name` = ?'
-      let param = [req.body.project, req.body.name]
+      let query = 'DELETE FROM `tag` where `cooperation` = ? and `name` = ?'
+      let param = [req.body.cooperation, req.body.name]
       const [tag] = await mypool.execute(query, param)
       res.status(200).send(tag)
     } catch (err) {
@@ -898,59 +913,59 @@ app.get('/map', async function (req, res, next) {
 })
 
 app.post('/budgetstepdoc', async function (req, res, next) {
-  try {// updates the project link to the budget step document
-    let query = 'UPDATE `project` SET `budgetstepdoc` = ? WHERE `id` = ?'
-    let param = [req.body.doc, req.body.project.id]
+  try {// updates the cooperation link to the budget step document
+    let query = 'UPDATE `cooperation` SET `budgetstepdoc` = ? WHERE `id` = ?'
+    let param = [req.body.doc, req.body.cooperation.id]
     await mypool.execute(query, param)
   } catch (err) {
     next(err)
   }
-  try {// creates new record in the project registry with the budget step document link
-    let query = 'INSERT INTO `projectregistry` (`projectid`,`stage`,`category`,`name`,`country`,`place`,`brief`,`content`,`video`,`anonymous`,`parent`,`collect`,`budget`,`budgetstep`,`fundingstep`,`professional`,`hudget`,`E`, `T`, `C`, `I`, `F`, `U`, `D`,`created`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
-    let param = [req.body.project.id, req.body.project.stage, req.body.project.category, req.body.project.name, req.body.project.country, req.body.project.place, req.body.project.brief, project.content, req.body.project.video, req.body.project.anonymous, req.body.project.parent, req.body.project.collect, req.body.project.budget, req.body.project.budgetstep, req.body.project.fundingstep, req.body.project.professional, req.body.project.hudget, req.body.project.E, req.body.project.T, req.body.project.C, req.body.project.I, req.body.project.F, req.body.project.U, req.body.project.D, req.body.project.created]
+  try {// creates new record in the cooperation registry with the budget step document link
+    let query = 'INSERT INTO `cooperationregistry` (`cooperationid`,`stage`,`category`,`name`,`country`,`place`,`brief`,`content`,`video`,`anonymous`,`parent`,`collect`,`budget`,`budgetstep`,`fundingstep`,`professional`,`hudget`,`E`, `T`, `C`, `I`, `F`, `U`, `D`,`created`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
+    let param = [req.body.cooperation.id, req.body.cooperation.stage, req.body.cooperation.category, req.body.cooperation.name, req.body.cooperation.country, req.body.cooperation.place, req.body.cooperation.brief, cooperation.content, req.body.cooperation.video, req.body.cooperation.anonymous, req.body.cooperation.parent, req.body.cooperation.collect, req.body.cooperation.budget, req.body.cooperation.budgetstep, req.body.cooperation.fundingstep, req.body.cooperation.professional, req.body.cooperation.hudget, req.body.cooperation.E, req.body.cooperation.T, req.body.cooperation.C, req.body.cooperation.I, req.body.cooperation.F, req.body.cooperation.U, req.body.cooperation.D, req.body.cooperation.created]
     await mypool.execute(query, param)
   } catch (err) {
     next(err)
   }
-  if ((req.body.project.budgetstep == 2 && req.body.project.T >= req.body.project.E * 0.7)
-    || (req.body.project.budgetstep == 3 && req.body.project.U >= req.body.project.E * 0.7)) {
+  if ((req.body.cooperation.budgetstep == 2 && req.body.cooperation.T >= req.body.cooperation.E * 0.7)
+    || (req.body.cooperation.budgetstep == 3 && req.body.cooperation.U >= req.body.cooperation.E * 0.7)) {
     try {// applies trust/uderstandingvotes rule, moves 1 budget step further, creates a new record in the registry
-      let query = 'UPDATE `project` SET `budgetstep` = `budgetstep` + 1 where `id`=?;'
-        + 'INSERT INTO `projectregistry`(`projectid`,`stage`,`category`,`name`,`country`,`place`,`brief`,`content`,'
+      let query = 'UPDATE `cooperation` SET `budgetstep` = `budgetstep` + 1 where `id`=?;'
+        + 'INSERT INTO `cooperationregistry`(`cooperationid`,`stage`,`category`,`name`,`country`,`place`,`brief`,`content`,'
         + '`video`,`anonymous`,`parent`,`collect`,`budget`,`budgetstep`,`fundingstep`,`professional`,`hudget`,'
         + '`E`, `T`, `C`, `I`,`F`, `U`, `D`,`created`) SELECT `id`,`stage`,`category`,`name`,`country`,`place`,`brief`,`content`,'
         + '`video`,`anonymous`,`parent`,`collect`,`budget`,`budgetstep`,`fundingstep`,`professional`,`hudget`,'
-        + '`E`, `T`, `C`, `I`,`F`, `U`, `D`,`created` from `project` where `id`=?;'
-      let param = [req.body.project.id, req.body.project.id]
+        + '`E`, `T`, `C`, `I`,`F`, `U`, `D`,`created` from `cooperation` where `id`=?;'
+      let param = [req.body.cooperation.id, req.body.cooperation.id]
       await mypool.execute(query, param)
     } catch (err) {
       next(err)
     }
   } else {// if no trustvote nor understandingvote rule can be applied, it creates one week deadline event
-    try {// at the end of which if E went down, project goes back to idea stage, 
+    try {// at the end of which if E went down, cooperation goes back to idea stage, 
       // if I downvoted, it goes into pairing state,
-      // if at stage 7 it becomes an active project, 
+      // if at stage 7 it becomes an active cooperation, 
       // else it moves 1 budget step forward and creates a new registry record
-      let query = 'delimiter | DROP EVENT IF EXISTS budgetstepproject' + req.body.project.id + '|'
-        + 'CREATE EVENT budgetstepproject' + req.body.project.id + ' ON SCHEDULE AT CURRENT_TIMESTAMP + INTERVAL 1 WEEK DO BEGIN'
-        + 'DECLARE thisproject INT; DECLARE e0 INT; DECLARE e1 INT;'
-        + 'SET thisproject = ?; SET e1 = (SELECT `E` from project where id=thisproject);'
-        + 'SET e0 = (SELECT `E` from projectregistry where projectid=thisproject and'
-        + 'id = (SELECT max(id) from projectregistry where projectid=thisproject));'
+      let query = 'delimiter | DROP EVENT IF EXISTS budgetstepcooperation' + req.body.cooperation.id + '|'
+        + 'CREATE EVENT budgetstepcooperation' + req.body.cooperation.id + ' ON SCHEDULE AT CURRENT_TIMESTAMP + INTERVAL 1 WEEK DO BEGIN'
+        + 'DECLARE thiscooperation INT; DECLARE e0 INT; DECLARE e1 INT;'
+        + 'SET thiscooperation = ?; SET e1 = (SELECT `E` from cooperation where id=thiscooperation);'
+        + 'SET e0 = (SELECT `E` from cooperationregistry where cooperationid=thiscooperation and'
+        + 'id = (SELECT max(id) from cooperationregistry where cooperationid=thiscooperation));'
         + 'IF e1 < e0 THEN'
-        + 'UPDATE `project` SET `stage` = 7, `collect` = `collect` * e1/e0 where `id`=thisproject;'
-        + 'ELSEIF (SELECT I from project where id=thisproject) > 0 THEN'
-        + 'UPDATE `project` SET `stage` = 6 where `id`=thisproject;'
-        + 'ELSEIF (SELECT `budgetstep` from project where id=thisproject) = 7 THEN'
-        + 'UPDATE `project` SET `stage` = 2 where `id`=thisproject;'
-        + 'ELSE UPDATE `project` SET `budgetstep` = `budgetstep` + 1 where `id`=thisproject;'
-        + 'INSERT INTO `projectregistry`(`projectid`,`stage`,`category`,`name`,`country`,`place`,`brief`,`content`,'
+        + 'UPDATE `cooperation` SET `stage` = 7, `collect` = `collect` * e1/e0 where `id`=thiscooperation;'
+        + 'ELSEIF (SELECT I from cooperation where id=thiscooperation) > 0 THEN'
+        + 'UPDATE `cooperation` SET `stage` = 6 where `id`=thiscooperation;'
+        + 'ELSEIF (SELECT `budgetstep` from cooperation where id=thiscooperation) = 7 THEN'
+        + 'UPDATE `cooperation` SET `stage` = 2 where `id`=thiscooperation;'
+        + 'ELSE UPDATE `cooperation` SET `budgetstep` = `budgetstep` + 1 where `id`=thiscooperation;'
+        + 'INSERT INTO `cooperationregistry`(`cooperationid`,`stage`,`category`,`name`,`country`,`place`,`brief`,`content`,'
         + '`video`,`anonymous`,`parent`,`collect`,`budget`,`budgetstep`,`fundingstep`,`professional`,`hudget`,'
         + '`E`, `T`, `C`, `I`,`F`, `U`, `D`,`created`) SELECT `id`,`stage`,`category`,`name`,`country`,`place`,`brief`,`content`,'
         + '`video`,`anonymous`,`parent`,`collect`,`budget`,`budgetstep`,`fundingstep`,`professional`,`hudget`,'
-        + '`E`, `T`, `C`, `I`,`F`, `U`, `D`,`created` from `project` where `id`=thisproject;'
+        + '`E`, `T`, `C`, `I`,`F`, `U`, `D`,`created` from `cooperation` where `id`=thiscooperation;'
         + 'END IF; END| delimiter ;'
-      let param = [req.body.project.id, req.body.project.id, req.body.project.id]
+      let param = [req.body.cooperation.id, req.body.cooperation.id, req.body.cooperation.id]
       await mypool.execute(query, param)
       res.status(200).send('OK')
     } catch (err) {
@@ -961,8 +976,8 @@ app.post('/budgetstepdoc', async function (req, res, next) {
 
 app.post('/fundingstep', async function (req, res, next) {
   try {
-    let query = 'UPDATE project SET fundingstep = fundingstep + 1 where id=?'
-    let param = [req.body.project.id]
+    let query = 'UPDATE cooperation SET fundingstep = fundingstep + 1 where id=?'
+    let param = [req.body.cooperation.id]
     await mypool.execute(query, param)
     res.status(200).send('OK')
   } catch (err) {
@@ -995,19 +1010,19 @@ app.post('/vote', async function (req, res, next) {
   async function addvote() {
     try {
       let query =
-        'INSERT INTO `projectvote` (`user`,`project`,`condition`) VALUES (?,?,?)'
+        'INSERT INTO `cooperationvote` (`user`,`cooperation`,`condition`) VALUES (?,?,?)'
       let param = [req.body.user, req.body.id, req.body.condition]
       if (req.body.proptype == 'comment') {
         query =
-          'INSERT INTO `commentvote` (`user`,`comment`,`condition`,`project`) VALUES (?,?,?,?)'
-        param.push(req.body.projectid)
+          'INSERT INTO `commentvote` (`user`,`comment`,`condition`,`cooperation`) VALUES (?,?,?,?)'
+        param.push(req.body.cooperationid)
       }
       mypool.execute(query, param)
     } catch (err) {
       next(err)
     }
 
-    //meanwhile the relative project-comment condition value is updated
+    //meanwhile the relative cooperation-comment condition value is updated
     try {
       let query =
         'UPDATE `' +
@@ -1026,13 +1041,13 @@ app.post('/vote', async function (req, res, next) {
     }
 
     // every 7 diversity votes one equivalence vote is lost
-    if (req.body.proptype == 'project' && req.body.condition == 'D') {
+    if (req.body.proptype == 'cooperation' && req.body.condition == 'D') {
       try {
-        let query = 'SELECT `D` from `project` where `project`.`id` = ?'
+        let query = 'SELECT `D` from `cooperation` where `cooperation`.`id` = ?'
         let param = [req.body.id]
         const [diversity] = await mypool.execute(query, param)
         if ((diversity[0].D - Math.floor(diversity[0].D / 7) * 7) == 0) {
-          let query = 'UPDATE `project` SET `E` = `E` - 1 where `project`.`id`=?'
+          let query = 'UPDATE `cooperation` SET `E` = `E` - 1 where `cooperation`.`id`=?'
           let param = [req.body.id]
           mypool.execute(query, param)
         }
@@ -1064,12 +1079,12 @@ app.post('/vote', async function (req, res, next) {
     try {
       //the vote is archived (we await for it)
       let query =
-        'INSERT INTO `removedpvote` (`user`,`project`,`condition`) VALUES (?,?,?)'
+        'INSERT INTO `removedcoovote` (`user`,`cooperation`,`condition`) VALUES (?,?,?)'
       let param = [req.body.user, req.body.id, req.body.condition]
       if (req.body.proptype == 'comment') {
         query =
-          'INSERT INTO `removedcvote` (`user`,`comment`,`condition`,`project`) VALUES (?,?,?,?)'
-        param.push(req.body.projectid)
+          'INSERT INTO `removedcvote` (`user`,`comment`,`condition`,`cooperation`) VALUES (?,?,?,?)'
+        param.push(req.body.cooperationid)
       }
       await mypool.execute(query, param)
     } catch (err) {
@@ -1078,13 +1093,13 @@ app.post('/vote', async function (req, res, next) {
 
     // every 7 diversity votes one equivalence vote is lost, 
     // so we recover it before removing the D vote:
-    if (req.body.proptype == 'project' && req.body.condition == 'D') {
+    if (req.body.proptype == 'cooperation' && req.body.condition == 'D') {
       try {
-        let query = 'SELECT `D` from `project` where `project`.`id` = ?'
+        let query = 'SELECT `D` from `cooperation` where `cooperation`.`id` = ?'
         let param = [req.body.id]
         const [diversity] = await mypool.execute(query, param)
         if ((diversity[0].D - Math.floor(diversity[0].D / 7) * 7) == 0) {
-          let query = 'UPDATE `project` SET `E` = `E` + 1 where `project`.`id`=?'
+          let query = 'UPDATE `cooperation` SET `E` = `E` + 1 where `cooperation`.`id`=?'
           let param = [req.body.id]
           await mypool.execute(query, param)
         }
@@ -1094,13 +1109,13 @@ app.post('/vote', async function (req, res, next) {
     }
 
     //if in pairing state, the state is removed if I=0
-    if (req.body.stage == 6 && req.body.proptype == 'project' && req.body.condition == 'I') {
+    if (req.body.stage == 6 && req.body.proptype == 'cooperation' && req.body.condition == 'I') {
       try {
-        let query = 'SELECT `I` from `project` where `id` = ?'
+        let query = 'SELECT `I` from `cooperation` where `id` = ?'
         let param = [req.body.id]
         const [transparency] = await mypool.execute(query, param)
         if (transparency[0].I == 0) {
-          let query = 'UPDATE `project` SET `stage` = 7 where `id`=?'
+          let query = 'UPDATE `cooperation` SET `stage` = 7 where `id`=?'
           let param = [req.body.id]
           await mypool.execute(query, param)
         }
@@ -1109,7 +1124,7 @@ app.post('/vote', async function (req, res, next) {
       }
     }
 
-    //then the relative project/comment condition value is updated
+    //then the relative cooperation/comment condition value is updated
     try {
       let query =
         'UPDATE `' +
@@ -1157,8 +1172,8 @@ app.post('/vote', async function (req, res, next) {
 app.post('/professional', async function (req, res, next) {
   try {
     let query =
-      'DELETE FROM `projectprofessional` where `user`=? and `project`=? LIMIT 1'
-    let param = [req.body.user, req.body.project]
+      'DELETE FROM `cooperationprofessional` where `user`=? and `cooperation`=? LIMIT 1'
+    let param = [req.body.user, req.body.cooperation]
     var [removed] = await mypool.execute(query, param)
   } catch (err) {
     next(err)
@@ -1166,8 +1181,8 @@ app.post('/professional', async function (req, res, next) {
   if (removed.affectedRows == 1) {
     try {
       let query =
-        'UPDATE `project` SET `professional`=`professional`-1 where `project`.`id`=?'
-      let param = [req.body.project]
+        'UPDATE `cooperation` SET `professional`=`professional`-1 where `cooperation`.`id`=?'
+      let param = [req.body.cooperation]
       mypool.execute(query, param)
     } catch (err) {
       next(err)
@@ -1176,16 +1191,16 @@ app.post('/professional', async function (req, res, next) {
   } else {
     try {
       let query =
-        'INSERT INTO `projectprofessional` (`project`, `user`) VALUES (?,?)'
-      let param = [req.body.project, req.body.user]
+        'INSERT INTO `cooperationprofessional` (`cooperation`, `user`) VALUES (?,?)'
+      let param = [req.body.cooperation, req.body.user]
       mypool.execute(query, param)
     } catch (err) {
       next(err)
     }
     try {
       let query =
-        'UPDATE `project` SET `professional`=`professional`+1 where `project`.`id`=?'
-      let param = [req.body.project]
+        'UPDATE `cooperation` SET `professional`=`professional`+1 where `cooperation`.`id`=?'
+      let param = [req.body.cooperation]
       mypool.execute(query, param)
     } catch (err) {
       next(err)
@@ -1195,17 +1210,16 @@ app.post('/professional', async function (req, res, next) {
 })
 
 app.post('/cooperationtool', async function (req, res, next) {
-  if (!req.body.user) { req.body.user = 0 }
   let surveyoutput = await insertion()
   res.status(200).json({ id: surveyoutput })
 
   async function insertion() {
     try {
       let query =
-        'INSERT INTO `cooperationtool` (`id`,`user`,`surveyid`,`project`,`group`,`country`,`place`,`month`,`participant`,`name`,`desc`,`MBD`,`BD`,`MRD`,`RD`,`MBU`,`BU`,`MRU`,`RU`,`MBF`,`BF`,`MRF`,`RF`,`MBI`,`BI`,`MRI`,`RI`,`MBC`,`BC`,`MRC`,`RC`,`MBX`,`BX`,`MRX`,`RX`,`MBH`,`BH`,`MRH`,`RH`,`MBT`,`BT`,`MRT`,`RT`,`MBE`,`BE`,`MRE`,`RE`,`P`,`PText`,`PD`,`PDText`,`PU`,`PUText`,`PF`,`PFText`,`PI`,`PIText`,`PC`,`PCText`,`PT`,`PTText`,`PE`,`PEText`,`PFinal`,`PFinalText`) VALUES (?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?)'
-      let param = [req.body.id, req.body.user, req.body.surveyid, req.body.project, req.body.group, req.body.country, req.body.place, req.body.month, req.body.participant, req.body.name, req.body.desc, req.body.MBD, req.body.BD, req.body.MRD, req.body.RD, req.body.MBU, req.body.BU, req.body.MRU, req.body.RU, req.body.MBF, req.body.BF, req.body.MRF, req.body.RF, req.body.MBI, req.body.BI, req.body.MRI, req.body.RI, req.body.MBC, req.body.BC, req.body.MRC, req.body.RC, req.body.MBX, req.body.BX, req.body.MRX, req.body.RX, req.body.MBH, req.body.BH, req.body.MRH, req.body.RH, req.body.MBT, req.body.BT, req.body.MRT, req.body.RT, req.body.MBE, req.body.BE, req.body.MRE, req.body.RE, req.body.P, req.body.PText, req.body.PD, req.body.PDText, req.body.PU, req.body.PUText, req.body.PF, req.body.PFText, req.body.PI, req.body.PIText, req.body.PC, req.body.PCText, req.body.PT, req.body.PTText, req.body.PE, req.body.PEText, req.body.PFinal, req.body.PFinalText]
+        'INSERT INTO `cooperationtool` (`id`,`user`,`surveyid`,`cooperation`,`group`,`country`,`place`,`month`,`participant`,`name`,`desc`,`MBD`,`BD`,`MRD`,`RD`,`MBU`,`BU`,`MRU`,`RU`,`MBF`,`BF`,`MRF`,`RF`,`MBI`,`BI`,`MRI`,`RI`,`MBC`,`BC`,`MRC`,`RC`,`MBX`,`BX`,`MRX`,`RX`,`MBH`,`BH`,`MRH`,`RH`,`MBT`,`BT`,`MRT`,`RT`,`MBE`,`BE`,`MRE`,`RE`,`P`,`PText`,`PD`,`PDText`,`PU`,`PUText`,`PF`,`PFText`,`PI`,`PIText`,`PC`,`PCText`,`PT`,`PTText`,`PE`,`PEText`,`PFinal`,`PFinalText`) VALUES (?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?)'
+      let param = [req.body.id, req.body.user, req.body.surveyid, req.body.cooperation, req.body.group, req.body.country, req.body.place, req.body.month, req.body.participant, req.body.name, req.body.desc, req.body.MBD, req.body.BD, req.body.MRD, req.body.RD, req.body.MBU, req.body.BU, req.body.MRU, req.body.RU, req.body.MBF, req.body.BF, req.body.MRF, req.body.RF, req.body.MBI, req.body.BI, req.body.MRI, req.body.RI, req.body.MBC, req.body.BC, req.body.MRC, req.body.RC, req.body.MBX, req.body.BX, req.body.MRX, req.body.RX, req.body.MBH, req.body.BH, req.body.MRH, req.body.RH, req.body.MBT, req.body.BT, req.body.MRT, req.body.RT, req.body.MBE, req.body.BE, req.body.MRE, req.body.RE, req.body.P, req.body.PText, req.body.PD, req.body.PDText, req.body.PU, req.body.PUText, req.body.PF, req.body.PFText, req.body.PI, req.body.PIText, req.body.PC, req.body.PCText, req.body.PT, req.body.PTText, req.body.PE, req.body.PEText, req.body.PFinal, req.body.PFinalText]
       if (req.body.pairing) {
-        query = 'UPDATE `cooperationtool` SET `id` = ?,`user` = ?,`surveyid` = ?,`project` = ?,`group` = ?,`country` = ?,`place` = ?,`month` = ?,`participant` = ?,`name` = ?,`desc` = ?,`MBD` = ?,`BD` = ?,`MRD` = ?,`RD` = ?,`MBU` = ?,`BU` = ?,`MRU` = ?,`RU` = ?,`MBF` = ?,`BF` = ?,`MRF` = ?,`RF` = ?,`MBI` = ?,`BI` = ?,`MRI` = ?,`RI` = ?,`MBC` = ?,`BC` = ?,`MRC` = ?,`RC` = ?,`MBX` = ?,`BX` = ?,`MRX` = ?,`RX` = ?,`MBH` = ?,`BH` = ?,`MRH` = ?,`RH` = ?,`MBT` = ?,`BT` = ?,`MRT` = ?,`RT` = ?,`MBE` = ?,`BE` = ?,`MRE` = ?,`RE` = ?,`P` = ?,`PText` = ?,`PD` = ?,`PDText` = ?,`PU` = ?,`PUText` = ?,`PF` = ?,`PFText` = ?,`PI` = ?,`PIText` = ?,`PC` = ?,`PCText` = ?,`PT` = ?,`PTText` = ?,`PE` = ?,`PEText` = ?,`PFinal` = ?,`PFinalText` = ? WHERE `id` = ?'
+        query = 'UPDATE `cooperationtool` SET `id` = ?,`user` = ?,`surveyid` = ?,`cooperation` = ?,`group` = ?,`country` = ?,`place` = ?,`month` = ?,`participant` = ?,`name` = ?,`desc` = ?,`MBD` = ?,`BD` = ?,`MRD` = ?,`RD` = ?,`MBU` = ?,`BU` = ?,`MRU` = ?,`RU` = ?,`MBF` = ?,`BF` = ?,`MRF` = ?,`RF` = ?,`MBI` = ?,`BI` = ?,`MRI` = ?,`RI` = ?,`MBC` = ?,`BC` = ?,`MRC` = ?,`RC` = ?,`MBX` = ?,`BX` = ?,`MRX` = ?,`RX` = ?,`MBH` = ?,`BH` = ?,`MRH` = ?,`RH` = ?,`MBT` = ?,`BT` = ?,`MRT` = ?,`RT` = ?,`MBE` = ?,`BE` = ?,`MRE` = ?,`RE` = ?,`P` = ?,`PText` = ?,`PD` = ?,`PDText` = ?,`PU` = ?,`PUText` = ?,`PF` = ?,`PFText` = ?,`PI` = ?,`PIText` = ?,`PC` = ?,`PCText` = ?,`PT` = ?,`PTText` = ?,`PE` = ?,`PEText` = ?,`PFinal` = ?,`PFinalText` = ? WHERE `id` = ?'
         param.push(req.body.id)
         await mypool.execute(query, param)
         return req.body.id
@@ -1227,7 +1241,7 @@ app.post('/cooperationtool', async function (req, res, next) {
 //admin
 
 app.post('/resetvoting', async function (req, res, next) {
-  var proptype = ['project', 'comment', 'user']
+  var proptype = ['cooperation', 'comment', 'user']
   for (let i = 0; i < proptype.length; i++) {
     try {
       let query = 'SELECT `id` from `' + proptype[i] + '`'

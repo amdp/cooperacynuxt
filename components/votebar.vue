@@ -12,14 +12,16 @@
       </b-col>
     </b-row>
   </b-container>
-  <b-container class="m-0 p-0 up" v-else-if="this.proptype == 'project'">
+  <b-container class="m-0 p-0 up" v-else-if="this.proptype == 'cooperation'">
     <b-row class="m-0 p-0">
       <b-col
         v-for="vote in this.vote"
-        :key="vote.projectcc"
+        :key="vote.cooperationcc"
         :class="vote.class + ' p-0 m-1'"
-        @mouseover="voteinfo('project', vote.vlong, vote.projectcc, vote.v)"
-        @click="checkprojectvote(vote.projectcc)"
+        @mouseover="
+          voteinfo('cooperation', vote.vlong, vote.cooperationcc, vote.v)
+        "
+        @click="checkcooperationvote(vote.cooperationcc)"
       >
       </b-col>
     </b-row>
@@ -45,7 +47,7 @@
 </template>
 
 <script>
-//cc stands for cooperation condition, proptype could be user, project or comment
+//cc stands for cooperation condition, proptype could be user, cooperation or comment
 export default {
   props: {
     voteprop: { required: true },
@@ -58,10 +60,10 @@ export default {
     vote() {
       let voteif = []
       for (let i = 0; i < 7; i++) {
-        // choosing the style to apply if the user voted this project/comment specific vote color:
+        // choosing the style to apply if the user voted this cooperation/comment specific vote color:
         var votestyle
         var uservoted
-        // this if checks if there are votes in projects or comments, avoids rainbowbar
+        // this if checks if there are votes in cooperations or comments, avoids rainbowbar
         if (this.$store.state[this.proptype + 'uservote']) {
           uservoted = this.$store.state[this.proptype + 'uservote'].findIndex(
             v =>
@@ -70,7 +72,7 @@ export default {
           )
           //here, if there is no vote in that condition, the result is -1
         } else {
-          // this happens if there is no projectuservote nor commentuservote, remember no votes => -1
+          // this happens if there is no cooperationuservote nor commentuservote, remember no votes => -1
           uservoted = 0
         }
         // now, if the uservote is different than -1, it means the user voted for it, so it should be turned ON
@@ -107,14 +109,14 @@ export default {
             (voteif[i].userkey = this.$store.state.cc[i])
         }
       }
-      if (this.proptype == 'project') {
+      if (this.proptype == 'cooperation') {
         for (let i = 0; i < 7; i++) {
           ; (voteif[i].class =
             'vote ' +
             voteif[i].style +
             ' ' +
             this.$store.state.condition[i]),
-            (voteif[i].projectcc = this.$store.state.cc[i])
+            (voteif[i].cooperationcc = this.$store.state.cc[i])
         }
       }
       if (this.proptype == 'comment') {
@@ -133,21 +135,21 @@ export default {
   methods: {
     voteinfo(proptype, vlong, cc, v) {
       this.voteinfocontent = vlong + 'votes: ' + v + ' - '
-      if (proptype == 'project') {
+      if (proptype == 'cooperation') {
         if (cc == 'E') {
-          return this.voteinfocontent += 'USE THIS VOTE TO GIVE POOL MONEY OR BUY THE TICKET FOR THIS PROJECT'
+          return this.voteinfocontent += 'USE THIS VOTE TO GIVE POOL MONEY OR BUY THE TICKET FOR THIS COOPERATION'
         } else if (cc == 'T') {
-          return this.voteinfocontent += 'USE THIS VOTE IF YOU TRUST THIS PROJECT (AND TO FASTEN FUNDING)'
+          return this.voteinfocontent += 'USE THIS VOTE IF YOU TRUST THIS COOPERATION (AND TO FASTEN FUNDING)'
         } else if (cc == 'C') {
-          return this.voteinfocontent += 'USE THIS VOTE TO PROMOTE THE VISIBILITY OF THIS PROJECT'
+          return this.voteinfocontent += 'USE THIS VOTE TO PROMOTE THE VISIBILITY OF THIS COOPERATION'
         } else if (cc == 'I') {
-          return this.voteinfocontent += 'WARNING: USE THIS VOTE TO SIGNAL SERIOUS LACK OF TRANSPARENCY IN THE PROJECT'
+          return this.voteinfocontent += 'WARNING: USE THIS VOTE TO SIGNAL SERIOUS LACK OF TRANSPARENCY IN THE COOPERATION'
         } else if (cc == 'F') {
-          return this.voteinfocontent += 'USE THIS VOTE TO PARTICIPATE, FOLLOW OR WORK FOR THE PROJECT'
+          return this.voteinfocontent += 'USE THIS VOTE TO PARTICIPATE, FOLLOW OR WORK FOR THE COOPERATION'
         } else if (cc == 'U') {
-          return this.voteinfocontent += 'USE THIS VOTE IF THE PROJECT IS EASILY UNDERSTANDABLE (AND TO FASTEN FUNDING)'
+          return this.voteinfocontent += 'USE THIS VOTE IF THE COOPERATION IS EASILY UNDERSTANDABLE (AND TO FASTEN FUNDING)'
         } else if (cc == 'D') {
-          return this.voteinfocontent += 'USE THIS VOTE IF THE PROJECT IS FUN, BIZARRE, ALTERNATIVE (AND TO MAKE FUNDING BIZARRE)'
+          return this.voteinfocontent += 'USE THIS VOTE IF THE COOPERATION IS FUN, BIZARRE, ALTERNATIVE (AND TO MAKE FUNDING BIZARRE)'
         }
       }
       if (proptype == 'comment') {
@@ -168,11 +170,11 @@ export default {
         }
       }
     },
-    checkprojectvote(cc) {
+    checkcooperationvote(cc) {
       if (!this.$auth.user) {
         return this.$router.push({ path: '/login' })
       }
-      let exists = this.$store.state['projectuservote'].findIndex(
+      let exists = this.$store.state['cooperationuservote'].findIndex(
         // checks if the vote exists
         x => x[this.proptype] == this.voteprop.id && x.condition == cc
       )
@@ -181,7 +183,7 @@ export default {
         return this.$root.$emit('bv::show::modal', modal, '#btnShow')
       }
       if (cc == 'E' && exists != -1 && this.voteprop.stage == 6) {
-        let Icheck = this.$store.state['projectuservote'].findIndex(
+        let Icheck = this.$store.state['cooperationuservote'].findIndex(
           // checks if there is a I vote
           x => x[this.proptype] == this.voteprop.id && x.condition == 'I'
         )
@@ -195,7 +197,7 @@ export default {
       // keep the following budgetstep alert AFTER the this.voteprop.stage == 6 (pairing) check
       if (cc == 'E' && exists != -1) {
         if (this.voteprop.budgetstep > 0) {
-          alert('With your unvoting, you release part of the project budget to the Cooperacy general pool. This project will go back into the idea stage, until the full budget is collected again, then start back from the last budget step it is now.')
+          alert('With your unvoting, you release part of the cooperation budget to the Cooperacy general pool. This cooperation will go back into the idea stage, until the full budget is collected again, then start back from the last budget step it is now.')
         }
         return this.voteswitch(cc)
       }
@@ -222,7 +224,7 @@ export default {
         proptype: this.proptype
       })
 
-      // SERVER-SIDE: prepares and sends async REST call (either comment or project)
+      // SERVER-SIDE: prepares and sends async REST call (either comment or cooperation)
       let request = {
         id: this.voteprop.id,
         condition: cc,
@@ -230,10 +232,10 @@ export default {
         proptype: this.proptype
       }
       if (this.proptype == 'comment') {
-        request.projectid = this.$route.params.id
+        request.cooperationid = this.$route.params.id
         request.author = this.voteprop.user
       }
-      if (this.proptype == 'project') {
+      if (this.proptype == 'cooperation') {
         request.category = this.voteprop.category
         request.stage = this.voteprop.stage
       }

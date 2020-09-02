@@ -1,7 +1,7 @@
 <template>
   <div class="m-0 p-0">
     <home />
-    <projectlist />
+    <cooperationlist />
     <entermodal />
   </div>
 </template>
@@ -9,7 +9,7 @@
 <script>
 export default {
   async fetch({ store, params }) {
-    await store.dispatch('getProjectAction', { limit: 7 })
+    await store.dispatch('getCooperationAction', { limit: 21 })
     await store.dispatch('getPlaceAction')
     await store.dispatch('getCountryAction')
     await store.dispatch('getFundingvar')
@@ -17,7 +17,7 @@ export default {
     if (store.state.auth.loggedIn) {
       await store.dispatch('getUservoteAction', {
         userid: store.state.auth.user.id,
-        proptype: 'project',
+        proptype: 'cooperation',
       })
     } else
       await store.dispatch('getUservoteAction', {

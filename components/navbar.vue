@@ -158,10 +158,10 @@
         </div>
         <div class="col-6 d-flex flex-column h-100 nav-only-desktop">
           <div class="navbar-menu w-100 text-center">
-            <div class="nav" @mouseenter="navState = 'project'">
+            <div class="nav" @mouseenter="navState = 'theproject'">
               <div
                 class="nav-item"
-                :class="{ 'project-active': navState == 'project' }"
+                :class="{ 'theproject-active': navState == 'theproject' }"
               >
                 THE PROJECT
               </div>
@@ -185,8 +185,8 @@
           </div>
           <div
             class="navbar-links text-center"
-            id="project"
-            v-if="navState == 'project'"
+            id="theproject"
+            v-if="navState == 'theproject'"
           >
             <nuxt-link class="menu-item" to="/main/aboutyou"
               >ABOUT YOU</nuxt-link
@@ -290,16 +290,16 @@
 
       <!-- MOBILE DROPDOWN -->
       <div class="mobile-dropdown text-center pt-2" v-if="isDropdownVisible">
-        <div class="mobile-nav-box" @click="navState = 'project'">
+        <div class="mobile-nav-box" @click="navState = 'theproject'">
           <div
             class="nav-item"
-            :class="{ 'project-active': navState == 'project' }"
+            :class="{ 'theproject-active': navState == 'theproject' }"
           >
             THE PROJECT
           </div>
           <div
             class="mt-2 d-flex flex-column"
-            v-if="navState == 'project'"
+            v-if="navState == 'theproject'"
             @click="hideNav()"
           >
             <nuxt-link class="mobile-menu-item" to="/main/aboutyou">

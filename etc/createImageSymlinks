@@ -5,4 +5,4 @@ do
   ln -s 0.png $i.png
 done
 
-#execute these lines both in /static/assets/image/project/ and in /static/assets/image/user/
+#execute these lines both in /static/assets/image/cooperation/ and in /static/assets/image/user/

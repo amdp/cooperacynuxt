@@ -112,7 +112,7 @@
     <!--FADE IN AREA-->
     <!-- Find other people to realize together what you want to do and possibly get funded -->
     <b-container class="mb-3">
-      <b-form @submit.prevent="projectSearch()" class="mt-3 none">
+      <b-form @submit.prevent="cooperationSearch()" class="mt-3 none">
         <b-row class="m-0 p-0">
           <b-col cols="10" class="m-0 p-0">
             <b-form-input
@@ -159,7 +159,7 @@
         </div>
       </div>
       <p class="base text-center">
-        Cooperacy is an open project aiming to apply and spread Cooperation
+        Cooperacy is an open initiative aiming to apply and spread Cooperation
         Science.
       </p>
       <p class="base text-center mb-2">
@@ -474,10 +474,10 @@ export default {
       this.dpayoff = 'none' // main payoff disappears
       this.descriptions[v].display = 'inline' // right description appears
     },
-    projectSearch() {
+    cooperationSearch() {
       this.searching = true
-      this.$store.dispatch('getProjectAction', { search: this.formSearch, limit: 3 })
-      return this.$router.push({ path: '/project' })
+      this.$store.dispatch('getCooperationAction', { search: this.formSearch, limit: 3 })
+      return this.$router.push({ path: '/cooperation' })
     }
   }
 }

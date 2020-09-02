@@ -29,7 +29,7 @@
         aria-valuenow="1%"
         aria-valuemin="0"
         aria-valuemax="100"
-        style="width:1%; color:#000000; background-color: #FF9000"
+        style="width: 1%; color: #000000; background-color: #ff9000;"
       >
         &nbsp;1%&nbsp;Complete
       </div>
@@ -91,7 +91,7 @@
     </div>
     <br />
     <p class="base">
-      This project was led by Igor Carravetta and Carola Ravaschino in 2016.
+      This cooperation was led by Igor Carravetta and Carola Ravaschino in 2016.
       During one of the first Cooperacy meetings, we were discussing how to test
       the
       <nuxt-link to="/main/governance" class="af">voting system</nuxt-link> and
@@ -102,10 +102,10 @@
     </p>
 
     <p class="subheading equivalence center space margin">
-      EXPERIMENTAL PROJECTS
+      EXPERIMENTAL COOPERATIONS
     </p>
     <p class="base">
-      This is a non-exaustive list of the projects we are currently testing.
+      This is a non-exaustive list of the cooperations we are currently testing.
     </p>
     <div class="center">
       <img
@@ -123,7 +123,7 @@
       <span class="freedom">2.</span> We have researched and found that we are
       able to organise and develop a business out of supplying delicious,
       organic, multi-cereal bread from Busto Arsizio. If you would like to drive
-      this exciting project let us know!<br />
+      this exciting cooperation let us know!<br />
       <span class="freedom">3.</span> Experience has shown us that we are able
       to earn 100 Euros for each catering event we organise.<br /><br />
       As you can see, we have had fun experimenting. Would you like to test your
@@ -150,7 +150,7 @@
       COOPERATION SCIENCE
     </p>
     <p class="base">
-      This project is the first and most important one as Cooperacy was born
+      This cooperation is the first and most important one as Cooperacy was born
       from our scientific research about Cooperation.<br /><br />
     </p>
     <p class="base">

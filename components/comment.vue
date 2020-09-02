@@ -28,7 +28,7 @@
 
     <!-- POSTS -->
     <div class="row mt-3" v-for="comment in up" :key="comment.id">
-      <div class="col-10 col-lg-7 mx-auto projectbox p-3">
+      <div class="col-10 col-lg-7 mx-auto cooperationbox p-3">
         <div class="row mb-2 mt-0 ml-0 mr-0 p-0">
           <div class="col-2 col-md-1 space t10 graylight up text-left p-0">
             <img
@@ -182,10 +182,10 @@ export default {
       }
     },
     anonymous() {
-      let thisproject = this.$store.state.project.filter(
-        (project) => project.id == this.$route.params.id
+      let thiscooperation = this.$store.state.cooperation.filter(
+        (cooperation) => cooperation.id == this.$route.params.id
       )
-      if (thisproject[0].anonymous == 1) {
+      if (thiscooperation[0].anonymous == 1) {
         return true
       }
     },
@@ -220,7 +220,7 @@ export default {
         this.$store.dispatch('commentFormAction', {
           id: editreplyid,
           parent: parent,
-          project: this.$route.params.id,
+          cooperation: this.$route.params.id,
           user: this.$auth.user.id,
           content: this.formComment,
         })
@@ -229,7 +229,7 @@ export default {
         this.$store.dispatch('commentFormAction', {
           id: editreplyid,
           parent: comment.parent,
-          project: this.$route.params.id,
+          cooperation: this.$route.params.id,
           user: this.$auth.user.id,
           content: this.formComment,
         })
@@ -255,7 +255,7 @@ export default {
       this.$store.dispatch('commentFormAction', {
         id: 'new',
         parent: 0,
-        project: this.$route.params.id,
+        cooperation: this.$route.params.id,
         user: this.$auth.user.id,
         content: this.formPost,
       })
@@ -291,7 +291,7 @@ export default {
       this.$store.dispatch('commentFormAction', {
         id: toberemoved.id,
         parent: toberemoved.parent,
-        project: this.$route.params.id,
+        cooperation: this.$route.params.id,
         user: this.$auth.user.id,
         content: 'removed by author',
       })

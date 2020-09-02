@@ -8,7 +8,7 @@
     <nuxt-link to="/main/aboutyou">DISCOVER MORE</nuxt-link>
   </b-modal>
 
-  <!-- People should see the projects but not vote!! -->
+  <!-- People should see the cooperations but not vote!! -->
 </template>
 
 <script>
@@ -35,7 +35,7 @@ export default {
       journey: [
         {
           q: 'What is Cooperacy?',
-          a: 'Cooperacy is an open project based on Cooperation Science.'
+          a: 'Cooperacy is an open initiative based on Cooperation Science.'
         },
 
         {
@@ -47,12 +47,12 @@ export default {
         {
           q: 'What is the money pool for?',
           a:
-            'A Human Artificial Intelligence ethically distributes the money to the members projects.'
+            'A Human Artificial Intelligence ethically distributes the money to the members cooperations.'
         },
 
         {
-          q: 'Can I propose a project of mine?',
-          a: 'You can propose your own Cooperacy project.'
+          q: 'Can I propose an idea of mine?',
+          a: 'You can propose your own Cooperacy cooperation idea.'
         },
 
         {
@@ -64,7 +64,7 @@ export default {
         {
           q: 'What is the business model?',
           a:
-            'The active projects will be owned by Cooperacy itself and the members will earn money deciding their salary autonomously, sending the margins back to Cooperacy in order to make other members start new projects.'
+            'The active cooperations will be owned by Cooperacy itself and the members will earn money deciding their salary autonomously, sending the margins back to Cooperacy in order to make other members start new cooperations.'
         },
 
         {

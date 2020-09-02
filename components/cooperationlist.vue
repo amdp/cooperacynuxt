@@ -2,24 +2,27 @@
   <b-container
     fluid
     class="justify-content-center m-0 p-0"
-    ref="projectlistcomponent"
+    ref="cooperationlistcomponent"
   >
     <voteinfomodal />
     <b-container
-      v-for="type in projectTypes"
+      v-for="type in cooperationTypes"
       :key="type.id"
       class="justify-content-center m-0 p-0"
       fluid
     >
-      <h2 v-if="projectlist[type.name].length > 0" class="text-center mb-3 up">
+      <h2
+        v-if="cooperationlist[type.name].length > 0"
+        class="text-center mb-3 up"
+      >
         <span class="hb" v-if="$route.path == '/'">RECENT</span>
-        <span class="hb">{{ type.name }}</span>
+        <span class="hb" v-if="!$route.params.id">{{ type.name }}</span>
         <span class="hb" v-if="$route.path == '/user'">YOU FOLLOW</span>
       </h2>
       <b-container
-        v-for="project in projectlist[type.name]"
-        :key="project.id"
-        :class="'p-1 mx-auto mb-3 w-100 ' + projectbox(project)"
+        v-for="cooperation in cooperationlist[type.name]"
+        :key="cooperation.id"
+        :class="'p-1 mx-auto mb-3 w-100 ' + cooperationbox(cooperation)"
         class="m-0 p-0"
       >
         <b-row class="m-0 p-0 w-100 p-0">
@@ -28,7 +31,7 @@
               <b-col cols="4"></b-col>
               <b-col cols="4">
                 <img
-                  :src="'/assets/image/project/' + project.id + '.png'"
+                  :src="'/assets/image/cooperation/' + cooperation.id + '.png'"
                   class="img-100"
                 />
               </b-col>
@@ -36,25 +39,25 @@
             </b-row>
             <b-row class="m-0 p-0 w-100">
               <b-col cols="12 text-center">
-                <nuxt-link :to="'/project/' + project.id">
+                <nuxt-link :to="'/cooperation/' + cooperation.id">
                   <span
                     class="space subheading up"
-                    v-if="type.name == 'projects'"
+                    v-if="type.name == 'cooperations'"
                   >
-                    {{ project.name }}
+                    {{ cooperation.name }}
                   </span>
                   <span
                     class="space subheading up o25"
                     v-if="type.name == 'archived'"
                   >
-                    {{ project.name }}
+                    {{ cooperation.name }}
                   </span> </nuxt-link
                 ><br />
                 <small class="mb-2 up t12">
-                  <i>{{ project.brief }}</i>
+                  <i>{{ cooperation.brief }}</i>
                 </small>
                 <p v-if="$route.params.id">
-                  {{ project.content }}
+                  {{ cooperation.content }}
                 </p>
                 <p v-if="$route.params.id">
                   TAGS:
@@ -74,23 +77,24 @@
                 <b-container v-if="$route.params.id">
                   <small>
                     <strong>AFTF: </strong
-                    >{{ project.anonymous ? 'ON' : 'OFF' }}
+                    >{{ cooperation.anonymous ? 'ON' : 'OFF' }}
                   </small>
-                  <small v-if="project.stage == '2'">
-                    <strong>FEE: </strong> {{ Math.round(project.budget) }}
+                  <small v-if="cooperation.stage == '2'">
+                    <strong>FEE: </strong> {{ Math.round(cooperation.budget) }}
                     <br />
                   </small>
                   <br />
                   <small>
-                    <strong>PARENT PROJECT: </strong> {{ project.parent }}
+                    <strong>PARENT COOPERATION: </strong>
+                    {{ cooperation.parent }}
                   </small>
                   <br />
                 </b-container>
-                <b-container @click="babba(project)">
+                <b-container>
                   <small>
-                    {{ category(project.category) }}
-                    <i>{{ stage(project.stage) }} project</i> in
-                    {{ location(project.place) }}
+                    {{ category(cooperation.category) }}
+                    <i>{{ stage(cooperation.stage) }} cooperation</i> in
+                    {{ location(cooperation.place) }}
                   </small>
                 </b-container>
               </b-col>
@@ -100,34 +104,38 @@
               <b-col cols="12">
                 <b-progress
                   v-if="
-                    (project.stage == 7 || project.stage == 2) &&
-                    project.budget != 0
+                    (cooperation.stage == 7 || cooperation.stage == 2) &&
+                    cooperation.budget != 0
                   "
                   max="1"
                   class="mt-2"
                 >
                   <b-progress-bar
-                    :value="collected(project) / project.budget"
+                    :value="collected(cooperation) / cooperation.budget"
                     :label="
-                      Math.round((collected(project) / project.budget) * 100) +
-                      '%'
+                      Math.round(
+                        (collected(cooperation) / cooperation.budget) * 100
+                      ) + '%'
                     "
-                    :class="'b' + budgetbar(project.stage)"
+                    :class="'b' + budgetbar(cooperation.stage)"
                   ></b-progress-bar>
                   <b-progress-bar
-                    :value="1 - Math.round(collected(project) / project.budget)"
-                    :class="'they' + budgetbar(project.stage) + ' std'"
+                    :value="
+                      1 -
+                      Math.round(collected(cooperation) / cooperation.budget)
+                    "
+                    :class="'they' + budgetbar(cooperation.stage) + ' std'"
                   ></b-progress-bar>
                 </b-progress>
-                <span v-if="project.stage == 7 && project.budget != 0">
-                  BUDGET: €{{ collected(project).toFixed(7) }} of €{{
-                    Math.round(project.budget)
+                <span v-if="cooperation.stage == 7 && cooperation.budget != 0">
+                  BUDGET: €{{ collected(cooperation).toFixed(7) }} of €{{
+                    Math.round(cooperation.budget)
                   }}
                   collected
                 </span>
-                <span v-if="project.stage == 2 && project.budget != 0">
-                  BUDGET: €{{ collected(project).toFixed(0) }} of €{{
-                    Math.round(project.budget)
+                <span v-if="cooperation.stage == 2 && cooperation.budget != 0">
+                  BUDGET: €{{ collected(cooperation).toFixed(0) }} of €{{
+                    Math.round(cooperation.budget)
                   }}
                   collected
                 </span>
@@ -138,37 +146,39 @@
               <b-col cols="12">
                 <b-progress
                   v-if="
-                    project.category != 4 &&
-                    project.hudget != 0 &&
-                    project.stage != 1
+                    cooperation.category != 4 &&
+                    cooperation.hudget != 0 &&
+                    cooperation.stage != 1
                   "
                   max="1"
                   class="mt-2"
                 >
                   <b-progress-bar
-                    :value="project.professional / project.hudget"
+                    :value="cooperation.professional / cooperation.hudget"
                     :label="
                       Math.round(
-                        (project.professional / project.hudget) * 100
+                        (cooperation.professional / cooperation.hudget) * 100
                       ) + '%'
                     "
                     class="bfreedom"
                   ></b-progress-bar>
                   <b-progress-bar
                     :value="
-                      negprogress(1 - project.professional / project.hudget)
+                      negprogress(
+                        1 - cooperation.professional / cooperation.hudget
+                      )
                     "
                     class="theyfreedom"
                   ></b-progress-bar>
                 </b-progress>
                 <span
                   v-if="
-                    project.category != 4 &&
-                    project.hudget != 0 &&
-                    project.stage != 1
+                    cooperation.category != 4 &&
+                    cooperation.hudget != 0 &&
+                    cooperation.stage != 1
                   "
-                  >HUDGET: {{ project.professional }} of
-                  {{ project.hudget }} professionals needed</span
+                  >HUDGET: {{ cooperation.professional }} of
+                  {{ cooperation.hudget }} professionals needed</span
                 >
               </b-col>
             </b-row>
@@ -176,18 +186,20 @@
             <b-row class="m-0 p-2 w-100">
               <b-col cols="12" class="m-0 p-0 w-100 text-center">
                 <b-link v-b-modal.voteinfomodal>
-                  <span v-if="project.stage != 1">
-                    VOTE FOR THIS PROJECT (<span class="underline">INFO</span>):
+                  <span v-if="cooperation.stage != 1">
+                    VOTE FOR THIS COOPERATION (<span class="underline"
+                      >INFO</span
+                    >):
                   </span>
-                  <span v-if="project.stage == 1">
-                    GIVE FEEDBACK FOR THIS PROJECT (?):
+                  <span v-if="cooperation.stage == 1">
+                    GIVE FEEDBACK FOR THIS COOPERATION (?):
                   </span>
                 </b-link>
                 <br />
                 <votebar
-                  :voteprop="project"
-                  :proptype="'project'"
-                  :vote-id="project.id"
+                  :voteprop="cooperation"
+                  :proptype="'cooperation'"
+                  :vote-id="cooperation.id"
                 />
               </b-col>
             </b-row>
@@ -199,18 +211,18 @@
                   v-if="$auth.user && $route.params.id"
                 >
                   <b-col cols="12" class="m-0 p-0 text-center">
-                    <span v-if="project.stage != 1 && $auth.user.role == 1">
-                      <b-link class="ae" @click="archive(project)"
+                    <span v-if="cooperation.stage != 1 && $auth.user.role == 1">
+                      <b-link class="ae" @click="archive(cooperation)"
                         >Archive</b-link
                       >&nbsp;
                     </span>
-                    <span v-if="project.stage == 1 && $auth.user.role == 1"
+                    <span v-if="cooperation.stage == 1 && $auth.user.role == 1"
                       ><b-link class="ae" @click="unarchive()">Resume</b-link
                       >&nbsp;
                     </span>
                     <span
                       v-if="
-                        (project.stage == 5 && improfessional) ||
+                        (cooperation.stage == 5 && improfessional) ||
                         $auth.user.role == 1
                       "
                     >
@@ -223,7 +235,7 @@
                     </span>
                     <span
                       v-if="
-                        (project.stage != 1 && improfessional) ||
+                        (cooperation.stage != 1 && improfessional) ||
                         $auth.user.role == 1
                       "
                     >
@@ -233,7 +245,7 @@
                     </span>
                     <span
                       v-if="
-                        (project.stage != 1 && improfessional) ||
+                        (cooperation.stage != 1 && improfessional) ||
                         $auth.user.role == 1
                       "
                     >
@@ -241,15 +253,15 @@
                     </span>
                     <span
                       v-if="
-                        (project.budgetstep - project.fundingstep > 1 &&
+                        (cooperation.budgetstep - cooperation.fundingstep > 1 &&
                           improfessional) ||
-                        (project.stage == 2 &&
-                          project.fundingstep == 6 &&
+                        (cooperation.stage == 2 &&
+                          cooperation.fundingstep == 6 &&
                           improfessional) ||
                         $auth.user.role == 1
                       "
                     >
-                      <b-link class="ad" @click="fundingstep(project)"
+                      <b-link class="ad" @click="fundingstep(cooperation)"
                         >Request funding step</b-link
                       >&nbsp;
                     </span>
@@ -261,21 +273,21 @@
         </b-row>
         <tagmodal
           v-if="$route.params.id && $auth.user"
-          :projectprop="project"
+          :cooperationprop="cooperation"
         />
         <professionalmodal
           v-if="$route.params.id && $auth.user"
-          :projectprop="project"
+          :cooperationprop="cooperation"
           :userlistprop="$store.state.userlist"
         />
         <budgetstepmodal
           v-if="$route.params.id && $auth.user"
-          :projectprop="project"
+          :cooperationprop="cooperation"
         />
-        <votebarmodal :projectprop="project" />
+        <votebarmodal :cooperationprop="cooperation" />
       </b-container>
     </b-container>
-    <p class="text-center" @click="more($store.state.project.length)">
+    <p class="text-center none" @click="more($store.state.cooperation.length)">
       More...
     </p>
   </b-container>
@@ -286,10 +298,10 @@ export default {
   data() {
     return {
       isHover: null,
-      projectnum: 7,
-      projectcounter: 1,
-      projectTypes: [
-        { id: 1, name: 'projects' },
+      cooperationnum: 7,
+      cooperationcounter: 1,
+      cooperationTypes: [
+        { id: 1, name: 'cooperations' },
         { id: 2, name: 'archived' },
       ],
       incremental: -1,
@@ -298,21 +310,21 @@ export default {
     }
   },
   computed: {
-    projectlist() {
+    cooperationlist() {
       if (this.$route.params.id) {
         return {
-          projects: this.$store.state.project.filter(
-            (project) => project.id == this.$route.params.id
+          cooperations: this.$store.state.cooperation.filter(
+            (cooperation) => cooperation.id == this.$route.params.id
           ),
           archived: [],
         }
       } else {
         return {
-          projects: this.$store.state.project.filter(
-            (project) => project.stage != 1
+          cooperations: this.$store.state.cooperation.filter(
+            (cooperation) => cooperation.stage != 1
           ),
-          archived: this.$store.state.project.filter(
-            (project) => project.stage == 1
+          archived: this.$store.state.cooperation.filter(
+            (cooperation) => cooperation.stage == 1
           ),
         }
       }
@@ -330,19 +342,19 @@ export default {
         this.incremental++
       }, this.updatesec * 1000)
     },
-    collected(project) {
-      if (project.stage == 2) {
-        return project.E * project.collect
+    collected(cooperation) {
+      if (cooperation.stage == 2) {
+        return cooperation.E * cooperation.collect
       } else {
-        // here we add to project.collect (the amount collected so far) the increment of every second,
-        // times the update seconds interval times the % of the project E-votes over the total of the E-votes
+        // here we add to cooperation.collect (the amount collected so far) the increment of every second,
+        // times the update seconds interval times the % of the cooperation E-votes over the total of the E-votes
         return (
-          parseFloat(project.collect) +
+          parseFloat(cooperation.collect) +
           this.incremental *
           this.$store.state.fundingvar.totalfee *
           0.000000380517504 *
           this.updatesec *
-          (project.E / this.$store.state.fundingvar.totalE)
+          (cooperation.E / this.$store.state.fundingvar.totalE)
         )
       }
     },
@@ -354,104 +366,104 @@ export default {
     improfessional() {
       let mypro = this.$store.state.professional.filter(
         (pro) =>
-          pro.user == this.$auth.user && pro.project == this.$route.params.id
+          pro.user == this.$auth.user && pro.cooperation == this.$route.params.id
       )
       if (mypro.length > 0) return true
       else return false
     },
-    projectbox(project) {
+    cooperationbox(cooperation) {
       let boxclass
       let categorycolor = ['e', 't', 'c', 'i', 'f', 'u', 'd'] //order these according categories
       for (let i = 0; i < 7; i++) {
-        if (project.category == i + 1) {
+        if (cooperation.category == i + 1) {
           boxclass =
-            categorycolor[i] + 'projectbox'
+            categorycolor[i] + 'cooperationbox'
         }
       }
       return boxclass
     },
-    archive(project) {
-      this.$store.dispatch('projectFormAction', {
-        id: project.id,
+    archive(cooperation) {
+      this.$store.dispatch('cooperationFormAction', {
+        id: cooperation.id,
         stage: 1,
-        name: project.name,
-        country: project.country,
-        place: project.place,
-        brief: project.brief,
-        content: project.content,
-        video: project.video,
-        anonymous: project.anonymous,
-        parent: project.parent,
-        category: project.category,
-        collect: project.collect,
-        budget: project.budget,
-        budgetstep: project.budgetstep,
-        budgetstepdoc: project.budgetstepdoc,
-        fundingstep: project.fundingstep,
-        professional: project.professional,
-        hudget: project.hudget,
-        E: project.E,
-        T: project.T,
-        C: project.C,
-        I: project.I,
-        F: project.F,
-        U: project.U,
-        D: project.D,
-        created: project.created,
+        name: cooperation.name,
+        country: cooperation.country,
+        place: cooperation.place,
+        brief: cooperation.brief,
+        content: cooperation.content,
+        video: cooperation.video,
+        anonymous: cooperation.anonymous,
+        parent: cooperation.parent,
+        category: cooperation.category,
+        collect: cooperation.collect,
+        budget: cooperation.budget,
+        budgetstep: cooperation.budgetstep,
+        budgetstepdoc: cooperation.budgetstepdoc,
+        fundingstep: cooperation.fundingstep,
+        professional: cooperation.professional,
+        hudget: cooperation.hudget,
+        E: cooperation.E,
+        T: cooperation.T,
+        C: cooperation.C,
+        I: cooperation.I,
+        F: cooperation.F,
+        U: cooperation.U,
+        D: cooperation.D,
+        created: cooperation.created,
       })
-      this.$store.dispatch('getUserProjectAction', {
+      this.$store.dispatch('getUserCooperationAction', {
         userid: this.$auth.user.id,
       })
       return this.$router.push({ path: '/user' })
     },
-    fundingstep(project) {
-      project.fundingstep++
+    fundingstep(cooperation) {
+      cooperation.fundingstep++
       let payload = {
         formName: this.$auth.user.name + ' ' + this.$auth.user.surname,
         formEmail: this.$auth.user.email,
         formSubject:
           'Funding Step #' +
-          project.fundingstep +
-          ' Request Notification from Project #' +
-          project.id +
+          cooperation.fundingstep +
+          ' Request Notification from Cooperation #' +
+          cooperation.id +
           ' ' +
-          project.name,
+          cooperation.name,
         formBody:
-          'In Project #' +
-          project.id +
+          'In Cooperation #' +
+          cooperation.id +
           ' ' +
-          project.name +
+          cooperation.name +
           ' comember ' +
           this.$auth.user.name +
           ' ' +
           this.$auth.user.surname +
           ' has requested Funding Step #"' +
-          project.fundingstep +
+          cooperation.fundingstep +
           '".',
       }
       this.$store.dispatch('contactEmailAction', payload)
-      this.$store.dispatch('fundingstep', project)
+      this.$store.dispatch('fundingstep', cooperation)
     },
     professional() {
       this.store.dispatch('addprofessional', { id: this.formProfessional })
     },
     edit() {
       this.$store.dispatch('editSwitchAction', { id: this.$route.params.id })
-      return this.$router.push({ path: '/project/form' })
+      return this.$router.push({ path: '/cooperation/form' })
     },
     unarchive() {
       this.$store.dispatch('editSwitchAction', { id: this.$route.params.id })
-      return this.$router.push({ path: '/project/form' })
+      return this.$router.push({ path: '/cooperation/form' })
     },
     copy() {
       this.$store.dispatch('editSwitchAction', {
         id: this.$route.params.id,
         copy: true,
       })
-      this.$store.dispatch('getUserProjectAction', {
+      this.$store.dispatch('getUserCooperationAction', {
         userid: this.$auth.user.id,
       })
-      return this.$router.push({ path: '/project/form' })
+      return this.$router.push({ path: '/cooperation/form' })
     },
     negprogress(num) {
       num < 0 ? (num = 0) : (num = num)
@@ -465,13 +477,13 @@ export default {
         .name
     },
     location(id) {
-      let projectPlace = this.$store.state.place.find((place) => place.id == id)
-      if (projectPlace) {
-        let projectCountry = this.$store.state.country.find(
-          (country) => country.id == projectPlace.country
+      let cooperationPlace = this.$store.state.place.find((place) => place.id == id)
+      if (cooperationPlace) {
+        let cooperationCountry = this.$store.state.country.find(
+          (country) => country.id == cooperationPlace.country
         )
-        if (projectCountry) {
-          return projectPlace.name + ', ' + projectCountry.name
+        if (cooperationCountry) {
+          return cooperationPlace.name + ', ' + cooperationCountry.name
         }
       } else {
         return 'Unknown'

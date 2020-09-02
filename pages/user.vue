@@ -14,11 +14,11 @@
           Edit your information
         </nuxt-link>
         <br />
-        <nuxt-link to="/project/form" class="ac">
-          Add a new Project
+        <nuxt-link to="/cooperation/form" class="ac">
+          Add a new Cooperation
         </nuxt-link>
         <br />
-        <nuxt-link to="/project/search" class="af">Project search </nuxt-link>
+        <nuxt-link to="/cooperation" class="af">Cooperation search </nuxt-link>
         <br />
         <nuxt-link to="/userlist" class="ac">
           Members List
@@ -76,7 +76,7 @@
         characteristics according to their behavior.</i
       >
     </p>
-    <projectlist />
+    <cooperationlist />
   </b-container>
 </template>
 
@@ -92,12 +92,12 @@ export default {
     await store.dispatch('getCountryAction')
     await store.dispatch('getPlaceAction')
     await store.dispatch('getFundingvar')
-    await store.dispatch('getUserProjectAction', {
+    await store.dispatch('getUserCooperationAction', {
       userid: store.state.auth.user.id
     })
     await store.dispatch('getUservoteAction', {
       userid: store.state.auth.user.id,
-      proptype: 'project'
+      proptype: 'cooperation'
     })
 
   },

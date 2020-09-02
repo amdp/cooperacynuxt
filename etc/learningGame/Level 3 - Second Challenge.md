@@ -11,7 +11,7 @@ Scroll down and enter your name,
 surname, email and password..
 eventually a pic of yours.
 Nothing will be sent to the 
-real cooperacy project, so
+real cooperacy cooperation, so
 don't worry and hit on bank transfer.
 
 

@@ -354,31 +354,31 @@ a:hover {
   background-image: none;
 }
 
-.eprojectbox {
+.ecooperationbox {
   border: 2px solid $equivalence;
   border-radius: 20px;
 }
-.tprojectbox {
+.tcooperationbox {
   border: 2px solid $trust;
   border-radius: 20px;
 }
-.cprojectbox {
+.ccooperationbox {
   border: 2px solid $care;
   border-radius: 20px;
 }
-.iprojectbox {
+.icooperationbox {
   border: 2px solid $transparency;
   border-radius: 20px;
 }
-.fprojectbox {
+.fcooperationbox {
   border: 2px solid $freedom;
   border-radius: 20px;
 }
-.uprojectbox {
+.ucooperationbox {
   border: 2px solid $understanding;
   border-radius: 20px;
 }
-.dprojectbox {
+.dcooperationbox {
   border: 2px solid $diversity;
   border-radius: 20px;
 }
@@ -404,10 +404,10 @@ a:hover {
   background-color: $back;
 }
 /* Navbar colors */
-#project .menu-item:hover {
+#theproject .menu-item:hover {
   color: $equivalence;
 }
-.project-active:after {
+.theproject-active:after {
   background-color: $equivalence;
 }
 #corporate .menu-item:hover {
@@ -507,12 +507,12 @@ b-form-select .was-validated, .custom-select:valid, .custom-select.is-valid{
   left: calc(50% - 7px);
   bottom: 0;
 }
-.project-active:after,
+.theproject-active:after,
 .science-active:after,
 .corporate-active:after {
   display: inline-block;
 }
-.projectbox {
+.cooperationbox {
   border: 1px solid $coogray;
   border-radius: 20px;
 }
@@ -827,7 +827,7 @@ a.disabled {
   }
 }
 @media (max-width: 768px) {
-  .project-votebar .single-vote-button {
+  .cooperation-votebar .single-vote-button {
     margin: 0.15rem;
   }
 }

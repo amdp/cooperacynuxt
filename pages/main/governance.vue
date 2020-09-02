@@ -13,19 +13,19 @@
     </p>
     <br /><br />
 
-    <p class="subheading freedom center space">PROJECTS</p>
+    <p class="subheading freedom center space">COOPERATIONS</p>
     <br />
     <p class="base">
-      The Cooperacy governance is made of projects, that can have upprojects or
-      subprojects. The main project is called Cooperacy. Every project is based
-      on the most simple form of
+      The Cooperacy governance is made of cooperations, that can have
+      upcooperations or subcooperations. The main cooperation is called
+      Cooperacy. Every cooperation is based on the most simple form of
       <nuxt-link to="/main/cooperation" class="ae">cooperation</nuxt-link>: two
       or more people doing something together. <br />
-      It is advised every project should have maximum 148 people and two
-      coordinators. A single coordinator is considered provisory, while projects
-      may also decide to elect everyone as coordinator to experiment diffuse
-      governance.<br />
-      Anytime, coordinators may resign, can be substituted upon the project
+      It is advised every cooperation should have maximum 148 people and two
+      coordinators. A single coordinator is considered provisory, while
+      cooperations may also decide to elect everyone as coordinator to
+      experiment diffuse governance.<br />
+      Anytime, coordinators may resign, can be substituted upon the cooperation
       participants’ will or candidates may propose themselves to become
       coordinators.<br />
     </p>
@@ -33,10 +33,10 @@
     <p class="subheading freedom center space">DECISIONS</p>
     <br />
     <p class="base" style="width: 100%;">
-      Coordinators may take direct decisions in their project. Only when their
-      decision is publicly communicated it becomes effective. When they are in
-      contrast or unsure about what decision to take, coordinators can ask
-      advice to the participants or start a voting phase.<br /><br />
+      Coordinators may take direct decisions in their cooperation. Only when
+      their decision is publicly communicated it becomes effective. When they
+      are in contrast or unsure about what decision to take, coordinators can
+      ask advice to the participants or start a voting phase.<br /><br />
 
       Participants can propose decisions as well through voting or asking the
       coordinators for direct approval. The coordinators should abstain when
@@ -66,21 +66,21 @@
     <p class="subheading freedom center space">VOTING</p>
     <br />
     <p class="base">
-      Cooperacy is a design democracy: we vote project ideas first, people
+      Cooperacy is a design democracy: we vote cooperation ideas first, people
       afterwards. Decisions are voted independently from the people who will
       enact them, as they will be chosen <i>on a second step</i>.<br /><br />
       The voting can be anonymous during the voting phase, but becomes
       transparent once the results are shown. All voting results are
       transparent.<br /><br />
       The decision making is based on approval voting, that is, everyone may
-      vote with a single vote all the project ideas or alternative decisions
+      vote with a single vote all the cooperation ideas or alternative decisions
       they want. If there is not a clear orientation<SUP>2</SUP> after the
       voting phase, the participants leave their choice to the coordinators.
       They may also choose with the coordinators which one of the seven possible
       <nuxt-link to="/main/integration#solutions" class="af"
         >solutions</nuxt-link
       >
-      to apply for the realization of the project’s will:<br /><br />
+      to apply for the realization of the cooperation’s will:<br /><br />
       - Turns or experimentations, starting from the most voted<br />
       - Give a definite time to test the previous situation and then vote
       again<br />
@@ -88,7 +88,7 @@
       and vote again<br />
       - Retrieve more information, listen to all the people positions and decide
       again<br />
-      - Separate the project in new ones, splitting eventual budgets<br />
+      - Separate the cooperation in new ones, splitting eventual budgets<br />
       - Evaluate things through data, common values or objective criterias and
       vote again<br />
       - Combine using the

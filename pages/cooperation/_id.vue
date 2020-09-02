@@ -1,6 +1,6 @@
 <template>
   <b-container>
-    <projectlist />
+    <cooperationlist />
     <!-- COMMENTS -->
     <div class="comments-container w-100 mt-5">
       <h3 class="font-weight-normal text-center">
@@ -19,28 +19,28 @@ export default {
     return /^\d+$/.test(params.id)
   },
   async fetch({ store, params }) {
-    await store.dispatch('getProjectAction', {
-      projectid: params.id,
+    await store.dispatch('getCooperationAction', {
+      cooperationid: params.id,
       userid: store.state.auth.user.id
     })
     await store.dispatch('getFundingvar')
     await store.dispatch('getPlaceAction')
     await store.dispatch('getCountryAction')
-    await store.dispatch('getTagAction', { project: params.id })
-    await store.dispatch('getProfessionalAction', { project: params.id })
-    await store.dispatch('getUservoteAction', { //project
+    await store.dispatch('getTagAction', { cooperation: params.id })
+    await store.dispatch('getProfessionalAction', { cooperation: params.id })
+    await store.dispatch('getUservoteAction', { //cooperation
       userid: store.state.auth.user.id,
-      proptype: 'project'
+      proptype: 'cooperation'
     })
     await store.dispatch('getCommentAction', {
-      projectid: params.id,
+      cooperationid: params.id,
       userid: store.state.auth.user.id,
       limit: ' LIMIT 1'
     })
     await store.dispatch('getUservoteAction', { // comments
       userid: store.state.auth.user.id,
       proptype: 'comment',
-      projectid: params.id,
+      cooperationid: params.id,
       limit: ' LIMIT 1'
     })
     await store.dispatch('getUserlistAction', '')
@@ -48,9 +48,9 @@ export default {
   head() {
     return {
       title:
-        'Cooperacy - Project: ' +
-        this.$store.state.project.filter(
-          project => project.id == this.$route.params.id
+        'Cooperacy - Cooperation: ' +
+        this.$store.state.cooperation.filter(
+          cooperation => cooperation.id == this.$route.params.id
         )[0].name
     }
   }

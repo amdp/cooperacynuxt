@@ -9,13 +9,13 @@
     "basic": "BASIC INFORMATION",
     "language": "Remember you can choose your preferred language at the end of the page in the ",
     "foot": "footer",
-    "nature": "Do you want to evaluate a generic group, like companies, communities, friends or a Cooperacy project one?",
+    "nature": "Do you want to evaluate a generic group, like companies, communities, friends or a Cooperacy cooperation one?",
     "bgroup0": "A Group",
-    "bgroup1": "A Cooperacy Project Group",
-    "project": "What is the project ID?",
+    "bgroup1": "A Cooperacy Cooperation Group",
+    "cooperation": "What is the Cooperation ID?",
     "prevsurvey": "Is there any previous survey ID you may want to refer to?",
     "group": "What level of group do you want to evaluate?",
-    "group0": "Cooperacy Project Group",
+    "group0": "Cooperacy cooperation Group",
     "group1": "Nation",
     "group2": "City, Region, State or Social Area",
     "group3": "Company, Association or Institution",
@@ -98,7 +98,7 @@
     "loading": "loading",
     "choice": "Please choose the type of report you want to visualize:",
     "choicesurvey": "Group report",
-    "choiceproject": "Cooperacy Project Report"
+    "choicecooperation": "Cooperacy Cooperation Report"
   },
   "cootoolreport": {
     "stagnation": "Your diversity is very low, you may risk involution or stagnation.",

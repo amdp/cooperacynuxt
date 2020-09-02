@@ -42,7 +42,7 @@ PAGES = web vue dynamic pages
 
 STATIC = try not to use this,
 it is not SERVER SIDE RENDERED NOR GENERALLY "NUXTED"
-we will leave only the favicon and user/project images here
+we will leave only the favicon and user/cooperation images here
 
 STORE = VUEX, or "variables shared in all vue pages"
 

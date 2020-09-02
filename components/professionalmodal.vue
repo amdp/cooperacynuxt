@@ -8,12 +8,12 @@
       <b-form @submit.prevent="professional()">
         <b-form-group
           label-for="professionalInput"
-          description="Add or remove a professional to your project"
+          description="Add or remove a professional to your cooperation"
         >
-          <span>{{ projectprop.name }}</span>
+          <span>{{ cooperationprop.name }}</span>
           <b-form-select id="professionalInput" v-model="formProfessional">
             <option
-              v-for="user in userlistprop.filter(user => user.active == 1)"
+              v-for="user in userlistprop.filter((user) => user.active == 1)"
               :key="user.id"
               :value="user.id"
             >
@@ -22,7 +22,7 @@
           </b-form-select>
         </b-form-group>
         <p class="understanding">
-          The following are already in the project and will be removed if
+          The following are already in the cooperation and will be removed if
           selected:
         </p>
         <span
@@ -48,7 +48,7 @@
 <script>
 export default {
   props: {
-    projectprop: { required: true },
+    cooperationprop: { required: true },
     userlistprop: { required: true }
   },
   data() {
@@ -60,15 +60,15 @@ export default {
   methods: {
     async professional() {
       this.$store.dispatch('professionalAction', {
-        project: this.projectprop.id,
+        cooperation: this.cooperationprop.id,
         user: this.formProfessional
       })
       this.$store.dispatch('getProfessionalAction', {
-        project: this.projectprop.id
+        cooperation: this.cooperationprop.id
       })
     },
     close() {
-      location.href = process.env.URLHOME + '/project/' + this.projectprop.id
+      location.href = process.env.URLHOME + '/cooperation/' + this.cooperationprop.id
     }
   }
 }

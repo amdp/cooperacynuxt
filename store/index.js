@@ -1,5 +1,5 @@
 export const state = () => ({
-  project: [],
+  cooperation: [],
   comment: [],
   vote: [],
   fundingvar: {
@@ -8,7 +8,7 @@ export const state = () => ({
     totalfee: null,
   },
   userlist: [],
-  projectuservote: [],
+  cooperationuservote: [],
   commentuservote: [],
   professional: [],
   tag: [],
@@ -41,7 +41,7 @@ export const state = () => ({
     { id: 4, name: 'Voting Proposals, Reporting' },
     {
       id: 5,
-      name: 'Free Project or Evaluation Purposes'
+      name: 'Free Cooperation or Evaluation Purposes'
     },
     {
       id: 6,
@@ -77,14 +77,14 @@ export const state = () => ({
 export const getters = {}
 
 export const mutations = {
-  projectSort: (state, sorting) => {
-    let projectsorting = state.project
-    projectsorting.sort((a, b) => (a[sorting] < b[sorting] ? 1 : -1))
-    state.project = projectsorting
+  cooperationSort: (state, sorting) => {
+    let cooperationsorting = state.cooperation
+    cooperationsorting.sort((a, b) => (a[sorting] < b[sorting] ? 1 : -1))
+    state.cooperation = cooperationsorting
   },
   //crunch the following sets with "set: (state, payload, statetoset) => {state[statetoset] = payload}"
-  setProject: (state, payload) => {
-    state.project = payload
+  setCooperation: (state, payload) => {
+    state.cooperation = payload
   },
   setComment: (state, payload) => {
     state.comment = payload
@@ -138,12 +138,12 @@ export const mutations = {
     }
   },
   setVoteUpdate: (state, payload) => {
-    //updates the voted proptype (project or comment) state and uservote table
+    //updates the voted proptype (cooperation or comment) state and uservote table
     var votedProptype = state[payload.proptype].find(
       proptype => proptype.id == payload.id
     )
     if (payload.add > 0) { votedProptype[payload.cc] += payload.add }
-    if (payload.cc == 'D' && payload.proptype == 'project') {
+    if (payload.cc == 'D' && payload.proptype == 'cooperation') {
       if ((votedProptype.D - Math.floor(votedProptype.D / 7) * 7) == 0)
         votedProptype.E -= payload.add
     }
@@ -174,17 +174,17 @@ export const actions = {
     let { data } = await this.$axios.get(process.env.DBURL + '/fundingvar')
     context.commit('setFundingvar', data)
   },
-  getProjectAction: async function (context, payload) {
-    let { data } = await this.$axios.get(process.env.DBURL + '/project', {
+  getCooperationAction: async function (context, payload) {
+    let { data } = await this.$axios.get(process.env.DBURL + '/cooperation', {
       params: payload
     })
-    context.commit('setProject', data)
+    context.commit('setCooperation', data)
   },
-  getUserProjectAction: async function (context, payload) {
-    let { data } = await this.$axios.get(process.env.DBURL + '/userproject', {
+  getUserCooperationAction: async function (context, payload) {
+    let { data } = await this.$axios.get(process.env.DBURL + '/usercooperation', {
       params: payload
     })
-    context.commit('setProject', data)
+    context.commit('setCooperation', data)
   },
   getCommentAction: async function (context, payload) {
     let { data } = await this.$axios.get(process.env.DBURL + '/comment', {
@@ -225,9 +225,9 @@ export const actions = {
     let go = { godata: data, goyear: payload.cciyear }
     context.commit('setCCI', go)
   },
-  projectFormAction: async function (context, payload) {
+  cooperationFormAction: async function (context, payload) {
     let { data } = await this.$axios.post(
-      process.env.DBURL + '/project',
+      process.env.DBURL + '/cooperation',
       payload
     )
     if (data.id) {
@@ -335,7 +335,7 @@ export const actions = {
   },
   getUservoteAction: async function (context, payload) {
     // this action GETS THE USER VOTE INFO,  addVoteAction IS THE REAL VOTING ACTION-FUNCTION
-    if (payload.reset) { return context.commit('setUservote', { body: [], proptype: 'project' }) }
+    if (payload.reset) { return context.commit('setUservote', { body: [], proptype: 'cooperation' }) }
     let { data } = await this.$axios.get(process.env.DBURL + '/uservote', {
       params: payload
     })

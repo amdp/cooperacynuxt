@@ -7,7 +7,7 @@
       ><span class="b diversity">w</span> votebar is the main expression of
       Cooperacy members' distribution of power, resources and activities. Learn
       how to influence the whole platform with your personal choices.<br />
-      In <strong>archived</strong> projects and proposals, it is used as a
+      In <strong>archived</strong> cooperations and proposals, it is used as a
       feedback.<br />
       In <strong>comments</strong> it influences your personal
       <span class="b equivalence">r</span><span class="b trust">a</span
@@ -22,37 +22,40 @@
       Full color = You voted<br />
       <i>The transparency vote works the opposite way</i>
     </p>
-    <b>Equivalence:</b><i> do you think this project deserves your money?</i>
+    <b>Equivalence:</b
+    ><i> do you think this cooperation deserves your money?</i>
     <b-row class="px-4">
       <b-col class="vote mx-3 w-25 bequivalence">&nbsp;</b-col>
       <b-col class="vote mx-3 w-25 theyequivalence">&nbsp;</b-col>
       <b-col class="vote mx-3 w-25 baaagray">&nbsp;</b-col>
     </b-row>
     <p>
-      It signals support, so in the projects influences the allocation of budget
-      or buys a ticket for a course, concert, event.
+      It signals support, so in the cooperations influences the allocation of
+      budget or buys a ticket for a course, concert, event.
     </p>
     <b>Trust:</b
-    ><i> do you think this project will work (timetable, costs, risks..)?</i>
+    ><i>
+      do you think this cooperation will work (timetable, costs, risks..)?</i
+    >
     <b-row class="px-4">
       <b-col class="vote mx-3 w-25 btrust">&nbsp;</b-col>
       <b-col class="vote mx-3 w-25 theytrust">&nbsp;</b-col>
       <b-col class="vote mx-3 w-25 baaagray">&nbsp;</b-col>
     </b-row>
     <p>
-      It signals trust, so in the projects may lead to skip the human resources
-      budget step.<br />
+      It signals trust, so in the cooperations may lead to skip the human
+      resources budget step.<br />
     </p>
-    <b>Care:</b><i> do you like this project?</i>
+    <b>Care:</b><i> do you like this cooperation?</i>
     <b-row class="px-4">
       <b-col class="vote mx-3 w-25 bcare">&nbsp;</b-col>
       <b-col class="vote mx-3 w-25 theycare">&nbsp;</b-col>
       <b-col class="vote mx-3 w-25 baaagray">&nbsp;</b-col>
     </b-row>
     <p>
-      It signals care, so in the projects leads to more visibility.
+      It signals care, so in the cooperations leads to more visibility.
     </p>
-    <b>Transparency:</b><i> do you think this project is transparent?</i>
+    <b>Transparency:</b><i> do you think this cooperation is transparent?</i>
     <b-row class="px-4">
       <b-col class="vote mx-3 w-25 baaagray">&nbsp;</b-col>
       <b-col class="vote mx-3 w-25 theytransparency">&nbsp;</b-col>
@@ -60,39 +63,41 @@
     </b-row>
     <p>
       Attention: it signals hidden information, corruption or spamming so it can
-      block the projects in a "pairing" stage.
+      block the cooperations in a "pairing" stage.
       <br />Remember: transparency voters are never anonymous.
     </p>
-    <b>Freedom:</b><i> do you want to follow or to work for this project?</i>
+    <b>Freedom:</b
+    ><i> do you want to follow or to work for this cooperation?</i>
     <b-row class="px-4">
       <b-col class="vote mx-3 w-25 bfreedom">&nbsp;</b-col>
       <b-col class="vote mx-3 w-25 theyfreedom">&nbsp;</b-col>
       <b-col class="vote mx-3 w-25 baaagray">&nbsp;</b-col>
     </b-row>
     <p>
-      It signals choice and coolness, so in the projects is for becoming a
-      participant or future employee of the project.
+      It signals choice and coolness, so in the cooperations is for becoming a
+      participant or future employee of the cooperation.
     </p>
-    <b>Understanding:</b><i> do you think this project is well explained?</i>
+    <b>Understanding:</b
+    ><i> do you think this cooperation is well explained?</i>
     <b-row class="px-4">
       <b-col class="vote mx-3 w-25 bunderstanding">&nbsp;</b-col>
       <b-col class="vote mx-3 w-25 theyunderstanding">&nbsp;</b-col>
       <b-col class="vote mx-3 w-25 baaagray">&nbsp;</b-col>
     </b-row>
     <p>
-      This vote signals comprehension, so in the projects it may lead to skip
-      the setup budget step.<br />
+      This vote signals comprehension, so in the cooperations it may lead to
+      skip the setup budget step.<br />
     </p>
     <b>Diversity:</b
-    ><i> do you think this project is innovative, artistic or bizarre?</i>
+    ><i> do you think this cooperation is innovative, artistic or bizarre?</i>
     <b-row class="px-4">
       <b-col class="vote mx-3 w-25 bdiversity">&nbsp;</b-col>
       <b-col class="vote mx-3 w-25 theydiversity">&nbsp;</b-col>
       <b-col class="vote mx-3 w-25 baaagray">&nbsp;</b-col>
     </b-row>
     <p>
-      It signals beauty, fun, “bizardry”, so in the projects it can randomly go
-      into the approving stage, but every 7 diversity votes lower the
+      It signals beauty, fun, “bizardry”, so in the cooperations it can randomly
+      go into the approving stage, but every 7 diversity votes lower the
       equivalence ones by 1.
     </p>
     <template slot="modal-footer" slot-scope="{ ok, cancel }">

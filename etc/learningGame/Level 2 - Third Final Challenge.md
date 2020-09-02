@@ -35,10 +35,10 @@ To call these elements, just imagine
 in the <SCRIPT> part of your vue page
 to type "this.$store.state.xxxvariablexxx".
  
-For example, to retrieve the projects,
+For example, to retrieve the cooperations,
 you would type in a function:
-"this.$store.state.project"
-or "store.state.project".
+"this.$store.state.cooperation"
+or "store.state.cooperation".
 
 These states are constants,
 so they are immutable once they arrive
@@ -47,8 +47,8 @@ in the docks store (remember the ships?)
 In the reality these states can be changed,
 but ONLY BY VUEX store commands,
 you can never assign them:
-`this.store.state.project = 
-[project1, project2, project3]`
+`this.store.state.cooperation = 
+[cooperation1, cooperation2, cooperation3]`
 would never work.
 The commands able to change the states
 are called MUTATIONS, and they

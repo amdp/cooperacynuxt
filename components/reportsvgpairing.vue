@@ -120,7 +120,7 @@
 </template>
 
 <script>
-//cc stands for cooperation condition, proptype could be user, project or comment
+//cc stands for cooperation condition, proptype could be user, cooperation or comment
 export default {
   props: {
     result: { required: true },

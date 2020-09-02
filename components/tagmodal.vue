@@ -11,9 +11,9 @@
       <b-form @submit.prevent="addtag">
         <b-form-group
           label-for="newtagInput"
-          description="Insert a new tag for your project"
+          description="Insert a new tag for your cooperation"
         >
-          <span>{{ projectprop.name }}</span>
+          <span>{{ cooperationprop.name }}</span>
           <b-form-input id="newTagInput" v-model="formTag"></b-form-input>
         </b-form-group>
       </b-form>
@@ -33,9 +33,9 @@
         <b-form-group
           label-for="newtagInput"
           label="Tag:"
-          description="Remove tags from your project"
+          description="Remove tags from your cooperation"
         >
-          <span>{{ projectprop.name }}</span>
+          <span>{{ cooperationprop.name }}</span>
           <b-form-select id="removeTagInput" v-model="formRemoveTag">
             <option
               v-for="tag in this.$store.state.tag"
@@ -66,7 +66,7 @@ export default {
     }
   },
   props: {
-    projectprop: { required: true }
+    cooperationprop: { required: true }
   },
   methods: {
     async addtag() {
@@ -74,7 +74,7 @@ export default {
         this.formTag = this.formTag.replace(/^[ ]+/gi, '') //removes spaces at the beginning of tag
         await this.$store
           .dispatch('tagFormAction', {
-            project: this.projectprop.id,
+            cooperation: this.cooperationprop.id,
             name: this.formTag,
             tag: 'add'
           })
@@ -90,7 +90,7 @@ export default {
         alert(this.formRemoveTag)
         await this.$store
           .dispatch('removeTagAction', {
-            project: this.projectprop.id,
+            cooperation: this.cooperationprop.id,
             name: this.formRemoveTag
           })
           .catch(err => {
