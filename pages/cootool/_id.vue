@@ -329,9 +329,9 @@ export default {
     }
   },
   async fetch({ store, params }) {
-    await store.dispatch('getPlaceAction')
-    await store.dispatch('getCountryAction')
-    await store.dispatch('getSurveyAction', { id: params.id })
+    await store.dispatch('getPlace')
+    await store.dispatch('getCountry')
+    await store.dispatch('getSurvey', { id: params.id })
   },
   //use params.id to update survey, also with pairing tool
   data() {
@@ -476,7 +476,7 @@ export default {
       let res
       try {
         res = await this.$store.dispatch(
-          'cooperationToolAction',
+          'cooperationTool',
           formBodyRequest
         )
       } catch (err) {

@@ -1,7 +1,7 @@
 <template>
-  <b-container fluid class="p-0" id="foot">
+  <b-container fluid class="m-0 p-0 foot" id="foot">
     <b-row>
-      <b-container fluid class="foot d-flex justify-content-center t16">
+      <b-container fluid class="d-flex justify-content-center t16">
         <p class="base text-center space m-0 my-2 pr-4 pl-4">
           <nuxt-link to="/login" class="ae menux">JOIN</nuxt-link>
 

@@ -5,9 +5,10 @@ import path from 'path'
 import en from './t/en.json'
 import it from './t/it.json'
 module.exports = {
-  mode: 'universal',
   build: {},
-  plugins: [],
+  plugins: [
+    { src: '@plugins/vue-tribute', mode: 'client' },
+  ],
   serverMiddleware: ['./api'],
   css: ['@assets/coo.scss'],
   components: true,
@@ -17,7 +18,6 @@ module.exports = {
     '@nuxtjs/auth',
     'nuxt-i18n',
     'bootstrap-vue/nuxt',
-    ['@nuxtjs/google-analytics', { id: 'UA-105334297-1' }],
   ],
   buildModules: [
     ['@nuxtjs/color-mode', { preference: 'light' }]

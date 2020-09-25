@@ -54,7 +54,10 @@ export default {
     proptype: { required: true }
   },
   data() {
-    return { voteinfocontent: null, }
+    return {
+      voteinfocontent: null,
+      intervalinfo: null
+    }
   },
   computed: {
     vote() {
@@ -134,6 +137,10 @@ export default {
   },
   methods: {
     voteinfo(proptype, vlong, cc, v) {
+      this.interval = setInterval(() => {
+        this.voteinfocontent = null
+      }, 5000)
+      if (this.voteinfocontent == null) { clearInterval(this.interval) }
       this.voteinfocontent = vlong + 'votes: ' + v + ' - '
       if (proptype == 'cooperation') {
         if (cc == 'E') {
@@ -239,7 +246,7 @@ export default {
         request.category = this.voteprop.category
         request.stage = this.voteprop.stage
       }
-      this.$store.dispatch('addVoteAction', request).catch(err => {
+      this.$store.dispatch('addVote', request).catch(err => {
         console.error(err)
       })
     }

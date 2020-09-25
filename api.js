@@ -34,9 +34,30 @@ app.get('/cooperation', async function (req, res, next) {
   //SEARCH
   if (req.query.search) {
     try {
-      let query = 'SELECT *, MATCH (`name`) AGAINST (\'' + req.query.search + '\' IN NATURAL LANGUAGE MODE) AS score FROM `cooperation` WHERE MATCH (`name`) AGAINST(\'' + req.query.search + '\' IN NATURAL LANGUAGE MODE) LIMIT ?;'
+      let query = 'SELECT `cooperation`.*, `tag`.`cooperation`, ' +
+        '(MATCH (`cooperation`.`name`,`cooperation`.`brief`,`cooperation`.`content`) ' +
+        'AGAINST (\'' + req.query.search + '\' IN NATURAL LANGUAGE MODE WITH QUERY EXPANSION) + ' +
+        'MATCH (`tag`.`name`)' +
+        'AGAINST (\'' + req.query.search + '\' IN NATURAL LANGUAGE MODE WITH QUERY EXPANSION)) ' +
+        'AS score FROM `cooperation` ' +
+        'LEFT JOIN `tag` on `cooperation`.`id` = `tag`.`cooperation` WHERE ' +
+        'MATCH (`cooperation`.`name`,`cooperation`.`brief`,`cooperation`.`content`) ' +
+        'AGAINST (\'' + req.query.search + '\' IN NATURAL LANGUAGE MODE WITH QUERY EXPANSION) ' +
+        'OR MATCH (`tag`.`name`) ' +
+        'AGAINST (\'' + req.query.search + '\' IN NATURAL LANGUAGE MODE WITH QUERY EXPANSION) ' +
+        'ORDER BY score DESC LIMIT ?'
       let param = [req.query.limit]
-      const [cooperation] = await mypool.execute(query, param)
+      let [cooperation] = await mypool.execute(query, param)
+      cooperation = cooperation.filter((coo, index, self) =>
+        index === self.findIndex((c) => (c.id === coo.id)))
+      if (req.query.country) {
+        cooperation = cooperation.filter(c =>
+          c.country == req.query.country)
+      }
+      if (req.query.place) {
+        cooperation = cooperation.filter(c =>
+          c.place == req.query.place)
+      }
       return res.status(200).send(cooperation)
     } catch (err) {
       next(err)
@@ -111,8 +132,8 @@ app.get('/fundingvar', async function (req, res, next) {
 app.get('/usercooperation', async function (req, res, next) {
   try {
     let query =
-      'SELECT * FROM `cooperation` WHERE `id` IN (SELECT `cooperation` FROM `cooperationvote` WHERE `user`=? and `condition`=?)'
-    let param = [req.query.userid, 'F']
+      'SELECT * FROM `cooperation` WHERE `id` IN (SELECT `cooperation` FROM `cooperationvote` WHERE `user`=? and `condition`=?) OR `author` = ?'
+    let param = [req.query.userid, 'F', req.query.userid]
     const [cooperation] = await mypool.execute(query, param)
     res.status(200).send(cooperation)
   } catch (err) {
@@ -709,6 +730,64 @@ app.post('/comment', async function (req, res, next) {
       next(err)
     }
   }
+})
+
+app.post('/notification', async function (req, res, next) {
+  let query
+  let param
+  let itemId
+  let user
+  for (let i = 0; i < req.body.array.length; i++) {
+    itemId = req.body.array[i].id
+    try {
+      query = 'INSERT INTO `notification` (`user`,`author`,`comment`,`cooperation`,`condition`,`message`) VALUES (?,?,?,?,?,?)'
+      param = [itemId, req.body.author, req.body.comment, req.body.cooperation, req.body.condition, req.body.message]
+      await mypool.execute(query, param)
+    } catch (err) {
+      next(err)
+    }
+    try {
+      query = 'SELECT `email`, `name` from `user` where `user`.`id` = ? LIMIT 1'
+      param = [itemId]
+      user = await mypool.execute(query, param)
+    } catch (err) {
+      next(err)
+    }
+    user = user[0][0]
+    try {
+      let transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
+        auth: {
+          user: process.env.MAILUSER,
+          pass: process.env.MAILPASSWORD
+        }
+      })
+      let mailOptions = {
+        from: '"Cooperacy Website" <websitemails@cooperacy.org>',
+        to: user.email,
+        subject: 'Notification from Cooperacy',
+        html: 'Hello, ' + user.name + '<br /><br />' + 'you have a new notification relative to the cooperation ' +
+          req.body.cooperation + ', click on this link to have a look: <br />' +
+          '<a href="https://cooperacy.org/cooperation/' + req.body.cooperation + '">Link to the comment</a><br />' +
+          'This is the relative comment:<br>' + req.body.message +
+          '<br /><br /><br />'
+      }
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          return console.error(error)
+        }
+        console.log('Message %s sent: %s', info.messageId, info.response)
+        res.render('index')
+      })
+    }
+    catch (err) {
+      next(err)
+    }
+  }
+  res.status(200).send('OK')
+
 })
 
 app.post('/user', async function (req, res, next) {

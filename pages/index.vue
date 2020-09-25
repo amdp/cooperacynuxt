@@ -9,18 +9,18 @@
 <script>
 export default {
   async fetch({ store, params }) {
-    await store.dispatch('getCooperationAction', { limit: 21 })
-    await store.dispatch('getPlaceAction')
-    await store.dispatch('getCountryAction')
+    await store.dispatch('getCooperation', { limit: 21 })
+    await store.dispatch('getPlace')
+    await store.dispatch('getCountry')
     await store.dispatch('getFundingvar')
-    await store.dispatch('getUserlistAction', '')
+    await store.dispatch('getUserlist', '')
     if (store.state.auth.loggedIn) {
-      await store.dispatch('getUservoteAction', {
+      await store.dispatch('getUservote', {
         userid: store.state.auth.user.id,
         proptype: 'cooperation',
       })
     } else
-      await store.dispatch('getUservoteAction', {
+      await store.dispatch('getUservote', {
         reset: true,
       })
   },

@@ -45,7 +45,7 @@ export default {
 
   methods: {
     async budgetstepdoc() {
-      this.$store.dispatch('budgetstepdocAction', {
+      this.$store.dispatch('budgetstepdoc', {
         cooperation: this.cooperationprop,
         user: this.$auth.user,
         doc: this.formDoc

@@ -174,58 +174,58 @@ export const actions = {
     let { data } = await this.$axios.get(process.env.DBURL + '/fundingvar')
     context.commit('setFundingvar', data)
   },
-  getCooperationAction: async function (context, payload) {
+  getCooperation: async function (context, payload) {
     let { data } = await this.$axios.get(process.env.DBURL + '/cooperation', {
       params: payload
     })
     context.commit('setCooperation', data)
   },
-  getUserCooperationAction: async function (context, payload) {
+  getUserCooperation: async function (context, payload) {
     let { data } = await this.$axios.get(process.env.DBURL + '/usercooperation', {
       params: payload
     })
     context.commit('setCooperation', data)
   },
-  getCommentAction: async function (context, payload) {
+  getComment: async function (context, payload) {
     let { data } = await this.$axios.get(process.env.DBURL + '/comment', {
       params: payload
     })
     context.commit('setComment', data)
   },
-  getProfessionalAction: async function (context, payload) {
+  getProfessional: async function (context, payload) {
     let { data } = await this.$axios.get(process.env.DBURL + '/professional', {
       params: payload
     })
     context.commit('setProfessional', data)
   },
-  getTagAction: async function (context, payload) {
+  getTag: async function (context, payload) {
     let { data } = await this.$axios.get(process.env.DBURL + '/tag', {
       params: payload
     })
     context.commit('setTag', data)
   },
-  getNewsAction: async function (context) {
+  getNews: async function (context) {
     let { data } = await this.$axios.get(process.env.DBURL + '/news')
     context.commit('setNews', data)
   },
-  getPlaceAction: async function (context) {
+  getPlace: async function (context) {
     let { data } = await this.$axios.get(process.env.DBURL + '/place')
     context.commit('setPlace', data)
   },
-  getCountryAction: async function (context) {
+  getCountry: async function (context) {
     let { data } = await this.$axios.get(process.env.DBURL + '/country')
     context.commit('setCountry', data)
   },
-  getUserlistAction: async function (context) {
+  getUserlist: async function (context) {
     let { data } = await this.$axios.get(process.env.DBURL + '/userlist')
     context.commit('setUserlist', data)
   },
-  getCCIAction: async function (context, payload) {
+  getCCI: async function (context, payload) {
     let { data } = await this.$axios.post(process.env.DBURL + '/CCI', payload)
     let go = { godata: data, goyear: payload.cciyear }
     context.commit('setCCI', go)
   },
-  cooperationFormAction: async function (context, payload) {
+  cooperationForm: async function (context, payload) {
     let { data } = await this.$axios.post(
       process.env.DBURL + '/cooperation',
       payload
@@ -236,41 +236,42 @@ export const actions = {
       return data
     }
   },
-  professionalAction: async function (context, payload) {
+  professional: async function (context, payload) {
     let { data } = await this.$axios.post(
       process.env.DBURL + '/professional',
       payload
     )
     return data
   },
-  budgetstepdocAction: async function (context, payload) {
+  budgetstepdoc: async function (context, payload) {
     let { data } = await this.$axios.post(
       process.env.DBURL + '/budgetstepdoc',
       payload
     )
     return data
   },
-  fundingstepAction: async function (context, payload) {
+  fundingstep: async function (context, payload) {
     let { data } = await this.$axios.post(
       process.env.DBURL + '/fundingstep',
       payload
     )
     return data
   },
-  commentFormAction: async function (context, payload) {
+  commentForm: async function (context, payload) {
     let { data } = await this.$axios.post(
       process.env.DBURL + '/comment',
       payload
     )
     context.commit('commentUpdate', data)
+    return data.id
   },
-  placeFormAction: async function (context, payload) {
+  placeForm: async function (context, payload) {
     let { data } = await this.$axios.post(process.env.DBURL + '/place', payload)
     if (data == 'exists') {
       return data
-    } else context.dispatch('getPlaceAction')
+    } else context.dispatch('getPlace')
   },
-  newuserAction: async function (context, payload) {
+  newuser: async function (context, payload) {
     let { data } = await this.$axios.post(process.env.DBURL + '/user', payload)
     if (data) {
       let message = {
@@ -284,26 +285,26 @@ export const actions = {
       alert('Sorry, please try again only once')
     }
   },
-  updateUserAction: async function (context, payload) {
+  updateUser: async function (context, payload) {
     let { data } = await this.$axios.put(process.env.DBURL + '/user', payload)
     return data
   },
-  updatePaypalAction: async function (context, payload) {
+  updatePaypal: async function (context, payload) {
     let { data } = await this.$axios.put(process.env.DBURL + '/userpaypal', payload)
     return data
   },
-  tagFormAction: async function (context, payload) {
+  tagForm: async function (context, payload) {
     let { data } = await this.$axios.post(process.env.DBURL + '/tag', payload)
     return data
   },
-  removeTagAction: async function (context, payload) {
+  removeTag: async function (context, payload) {
     let { data } = await this.$axios.post(process.env.DBURL + '/tag', payload)
     return data
   },
-  editSwitchAction: async function (context, payload) {
+  editSwitch: async function (context, payload) {
     context.commit('setEditSwitch', payload)
   },
-  imageUploadAction: async function (context, payload) {
+  imageUpload: async function (context, payload) {
     let { data } = await this.$axios.post(
       process.env.DBURL + '/image',
       payload.formImageData,
@@ -312,29 +313,29 @@ export const actions = {
     if (data.id) return data.id
     else return data.status
   },
-  contactEmailAction: async function (context, payload) {
+  contactEmail: async function (context, payload) {
     let { data } = await this.$axios.post(
       process.env.DBURL + '/contactemail',
       payload
     )
     return data
   },
-  checkCurrentPasswordAction: async function (context, payload) {
+  checkCurrentPassword: async function (context, payload) {
     let { data } = await this.$axios.post(
       process.env.DBURL + '/checkpassword',
       payload
     )
     return data
   },
-  recoverPasswordAction: async function (context, payload) {
+  recoverPassword: async function (context, payload) {
     let { data } = await this.$axios.post(
       process.env.DBURL + '/recoverpassword',
       payload
     )
     return data
   },
-  getUservoteAction: async function (context, payload) {
-    // this action GETS THE USER VOTE INFO,  addVoteAction IS THE REAL VOTING ACTION-FUNCTION
+  getUservote: async function (context, payload) {
+    // this action GETS THE USER VOTE INFO,  addVote IS THE REAL VOTING ACTION-FUNCTION
     if (payload.reset) { return context.commit('setUservote', { body: [], proptype: 'cooperation' }) }
     let { data } = await this.$axios.get(process.env.DBURL + '/uservote', {
       params: payload
@@ -342,20 +343,24 @@ export const actions = {
     let go = { body: data, proptype: payload.proptype }
     context.commit('setUservote', go)
   },
-  addVoteAction: async function (context, payload) {
+  addVote: async function (context, payload) {
     let { data } = await this.$axios.post(process.env.DBURL + '/vote', payload)
     return data
   },
-  cooperationToolAction: async function (context, payload) {
+  notificationPush: async function (context, payload) {
+    let { data } = await this.$axios.post(process.env.DBURL + '/notification', payload)
+    return data
+  },
+  cooperationTool: async function (context, payload) {
     let { data } = await this.$axios.post(process.env.DBURL + '/cooperationtool', payload)
     return data
   },
-  getSurveyAction: async function (context, payload) {
+  getSurvey: async function (context, payload) {
     let { data } = await this.$axios.get(process.env.DBURL + '/survey', { params: payload })
     context.commit('setSurvey', data)
   },
   //Admin stuff here: be careful
-  resetVotingAction: async function () {
+  resetVoting: async function () {
     await this.$axios.post(process.env.DBURL + '/resetvoting')
     return 'OK'
   }

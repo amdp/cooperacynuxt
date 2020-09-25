@@ -186,8 +186,9 @@
                   v-for="country in country"
                   :key="country.id"
                   :value="country.id"
-                  >{{ country.name }}</option
                 >
+                  {{ country.name }}
+                </option>
               </b-form-select>
             </b-form-group>
             <b-form-group
@@ -204,8 +205,9 @@
                   v-for="place in place"
                   :key="place.id"
                   :value="place.id"
-                  >{{ place.name }}</option
                 >
+                  {{ place.name }}
+                </option>
               </b-form-select>
             </b-form-group>
 
@@ -230,8 +232,9 @@
                   v-for="country in country"
                   :key="country.id"
                   :value="country.id"
-                  >{{ country.name }}</option
                 >
+                  {{ country.name }}
+                </option>
               </b-form-select>
             </b-form-group>
             <b-form-group
@@ -267,8 +270,8 @@ export default {
     }
   },
   async fetch({ store, params }) {
-    await store.dispatch('getPlaceAction')
-    await store.dispatch('getCountryAction')
+    await store.dispatch('getPlace')
+    await store.dispatch('getCountry')
   },
   data() {
     return {
@@ -312,7 +315,7 @@ export default {
         formImageData.append('id', this.id)
         formImageData.append('proptype', 'user')
         let res = await this.$store
-          .dispatch('imageUploadAction', {
+          .dispatch('imageUpload', {
             formImageData: formImageData,
             headers: { headers: { 'Content-Type': 'multipart/form-data' } },
           })
@@ -326,7 +329,7 @@ export default {
     },
     async userUpdate() {
       let checkCurrentPassword = await this.$store.dispatch(
-        'checkCurrentPasswordAction',
+        'checkCurrentPassword',
         {
           id: this.id,
           email: this.formEmail,
@@ -345,7 +348,7 @@ export default {
         this.formNewEmail = this.formEmail
       }
       var updateUser = await this.$store
-        .dispatch('updateUserAction', {
+        .dispatch('updateUser', {
           id: this.id,
           name: this.formName,
           surname: this.formSurname,

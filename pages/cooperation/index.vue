@@ -2,40 +2,57 @@
   <b-container class="m-0 p-0">
     <b-container class="mb-5 p-0">
       <p class="equivalence text-center t44">PUBLIC COOPERATION SEARCH</p>
-      <b-container class="m-0 p-0">
-        <b-row class="m-0 p-0">
-          <b-col
-            v-for="cc in this.$store.state.condition"
-            :key="cc"
-            :class="'b' + cc + ' m-1 p-0 vote col'"
-            @click="filtercooperations(cc)"
-            @mouseover="info(cc)"
-          ></b-col>
-        </b-row>
-        <b-row>
-          <b-col cols="12" class="text-center" v-html="filterinfo"> </b-col>
-        </b-row>
-      </b-container>
 
       <b-form @submit.prevent="cooperationSearch()" class="mt-4 mb-5 p-0 pt-1">
-        <b-row class="w-100 mt-2 mb-2 ml-0 mr-0 p-0 up"> </b-row>
         <b-row class="m-0 p-0">
           <b-col cols="2" class="m-0 p-0"></b-col>
-          <b-col cols="6" class="m-0 p-0">
+          <b-col cols="8" class="m-0 p-0">
             <b-form-input
               v-model="formSearch"
               size="sm"
-              placeholder="What do you want to do together?"
+              placeholder="Search through cooperations"
               required
             ></b-form-input>
           </b-col>
-          <b-col cols="2" class="m-0 p-0">
+          <b-col cols="2" class="m-0 p-0"></b-col>
+        </b-row>
+        <b-row class="m-0 p-0">
+          <b-col cols="2" class="m-0 p-0"></b-col>
+          <b-col cols="4" class="m-0 p-0">
+            <b-form-select v-model="formSearchCountry" size="sm">
+              <b-form-select-option value="">
+                Filter Country
+              </b-form-select-option>
+              <option
+                v-for="country in $store.state.country"
+                :key="country.id"
+                :value="country.id"
+              >
+                {{ country.name }}
+              </option>
+            </b-form-select>
+          </b-col>
+          <b-col cols="4" class="m-0 p-0">
+            <b-form-select v-model="formSearchPlace" size="sm">
+              <b-form-select-option value="">
+                Filter Place
+              </b-form-select-option>
+              <option v-for="place in place" :key="place.id" :value="place.id">
+                {{ place.name }}
+              </option>
+            </b-form-select>
+          </b-col>
+          <b-col cols="2" class="m-0 p-0"></b-col>
+        </b-row>
+        <b-row class="m-0 p-0">
+          <b-col cols="2" class="m-0 p-0"></b-col>
+          <b-col cols="8" class="m-0 p-0">
             <b-button
               type="submit"
-              class="btn bhequivalence btn-block m-0 pt-0 b-0"
+              class="btn bhequivalence btn-block m-0 pt-0 border-0"
             >
               <p class="m-0 pt-2 btransparent white t12" v-if="!searching">
-                SEARCH
+                SEARCH COOPERATIONS
               </p>
               <b-spinner
                 small
@@ -48,6 +65,21 @@
         </b-row>
       </b-form>
     </b-container>
+
+    <b-container class="m-0 mb-5 p-0">
+      <b-row class="m-0 p-0">
+        <b-col
+          v-for="cc in this.$store.state.condition"
+          :key="cc"
+          :class="'b' + cc + ' m-1 p-0 vote col'"
+          @click="filtercooperation(cc)"
+          @mouseover="info(cc)"
+        ></b-col>
+      </b-row>
+      <b-row>
+        <b-col cols="12" class="text-center" v-html="filterinfo"> </b-col>
+      </b-row>
+    </b-container>
     <cooperationlist />
   </b-container>
 </template>
@@ -58,20 +90,36 @@ export default {
       title: 'Cooperacy - Cooperations'
     }
   },
+  async fetch({ store, params }) {
+    await store.dispatch('getPlace')
+    await store.dispatch('getCountry')
+  },
   data() {
     return {
       searching: false,
       formSearch: null,
+      formSearchCountry: '',
+      formSearchPlace: '',
       cooperationID: null,
       editing: false,
       filterinfo: null,
     }
   },
+  computed: {
+    place() {
+      let place = this.$store.state.place.filter(
+        (place) => place.country == this.formSearchCountry
+      )
+      return place.sort((a, b) => (a.name > b.name ? 1 : -1))
+    },
+  },
   methods: {
     async cooperationSearch() {
       this.searching = true
       await this.$store.dispatch('getFundingvar')
-      await this.$store.dispatch('getCooperationAction', { search: this.formSearch, limit: 3 })
+      await this.$store.dispatch('getCooperation', {
+        search: this.formSearch, limit: 100, country: this.formSearchCountry, place: this.formSearchPlace
+      })
       this.searching = false
     },
     info(cc) {
@@ -91,7 +139,7 @@ export default {
         return this.filterinfo = 'SORT COOPERATIONS BY MOST BIZARRE OR ALTERNATIVE'
       }
     },
-    filtercooperations(cc) {
+    filtercooperation(cc) {
       if (cc == 'equivalence') {
         return this.$store.commit('cooperationSort', 'E')
       } else if (cc == 'trust') {

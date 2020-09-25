@@ -45,7 +45,7 @@ export default {
   },
   methods: {
     async addplace() {
-      let result = await this.$store.dispatch('placeFormAction', {
+      let result = await this.$store.dispatch('placeForm', {
         country: this.formNewcountry,
         name: this.formNewplace,
       })

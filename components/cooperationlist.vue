@@ -17,7 +17,10 @@
       >
         <span class="hb" v-if="$route.path == '/'">RECENT</span>
         <span class="hb" v-if="!$route.params.id">{{ type.name }}</span>
-        <span class="hb" v-if="$route.path == '/user'">YOU FOLLOW</span>
+        <span class="hb" v-if="$route.path == '/user'"
+          ><br />
+          (YOU AUTHORED OR FOLLOW)
+        </span>
       </h2>
       <b-container
         v-for="cooperation in cooperationlist[type.name]"
@@ -383,7 +386,7 @@ export default {
       return boxclass
     },
     archive(cooperation) {
-      this.$store.dispatch('cooperationFormAction', {
+      this.$store.dispatch('cooperationForm', {
         id: cooperation.id,
         stage: 1,
         name: cooperation.name,
@@ -411,7 +414,7 @@ export default {
         D: cooperation.D,
         created: cooperation.created,
       })
-      this.$store.dispatch('getUserCooperationAction', {
+      this.$store.dispatch('getUserCooperation', {
         userid: this.$auth.user.id,
       })
       return this.$router.push({ path: '/user' })
@@ -441,27 +444,24 @@ export default {
           cooperation.fundingstep +
           '".',
       }
-      this.$store.dispatch('contactEmailAction', payload)
+      this.$store.dispatch('contactEmail', payload)
       this.$store.dispatch('fundingstep', cooperation)
     },
     professional() {
       this.store.dispatch('addprofessional', { id: this.formProfessional })
     },
     edit() {
-      this.$store.dispatch('editSwitchAction', { id: this.$route.params.id })
+      this.$store.dispatch('editSwitch', { id: this.$route.params.id })
       return this.$router.push({ path: '/cooperation/form' })
     },
     unarchive() {
-      this.$store.dispatch('editSwitchAction', { id: this.$route.params.id })
+      this.$store.dispatch('editSwitch', { id: this.$route.params.id })
       return this.$router.push({ path: '/cooperation/form' })
     },
     copy() {
-      this.$store.dispatch('editSwitchAction', {
+      this.$store.dispatch('editSwitch', {
         id: this.$route.params.id,
         copy: true,
-      })
-      this.$store.dispatch('getUserCooperationAction', {
-        userid: this.$auth.user.id,
       })
       return this.$router.push({ path: '/cooperation/form' })
     },

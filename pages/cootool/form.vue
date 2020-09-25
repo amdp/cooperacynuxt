@@ -119,8 +119,9 @@
               v-for="country in country"
               :key="country.id"
               :value="country.id"
-              >{{ country.name }}</option
             >
+              {{ country.name }}
+            </option>
           </b-form-select>
 
           <p
@@ -137,8 +138,9 @@
               v-for="place in selectPlace"
               :key="place.id"
               :value="place.id"
-              >{{ place.name }}</option
             >
+              {{ place.name }}
+            </option>
           </b-form-select>
 
           <p class="it diversity" v-if="formNature == 0 && !formPrevSurveyID">
@@ -711,10 +713,10 @@ export default {
     }
   },
   async fetch({ store, params }) {
-    await store.dispatch('getPlaceAction')
-    await store.dispatch('getCountryAction')
-    await store.dispatch('getSurveyAction')
-    await store.dispatch('getCooperationAction')
+    await store.dispatch('getPlace')
+    await store.dispatch('getCountry')
+    await store.dispatch('getSurvey')
+    await store.dispatch('getCooperation')
   },
   data() {
     return {
@@ -792,7 +794,7 @@ export default {
   },
   methods: {
     async addplace() {
-      let result = await this.$store.dispatch('placeFormAction', {
+      let result = await this.$store.dispatch('placeForm', {
         country: this.formNewcountry,
         name: this.formNewplace,
       })
@@ -903,7 +905,7 @@ export default {
       let res
       try {
         res = await this.$store.dispatch(
-          'cooperationToolAction',
+          'cooperationTool',
           formBodyRequest
         )
       } catch (err) {

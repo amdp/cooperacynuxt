@@ -28,8 +28,9 @@
               v-for="country in country"
               :key="country.id"
               :value="country.id"
-              >{{ country.name }}</option
             >
+              {{ country.name }}
+            </option>
           </b-form-select>
         </b-form-group>
         <b-form-group
@@ -38,9 +39,9 @@
           description="Insert the city or location of your cooperation idea, use Cooperacy for online or global"
         >
           <b-form-select id="placeInput" v-model="formPlace" required>
-            <option v-for="place in place" :key="place.id" :value="place.id">{{
-              place.name
-            }}</option>
+            <option v-for="place in place" :key="place.id" :value="place.id">
+              {{ place.name }}
+            </option>
           </b-form-select>
         </b-form-group>
 
@@ -132,8 +133,9 @@
               v-for="category in category"
               :key="category.id"
               :value="category.id"
-              >{{ category.name }}</option
             >
+              {{ category.name }}
+            </option>
           </b-form-select>
         </b-form-group>
         <b-form-group
@@ -269,17 +271,17 @@ export default {
     }
   },
   async fetch({ store, params }) {
-    await store.dispatch('getPlaceAction')
-    await store.dispatch('getCountryAction')
+    await store.dispatch('getPlace')
+    await store.dispatch('getCountry')
     if (store.state.edit.id) {
-      await store.dispatch('getCooperationAction', {
+      await store.dispatch('getCooperation', {
         cooperationid: store.state.edit.id,
         limit: 1,
         userid: store.state.auth.user.id,
       })
     }
     if (!store.state.edit.id) {//will retrieve only funded cooperations to limit the author
-      await store.dispatch('getCooperationAction', {
+      await store.dispatch('getCooperation', {
         limitauth: 1, //change this and next limitnum to set author limit
         author: store.state.auth.user.id,
       })
@@ -415,7 +417,7 @@ export default {
       let res
       try {
         //vuex action to the database, the 'res'[ponse] variable brings the recently created or edited cooperation >id< from the server..
-        res = await this.$store.dispatch('cooperationFormAction', formBodyRequest)
+        res = await this.$store.dispatch('cooperationForm', formBodyRequest)
 
         //..in order to use it in the image creation and to make the user a participant of its cooperation:
         if (res == 'exists') {
@@ -431,8 +433,8 @@ export default {
             user: this.$auth.user.id,
             proptype: 'cooperation',
           }
-          this.$store.dispatch('addVoteAction', freedomvote)
-          this.$store.dispatch('professionalAction', {
+          this.$store.dispatch('addVote', freedomvote)
+          this.$store.dispatch('professional', {
             cooperation: res,
             user: this.$auth.user.id,
           })
@@ -454,7 +456,7 @@ export default {
       // }
       let res
       try {
-        res = await this.$store.dispatch('imageUploadAction', {
+        res = await this.$store.dispatch('imageUpload', {
           formImageData: formImageData,
           headers: { headers: { 'Content-Type': 'multipart/form-data' } },
           proptype: 'cooperation',
@@ -469,7 +471,7 @@ export default {
     },
     doneToast(res) {
       this.$toast.success('Done!', { duration: 1000, className: 'toast' })
-      this.$store.dispatch('editSwitchAction', false)
+      this.$store.dispatch('editSwitch', false)
       setTimeout(function () {
         if (res == 'OK') {
           location.href = process.env.URLHOME + '/cooperation/' + res.id

@@ -10,9 +10,7 @@
           v-if="this.$auth.user.id"
           :src="'/assets/image/user/' + this.$auth.user.id + '.png'"
         /><br />
-        <nuxt-link to="/useredit" class="ad">
-          Edit your information
-        </nuxt-link>
+        <nuxt-link to="/useredit" class="ad"> Edit your information </nuxt-link>
         <br />
         <nuxt-link to="/cooperation/form" class="ac">
           Add a new Cooperation
@@ -20,13 +18,9 @@
         <br />
         <nuxt-link to="/cooperation" class="af">Cooperation search </nuxt-link>
         <br />
-        <nuxt-link to="/userlist" class="ac">
-          Members List
-        </nuxt-link>
+        <nuxt-link to="/userlist" class="ac"> Members List </nuxt-link>
         <br />
-        <nuxt-link to="/cootool/" class="au">
-          Cooperation Tool
-        </nuxt-link>
+        <nuxt-link to="/cootool/" class="au"> Cooperation Tool </nuxt-link>
         <br />
         <span
           class="au"
@@ -89,13 +83,13 @@ export default {
     }
   },
   async fetch({ store, params }) {
-    await store.dispatch('getCountryAction')
-    await store.dispatch('getPlaceAction')
+    await store.dispatch('getCountry')
+    await store.dispatch('getPlace')
     await store.dispatch('getFundingvar')
-    await store.dispatch('getUserCooperationAction', {
+    await store.dispatch('getUserCooperation', {
       userid: store.state.auth.user.id
     })
-    await store.dispatch('getUservoteAction', {
+    await store.dispatch('getUservote', {
       userid: store.state.auth.user.id,
       proptype: 'cooperation'
     })
@@ -106,7 +100,7 @@ export default {
   },
   methods: {
     async resetvoting() {
-      await this.$store.dispatch('resetVotingAction')
+      await this.$store.dispatch('resetVoting')
     },
     rainbowcode() {
       if (this.$auth.user.rainbowcode) {

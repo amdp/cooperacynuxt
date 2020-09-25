@@ -1,8 +1,6 @@
 <template>
   <div>
-    <p class="subheading up">
-      Changing and setting up your new password...
-    </p>
+    <p class="subheading up">Changing and setting up your new password...</p>
   </div>
 </template>
 
@@ -14,11 +12,11 @@ export default {
     }
   },
   async mounted() {
-    let change = await this.$store.dispatch('recoverPasswordAction', {
+    let change = await this.$store.dispatch('recoverPassword', {
       token: this.$route.query.jws
     })
     if (change == 'updated') {
-      setTimeout(function() {
+      setTimeout(function () {
         location.href = '/login'
       }, 1200)
     }

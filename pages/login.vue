@@ -240,8 +240,9 @@
                 v-for="country in country"
                 :key="country.id"
                 :value="country.id"
-                >{{ country.name }}</option
               >
+                {{ country.name }}
+              </option>
             </b-form-select>
           </b-form-group>
           <b-form-group
@@ -254,12 +255,9 @@
               v-model="formBirthplace"
               required
             >
-              <option
-                v-for="place in place"
-                :key="place.id"
-                :value="place.id"
-                >{{ place.name }}</option
-              >
+              <option v-for="place in place" :key="place.id" :value="place.id">
+                {{ place.name }}
+              </option>
             </b-form-select>
           </b-form-group>
 
@@ -284,8 +282,9 @@
                 v-for="country in country"
                 :key="country.id"
                 :value="country.id"
-                >{{ country.name }}</option
               >
+                {{ country.name }}
+              </option>
             </b-form-select>
           </b-form-group>
           <b-form-group
@@ -326,8 +325,8 @@
 export default {
   middleware: ['auth'],
   async fetch({ store, params }) {
-    await store.dispatch('getPlaceAction')
-    await store.dispatch('getCountryAction')
+    await store.dispatch('getPlace')
+    await store.dispatch('getCountry')
   },
   head() {
     return {
@@ -441,7 +440,7 @@ export default {
             onApprove: function (data, actions) {
               alert(
                 'You have successfully become a member with subscription ID ' +
-                  data.subscriptionID
+                data.subscriptionID
               )
               that.formPaypalagreementid = data.subscriptionID
               that.newuser()
@@ -466,8 +465,8 @@ export default {
         } else {
           alert(
             'Sorry, there seems to be something wrong: ' +
-              err.response.data +
-              '.'
+            err.response.data +
+            '.'
           )
           this.logging = false
         }
@@ -478,18 +477,18 @@ export default {
       auth2.signOut()
     },
     async recover() {
-      this.$store.dispatch('recoverPasswordAction', {
+      this.$store.dispatch('recoverPassword', {
         email: this.loginEmail,
         password: this.loginPassword,
       })
       alert(
         'Cooperacy is sending you an email to ' +
-          this.loginEmail +
-          ' to set the new password that is now in the password field.'
+        this.loginEmail +
+        ' to set the new password that is now in the password field.'
       )
     },
     async newuser() {
-      var newuser = await this.$store.dispatch('newuserAction', {
+      var newuser = await this.$store.dispatch('newuser', {
         name: this.formName,
         surname: this.formSurname,
         email: this.formEmail,
@@ -523,7 +522,7 @@ export default {
       formImageData.append('id', id)
       formImageData.append('proptype', 'user')
       let res = await this.$store
-        .dispatch('imageUploadAction', {
+        .dispatch('imageUpload', {
           formImageData: formImageData,
           headers: { headers: { 'Content-Type': 'multipart/form-data' } },
         })

@@ -7,9 +7,7 @@
         <p v-html="$t('cootool.intro')"></p>
 
         <b-form @submit.prevent="surveygo()" class="mt-4 was-validated">
-          <p class="m-0 p-0 text-center t16 hb equivalence">
-            SEARCH TOOL
-          </p>
+          <p class="m-0 p-0 text-center t16 hb equivalence">SEARCH TOOL</p>
           <p class="mb-1" v-html="$t('cootool.choice')"></p>
           <b-form-select v-model="choice" required>
             <option value="0" v-html="$t('cootool.choicesurvey')"></option>
@@ -96,8 +94,8 @@ export default {
     }
   },
   async fetch({ store, params }) {
-    await store.dispatch('getCooperationAction', { cooperationtool: true })
-    await store.dispatch('getSurveyAction')
+    await store.dispatch('getCooperation', { cooperationtool: true })
+    await store.dispatch('getSurvey')
   },
   methods: {
     surveygo() {

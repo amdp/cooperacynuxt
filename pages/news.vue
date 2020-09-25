@@ -23,7 +23,7 @@ export default {
     }
   },
   async fetch({ store, params }) {
-    await store.dispatch('getNewsAction', '')
+    await store.dispatch('getNews', '')
   },
   methods: {
     newsImage(img) {

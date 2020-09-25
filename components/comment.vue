@@ -1,30 +1,17 @@
 <template>
   <div class="mx-auto mt-4 mb-5">
     <!-- NEW POST -->
-    <b-form @submit.prevent="formpost()">
-      <b-form-group
-        label-for="postInput"
-        label="New Post:"
-        description="Make a question, discuss a topic!"
-      >
-        <b-button type="submit" style="display: none;"></b-button>
-        <Mentionable :keys="['@']" :items="members" offset="1">
-          <b-form-input
-            id="postInput"
-            v-model="formPost"
-            size="sm"
-            @keyup="check()"
-          >
-          </b-form-input>
-
-          <template #item-@="{ item }">
-            <div class="user" @focus="gaga()">
-              {{ item.value }}
-            </div>
-          </template>
-        </Mentionable>
-      </b-form-group>
-    </b-form>
+    <p>Make a question, discuss a topic!</p>
+    <vue-tribute :options="options" id="postTribute">
+      <b-container
+        class="newcommentbox p-0 m-0"
+        contenteditable="true"
+        @tribute-replaced="mention()"
+        @click="check()"
+        id="formPost"
+        v-on:keyup.enter="formpost('formPost')"
+      ></b-container>
+    </vue-tribute>
 
     <!-- POSTS -->
     <div class="row mt-3" v-for="comment in up" :key="comment.id">
@@ -73,21 +60,24 @@
           </div>
         </div>
         <!-- POST EDIT/REPLY FORM BOX -->
-        <div class="row" v-if="formswitch == comment.id">
-          <div class="col-12">
-            <b-form @submit.prevent="formcomment(comment, editreplyid)">
-              <b-button type="submit" style="display: none;"></b-button>
-              <b-form-input
-                id="commentInput"
-                v-model="formComment"
-                size="sm"
-              ></b-form-input>
-              <b-link @click="edit(comment)" class="hunderstanding"
-                >Cancel</b-link
-              >
-            </b-form>
-          </div>
-        </div>
+        <b-row class="p-0 m-0" v-show="formswitch == comment.id">
+          <b-col cols="12">
+            <vue-tribute :options="options" id="commentTribute">
+              <!-- !!!the mention function should carry the id of the comment !!!-->
+              <b-container
+                class="newcommentbox"
+                contenteditable="true"
+                @tribute-replaced="mention()"
+                @click="check()"
+                :id="'commentInput' + comment.id"
+                v-on:keyup.enter="commentform(comment, editreplyid)"
+              ></b-container>
+            </vue-tribute>
+            <b-link @click="edit(comment)" class="hunderstanding">
+              Cancel
+            </b-link>
+          </b-col>
+        </b-row>
         <!-- COMMENT -->
         <div
           class="row mt-2"
@@ -137,38 +127,42 @@
               </div>
             </div>
             <!-- COMMENT EDIT/REPLY FORM BOX -->
-            <div class="row" v-if="formswitch == subcomment.id">
-              <div class="col-12">
-                <b-form @submit.prevent="formcomment(subcomment, editreplyid)">
-                  <b-button type="submit" style="display: none;"></b-button>
-                  <b-form-input
-                    id="commentInput"
-                    v-model="formComment"
-                    size="sm"
-                  ></b-form-input>
-                  <b-link @click="edit(subcomment)" class="hunderstanding"
-                    >Cancel</b-link
-                  >
-                </b-form>
-              </div>
-            </div>
+            <b-row class="p-0 m-0" v-show="formswitch == subcomment.id">
+              <b-col cols="12">
+                <vue-tribute :options="options" id="commentTribute">
+                  <!-- !!!the mention function should carry the id of the comment !!!-->
+                  <b-container
+                    class="newcommentbox"
+                    contenteditable="true"
+                    @tribute-replaced="mention()"
+                    @click="check()"
+                    :id="'commentInput' + subcomment.id"
+                    v-on:keyup.enter="commentform(subcomment, editreplyid)"
+                  ></b-container>
+                </vue-tribute>
+                <b-link @click="edit(subcomment)" class="hunderstanding">
+                  Cancel
+                </b-link>
+              </b-col>
+            </b-row>
           </div>
         </div>
       </div>
     </div>
+    <div class="circle"></div>
   </div>
 </template>
 
 <script>
-import { Mentionable } from 'vue-mention'
 export default {
-  components: { Mentionable },
   data() {
     return {
       formswitch: false,
       editreplyid: false,
       formComment: '',
       formPost: '',
+      enteredmention: false,
+      mentionedUsers: [],
     }
   }, //if formswitch = a comment id, textbox appears
   computed: {
@@ -189,52 +183,47 @@ export default {
         return true
       }
     },
-    members() {
+    options() {
       let members = []
       for (let i = 0; i < this.$store.state.userlist.length; i++) {
         if (this.$store.state.userlist[i].active)
           members.push({
+            key: this.$store.state.userlist[i].name + ' ' + this.$store.state.userlist[i].surname,
             value: this.$store.state.userlist[i].name + ' ' + this.$store.state.userlist[i].surname,
-            label: this.$store.state.userlist[i].name + ' ' + this.$store.state.userlist[i].surname,
             id: this.$store.state.userlist[i].id
           })
       }
-      return members
-    },
+      let options = {}
+      let mentioned = this.mentionedUsers
+      return options = {
+        trigger: "@",
+        values: members,
+        selectTemplate: function (item) {
+          mentioned.push({ id: item.original.id })
+          this.mentionedUsers = mentioned
+          return this.formPost = '<span class="freedom">@' + item.original.value + "</span>"
+        },
+      }
+    }
+  },
+  mounted() {
+    this.options.values = this.members
   },
   methods: {
-    gaga() {
-      alert('test')
+    noMatchFound() {
+      console.log("No matches found!");
     },
-    formcomment(comment, editreplyid) {
-      if (comment.parent === 0) {
-        var parent = comment.id
-      } else {
-        var parent = comment.parent
-      }
-      this.formComment = this.formComment.replace(
-        /(http:\/\/[^\s]+|https:\/\/[^\s]+)/gm,
-        '<a class="ae" href="$1">$1</a>'
-      )
-      if (editreplyid == 'new') {
-        this.$store.dispatch('commentFormAction', {
-          id: editreplyid,
-          parent: parent,
-          cooperation: this.$route.params.id,
-          user: this.$auth.user.id,
-          content: this.formComment,
-        })
-        this.reply(comment.id)
-      } else {
-        this.$store.dispatch('commentFormAction', {
-          id: editreplyid,
-          parent: comment.parent,
-          cooperation: this.$route.params.id,
-          user: this.$auth.user.id,
-          content: this.formComment,
-        })
-        this.edit(comment.id)
-      }
+    mention() {
+      this.enteredmention = true
+    },
+    append() {
+      let kv = Math.random()
+        .toString(36)
+        .slice(2);
+      this.options.values.push({
+        key: kv,
+        value: kv
+      });
     },
     sub(comment, id) {
       if (this.$store.state.comment) {
@@ -247,19 +236,81 @@ export default {
         return []
       }
     },
-    formpost() {
-      this.formPost = this.formPost.replace(
-        /(http:\/\/[^\s]+|https:\/\/[^\s]+)/gm,
-        '<a class="ae" href="$1">$1</a>'
-      )
-      this.$store.dispatch('commentFormAction', {
-        id: 'new',
-        parent: 0,
-        cooperation: this.$route.params.id,
-        user: this.$auth.user.id,
-        content: this.formPost,
-      })
-      this.formPost = ''
+    async commentform(formcomment, editreplyid) {
+      if (this.enteredmention) {
+        //if enteredmention is true we should interrupt as the enter comes from a mention
+        return this.enteredmention = false
+      } else {
+        if (formcomment.parent === 0) {
+          var parent = formcomment.id
+        } else {
+          var parent = formcomment.parent
+        }
+        let data = document.getElementById('commentInput' + formcomment.id).innerHTML
+        data = await data.replace(
+          /(http:\/\/[^\s]+|https:\/\/[^\s]+)/gm,
+          '<a class="ae" href="$1">$1</a>'
+        )
+        let commentId
+        if (editreplyid == 'new') {
+          commentId = await this.$store.dispatch('commentForm', {
+            id: editreplyid,
+            parent: parent,
+            cooperation: this.$route.params.id,
+            user: this.$auth.user.id,
+            content: data,
+          })
+          this.reply(formcomment.id)
+        } else {
+          commentId = await this.$store.dispatch('commentForm', {
+            id: editreplyid,
+            parent: formcomment.parent,
+            cooperation: this.$route.params.id,
+            user: this.$auth.user.id,
+            content: data,
+          })
+          this.edit(formcomment.id)
+        }
+        await this.$store.dispatch('notificationPush', {
+          array: this.mentionedUsers,
+          author: this.$auth.user.id,
+          comment: commentId,
+          cooperation: this.$route.params.id,
+          condition: 0,
+          message: data,
+        })
+        document.getElementById('commentInput' + formcomment.id).innerHTML = ''
+        this.mentionedUsers = []
+      }
+    },
+    async formpost(box) {
+      if (this.enteredmention) {
+        //if enteredmention is true we should interrupt as the enter comes from a mention
+        return this.enteredmention = false
+      } else {
+        let data = document.getElementById(box).innerHTML
+        data = await data.replace(
+          /(http:\/\/[^\s]+|https:\/\/[^\s]+)/gm,
+          '<a class="ae" href="$1">$1</a>'
+        )
+        let commentId = await this.$store.dispatch('commentForm', {
+          id: 'new',
+          parent: 0,
+          cooperation: this.$route.params.id,
+          user: this.$auth.user.id,
+          content: data,
+        })
+        await this.$store.dispatch('notificationPush', {
+          array: this.mentionedUsers,
+          author: this.$auth.user.id,
+          comment: commentId,
+          cooperation: this.$route.params.id,
+          condition: 0,
+          message: data,
+        })
+        document.getElementById('commentInput' + comment.id).innerHTML = ''
+        this.mentionedUsers = []
+      }
     },
     reply(replycomment) {
       this.check()
@@ -288,7 +339,7 @@ export default {
     },
     remove(toberemoved) {
       this.check()
-      this.$store.dispatch('commentFormAction', {
+      this.$store.dispatch('commentForm', {
         id: toberemoved.id,
         parent: toberemoved.parent,
         cooperation: this.$route.params.id,

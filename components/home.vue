@@ -84,7 +84,7 @@
           transform="matrix(1 0 0 1 132 379)"
           opacity="0"
           :display="this.dtypo"
-          style="animation: fade-in 3s forwards;"
+          style="animation: fade-in 3s forwards"
           font-size="80"
           class="font-weight-light svgtext"
         >
@@ -97,7 +97,7 @@
           transform="matrix(1 0 0 1 138 422)"
           opacity="0"
           :display="this.dpayoff"
-          style="animation: fade-in 3s 1s forwards;"
+          style="animation: fade-in 3s 1s forwards"
           font-size="28"
           stroke="#555555"
           textLength="475"
@@ -140,7 +140,7 @@
         </b-row>
       </b-form>
     </b-container>
-    <div id="homefade" style="opacity: 0;">
+    <div id="homefade" style="opacity: 0">
       <div class="row mb-4 p-2">
         <div class="col-lg-4 col-xs-12 subheading text-center">
           <nuxt-link to="/main/platform" class="noline transparency space"
@@ -476,7 +476,7 @@ export default {
     },
     cooperationSearch() {
       this.searching = true
-      this.$store.dispatch('getCooperationAction', { search: this.formSearch, limit: 3 })
+      this.$store.dispatch('getCooperation', { search: this.formSearch, limit: 7 })
       return this.$router.push({ path: '/cooperation' })
     }
   }

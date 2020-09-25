@@ -156,7 +156,7 @@ export default {
         recaptchaToken: this.recaptchaToken
       }
       try {
-        const res = await this.$store.dispatch('contactEmailAction', message)
+        const res = await this.$store.dispatch('contactEmail', message)
         this.formName = this.formEmail = this.formSubject = this.formBody = this.recaptchaToken = null
         this.response = res.message
       } catch (error) {

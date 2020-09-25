@@ -58,7 +58,7 @@ export default {
         formSubject: 'Transparency Infringement Notification from Cooperation #' + this.cooperationprop.id + ' ' + this.cooperationprop.name,
         formBody: 'In the Cooperation #' + this.cooperationprop.id + ' ' + this.cooperationprop.name + ' comember ' + this.$auth.user.name + ' ' + this.$auth.user.surname + ' has described this Transparency Infringement: "' + this.formTmessage + '".'
       }
-      this.$store.dispatch('contactEmailAction', payload)
+      this.$store.dispatch('contactEmail', payload)
 
       // CLIENT SIDE: sets the vote on frontend
       this.$store.commit('setVoteUpdate', {
@@ -78,7 +78,7 @@ export default {
         category: this.cooperationprop.category,
         stage: this.cooperationprop.stage
       }
-      this.$store.dispatch('addVoteAction', request).catch(err => {
+      this.$store.dispatch('addVote', request).catch(err => {
         console.error(err)
       })
       this.$root.$emit('bv::hide::modal', 'votebarmodal' + this.cooperationprop.id, '#btnShow')

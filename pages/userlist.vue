@@ -65,7 +65,7 @@
           </b-thead>
           <b-tbody>
             <b-tr v-for="user in userlist" :key="user.id">
-              <b-td><img :src="userImage(user.id)" width="50px"/></b-td>
+              <b-td><img :src="userImage(user.id)" width="50px" /></b-td>
               <b-td>{{ user.id }}</b-td>
               <b-td>{{ user.name }}</b-td>
               <b-td>{{ user.surname }}</b-td>
@@ -146,7 +146,7 @@ export default {
     }
   },
   async fetch({ store, params }) {
-    await store.dispatch('getUserlistAction', '')
+    await store.dispatch('getUserlist', '')
   },
   computed: {
     userlist() {

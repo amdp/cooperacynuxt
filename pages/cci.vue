@@ -2,16 +2,16 @@
   <div class="page-container">
     <br /><img class="page-header" src="~/assets/image/page/banners/cci.png" />
 
-    <div style="text-align:center;width:100%;">
-      <p class="center" style="margin-top:10px;text-align:center;">
+    <div style="text-align: center; width: 100%">
+      <p class="center" style="margin-top: 10px; text-align: center">
         <object
           id="countries-map"
           type="image/svg+xml"
-          style="width:100%; height:80%"
+          style="width: 100%; height: 80%"
           data="/map.svg"
         >
-          <param name="wmode" value="transparent"
-        /></object>
+          <param name="wmode" value="transparent" />
+        </object>
 
         <br />
       </p>
@@ -19,7 +19,12 @@
 
     <div
       id="map_btn"
-      style="display:block; text-align:center; color:#aa66dd; font-size:24px"
+      style="
+        display: block;
+        text-align: center;
+        color: #aa66dd;
+        font-size: 24px;
+      "
       onclick="return countries.ii_click();"
     >
       <p class="subheading understanding center space">
@@ -36,26 +41,26 @@
 
       <div class="row">
         <div class="col-lg-3 col-xs-12">
-          <span class="detail country" style="font-weight:lighter;">
+          <span class="detail country" style="font-weight: lighter">
             CCI <span id="CCI-value"></span
           ></span>
         </div>
         <div class="col-lg-3 col-xs-12">
           <span
             class="detail equivalence"
-            style="font-weight:lighter; color: #ff9900;"
+            style="font-weight: lighter; color: #ff9900"
             >EQUIVALENCE <span id="equivalence-value"></span
           ></span>
         </div>
         <div class="col-lg-3 col-xs-12">
           <span
             class="detail trust"
-            style="font-weight:lighter; color: #ffdd00;"
+            style="font-weight: lighter; color: #ffdd00"
             >TRUST <span id="trust-value"></span
           ></span>
         </div>
         <div class="col-lg-3 col-xs-12">
-          <span class="detail care" style="font-weight:lighter; color: #99ff55;"
+          <span class="detail care" style="font-weight: lighter; color: #99ff55"
             >CARE <span id="care-value"></span
           ></span>
         </div>
@@ -65,28 +70,28 @@
         <div class="col-lg-3 col-xs-12">
           <span
             class="detail transparency"
-            style="font-weight:lighter; color: #55ffff;"
+            style="font-weight: lighter; color: #55ffff"
             >TRANSPARENCY <span id="transparency-value"></span
           ></span>
         </div>
         <div class="col-lg-3 col-xs-12">
           <span
             class="detail freedom"
-            style="font-weight:lighter; color: #0077ee;"
+            style="font-weight: lighter; color: #0077ee"
             >FREEDOM <span id="freedom-value"></span
           ></span>
         </div>
         <div class="col-lg-3 col-xs-12">
           <span
             class="detail understanding"
-            style="font-weight:lighter; color: #aa77dd;"
+            style="font-weight: lighter; color: #aa77dd"
             >UNDERSTANDING <span id="understanding-value"></span
           ></span>
         </div>
         <div class="col-lg-3 col-xs-12">
           <span
             class="detail diversity"
-            style="font-weight:lighter; color: #ff00ff;"
+            style="font-weight: lighter; color: #ff00ff"
             >DIVERSITY <span id="diversity-value"></span
           ></span>
         </div>
@@ -176,9 +181,9 @@ export default {
     }
   },
   async fetch({ store, params }) {
-    await store.dispatch('getCCIAction', { cciyear: '2017' })
-    await store.dispatch('getCCIAction', { cciyear: '2016' })
-    await store.dispatch('getCCIAction', { cciyear: '2015' })
+    await store.dispatch('getCCI', { cciyear: '2017' })
+    await store.dispatch('getCCI', { cciyear: '2016' })
+    await store.dispatch('getCCI', { cciyear: '2015' })
   }
 }
 </script>

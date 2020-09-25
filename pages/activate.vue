@@ -189,7 +189,7 @@ export default {
     },
     async updateuser() {
       try {
-        let updateUser = await this.$store.dispatch('updatePaypalAction', {
+        let updateUser = await this.$store.dispatch('updatePaypal', {
           email: this.loginEmail,
           password: this.loginPassword,
           paypalagreementid: this.formPaypalagreementid

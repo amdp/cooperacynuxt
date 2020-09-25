@@ -9,7 +9,7 @@
         <nuxt />
       </b-col>
     </b-row>
-    <b-row>
+    <b-row fluid class="p-0 m-0">
       <foot />
     </b-row>
   </b-container>

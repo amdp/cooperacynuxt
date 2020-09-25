@@ -59,11 +59,11 @@ export default {
 
   methods: {
     async professional() {
-      this.$store.dispatch('professionalAction', {
+      this.$store.dispatch('professional', {
         cooperation: this.cooperationprop.id,
         user: this.formProfessional
       })
-      this.$store.dispatch('getProfessionalAction', {
+      this.$store.dispatch('getProfessional', {
         cooperation: this.cooperationprop.id
       })
     },

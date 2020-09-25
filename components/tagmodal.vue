@@ -18,9 +18,7 @@
         </b-form-group>
       </b-form>
       <template slot="modal-footer" slot-scope="{ ok, cancel }">
-        <b-button size="sm" class="bcare" @click="addtag()">
-          ADD
-        </b-button>
+        <b-button size="sm" class="bcare" @click="addtag()"> ADD </b-button>
         <b-button size="sm" class="btransparency" @click="cancel()">
           CLOSE
         </b-button>
@@ -41,8 +39,9 @@
               v-for="tag in this.$store.state.tag"
               :key="tag.id"
               :value="tag.name"
-              >{{ tag.name }}</option
             >
+              {{ tag.name }}
+            </option>
           </b-form-select>
         </b-form-group>
       </b-form>
@@ -73,7 +72,7 @@ export default {
       if (this.formTag) {
         this.formTag = this.formTag.replace(/^[ ]+/gi, '') //removes spaces at the beginning of tag
         await this.$store
-          .dispatch('tagFormAction', {
+          .dispatch('tagForm', {
             cooperation: this.cooperationprop.id,
             name: this.formTag,
             tag: 'add'
@@ -89,7 +88,7 @@ export default {
       if (this.formRemoveTag) {
         alert(this.formRemoveTag)
         await this.$store
-          .dispatch('removeTagAction', {
+          .dispatch('removeTag', {
             cooperation: this.cooperationprop.id,
             name: this.formRemoveTag
           })
