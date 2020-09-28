@@ -161,19 +161,19 @@ export default {
       }
       if (proptype == 'comment') {
         if (cc == 'E') {
-          return this.voteinfocontent += 'THIS VOTES INDICATE GENERAL LIKE'
+          return this.voteinfocontent += 'THIS BRINGS BENEFITS FOR EVERYONE'
         } else if (cc == 'T') {
-          return this.voteinfocontent += 'THIS VOTES INDICATE TRUST'
+          return this.voteinfocontent += 'THIS IS PRACTICAL OR TRUSTABLE'
         } else if (cc == 'C') {
-          return this.voteinfocontent += 'THIS VOTES INDICATE CARE, LIKE A HEART'
+          return this.voteinfocontent += 'LIKE THIS'
         } else if (cc == 'I') {
-          return this.voteinfocontent += 'THIS VOTES SIGNAL LACK OF TRANSPARENCY'
+          return this.voteinfocontent += 'THIS IS NOT TRANSPARENT'
         } else if (cc == 'F') {
-          return this.voteinfocontent += 'THIS VOTES INDICATE YOU FOLLOW THE DISCUSSION'
+          return this.voteinfocontent += 'WANT TO FOLLOW'
         } else if (cc == 'U') {
-          return this.voteinfocontent += 'THIS VOTES INDICATE UNDERSTANDING'
+          return this.voteinfocontent += 'THIS IS UNDERSTANDABLE'
         } else if (cc == 'D') {
-          return this.voteinfocontent += 'THIS VOTES INDICATE FUN, LAUGH, BIZARDRY'
+          return this.voteinfocontent += 'THIS IS FUNNY, INNOVATIVE OR BIZARRE'
         }
       }
     },

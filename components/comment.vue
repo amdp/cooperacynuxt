@@ -308,7 +308,7 @@ export default {
           condition: 0,
           message: data,
         })
-        document.getElementById('commentInput' + comment.id).innerHTML = ''
+        document.getElementById('formPost').innerHTML = ''
         this.mentionedUsers = []
       }
     },
