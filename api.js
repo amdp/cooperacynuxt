@@ -67,7 +67,7 @@ app.get('/cooperation', async function (req, res, next) {
   //NON-SEARCH
   try {
     if (req.query.author) {//!used to control the number of funded cooperation of an author!
-      let query = 'SELECT * FROM `cooperation` WHERE `stage`=? and `budget`>? and `author`=? ORDER BY C DESC LIMIT ?'
+      let query = 'SELECT * FROM `cooperation` WHERE `state`=? and `budget`>? and `author`=? ORDER BY C DESC LIMIT ?'
       let param = [7, 0, req.query.author, req.query.limitauth]
       const [cooperation] = await mypool.execute(query, param)
       res.status(200).send(cooperation)
@@ -77,18 +77,18 @@ app.get('/cooperation', async function (req, res, next) {
       const [cooperation] = await mypool.execute(query, param)
       res.status(200).send(cooperation)
     } else if (req.query.limit) {
-      let query = 'SELECT * FROM `cooperation` WHERE `cooperation`.`stage`<>1 ORDER BY `C` DESC LIMIT ?'
+      let query = 'SELECT * FROM `cooperation` WHERE `cooperation`.`state`<>1 ORDER BY `C` DESC LIMIT ?'
       param = [req.query.limit]
       const [cooperation] = await mypool.execute(query, param)
       res.status(200).send(cooperation)
     } else if (req.query.cooperationtool) {// selecting cooperation in cooperationtool table
       let query = 'SELECT `cooperationtool`.`id` as coosurveyid, `cooperation`.* FROM `cooperation`' +
         'RIGHT JOIN `cooperationtool` ON `cooperation`.`id` = `cooperationtool`.`cooperation`' +
-        'WHERE `cooperation`.`stage`<>1 ORDER BY `id` DESC'
+        'WHERE `cooperation`.`state`<>1 ORDER BY `id` DESC'
       const [cooperation] = await mypool.execute(query)
       res.status(200).send(cooperation)
     } else {// selecting non-archived cooperation from dropdown
-      let query = 'SELECT * FROM `cooperation` WHERE `cooperation`.`stage`<>1 ORDER BY `id` DESC'
+      let query = 'SELECT * FROM `cooperation` WHERE `cooperation`.`state`<>1 ORDER BY `id` DESC'
       const [cooperation] = await mypool.execute(query)
       res.status(200).send(cooperation)
     }
@@ -605,7 +605,7 @@ app.post('/place', async function (req, res, next) {
 
 app.post('/cooperation', async function (req, res, next) {
   let param = [
-    req.body.stage,
+    req.body.state,
     req.body.category,
     req.body.name,
     req.body.country,
@@ -633,7 +633,7 @@ app.post('/cooperation', async function (req, res, next) {
       next(err)
     }
   } else {
-    if (req.body.stage == 1) { //if we archive, we need to copy the state of the cooperation before archiviation
+    if (req.body.state == 1) { //if we archive, we need to copy the state of the cooperation before archiviation
       param.push( //we already pushed req.body.id
         req.body.budgetstep,
         req.body.budgetstepdoc,
@@ -648,13 +648,13 @@ app.post('/cooperation', async function (req, res, next) {
         req.body.D,
         req.body.created
       )
-      let query = 'INSERT INTO `cooperationregistry` (`stage`,`category`,`name`,`country`,`place`,`brief`,`content`,`video`,`anonymous`,`parent`,`collect`,`budget`,`hudget`,`cooperationid`,`budgetstep`,`budgetstepdoc`,`fundingstep`,`professional`,`E`, `T`, `C`, `I`, `F`, `U`, `D`,`created`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
+      let query = 'INSERT INTO `cooperationregistry` (`state`,`category`,`name`,`country`,`place`,`brief`,`content`,`video`,`anonymous`,`parent`,`collect`,`budget`,`hudget`,`cooperationid`,`budgetstep`,`budgetstepdoc`,`fundingstep`,`professional`,`E`, `T`, `C`, `I`, `F`, `U`, `D`,`created`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
       await mypool.execute(query, param)
     }
     try {
       param.push(req.body.id)
       let query =
-        'UPDATE `cooperation` SET `stage`=?,`category`=?,`name`=?,`country`=?,`place`=?,`brief`=?,`content`=?,`video`=?,`anonymous`=?,`parent`=?,`collect`=?,`budget`=?,`hudget`=? WHERE `cooperation`.`id`=?'
+        'UPDATE `cooperation` SET `state`=?,`category`=?,`name`=?,`country`=?,`place`=?,`brief`=?,`content`=?,`video`=?,`anonymous`=?,`parent`=?,`collect`=?,`budget`=?,`hudget`=? WHERE `cooperation`.`id`=?'
       await mypool.execute(query, param)
     } catch (err) {
       next(err)
@@ -665,7 +665,7 @@ app.post('/cooperation', async function (req, res, next) {
     try {
       param.unshift(req.body.author)
       let query =
-        'INSERT INTO `cooperation` (`author`,`stage`,`category`,`name`,`country`,`place`,`brief`,`content`,`video`,`anonymous`,`parent`,`collect`,`budget`,`hudget`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
+        'INSERT INTO `cooperation` (`author`,`state`,`category`,`name`,`country`,`place`,`brief`,`content`,`video`,`anonymous`,`parent`,`collect`,`budget`,`hudget`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
       const [cooperation] = await mypool.execute(query, param)
       res.status(200).send({ id: cooperation.insertId })
     } catch (err) {
@@ -1000,8 +1000,8 @@ app.post('/budgetstepdoc', async function (req, res, next) {
     next(err)
   }
   try {// creates new record in the cooperation registry with the budget step document link
-    let query = 'INSERT INTO `cooperationregistry` (`cooperationid`,`stage`,`category`,`name`,`country`,`place`,`brief`,`content`,`video`,`anonymous`,`parent`,`collect`,`budget`,`budgetstep`,`fundingstep`,`professional`,`hudget`,`E`, `T`, `C`, `I`, `F`, `U`, `D`,`created`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
-    let param = [req.body.cooperation.id, req.body.cooperation.stage, req.body.cooperation.category, req.body.cooperation.name, req.body.cooperation.country, req.body.cooperation.place, req.body.cooperation.brief, cooperation.content, req.body.cooperation.video, req.body.cooperation.anonymous, req.body.cooperation.parent, req.body.cooperation.collect, req.body.cooperation.budget, req.body.cooperation.budgetstep, req.body.cooperation.fundingstep, req.body.cooperation.professional, req.body.cooperation.hudget, req.body.cooperation.E, req.body.cooperation.T, req.body.cooperation.C, req.body.cooperation.I, req.body.cooperation.F, req.body.cooperation.U, req.body.cooperation.D, req.body.cooperation.created]
+    let query = 'INSERT INTO `cooperationregistry` (`cooperationid`,`state`,`category`,`name`,`country`,`place`,`brief`,`content`,`video`,`anonymous`,`parent`,`collect`,`budget`,`budgetstep`,`fundingstep`,`professional`,`hudget`,`E`, `T`, `C`, `I`, `F`, `U`, `D`,`created`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
+    let param = [req.body.cooperation.id, req.body.cooperation.state, req.body.cooperation.category, req.body.cooperation.name, req.body.cooperation.country, req.body.cooperation.place, req.body.cooperation.brief, cooperation.content, req.body.cooperation.video, req.body.cooperation.anonymous, req.body.cooperation.parent, req.body.cooperation.collect, req.body.cooperation.budget, req.body.cooperation.budgetstep, req.body.cooperation.fundingstep, req.body.cooperation.professional, req.body.cooperation.hudget, req.body.cooperation.E, req.body.cooperation.T, req.body.cooperation.C, req.body.cooperation.I, req.body.cooperation.F, req.body.cooperation.U, req.body.cooperation.D, req.body.cooperation.created]
     await mypool.execute(query, param)
   } catch (err) {
     next(err)
@@ -1010,9 +1010,9 @@ app.post('/budgetstepdoc', async function (req, res, next) {
     || (req.body.cooperation.budgetstep == 3 && req.body.cooperation.U >= req.body.cooperation.E * 0.7)) {
     try {// applies trust/uderstandingvotes rule, moves 1 budget step further, creates a new record in the registry
       let query = 'UPDATE `cooperation` SET `budgetstep` = `budgetstep` + 1 where `id`=?;'
-        + 'INSERT INTO `cooperationregistry`(`cooperationid`,`stage`,`category`,`name`,`country`,`place`,`brief`,`content`,'
+        + 'INSERT INTO `cooperationregistry`(`cooperationid`,`state`,`category`,`name`,`country`,`place`,`brief`,`content`,'
         + '`video`,`anonymous`,`parent`,`collect`,`budget`,`budgetstep`,`fundingstep`,`professional`,`hudget`,'
-        + '`E`, `T`, `C`, `I`,`F`, `U`, `D`,`created`) SELECT `id`,`stage`,`category`,`name`,`country`,`place`,`brief`,`content`,'
+        + '`E`, `T`, `C`, `I`,`F`, `U`, `D`,`created`) SELECT `id`,`state`,`category`,`name`,`country`,`place`,`brief`,`content`,'
         + '`video`,`anonymous`,`parent`,`collect`,`budget`,`budgetstep`,`fundingstep`,`professional`,`hudget`,'
         + '`E`, `T`, `C`, `I`,`F`, `U`, `D`,`created` from `cooperation` where `id`=?;'
       let param = [req.body.cooperation.id, req.body.cooperation.id]
@@ -1021,9 +1021,9 @@ app.post('/budgetstepdoc', async function (req, res, next) {
       next(err)
     }
   } else {// if no trustvote nor understandingvote rule can be applied, it creates one week deadline event
-    try {// at the end of which if E went down, cooperation goes back to idea stage, 
+    try {// at the end of which if E went down, cooperation goes back to idea state, 
       // if I downvoted, it goes into pairing state,
-      // if at stage 7 it becomes an active cooperation, 
+      // if at state 7 it becomes an active cooperation, 
       // else it moves 1 budget step forward and creates a new registry record
       let query = 'delimiter | DROP EVENT IF EXISTS budgetstepcooperation' + req.body.cooperation.id + '|'
         + 'CREATE EVENT budgetstepcooperation' + req.body.cooperation.id + ' ON SCHEDULE AT CURRENT_TIMESTAMP + INTERVAL 1 WEEK DO BEGIN'
@@ -1032,15 +1032,15 @@ app.post('/budgetstepdoc', async function (req, res, next) {
         + 'SET e0 = (SELECT `E` from cooperationregistry where cooperationid=thiscooperation and'
         + 'id = (SELECT max(id) from cooperationregistry where cooperationid=thiscooperation));'
         + 'IF e1 < e0 THEN'
-        + 'UPDATE `cooperation` SET `stage` = 7, `collect` = `collect` * e1/e0 where `id`=thiscooperation;'
+        + 'UPDATE `cooperation` SET `state` = 7, `collect` = `collect` * e1/e0 where `id`=thiscooperation;'
         + 'ELSEIF (SELECT I from cooperation where id=thiscooperation) > 0 THEN'
-        + 'UPDATE `cooperation` SET `stage` = 6 where `id`=thiscooperation;'
+        + 'UPDATE `cooperation` SET `state` = 6 where `id`=thiscooperation;'
         + 'ELSEIF (SELECT `budgetstep` from cooperation where id=thiscooperation) = 7 THEN'
-        + 'UPDATE `cooperation` SET `stage` = 2 where `id`=thiscooperation;'
+        + 'UPDATE `cooperation` SET `state` = 2 where `id`=thiscooperation;'
         + 'ELSE UPDATE `cooperation` SET `budgetstep` = `budgetstep` + 1 where `id`=thiscooperation;'
-        + 'INSERT INTO `cooperationregistry`(`cooperationid`,`stage`,`category`,`name`,`country`,`place`,`brief`,`content`,'
+        + 'INSERT INTO `cooperationregistry`(`cooperationid`,`state`,`category`,`name`,`country`,`place`,`brief`,`content`,'
         + '`video`,`anonymous`,`parent`,`collect`,`budget`,`budgetstep`,`fundingstep`,`professional`,`hudget`,'
-        + '`E`, `T`, `C`, `I`,`F`, `U`, `D`,`created`) SELECT `id`,`stage`,`category`,`name`,`country`,`place`,`brief`,`content`,'
+        + '`E`, `T`, `C`, `I`,`F`, `U`, `D`,`created`) SELECT `id`,`state`,`category`,`name`,`country`,`place`,`brief`,`content`,'
         + '`video`,`anonymous`,`parent`,`collect`,`budget`,`budgetstep`,`fundingstep`,`professional`,`hudget`,'
         + '`E`, `T`, `C`, `I`,`F`, `U`, `D`,`created` from `cooperation` where `id`=thiscooperation;'
         + 'END IF; END| delimiter ;'
@@ -1188,13 +1188,13 @@ app.post('/vote', async function (req, res, next) {
     }
 
     //if in pairing state, the state is removed if I=0
-    if (req.body.stage == 6 && req.body.proptype == 'cooperation' && req.body.condition == 'I') {
+    if (req.body.state == 6 && req.body.proptype == 'cooperation' && req.body.condition == 'I') {
       try {
         let query = 'SELECT `I` from `cooperation` where `id` = ?'
         let param = [req.body.id]
         const [transparency] = await mypool.execute(query, param)
         if (transparency[0].I == 0) {
-          let query = 'UPDATE `cooperation` SET `stage` = 7 where `id`=?'
+          let query = 'UPDATE `cooperation` SET `state` = 7 where `id`=?'
           let param = [req.body.id]
           await mypool.execute(query, param)
         }

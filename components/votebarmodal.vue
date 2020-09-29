@@ -76,7 +76,7 @@ export default {
         user: this.$auth.user.id,
         proptype: 'cooperation',
         category: this.cooperationprop.category,
-        stage: this.cooperationprop.stage
+        state: this.cooperationprop.state
       }
       this.$store.dispatch('addVote', request).catch(err => {
         console.error(err)

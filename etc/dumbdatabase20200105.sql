@@ -384,7 +384,7 @@ DROP TABLE IF EXISTS `project`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `project` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `stage` int(11) NOT NULL DEFAULT '7',
+  `state` int(11) NOT NULL DEFAULT '7',
   `category` int(11) NOT NULL DEFAULT '1',
   `name` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `country` int(11) NOT NULL,
@@ -435,15 +435,15 @@ UNLOCK TABLES;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `gotobudgetsteps` BEFORE UPDATE ON `project` FOR EACH ROW BEGIN
-	IF new.collect >= new.budget AND new.stage = 7 THEN 
-		SET new.stage = 5;
+	IF new.collect >= new.budget AND new.state = 7 THEN 
+		SET new.state = 5;
 		IF new.budgetstep = 0 THEN SET new.budgetstep = 1; END IF;
     		INSERT INTO `projectregistry` 
-            	(`projectid`,`stage`,`category`,`name`,`country`,`place`, 
+            	(`projectid`,`state`,`category`,`name`,`country`,`place`, 
 		`brief`, `content`,`video`,`anonymous`,`parent`,
             	`collect`, `budget`,`budgetstep`,`fundingstep`, `professional`, `hudget`,
             	`E`,`T`,`C`,`I`,`F`,`U`,`D`,`created`)
-    	VALUES (new.`id`,new.`stage`,new.`category`,new.`name`,new.`country`,new.`place`,
+    	VALUES (new.`id`,new.`state`,new.`category`,new.`name`,new.`country`,new.`place`,
     	new.`brief`,new.`content`,new.`video`,new.`anonymous`,new.`parent`, 
 	new.`collect`,new.`budget`,new.`budgetstep`,new.`fundingstep`,new.`professional`,new.`hudget`, 
     	new.`E`,new.`T`,new.`C`,new.`I`,new.`F`,new.`U`,new.`D`,new.`created`);
@@ -496,7 +496,7 @@ DROP TABLE IF EXISTS `projectregistry`;
 CREATE TABLE `projectregistry` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `projectid` int(11) NOT NULL,
-  `stage` int(11) NOT NULL DEFAULT '5',
+  `state` int(11) NOT NULL DEFAULT '5',
   `category` int(11) NOT NULL DEFAULT '1',
   `name` varchar(128) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `country` int(11) NOT NULL,
@@ -925,10 +925,10 @@ BEGIN
 	DECLARE allprojectD int;
 	DECLARE maxprojectE int;
     DECLARE bizarreID int;
-	SET allprojectD = (SELECT SUM(`D`) FROM `coo`.`project` WHERE `stage` = '7');
-    SET maxprojectE = (SELECT MAX(`E`) FROM `coo`.`project` WHERE `stage` = '7');
+	SET allprojectD = (SELECT SUM(`D`) FROM `coo`.`project` WHERE `state` = '7');
+    SET maxprojectE = (SELECT MAX(`E`) FROM `coo`.`project` WHERE `state` = '7');
 	CREATE TABLE IF NOT EXISTS BIZARRE AS (SELECT id, `D`/@allprojectD+(RAND()-RAND())
-	AS BIZARDRY FROM `coo`.`project` WHERE `stage` = '7');
+	AS BIZARDRY FROM `coo`.`project` WHERE `state` = '7');
 	SET bizarreID = (SELECT id FROM BIZARRE WHERE BIZARDRY = (SELECT MAX(DISTINCT BIZARDRY) FROM BIZARRE));
 	UPDATE coo.project SET E = @maxprojectE  WHERE ID = bizarreID;
 	DROP TABLE BIZARRE;
@@ -953,10 +953,10 @@ BEGIN
 	DECLARE activeusers int;
     DECLARE totalvotes int;
 	SET activeusers = (SELECT COUNT(`active`) FROM `coo`.`user` WHERE `active` = 1);
-    SET totalvotes = (SELECT SUM(`E`) FROM `coo`.`project` WHERE `stage` = 7);
+    SET totalvotes = (SELECT SUM(`E`) FROM `coo`.`project` WHERE `state` = 7);
     UPDATE `coo`.`project` SET 
 	collect = collect + 0.000002663622528 * activeusers * `E` / totalvotes  
-	WHERE stage = 7 AND id <> 0;
+	WHERE state = 7 AND id <> 0;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;

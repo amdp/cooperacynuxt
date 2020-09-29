@@ -49,7 +49,7 @@ export const state = () => ({
     },
     { id: 7, name: 'Art, Music, Sports & Fun' }
   ],
-  stage: [
+  state: [
     { id: 1, name: 'archived' },
     { id: 2, name: 'participation' },
     { id: 3, name: 'active' },

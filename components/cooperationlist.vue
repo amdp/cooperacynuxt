@@ -82,7 +82,7 @@
                     <strong>AFTF: </strong
                     >{{ cooperation.anonymous ? 'ON' : 'OFF' }}
                   </small>
-                  <small v-if="cooperation.stage == '2'">
+                  <small v-if="cooperation.state == '2'">
                     <strong>FEE: </strong> {{ Math.round(cooperation.budget) }}
                     <br />
                   </small>
@@ -96,7 +96,7 @@
                 <b-container>
                   <small>
                     {{ category(cooperation.category) }}
-                    <i>{{ stage(cooperation.stage) }} cooperation</i> in
+                    <i>{{ state(cooperation.state) }} cooperation</i> in
                     {{ location(cooperation.place) }}
                   </small>
                 </b-container>
@@ -107,7 +107,7 @@
               <b-col cols="12">
                 <b-progress
                   v-if="
-                    (cooperation.stage == 7 || cooperation.stage == 2) &&
+                    (cooperation.state == 7 || cooperation.state == 2) &&
                     cooperation.budget != 0
                   "
                   max="1"
@@ -120,23 +120,23 @@
                         (collected(cooperation) / cooperation.budget) * 100
                       ) + '%'
                     "
-                    :class="'b' + budgetbar(cooperation.stage)"
+                    :class="'b' + budgetbar(cooperation.state)"
                   ></b-progress-bar>
                   <b-progress-bar
                     :value="
                       1 -
                       Math.round(collected(cooperation) / cooperation.budget)
                     "
-                    :class="'they' + budgetbar(cooperation.stage) + ' std'"
+                    :class="'they' + budgetbar(cooperation.state) + ' std'"
                   ></b-progress-bar>
                 </b-progress>
-                <span v-if="cooperation.stage == 7 && cooperation.budget != 0">
+                <span v-if="cooperation.state == 7 && cooperation.budget != 0">
                   BUDGET: €{{ collected(cooperation).toFixed(7) }} of €{{
                     Math.round(cooperation.budget)
                   }}
                   collected
                 </span>
-                <span v-if="cooperation.stage == 2 && cooperation.budget != 0">
+                <span v-if="cooperation.state == 2 && cooperation.budget != 0">
                   BUDGET: €{{ collected(cooperation).toFixed(0) }} of €{{
                     Math.round(cooperation.budget)
                   }}
@@ -151,7 +151,7 @@
                   v-if="
                     cooperation.category != 4 &&
                     cooperation.hudget != 0 &&
-                    cooperation.stage != 1
+                    cooperation.state != 1
                   "
                   max="1"
                   class="mt-2"
@@ -178,7 +178,7 @@
                   v-if="
                     cooperation.category != 4 &&
                     cooperation.hudget != 0 &&
-                    cooperation.stage != 1
+                    cooperation.state != 1
                   "
                   >HUDGET: {{ cooperation.professional }} of
                   {{ cooperation.hudget }} professionals needed</span
@@ -189,12 +189,12 @@
             <b-row class="m-0 p-2 w-100">
               <b-col cols="12" class="m-0 p-0 w-100 text-center">
                 <b-link v-b-modal.voteinfomodal>
-                  <span v-if="cooperation.stage != 1">
+                  <span v-if="cooperation.state != 1">
                     VOTE FOR THIS COOPERATION (<span class="underline"
                       >INFO</span
                     >):
                   </span>
-                  <span v-if="cooperation.stage == 1">
+                  <span v-if="cooperation.state == 1">
                     GIVE FEEDBACK FOR THIS COOPERATION (?):
                   </span>
                 </b-link>
@@ -214,18 +214,18 @@
                   v-if="$auth.user && $route.params.id"
                 >
                   <b-col cols="12" class="m-0 p-0 text-center">
-                    <span v-if="cooperation.stage != 1 && $auth.user.role == 1">
+                    <span v-if="cooperation.state != 1 && $auth.user.role == 1">
                       <b-link class="ae" @click="archive(cooperation)"
                         >Archive</b-link
                       >&nbsp;
                     </span>
-                    <span v-if="cooperation.stage == 1 && $auth.user.role == 1"
+                    <span v-if="cooperation.state == 1 && $auth.user.role == 1"
                       ><b-link class="ae" @click="unarchive()">Resume</b-link
                       >&nbsp;
                     </span>
                     <span
                       v-if="
-                        (cooperation.stage == 5 && improfessional) ||
+                        (cooperation.state == 5 && improfessional) ||
                         $auth.user.role == 1
                       "
                     >
@@ -238,7 +238,7 @@
                     </span>
                     <span
                       v-if="
-                        (cooperation.stage != 1 && improfessional) ||
+                        (cooperation.state != 1 && improfessional) ||
                         $auth.user.role == 1
                       "
                     >
@@ -248,7 +248,7 @@
                     </span>
                     <span
                       v-if="
-                        (cooperation.stage != 1 && improfessional) ||
+                        (cooperation.state != 1 && improfessional) ||
                         $auth.user.role == 1
                       "
                     >
@@ -258,7 +258,7 @@
                       v-if="
                         (cooperation.budgetstep - cooperation.fundingstep > 1 &&
                           improfessional) ||
-                        (cooperation.stage == 2 &&
+                        (cooperation.state == 2 &&
                           cooperation.fundingstep == 6 &&
                           improfessional) ||
                         $auth.user.role == 1
@@ -324,10 +324,10 @@ export default {
       } else {
         return {
           cooperations: this.$store.state.cooperation.filter(
-            (cooperation) => cooperation.stage != 1
+            (cooperation) => cooperation.state != 1
           ),
           archived: this.$store.state.cooperation.filter(
-            (cooperation) => cooperation.stage == 1
+            (cooperation) => cooperation.state == 1
           ),
         }
       }
@@ -346,7 +346,7 @@ export default {
       }, this.updatesec * 1000)
     },
     collected(cooperation) {
-      if (cooperation.stage == 2) {
+      if (cooperation.state == 2) {
         return cooperation.E * cooperation.collect
       } else {
         // here we add to cooperation.collect (the amount collected so far) the increment of every second,
@@ -361,9 +361,9 @@ export default {
         )
       }
     },
-    budgetbar(stage) {
+    budgetbar(state) {
       let color
-      stage == 2 ? color = 'trust' : color = 'equivalence'
+      state == 2 ? color = 'trust' : color = 'equivalence'
       return color
     },
     improfessional() {
@@ -388,7 +388,7 @@ export default {
     archive(cooperation) {
       this.$store.dispatch('cooperationForm', {
         id: cooperation.id,
-        stage: 1,
+        state: 1,
         name: cooperation.name,
         country: cooperation.country,
         place: cooperation.place,
@@ -469,8 +469,8 @@ export default {
       num < 0 ? (num = 0) : (num = num)
       return num
     },
-    stage(id) {
-      return this.$store.state.stage.find((stage) => stage.id == id).name
+    state(id) {
+      return this.$store.state.state.find((state) => state.id == id).name
     },
     category(id) {
       return this.$store.state.category.find((category) => category.id == id)

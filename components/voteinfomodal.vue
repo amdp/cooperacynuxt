@@ -52,9 +52,7 @@
       <b-col class="vote mx-3 w-25 theycare">&nbsp;</b-col>
       <b-col class="vote mx-3 w-25 baaagray">&nbsp;</b-col>
     </b-row>
-    <p>
-      It signals care, so in the cooperations leads to more visibility.
-    </p>
+    <p>It signals care, so in the cooperations leads to more visibility.</p>
     <b>Transparency:</b><i> do you think this cooperation is transparent?</i>
     <b-row class="px-4">
       <b-col class="vote mx-3 w-25 baaagray">&nbsp;</b-col>
@@ -63,7 +61,7 @@
     </b-row>
     <p>
       Attention: it signals hidden information, corruption or spamming so it can
-      block the cooperations in a "pairing" stage.
+      block the cooperations in a "pairing" state.
       <br />Remember: transparency voters are never anonymous.
     </p>
     <b>Freedom:</b
@@ -97,13 +95,11 @@
     </b-row>
     <p>
       It signals beauty, fun, “bizardry”, so in the cooperations it can randomly
-      go into the approving stage, but every 7 diversity votes lower the
+      go into the approving state, but every 7 diversity votes lower the
       equivalence ones by 1.
     </p>
     <template slot="modal-footer" slot-scope="{ ok, cancel }">
-      <b-button size="sm" class="none" @click="cancel()">
-        CANCEL
-      </b-button>
+      <b-button size="sm" class="none" @click="cancel()"> CANCEL </b-button>
       <b-button
         class="btn bhtransparency white btn-block border-0"
         @click="ok()"

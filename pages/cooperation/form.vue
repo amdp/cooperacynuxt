@@ -159,13 +159,13 @@
         <h5 class="trust">BUDGET AND HUDGET</h5>
 
         <b-form-group
-          label-for="stageInput"
+          label-for="stateInput"
           label=""
           description="If you want to propose a free group cooperation, or a course, an event or similar with its own fee, you just leave it unchecked"
         >
           <b-form-checkbox
-            id="stageInput"
-            v-model="formStageFunding"
+            id="stateInput"
+            v-model="formStateFunding"
             value="7"
             unchecked-value="2"
             switch
@@ -188,7 +188,7 @@
           <b-form-input
             id="budgetInput"
             v-model="formBudget"
-            :readonly="this.formStageFunding == 2"
+            :readonly="this.formStateFunding == 2"
           ></b-form-input>
         </b-form-group>
         <b-form-group
@@ -202,7 +202,7 @@
           label-for="feeInput"
           label="Attending Fee:"
           description="Insert the price of the attending fee, leave 0 for free cooperations"
-          v-if="this.formStageFunding == 2"
+          v-if="this.formStateFunding == 2"
         >
           <b-form-input
             id="feeInput"
@@ -214,7 +214,7 @@
           label-for="attendeeInput"
           label="Minimum attendees:"
           description="Insert the minimum amount of attendees to this course, event, fee-based service"
-          v-if="this.formStageFunding == 2"
+          v-if="this.formStateFunding == 2"
         >
           <b-form-input
             id="attendeeInput"
@@ -325,7 +325,7 @@ export default {
       formCategory: this.$store.state.edit.id
         ? this.$store.state.cooperation[0].category
         : '1',
-      formStageFunding: 2,
+      formStateFunding: 2,
       formBudget: this.$store.state.edit.id
         ? Math.round(this.$store.state.cooperation[0].budget)
         : 0,
@@ -371,21 +371,21 @@ export default {
     ) {
       this.formAnonymous = 1
     }
-    if (this.$store.state.edit.id && this.$store.state.cooperation[0].stage != 2) {
-      this.formStageFunding = 7
+    if (this.$store.state.edit.id && this.$store.state.cooperation[0].state != 2) {
+      this.formStateFunding = 7
     }
-    if (this.$store.state.edit.id && this.$store.state.cooperation[0].stage == 2) {
+    if (this.$store.state.edit.id && this.$store.state.cooperation[0].state == 2) {
       this.totalfreecooperation()
     }
   },
   methods: {
     totalfreecooperation() {
-      if (this.formStageFunding == 2) {
+      if (this.formStateFunding == 2) {
         this.formBudget = this.formFee * this.formAttendee
       }
     },
     async cooperationForm() {
-      if (this.$store.state.cooperation.length >= this.limitauth && this.formStageFunding == 7) {
+      if (this.$store.state.cooperation.length >= this.limitauth && this.formStateFunding == 7) {
         return alert('Sorry, Cooperacy allows only ' + this.limitauth + ' funded cooperation per user at this moment.')
       }
       this.editing = true
@@ -397,7 +397,7 @@ export default {
       }
       var formBodyRequest = {
         id: cooperationid,
-        stage: this.formStageFunding,
+        state: this.formStateFunding,
         name: this.formName,
         country: this.formCountry,
         place: this.formPlace,

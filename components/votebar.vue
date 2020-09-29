@@ -139,7 +139,7 @@ export default {
     voteinfo(proptype, vlong, cc, v) {
       this.interval = setInterval(() => {
         this.voteinfocontent = null
-      }, 5000)
+      }, 10000)
       if (this.voteinfocontent == null) { clearInterval(this.interval) }
       this.voteinfocontent = vlong + 'votes: ' + v + ' - '
       if (proptype == 'cooperation') {
@@ -189,7 +189,7 @@ export default {
       if (cc == 'I' && exists == -1) {
         return this.$root.$emit('bv::show::modal', modal, '#btnShow')
       }
-      if (cc == 'E' && exists != -1 && this.voteprop.stage == 6) {
+      if (cc == 'E' && exists != -1 && this.voteprop.state == 6) {
         let Icheck = this.$store.state['cooperationuservote'].findIndex(
           // checks if there is a I vote
           x => x[this.proptype] == this.voteprop.id && x.condition == 'I'
@@ -201,10 +201,10 @@ export default {
         }
         else return this.vosteswitch('E')
       }
-      // keep the following budgetstep alert AFTER the this.voteprop.stage == 6 (pairing) check
+      // keep the following budgetstep alert AFTER the this.voteprop.state == 6 (pairing) check
       if (cc == 'E' && exists != -1) {
         if (this.voteprop.budgetstep > 0) {
-          alert('With your unvoting, you release part of the cooperation budget to the Cooperacy general pool. This cooperation will go back into the idea stage, until the full budget is collected again, then start back from the last budget step it is now.')
+          alert('With your unvoting, you release part of the cooperation budget to the Cooperacy general pool. This cooperation will go back into the idea state, until the full budget is collected again, then start back from the last budget step it is now.')
         }
         return this.voteswitch(cc)
       }
@@ -244,7 +244,7 @@ export default {
       }
       if (this.proptype == 'cooperation') {
         request.category = this.voteprop.category
-        request.stage = this.voteprop.stage
+        request.state = this.voteprop.state
       }
       this.$store.dispatch('addVote', request).catch(err => {
         console.error(err)
