@@ -1,7 +1,7 @@
 <template>
-  <div class="row">
-    <div class="col-2"></div>
-    <div class="col-8">
+  <b-row class="m-0 p-0">
+    <b-col cols="1" md="2" class="m-0 p-0"></b-col>
+    <b-col cols="10" md="8" class="m-0 p-0">
       <h2 class="text-center mb-4 diversity">COOPERATION FORM</h2>
       <b-form @submit.prevent="cooperationForm()" class="mt-3 was-validated">
         <br />
@@ -175,9 +175,8 @@
               formFee = 0
             "
           >
-            FUNDED: when checked, this cooperation idea asks for Cooperacy
-            Funds</b-form-checkbox
-          >
+            FUNDED: when checked, this cooperation idea asks for Cooperacy Funds
+          </b-form-checkbox>
         </b-form-group>
         <b-form-group
           label-for="budgetInput"
@@ -258,8 +257,9 @@
       </b-form>
       <!-- MODAL: ADD A NEW PLACE -->
       <placemodal />
-    </div>
-  </div>
+    </b-col>
+    <b-col cols="1" md="2" class="m-0 p-0"></b-col>
+  </b-row>
 </template>
 
 <script>

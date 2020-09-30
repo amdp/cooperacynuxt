@@ -36,8 +36,8 @@
         <table style="width: 100%">
           <thead>
             <tr>
-              <th class="baset understanding">STATE</th>
-              <th class="baset understanding">DESCRIPTION</th>
+              <th class="baset">STATE</th>
+              <th class="baset">DESCRIPTION</th>
             </tr>
           </thead>
           <tbody>
@@ -103,7 +103,7 @@
         </table>
       </div>
 
-      <p class="subheading understanding center space margin">
+      <p class="subheading understanding center space margin mt-3">
         FREE COOPERATIONS
       </p>
       <p class="base">

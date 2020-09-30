@@ -137,10 +137,11 @@ export default {
   },
   methods: {
     voteinfo(proptype, vlong, cc, v) {
-      this.interval = setInterval(() => {
-        this.voteinfocontent = null
-      }, 10000)
-      if (this.voteinfocontent == null) { clearInterval(this.interval) }
+      if (this.voteinfocontent == null) {
+        this.interval = setInterval(() => {
+          this.voteinfocontent = null
+        }, 5000)
+      }
       this.voteinfocontent = vlong + 'votes: ' + v + ' - '
       if (proptype == 'cooperation') {
         if (cc == 'E') {
@@ -156,7 +157,7 @@ export default {
         } else if (cc == 'U') {
           return this.voteinfocontent += 'USE THIS VOTE IF THE COOPERATION IS EASILY UNDERSTANDABLE (AND TO FASTEN FUNDING)'
         } else if (cc == 'D') {
-          return this.voteinfocontent += 'USE THIS VOTE IF THE COOPERATION IS FUN, BIZARRE, ALTERNATIVE (AND TO MAKE FUNDING BIZARRE)'
+          return this.voteinfocontent += 'USE THIS VOTE IF THE COOPERATION IS FUN, BIZARRE, ALTERNATIVE (AND TO RISK BIZARRE FUNDING)'
         }
       }
       if (proptype == 'comment') {
