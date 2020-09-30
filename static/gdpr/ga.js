@@ -1,6 +1,6 @@
-import('https://www.googletagmanager.com/gtag/js?id=UA-53354338-1')
+import('https://www.googletagmanager.com/gtag/js?id=UA-105334297-1')
 window.dataLayer = window.dataLayer || [];
 function gtag() { dataLayer.push(arguments); }
 gtag('js', new Date());
 
-gtag('config', 'UA-53354338-1');
+gtag('config', 'UA-105334297-1');
