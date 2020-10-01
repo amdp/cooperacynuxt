@@ -4,7 +4,13 @@
       <b-col cols="1" md="2"></b-col>
       <b-col cols="10" md="8">
         <p class="text-center t32 hb equivalence">COOPERATION TOOL</p>
-        <p v-html="$t('cootool.intro')"></p>
+        <p>
+          <span v-html="$t('cootool.intro1')"></span>
+          <nuxt-link to="/cootool/form" class="ae">
+            Cooperation Tool Form
+          </nuxt-link>
+          <span v-html="$t('cootool.intro2')"></span>
+        </p>
 
         <b-form @submit.prevent="surveygo()" class="mt-4 was-validated">
           <p class="m-0 p-0 text-center t16 hb equivalence">SEARCH TOOL</p>

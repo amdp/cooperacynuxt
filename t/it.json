@@ -4,7 +4,8 @@
     "newplace": "Se non trovi il luogo nell'elenco, sentiti libero di aggiungerne"
   },
   "cootool": {
-    "intro": "Benvenuto al Cooperacy Cooperation Tool! <br/ > Utilizza pure il <nuxt-link to=\"/cootool/form\" class=\"ae\">Cooperation Tool Form</nuxt-link> per valutare la cooperazione del tuo gruppo, sia esso un gruppo di amici, i tuoi colleghi a lavoro, la tua famiglia o anche comunità su grande scala. Utilizza invece il form di ricerca se vuoi rivedere un precedente questionario e i suoi risultati.",
+    "intro1": "Benvenuto al Cooperacy Cooperation Tool! <br/ > Utilizza pure il ",
+    "intro2": "per valutare la cooperazione del tuo gruppo, sia esso un gruppo di amici, i tuoi colleghi a lavoro, la tua famiglia o anche comunità su grande scala. Utilizza invece il form di ricerca se vuoi rivedere un precedente questionario e i suoi risultati.",
     "introform": "Una volta completato il questionario potete condividerne il nome e l'ID insieme al link a questa pagina nel vostro gruppo: più sono coloro che vi partecipano e più la valutazione sarà accurata.",
     "basic": "INFORMAZIONI DI BASE",
     "language": "Ricordati che puoi scegliere la tua lingua preferita alla fine della pagina nel ",

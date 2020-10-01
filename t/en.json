@@ -4,7 +4,8 @@
     "newplace": "If you do not find your place, please feel free to add a new"
   },
   "cootool": {
-    "intro": "Welcome to the Cooperacy Cooperation Tool! <br/ > Please use the <nuxt-link to=\"/cootool/form\" class=\"ae\">Cooperation Tool Form</nuxt-link> to evaluate your group cooperation, be it a group of friends, your colleagues at work, your family or even a large scale community. <br />Use the search instead if you want to have a look at a previous survey and review the results.",
+    "intro1": "Welcome to the Cooperacy Cooperation Tool! <br/ > Please use the ",
+    "intro2": " to evaluate your group cooperation, be it a group of friends, your colleagues at work, your family or even a large scale community. <br />Use the search instead if you want to have a look at a previous survey and review the results.",
     "introform": "Once answered the questions you can share its name and ID together with the link to this page within your group: the more will fill it in, the more your evaluation will be accurate.",
     "basic": "BASIC INFORMATION",
     "language": "Remember you can choose your preferred language at the end of the page in the ",
