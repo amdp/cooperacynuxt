@@ -15,7 +15,7 @@
         coomembers.
       </p>
       <!-- COLLECTION FUND -->
-      <p class="subheading understanding center space margin">
+      <p class="subheading understanding center space margin mt-5">
         THE COLLECTION FUND: COOPERATION IDEAS
       </p>
       <p class="base">
@@ -28,7 +28,7 @@
         are "frozen" until idea budget is fulfilled.
       </p>
 
-      <p class="subheading understanding center space margin">
+      <p class="subheading understanding center space margin mt-5">
         COOPERATIONS STATES
       </p>
       <p class="base"></p>
@@ -100,7 +100,7 @@
         </table>
       </div>
 
-      <p class="subheading understanding center space margin">
+      <p class="subheading understanding center space margin mt-5">
         COOPERATIONS CATEGORIES
       </p>
       <p class="base"></p>
@@ -175,7 +175,7 @@
         </table>
       </div>
 
-      <p class="subheading understanding center space margin">
+      <p class="subheading understanding center space margin mt-5">
         AFTF MULTIDIMENSIONAL VOTING
       </p>
       <p class="base">
@@ -198,11 +198,12 @@
         the equivalence votes all the ideas have (Ei / Et ). If funds for a
         budget cooperation idea get to more than 50%, the cooperation gets to a
         boost bonus and its funding allocation will be as quick as if it had 80%
-        of the votes. Equivalence votes in a "free cooperation" indicate
-        participation as a client, that is, affiliate, pre-buy, subscription to
-        a course or pre-purchase to a concert. This vinculates the trustee to
-        the payment of the relative pre-purchase or fee when the cooperation
-        becomes active.
+        of the votes. Equivalence votes in a participated cooperation indicate
+        pre-buy as a client, that is, subscription to a course or pre-purchase
+        to a concert. This vinculates the trustee to the payment of the relative
+        pre-purchase or fee when the cooperation becomes active. The participant
+        can change the vote anytime but not after the cooperation becomes active
+        after the reaching of the needed budget.
       </p>
       <br />
 
@@ -263,8 +264,8 @@
       <br />
       <p class="base diversity">Diversity</p>
       <p class="base">
-        When a cooperation has a strong “bizardry” (diversity-votes), it has
-        more opportunities to be randomly approved. Technical: ideas has a
+        When a funded cooperation has a strong “bizardry” (diversity-votes), it
+        has more opportunities to be randomly approved. Technical: ideas has a
         diversity percentage ( Di / Dt ). Every idea, the first day of a season
         (equinoxes and solstices), is given a random percentage value between 0%
         and 10%, to which the diversity percentage is added and then randomly
@@ -273,7 +274,7 @@
         Warning: 10 diversity votes lower the equivalence ones by 1.
       </p>
       <br /><br />
-      <p class="subheading understanding center space margin">
+      <p class="subheading understanding center space margin mt-5">
         BUDGET RELEASE STEPS
       </p>
       <p class="base">
@@ -336,7 +337,9 @@
         </table>
       </div>
       <br /><br />
-      <p class="subheading understanding center space margin">OTHER NOTES</p>
+      <p class="subheading understanding center space margin mt-5">
+        OTHER NOTES
+      </p>
       <p class="base">
         Any direct donation to an idea counts as dedicated donated budget.
         Donated budget and pre-allocated budget count for the idea budget to be
@@ -376,7 +379,7 @@
         cooperation.<br />
       </p>
 
-      <!-- <p class="subheading understanding center space margin">CO-DONATIONS</p>
+      <!-- <p class="subheading understanding center space margin mt-5">CO-DONATIONS</p>
       <p class="base">
         Co-donation is an alternative way in which you can help an idea to find
         its budget. When you hit on co-donate, you choose a maximum amount you
@@ -391,7 +394,7 @@
         possibility the website allows.
       </p> -->
 
-      <p class="subheading understanding center space margin">
+      <p class="subheading understanding center space margin mt-5">
         THE COOPERACY COOPERATIONS AS MODULES
       </p>
       <p class="base">
@@ -401,10 +404,11 @@
       </p>
 
       <p class="base">
-        It is advised that the active participants should be maximum 150. The
-        module is continuously subject to the feedback of the participants and
-        the voters. Even after years any participant can decide if something was
-        good or bad, influencing the memory of the system.<br />
+        It is advised that the active participants should be maximum 150 and
+        have maximum two coordinators. The module is continuously subject to the
+        feedback of the participants and the voters. Even after years any
+        participant can decide if something was good or bad, influencing the
+        memory and the future AI of the system.<br />
       </p>
     </div>
   </div>
