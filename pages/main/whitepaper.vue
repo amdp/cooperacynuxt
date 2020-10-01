@@ -75,21 +75,18 @@
               </td>
             </tr>
             <tr>
-              <td class="baset">Active</td>
+              <td class="baset">Caring</td>
               <td class="baset">
-                An "active" cooperation is one that is in fuction and may
-                produce revenues which, after every working professional receive
-                their salary, will go back to the main collection fund.
+                Special state for cooperations that need some care or attention
+                because in a delicate situation.
               </td>
             </tr>
             <tr>
               <td class="baset">Participation</td>
               <td class="baset">
-                The "participation" state of a cooperation is a state in which
-                the budget is determined by the collection of a fee. Events,
-                courses and similar cooperations need a certain amount of
-                participants to be activated. When the needed number is reached,
-                they become active.
+                An "active" cooperation is one that is in fuction and may
+                produce revenues which, after every working professional receive
+                their salary, will go back to the main collection fund.
               </td>
             </tr>
             <tr>
@@ -103,19 +100,80 @@
         </table>
       </div>
 
-      <p class="subheading understanding center space margin mt-3">
-        FREE COOPERATIONS
+      <p class="subheading understanding center space margin">
+        COOPERATIONS CATEGORIES
       </p>
-      <p class="base">
-        Ideas may need no budget. For example, they can be a tool for a decision
-        making supported by voting. Some of them, instead, like courses,
-        concerts, dinners, parties.. may not require a budget but a minimum
-        number of participants that commit themselves to the payment of a ticket
-        or a fee, without which the ideas are not sustainable. All these ideas
-        do not participate to the collection fund distribution, but their
-        possible profit goes to the collection fund anyways, as all activities
-        are co-owned by Cooperacy.
-      </p>
+      <p class="base"></p>
+      <div style="overflow-x: auto">
+        <table style="width: 100%">
+          <thead>
+            <tr>
+              <th class="baset">CATEGORY</th>
+              <th class="baset">DESCRIPTION</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="baset">Funded</td>
+              <td class="baset">
+                This category indicates the cooperation idea participates to the
+                possibility of receiving funds according to the common voting.
+              </td>
+            </tr>
+            <tr>
+              <td class="baset">Participated</td>
+              <td class="baset">
+                The "participated" cooperations have a budget determined by the
+                collection of a fee. Events, courses and similar cooperations
+                need a certain amount of participants to be activated. When the
+                needed number is reached, they become active.
+              </td>
+            </tr>
+            <tr>
+              <td class="baset">Ecosystem</td>
+              <td class="baset">
+                The ecosystem category is related to cooperations that are like
+                the funded ones but get promoted in the sense that they result
+                as first in the search results.
+              </td>
+            </tr>
+            <tr>
+              <td class="baset">Voting</td>
+              <td class="baset">
+                The voting category is for voting only, so it does not receive
+                funds but has governance effects. In order to issue a voting in
+                your cooperation, just use your cooperation as parent and create
+                a child cooperation with the votingh category. It doesn't give
+                any results in the cooperation search.
+              </td>
+            </tr>
+            <tr>
+              <td class="baset">Evaluation</td>
+              <td class="baset">
+                The evaluation category is to allow people to evaluate some
+                cooperation ideas. It does not give any results in the
+                cooperation search, and it's not funded nor participated.
+              </td>
+            </tr>
+            <tr>
+              <td class="baset">Science, Education and Health</td>
+              <td class="baset">
+                The Science, Education and Health category is for not funded
+                ideas or can be applied to funded cooperations - only after they
+                become active. Its peculiarity is that it may be subject to
+                testing by experts.
+              </td>
+            </tr>
+            <tr>
+              <td class="baset">Not Funded</td>
+              <td class="baset">
+                A simple cooperation idea based on voluntary funding or just to
+                gather action and interest.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <p class="subheading understanding center space margin">
         AFTF MULTIDIMENSIONAL VOTING
@@ -215,65 +273,6 @@
         Warning: 10 diversity votes lower the equivalence ones by 1.
       </p>
       <br /><br />
-      <p class="base">
-        Any direct donation to an idea counts as dedicated donated budget.
-        Donated budget and pre-allocated budget count for the idea budget to be
-        turned into an approval cooperation, but donated budget cannot be
-        returned to the collection fund unless the idea is rescinded or
-        abandoned.<br />
-        Once the idea has reached the budget and/or hudget, the participants of
-        the idea are kept frozen during the approval cooperation phase until it
-        is turned into an active cooperation. The budget release milestones
-        deadlines are chosen according to the Cooperacy
-        <nuxt-link to="/main/governance" class="af">governance</nuxt-link>
-        scheme.<br />
-        Eventual contrasts not resolved in the 7 budget milestones are solved
-        with a transparent voting kept live for three days, in which the
-        participants can change their votes. The coordinators have three more
-        days to try to creatively integrate the contrasting positions according
-        to the seven solutions. At the end of a week time, the milestone should
-        be decided.<br />
-        All the contrasting votes not integrated reduce the budget, which goes
-        back to the collection fund. In that case, the cooperation turns back to
-        the idea state, keeping the milestones approved, and waits again for the
-        fulfilment of the missing budget cut due to contrasting positions.<br />
-        Highlighting colors can indicate different ideas types, like cyan for
-        “educational”, violet for “scientific”, and green for “environmental”
-        ones. You are free to use these labels, but if they are misleading they
-        can make people downvote them. Some cooperations are geographic units,
-        like cities or specific locations and are highlighted in blue.<br />
-        When an idea becomes an approval cooperation, the idea is “born”, and
-        has a birthdate. When the approval becomes an active cooperation it can
-        receive a three level feedback by the coomembers (+,=,-).<br />
-        In case of “death” of an active cooperation, for example when a course
-        ends, or a backery is sold, its final step is to be archived. This turns
-        the active cooperation into an archived one and the AI analyzes it while
-        the participants may still give some feedback.<br />
-        Participants Gender (M / F / Other) will be aggregated in order to
-        inidicate in the future the cooperation gender composition.<br />
-        cooperations may have internal cooperation ideas, for example a language
-        institute that wants to add a new language course. Budget ideas that
-        want to be funded by the Cooperacy collection fund must be in the
-        Cooperacy base cooperation to receive any budget pre-allocation. Only
-        afterwards they can be inserted as subcooperations of any main
-        cooperation.<br />
-      </p>
-
-      <!-- <p class="subheading understanding center space margin">CO-DONATIONS</p>
-      <p class="base">
-        Co-donation is an alternative way in which you can help an idea to find
-        its budget. When you hit on co-donate, you choose a maximum amount you
-        are willing to donate for filling up the idea budget, if all the other
-        co-donators are willing to donate the same. The system periodically
-        evaluates the lowest of all amounts promised and multiplies for the
-        number of the co-donators in order to see if the total budget is
-        reached. If not, the system evaluates other combination possibilities
-        able to reach the budget, like excluding lower donation amounts. Once a
-        possible co-donation is found, the idea is turned into a cooperation and the
-        codonations are billed to your bank account, credit card or any other
-        possibility the website allows.
-      </p> -->
-
       <p class="subheading understanding center space margin">
         BUDGET RELEASE STEPS
       </p>
@@ -336,6 +335,61 @@
           </tbody>
         </table>
       </div>
+      <br /><br />
+      <p class="subheading understanding center space margin">OTHER NOTES</p>
+      <p class="base">
+        Any direct donation to an idea counts as dedicated donated budget.
+        Donated budget and pre-allocated budget count for the idea budget to be
+        turned into an approval cooperation, but donated budget cannot be
+        returned to the collection fund unless the idea is rescinded or
+        abandoned.<br />
+        Once the idea has reached the budget and/or hudget, the participants of
+        the idea are kept frozen during the approval cooperation phase until it
+        is turned into an active cooperation. The budget release milestones
+        deadlines are chosen according to the Cooperacy
+        <nuxt-link to="/main/governance" class="af">governance</nuxt-link>
+        scheme.<br />
+        Eventual contrasts not resolved in the 7 budget milestones are solved
+        with a transparent voting kept live for three days, in which the
+        participants can change their votes. The coordinators can creatively
+        integrate the contrasting positions according to the seven solutions. At
+        the end of a deadline time, the milestone should be decided.<br />
+        All the contrasting votes not integrated reduce the budget, which goes
+        back to the collection fund. In that case, the cooperation turns back to
+        the idea state, keeping the milestones approved, and waits again for the
+        fulfilment of the missing budget cut due to contrasting positions.<br />
+        When an idea becomes an approval cooperation, the idea is “born”, and
+        has a birthdate. When the approval becomes an active cooperation it can
+        receive a three level feedback by the coomembers using the same
+        votes.<br />
+        In case of “death” of an active cooperation, for example when a course
+        ends, or a backery is sold, its final step is to be archived. This turns
+        the active cooperation into an archived one and the AI analyzes it while
+        the participants may still give some feedback.<br />
+        Participants Gender (M / F / Other) will be aggregated in order to
+        inidicate in the future the cooperation gender composition.<br />
+        Cooperations may have internal cooperation ideas, for example a language
+        institute that wants to add a new language course. Budget ideas that
+        want to be funded by the Cooperacy collection fund must be children of
+        the Cooperacy base cooperation to receive any budget pre-allocation.
+        Only afterwards they can be inserted as subcooperations of any main
+        cooperation.<br />
+      </p>
+
+      <!-- <p class="subheading understanding center space margin">CO-DONATIONS</p>
+      <p class="base">
+        Co-donation is an alternative way in which you can help an idea to find
+        its budget. When you hit on co-donate, you choose a maximum amount you
+        are willing to donate for filling up the idea budget, if all the other
+        co-donators are willing to donate the same. The system periodically
+        evaluates the lowest of all amounts promised and multiplies for the
+        number of the co-donators in order to see if the total budget is
+        reached. If not, the system evaluates other combination possibilities
+        able to reach the budget, like excluding lower donation amounts. Once a
+        possible co-donation is found, the idea is turned into a cooperation and the
+        codonations are billed to your bank account, credit card or any other
+        possibility the website allows.
+      </p> -->
 
       <p class="subheading understanding center space margin">
         THE COOPERACY COOPERATIONS AS MODULES
@@ -348,29 +402,9 @@
 
       <p class="base">
         It is advised that the active participants should be maximum 150. The
-        module is continuously subject of feedback by the participants and the
-        voters. Even after years any participant can decide if something was
-        good or bad, influencing the memory of the system. A simple feedback
-        history is available: after 1 month (M), 1 season (S), 1 year (Y) and
-        after 7 years (7).<br />
-        Feedback can be added once the cooperation is archived.<br /><br />
-      </p>
-      <p class="subheading understanding center space margin">
-        THE COOPERACY COOPERATION LIFECICLE
-      </p>
-      <p class="base">
-        The cooperations represent the voting unit of Cooperacy. They have this
-        main lifecycle:<br />
-        • cooperation Idea: the cooperation is proposed – it is usually
-        anonymous and it could be also voted anonymously<br />
-        • Approval Stage: the idea reaches its budget or hudget, becomes a
-        cooperation, anonymity ends, budget phase starts;<br />
-        • Active or Participating Cooperation: the cooperation is an active one,
-        its profits go back to the collection fund;<br />
-        • Archived cooperation: when the mission is accomplished or terminated
-        the cooperation “dies”. This is not a bitter end, it means the
-        cooperation goes in the archive in order to influence future modules and
-        for future reference;<br />
+        module is continuously subject to the feedback of the participants and
+        the voters. Even after years any participant can decide if something was
+        good or bad, influencing the memory of the system.<br />
       </p>
     </div>
   </div>

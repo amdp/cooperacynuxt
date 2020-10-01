@@ -293,9 +293,7 @@ export default {
       terms: false,
       editing: false,
       country: this.$store.state.country,
-      category: this.$store.state.category.filter(
-        (category) => category.id != 0
-      ),
+      category: this.$store.state.category,
       totallabel: 0,
       formAnonymous: 0,
       formNewcountry: null,

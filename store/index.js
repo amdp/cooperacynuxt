@@ -31,28 +31,18 @@ export const state = () => ({
   ],
   cc: ['E', 'T', 'C', 'I', 'F', 'U', 'D'],
   category: [
-    { id: 0, name: 'Main Cooperacy' },
-    { id: 1, name: 'Funded or Fee based' },
-    { id: 2, name: 'Communities, Locations, Cities, Nations' },
-    {
-      id: 3,
-      name: 'Ecosystem and Wellbeing'
-    },
-    { id: 4, name: 'Voting Proposals, Reporting' },
-    {
-      id: 5,
-      name: 'Free Cooperation or Evaluation Purposes'
-    },
-    {
-      id: 6,
-      name: 'Science, Education and Guilds'
-    },
-    { id: 7, name: 'Art, Music, Sports & Fun' }
+    { id: 1, name: 'Funded' },
+    { id: 2, name: 'Fee based' },
+    { id: 3, name: 'Ecosystem' },
+    { id: 4, name: 'Voting' },
+    { id: 5, name: 'Evaluation' },
+    { id: 6, name: 'Science, Edu, Health' },
+    { id: 7, name: 'Not funded' }
   ],
   state: [
     { id: 1, name: 'archived' },
-    { id: 2, name: 'participation' },
-    { id: 3, name: 'active' },
+    { id: 2, name: 'active' },
+    { id: 3, name: 'caring' },
     { id: 4, name: 'testing' },
     { id: 5, name: 'approval' },
     { id: 6, name: 'pairing' },
