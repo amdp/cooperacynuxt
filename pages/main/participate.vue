@@ -1,5 +1,5 @@
 <template>
-  <div class="page-container">
+  <b-container class="m-0 p-0 pagecontainer">
     <br /><img
       class="page-header"
       src="~/assets/image/page/banners/main/participate.png"
@@ -29,7 +29,7 @@
         aria-valuenow="1%"
         aria-valuemin="0"
         aria-valuemax="100"
-        style="width: 1%; color: #000000; background-color: #ff9000;"
+        style="width: 1%; color: #000000; background-color: #ff9000"
       >
         &nbsp;1%&nbsp;Complete
       </div>
@@ -186,13 +186,13 @@
       great with Cooperation Science! Our model was at two conferences by MIT in
       the US, and in 2017 we presented in Macao our international Cooperation
       Context Index by countries. Have a look at the
-      <nuxt-link to="/main/coscience" class="au">scientific</nuxt-link> part of
+      <nuxt-link to="/main/cooscience" class="au">scientific</nuxt-link> part of
       our website and, if you are an academic, please
       <nuxt-link to="/login" class="at">join</nuxt-link> Cooperacy and our team
       of researchers!
     </p>
     <br /><br />
-  </div>
+  </b-container>
 </template>
 <script>
 export default {

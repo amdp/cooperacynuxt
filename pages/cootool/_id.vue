@@ -5,7 +5,7 @@
       <b-col cols="10">
         <h1
           class="up text-center"
-          v-html="this.$store.state.survey.main[0].name"
+          v-html="this.$store.state.survey.main[0].title"
         ></h1>
         <p>
           These result have been calculated on
@@ -416,7 +416,7 @@ export default {
         place: this.$store.state.survey.main[0].place,
         month: this.$store.state.survey.main[0].month,
         participant: this.$store.state.survey.main[0].participant,
-        name: this.$store.state.survey.main[0].name,
+        title: this.$store.state.survey.main[0].title,
         desc: this.$store.state.survey.main[0].desc,
         MBD: this.$store.state.survey.main[0].MBD,
         BD: this.$store.state.survey.main[0].BD,

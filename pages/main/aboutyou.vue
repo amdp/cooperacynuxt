@@ -1,10 +1,10 @@
 <template>
-  <div class="page-container">
+  <b-container class="m-0 p-0 pagecontainer">
     <br /><img
       class="page-header"
       src="~/assets/image/page/banners/main/aboutyou.png"
     />
-    <p class="base" style="margin-right: auto;">
+    <p class="base" style="margin-right: auto">
       You may <span class="diversity">love</span>
       <nuxt-link to="/main/cooperation" class="ae"
         >doing things together</nuxt-link
@@ -20,14 +20,14 @@
       >.<br /><br />
 
       Or you may be one of those who believe that
-      <nuxt-link to="/main/platform" class="ae">changing the world</nuxt-link> starts
-      with a new
+      <nuxt-link to="/main/platform" class="ae">changing the world</nuxt-link>
+      starts with a new
       <nuxt-link to="/main/cooperation" class="au">awareness</nuxt-link
       >.<br /><br />
 
       For example, you may believe in
-      <nuxt-link to="/main/research" class="au">science</nuxt-link> and technology
-      but want them to be respectful of the people’s
+      <nuxt-link to="/main/research" class="au">science</nuxt-link> and
+      technology but want them to be respectful of the people’s
       <nuxt-link to="/main/cooperation#care" class="ac">feelings</nuxt-link
       >.<br /><br />
 
@@ -69,9 +69,9 @@
 
       Another possibility, instead, is that you are concerned about wars and
       hunger and see them as an effect of the way wealth is
-      <nuxt-link to="/main/platform" class="ae">distributed</nuxt-link>. So you would
-      like an economy based not on numbers, productivity and surplus only, but
-      also on
+      <nuxt-link to="/main/platform" class="ae">distributed</nuxt-link>. So you
+      would like an economy based not on numbers, productivity and surplus only,
+      but also on
       <nuxt-link to="/main/cooperation#care" class="ac">caring</nuxt-link>,
       sustainability, real assets, traditional shops and activities coordinated
       by “multilocal” companies. You may be wanting safe and fair water access,
@@ -94,7 +94,7 @@
       personal journey into a World of Cooperation.
     </p>
     <br />
-  </div>
+  </b-container>
 </template>
 <script>
 export default {

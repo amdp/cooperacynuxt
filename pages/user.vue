@@ -93,10 +93,10 @@ export default {
       userid: store.state.auth.user.id,
       proptype: 'cooperation'
     })
-
   },
   mounted() {
     this.rainbowcode()
+    this.$store.dispatch('budgetcheck')
   },
   methods: {
     async resetvoting() {

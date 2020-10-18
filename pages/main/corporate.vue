@@ -1,5 +1,5 @@
 <template>
-  <div class="page-container">
+  <b-container class="m-0 p-0 pagecontainer">
     <br /><img
       class="page-header"
       src="~/assets/image/page/banners/main/corporate.png"
@@ -71,7 +71,7 @@
     </p>
     <br />
     <br />
-  </div>
+  </b-container>
 </template>
 <script>
 export default {

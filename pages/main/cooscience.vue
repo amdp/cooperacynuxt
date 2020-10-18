@@ -1,5 +1,5 @@
 <template>
-  <div class="page-container">
+  <b-container class="m-0 p-0 pagecontainer">
     <br /><img
       class="page-header"
       src="~/assets/image/page/banners/main/cooperationscience.png"
@@ -75,7 +75,7 @@
       based approaches. We would also like to provide a subsequent economic
       model for a social system based on cooperation science.
     </p>
-  </div>
+  </b-container>
 </template>
 <script>
 export default {

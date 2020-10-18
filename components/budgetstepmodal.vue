@@ -6,24 +6,20 @@
       hide-header-close
     >
       <p class="base">
-        Behind this step there is a delicate passage that your cooperation will
-        face: it will wait for 7 days for the cooperation document to be
-        approved. If nothing happens, your document is approved and you can go
-        forward to the next budget step.
+        Warning: if you do not know what you're doing, please read the
+        <nuxt-link to="/main/whitepaper" class="au">white paper</nuxt-link>
       </p>
-      <b-form @submit.prevent="budgetstepdoc()">
+      <b-form @submit.prevent="budgetstep()">
         <b-form-group
           label-for="professionalInput"
-          description="Add a Budget Step Document to your cooperation, inserting a link to a shared google document."
+          description="Add a Budget Step Document to your cooperation, inserting a link to a shared document."
         >
-          <span>{{ cooperationprop.name }}</span>
+          <span>{{ cooperationprop.title }}</span>
           <b-form-input id="docInput" v-model="formDoc"></b-form-input>
         </b-form-group>
       </b-form>
       <template slot="modal-footer">
-        <b-button size="sm" class="bcare" @click="budgetstepdoc()">
-          ADD
-        </b-button>
+        <b-button size="sm" class="bcare" @click="budgetstep()"> ADD </b-button>
         <b-button size="sm" class="btransparency" @click="close()">
           CLOSE
         </b-button>
@@ -44,8 +40,8 @@ export default {
   },
 
   methods: {
-    async budgetstepdoc() {
-      this.$store.dispatch('budgetstepdoc', {
+    async budgetstep() {
+      this.$store.dispatch('budgetstep', {
         cooperation: this.cooperationprop,
         user: this.$auth.user,
         doc: this.formDoc

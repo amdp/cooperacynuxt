@@ -26,7 +26,7 @@
     "group7": "Yourself (experimental)",
     "country": "Which is the country of your group?",
     "place": "Which is the place (i.e. the city in which you live, the company headquarters, the capital city for nations...) of your group?",
-    "name": "What is the name of your group?",
+    "title": "What is the name of your group?",
     "month": "For how many months have you been a participant in the group till now?",
     "participant": "What is the (approximate) number of your group participants?",
     "desc": "Please insert a description of the group and eventual current difficulties",

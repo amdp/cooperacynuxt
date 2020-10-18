@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Prompt:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Prompt:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=block');
 
 :root {
   --equivalence: #f80;
@@ -34,8 +34,8 @@
 --graylight: #ccc;
 --front: #000;
 --back: #fff;
---font-family-sans-serif: "Prompt";
---font-family-monospace: "Prompt";
+--font-family-sans-serif: 'Prompt', sans-serif;
+--font-family-monospace: 'Prompt', sans-serif;
 }
 
 $equivalence: #f80;
@@ -73,10 +73,24 @@ $front: #000;
 $back: #fff;
 $frontdark: #fff;
 
+/*@font-face {
+  font-family: 'cooperacy';
+  font-style: normal;
+  src: url('./font/Questrial-Regular.woff') format('woff');
+  font-display: block;
+}*/
+
 * {
   font-family: 'Prompt', sans-serif;
   font-weight: 300;
   color: $front;
+}
+
+.base {
+  text-align: justify;
+  font-size: 18px;
+  margin-bottom: 10px;
+  line-height: 29px;
 }
 
 body {
@@ -588,7 +602,7 @@ hr.home-hr {
   height: 40px;
   width: 40px;
 }
-.page-container {
+.pagecontainer {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -653,12 +667,6 @@ video {
 
 /* text dimensions + decorations */
 
-.base {
-  text-align: justify;
-  font-size: 20px;
-  margin-bottom: 10px;
-  line-height: 29px;
-}
 .quote {
   font-size: 18px;
   margin-bottom: 10px;

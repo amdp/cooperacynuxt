@@ -25,7 +25,7 @@
               :key="survey.id"
               :value="survey.surveyid"
               v-html="
-                survey.name +
+                survey.title +
                 ' ' +
                 survey.surveyid +
                 ' ' +
@@ -47,7 +47,7 @@
               v-html="
                 cooperation.id +
                 ' ' +
-                cooperation.name +
+                cooperation.title +
                 ' ' +
                 cooperation.parent +
                 ' ' +

@@ -1,5 +1,5 @@
 <template>
-  <div class="page-container">
+  <b-container class="m-0 p-0 pagecontainer">
     <br /><img
       class="page-header"
       src="~/assets/image/page/banners/main/journey.png"
@@ -82,7 +82,7 @@
       best of the personal self, the social groups and even the natural
       ecosystem.<br /><br />
     </p>
-  </div>
+  </b-container>
 </template>
 <script>
 export default {

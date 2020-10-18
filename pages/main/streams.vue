@@ -1,5 +1,5 @@
 <template>
-  <div class="page-container">
+  <b-container class="m-0 p-0 pagecontainer">
     <br /><img
       class="page-header"
       src="~/assets/image/page/banners/main/streams.png"
@@ -30,7 +30,7 @@
       free to <nuxt-link to="/login" class="ae">join</nuxt-link> or
       <nuxt-link to="/contact" class="ai">contact</nuxt-link> us.
     </p>
-  </div>
+  </b-container>
 </template>
 <script>
 export default {

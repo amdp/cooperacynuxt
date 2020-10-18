@@ -1,5 +1,5 @@
 <template>
-  <div class="page-container">
+  <b-container class="m-0 p-0 pagecontainer">
     <br /><img
       class="page-header"
       src="~/assets/image/page/banners/main/governance.png"
@@ -16,14 +16,13 @@
     <p class="subheading freedom center space">COOPERATIONS</p>
     <br />
     <p class="base">
-      The Cooperacy governance is made of cooperations, that can have
-      upcooperations or subcooperations. The main cooperation is called
-      Cooperacy. Every cooperation is based on the most simple form of
+      The Cooperacy governance is made of cooperations, that can also be
+      containers. The main cooperation container is Cooperacy itself. Every
+      cooperation is based on the most simple form of
       <nuxt-link to="/main/cooperation" class="ae">cooperation</nuxt-link>: two
       or more people doing something together. <br />
-      It is advised every cooperation should have maximum 148 people and two
-      coordinators. A single coordinator is considered provisory, while
-      cooperations may also decide to elect everyone as coordinator to
+      It is advised every cooperation should have two coordinators and a maximum
+      of 150 people. They may also decide to elect everyone as coordinator to
       experiment diffuse governance.<br />
       Anytime, coordinators may resign, can be substituted upon the cooperation
       participants’ will or candidates may propose themselves to become
@@ -32,15 +31,18 @@
     <br />
     <p class="subheading freedom center space">DECISIONS</p>
     <br />
-    <p class="base" style="width: 100%;">
+    <p class="base" style="width: 100%">
       Coordinators may take direct decisions in their cooperation. Only when
       their decision is publicly communicated it becomes effective. When they
       are in contrast or unsure about what decision to take, coordinators can
-      ask advice to the participants or start a voting phase.<br /><br />
+      ask advice to the participants or start a voting phase, remembering voting
+      is never subject to majority but represents an official evaluation that
+      needs to be
+      <nuxt-link to="/main/cooperation" class="ae">integrated</nuxt-link
+      >.<br /><br />
 
-      Participants can propose decisions as well through voting or asking the
-      coordinators for direct approval. The coordinators should abstain when
-      they are the voting main subject.<br />
+      Participants can propose decisions as well through voting evaluation or
+      asking the coordinators for direct approval.<br />
       Participants may also oppose the coordinators decisions. If the opposing
       participants are at least two<SUP>1</SUP>, the coordinators should
       proportionally and creatively
@@ -49,54 +51,39 @@
       <nuxt-link to="/main/integration#solutions" class="ae"
         >solutions</nuxt-link
       >
-      or alternatively start a voting phase.<br /><br />
+      or alternatively start a voting evaluation.<br /><br />
 
-      If just a single participants proposes or opposes, but nobody secondes,
-      the single instance is recorded or, when possible, but not always,
+      If just a single participant proposes or opposes, but nobody secondes, the
+      single instance is recorded or, when possible, but not always,
       proportionally and creatively
       <nuxt-link to="/main/integration" class="ad">integrated</nuxt-link>.<br />
 
       <br /><img
-        style="width: 100%;"
+        style="width: 100%"
         class="page-header"
         src="~/assets/image/page/governance/decisions.png"
       />
     </p>
     <br />
-    <p class="subheading freedom center space">VOTING</p>
+    <p class="subheading freedom center space">VOTING EVALUATIONS</p>
     <br />
     <p class="base">
       Cooperacy is a design democracy: we vote cooperation ideas first, people
       afterwards. Decisions are voted independently from the people who will
       enact them, as they will be chosen <i>on a second step</i>.<br /><br />
       The voting can be anonymous during the voting phase, but becomes
-      transparent once the results are shown. All voting results are
+      transparent once the results are shown. All voting evaluation results are
       transparent.<br /><br />
       The decision making is based on approval voting, that is, everyone may
       vote with a single vote all the cooperation ideas or alternative decisions
       they want. If there is not a clear orientation<SUP>2</SUP> after the
-      voting phase, the participants leave their choice to the coordinators.
-      They may also choose with the coordinators which one of the seven possible
+      voting evaluation, the participants may want to leave their choice to the
+      coordinators. They may also choose with the coordinators which one of the
+      seven possible
       <nuxt-link to="/main/integration#solutions" class="af"
         >solutions</nuxt-link
       >
-      to apply for the realization of the cooperation’s will:<br /><br />
-      - Turns or experimentations, starting from the most voted<br />
-      - Give a definite time to test the previous situation and then vote
-      again<br />
-      - Change the context and pleasantness of the context or the voting process
-      and vote again<br />
-      - Retrieve more information, listen to all the people positions and decide
-      again<br />
-      - Separate the cooperation in new ones, splitting eventual budgets<br />
-      - Evaluate things through data, common values or objective criterias and
-      vote again<br />
-      - Combine using the
-      <nuxt-link to="/main/integration" class="af"
-        >proportional creative integration</nuxt-link
-      >
-      the different solutions or give people -or the same solutions- specific
-      roles<br />
+      to apply for the realization of the cooperation’s will.<br /><br />
     </p>
 
     <br /><br />
@@ -109,12 +96,13 @@
       coordination is also possible, although roles could emerge anyways.<br />
       2: VOTING IS INFORMATIVE The voting results are indicators of the
       participants will, they do not explicitly determine a final decision,
-      because winning and losing the voting process is substituted by
+      because winning and losing the voting process is substituted by evaluation
+      and
       <nuxt-link to="/main/integration" class="af"
         >proportional creative integration</nuxt-link
       >.
     </p>
-  </div>
+  </b-container>
 </template>
 <script>
 export default {

@@ -7,13 +7,13 @@
         <br />
         <h5 class="diversity">DESCRIPTION</h5>
         <b-form-group
-          label-for="nameInput"
-          label="Name:"
-          description="The cooperation idea name"
+          label-for="titleInput"
+          label="Title:"
+          description="The cooperation idea title"
         >
           <b-form-input
-            id="nameInput"
-            v-model="formName"
+            id="titleInput"
+            v-model="formTitle"
             size="sm"
             required
           ></b-form-input>
@@ -99,7 +99,7 @@
         <b-form-group
           label-for="videoInput"
           label="Video:"
-          description="Please insert a YouTube video link for the cooperation idea"
+          description="Please, feel free to insert a video link for the cooperation idea"
         >
           <b-form-input
             id="videoInput"
@@ -128,7 +128,11 @@
           label="Category:"
           description="Please choose the cooperation idea category"
         >
-          <b-form-select id="categoryInput" v-model="formCategory">
+          <b-form-select
+            id="categoryInput"
+            v-model="formCategory"
+            @input="setMode(formCategory)"
+          >
             <option
               v-for="category in category"
               :key="category.id"
@@ -155,53 +159,46 @@
             methodology.</b-form-checkbox
           >
         </b-form-group>
-
         <h5 class="trust">BUDGET AND HUDGET</h5>
-
-        <b-form-group
-          label-for="stateInput"
-          label=""
-          description="If you want to propose a free group cooperation, or a course, an event or similar with its own fee, you just leave it unchecked"
+        <b-form-select
+          id="modeInput"
+          v-model="formMode"
+          class="my-3"
+          @input="setMode(formMode)"
         >
-          <b-form-checkbox
-            id="stateInput"
-            v-model="formStateFunding"
-            value="7"
-            unchecked-value="2"
-            switch
-            class="m-3"
-            @input="
-              formBudget = 0
-              formFee = 0
-            "
-          >
-            FUNDED: when checked, this cooperation idea asks for Cooperacy Funds
-          </b-form-checkbox>
-        </b-form-group>
+          <option value="9">
+            FREE: this cooperation idea does NOT need Cooperacy funds
+          </option>
+          <option value="20">
+            PARTICIPATION: this cooperation idea asks for a participation fee
+          </option>
+          <option value="101">
+            FUNDING: this cooperation idea asks for Cooperacy funds
+          </option>
+          <option value="4" disabled>
+            VOTING: automatically selected via the voting category
+          </option>
+          <option value="1" disabled>
+            EVALUATION: automatically selected via the evaluation category
+          </option>
+        </b-form-select>
         <b-form-group
           label-for="budgetInput"
           label="Budget:"
-          description="Insert the amount of budget needed for your cooperation 
-          (Automatically calculated in case of fee-based cooperations)"
+          description="The budget needed for your cooperation"
+          v-show="this.formCategory > 0"
         >
           <b-form-input
             id="budgetInput"
             v-model="formBudget"
-            :readonly="this.formStateFunding == 2"
+            :readonly="this.formMode <= 20"
           ></b-form-input>
-        </b-form-group>
-        <b-form-group
-          label-for="hudgetInput"
-          label="Hudget:"
-          description="Insert the number of professionals needed that will receive a remuneration from the budget"
-        >
-          <b-form-input id="hudgetInput" v-model="formHudget"></b-form-input>
         </b-form-group>
         <b-form-group
           label-for="feeInput"
           label="Attending Fee:"
           description="Insert the price of the attending fee, leave 0 for free cooperations"
-          v-if="this.formStateFunding == 2"
+          v-show="this.formMode == 20"
         >
           <b-form-input
             id="feeInput"
@@ -213,7 +210,7 @@
           label-for="attendeeInput"
           label="Minimum attendees:"
           description="Insert the minimum amount of attendees to this course, event, fee-based service"
-          v-if="this.formStateFunding == 2"
+          v-show="this.formMode == 20"
         >
           <b-form-input
             id="attendeeInput"
@@ -221,12 +218,15 @@
             @keyup="totalfreecooperation"
           ></b-form-input>
         </b-form-group>
-        <b-check
-          v-if="formCategory != 4"
-          id="termscheckbox"
-          name="termscheckbox"
-          required
+        <b-form-group
+          label-for="hudgetInput"
+          label="Hudget:"
+          description="Insert the number of professionals needed that will receive a remuneration"
+          v-show="this.formCategory > 0"
         >
+          <b-form-input id="hudgetInput" v-model="formHudget"></b-form-input>
+        </b-form-group>
+        <b-check id="termscheckbox" name="termscheckbox" required>
           <span class="gray">
             <i>
               By clicking the GO! button you declare you read and are aware of
@@ -295,11 +295,12 @@ export default {
       country: this.$store.state.country,
       category: this.$store.state.category,
       totallabel: 0,
-      formAnonymous: 0,
+      formAnonymous: this.$store.state.edit.id &&
+        this.$store.state.cooperation[0].anonymous == 1 ? 1 : 0,
       formNewcountry: null,
       formNewplace: null,
-      formName: this.$store.state.edit.id
-        ? this.$store.state.cooperation[0].name
+      formTitle: this.$store.state.edit.id
+        ? this.$store.state.cooperation[0].title
         : null,
       formCountry: this.$store.state.edit.id
         ? this.$store.state.cooperation[0].country
@@ -323,9 +324,11 @@ export default {
       formCategory: this.$store.state.edit.id
         ? this.$store.state.cooperation[0].category
         : '1',
-      formStateFunding: 2,
+      formMode: this.$store.state.edit.id
+        ? this.$store.state.cooperation[0].mode
+        : 9,
       formBudget: this.$store.state.edit.id
-        ? Math.round(this.$store.state.cooperation[0].budget)
+        ? Math.round(Math.abs(this.$store.state.cooperation[0].budget))
         : 0,
       formHudget: this.$store.state.edit.id
         ? this.$store.state.cooperation[0].hudget
@@ -335,14 +338,14 @@ export default {
         : 0,
       formAttendee: this.$store.state.edit.id
         ? Math.round(
-          this.$store.state.cooperation[0].budget /
+          Math.abs(this.$store.state.cooperation[0].budget) /
           this.$store.state.cooperation[0].collect
         ) || 0
         : 0,
     }
   },
   computed: {
-    nameInputState() {
+    titleInputState() {
       return this.name.length > 4 ? true : false
     },
     cooperationImage() {
@@ -363,27 +366,29 @@ export default {
     },
   },
   mounted() {
-    if (
-      this.$store.state.edit.id &&
-      this.$store.state.cooperation[0].anonymous == 1
-    ) {
-      this.formAnonymous = 1
-    }
-    if (this.$store.state.edit.id && this.$store.state.cooperation[0].state != 2) {
-      this.formStateFunding = 7
-    }
-    if (this.$store.state.edit.id && this.$store.state.cooperation[0].state == 2) {
+    if (this.$store.state.edit.id && this.$store.state.cooperation[0].mode == 20) {
       this.totalfreecooperation()
     }
   },
   methods: {
     totalfreecooperation() {
-      if (this.formStateFunding == 2) {
+      if (this.formMode == 20) {
         this.formBudget = this.formFee * this.formAttendee
       }
     },
+    setMode(category) {
+      this.formBudget = 0
+      this.formFee = 0
+      this.formHudget = 0
+      if (category < 0) {
+        this.formMode = category * -1
+      }//following if happens only with formMode, categories are all < 9
+      if (category > 9) {
+        if (this.formCategory < 0) this.formCategory = 1
+      }
+    },
     async cooperationForm() {
-      if (this.$store.state.cooperation.length >= this.limitauth && this.formStateFunding == 7) {
+      if (this.$store.state.cooperation.length > this.limitauth && this.formMode > 100) {
         return alert('Sorry, Cooperacy allows only ' + this.limitauth + ' funded cooperation per user at this moment.')
       }
       this.editing = true
@@ -395,8 +400,8 @@ export default {
       }
       var formBodyRequest = {
         id: cooperationid,
-        state: this.formStateFunding,
-        name: this.formName,
+        mode: this.formMode,
+        title: this.formTitle,
         country: this.formCountry,
         place: this.formPlace,
         brief: this.formBrief,
@@ -412,6 +417,7 @@ export default {
       if (!this.$store.state.edit.id) {
         formBodyRequest.author = this.$auth.user.id
       }
+      if (this.formMode == 20) { formBodyRequest.budget * -1 }
       let res
       try {
         //vuex action to the database, the 'res'[ponse] variable brings the recently created or edited cooperation >id< from the server..
@@ -429,6 +435,7 @@ export default {
             id: res,
             condition: 'F',
             user: this.$auth.user.id,
+            cooperationtitle: this.formTitle,
             proptype: 'cooperation',
           }
           this.$store.dispatch('addVote', freedomvote)

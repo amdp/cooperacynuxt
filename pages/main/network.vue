@@ -1,5 +1,5 @@
 <template>
-  <div class="page-container">
+  <b-container class="m-0 p-0 pagecontainer">
     <br /><img
       class="page-header"
       src="~/assets/image/page/banners/main/network.png"
@@ -49,7 +49,7 @@
       organisation and want to join our network feel free to
       <nuxt-link to="/contact" class="ai">contact</nuxt-link> us.
     </p>
-  </div>
+  </b-container>
 </template>
 <script>
 export default {

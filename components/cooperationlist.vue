@@ -12,18 +12,18 @@
       fluid
     >
       <h2
-        v-if="cooperationlist[type.name].length > 0"
+        v-if="cooperationlist[type.type].length > 0"
         class="text-center mb-3 up"
       >
         <span class="hb" v-if="$route.path == '/'">RECENT</span>
-        <span class="hb" v-if="!$route.params.id">{{ type.name }}</span>
+        <span class="hb" v-if="!$route.params.id">{{ type.type }}</span>
         <span class="hb" v-if="$route.path == '/user'"
           ><br />
           (YOU AUTHORED OR FOLLOW)
         </span>
       </h2>
       <b-container
-        v-for="cooperation in cooperationlist[type.name]"
+        v-for="cooperation in cooperationlist[type.type]"
         :key="cooperation.id"
         :class="'p-1 mx-auto mb-3 w-100 ' + cooperationbox(cooperation)"
         class="m-0 p-0"
@@ -45,15 +45,15 @@
                 <nuxt-link :to="'/cooperation/' + cooperation.id">
                   <span
                     class="space subheading up"
-                    v-if="type.name == 'cooperations'"
+                    v-if="type.type == 'cooperations'"
                   >
-                    {{ cooperation.name }}
+                    {{ cooperation.title }}
                   </span>
                   <span
                     class="space subheading up o25"
-                    v-if="type.name == 'archived'"
+                    v-if="type.type == 'deactivated'"
                   >
-                    {{ cooperation.name }}
+                    {{ cooperation.title }}
                   </span> </nuxt-link
                 ><br />
                 <small class="mb-2 up t12">
@@ -82,7 +82,7 @@
                     <strong>AFTF: </strong
                     >{{ cooperation.anonymous ? 'ON' : 'OFF' }}
                   </small>
-                  <small v-if="cooperation.state == '2'">
+                  <small v-if="cooperation.mode == 20">
                     <strong>FEE: </strong> {{ Math.round(cooperation.budget) }}
                     <br />
                   </small>
@@ -95,8 +95,8 @@
                 </b-container>
                 <b-container>
                   <small>
-                    {{ category(cooperation.category) }}
-                    <i>{{ state(cooperation.state) }} cooperation</i> in
+                    {{ category(cooperation.category) }} related cooperation
+                    {{ mode(Math.abs(cooperation.mode)) }} -
                     {{ location(cooperation.place) }}
                   </small>
                 </b-container>
@@ -106,39 +106,42 @@
             <b-row class="m-0 p-0 w-100">
               <b-col cols="12">
                 <b-progress
-                  v-if="
-                    (cooperation.state == 7 || cooperation.state == 2) &&
-                    cooperation.budget != 0
-                  "
+                  v-if="cooperation.mode > 9 && cooperation.budget != 0"
                   max="1"
                   class="mt-2"
                 >
                   <b-progress-bar
-                    :value="collected(cooperation) / cooperation.budget"
+                    :value="
+                      collected(cooperation) / Math.abs(cooperation.budget)
+                    "
                     :label="
                       Math.round(
-                        (collected(cooperation) / cooperation.budget) * 100
+                        (collected(cooperation) /
+                          Math.abs(cooperation.budget)) *
+                          100
                       ) + '%'
                     "
-                    :class="'b' + budgetbar(cooperation.state)"
+                    :class="'b' + budgetbar(cooperation.mode)"
                   ></b-progress-bar>
                   <b-progress-bar
                     :value="
                       1 -
-                      Math.round(collected(cooperation) / cooperation.budget)
+                      Math.round(
+                        collected(cooperation) / Math.abs(cooperation.budget)
+                      )
                     "
-                    :class="'they' + budgetbar(cooperation.state) + ' std'"
+                    :class="'they' + budgetbar(cooperation.mode) + ' std'"
                   ></b-progress-bar>
                 </b-progress>
-                <span v-if="cooperation.state == 7 && cooperation.budget != 0">
+                <span v-if="cooperation.mode > 0 && cooperation.budget > 0">
                   BUDGET: €{{ collected(cooperation).toFixed(7) }} of €{{
                     Math.round(cooperation.budget)
                   }}
                   collected
                 </span>
-                <span v-if="cooperation.state == 2 && cooperation.budget != 0">
+                <span v-if="cooperation.mode == 20">
                   BUDGET: €{{ collected(cooperation).toFixed(0) }} of €{{
-                    Math.round(cooperation.budget)
+                    Math.round(cooperation.budget * -1)
                   }}
                   collected
                 </span>
@@ -148,11 +151,7 @@
             <b-row class="m-0 p-0 w-100">
               <b-col cols="12">
                 <b-progress
-                  v-if="
-                    cooperation.category != 4 &&
-                    cooperation.hudget != 0 &&
-                    cooperation.state != 1
-                  "
+                  v-if="cooperation.hudget != 0 && cooperation.mode > 0"
                   max="1"
                   class="mt-2"
                 >
@@ -174,12 +173,7 @@
                     class="theyfreedom"
                   ></b-progress-bar>
                 </b-progress>
-                <span
-                  v-if="
-                    cooperation.category != 4 &&
-                    cooperation.hudget != 0 &&
-                    cooperation.state != 1
-                  "
+                <span v-if="cooperation.hudget != 0 && cooperation.mode > 0"
                   >HUDGET: {{ cooperation.professional }} of
                   {{ cooperation.hudget }} professionals needed</span
                 >
@@ -189,13 +183,13 @@
             <b-row class="m-0 p-2 w-100">
               <b-col cols="12" class="m-0 p-0 w-100 text-center">
                 <b-link v-b-modal.voteinfomodal>
-                  <span v-if="cooperation.state != 1">
+                  <span v-if="cooperation.mode > 9">
                     VOTE FOR THIS COOPERATION (<span class="underline"
                       >INFO</span
                     >):
                   </span>
-                  <span v-if="cooperation.state == 1">
-                    GIVE FEEDBACK FOR THIS COOPERATION (?):
+                  <span v-if="cooperation.mode <= 9">
+                    PROVIDE YOUR FEEDBACK (?):
                   </span>
                 </b-link>
                 <br />
@@ -214,18 +208,20 @@
                   v-if="$auth.user && $route.params.id"
                 >
                   <b-col cols="12" class="m-0 p-0 text-center">
-                    <span v-if="cooperation.state != 1 && $auth.user.role == 1">
-                      <b-link class="ae" @click="archive(cooperation)"
-                        >Archive</b-link
+                    <span v-if="cooperation.mode > 0 && $auth.user.role == 1">
+                      <b-link class="ae" @click="deactivate(cooperation)"
+                        >Deactivate</b-link
                       >&nbsp;
                     </span>
-                    <span v-if="cooperation.state == 1 && $auth.user.role == 1"
-                      ><b-link class="ae" @click="unarchive()">Resume</b-link
+                    <span v-if="cooperation.mode < 0 && $auth.user.role == 1"
+                      ><b-link class="ae" @click="activate()">Resume</b-link
                       >&nbsp;
                     </span>
                     <span
                       v-if="
-                        (cooperation.state == 5 && improfessional) ||
+                        (cooperation.collected > cooperation.budget &&
+                          cooperation.mode >= 101 &&
+                          improfessional) ||
                         $auth.user.role == 1
                       "
                     >
@@ -238,7 +234,7 @@
                     </span>
                     <span
                       v-if="
-                        (cooperation.state != 1 && improfessional) ||
+                        (cooperation.mode > 0 && improfessional) ||
                         $auth.user.role == 1
                       "
                     >
@@ -248,25 +244,11 @@
                     </span>
                     <span
                       v-if="
-                        (cooperation.state != 1 && improfessional) ||
+                        (cooperation.mode > 0 && improfessional) ||
                         $auth.user.role == 1
                       "
                     >
                       <b-link class="au" @click="edit()">Edit</b-link>&nbsp;
-                    </span>
-                    <span
-                      v-if="
-                        (cooperation.budgetstep - cooperation.fundingstep > 1 &&
-                          improfessional) ||
-                        (cooperation.state == 2 &&
-                          cooperation.fundingstep == 6 &&
-                          improfessional) ||
-                        $auth.user.role == 1
-                      "
-                    >
-                      <b-link class="ad" @click="fundingstep(cooperation)"
-                        >Request funding step</b-link
-                      >&nbsp;
                     </span>
                   </b-col>
                 </b-row>
@@ -304,8 +286,8 @@ export default {
       cooperationnum: 7,
       cooperationcounter: 1,
       cooperationTypes: [
-        { id: 1, name: 'cooperations' },
-        { id: 2, name: 'archived' },
+        { id: 1, type: 'cooperations' },
+        { id: 2, type: 'deactivated' },
       ],
       incremental: -1,
       updatesec: 1, //sets how frequently the collected budget is updated
@@ -319,15 +301,15 @@ export default {
           cooperations: this.$store.state.cooperation.filter(
             (cooperation) => cooperation.id == this.$route.params.id
           ),
-          archived: [],
+          deactivated: [],
         }
       } else {
         return {
           cooperations: this.$store.state.cooperation.filter(
-            (cooperation) => cooperation.state != 1
+            (cooperation) => cooperation.mode > 0
           ),
-          archived: this.$store.state.cooperation.filter(
-            (cooperation) => cooperation.state == 1
+          deactivated: this.$store.state.cooperation.filter(
+            (cooperation) => cooperation.mode < 0
           ),
         }
       }
@@ -345,10 +327,10 @@ export default {
         this.incremental++
       }, this.updatesec * 1000)
     },
-    collected(cooperation) {
-      if (cooperation.state == 2) {
+    collected(cooperation) {//if participation mode:
+      if (cooperation.budget < 0) {
         return cooperation.E * cooperation.collect
-      } else {
+      } else {//if funding mode:
         // here we add to cooperation.collect (the amount collected so far) the increment of every second,
         // times the update seconds interval times the % of the cooperation E-votes over the total of the E-votes
         return (
@@ -361,9 +343,9 @@ export default {
         )
       }
     },
-    budgetbar(state) {
+    budgetbar(mode) {
       let color
-      state == 2 ? color = 'trust' : color = 'equivalence'
+      mode == 20 ? color = 'trust' : color = 'equivalence'
       return color
     },
     improfessional() {
@@ -385,11 +367,11 @@ export default {
       }
       return boxclass
     },
-    archive(cooperation) {
+    deactivate(cooperation) {
       this.$store.dispatch('cooperationForm', {
         id: cooperation.id,
-        state: 1,
-        name: cooperation.name,
+        mode: cooperation.mode * -1,
+        title: cooperation.title,
         country: cooperation.country,
         place: cooperation.place,
         brief: cooperation.brief,
@@ -401,7 +383,6 @@ export default {
         collect: cooperation.collect,
         budget: cooperation.budget,
         budgetstep: cooperation.budgetstep,
-        budgetstepdoc: cooperation.budgetstepdoc,
         fundingstep: cooperation.fundingstep,
         professional: cooperation.professional,
         hudget: cooperation.hudget,
@@ -419,34 +400,6 @@ export default {
       })
       return this.$router.push({ path: '/user' })
     },
-    fundingstep(cooperation) {
-      cooperation.fundingstep++
-      let payload = {
-        formName: this.$auth.user.name + ' ' + this.$auth.user.surname,
-        formEmail: this.$auth.user.email,
-        formSubject:
-          'Funding Step #' +
-          cooperation.fundingstep +
-          ' Request Notification from Cooperation #' +
-          cooperation.id +
-          ' ' +
-          cooperation.name,
-        formBody:
-          'In Cooperation #' +
-          cooperation.id +
-          ' ' +
-          cooperation.name +
-          ' comember ' +
-          this.$auth.user.name +
-          ' ' +
-          this.$auth.user.surname +
-          ' has requested Funding Step #"' +
-          cooperation.fundingstep +
-          '".',
-      }
-      this.$store.dispatch('contactEmail', payload)
-      this.$store.dispatch('fundingstep', cooperation)
-    },
     professional() {
       this.store.dispatch('addprofessional', { id: this.formProfessional })
     },
@@ -454,7 +407,7 @@ export default {
       this.$store.dispatch('editSwitch', { id: this.$route.params.id })
       return this.$router.push({ path: '/cooperation/form' })
     },
-    unarchive() {
+    activate() {
       this.$store.dispatch('editSwitch', { id: this.$route.params.id })
       return this.$router.push({ path: '/cooperation/form' })
     },
@@ -469,8 +422,11 @@ export default {
       num < 0 ? (num = 0) : (num = num)
       return num
     },
-    state(id) {
-      return this.$store.state.state.find((state) => state.id == id).name
+    mode(id) {
+      let modeinfo = 'in '
+      if (id < 0) modeinfo += 'inactive '
+      modeinfo += this.$store.state.mode.find((mode) => mode.id == id).name + ' mode'
+      return modeinfo
     },
     category(id) {
       return this.$store.state.category.find((category) => category.id == id)

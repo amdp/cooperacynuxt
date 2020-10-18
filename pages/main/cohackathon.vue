@@ -1,5 +1,5 @@
 <template>
-  <div class="page-container">
+  <b-container class="m-0 p-0 pagecontainer">
     <br /><img
       class="page-header"
       src="~/assets/image/page/banners/main/cohackathon.png"
@@ -62,7 +62,7 @@
         >Open Space Cooperation</nuxt-link
       >. <br /><br /><br />
     </p>
-  </div>
+  </b-container>
 </template>
 <script>
 export default {

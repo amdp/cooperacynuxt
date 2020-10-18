@@ -10,7 +10,7 @@
           label-for="professionalInput"
           description="Add or remove a professional to your cooperation"
         >
-          <span>{{ cooperationprop.name }}</span>
+          <span>{{ cooperationprop.title }}</span>
           <b-form-select id="professionalInput" v-model="formProfessional">
             <option
               v-for="user in userlistprop.filter((user) => user.active == 1)"

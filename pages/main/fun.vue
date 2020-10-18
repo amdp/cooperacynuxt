@@ -1,5 +1,5 @@
 <template>
-  <div class="page-container">
+  <b-container class="m-0 p-0 pagecontainer">
     <br /><img
       class="page-header"
       src="~/assets/image/page/banners/main/fun.png"
@@ -40,8 +40,8 @@
     </p>
 
     <!--BEGIN WHEEL-->
-    <div style="width: 100%; position: relative; text-align: center; ">
-      <div class="rotating" style="position: absolute; z-index: 1;">
+    <div style="width: 100%; position: relative; text-align: center">
+      <div class="rotating" style="position: absolute; z-index: 1">
         <img
           src="~/assets/image/page/fun/pinwheel.png"
           width="330"
@@ -175,7 +175,7 @@
       <nuxt-link to="/main/cooperation" class="au">learning area.</nuxt-link>
     </p>
     <br /><br /><br />
-  </div>
+  </b-container>
 </template>
 <script>
 export default {

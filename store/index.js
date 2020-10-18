@@ -31,36 +31,34 @@ export const state = () => ({
   ],
   cc: ['E', 'T', 'C', 'I', 'F', 'U', 'D'],
   category: [
-    { id: 1, name: 'Funded' },
-    { id: 2, name: 'Fee based' },
-    { id: 3, name: 'Ecosystem' },
-    { id: 4, name: 'Voting' },
-    { id: 5, name: 'Evaluation' },
-    { id: 6, name: 'Science, Edu, Health' },
-    { id: 7, name: 'Not funded' }
-  ],
-  state: [
-    { id: 1, name: 'archived' },
-    { id: 2, name: 'active' },
-    { id: 3, name: 'caring' },
-    { id: 4, name: 'testing' },
-    { id: 5, name: 'approval' },
-    { id: 6, name: 'pairing' },
-    { id: 7, name: 'idea' }
+    { id: 1, name: 'Wealth', desc: 'A generic term to indicate all the activities that may generate wealth for the cooperation participants and for Cooperacy as a whole' },
+    { id: 2, name: 'Coordination', desc: 'A governative cooperation, available only to admins or after a voting has been issued to create one' },
+    { id: 3, name: 'Ecosystem', desc: 'A green border will surround all ecosystem-caring projects!' },
+    { id: 4, name: 'Informative', desc: 'A governative cooperation, for informative support, available only to admins or after a voting has been issued to create one' },
+    { id: 5, name: 'Location', desc: 'A governative cooperation, available to everyone who wants to represent a location like a city or similar' },
+    { id: 6, name: 'Science', desc: 'A cooperation related to Research, Science, Health that may be subject to scientific verification' },
+    { id: 7, name: 'Creativity', desc: 'A cooperation related to Art, Music, Games, Fun, Sports, Entertainment and the like' },
+    { id: -1, name: 'Evaluation Mode', desc: 'A cooperation just to experiment evaluations with the seven dimensions, available also to non-coo-members' },
+    { id: -4, name: 'Voting Mode', desc: 'A governative cooperation, available to everyone to issue a voting evaluation. Remember to choose the right "parent" above if you want your vote to be relative to a specific cooperation' }
   ],
   role: [
     { id: 0, name: 'user' },
     { id: 1, name: 'admin' },
     { id: 2, name: 'reporter' }
   ],
-  budgetstep: [
-    { id: 1, name: 'business plan', percentage: '0,03' },
-    { id: 2, name: 'human resources', percentage: '0,1' },
-    { id: 3, name: 'setup', percentage: '0,12' },
-    { id: 4, name: 'production', percentage: '0,5' },
-    { id: 5, name: 'kick off', percentage: '0,12' },
-    { id: 6, name: 'fine tuning', percentage: '0,1' },
-    { id: 7, name: 'celebrate', percentage: '0,03' }
+  mode: [
+    { id: 1, name: 'evaluation', percentage: '0', incremental: '0' },
+    { id: 4, name: 'voting', percentage: '0', incremental: '0' },
+    { id: 9, name: 'free', percentage: '0', incremental: '0' },
+    { id: 20, name: 'participation', percentage: '100', incremental: '100' },
+    { id: 101, name: 'collecting and business plan', percentage: '3', incremental: '3' },
+    { id: 102, name: 'funding human resources', percentage: '10', incremental: '13' },
+    { id: 103, name: 'funding setup', percentage: '12', incremental: '25' },
+    { id: 104, name: 'funding production', percentage: '5', incremental: '75' },
+    { id: 105, name: 'funding kick off', percentage: '12', incremental: '87' },
+    { id: 106, name: 'funding fine tuning', percentage: '10', incremental: '97' },
+    { id: 107, name: 'funding celebrate', percentage: '3', incremental: '1' },
+    { id: 108, name: 'funded', percentage: '0', incremental: '0' },
   ]
 })
 
@@ -233,9 +231,9 @@ export const actions = {
     )
     return data
   },
-  budgetstepdoc: async function (context, payload) {
+  budgetstep: async function (context, payload) {
     let { data } = await this.$axios.post(
-      process.env.DBURL + '/budgetstepdoc',
+      process.env.DBURL + '/budgetstep',
       payload
     )
     return data
@@ -348,6 +346,10 @@ export const actions = {
   getSurvey: async function (context, payload) {
     let { data } = await this.$axios.get(process.env.DBURL + '/survey', { params: payload })
     context.commit('setSurvey', data)
+  },
+  budgetcheck: async function () {
+    this.$axios.post(process.env.DBURL + '/budgetcheck')
+    return 'OK'
   },
   //Admin stuff here: be careful
   resetVoting: async function () {

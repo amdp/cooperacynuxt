@@ -16,17 +16,19 @@
 </template>
 
 <script>
+import Cookie from '~/assets/gdpr/cookie.js'
 export default {
   head() {
     return {
       script: [
-        { src: '/gdpr/cookies.js', type: 'text/javascript' },
+        //{ src: '~assets/gdpr/cookies.js', type: 'text/javascript' },
         { src: '/gdpr/ga.js', type: 'text/javascript', 'data-starcookie': 'statistics' },
         //{ src: '/gdpr/linkedin.js', type: 'text/plain', 'data-starcookie': 'statistics' },
       ],
     }
   },
-  created() {
+  components: { Cookie },
+  mounted() {
     this.$colorMode.preference = 'light'
   },
 }

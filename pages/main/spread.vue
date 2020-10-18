@@ -1,12 +1,12 @@
 
 <template>
-  <div class="page-container">
+  <b-container class="m-0 p-0 pagecontainer">
     <br /><img
       class="page-header"
       src="~/assets/image/page/banners/main/spread.png"
     />
 
-    <p class="base" style="margin-right: auto;">
+    <p class="base" style="margin-right: auto">
       Let's spread together cooperation and ecosystemic thinking!<br />
     </p>
     <p class="subheading equivalence center space margin">PRACTICE</p>
@@ -50,7 +50,7 @@
       gathering committed people with which to spread cooperation and enjoy
       doing things together!
     </p>
-  </div>
+  </b-container>
 </template>
 <script>
 export default {

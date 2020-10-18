@@ -1,5 +1,5 @@
 <template>
-  <div class="page-container">
+  <b-container class="m-0 p-0 pagecontainer">
     <br /><img
       class="page-header"
       src="~/assets/image/page/banners/main/research.png"
@@ -31,7 +31,7 @@
       developed by Alessandro Merletti De Palo based on an extensive literature
       review about Cooperation and its many different frameworks.<br /><br />
       The model, based on interdisciplinary systemic
-      <nuxt-link to="/main/coscience" class="au">approach</nuxt-link>, was
+      <nuxt-link to="/main/cooscience" class="au">approach</nuxt-link>, was
       confirmed by the investigations results, and the subsequent paper was
       accepted at the M.I.T. 2015
       <a href="http://cci.mit.edu/" class="au">Collective Intelligence</a>
@@ -90,7 +90,7 @@
       <nuxt-link to="/main/streams" class="au">research streams</nuxt-link> or
       academic <nuxt-link to="/main/network" class="au">network</nuxt-link>.
     </p>
-  </div>
+  </b-container>
 </template>
 <script>
 export default {

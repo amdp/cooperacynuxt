@@ -3,14 +3,12 @@
     <b-modal :id="pmodal" hide-footer title="Are you sure?" hide-header-close>
       <p class="my-4">
         Warning! This is a downvote to declare hidden information, corruption,
-        cheating or spamming. The cooperation may go into a "pairing" state
-        where the participants discuss. After 90 days of pairing, if nothing
-        happens the idea may be split or removed and in case part of the budget
-        is turned back to the money pool. Transparency voters are never
-        anonymous.
+        cheating or spamming. After 90 days of discussion, if nothing happens
+        the idea may be split or removed and in case part of the budget is
+        turned back to the money pool. Transparency voters are never anonymous.
         <br /><br />
         Are you sure you want to report a transparency infringement for the
-        cooperation "{{ cooperationprop.name }}"?
+        cooperation "{{ cooperationprop.title }}"?
       </p>
       <b-form @submit.prevent="voteswitchmodal('I')">
         <b-form-group
@@ -55,8 +53,8 @@ export default {
       let payload = {
         formName: this.$auth.user.name + ' ' + this.$auth.user.surname,
         formEmail: this.$auth.user.email,
-        formSubject: 'Transparency Infringement Notification from Cooperation #' + this.cooperationprop.id + ' ' + this.cooperationprop.name,
-        formBody: 'In the Cooperation #' + this.cooperationprop.id + ' ' + this.cooperationprop.name + ' comember ' + this.$auth.user.name + ' ' + this.$auth.user.surname + ' has described this Transparency Infringement: "' + this.formTmessage + '".'
+        formSubject: 'Transparency Infringement Notification from Cooperation #' + this.cooperationprop.id + ' ' + this.cooperationprop.title,
+        formBody: 'In the Cooperation #' + this.cooperationprop.id + ' ' + this.cooperationprop.title + ' comember ' + this.$auth.user.name + ' ' + this.$auth.user.surname + ' has described this Transparency Infringement: "' + this.formTmessage + '".'
       }
       this.$store.dispatch('contactEmail', payload)
 
@@ -72,11 +70,12 @@ export default {
       // SERVER-SIDE: prepares and sends async REST call (either comment or cooperation)
       let request = {
         id: this.cooperationprop.id,
+        cooperationtitle: this.cooperationprop.title,
         condition: cc,
         user: this.$auth.user.id,
         proptype: 'cooperation',
         category: this.cooperationprop.category,
-        state: this.cooperationprop.state
+        mode: this.cooperationprop.mode
       }
       this.$store.dispatch('addVote', request).catch(err => {
         console.error(err)

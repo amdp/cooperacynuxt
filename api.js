@@ -24,10 +24,20 @@ const pool = mysql.createPool({
 })
 const mypool = pool.promise()
 
+var evaluation = 1
+var voting = 4
+var active = 9 //should be higher in value than deactivated, voting and evaluation
+var participation = 20
+var funding = 101
+var btrust = funding + 1
+var bunderstanding = funding + 5
+var fundinglaststep = 108
+
+
 /////// GET ///////
 
 app.get('/cooperation', async function (req, res, next) {
-  //USE DIRECT DATABASE QUERY FOR EVERYTHING THAT IS USELESS TO FILTER IN FRONTEND,
+  //USE DIRECT DATABASE QUERIES FOR EVERYTHING THAT IS USELESS TO FILTER IN FRONTEND,
   //LIKE COOPERATIONS LIST FOR USER DASHBOARD OR SINGLE COOPERATION
   //FILTER THE REST IN FRONTEND UNTIL THE DATABASE GETS TOO LONG TO LOAD
 
@@ -35,13 +45,13 @@ app.get('/cooperation', async function (req, res, next) {
   if (req.query.search) {
     try {
       let query = 'SELECT `cooperation`.*, `tag`.`cooperation`, ' +
-        '(MATCH (`cooperation`.`name`,`cooperation`.`brief`,`cooperation`.`content`) ' +
+        '(MATCH (`cooperation`.`title`,`cooperation`.`brief`,`cooperation`.`content`) ' +
         'AGAINST (\'' + req.query.search + '\' IN NATURAL LANGUAGE MODE WITH QUERY EXPANSION) + ' +
         'MATCH (`tag`.`name`)' +
         'AGAINST (\'' + req.query.search + '\' IN NATURAL LANGUAGE MODE WITH QUERY EXPANSION)) ' +
         'AS score FROM `cooperation` ' +
         'LEFT JOIN `tag` on `cooperation`.`id` = `tag`.`cooperation` WHERE ' +
-        'MATCH (`cooperation`.`name`,`cooperation`.`brief`,`cooperation`.`content`) ' +
+        'MATCH (`cooperation`.`title`,`cooperation`.`brief`,`cooperation`.`content`) ' +
         'AGAINST (\'' + req.query.search + '\' IN NATURAL LANGUAGE MODE WITH QUERY EXPANSION) ' +
         'OR MATCH (`tag`.`name`) ' +
         'AGAINST (\'' + req.query.search + '\' IN NATURAL LANGUAGE MODE WITH QUERY EXPANSION) ' +
@@ -67,8 +77,8 @@ app.get('/cooperation', async function (req, res, next) {
   //NON-SEARCH
   try {
     if (req.query.author) {//!used to control the number of funded cooperation of an author!
-      let query = 'SELECT * FROM `cooperation` WHERE `state`=? and `budget`>? and `author`=? ORDER BY C DESC LIMIT ?'
-      let param = [7, 0, req.query.author, req.query.limitauth]
+      let query = 'SELECT * FROM `cooperation` WHERE `mode`>=? and `budget`>? and `author`=? ORDER BY C DESC LIMIT ?'
+      let param = [funding, 0, req.query.author, req.query.limitauth]
       const [cooperation] = await mypool.execute(query, param)
       res.status(200).send(cooperation)
     } else if (req.query.cooperationid) {//SINGLE cooperation
@@ -76,20 +86,22 @@ app.get('/cooperation', async function (req, res, next) {
       param = [req.query.cooperationid]
       const [cooperation] = await mypool.execute(query, param)
       res.status(200).send(cooperation)
-    } else if (req.query.limit) {
-      let query = 'SELECT * FROM `cooperation` WHERE `cooperation`.`state`<>1 ORDER BY `C` DESC LIMIT ?'
-      param = [req.query.limit]
+    } else if (req.query.limit) {//non-evaluation or deactivated cooperations
+      let query = 'SELECT * FROM `cooperation` WHERE `cooperation`.`mode`>=? ORDER BY `C` DESC LIMIT ?'
+      param = [active, req.query.limit]
       const [cooperation] = await mypool.execute(query, param)
       res.status(200).send(cooperation)
     } else if (req.query.cooperationtool) {// selecting cooperation in cooperationtool table
       let query = 'SELECT `cooperationtool`.`id` as coosurveyid, `cooperation`.* FROM `cooperation`' +
         'RIGHT JOIN `cooperationtool` ON `cooperation`.`id` = `cooperationtool`.`cooperation`' +
-        'WHERE `cooperation`.`state`<>1 ORDER BY `id` DESC'
-      const [cooperation] = await mypool.execute(query)
+        'WHERE `cooperation`.`mode`>=? ORDER BY `id` DESC'
+      param = [active]
+      const [cooperation] = await mypool.execute(query, param)
       res.status(200).send(cooperation)
-    } else {// selecting non-archived cooperation from dropdown
-      let query = 'SELECT * FROM `cooperation` WHERE `cooperation`.`state`<>1 ORDER BY `id` DESC'
-      const [cooperation] = await mypool.execute(query)
+    } else {// selecting non-deactivated cooperation from dropdown
+      let query = 'SELECT * FROM `cooperation` WHERE `cooperation`.`mode`>=? ORDER BY `id` DESC'
+      param = [active]
+      const [cooperation] = await mypool.execute(query, param)
       res.status(200).send(cooperation)
     }
   } catch (err) {
@@ -114,11 +126,13 @@ app.get('/comment', async function (req, res, next) {
 app.get('/fundingvar', async function (req, res, next) {
   let fundingvar = {}
   try {
-    let query = 'SELECT SUM(`E`) as `totalE` FROM `cooperation`'
-    const [result1] = await mypool.execute(query)
+    let query = 'SELECT SUM(`E`) as `totalE` FROM `cooperation` WHERE `mode`>=? and `collect`<`budget`'
+    param = [funding]
+    const [result1] = await mypool.execute(query, param)
     fundingvar.totalE = result1[0].totalE
-    query = 'SELECT COUNT(`user`.`active`) as `totaluser` from `user` where `user`.`active` = 1'
-    const [result2] = await mypool.execute(query)
+    query = 'SELECT COUNT(`user`.`active`) as `totaluser` from `user` where `user`.`active` = ?'
+    param = [1]
+    const [result2] = await mypool.execute(query, param)
     fundingvar.totaluser = result2[0].totaluser
     query = 'SELECT SUM(`user`.`active`*`user`.`fee`) as `totalfee` from `user`'
     const [result3] = await mypool.execute(query)
@@ -254,7 +268,7 @@ app.get('/news', async function (req, res, next) {
 app.get('/survey', async function (req, res, next) {
   if (!req.query.id) {
     try {
-      let query = 'SELECT `surveyid`, `group`, `country`, `place`, `participant`,`name`, `desc` FROM `cooperationtool` WHERE `cooperation` IS NULL GROUP BY `surveyid`, `group`, `country`, `place`, `participant`,`name`, `desc` ORDER BY `surveyid`'
+      let query = 'SELECT `surveyid`, `group`, `country`, `place`, `participant`,`title`, `desc` FROM `cooperationtool` WHERE `cooperation` IS NULL GROUP BY `surveyid`, `group`, `country`, `place`, `participant`,`title`, `desc` ORDER BY `surveyid`'
       const [survey] = await mypool.execute(query)
       res.status(200).send(survey)
     } catch (err) {
@@ -277,7 +291,7 @@ app.get('/survey', async function (req, res, next) {
       let parallel
       if (currentsurvey.cooperation) {//this is for survey about Cooperacy cooperations
         //in an if, keep query and param out of the "try"
-        let query = 'SELECT COUNT(`id`) as surveynum,`surveyid`,`group`,`country`,`place`,AVG(`month`) AS month,`participant`,`name`,`desc`,AVG(`MBD`) AS MBD,AVG(`BD`) AS BD,AVG(`MRD`) AS MRD,AVG(`RD`) AS RD,AVG(`MBU`) AS MBU,AVG(`BU`) AS BU,AVG(`MRU`) AS MRU,AVG(`RU`) AS RU,AVG(`MBF`) AS MBF,AVG(`BF`) AS BF,AVG(`MRF`) AS MRF,AVG(`RF`) AS RF,AVG(`MBI`) AS MBI,AVG(`BI`) AS BI,AVG(`MRI`) AS MRI,AVG(`RI`) AS RI,AVG(`MBC`) AS MBC,AVG(`BC`) AS BC,AVG(`MRC`) AS MRC,AVG(`RC`) AS RC,AVG(`MBX`) AS MBX,AVG(`BX`) AS BX,AVG(`MRX`) AS MRX,AVG(`RX`) AS RX,AVG(`MBH`) AS MBH,AVG(`BH`) AS BH,AVG(`MRH`) AS MRH,AVG(`RH`) AS RH,AVG(`MBT`) AS MBT,AVG(`BT`) AS BT,AVG(`MRT`) AS MRT,AVG(`RT`) AS RT,AVG(`MBE`) AS MBE,AVG(`BE`) AS BE,AVG(`MRE`) AS MRE,AVG(`RE`) AS RE,AVG(`P`) AS P,GROUP_CONCAT(`PText`) AS PText,AVG(`PD`) AS PD,GROUP_CONCAT(`PDText`) AS PDText,AVG(`PU`) AS PU,GROUP_CONCAT(`PUText`) AS PUText,AVG(`PF`) AS PF,GROUP_CONCAT(`PFText`) AS PFText,AVG(`PI`) AS PI,GROUP_CONCAT(`PIText`) AS PIText,AVG(`PC`) AS PC,GROUP_CONCAT(`PCText`) AS PCText,AVG(`PT`) AS PT,GROUP_CONCAT(`PTText`) AS PTText,AVG(`PE`) AS PE,GROUP_CONCAT(`PEText`) AS PEText,AVG(`PFinal`) AS PFinal,GROUP_CONCAT(`PFinalText`) AS PFinalText  from `cooperationtool` WHERE `cooperation` = ? GROUP BY `surveyid`,`cooperation`,`group`,`country`,`place`,`participant`,`name`,`desc`'
+        let query = 'SELECT COUNT(`id`) as surveynum,`surveyid`,`group`,`country`,`place`,AVG(`month`) AS month,`participant`,`title`,`desc`,AVG(`MBD`) AS MBD,AVG(`BD`) AS BD,AVG(`MRD`) AS MRD,AVG(`RD`) AS RD,AVG(`MBU`) AS MBU,AVG(`BU`) AS BU,AVG(`MRU`) AS MRU,AVG(`RU`) AS RU,AVG(`MBF`) AS MBF,AVG(`BF`) AS BF,AVG(`MRF`) AS MRF,AVG(`RF`) AS RF,AVG(`MBI`) AS MBI,AVG(`BI`) AS BI,AVG(`MRI`) AS MRI,AVG(`RI`) AS RI,AVG(`MBC`) AS MBC,AVG(`BC`) AS BC,AVG(`MRC`) AS MRC,AVG(`RC`) AS RC,AVG(`MBX`) AS MBX,AVG(`BX`) AS BX,AVG(`MRX`) AS MRX,AVG(`RX`) AS RX,AVG(`MBH`) AS MBH,AVG(`BH`) AS BH,AVG(`MRH`) AS MRH,AVG(`RH`) AS RH,AVG(`MBT`) AS MBT,AVG(`BT`) AS BT,AVG(`MRT`) AS MRT,AVG(`RT`) AS RT,AVG(`MBE`) AS MBE,AVG(`BE`) AS BE,AVG(`MRE`) AS MRE,AVG(`RE`) AS RE,AVG(`P`) AS P,GROUP_CONCAT(`PText`) AS PText,AVG(`PD`) AS PD,GROUP_CONCAT(`PDText`) AS PDText,AVG(`PU`) AS PU,GROUP_CONCAT(`PUText`) AS PUText,AVG(`PF`) AS PF,GROUP_CONCAT(`PFText`) AS PFText,AVG(`PI`) AS PI,GROUP_CONCAT(`PIText`) AS PIText,AVG(`PC`) AS PC,GROUP_CONCAT(`PCText`) AS PCText,AVG(`PT`) AS PT,GROUP_CONCAT(`PTText`) AS PTText,AVG(`PE`) AS PE,GROUP_CONCAT(`PEText`) AS PEText,AVG(`PFinal`) AS PFinal,GROUP_CONCAT(`PFinalText`) AS PFinalText  from `cooperationtool` WHERE `cooperation` = ? GROUP BY `surveyid`,`cooperation`,`group`,`country`,`place`,`participant`,`title`,`desc`'
         let param = [currentsurvey.cooperation]
         try {
           [parallel] = await mypool.execute(query, param)
@@ -286,7 +300,7 @@ app.get('/survey', async function (req, res, next) {
         }
       } else {//this is for survey about generic groups
         //in an if, keep query and param out of the "try"
-        query = 'SELECT COUNT(`id`) as surveynum,`surveyid`,`group`,`country`,`place`,AVG(`month`) AS month,`participant`,`name`,`desc`,AVG(`MBD`) AS MBD,AVG(`BD`) AS BD,AVG(`MRD`) AS MRD,AVG(`RD`) AS RD,AVG(`MBU`) AS MBU,AVG(`BU`) AS BU,AVG(`MRU`) AS MRU,AVG(`RU`) AS RU,AVG(`MBF`) AS MBF,AVG(`BF`) AS BF,AVG(`MRF`) AS MRF,AVG(`RF`) AS RF,AVG(`MBI`) AS MBI,AVG(`BI`) AS BI,AVG(`MRI`) AS MRI,AVG(`RI`) AS RI,AVG(`MBC`) AS MBC,AVG(`BC`) AS BC,AVG(`MRC`) AS MRC,AVG(`RC`) AS RC,AVG(`MBX`) AS MBX,AVG(`BX`) AS BX,AVG(`MRX`) AS MRX,AVG(`RX`) AS RX,AVG(`MBH`) AS MBH,AVG(`BH`) AS BH,AVG(`MRH`) AS MRH,AVG(`RH`) AS RH,AVG(`MBT`) AS MBT,AVG(`BT`) AS BT,AVG(`MRT`) AS MRT,AVG(`RT`) AS RT,AVG(`MBE`) AS MBE,AVG(`BE`) AS BE,AVG(`MRE`) AS MRE,AVG(`RE`) AS RE,AVG(`P`) AS P,GROUP_CONCAT(`PText`) AS PText,AVG(`PD`) AS PD,GROUP_CONCAT(`PDText`) AS PDText,AVG(`PU`) AS PU,GROUP_CONCAT(`PUText`) AS PUText,AVG(`PF`) AS PF,GROUP_CONCAT(`PFText`) AS PFText,AVG(`PI`) AS PI,GROUP_CONCAT(`PIText`) AS PIText,AVG(`PC`) AS PC,GROUP_CONCAT(`PCText`) AS PCText,AVG(`PT`) AS PT,GROUP_CONCAT(`PTText`) AS PTText,AVG(`PE`) AS PE,GROUP_CONCAT(`PEText`) AS PEText,AVG(`PFinal`) AS PFinal,GROUP_CONCAT(`PFinalText`) AS PFinalText from `cooperationtool` WHERE `surveyid` = ? GROUP BY `surveyid`,`cooperation`,`group`,`country`,`place`,`participant`,`name`,`desc`'
+        query = 'SELECT COUNT(`id`) as surveynum,`surveyid`,`group`,`country`,`place`,AVG(`month`) AS month,`participant`,`title`,`desc`,AVG(`MBD`) AS MBD,AVG(`BD`) AS BD,AVG(`MRD`) AS MRD,AVG(`RD`) AS RD,AVG(`MBU`) AS MBU,AVG(`BU`) AS BU,AVG(`MRU`) AS MRU,AVG(`RU`) AS RU,AVG(`MBF`) AS MBF,AVG(`BF`) AS BF,AVG(`MRF`) AS MRF,AVG(`RF`) AS RF,AVG(`MBI`) AS MBI,AVG(`BI`) AS BI,AVG(`MRI`) AS MRI,AVG(`RI`) AS RI,AVG(`MBC`) AS MBC,AVG(`BC`) AS BC,AVG(`MRC`) AS MRC,AVG(`RC`) AS RC,AVG(`MBX`) AS MBX,AVG(`BX`) AS BX,AVG(`MRX`) AS MRX,AVG(`RX`) AS RX,AVG(`MBH`) AS MBH,AVG(`BH`) AS BH,AVG(`MRH`) AS MRH,AVG(`RH`) AS RH,AVG(`MBT`) AS MBT,AVG(`BT`) AS BT,AVG(`MRT`) AS MRT,AVG(`RT`) AS RT,AVG(`MBE`) AS MBE,AVG(`BE`) AS BE,AVG(`MRE`) AS MRE,AVG(`RE`) AS RE,AVG(`P`) AS P,GROUP_CONCAT(`PText`) AS PText,AVG(`PD`) AS PD,GROUP_CONCAT(`PDText`) AS PDText,AVG(`PU`) AS PU,GROUP_CONCAT(`PUText`) AS PUText,AVG(`PF`) AS PF,GROUP_CONCAT(`PFText`) AS PFText,AVG(`PI`) AS PI,GROUP_CONCAT(`PIText`) AS PIText,AVG(`PC`) AS PC,GROUP_CONCAT(`PCText`) AS PCText,AVG(`PT`) AS PT,GROUP_CONCAT(`PTText`) AS PTText,AVG(`PE`) AS PE,GROUP_CONCAT(`PEText`) AS PEText,AVG(`PFinal`) AS PFinal,GROUP_CONCAT(`PFinalText`) AS PFinalText from `cooperationtool` WHERE `surveyid` = ? GROUP BY `surveyid`,`cooperation`,`group`,`country`,`place`,`participant`,`title`,`desc`'
         param = [currentsurvey.surveyid]
         try {
           [parallel] = await mypool.execute(query, param)
@@ -605,9 +619,9 @@ app.post('/place', async function (req, res, next) {
 
 app.post('/cooperation', async function (req, res, next) {
   let param = [
-    req.body.state,
+    req.body.mode,
     req.body.category,
-    req.body.name,
+    req.body.title,
     req.body.country,
     req.body.place,
     req.body.brief,
@@ -621,9 +635,9 @@ app.post('/cooperation', async function (req, res, next) {
   ]
   if (req.body.id == 'new') {
     try {
-      let query = 'SELECT * FROM `cooperation` WHERE `cooperation`.`name`= ? LIMIT 1'
-      let cooperationname = [req.body.name]
-      const [cooperation] = await mypool.execute(query, cooperationname)
+      let query = 'SELECT * FROM `cooperation` WHERE `cooperation`.`title`= ? LIMIT 1'
+      let cooperationtitle = [req.body.title]
+      const [cooperation] = await mypool.execute(query, cooperationtitle)
       if (cooperation[0]) {
         res.status(200).send('exists')
       } else {
@@ -633,11 +647,8 @@ app.post('/cooperation', async function (req, res, next) {
       next(err)
     }
   } else {
-    if (req.body.state == 1) { //if we archive, we need to copy the state of the cooperation before archiviation
+    if (req.body.mode < 0) { //if we deactivate, we need to copy the state of the cooperation before archiviation
       param.push( //we already pushed req.body.id
-        req.body.budgetstep,
-        req.body.budgetstepdoc,
-        req.body.fundingstep,
         req.body.professional,
         req.body.E,
         req.body.T,
@@ -648,13 +659,13 @@ app.post('/cooperation', async function (req, res, next) {
         req.body.D,
         req.body.created
       )
-      let query = 'INSERT INTO `cooperationregistry` (`state`,`category`,`name`,`country`,`place`,`brief`,`content`,`video`,`anonymous`,`parent`,`collect`,`budget`,`hudget`,`cooperationid`,`budgetstep`,`budgetstepdoc`,`fundingstep`,`professional`,`E`, `T`, `C`, `I`, `F`, `U`, `D`,`created`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
+      let query = 'INSERT INTO `cooperationregistry` (`mode`,`category`,`title`,`country`,`place`,`brief`,`content`,`video`,`anonymous`,`parent`,`collect`,`budget`,`hudget`,`cooperationid`,`professional`,`E`, `T`, `C`, `I`, `F`, `U`, `D`,`created`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
       await mypool.execute(query, param)
     }
     try {
       param.push(req.body.id)
       let query =
-        'UPDATE `cooperation` SET `state`=?,`category`=?,`name`=?,`country`=?,`place`=?,`brief`=?,`content`=?,`video`=?,`anonymous`=?,`parent`=?,`collect`=?,`budget`=?,`hudget`=? WHERE `cooperation`.`id`=?'
+        'UPDATE `cooperation` SET `mode`=?,`category`=?,`title`=?,`country`=?,`place`=?,`brief`=?,`content`=?,`video`=?,`anonymous`=?,`parent`=?,`collect`=?,`budget`=?,`hudget`=? WHERE `cooperation`.`id`=?'
       await mypool.execute(query, param)
     } catch (err) {
       next(err)
@@ -665,7 +676,7 @@ app.post('/cooperation', async function (req, res, next) {
     try {
       param.unshift(req.body.author)
       let query =
-        'INSERT INTO `cooperation` (`author`,`state`,`category`,`name`,`country`,`place`,`brief`,`content`,`video`,`anonymous`,`parent`,`collect`,`budget`,`hudget`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
+        'INSERT INTO `cooperation` (`author`,`mode`,`category`,`title`,`country`,`place`,`brief`,`content`,`video`,`anonymous`,`parent`,`collect`,`budget`,`hudget`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
       const [cooperation] = await mypool.execute(query, param)
       res.status(200).send({ id: cooperation.insertId })
     } catch (err) {
@@ -686,6 +697,7 @@ app.post('/comment', async function (req, res, next) {
         req.body.content
       ]
       const [comment] = await mypool.execute(query, param)
+      notifycomment(req.body.cooperation)
       returncomment(comment)
     } catch (err) {
       next(err)
@@ -730,6 +742,53 @@ app.post('/comment', async function (req, res, next) {
       next(err)
     }
   }
+  async function notifycomment(id) {
+    let notifylist // we create a list of users that currently F-voted the cooperation
+    try {
+      let query =
+        'SELECT `cooperationvote`.`user`, `cooperationvote`.`cooperation`, `cooperationvote`.`cooperationtitle`,' +
+        ' `cooperationvote`.`condition`, `user`.`name`, `user`.`surname`, `user`.`email` FROM `cooperationvote`' +
+        ' LEFT JOIN `user` ON `cooperationvote`.`user` = `user`.`id`' +
+        ' WHERE `cooperationvote`.`cooperation` = ? and `cooperationvote`.`condition` = ?'
+      let param = [id, 'F']
+      const [list] = await mypool.execute(query, param)
+      notifylist = list
+    } catch (err) {
+      next(err)
+    }
+    for (let i = 0; i < notifylist.length; i++) {
+      try {
+        let transporter = nodemailer.createTransport({
+          host: 'smtp.gmail.com',
+          port: 465,
+          secure: true,
+          auth: {
+            user: process.env.MAILUSER,
+            pass: process.env.MAILPASSWORD
+          }
+        })
+        let mailOptions = {
+          from: '"Cooperacy Website" <websitemails@cooperacy.org>',
+          to: notifylist[i].email,
+          subject: 'Notification from Cooperacy',
+          html: 'Hello, ' + notifylist[i].name + ' ' + notifylist[i].surname + '!<br /><br />' +
+            'You have a new notification relative to the cooperation "' +
+            notifylist[i].cooperationtitle + '" that you are following: there is a new comment. <a href="https://cooperacy.org/cooperation/' +
+            notifylist[i].cooperation + '">Have a look</a> or read the comment here:<br />' +
+            req.body.message + '<br /><br /><br />'
+        }
+        transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+            return console.error(error)
+          }
+          console.log('Message %s sent: %s', info.messageId, info.response)
+          res.render('index')
+        })
+      } catch (err) {
+        next(err)
+      }
+    }
+  }
 })
 
 app.post('/notification', async function (req, res, next) {
@@ -769,10 +828,9 @@ app.post('/notification', async function (req, res, next) {
         to: user.email,
         subject: 'Notification from Cooperacy',
         html: 'Hello, ' + user.name + '<br /><br />' + 'you have a new notification relative to the cooperation ' +
-          req.body.cooperation + ', click on this link to have a look: <br />' +
-          '<a href="https://cooperacy.org/cooperation/' + req.body.cooperation + '">Link to the comment</a><br />' +
-          'This is the relative comment:<br>' + req.body.message +
-          '<br /><br /><br />'
+          req.body.cooperation + ': someone tagged you. <a href="https://cooperacy.org/cooperation/' +
+          req.body.cooperation + '">Have a look</a> or read the comment here:<br />' +
+          req.body.message + '<br /><br /><br />'
       }
       transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
@@ -826,8 +884,8 @@ app.post('/user', async function (req, res, next) {
         res.status(200).send({ id: useradded.insertId })
         try {
           let queryA =
-            'INSERT INTO `cooperationvote` (`user`,`cooperation`,`condition`) VALUES (?,?,?)'
-          let paramA = [useradded.insertId, '700', 'F'] //700 is the annoucements cooperation id
+            'INSERT INTO `cooperationvote` (`user`,`cooperation`,`cooperationtitle`,`condition`) VALUES (?,?,?,?)'
+          let paramA = [useradded.insertId, '700', 'Announcements', 'F'] //700 is the Annoucements cooperation id
           mypool.execute(queryA, paramA)
         } catch (err) {
           next(err)
@@ -991,77 +1049,167 @@ app.get('/map', async function (req, res, next) {
   }
 })
 
-app.post('/budgetstepdoc', async function (req, res, next) {
-  try {// updates the cooperation link to the budget step document
-    let query = 'UPDATE `cooperation` SET `budgetstepdoc` = ? WHERE `id` = ?'
-    let param = [req.body.doc, req.body.cooperation.id]
-    await mypool.execute(query, param)
-  } catch (err) {
-    next(err)
-  }
-  try {// creates new record in the cooperation registry with the budget step document link
-    let query = 'INSERT INTO `cooperationregistry` (`cooperationid`,`state`,`category`,`name`,`country`,`place`,`brief`,`content`,`video`,`anonymous`,`parent`,`collect`,`budget`,`budgetstep`,`fundingstep`,`professional`,`hudget`,`E`, `T`, `C`, `I`, `F`, `U`, `D`,`created`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
-    let param = [req.body.cooperation.id, req.body.cooperation.state, req.body.cooperation.category, req.body.cooperation.name, req.body.cooperation.country, req.body.cooperation.place, req.body.cooperation.brief, cooperation.content, req.body.cooperation.video, req.body.cooperation.anonymous, req.body.cooperation.parent, req.body.cooperation.collect, req.body.cooperation.budget, req.body.cooperation.budgetstep, req.body.cooperation.fundingstep, req.body.cooperation.professional, req.body.cooperation.hudget, req.body.cooperation.E, req.body.cooperation.T, req.body.cooperation.C, req.body.cooperation.I, req.body.cooperation.F, req.body.cooperation.U, req.body.cooperation.D, req.body.cooperation.created]
-    await mypool.execute(query, param)
-  } catch (err) {
-    next(err)
-  }
-  if ((req.body.cooperation.budgetstep == 2 && req.body.cooperation.T >= req.body.cooperation.E * 0.7)
-    || (req.body.cooperation.budgetstep == 3 && req.body.cooperation.U >= req.body.cooperation.E * 0.7)) {
-    try {// applies trust/uderstandingvotes rule, moves 1 budget step further, creates a new record in the registry
-      let query = 'UPDATE `cooperation` SET `budgetstep` = `budgetstep` + 1 where `id`=?;'
-        + 'INSERT INTO `cooperationregistry`(`cooperationid`,`state`,`category`,`name`,`country`,`place`,`brief`,`content`,'
-        + '`video`,`anonymous`,`parent`,`collect`,`budget`,`budgetstep`,`fundingstep`,`professional`,`hudget`,'
-        + '`E`, `T`, `C`, `I`,`F`, `U`, `D`,`created`) SELECT `id`,`state`,`category`,`name`,`country`,`place`,`brief`,`content`,'
-        + '`video`,`anonymous`,`parent`,`collect`,`budget`,`budgetstep`,`fundingstep`,`professional`,`hudget`,'
-        + '`E`, `T`, `C`, `I`,`F`, `U`, `D`,`created` from `cooperation` where `id`=?;'
-      let param = [req.body.cooperation.id, req.body.cooperation.id]
+app.post('/budgetstep', async function (req, res, next) {
+  if (// applies trust/uderstandingvotes rule, moves 1 budget step further, creates a new record in the registry
+    (req.body.cooperation.mode == btrust && req.body.cooperation.T >= req.body.cooperation.E * 0.7)
+    || (req.body.cooperation.mode == bunderstanding && req.body.cooperation.U >= req.body.cooperation.E * 0.7)) {
+    try {
+      let query =
+        'INSERT INTO `cooperationregistry`(`cooperationid`,`mode`,`category`,`title`,`country`,`place`,`brief`,`content`,'
+        + '`video`,`anonymous`,`parent`,`collect`,`budget`,`budgetstep`,`professional`,`hudget`,'
+        + '`E`, `T`, `C`, `I`,`F`, `U`, `D`,`created`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
+        + 'UPDATE `cooperation` SET `mode` = `mode`+1 where `id`=?;'
+      let param = [req.body.cooperation.id, req.body.cooperation.mode, req.body.cooperation.category, req.body.cooperation.title, req.body.cooperation.country, req.body.cooperation.place, req.body.cooperation.brief, cooperation.content, req.body.cooperation.video, req.body.cooperation.anonymous, req.body.cooperation.parent, req.body.cooperation.collect, req.body.cooperation.budget, 'trust-understanding-pass', req.body.cooperation.professional, req.body.cooperation.hudget, req.body.cooperation.E, req.body.cooperation.T, req.body.cooperation.C, req.body.cooperation.I, req.body.cooperation.F, req.body.cooperation.U, req.body.cooperation.D, req.body.cooperation.created, req.body.cooperation.id]
+      await mypool.execute(query, param)
+      notifybudgetpass('special')
+    } catch (err) {
+      next(err)
+    }
+  } else {// if no trustvote nor understandingvote rule can be applied, it copies the current state in the registry:
+    try {// creates new record in the cooperation registry with the budget step document link
+      let query = 'INSERT INTO `cooperationregistry` (`cooperationid`,`mode`,`category`,`title`,`country`,`place`,`brief`,`content`,`video`,`anonymous`,`parent`,`collect`,`budget`,`budgetstep`,`professional`,`hudget`,`E`, `T`, `C`, `I`, `F`, `U`, `D`,`created`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
+      let param = [req.body.cooperation.id, req.body.cooperation.mode, req.body.cooperation.category, req.body.cooperation.title, req.body.cooperation.country, req.body.cooperation.place, req.body.cooperation.brief, cooperation.content, req.body.cooperation.video, req.body.cooperation.anonymous, req.body.cooperation.parent, req.body.cooperation.collect, req.body.cooperation.budget, req.body.doc, req.body.cooperation.professional, req.body.cooperation.hudget, req.body.cooperation.E, req.body.cooperation.T, req.body.cooperation.C, req.body.cooperation.I, req.body.cooperation.F, req.body.cooperation.U, req.body.cooperation.D, req.body.cooperation.created]
       await mypool.execute(query, param)
     } catch (err) {
       next(err)
     }
-  } else {// if no trustvote nor understandingvote rule can be applied, it creates one week deadline event
-    try {// at the end of which if E went down, cooperation goes back to idea state, 
-      // if I downvoted, it goes into pairing state,
-      // if at state 7 it becomes an active cooperation, 
-      // else it moves 1 budget step forward and creates a new registry record
+    try {// then creates one week deadline event at the end of which if I went down, 
+      // it does nothing, as another doc should be provided
+      // if E went down cooperation remove some of its collected funds so it goes back collecting,  
+      // in any case it creates a new registry record and moves 1 budget step forward
       let query = 'delimiter | DROP EVENT IF EXISTS budgetstepcooperation' + req.body.cooperation.id + '|'
-        + 'CREATE EVENT budgetstepcooperation' + req.body.cooperation.id + ' ON SCHEDULE AT CURRENT_TIMESTAMP + INTERVAL 1 WEEK DO BEGIN'
-        + 'DECLARE thiscooperation INT; DECLARE e0 INT; DECLARE e1 INT;'
-        + 'SET thiscooperation = ?; SET e1 = (SELECT `E` from cooperation where id=thiscooperation);'
-        + 'SET e0 = (SELECT `E` from cooperationregistry where cooperationid=thiscooperation and'
-        + 'id = (SELECT max(id) from cooperationregistry where cooperationid=thiscooperation));'
-        + 'IF e1 < e0 THEN'
-        + 'UPDATE `cooperation` SET `state` = 7, `collect` = `collect` * e1/e0 where `id`=thiscooperation;'
-        + 'ELSEIF (SELECT I from cooperation where id=thiscooperation) > 0 THEN'
-        + 'UPDATE `cooperation` SET `state` = 6 where `id`=thiscooperation;'
-        + 'ELSEIF (SELECT `budgetstep` from cooperation where id=thiscooperation) = 7 THEN'
-        + 'UPDATE `cooperation` SET `state` = 2 where `id`=thiscooperation;'
-        + 'ELSE UPDATE `cooperation` SET `budgetstep` = `budgetstep` + 1 where `id`=thiscooperation;'
-        + 'INSERT INTO `cooperationregistry`(`cooperationid`,`state`,`category`,`name`,`country`,`place`,`brief`,`content`,'
-        + '`video`,`anonymous`,`parent`,`collect`,`budget`,`budgetstep`,`fundingstep`,`professional`,`hudget`,'
-        + '`E`, `T`, `C`, `I`,`F`, `U`, `D`,`created`) SELECT `id`,`state`,`category`,`name`,`country`,`place`,`brief`,`content`,'
-        + '`video`,`anonymous`,`parent`,`collect`,`budget`,`budgetstep`,`fundingstep`,`professional`,`hudget`,'
-        + '`E`, `T`, `C`, `I`,`F`, `U`, `D`,`created` from `cooperation` where `id`=thiscooperation;'
-        + 'END IF; END| delimiter ;'
-      let param = [req.body.cooperation.id, req.body.cooperation.id, req.body.cooperation.id]
+        + ' CREATE EVENT budgetstepcooperation' + req.body.cooperation.id
+        + ' ON SCHEDULE AT CURRENT_TIMESTAMP + INTERVAL 1 WEEK DO BEGIN' // (BEGIN 1)
+        + '   DECLARE thiscooperation INT; SET thiscooperation = ?;'
+        + '   DECLARE ivote; SET ivote = (SELECT `I` form cooperation where id=thiscooperation);'
+        + '   IF ivote > 0 THEN SET ivote = ivote' //if I vote, do nothing
+        + '   ELSE BEGIN' //else (BEGIN 2):
+        + '       DECLARE e0 INT; DECLARE e1 INT; SET e1 = (SELECT `E` from cooperation where id=thiscooperation);'
+        + '       SET e0 = (SELECT `E` from cooperationregistry where cooperationid=thiscooperation and'
+        + '         id = (SELECT max(id) from cooperationregistry where cooperationid=thiscooperation));'
+        + '       IF e1 < e0 THEN' // first, if E unvoting, then drop some collected money
+        + '         UPDATE `cooperation` SET `collect` = `collect` * e1/e0 where `id`=thiscooperation;'
+        + '       END IF;' // after, go one step forward anyways, because the week passed and no I votes were issued
+        + '       INSERT INTO `cooperationregistry`(`cooperationid`,`mode`,`category`,`title`,`country`,`place`,`brief`,`content`,'
+        + '         `video`,`anonymous`,`parent`,`collect`,`budget`,`budgetstep`,`professional`,`hudget`,'
+        + '         `E`, `T`, `C`, `I`,`F`, `U`, `D`,`created`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);'
+        + '       UPDATE `cooperation` SET `mode` = `mode`+1  where `id`=thiscooperation;'
+        + '     END' // (END BEGIN 2)
+        + '   END IF;' // (END IF/ELSE)
+        + ' END | delimiter ;' // (END BEGIN 1)
+      let param = [req.body.cooperation.id, req.body.cooperation.id, req.body.cooperation.mode, req.body.cooperation.category, req.body.cooperation.title, req.body.cooperation.country, req.body.cooperation.place, req.body.cooperation.brief, cooperation.content, req.body.cooperation.video, req.body.cooperation.anonymous, req.body.cooperation.parent, req.body.cooperation.collect, req.body.cooperation.budget, 'weekpass', req.body.cooperation.professional, req.body.cooperation.hudget, req.body.cooperation.E, req.body.cooperation.T, req.body.cooperation.C, req.body.cooperation.I, req.body.cooperation.F, req.body.cooperation.U, req.body.cooperation.D, req.body.cooperation.created]
       await mypool.execute(query, param)
-      res.status(200).send('OK')
+      notifybudgetpass(req.body.cooperation.mode)
+      if (req.body.cooperation.mode > 101) { fundingstep(req.body.cooperation) }
     } catch (err) {
       next(err)
     }
   }
-})
-
-app.post('/fundingstep', async function (req, res, next) {
-  try {
-    let query = 'UPDATE cooperation SET fundingstep = fundingstep + 1 where id=?'
-    let param = [req.body.cooperation.id]
-    await mypool.execute(query, param)
-    res.status(200).send('OK')
-  } catch (err) {
-    next(err)
+  async function notifybudgetpass(special) {
+    let notifylist // we create a list of users that currently F-voted the cooperation
+    try {
+      let query =
+        'SELECT `cooperationvote`.`user`, `cooperationvote`.`cooperation`, `cooperationvote`.`cooperationtitle`,' +
+        ' `cooperationvote`.`condition`, `user`.`name`, `user`.`surname`, `user`.`email` FROM `cooperationvote`' +
+        ' LEFT JOIN `user` ON `cooperationvote`.`user` = `user`.`id`' +
+        ' WHERE `cooperationvote`.`cooperation` = ? and `cooperationvote`.`condition` = ?'
+      let param = [id, 'F']
+      const [list] = await mypool.execute(query, param)
+      notifylist = list
+    } catch (err) {
+      next(err)
+    }
+    for (let i = 0; i < notifylist.length; i++) {
+      try {
+        let transporter = nodemailer.createTransport({
+          host: 'smtp.gmail.com',
+          port: 465,
+          secure: true,
+          auth: {
+            user: process.env.MAILUSER,
+            pass: process.env.MAILPASSWORD
+          }
+        })
+        let mailOptions = {
+          from: '"Cooperacy Website" <websitemails@cooperacy.org>',
+          to: notifylist[i].email,
+          subject: 'Notification from Cooperacy',
+          html: 'Hello, ' + notifylist[i].name + ' ' + notifylist[i].surname + '!<br /><br />' +
+            'You have a new notification relative to the cooperation ' +
+            notifylist[i].cooperationtitle + ': a budget document link has been delivered!<br />' +
+            '<a href="https://cooperacy.org/cooperation/' + notifylist[i].cooperation +
+            '">Have a look</a>: you have three possible actions now: <br /><br />' +
+            '1 Do nothing, as you\'re ok with the document provided, ' +
+            'in one week the cooperation will go one step forward and probably get a part of the relative funding<br />' +
+            '2 Remove your E-vote (equivalence, orange): the cooperation will go one step forward ' +
+            'and probably get a part of the relative funding but after that it should recollect ' +
+            'the part of money you contributed to pool, which instead goes back to the main collection fund<br />' +
+            '3 Only in case of very important safety, transparency-related, legal or dramatic circustances ' +
+            'you can halt the process clicking on the I-vote (transparency, turquoise) but remember ' +
+            'in that case your name and your reasons will be publicly recorded, ' +
+            'so if you really don\'t like something and you think it won\'t be useful ' +
+            'to discuss it in the cooperation group then the 2nd point solution is the best.<br />' +
+            '<br /><br /><br />'
+        }
+        if (special > 101) mailOptions.html += 'FUNDING NOTE: having your cooperation passed a budget step, you\'re going to receive the relative funding amount.<br /><br /><br />'
+        transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+            return console.error(error)
+          }
+          console.log('Message %s sent: %s', info.messageId, info.response)
+          res.render('index')
+        })
+      } catch (err) {
+        next(err)
+      }
+    }
   }
+  async function fundingstep(cooperationtbf) {
+    let notifylist // we create a list of admins that should deliver the funds
+    try {
+      let query =
+        'SELECT `user`.`email`, `user`.`name`, `user`.`surname` from `user` WHERE `user`.`admin` = ?'
+      let param = [1]
+      const [list] = await mypool.execute(query, param)
+      notifylist = list
+    } catch (err) {
+      next(err)
+    }
+    for (let i = 0; i < notifylist.length; i++) {
+      try {
+        let transporter = nodemailer.createTransport({
+          host: 'smtp.gmail.com',
+          port: 465,
+          secure: true,
+          auth: {
+            user: process.env.MAILUSER,
+            pass: process.env.MAILPASSWORD
+          }
+        })
+        let mailOptions = {
+          from: '"Cooperacy Website" <websitemails@cooperacy.org>',
+          to: notifylist[i].email,
+          subject: 'Notification from Cooperacy',
+          html: 'Hello, ' + notifylist[i].name + ' ' + notifylist[i].surname + '!<br /><br />' +
+            'You have a new ADMINISTRATION related notification relative to the cooperation ' +
+            notifylist[i].cooperationtitle + ': you should deliver the relative funding amount.<br /><br /><br />' +
+            + 'Techical details: ' + JSON.stringify(cooperationtbf) +
+            ' <br /><br /><br />'
+        }
+
+        transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+            return console.error(error)
+          }
+          console.log('Message %s sent: %s', info.messageId, info.response)
+          res.render('index')
+        })
+      } catch (err) {
+        next(err)
+      }
+    }
+  }
+  res.status(200).send('OK')
 })
 
 app.post('/vote', async function (req, res, next) {
@@ -1089,8 +1237,8 @@ app.post('/vote', async function (req, res, next) {
   async function addvote() {
     try {
       let query =
-        'INSERT INTO `cooperationvote` (`user`,`cooperation`,`condition`) VALUES (?,?,?)'
-      let param = [req.body.user, req.body.id, req.body.condition]
+        'INSERT INTO `cooperationvote` (`user`,`cooperation`,`cooperationtitle`,`condition`) VALUES (?,?,?,?)'
+      let param = [req.body.user, req.body.id, req.body.cooperationtitle, req.body.condition]
       if (req.body.proptype == 'comment') {
         query =
           'INSERT INTO `commentvote` (`user`,`comment`,`condition`,`cooperation`) VALUES (?,?,?,?)'
@@ -1179,22 +1327,6 @@ app.post('/vote', async function (req, res, next) {
         const [diversity] = await mypool.execute(query, param)
         if ((diversity[0].D - Math.floor(diversity[0].D / 7) * 7) == 0) {
           let query = 'UPDATE `cooperation` SET `E` = `E` + 1 where `cooperation`.`id`=?'
-          let param = [req.body.id]
-          await mypool.execute(query, param)
-        }
-      } catch (err) {
-        next(err)
-      }
-    }
-
-    //if in pairing state, the state is removed if I=0
-    if (req.body.state == 6 && req.body.proptype == 'cooperation' && req.body.condition == 'I') {
-      try {
-        let query = 'SELECT `I` from `cooperation` where `id` = ?'
-        let param = [req.body.id]
-        const [transparency] = await mypool.execute(query, param)
-        if (transparency[0].I == 0) {
-          let query = 'UPDATE `cooperation` SET `state` = 7 where `id`=?'
           let param = [req.body.id]
           await mypool.execute(query, param)
         }
@@ -1295,10 +1427,10 @@ app.post('/cooperationtool', async function (req, res, next) {
   async function insertion() {
     try {
       let query =
-        'INSERT INTO `cooperationtool` (`id`,`user`,`surveyid`,`cooperation`,`group`,`country`,`place`,`month`,`participant`,`name`,`desc`,`MBD`,`BD`,`MRD`,`RD`,`MBU`,`BU`,`MRU`,`RU`,`MBF`,`BF`,`MRF`,`RF`,`MBI`,`BI`,`MRI`,`RI`,`MBC`,`BC`,`MRC`,`RC`,`MBX`,`BX`,`MRX`,`RX`,`MBH`,`BH`,`MRH`,`RH`,`MBT`,`BT`,`MRT`,`RT`,`MBE`,`BE`,`MRE`,`RE`,`P`,`PText`,`PD`,`PDText`,`PU`,`PUText`,`PF`,`PFText`,`PI`,`PIText`,`PC`,`PCText`,`PT`,`PTText`,`PE`,`PEText`,`PFinal`,`PFinalText`) VALUES (?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?)'
-      let param = [req.body.id, req.body.user, req.body.surveyid, req.body.cooperation, req.body.group, req.body.country, req.body.place, req.body.month, req.body.participant, req.body.name, req.body.desc, req.body.MBD, req.body.BD, req.body.MRD, req.body.RD, req.body.MBU, req.body.BU, req.body.MRU, req.body.RU, req.body.MBF, req.body.BF, req.body.MRF, req.body.RF, req.body.MBI, req.body.BI, req.body.MRI, req.body.RI, req.body.MBC, req.body.BC, req.body.MRC, req.body.RC, req.body.MBX, req.body.BX, req.body.MRX, req.body.RX, req.body.MBH, req.body.BH, req.body.MRH, req.body.RH, req.body.MBT, req.body.BT, req.body.MRT, req.body.RT, req.body.MBE, req.body.BE, req.body.MRE, req.body.RE, req.body.P, req.body.PText, req.body.PD, req.body.PDText, req.body.PU, req.body.PUText, req.body.PF, req.body.PFText, req.body.PI, req.body.PIText, req.body.PC, req.body.PCText, req.body.PT, req.body.PTText, req.body.PE, req.body.PEText, req.body.PFinal, req.body.PFinalText]
+        'INSERT INTO `cooperationtool` (`id`,`user`,`surveyid`,`cooperation`,`group`,`country`,`place`,`month`,`participant`,`title`,`desc`,`MBD`,`BD`,`MRD`,`RD`,`MBU`,`BU`,`MRU`,`RU`,`MBF`,`BF`,`MRF`,`RF`,`MBI`,`BI`,`MRI`,`RI`,`MBC`,`BC`,`MRC`,`RC`,`MBX`,`BX`,`MRX`,`RX`,`MBH`,`BH`,`MRH`,`RH`,`MBT`,`BT`,`MRT`,`RT`,`MBE`,`BE`,`MRE`,`RE`,`P`,`PText`,`PD`,`PDText`,`PU`,`PUText`,`PF`,`PFText`,`PI`,`PIText`,`PC`,`PCText`,`PT`,`PTText`,`PE`,`PEText`,`PFinal`,`PFinalText`) VALUES (?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?)'
+      let param = [req.body.id, req.body.user, req.body.surveyid, req.body.cooperation, req.body.group, req.body.country, req.body.place, req.body.month, req.body.participant, req.body.title, req.body.desc, req.body.MBD, req.body.BD, req.body.MRD, req.body.RD, req.body.MBU, req.body.BU, req.body.MRU, req.body.RU, req.body.MBF, req.body.BF, req.body.MRF, req.body.RF, req.body.MBI, req.body.BI, req.body.MRI, req.body.RI, req.body.MBC, req.body.BC, req.body.MRC, req.body.RC, req.body.MBX, req.body.BX, req.body.MRX, req.body.RX, req.body.MBH, req.body.BH, req.body.MRH, req.body.RH, req.body.MBT, req.body.BT, req.body.MRT, req.body.RT, req.body.MBE, req.body.BE, req.body.MRE, req.body.RE, req.body.P, req.body.PText, req.body.PD, req.body.PDText, req.body.PU, req.body.PUText, req.body.PF, req.body.PFText, req.body.PI, req.body.PIText, req.body.PC, req.body.PCText, req.body.PT, req.body.PTText, req.body.PE, req.body.PEText, req.body.PFinal, req.body.PFinalText]
       if (req.body.pairing) {
-        query = 'UPDATE `cooperationtool` SET `id` = ?,`user` = ?,`surveyid` = ?,`cooperation` = ?,`group` = ?,`country` = ?,`place` = ?,`month` = ?,`participant` = ?,`name` = ?,`desc` = ?,`MBD` = ?,`BD` = ?,`MRD` = ?,`RD` = ?,`MBU` = ?,`BU` = ?,`MRU` = ?,`RU` = ?,`MBF` = ?,`BF` = ?,`MRF` = ?,`RF` = ?,`MBI` = ?,`BI` = ?,`MRI` = ?,`RI` = ?,`MBC` = ?,`BC` = ?,`MRC` = ?,`RC` = ?,`MBX` = ?,`BX` = ?,`MRX` = ?,`RX` = ?,`MBH` = ?,`BH` = ?,`MRH` = ?,`RH` = ?,`MBT` = ?,`BT` = ?,`MRT` = ?,`RT` = ?,`MBE` = ?,`BE` = ?,`MRE` = ?,`RE` = ?,`P` = ?,`PText` = ?,`PD` = ?,`PDText` = ?,`PU` = ?,`PUText` = ?,`PF` = ?,`PFText` = ?,`PI` = ?,`PIText` = ?,`PC` = ?,`PCText` = ?,`PT` = ?,`PTText` = ?,`PE` = ?,`PEText` = ?,`PFinal` = ?,`PFinalText` = ? WHERE `id` = ?'
+        query = 'UPDATE `cooperationtool` SET `id` = ?,`user` = ?,`surveyid` = ?,`cooperation` = ?,`group` = ?,`country` = ?,`place` = ?,`month` = ?,`participant` = ?,`title` = ?,`desc` = ?,`MBD` = ?,`BD` = ?,`MRD` = ?,`RD` = ?,`MBU` = ?,`BU` = ?,`MRU` = ?,`RU` = ?,`MBF` = ?,`BF` = ?,`MRF` = ?,`RF` = ?,`MBI` = ?,`BI` = ?,`MRI` = ?,`RI` = ?,`MBC` = ?,`BC` = ?,`MRC` = ?,`RC` = ?,`MBX` = ?,`BX` = ?,`MRX` = ?,`RX` = ?,`MBH` = ?,`BH` = ?,`MRH` = ?,`RH` = ?,`MBT` = ?,`BT` = ?,`MRT` = ?,`RT` = ?,`MBE` = ?,`BE` = ?,`MRE` = ?,`RE` = ?,`P` = ?,`PText` = ?,`PD` = ?,`PDText` = ?,`PU` = ?,`PUText` = ?,`PF` = ?,`PFText` = ?,`PI` = ?,`PIText` = ?,`PC` = ?,`PCText` = ?,`PT` = ?,`PTText` = ?,`PE` = ?,`PEText` = ?,`PFinal` = ?,`PFinalText` = ? WHERE `id` = ?'
         param.push(req.body.id)
         await mypool.execute(query, param)
         return req.body.id
@@ -1315,6 +1447,77 @@ app.post('/cooperationtool', async function (req, res, next) {
       next(err)
     }
   }
+})
+
+app.post('/budgetcheck', async function (req, res, next) {
+  //this function moved from db due to email notification, can be set as a serverside routine
+  let collectedcoo
+  let query
+  let param
+  try {
+    query = 'SELECT `cooperationregistry`.* FROM `cooperationregistry` WHERE `budgetstep` = \'budgetcrossed\''
+    const [check] = await mypool.execute(query)
+    collectedcoo = check
+  } catch (err) {
+    next(err)
+  }
+  for (let i = 0; i < collectedcoo.length; i++) {
+    try {
+      query = 'UPDATE `cooperationregistry` SET `budgetstep` = \'mailsent-awaiting\''
+      mypool.execute(query, param)
+      notifycollectedcoo(collectedcoo[i].id)
+    } catch (err) {
+      next(err)
+    }
+  }
+  async function notifycollectedcoo(id) {
+    let notifylist // we create a list of users that currently F-voted the cooperation
+    try {
+      let query =
+        'SELECT `cooperationvote`.`user`, `cooperationvote`.`cooperation`, `cooperationvote`.`cooperationtitle`,' +
+        ' `cooperationvote`.`condition`, `user`.`name`, `user`.`surname`, `user`.`email` FROM `cooperationvote`' +
+        ' LEFT JOIN `user` ON `cooperationvote`.`user` = `user`.`id`' +
+        ' WHERE `cooperationvote`.`cooperation` = ? and `cooperationvote`.`condition` = ?'
+      let param = [id, 'F']
+      const [list] = await mypool.execute(query, param)
+      notifylist = list
+    } catch (err) {
+      next(err)
+    }
+    for (let i = 0; i < notifylist.length; i++) {
+      try {
+        let transporter = nodemailer.createTransport({
+          host: 'smtp.gmail.com',
+          port: 465,
+          secure: true,
+          auth: {
+            user: process.env.MAILUSER,
+            pass: process.env.MAILPASSWORD
+          }
+        })
+        let mailOptions = {
+          from: '"Cooperacy Website" <websitemails@cooperacy.org>',
+          to: notifylist[i].email,
+          subject: 'Notification from Cooperacy',
+          html: 'Hello, ' + notifylist[i].name + ' ' + notifylist[i].surname + '!<br /><br />' +
+            'You have a new notification relative to the cooperation ' +
+            notifylist[i].cooperationtitle + ': the collected money crossed the final budget line!<br />' +
+            '<a href="https://cooperacy.org/cooperation/' + notifylist[i].cooperation +
+            '">Have a look</a> and prepare the relative documentation to get funded! <br /><br /><br />'
+        }
+        transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+            return console.error(error)
+          }
+          console.log('Message %s sent: %s', info.messageId, info.response)
+          res.render('index')
+        })
+      } catch (err) {
+        next(err)
+      }
+    }
+  }
+  res.status(200).send('OK')
 })
 
 //admin
@@ -1471,4 +1674,20 @@ FOR ALL REQUESTS:
 
 INVESTIGATE SUBSCRIPTION:
 axios({method: 'get', url: 'https://api.paypal.com/v1/billing/subscriptions/I-V5G6T3VYVDWH', headers: { 'Authorization':'Bearer '+paypaltoken, 'Content-Type':'application/json'}}).then((response)=>{console.log(JSON.stringify(response.data))}).catch((err)=>{console.log(err.response.data)}) => {"status":"ACTIVE","status_update_time":"2019-07-14T12:49:54Z","id":"I-V5G6T3VYVDWH","plan_id":"P-9C681042E7918904VLURYYGQ","start_time":"2019-07-13T22:00:00Z","quantity":"1","shipping_amount":{"currency_code":"EUR","value":"0.0"},"subscriber":{"name":{"given_name":"Alessandro","surname":"Merletti De Palo"},"email_address":"alessandromerlettidepalo@gmail.com","shipping_address":{"name":{"full_name":"Alessandro Merletti De Palo"},"address":{"address_line_1":"Via Moscova 39","address_line_2":"","admin_area_2":"Milano","admin_area_1":"","postal_code":"20121","country_code":"IT"}}},"billing_info":{"outstanding_balance":{"currency_code":"EUR","value":"0.0"},"cycle_executions":[{"tenure_type":"REGULAR","sequence":1,"cycles_completed":1,"cycles_remaining":997,"current_pricing_scheme_version":1}],"last_payment":{"amount":{"currency_code":"EUR","value":"1.0"},"time":"2019-07-14T12:49:53Z"},"next_billing_time":"2019-08-14T10:00:00Z","final_payment_time":"2102-08-14T10:00:00Z","failed_payments_count":0},"auto_renewal":false,"create_time":"2019-07-14T12:48:57Z","update_time":"2019-07-14T12:49:54Z","links":[{"href":"https://api.paypal.com/v1/billing/subscriptions/I-V5G6T3VYVDWH/cancel","rel":"cancel","method":"POST"},{"href":"https://api.paypal.com/v1/billing/subscriptions/I-V5G6T3VYVDWH","rel":"edit","method":"PATCH"},{"href":"https://api.paypal.com/v1/billing/subscriptions/I-V5G6T3VYVDWH","rel":"self","method":"GET"},{"href":"https://api.paypal.com/v1/billing/subscriptions/I-V5G6T3VYVDWH/suspend","rel":"suspend","method":"POST"},{"href":"https://api.paypal.com/v1/billing/subscriptions/I-V5G6T3VYVDWH/capture","rel":"capture","method":"POST"}]} THIS CAN BE USED TO GET THE REAL NAME OF THE PEOPLE BUT NOT IF A GIFT, IN CASE OF GIFT WE HAVE A REFERRER THAT IS LEGALLY RESPONSIBLE
+
+DELIMITER ;;
+CREATE TRIGGER `gotobudgetsteps` BEFORE UPDATE ON `cooperation` FOR EACH ROW BEGIN
+  IF new.collect >= new.budget AND new.mode > 100 THEN
+        INSERT INTO `cooperationregistry`
+              (`cooperationid`,`mode`,`category`,`name`,`country`,`place`,
+    `brief`, `content`,`video`,`anonymous`,`parent`,
+              `collect`, `budget`,`budgetstep`, `professional`, `hudget`,
+              `E`,`T`,`C`,`I`,`F`,`U`,`D`,`created`)
+      VALUES (new.`id`,new.`mode`,new.`category`,new.`name`,new.`country`,new.`place`,
+      new.`brief`,new.`content`,new.`video`,new.`anonymous`,new.`parent`,
+  new.`collect`,new.`budget`,'budgetcrossed',new.`professional`,new.`hudget`,
+      new.`E`,new.`T`,new.`C`,new.`I`,new.`F`,new.`U`,new.`D`,new.`created`);
+  END IF;
+END ;;
+DELIMITER ;
 */

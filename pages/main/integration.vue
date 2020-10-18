@@ -1,5 +1,5 @@
 <template>
-  <div class="page-container">
+  <b-container class="m-0 p-0 pagecontainer">
     <br /><img
       class="page-header"
       src="~/assets/image/page/banners/main/integration.png"
@@ -265,7 +265,7 @@
       think. Understanding others will let them follow you if they make a
       mistake or if their solution is not so enjoyable.
     </p>
-  </div>
+  </b-container>
 </template>
 <script>
 export default {

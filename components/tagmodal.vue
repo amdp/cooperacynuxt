@@ -13,7 +13,7 @@
           label-for="newtagInput"
           description="Insert a new tag for your cooperation"
         >
-          <span>{{ cooperationprop.name }}</span>
+          <span>{{ cooperationprop.title }}</span>
           <b-form-input id="newTagInput" v-model="formTag"></b-form-input>
         </b-form-group>
       </b-form>
@@ -33,7 +33,7 @@
           label="Tag:"
           description="Remove tags from your cooperation"
         >
-          <span>{{ cooperationprop.name }}</span>
+          <span>{{ cooperationprop.title }}</span>
           <b-form-select id="removeTagInput" v-model="formRemoveTag">
             <option
               v-for="tag in this.$store.state.tag"

@@ -47,7 +47,7 @@
               v-html="
                 cooperation.id +
                 ' ' +
-                cooperation.name +
+                cooperation.title +
                 ' ' +
                 cooperation.parent +
                 ' ' +
@@ -72,7 +72,7 @@
               :key="survey.id"
               :value="survey.surveyid"
               v-html="
-                survey.name +
+                survey.title +
                 ' ' +
                 survey.surveyid +
                 ' ' +
@@ -167,12 +167,12 @@
 
           <p
             class="pt-3 m-1"
-            v-html="$t('cootool.name')"
+            v-html="$t('cootool.title')"
             v-if="formNature == 0 && !formPrevSurveyID"
           ></p>
           <b-form-input
             v-if="formNature == 0 && !formPrevSurveyID"
-            v-model="formName"
+            v-model="formTitle"
             size="sm"
             required
           ></b-form-input>
@@ -730,7 +730,7 @@ export default {
       formPlace: 1,
       formMonth: 1,
       formParticipant: 3,
-      formName: null,
+      formTitle: null,
       formDesc: null,
       formMBDiversity: 50,
       formBDiversity: 50,
@@ -776,8 +776,8 @@ export default {
     }
   },
   computed: {
-    nameInputState() {
-      return this.name.length > 3 ? true : false
+    titleInputState() {
+      return this.title.length > 3 ? true : false
     },
     // return this.formMonth > 0 ? true : false
     // return this.formParticipant > 0 ? true : false
@@ -820,7 +820,7 @@ export default {
         this.formCountry = cooperationChosen.country
         this.formPlace = cooperationChosen.place
         this.formParticipant = cooperationChosen.professional
-        this.formName = cooperationChosen.name
+        this.formTitle = cooperationChosen.title
         this.formDesc = cooperationChosen.brief
       }
       let prevsurvey = null
@@ -832,7 +832,7 @@ export default {
         this.formCountry = prevsurvey.country
         this.formPlace = prevsurvey.place
         this.formParticipant = prevsurvey.participant
-        this.formName = prevsurvey.name
+        this.formTitle = prevsurvey.title
         this.formDesc = prevsurvey.desc
       }
       var formBodyRequest = {
@@ -845,7 +845,7 @@ export default {
         place: this.formPlace,
         month: this.formMonth,
         participant: this.formParticipant,
-        name: this.formName,
+        title: this.formTitle,
         desc: this.formDesc,
         MBD: this.formMBDiversity / 100,
         BD: this.formBDiversity / 100,

@@ -190,7 +190,7 @@ export default {
       if (cc == 'I' && exists == -1) {
         return this.$root.$emit('bv::show::modal', modal, '#btnShow')
       }
-      if (cc == 'E' && exists != -1 && this.voteprop.state == 6) {
+      if (cc == 'E' && exists != -1 && this.voteprop.collect > this.voteprop.budget) {
         let Icheck = this.$store.state['cooperationuservote'].findIndex(
           // checks if there is a I vote
           x => x[this.proptype] == this.voteprop.id && x.condition == 'I'
@@ -200,12 +200,12 @@ export default {
           this.voteswitch('I')
           return this.voteswitch('E')
         }
-        else return this.vosteswitch('E')
+        else return this.voteswitch('E')
       }
-      // keep the following budgetstep alert AFTER the this.voteprop.state == 6 (pairing) check
+      // keep the following budgetstep alert for budgetstep phases
       if (cc == 'E' && exists != -1) {
-        if (this.voteprop.budgetstep > 0) {
-          alert('With your unvoting, you release part of the cooperation budget to the Cooperacy general pool. This cooperation will go back into the idea state, until the full budget is collected again, then start back from the last budget step it is now.')
+        if (this.voteprop.collect > this.voteprop.budget) {
+          alert('With your unvoting, you release part of the cooperation budget to the Cooperacy general pool. This cooperation will go back collecting, until the full budget is collected again, then start back from the last budget step it is now.')
         }
         return this.voteswitch(cc)
       }
@@ -245,7 +245,8 @@ export default {
       }
       if (this.proptype == 'cooperation') {
         request.category = this.voteprop.category
-        request.state = this.voteprop.state
+        request.mode = this.voteprop.mode
+        request.cooperationtitle = this.voteprop.title
       }
       this.$store.dispatch('addVote', request).catch(err => {
         console.error(err)

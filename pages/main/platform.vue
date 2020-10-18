@@ -1,5 +1,5 @@
 <template>
-  <div class="page-container">
+  <b-container class="m-0 p-0 pagecontainer">
     <img
       class="page-header col-md-8"
       src="~/assets/image/page/banners/main/platform.png"
@@ -78,7 +78,7 @@
       <nuxt-link to="/login" class="ae">Cooperacy</nuxt-link> Platform.. let's
       start doing things together!
     </p>
-  </div>
+  </b-container>
 </template>
 <script>
 export default {

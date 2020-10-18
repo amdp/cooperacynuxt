@@ -7,8 +7,8 @@
       ><span class="b diversity">w</span> votebar is the main expression of
       Cooperacy members' distribution of power, resources and activities. Learn
       how to influence the whole platform with your personal choices.<br />
-      In <strong>archived</strong> cooperations and proposals, it is used as a
-      feedback.<br />
+      In <strong>deactivated</strong> cooperations and proposals, it is used as
+      a feedback.<br />
       In <strong>comments</strong> it influences your personal
       <span class="b equivalence">r</span><span class="b trust">a</span
       ><span class="b care">i</span><span class="b transparency">n</span

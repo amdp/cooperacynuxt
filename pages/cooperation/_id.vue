@@ -49,7 +49,7 @@ export default {
         'Cooperacy - Cooperation: ' +
         this.$store.state.cooperation.filter(
           cooperation => cooperation.id == this.$route.params.id
-        )[0].name
+        )[0].title
     }
   }
 }

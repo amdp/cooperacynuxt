@@ -1,5 +1,5 @@
 <template>
-  <div class="page-container">
+  <b-container class="m-0 p-0 pagecontainer">
     <br /><img
       class="page-header"
       src="~/assets/image/page/banners/main/workshops.png"
@@ -41,7 +41,7 @@
         <li>Cooperative production industries-based Economy</li>
       </ol>
     </p>
-  </div>
+  </b-container>
 </template>
 <script>
 export default {
