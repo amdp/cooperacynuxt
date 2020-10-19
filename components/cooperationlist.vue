@@ -96,7 +96,7 @@
                 <b-container>
                   <small>
                     {{ category(cooperation.category) }} related cooperation
-                    {{ mode(Math.abs(cooperation.mode)) }} -
+                    {{ mode(cooperation.mode) }} -
                     {{ location(cooperation.place) }}
                   </small>
                 </b-container>
@@ -357,7 +357,7 @@ export default {
       else return false
     },
     cooperationbox(cooperation) {
-      let boxclass
+      let boxclass = 'gcooperationbox'
       let categorycolor = ['e', 't', 'c', 'i', 'f', 'u', 'd'] //order these according categories
       for (let i = 0; i < 7; i++) {
         if (cooperation.category == i + 1) {
@@ -425,7 +425,7 @@ export default {
     mode(id) {
       let modeinfo = 'in '
       if (id < 0) modeinfo += 'inactive '
-      modeinfo += this.$store.state.mode.find((mode) => mode.id == id).name + ' mode'
+      modeinfo += this.$store.state.mode.find((mode) => mode.id == Math.abs(id)).name + ' mode'
       return modeinfo
     },
     category(id) {

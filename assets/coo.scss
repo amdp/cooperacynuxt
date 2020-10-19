@@ -368,6 +368,10 @@ a:hover {
   background-image: none;
 }
 
+.gcooperationbox {
+  border: 2px solid $graylight;
+  border-radius: 20px;
+}
 .ecooperationbox {
   border: 2px solid $equivalence;
   border-radius: 20px;
@@ -525,10 +529,6 @@ b-form-select .was-validated, .custom-select:valid, .custom-select.is-valid{
 .science-active:after,
 .corporate-active:after {
   display: inline-block;
-}
-.cooperationbox {
-  border: 1px solid $coogray;
-  border-radius: 20px;
 }
 .progress-zero {
   color: $coogray;
