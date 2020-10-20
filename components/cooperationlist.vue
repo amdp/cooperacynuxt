@@ -219,7 +219,7 @@
                     </span>
                     <span
                       v-if="
-                        (cooperation.collected > cooperation.budget &&
+                        (cooperation.collect >= cooperation.budget &&
                           cooperation.mode >= 101 &&
                           improfessional) ||
                         $auth.user.role == 1
@@ -327,10 +327,11 @@ export default {
         this.incremental++
       }, this.updatesec * 1000)
     },
-    collected(cooperation) {//if participation mode:
-      if (cooperation.budget < 0) {
+    collected(cooperation) {
+      if (cooperation.budget < 0) {//if participation mode:
         return cooperation.E * cooperation.collect
-      } else {//if funding mode:
+      }
+      if (parseFloat(cooperation.collect) < parseFloat(cooperation.budget)) {//if funding mode:
         // here we add to cooperation.collect (the amount collected so far) the increment of every second,
         // times the update seconds interval times the % of the cooperation E-votes over the total of the E-votes
         return (
@@ -342,6 +343,7 @@ export default {
           (cooperation.E / this.$store.state.fundingvar.totalE)
         )
       }
+      return parseFloat(cooperation.collect)
     },
     budgetbar(mode) {
       let color
@@ -379,6 +381,7 @@ export default {
         video: cooperation.video,
         anonymous: cooperation.anonymous,
         parent: cooperation.parent,
+        author: cooperation.author,
         category: cooperation.category,
         collect: cooperation.collect,
         budget: cooperation.budget,

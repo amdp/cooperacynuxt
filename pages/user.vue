@@ -96,11 +96,14 @@ export default {
   },
   mounted() {
     this.rainbowcode()
-    this.$store.dispatch('budgetcheck')
+    this.budgetcheck()
   },
   methods: {
     async resetvoting() {
       await this.$store.dispatch('resetVoting')
+    },
+    async budgetcheck() {
+      this.$store.dispatch('budgetcheck')
     },
     rainbowcode() {
       if (this.$auth.user.rainbowcode) {

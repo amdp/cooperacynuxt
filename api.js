@@ -1094,7 +1094,7 @@ app.post('/budgetstep', async function (req, res, next) {
         + '         `video`,`anonymous`,`parent`,`collect`,`budget`,`budgetstep`,`professional`,`hudget`,'
         + '         `E`, `T`, `C`, `I`,`F`, `U`, `D`,`created`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);'
         + '       UPDATE `cooperation` SET `mode` = `mode`+1  where `id`=thiscooperation;'
-        + '     END' // (END BEGIN 2)
+        + '     END;' // (END BEGIN 2)
         + '   END IF;' // (END IF/ELSE)
         + ' END | delimiter ;' // (END BEGIN 1)
       let param = [req.body.cooperation.id, req.body.cooperation.id, req.body.cooperation.mode, req.body.cooperation.category, req.body.cooperation.title, req.body.cooperation.country, req.body.cooperation.place, req.body.cooperation.brief, cooperation.content, req.body.cooperation.video, req.body.cooperation.anonymous, req.body.cooperation.parent, req.body.cooperation.collect, req.body.cooperation.budget, 'weekpass', req.body.cooperation.professional, req.body.cooperation.hudget, req.body.cooperation.E, req.body.cooperation.T, req.body.cooperation.C, req.body.cooperation.I, req.body.cooperation.F, req.body.cooperation.U, req.body.cooperation.D, req.body.cooperation.created]
@@ -1451,26 +1451,27 @@ app.post('/cooperationtool', async function (req, res, next) {
 
 app.post('/budgetcheck', async function (req, res, next) {
   //this function moved from db due to email notification, can be set as a serverside routine
-  let collectedcoo
+  let completedcoo
   let query
   let param
   try {
-    query = 'SELECT `cooperationregistry`.* FROM `cooperationregistry` WHERE `budgetstep` = \'budgetcrossed\''
+    query = 'SELECT * FROM `cooperationregistry` WHERE `budgetstep` = \'budgetcrossed\''
     const [check] = await mypool.execute(query)
-    collectedcoo = check
+    completedcoo = check
   } catch (err) {
     next(err)
   }
-  for (let i = 0; i < collectedcoo.length; i++) {
+  for (let i = 0; i < completedcoo.length; i++) {
     try {
-      query = 'UPDATE `cooperationregistry` SET `budgetstep` = \'mailsent-awaiting\''
+      query = 'UPDATE `cooperationregistry` SET `budgetstep` = \'mailsent-awaiting\' WHERE `id` = ?'
+      param = [completedcoo[i].id]
       mypool.execute(query, param)
-      notifycollectedcoo(collectedcoo[i].id)
+      notifycoo(completedcoo[i].cooperationid)
     } catch (err) {
       next(err)
     }
   }
-  async function notifycollectedcoo(id) {
+  async function notifycoo(id) {
     let notifylist // we create a list of users that currently F-voted the cooperation
     try {
       let query =
@@ -1675,18 +1676,23 @@ FOR ALL REQUESTS:
 INVESTIGATE SUBSCRIPTION:
 axios({method: 'get', url: 'https://api.paypal.com/v1/billing/subscriptions/I-V5G6T3VYVDWH', headers: { 'Authorization':'Bearer '+paypaltoken, 'Content-Type':'application/json'}}).then((response)=>{console.log(JSON.stringify(response.data))}).catch((err)=>{console.log(err.response.data)}) => {"status":"ACTIVE","status_update_time":"2019-07-14T12:49:54Z","id":"I-V5G6T3VYVDWH","plan_id":"P-9C681042E7918904VLURYYGQ","start_time":"2019-07-13T22:00:00Z","quantity":"1","shipping_amount":{"currency_code":"EUR","value":"0.0"},"subscriber":{"name":{"given_name":"Alessandro","surname":"Merletti De Palo"},"email_address":"alessandromerlettidepalo@gmail.com","shipping_address":{"name":{"full_name":"Alessandro Merletti De Palo"},"address":{"address_line_1":"Via Moscova 39","address_line_2":"","admin_area_2":"Milano","admin_area_1":"","postal_code":"20121","country_code":"IT"}}},"billing_info":{"outstanding_balance":{"currency_code":"EUR","value":"0.0"},"cycle_executions":[{"tenure_type":"REGULAR","sequence":1,"cycles_completed":1,"cycles_remaining":997,"current_pricing_scheme_version":1}],"last_payment":{"amount":{"currency_code":"EUR","value":"1.0"},"time":"2019-07-14T12:49:53Z"},"next_billing_time":"2019-08-14T10:00:00Z","final_payment_time":"2102-08-14T10:00:00Z","failed_payments_count":0},"auto_renewal":false,"create_time":"2019-07-14T12:48:57Z","update_time":"2019-07-14T12:49:54Z","links":[{"href":"https://api.paypal.com/v1/billing/subscriptions/I-V5G6T3VYVDWH/cancel","rel":"cancel","method":"POST"},{"href":"https://api.paypal.com/v1/billing/subscriptions/I-V5G6T3VYVDWH","rel":"edit","method":"PATCH"},{"href":"https://api.paypal.com/v1/billing/subscriptions/I-V5G6T3VYVDWH","rel":"self","method":"GET"},{"href":"https://api.paypal.com/v1/billing/subscriptions/I-V5G6T3VYVDWH/suspend","rel":"suspend","method":"POST"},{"href":"https://api.paypal.com/v1/billing/subscriptions/I-V5G6T3VYVDWH/capture","rel":"capture","method":"POST"}]} THIS CAN BE USED TO GET THE REAL NAME OF THE PEOPLE BUT NOT IF A GIFT, IN CASE OF GIFT WE HAVE A REFERRER THAT IS LEGALLY RESPONSIBLE
 
+DROP TRIGGER IF EXISTS `gotobudgetsteps`;
 DELIMITER ;;
-CREATE TRIGGER `gotobudgetsteps` BEFORE UPDATE ON `cooperation` FOR EACH ROW BEGIN
-  IF new.collect >= new.budget AND new.mode > 100 THEN
+CREATE TRIGGER `gotobudgetsteps` BEFORE UPDATE ON `cooperation` FOR EACH ROW
+BEGIN
+  IF new.`collect` >= new.`budget` AND new.`mode` > 100 THEN
+  BEGIN
+    SET new.`collect` = new.`budget`;
         INSERT INTO `cooperationregistry`
-              (`cooperationid`,`mode`,`category`,`name`,`country`,`place`,
-    `brief`, `content`,`video`,`anonymous`,`parent`,
-              `collect`, `budget`,`budgetstep`, `professional`, `hudget`,
+              (`cooperationid`,`mode`,`category`,`title`,`country`,`place`,
+        `brief`,`content`,`video`,`anonymous`,`parent`,`author`,
+              `collect`,`budget`,`budgetstep`,`professional`,`hudget`,
               `E`,`T`,`C`,`I`,`F`,`U`,`D`,`created`)
-      VALUES (new.`id`,new.`mode`,new.`category`,new.`name`,new.`country`,new.`place`,
-      new.`brief`,new.`content`,new.`video`,new.`anonymous`,new.`parent`,
-  new.`collect`,new.`budget`,'budgetcrossed',new.`professional`,new.`hudget`,
+      VALUES (new.`id`,new.`mode`,new.`category`,new.`title`,new.`country`,new.`place`,
+      new.`brief`,new.`content`,new.`video`,new.`anonymous`,new.`parent`,new.`author`,
+    new.`collect`,new.`budget`,'budgetcrossed',new.`professional`,new.`hudget`,
       new.`E`,new.`T`,new.`C`,new.`I`,new.`F`,new.`U`,new.`D`,new.`created`);
+  END;
   END IF;
 END ;;
 DELIMITER ;
