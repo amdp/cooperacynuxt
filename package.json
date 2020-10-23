@@ -14,7 +14,7 @@
     "lintfix": "eslint --fix --ext .js,.vue --ignore-path .gitignore ."
   },
   "dependencies": {
-    "@nuxt/components": "^1.1.0",
+    "@nuxt/components": "^1.1.1",
     "@nuxt/webpack": "^2.14.7",
     "@nuxtjs/auth": "^4.9.1",
     "@nuxtjs/axios": "^5.12.2",
@@ -25,7 +25,7 @@
     "bignumber.js": "^7.2.1",
     "body-parser": "^1.19.0",
     "bootstrap": "^4.5.3",
-    "bootstrap-vue": "^2.18.0",
+    "bootstrap-vue": "^2.18.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-fileupload": "^1.2.0",
