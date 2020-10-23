@@ -1261,12 +1261,15 @@ app.post('/vote', async function (req, res, next) {
   async function addvote() {
     try {
       let query =
-        'INSERT INTO `cooperationvote` (`user`,`cooperation`,`cooperationtitle`,`condition`) VALUES (?,?,?,?)'
-      let param = [req.body.user, req.body.id, req.body.cooperationtitle, req.body.condition]
+        'INSERT INTO `' + req.body.proptype + 'vote` (`user`,`condition`,`cooperation`,'
+      let param = [req.body.user, req.body.condition]
+      if (req.body.proptype == 'cooperation') {
+        query += '`cooperationtitle`) VALUES (?,?,?,?)'
+        param.push(req.body.id, req.body.cooperationtitle)
+      }
       if (req.body.proptype == 'comment') {
-        query =
-          'INSERT INTO `commentvote` (`user`,`comment`,`condition`,`cooperation`) VALUES (?,?,?,?)'
-        param.push(req.body.cooperationid)
+        query += '`comment`) VALUES (?,?,?,?)'
+        param.push(req.body.cooperationid, req.body.id)
       }
       mypool.execute(query, param)
     } catch (err) {
@@ -1287,6 +1290,7 @@ app.post('/vote', async function (req, res, next) {
         '`.`id`=?'
       let param = [req.body.id]
       await mypool.execute(query, param)
+
     } catch (err) {
       next(err)
     }
