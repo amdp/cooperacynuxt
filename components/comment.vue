@@ -33,14 +33,13 @@
         </b-row>
         <b-row class="m-0 mx-2 p-0">
           <b-col cols="6" class="m-0 p-0 t10 b up">
-            <a class="finger ae" @click="reply(comment)">Reply</a> -
+            <a class="finger ae" @click="reply(comment)">Reply</a>&nbsp;
             <a
               v-if="$auth.user.id == comment.user"
               class="finger af"
               @click="edit(comment)"
               >Edit</a
-            >
-            -
+            >&nbsp;
             <a
               v-if="$auth.user.id == comment.user"
               class="finger au"
@@ -112,14 +111,13 @@
             </b-row>
             <b-row class="m-0 mx-2 p-0">
               <b-col cols="6" class="m-0 p-0 t10 b up">
-                <a class="finger ae" @click="reply(subcomment)">Reply</a> -
+                <a class="finger ae" @click="reply(subcomment)">Reply</a>&nbsp;
                 <a
                   v-if="$auth.user.id == subcomment.user"
                   class="finger af"
                   @click="edit(subcomment)"
                   >Edit</a
-                >
-                -
+                >&nbsp;
                 <a
                   v-if="$auth.user.id == subcomment.user"
                   class="finger au"
