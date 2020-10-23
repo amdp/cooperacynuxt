@@ -1,11 +1,11 @@
 <template>
-  <b-container>
+  <b-container class="m-0 p-0">
     <cooperationlist />
     <!-- COMMENTS -->
-    <div class="comments-container w-100 mt-5">
+    <b-container class="comments-container w-100 m-0 mt-5 p-0">
       <h3 class="font-weight-normal text-center">COMMENTS AND QUESTIONS</h3>
       <comment />
-    </div>
+    </b-container>
   </b-container>
 </template>
 

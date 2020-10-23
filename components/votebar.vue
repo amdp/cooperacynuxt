@@ -31,15 +31,15 @@
   </b-container>
   <b-container class="m-0 p-0 up" v-else-if="this.proptype == 'comment'">
     <b-row class="m-0 p-0">
-      <b-col cols="12" v-html="voteinfocontent" class="text-center"></b-col>
       <b-col
         v-for="vote in this.vote"
         :key="vote.commentcc"
-        :class="vote.class + ' p-0 m-1'"
+        :class="vote.class + ' p-0 mvotecomment'"
         @mouseover="voteinfo('comment', vote.vlong, vote.commentcc, vote.v)"
         @click="voteswitch(vote.commentcc)"
       >
       </b-col>
+      <b-col cols="12" v-html="voteinfocontent" class="text-center t9"></b-col>
     </b-row>
   </b-container>
 </template>
@@ -53,7 +53,7 @@ export default {
   },
   data() {
     return {
-      voteinfocontent: '<span v-if="voteprop.mode <= 9"> PROVIDE YOUR VOTE/FEEDBACK (<span class="underline">INFO</span>): </span>',
+      voteinfocontent: '<span v-if="voteprop.mode <= 9">YOUR VOTE/FEEDBACK (<span class="underline">INFO</span>): </span>',
       intervalinfo: null
     }
   },

@@ -584,6 +584,9 @@ hr.home-hr {
   width: 10px;
   text-align: left;
 }
+.mvotecomment {
+  margin: 3px;
+}
 .label-default {
   background-color: $back !important;
 }
@@ -598,9 +601,16 @@ hr.home-hr {
   hyphens: auto;
 }
 
-.usercomment {
+.usercommentimg {
   height: 40px;
   width: 40px;
+}
+.fumetto{
+  background-color: #f8f8f8;
+}
+.bianchetto{
+  background-color: #fff;
+  border-radius: 3% 3% 3% 3%;
 }
 .pagecontainer {
   display: flex;
@@ -727,6 +737,9 @@ a.disabled {
 .t8 {
   font-size: 8px;
 }
+.t9 {
+  font-size: 8px;
+}
 .t10 {
   font-size: 10px;
 }
@@ -781,6 +794,7 @@ a.disabled {
 .newcommentbox{
   border: 1px solid $aaagray;
   border-radius: 5px;
+  background-color: white;
 }
 
 /***********************************************************

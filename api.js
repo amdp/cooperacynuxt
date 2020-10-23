@@ -1102,7 +1102,7 @@ app.post('/budgetstep', async function (req, res, next) {
       // in any case it creates a new registry record and moves 1 budget step forward
       await mypool.query('DROP EVENT IF EXISTS budgetstepcooperation' + req.body.cooperation.id)
       let query = 'CREATE EVENT budgetstepcooperation' + req.body.cooperation.id
-        + ' ON SCHEDULE AT CURRENT_TIMESTAMP + INTERVAL 3 SECOND DO BEGIN' // (BEGIN 1)
+        + ' ON SCHEDULE AT CURRENT_TIMESTAMP + INTERVAL 1 MINUTE DO BEGIN' // (BEGIN 1)
         + '   DECLARE thiscooperation INT; DECLARE ivote INT; DECLARE e0 INT; DECLARE e1 INT;'
         + '   SET thiscooperation = ?; SET ivote = (SELECT `I` from cooperation where id=thiscooperation);'
         + '   IF ivote > 0 THEN SET ivote = ivote;' //if I vote, do nothing
@@ -1487,7 +1487,8 @@ app.post('/budgetcheck', async function (req, res, next) {
   }
   for (let i = 0; i < completedcoo.length; i++) {
     try {
-      query = 'UPDATE `cooperationregistry` SET `budgetstep` = \'mailsent-awaiting\' WHERE `id` = ?'
+      query = 'UPDATE `cooperationregistry` SET `budgetstep` = \'mailsent-awaiting\''
+        + ' WHERE `id` = ? and WHERE `budgetstep` = \'budgetcrossed\''
       param = [completedcoo[i].id]
       mypool.execute(query, param)
       notifycoo(completedcoo[i].cooperationid)

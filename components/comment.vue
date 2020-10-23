@@ -1,8 +1,8 @@
 <template>
-  <div class="mx-auto mt-4 mb-5">
+  <b-container class="mx-auto mt-4 mb-5 fumetto">
     <!-- NEW POST -->
-    <p>Make a question, discuss a topic!</p>
-    <vue-tribute :options="options" id="postTribute">
+    <b-container class="p-2">Make a question, discuss a topic!</b-container>
+    <vue-tribute :options="options" id="postTribute" class="px-2">
       <b-container
         class="newcommentbox p-0 m-0"
         contenteditable="true"
@@ -14,51 +14,56 @@
     </vue-tribute>
 
     <!-- POSTS -->
-    <div class="row mt-3" v-for="comment in up" :key="comment.id">
-      <div class="col-10 col-lg-7 mx-auto cooperationbox p-3">
-        <div class="row mb-2 mt-0 ml-0 mr-0 p-0">
-          <div class="col-2 col-md-1 space t10 graylight up text-left p-0">
+    <b-row class="m-0 p-0 mt-3" v-for="comment in up" :key="comment.id">
+      <b-col cols="12" lg="7" class="p-0 mx-auto cooperationbox">
+        <b-row class="m-0 p-0">
+          <b-col cols="2" md="1" class="space t10 graylight up text-left p-0">
             <img
               v-if="!anonymous"
-              class="usercomment rounded-circle img-responsive"
+              class="usercommentimg rounded-circle img-responsive"
               :src="'/assets/image/user/' + comment.user + '.png'"
             />
-          </div>
-          <p class="col-10 col-md-11" v-html="comment.content"></p>
-        </div>
-        <div class="row">
-          <div class="col-12 space t10 up text-right graylight">
-            <span v-if="!anonymous">
+          </b-col>
+          <b-col cols="10" md="11" class="t12 m-0 p-0 px-1 bianchetto">
+            <b-container v-if="!anonymous" class="m-0 p-0 up hb">
               {{ comment.name }} {{ comment.surname }}
-            </span>
-            <span> #{{ comment.id }} {{ comment.created }} </span>
-            <br />
-            <span
+            </b-container>
+            <span v-html="comment.content"></span>
+          </b-col>
+        </b-row>
+        <b-row class="m-0 mx-2 p-0">
+          <b-col cols="6" class="m-0 p-0 t10 b up">
+            <a class="finger ae" @click="reply(comment)">Reply</a> -
+            <a
               v-if="$auth.user.id == comment.user"
-              class="gray finger"
+              class="finger af"
+              @click="edit(comment)"
+              >Edit</a
+            >
+            -
+            <a
+              v-if="$auth.user.id == comment.user"
+              class="finger au"
               @click="remove(comment)"
             >
               Delete
-            </span>
-            <span
-              v-if="$auth.user.id == comment.user"
-              class="gray finger"
-              @click="edit(comment)"
-            >
-              - Edit</span
-            >
-            <span class="gray finger" @click="reply(comment)"> - Reply</span>
-          </div>
-        </div>
-        <div class="row m-0 p-0">
-          <div class="col-12 mb-3">
+            </a>
+          </b-col>
+          <b-col cols="6" class="m-0 p-0 t10 text-right">
+            {{ comment.created.replace(/T|:..\.000Z/gm, ' ') }}
+            #{{ comment.id }}
+          </b-col>
+        </b-row>
+        <b-row class="m-0 p-0">
+          <b-col cols="12" class="m-0 p-0">
             <votebar
               :voteprop="comment"
               :proptype="'comment'"
               :voteId="comment.id"
             />
-          </div>
-        </div>
+          </b-col>
+        </b-row>
+
         <!-- POST EDIT/REPLY FORM BOX -->
         <b-row class="p-0 m-0" v-show="formswitch == comment.id">
           <b-col cols="12">
@@ -79,53 +84,65 @@
           </b-col>
         </b-row>
         <!-- COMMENT -->
-        <div
-          class="row mt-2"
+        <b-row
+          class="m-0 mt-2 p-0"
           v-for="subcomment in sub(comment, comment.id)"
           :key="subcomment.id"
         >
-          <div class="col-11 mx-auto">
-            <div class="row mb-2 mt-0 ml-0 mr-0 p-0">
-              <div class="col-2 col-md-1 space t10 graylight up text-left p-0">
+          <b-col cols="12" class="p-0 m-0">
+            <b-row class="m-0 p-0">
+              <b-col cols="1" class="m-0 p-0"></b-col>
+              <b-col
+                cols="2"
+                md="1"
+                class="space t10 graylight up text-left p-0"
+              >
                 <img
                   v-if="!anonymous"
-                  class="usercomment rounded-circle"
+                  class="usercommentimg rounded-circle img-responsive"
                   :src="'/assets/image/user/' + subcomment.user + '.png'"
                 />
-              </div>
-              <div class="col-10 col-md-11" v-html="subcomment.content"></div>
-            </div>
-            <div class="row">
-              <div class="col-12 space t10 up text-right graylight">
-                <span v-if="!anonymous">
+              </b-col>
+              <b-col cols="9" md="10" class="t12 m-0 p-0 px-1 bianchetto">
+                <b-container v-if="!anonymous" class="m-0 p-0 up hb">
                   {{ subcomment.name }} {{ subcomment.surname }}
-                </span>
-                <span> #{{ subcomment.id }} {{ subcomment.created }} </span>
-                <br />
-                <span
+                </b-container>
+                <span v-html="subcomment.content"></span>
+              </b-col>
+            </b-row>
+            <b-row class="m-0 mx-2 p-0">
+              <b-col cols="6" class="m-0 p-0 t10 b up">
+                <a class="finger ae" @click="reply(subcomment)">Reply</a> -
+                <a
                   v-if="$auth.user.id == subcomment.user"
-                  class="gray finger"
+                  class="finger af"
+                  @click="edit(subcomment)"
+                  >Edit</a
+                >
+                -
+                <a
+                  v-if="$auth.user.id == subcomment.user"
+                  class="finger au"
                   @click="remove(subcomment)"
                 >
                   Delete
-                </span>
-                <span
-                  v-if="$auth.user.id == subcomment.user"
-                  class="gray finger"
-                  @click="edit(subcomment)"
-                >
-                  - Edit</span
-                >
-                <span class="gray finger" @click="reply(subcomment)">
-                  - Reply</span
-                >
-              </div>
-            </div>
-            <div class="row m-0 p-0">
-              <div class="col-12 mb-3">
-                <votebar :voteprop="subcomment" :proptype="'comment'" />
-              </div>
-            </div>
+                </a>
+              </b-col>
+              <b-col cols="6" class="m-0 p-0 t10 text-right">
+                {{ subcomment.created.replace(/T|:..\.000Z/gm, ' ') }}
+                #{{ subcomment.id }}
+              </b-col>
+            </b-row>
+            <b-row class="m-0 p-0">
+              <b-col cols="12" class="m-0 p-0">
+                <votebar
+                  :voteprop="subcomment"
+                  :proptype="'comment'"
+                  :voteId="subcomment.id"
+                />
+              </b-col>
+            </b-row>
+
             <!-- COMMENT EDIT/REPLY FORM BOX -->
             <b-row class="p-0 m-0" v-show="formswitch == subcomment.id">
               <b-col cols="12">
@@ -145,12 +162,12 @@
                 </b-link>
               </b-col>
             </b-row>
-          </div>
-        </div>
-      </div>
-    </div>
+          </b-col>
+        </b-row>
+      </b-col>
+    </b-row>
     <div class="circle"></div>
-  </div>
+  </b-container>
 </template>
 
 <script>
