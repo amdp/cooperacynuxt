@@ -219,7 +219,7 @@
             description="Please insert your birthdate"
           >
             <b-form-input
-              id="brithdateInput"
+              id="birthdateInput"
               v-model="formBirthdate"
               size="sm"
               type="datetime-local"
