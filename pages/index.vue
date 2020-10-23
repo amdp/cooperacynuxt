@@ -9,7 +9,6 @@
 <script>
 export default {
   async fetch({ store, params }) {
-    await store.dispatch('getCooperation', { limit: 21 })
     await store.dispatch('getPlace')
     await store.dispatch('getCountry')
     await store.dispatch('getFundingvar')
@@ -24,5 +23,8 @@ export default {
         reset: true,
       })
   },
+  mounted() {
+    this.$store.dispatch('getCooperation', { limit: 21 })
+  }
 }
 </script>

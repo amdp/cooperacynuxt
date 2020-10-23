@@ -83,18 +83,18 @@ export default {
     }
   },
   async fetch({ store, params }) {
-    await store.dispatch('getCountry')
-    await store.dispatch('getPlace')
-    await store.dispatch('getFundingvar')
-    await store.dispatch('getUserCooperation', {
-      userid: store.state.auth.user.id
-    })
     await store.dispatch('getUservote', {
       userid: store.state.auth.user.id,
       proptype: 'cooperation'
     })
+    await store.dispatch('getCountry')
+    await store.dispatch('getPlace')
+    await store.dispatch('getFundingvar')
   },
   mounted() {
+    this.$store.dispatch('getUserCooperation', {
+      userid: this.$store.state.auth.user.id
+    })
     this.rainbowcode()
     this.budgetcheck()
   },

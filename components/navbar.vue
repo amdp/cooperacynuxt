@@ -28,7 +28,7 @@
                 </text>
                 <g>
                   <image
-                    style="overflow: visible;"
+                    style="overflow: visible"
                     width="81"
                     height="81"
                     transform="matrix(1 0 0 1 126 29)"

@@ -618,6 +618,13 @@ app.post('/place', async function (req, res, next) {
 })
 
 app.post('/cooperation', async function (req, res, next) {
+  if (req.body.created) req.body.created = req.body.created.replace(
+    /T|Z/gm,
+    function (x) {
+      if (x == 'T') return ' '
+      if (x == 'Z') return ''
+    }
+  )
   let param = [
     req.body.mode,
     req.body.category,
@@ -629,11 +636,12 @@ app.post('/cooperation', async function (req, res, next) {
     req.body.video,
     req.body.anonymous,
     req.body.parent,
+    req.body.author,
     req.body.collect,
     req.body.budget,
     req.body.hudget
   ]
-  if (req.body.id == 'new') {
+  if (req.body.id == 'new') {//checks if cooperation exists
     try {
       let query = 'SELECT * FROM `cooperation` WHERE `cooperation`.`title`= ? LIMIT 1'
       let cooperationtitle = [req.body.title]
@@ -646,9 +654,11 @@ app.post('/cooperation', async function (req, res, next) {
     } catch (err) {
       next(err)
     }
-  } else {
+  } else {//deactivate case
     if (req.body.mode < 0) { //if we deactivate, we need to copy the state of the cooperation before archiviation
-      param.push( //we already pushed req.body.id
+      let deparam = param.slice(0)
+      deparam.unshift(req.body.id)//we need req.body.id for the registry
+      deparam.push(
         req.body.professional,
         req.body.E,
         req.body.T,
@@ -659,13 +669,13 @@ app.post('/cooperation', async function (req, res, next) {
         req.body.D,
         req.body.created
       )
-      let query = 'INSERT INTO `cooperationregistry` (`mode`,`category`,`title`,`country`,`place`,`brief`,`content`,`video`,`anonymous`,`parent`,`collect`,`budget`,`hudget`,`cooperationid`,`professional`,`E`, `T`, `C`, `I`, `F`, `U`, `D`,`created`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
-      await mypool.execute(query, param)
+      let query = 'INSERT INTO `cooperationregistry` (`cooperationid`,`mode`,`category`,`title`,`country`,`place`,`brief`,`content`,`video`,`anonymous`,`parent`,`author`,`collect`,`budget`,`hudget`,`professional`,`E`, `T`, `C`, `I`, `F`, `U`, `D`,`created`) VALUES (?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?,?, ?,?,?,?)'
+      await mypool.execute(query, deparam)
     }
-    try {
-      param.push(req.body.id)
+    try {// if not, we just update it
+      param.push(req.body.id)//we need req.body.id at the end here
       let query =
-        'UPDATE `cooperation` SET `mode`=?,`category`=?,`title`=?,`country`=?,`place`=?,`brief`=?,`content`=?,`video`=?,`anonymous`=?,`parent`=?,`collect`=?,`budget`=?,`hudget`=? WHERE `cooperation`.`id`=?'
+        'UPDATE `cooperation` SET `mode`=?,`category`=?,`title`=?,`country`=?,`place`=?,`brief`=?,`content`=?,`video`=?,`anonymous`=?,`parent`=?,`author`=?,`collect`=?,`budget`=?,`hudget`=? WHERE `cooperation`.`id`=?'
       await mypool.execute(query, param)
     } catch (err) {
       next(err)
@@ -674,9 +684,8 @@ app.post('/cooperation', async function (req, res, next) {
   }
   async function addcooperation() {
     try {
-      param.unshift(req.body.author)
       let query =
-        'INSERT INTO `cooperation` (`author`,`mode`,`category`,`title`,`country`,`place`,`brief`,`content`,`video`,`anonymous`,`parent`,`collect`,`budget`,`hudget`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
+        'INSERT INTO `cooperation` (`mode`,`category`,`title`,`country`,`place`,`brief`,`content`,`video`,`anonymous`,`parent`,`author`,`collect`,`budget`,`hudget`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
       const [cooperation] = await mypool.execute(query, param)
       res.status(200).send({ id: cooperation.insertId })
     } catch (err) {
@@ -861,6 +870,13 @@ app.post('/user', async function (req, res, next) {
     if (user) {
       return res.status(200).send('exists')
     } else {
+      req.body.birthdate = req.body.birthdate.replace(
+        /T|Z/gm,
+        function (x) {
+          if (x == 'T') return ' '
+          if (x == 'Z') return ''
+        }
+      )
       let hashed = await bcrypt.hash(req.body.password, 10)
       try {
         let query =
@@ -1050,16 +1066,23 @@ app.get('/map', async function (req, res, next) {
 })
 
 app.post('/budgetstep', async function (req, res, next) {
+  req.body.cooperation.created = req.body.cooperation.created.replace(
+    /T|Z/gm,
+    function (x) {
+      if (x == 'T') return ' '
+      if (x == 'Z') return ''
+    }
+  )
   if (// applies trust/uderstandingvotes rule, moves 1 budget step further, creates a new record in the registry
     (req.body.cooperation.mode == btrust && req.body.cooperation.T >= req.body.cooperation.E * 0.7)
     || (req.body.cooperation.mode == bunderstanding && req.body.cooperation.U >= req.body.cooperation.E * 0.7)) {
     try {
       let query =
         'INSERT INTO `cooperationregistry`(`cooperationid`,`mode`,`category`,`title`,`country`,`place`,`brief`,`content`,'
-        + '`video`,`anonymous`,`parent`,`collect`,`budget`,`budgetstep`,`professional`,`hudget`,'
+        + '`video`,`anonymous`,`parent`,`author`,`collect`,`budget`,`budgetstep`,`professional`,`hudget`,'
         + '`E`, `T`, `C`, `I`,`F`, `U`, `D`,`created`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
         + 'UPDATE `cooperation` SET `mode` = `mode`+1 where `id`=?;'
-      let param = [req.body.cooperation.id, req.body.cooperation.mode, req.body.cooperation.category, req.body.cooperation.title, req.body.cooperation.country, req.body.cooperation.place, req.body.cooperation.brief, cooperation.content, req.body.cooperation.video, req.body.cooperation.anonymous, req.body.cooperation.parent, req.body.cooperation.collect, req.body.cooperation.budget, 'trust-understanding-pass', req.body.cooperation.professional, req.body.cooperation.hudget, req.body.cooperation.E, req.body.cooperation.T, req.body.cooperation.C, req.body.cooperation.I, req.body.cooperation.F, req.body.cooperation.U, req.body.cooperation.D, req.body.cooperation.created, req.body.cooperation.id]
+      let param = [req.body.cooperation.id, req.body.cooperation.mode, req.body.cooperation.category, req.body.cooperation.title, req.body.cooperation.country, req.body.cooperation.place, req.body.cooperation.brief, req.body.cooperation.content, req.body.cooperation.video, req.body.cooperation.anonymous, req.body.cooperation.parent, req.body.cooperation.author, req.body.cooperation.collect, req.body.cooperation.budget, 'trust-understanding-pass', req.body.cooperation.professional, req.body.cooperation.hudget, req.body.cooperation.E, req.body.cooperation.T, req.body.cooperation.C, req.body.cooperation.I, req.body.cooperation.F, req.body.cooperation.U, req.body.cooperation.D, req.body.cooperation.created, req.body.cooperation.id]
       await mypool.execute(query, param)
       notifybudgetpass('special')
     } catch (err) {
@@ -1067,8 +1090,8 @@ app.post('/budgetstep', async function (req, res, next) {
     }
   } else {// if no trustvote nor understandingvote rule can be applied, it copies the current state in the registry:
     try {// creates new record in the cooperation registry with the budget step document link
-      let query = 'INSERT INTO `cooperationregistry` (`cooperationid`,`mode`,`category`,`title`,`country`,`place`,`brief`,`content`,`video`,`anonymous`,`parent`,`collect`,`budget`,`budgetstep`,`professional`,`hudget`,`E`, `T`, `C`, `I`, `F`, `U`, `D`,`created`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
-      let param = [req.body.cooperation.id, req.body.cooperation.mode, req.body.cooperation.category, req.body.cooperation.title, req.body.cooperation.country, req.body.cooperation.place, req.body.cooperation.brief, cooperation.content, req.body.cooperation.video, req.body.cooperation.anonymous, req.body.cooperation.parent, req.body.cooperation.collect, req.body.cooperation.budget, req.body.doc, req.body.cooperation.professional, req.body.cooperation.hudget, req.body.cooperation.E, req.body.cooperation.T, req.body.cooperation.C, req.body.cooperation.I, req.body.cooperation.F, req.body.cooperation.U, req.body.cooperation.D, req.body.cooperation.created]
+      let query = 'INSERT INTO `cooperationregistry` (`cooperationid`,`mode`,`category`,`title`,`country`,`place`,`brief`,`content`,`video`,`anonymous`,`parent`,`author`,`collect`,`budget`,`budgetstep`,`professional`,`hudget`,`E`, `T`, `C`, `I`, `F`, `U`, `D`,`created`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
+      let param = [req.body.cooperation.id, req.body.cooperation.mode, req.body.cooperation.category, req.body.cooperation.title, req.body.cooperation.country, req.body.cooperation.place, req.body.cooperation.brief, req.body.cooperation.content, req.body.cooperation.video, req.body.cooperation.anonymous, req.body.cooperation.parent, req.body.cooperation.author, req.body.cooperation.collect, req.body.cooperation.budget, req.body.doc, req.body.cooperation.professional, req.body.cooperation.hudget, req.body.cooperation.E, req.body.cooperation.T, req.body.cooperation.C, req.body.cooperation.I, req.body.cooperation.F, req.body.cooperation.U, req.body.cooperation.D, req.body.cooperation.created]
       await mypool.execute(query, param)
     } catch (err) {
       next(err)
@@ -1077,35 +1100,36 @@ app.post('/budgetstep', async function (req, res, next) {
       // it does nothing, as another doc should be provided
       // if E went down cooperation remove some of its collected funds so it goes back collecting,  
       // in any case it creates a new registry record and moves 1 budget step forward
-      let query = 'delimiter | DROP EVENT IF EXISTS budgetstepcooperation' + req.body.cooperation.id + '|'
-        + ' CREATE EVENT budgetstepcooperation' + req.body.cooperation.id
-        + ' ON SCHEDULE AT CURRENT_TIMESTAMP + INTERVAL 1 WEEK DO BEGIN' // (BEGIN 1)
-        + '   DECLARE thiscooperation INT; SET thiscooperation = ?;'
-        + '   DECLARE ivote; SET ivote = (SELECT `I` form cooperation where id=thiscooperation);'
-        + '   IF ivote > 0 THEN SET ivote = ivote' //if I vote, do nothing
+      await mypool.query('DROP EVENT IF EXISTS budgetstepcooperation' + req.body.cooperation.id)
+      let query = 'CREATE EVENT budgetstepcooperation' + req.body.cooperation.id
+        + ' ON SCHEDULE AT CURRENT_TIMESTAMP + INTERVAL 3 SECOND DO BEGIN' // (BEGIN 1)
+        + '   DECLARE thiscooperation INT; DECLARE ivote INT; DECLARE e0 INT; DECLARE e1 INT;'
+        + '   SET thiscooperation = ?; SET ivote = (SELECT `I` from cooperation where id=thiscooperation);'
+        + '   IF ivote > 0 THEN SET ivote = ivote;' //if I vote, do nothing
         + '   ELSE BEGIN' //else (BEGIN 2):
-        + '       DECLARE e0 INT; DECLARE e1 INT; SET e1 = (SELECT `E` from cooperation where id=thiscooperation);'
+        + '       SET e1 = (SELECT `E` from cooperation where id=thiscooperation);'
         + '       SET e0 = (SELECT `E` from cooperationregistry where cooperationid=thiscooperation and'
         + '         id = (SELECT max(id) from cooperationregistry where cooperationid=thiscooperation));'
         + '       IF e1 < e0 THEN' // first, if E unvoting, then drop some collected money
         + '         UPDATE `cooperation` SET `collect` = `collect` * e1/e0 where `id`=thiscooperation;'
         + '       END IF;' // after, go one step forward anyways, because the week passed and no I votes were issued
-        + '       INSERT INTO `cooperationregistry`(`cooperationid`,`mode`,`category`,`title`,`country`,`place`,`brief`,`content`,'
-        + '         `video`,`anonymous`,`parent`,`collect`,`budget`,`budgetstep`,`professional`,`hudget`,'
+        + '       INSERT INTO `cooperationregistry` (`cooperationid`,`mode`,`category`,`title`,`country`,`place`,`brief`,`content`,'
+        + '         `video`,`anonymous`,`parent`,`author`,`collect`,`budget`,`budgetstep`,`professional`,`hudget`,'
         + '         `E`, `T`, `C`, `I`,`F`, `U`, `D`,`created`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);'
         + '       UPDATE `cooperation` SET `mode` = `mode`+1  where `id`=thiscooperation;'
         + '     END;' // (END BEGIN 2)
         + '   END IF;' // (END IF/ELSE)
-        + ' END | delimiter ;' // (END BEGIN 1)
-      let param = [req.body.cooperation.id, req.body.cooperation.id, req.body.cooperation.mode, req.body.cooperation.category, req.body.cooperation.title, req.body.cooperation.country, req.body.cooperation.place, req.body.cooperation.brief, cooperation.content, req.body.cooperation.video, req.body.cooperation.anonymous, req.body.cooperation.parent, req.body.cooperation.collect, req.body.cooperation.budget, 'weekpass', req.body.cooperation.professional, req.body.cooperation.hudget, req.body.cooperation.E, req.body.cooperation.T, req.body.cooperation.C, req.body.cooperation.I, req.body.cooperation.F, req.body.cooperation.U, req.body.cooperation.D, req.body.cooperation.created]
-      await mypool.execute(query, param)
-      notifybudgetpass(req.body.cooperation.mode)
+        + ' END;' // (END BEGIN 1)
+      console.log('HERE AAAA ' + query)
+      let param = [req.body.cooperation.id, req.body.cooperation.id, req.body.cooperation.mode, req.body.cooperation.category, req.body.cooperation.title, req.body.cooperation.country, req.body.cooperation.place, req.body.cooperation.brief, req.body.cooperation.content, req.body.cooperation.video, req.body.cooperation.anonymous, req.body.cooperation.parent, req.body.cooperation.author, req.body.cooperation.collect, req.body.cooperation.budget, 'weekpass', req.body.cooperation.professional, req.body.cooperation.hudget, req.body.cooperation.E, req.body.cooperation.T, req.body.cooperation.C, req.body.cooperation.I, req.body.cooperation.F, req.body.cooperation.U, req.body.cooperation.D, req.body.cooperation.created]
+      await mypool.query(query, param)
+      notifybudgetpass(req.body.cooperation.mode, req.body.cooperation.id)
       if (req.body.cooperation.mode > 101) { fundingstep(req.body.cooperation) }
     } catch (err) {
       next(err)
     }
   }
-  async function notifybudgetpass(special) {
+  async function notifybudgetpass(special, id) {
     let notifylist // we create a list of users that currently F-voted the cooperation
     try {
       let query =

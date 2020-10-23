@@ -6,24 +6,24 @@
   >
     <voteinfomodal />
     <b-container
-      v-for="type in cooperationTypes"
+      v-for="type in cooperationType"
       :key="type.id"
       class="justify-content-center m-0 p-0"
       fluid
     >
       <h2
-        v-if="cooperationlist[type.type].length > 0"
+        v-if="cooperationlist[type.name].length > 0"
         class="text-center mb-3 up"
       >
         <span class="hb" v-if="$route.path == '/'">RECENT</span>
-        <span class="hb" v-if="!$route.params.id">{{ type.type }}</span>
+        <span class="hb" v-if="!$route.params.id">{{ type.name }}</span>
         <span class="hb" v-if="$route.path == '/user'"
           ><br />
           (YOU AUTHORED OR FOLLOW)
         </span>
       </h2>
       <b-container
-        v-for="cooperation in cooperationlist[type.type]"
+        v-for="cooperation in cooperationlist[type.name]"
         :key="cooperation.id"
         :class="'p-1 mx-auto mb-3 w-100 ' + cooperationbox(cooperation)"
         class="m-0 p-0"
@@ -45,13 +45,13 @@
                 <nuxt-link :to="'/cooperation/' + cooperation.id">
                   <span
                     class="space subheading up"
-                    v-if="type.type == 'cooperations'"
+                    v-if="type.name == 'cooperations'"
                   >
                     {{ cooperation.title }}
                   </span>
                   <span
                     class="space subheading up o25"
-                    v-if="type.type == 'deactivated'"
+                    v-if="type.name == 'deactivated'"
                   >
                     {{ cooperation.title }}
                   </span> </nuxt-link
@@ -182,17 +182,6 @@
             <!-- VOTEBAR -->
             <b-row class="m-0 p-2 w-100">
               <b-col cols="12" class="m-0 p-0 w-100 text-center">
-                <b-link v-b-modal.voteinfomodal>
-                  <span v-if="cooperation.mode > 9">
-                    VOTE FOR THIS COOPERATION (<span class="underline"
-                      >INFO</span
-                    >):
-                  </span>
-                  <span v-if="cooperation.mode <= 9">
-                    PROVIDE YOUR FEEDBACK (?):
-                  </span>
-                </b-link>
-                <br />
                 <votebar
                   :voteprop="cooperation"
                   :proptype="'cooperation'"
@@ -209,20 +198,20 @@
                 >
                   <b-col cols="12" class="m-0 p-0 text-center">
                     <span v-if="cooperation.mode > 0 && $auth.user.role == 1">
-                      <b-link class="ae" @click="deactivate(cooperation)"
+                      <b-link class="ae" @click="dereactivate(cooperation)"
                         >Deactivate</b-link
                       >&nbsp;
                     </span>
                     <span v-if="cooperation.mode < 0 && $auth.user.role == 1"
-                      ><b-link class="ae" @click="activate()">Resume</b-link
+                      ><b-link class="ae" @click="dereactivate(cooperation)"
+                        >Reactivate</b-link
                       >&nbsp;
                     </span>
                     <span
                       v-if="
-                        (cooperation.collect >= cooperation.budget &&
-                          cooperation.mode >= 101 &&
-                          improfessional) ||
-                        $auth.user.role == 1
+                        cooperation.collect >= cooperation.budget &&
+                        cooperation.mode > 100 &&
+                        (improfessional() || $auth.user.role == 1)
                       "
                     >
                       <b-link v-b-modal.budgetstepmodal class="at"
@@ -234,7 +223,7 @@
                     </span>
                     <span
                       v-if="
-                        (cooperation.mode > 0 && improfessional) ||
+                        (cooperation.mode > 0 && improfessional()) ||
                         $auth.user.role == 1
                       "
                     >
@@ -244,7 +233,7 @@
                     </span>
                     <span
                       v-if="
-                        (cooperation.mode > 0 && improfessional) ||
+                        (cooperation.mode > 0 && improfessional()) ||
                         $auth.user.role == 1
                       "
                     >
@@ -285,9 +274,9 @@ export default {
       isHover: null,
       cooperationnum: 7,
       cooperationcounter: 1,
-      cooperationTypes: [
-        { id: 1, type: 'cooperations' },
-        { id: 2, type: 'deactivated' },
+      cooperationType: [
+        { id: 1, name: 'cooperations' },
+        { id: 2, name: 'deactivated' },
       ],
       incremental: -1,
       updatesec: 1, //sets how frequently the collected budget is updated
@@ -351,11 +340,11 @@ export default {
       return color
     },
     improfessional() {
-      let mypro = this.$store.state.professional.filter(
-        (pro) =>
+      let mepro = this.$store.state.professional.filter(
+        pro =>
           pro.user == this.$auth.user && pro.cooperation == this.$route.params.id
       )
-      if (mypro.length > 0) return true
+      if (mepro.length > 0) return true
       else return false
     },
     cooperationbox(cooperation) {
@@ -369,35 +358,10 @@ export default {
       }
       return boxclass
     },
-    deactivate(cooperation) {
-      this.$store.dispatch('cooperationForm', {
-        id: cooperation.id,
-        mode: cooperation.mode * -1,
-        title: cooperation.title,
-        country: cooperation.country,
-        place: cooperation.place,
-        brief: cooperation.brief,
-        content: cooperation.content,
-        video: cooperation.video,
-        anonymous: cooperation.anonymous,
-        parent: cooperation.parent,
-        author: cooperation.author,
-        category: cooperation.category,
-        collect: cooperation.collect,
-        budget: cooperation.budget,
-        budgetstep: cooperation.budgetstep,
-        fundingstep: cooperation.fundingstep,
-        professional: cooperation.professional,
-        hudget: cooperation.hudget,
-        E: cooperation.E,
-        T: cooperation.T,
-        C: cooperation.C,
-        I: cooperation.I,
-        F: cooperation.F,
-        U: cooperation.U,
-        D: cooperation.D,
-        created: cooperation.created,
-      })
+    dereactivate(cooperation) {
+      let formBodyRequest = { ...cooperation }
+      formBodyRequest.mode *= -1
+      this.$store.dispatch('cooperationForm', formBodyRequest)
       this.$store.dispatch('getUserCooperation', {
         userid: this.$auth.user.id,
       })
@@ -407,10 +371,6 @@ export default {
       this.store.dispatch('addprofessional', { id: this.formProfessional })
     },
     edit() {
-      this.$store.dispatch('editSwitch', { id: this.$route.params.id })
-      return this.$router.push({ path: '/cooperation/form' })
-    },
-    activate() {
       this.$store.dispatch('editSwitch', { id: this.$route.params.id })
       return this.$router.push({ path: '/cooperation/form' })
     },

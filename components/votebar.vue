@@ -14,6 +14,9 @@
   </b-container>
   <b-container class="m-0 p-0 up" v-else-if="this.proptype == 'cooperation'">
     <b-row class="m-0 p-0">
+      <b-col cols="12">
+        <b-link v-b-modal.voteinfomodal v-html="voteinfocontent"> </b-link>
+      </b-col>
       <b-col
         v-for="vote in this.vote"
         :key="vote.cooperationcc"
@@ -25,12 +28,10 @@
       >
       </b-col>
     </b-row>
-    <b-row class="t12 m-0 p-0">
-      <b-col cols="12" v-html="voteinfocontent"></b-col>
-    </b-row>
   </b-container>
   <b-container class="m-0 p-0 up" v-else-if="this.proptype == 'comment'">
     <b-row class="m-0 p-0">
+      <b-col cols="12" v-html="voteinfocontent" class="text-center"></b-col>
       <b-col
         v-for="vote in this.vote"
         :key="vote.commentcc"
@@ -39,9 +40,6 @@
         @click="voteswitch(vote.commentcc)"
       >
       </b-col>
-    </b-row>
-    <b-row class="t12 mb-0 ml-0 mr-0 p-0 text-center">
-      <b-col cols="12" v-html="voteinfocontent"></b-col>
     </b-row>
   </b-container>
 </template>
@@ -55,7 +53,7 @@ export default {
   },
   data() {
     return {
-      voteinfocontent: null,
+      voteinfocontent: '<span v-if="voteprop.mode <= 9"> PROVIDE YOUR VOTE/FEEDBACK (<span class="underline">INFO</span>): </span>',
       intervalinfo: null
     }
   },
@@ -137,11 +135,6 @@ export default {
   },
   methods: {
     voteinfo(proptype, vlong, cc, v) {
-      if (this.voteinfocontent == null) {
-        this.interval = setInterval(() => {
-          this.voteinfocontent = null
-        }, 5000)
-      }
       this.voteinfocontent = vlong + 'votes: ' + v + ' - '
       if (proptype == 'cooperation') {
         if (cc == 'E') {

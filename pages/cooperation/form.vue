@@ -388,19 +388,26 @@ export default {
       }
     },
     async cooperationForm() {
+      this.editing = true //animates the click
+
+      //first we check if it is a funding mode and if the author has already one funding request
       if (this.$store.state.cooperation.length > this.limitauth && this.formMode > 100) {
         return alert('Sorry, Cooperacy allows only ' + this.limitauth + ' funded cooperation per user at this moment.')
       }
-      this.editing = true
-      // This function creates and sends database request body both for cooperation creation and updating
-      //'new' is set for a new cooperation, if not the param.id is taken from url to update or copy old ones
+
+      // This function creates and sends database request body both for cooperation creation, copy, edit and reactivation
+      //'new' is set for a new cooperations, both completely new and copies of other cooperations
       let cooperationid = 'new'
+
+      // if this is an edit instead, the param.id is taken from url to update the cooperation with new data
       if (this.$store.state.edit.id && !this.$store.state.edit.copy) {
         cooperationid = this.$store.state.edit.id
       }
+
+      // here we prepare the data, if it is an edit we shouldn't insert the author
       var formBodyRequest = {
         id: cooperationid,
-        mode: this.formMode,
+        mode: this.$store.state.cooperation[0].mode < 0 ? this.formMode *= -1 : this.formMode,
         title: this.formTitle,
         country: this.formCountry,
         place: this.formPlace,
@@ -409,15 +416,12 @@ export default {
         video: '' + this.formVideo, //leave '' here
         anonymous: this.formAnonymous,
         parent: this.formParent,
+        author: this.$store.state.edit.id ? this.$store.state.cooperation[0].author : this.$auth.user.id,
         category: this.formCategory,
         collect: this.formFee,
-        budget: this.formBudget,
+        budget: this.formMode == 20 ? this.formBudget *= -1 : this.formBudget,
         hudget: this.formHudget,
       }
-      if (!this.$store.state.edit.id) {
-        formBodyRequest.author = this.$auth.user.id
-      }
-      if (this.formMode == 20) { formBodyRequest.budget * -1 }
       let res
       try {
         //vuex action to the database, the 'res'[ponse] variable brings the recently created or edited cooperation >id< from the server..
