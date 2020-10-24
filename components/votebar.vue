@@ -14,13 +14,13 @@
   </b-container>
   <b-container class="m-0 p-0 up" v-else-if="this.proptype == 'cooperation'">
     <b-row class="m-0 p-0">
-      <b-col cols="12">
+      <b-col cols="12" class="t9">
         <b-link v-b-modal.voteinfomodal v-html="voteinfocontent"> </b-link>
       </b-col>
       <b-col
         v-for="vote in this.vote"
         :key="vote.cooperationcc"
-        :class="vote.class + ' p-0 m-1'"
+        :class="vote.class + ' p-0 mvote'"
         @mouseover="
           voteinfo('cooperation', vote.vlong, vote.cooperationcc, vote.v)
         "
@@ -34,7 +34,7 @@
       <b-col
         v-for="vote in this.vote"
         :key="vote.commentcc"
-        :class="vote.class + ' p-0 mvotecomment'"
+        :class="vote.class + ' p-0 mvote'"
         @mouseover="voteinfo('comment', vote.vlong, vote.commentcc, vote.v)"
         @click="voteswitch(vote.commentcc)"
       >
@@ -239,7 +239,6 @@ export default {
       if (this.proptype == 'cooperation') {
         request.category = this.voteprop.category
         request.mode = this.voteprop.mode
-        request.cooperationtitle = this.voteprop.title
       }
       this.$store.dispatch('addVote', request).catch(err => {
         console.error(err)

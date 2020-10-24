@@ -644,8 +644,8 @@ app.post('/cooperation', async function (req, res, next) {
   if (req.body.id == 'new') {//checks if cooperation exists
     try {
       let query = 'SELECT * FROM `cooperation` WHERE `cooperation`.`title`= ? LIMIT 1'
-      let cooperationtitle = [req.body.title]
-      const [cooperation] = await mypool.execute(query, cooperationtitle)
+      let titlecheck = [req.body.title]
+      const [cooperation] = await mypool.execute(query, titlecheck)
       if (cooperation[0]) {
         res.status(200).send('exists')
       } else {
@@ -752,10 +752,12 @@ app.post('/comment', async function (req, res, next) {
     }
   }
   async function notifycomment(id) {
+    const [cooperationtitle] = await mypool.execute(
+      'SELECT `cooperation`.`title` from `cooperation` where `cooperation`.`id` = ?', req.body.cooperation)
     let notifylist // we create a list of users that currently F-voted the cooperation
     try {
       let query =
-        'SELECT `cooperationvote`.`user`, `cooperationvote`.`cooperation`, `cooperationvote`.`cooperationtitle`,' +
+        'SELECT `cooperationvote`.`user`, `cooperationvote`.`cooperation`' +
         ' `cooperationvote`.`condition`, `user`.`name`, `user`.`surname`, `user`.`email` FROM `cooperationvote`' +
         ' LEFT JOIN `user` ON `cooperationvote`.`user` = `user`.`id`' +
         ' WHERE `cooperationvote`.`cooperation` = ? and `cooperationvote`.`condition` = ?'
@@ -782,7 +784,7 @@ app.post('/comment', async function (req, res, next) {
           subject: 'Notification from Cooperacy',
           html: 'Hello, ' + notifylist[i].name + ' ' + notifylist[i].surname + '!<br /><br />' +
             'You have a new notification relative to the cooperation "' +
-            notifylist[i].cooperationtitle + '" that you are following: there is a new comment. <a href="https://cooperacy.org/cooperation/' +
+            cooperationtitle + '" that you are following: there is a new comment. <a href="https://cooperacy.org/cooperation/' +
             notifylist[i].cooperation + '">Have a look</a> or read the comment here:<br />' +
             req.body.message + '<br /><br /><br />'
         }
@@ -900,7 +902,7 @@ app.post('/user', async function (req, res, next) {
         res.status(200).send({ id: useradded.insertId })
         try {
           let queryA =
-            'INSERT INTO `cooperationvote` (`user`,`cooperation`,`cooperationtitle`,`condition`) VALUES (?,?,?,?)'
+            'INSERT INTO `cooperationvote` (`user`,`cooperation`,`condition`) VALUES (?,?,?,?)'
           let paramA = [useradded.insertId, '700', 'Announcements', 'F'] //700 is the Annoucements cooperation id
           mypool.execute(queryA, paramA)
         } catch (err) {
@@ -1133,7 +1135,7 @@ app.post('/budgetstep', async function (req, res, next) {
     let notifylist // we create a list of users that currently F-voted the cooperation
     try {
       let query =
-        'SELECT `cooperationvote`.`user`, `cooperationvote`.`cooperation`, `cooperationvote`.`cooperationtitle`,' +
+        'SELECT `cooperationvote`.`user`, `cooperationvote`.`cooperation`,' +
         ' `cooperationvote`.`condition`, `user`.`name`, `user`.`surname`, `user`.`email` FROM `cooperationvote`' +
         ' LEFT JOIN `user` ON `cooperationvote`.`user` = `user`.`id`' +
         ' WHERE `cooperationvote`.`cooperation` = ? and `cooperationvote`.`condition` = ?'
@@ -1160,7 +1162,7 @@ app.post('/budgetstep', async function (req, res, next) {
           subject: 'Notification from Cooperacy',
           html: 'Hello, ' + notifylist[i].name + ' ' + notifylist[i].surname + '!<br /><br />' +
             'You have a new notification relative to the cooperation ' +
-            notifylist[i].cooperationtitle + ': a budget document link has been delivered!<br />' +
+            req.body.cooperation.title + ': a budget document link has been delivered!<br />' +
             '<a href="https://cooperacy.org/cooperation/' + notifylist[i].cooperation +
             '">Have a look</a>: you have three possible actions now: <br /><br />' +
             '1 Do nothing, as you\'re ok with the document provided, ' +
@@ -1216,7 +1218,7 @@ app.post('/budgetstep', async function (req, res, next) {
           subject: 'Notification from Cooperacy',
           html: 'Hello, ' + notifylist[i].name + ' ' + notifylist[i].surname + '!<br /><br />' +
             'You have a new ADMINISTRATION related notification relative to the cooperation ' +
-            notifylist[i].cooperationtitle + ': you should deliver the relative funding amount.<br /><br /><br />' +
+            req.body.cooperation.title + ': you should deliver the relative funding amount.<br /><br /><br />' +
             + 'Techical details: ' + JSON.stringify(cooperationtbf) +
             ' <br /><br /><br />'
         }
@@ -1261,14 +1263,14 @@ app.post('/vote', async function (req, res, next) {
   async function addvote() {
     try {
       let query =
-        'INSERT INTO `' + req.body.proptype + 'vote` (`user`,`condition`,`cooperation`,'
+        'INSERT INTO `' + req.body.proptype + 'vote` (`user`,`condition`,`cooperation`'
       let param = [req.body.user, req.body.condition]
       if (req.body.proptype == 'cooperation') {
-        query += '`cooperationtitle`) VALUES (?,?,?,?)'
-        param.push(req.body.id, req.body.cooperationtitle)
+        query += ') VALUES (?,?,?)'
+        param.push(req.body.id)
       }
       if (req.body.proptype == 'comment') {
-        query += '`comment`) VALUES (?,?,?,?)'
+        query += ',`comment`) VALUES (?,?,?,?)'
         param.push(req.body.cooperationid, req.body.id)
       }
       mypool.execute(query, param)
@@ -1495,16 +1497,16 @@ app.post('/budgetcheck', async function (req, res, next) {
         + ' WHERE `id` = ? and WHERE `budgetstep` = \'budgetcrossed\''
       param = [completedcoo[i].id]
       mypool.execute(query, param)
-      notifycoo(completedcoo[i].cooperationid)
+      notifycoo(completedcoo[i].cooperationid, completedcoo.title)
     } catch (err) {
       next(err)
     }
   }
-  async function notifycoo(id) {
+  async function notifycoo(id, cooperationtitle) {
     let notifylist // we create a list of users that currently F-voted the cooperation
     try {
       let query =
-        'SELECT `cooperationvote`.`user`, `cooperationvote`.`cooperation`, `cooperationvote`.`cooperationtitle`,' +
+        'SELECT `cooperationvote`.`user`, `cooperationvote`.`cooperation`,' +
         ' `cooperationvote`.`condition`, `user`.`name`, `user`.`surname`, `user`.`email` FROM `cooperationvote`' +
         ' LEFT JOIN `user` ON `cooperationvote`.`user` = `user`.`id`' +
         ' WHERE `cooperationvote`.`cooperation` = ? and `cooperationvote`.`condition` = ?'
@@ -1531,7 +1533,7 @@ app.post('/budgetcheck', async function (req, res, next) {
           subject: 'Notification from Cooperacy',
           html: 'Hello, ' + notifylist[i].name + ' ' + notifylist[i].surname + '!<br /><br />' +
             'You have a new notification relative to the cooperation ' +
-            notifylist[i].cooperationtitle + ': the collected money crossed the final budget line!<br />' +
+            cooperationtitle + ': the collected money crossed the final budget line!<br />' +
             '<a href="https://cooperacy.org/cooperation/' + notifylist[i].cooperation +
             '">Have a look</a> and prepare the relative documentation to get funded! <br /><br /><br />'
         }
@@ -1709,7 +1711,7 @@ DROP TRIGGER IF EXISTS `gotobudgetsteps`;
 DELIMITER ;;
 CREATE TRIGGER `gotobudgetsteps` BEFORE UPDATE ON `cooperation` FOR EACH ROW
 BEGIN
-  IF new.`collect` >= new.`budget` AND new.`mode` > 100 THEN
+  IF new.`collect` >= new.`budget` AND new.`mode` > 100 AND new.collect != old.collect THEN
   BEGIN
     SET new.`collect` = new.`budget`;
         INSERT INTO `cooperationregistry`

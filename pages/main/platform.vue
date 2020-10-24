@@ -7,45 +7,37 @@
 
     <p class="subheading transparency center space">IMAGINE</p>
     <p class="base">
-      Imagine the effect of one million people bringing together a little
-      economic effort: one euro. Imagine you and all the other people to
-      reciprocally collect one million euros every month to support your ideas.
-      With this collective fund you will generate an innovative economy in which
-      the more people will participate, the more the people's ideas will be
-      realized.<br />
+      Imagine the effect of one million people collecting one euro each. Imagine
+      one million euros to be collected every month. Imagine this capital to
+      support your ideas and an innovative economy in which the more people will
+      participate, the more the people's ideas will be realized.<br />
     </p>
 
     <p class="subheading transparency center space">CO-OWNING A PLATFORM</p>
     <p class="base">
-      The Cooperacy Platform won't just realise the most desired ideas proposed
-      by the participants, but also create a social ecosystem based on
-      co-ownership and redistribution of wealth. Every participants will in
-      facts be co-owner of all the platform achievements and funds.
+      The Cooperacy Platform will create a social ecosystem based on
+      co-ownership and redistribution of wealth. Every participants will in fact
+      be a co-owner of all the platform achievements and funds.
     </p>
 
     <p class="subheading center space transparency">VOTING IDEAS</p>
     <p class="base">
-      The platform distributes the common money and resources to the ideas
-      according to how much they are desired by the participants. Expressing
-      their
+      The platform distributes
+      <nuxt-link to="/main/integration" class="ae">proportionally</nuxt-link>
+      the common money and resources to the ideas according to the participants'
       <nuxt-link to="/main/cooperation#diversity" class="ae"
         >preferences</nuxt-link
       >
-      through
-      <nuxt-link to="/main/cooperation#diversity" class="ae"
-        >transparent</nuxt-link
-      >
-      votes, the common collected money goes
-      <nuxt-link to="/main/integration" class="ae">proportionally</nuxt-link> to
-      the ideas according to how many votes they received. Keeping it simple:
-      people propose <i>ideas</i>, <i>votes</i> allocate the common money.
+      expressed through colorful votes. Keeping it simple: people propose
+      <i>ideas</i>, the participants <i>preferences</i> allocate the common
+      money.
     </p>
 
     <p class="subheading center space transparency">REDISTRIBUTING PROFITS</p>
     <p class="base">
-      Every idea is co-owned, so when it produces wealth, its profits go back to
-      the platform collected money, in order to fund other ideas and to create a
-      virtuous circle that slowly generates resources for
+      When a cooperation produces wealth, its profits go back to the collected
+      money, in order to fund other ideas and to create a virtuous circle that
+      slowly generates resources for
       <nuxt-link to="/main/cooperation#equivalence" class="ae"
         >everyone</nuxt-link
       >.

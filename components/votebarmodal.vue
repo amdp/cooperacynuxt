@@ -70,7 +70,6 @@ export default {
       // SERVER-SIDE: prepares and sends async REST call (either comment or cooperation)
       let request = {
         id: this.cooperationprop.id,
-        cooperationtitle: this.cooperationprop.title,
         condition: cc,
         user: this.$auth.user.id,
         proptype: 'cooperation',

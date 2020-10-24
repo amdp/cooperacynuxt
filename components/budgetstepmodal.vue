@@ -41,11 +41,12 @@ export default {
 
   methods: {
     async budgetstep() {
-      this.$store.dispatch('budgetstep', {
+      let done = await this.$store.dispatch('budgetstep', {
         cooperation: this.cooperationprop,
         user: this.$auth.user,
         doc: this.formDoc
       })
+      if (done) location.href = process.env.URLHOME + '/cooperation/' + this.cooperationprop.id
     },
     close() {
       location.href = process.env.URLHOME + '/cooperation/' + this.cooperationprop.id

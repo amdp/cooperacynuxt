@@ -1,5 +1,5 @@
 <template>
-  <b-container class="mx-auto mt-4 mb-5 fumetto">
+  <b-container class="m-0 px-2 mt-4 mb-5 fumetto">
     <!-- NEW POST -->
     <b-container class="p-2">Make a question, discuss a topic!</b-container>
     <vue-tribute :options="options" id="postTribute" class="px-2">
@@ -32,7 +32,11 @@
           </b-col>
         </b-row>
         <b-row class="m-0 mx-2 p-0">
-          <b-col cols="6" class="m-0 p-0 t10 b up">
+          <b-col cols="6" class="m-0 p-0 t10">
+            {{ comment.created.replace(/T|:..\.000Z/gm, ' ') }}
+            #{{ comment.id }}
+          </b-col>
+          <b-col cols="6" class="m-0 p-0 t10 b up text-right">
             <a class="finger ae" @click="reply(comment)">Reply</a>&nbsp;
             <a
               v-if="$auth.user.id == comment.user"
@@ -47,10 +51,6 @@
             >
               Delete
             </a>
-          </b-col>
-          <b-col cols="6" class="m-0 p-0 t10 text-right">
-            {{ comment.created.replace(/T|:..\.000Z/gm, ' ') }}
-            #{{ comment.id }}
           </b-col>
         </b-row>
         <b-row class="m-0 p-0">
@@ -110,7 +110,11 @@
               </b-col>
             </b-row>
             <b-row class="m-0 mx-2 p-0">
-              <b-col cols="6" class="m-0 p-0 t10 b up">
+              <b-col cols="6" class="m-0 p-0 t10">
+                {{ subcomment.created.replace(/T|:..\.000Z/gm, ' ') }}
+                #{{ subcomment.id }}
+              </b-col>
+              <b-col cols="6" class="m-0 p-0 t10 b up text-right">
                 <a class="finger ae" @click="reply(subcomment)">Reply</a>&nbsp;
                 <a
                   v-if="$auth.user.id == subcomment.user"
@@ -125,10 +129,6 @@
                 >
                   Delete
                 </a>
-              </b-col>
-              <b-col cols="6" class="m-0 p-0 t10 text-right">
-                {{ subcomment.created.replace(/T|:..\.000Z/gm, ' ') }}
-                #{{ subcomment.id }}
               </b-col>
             </b-row>
             <b-row class="m-0 p-0">
@@ -164,7 +164,7 @@
         </b-row>
       </b-col>
     </b-row>
-    <div class="circle"></div>
+    <br />
   </b-container>
 </template>
 

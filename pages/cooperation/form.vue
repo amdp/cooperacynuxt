@@ -439,7 +439,6 @@ export default {
             id: res,
             condition: 'F',
             user: this.$auth.user.id,
-            cooperationtitle: this.formTitle,
             proptype: 'cooperation',
           }
           this.$store.dispatch('addVote', freedomvote)

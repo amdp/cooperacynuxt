@@ -103,7 +103,7 @@
               </b-col>
             </b-row>
             <!-- BUDGET BAR -->
-            <b-row class="m-0 p-0 w-100">
+            <b-row class="m-0 p-0 w-100 t10">
               <b-col cols="12">
                 <b-progress
                   v-if="cooperation.mode > 9 && cooperation.budget != 0"
@@ -148,7 +148,7 @@
               </b-col>
             </b-row>
             <!-- HUDGET BAR -->
-            <b-row class="m-0 p-0 w-100">
+            <b-row class="m-0 p-0 w-100 t10">
               <b-col cols="12">
                 <b-progress
                   v-if="cooperation.hudget != 0 && cooperation.mode > 0"

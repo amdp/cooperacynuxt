@@ -17,10 +17,6 @@ export default {
     return /^\d+$/.test(params.id)
   },
   async fetch({ store, params }) {
-    await store.dispatch('getCooperation', {
-      cooperationid: params.id,
-      userid: store.state.auth.user.id
-    })
     await store.dispatch('getFundingvar')
     await store.dispatch('getPlace')
     await store.dispatch('getCountry')
@@ -51,6 +47,12 @@ export default {
           cooperation => cooperation.id == this.$route.params.id
         )[0].title
     }
+  },
+  created() {
+    this.$store.dispatch('getCooperation', {
+      cooperationid: this.$route.params.id,
+      userid: this.$store.state.auth.user.id
+    })
   }
 }
 </script>

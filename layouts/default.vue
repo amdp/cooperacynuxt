@@ -5,7 +5,7 @@
     </b-row>
     <b-row fluid class="justify-content-center w-100 m-0 pl-0 pr-0">
       <navbar />
-      <b-col cols="12" lg="8" class="p-3 mt-5">
+      <b-col cols="12" lg="8" class="p-2 mt-5">
         <nuxt />
       </b-col>
     </b-row>

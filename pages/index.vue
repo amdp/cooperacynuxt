@@ -23,7 +23,7 @@ export default {
         reset: true,
       })
   },
-  mounted() {
+  created() {
     this.$store.dispatch('getCooperation', { limit: 21 })
   }
 }

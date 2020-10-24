@@ -148,34 +148,27 @@
           >
         </div>
         <div class="col-lg-4 col-xs-12 subheading text-center">
-          <nuxt-link to="/main/cooperation" class="noline understanding space"
-            >LEARN</nuxt-link
-          >
-        </div>
-        <div class="col-lg-4 col-xs-12 subheading text-center">
           <nuxt-link to="/login" class="noline equivalence space"
             >JOIN</nuxt-link
           >
         </div>
+        <div class="col-lg-4 col-xs-12 subheading text-center">
+          <nuxt-link to="/main/cooperation" class="noline understanding space"
+            >LEARN</nuxt-link
+          >
+        </div>
       </div>
       <p class="base text-center">
-        Cooperacy is an open initiative aiming to apply and spread Cooperation
-        Science.
+        Cooperacy is an experimental project based on Cooperation Science
       </p>
       <p class="base text-center mb-2">
         We're setting up a
-        <nuxt-link to="/main/platform" class="ae">platform</nuxt-link> in which,
-        supported by money, people help each other to realise what they want for
-        their lives taking decisions together in a productive way.
-      </p>
-      <p class="base text-center mb-3">
-        <nuxt-link to="/login" class="ae">Joining</nuxt-link> Cooperacy is
-        entertaining and makes you learn how to develop enjoyable cooperations
-        in your
-        <nuxt-link to="/main/aboutyou" class="ad">personal</nuxt-link>
-        relations, in the
+        <nuxt-link to="/main/platform" class="ae">platform</nuxt-link> in which
+        people can learn how to realize their ideas together, resolve relational
+        conflicts and develop enjoyable cooperations at the
+        <nuxt-link to="/main/aboutyou" class="ad">personal</nuxt-link>,
         <nuxt-link to="/main/corporate" class="af">corporate</nuxt-link>
-        world and at the
+        and
         <nuxt-link to="/cci" class="au">international</nuxt-link> level.
       </p>
       <div class="base text-center">
