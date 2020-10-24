@@ -6,7 +6,7 @@
           {{ this.$auth.user.name }} {{ this.$auth.user.surname }}
         </h5>
         <img
-          class="usercomment rounded-circle img-responsive"
+          class="usercommentimg rounded-circle img-responsive"
           v-if="this.$auth.user.id"
           :src="'/assets/image/user/' + this.$auth.user.id + '.png'"
         /><br />
