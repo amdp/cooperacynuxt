@@ -38,7 +38,6 @@ export default {
       formDoc: ''
     }
   },
-
   methods: {
     async budgetstep() {
       let done = await this.$store.dispatch('budgetstep', {

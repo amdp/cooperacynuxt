@@ -14,6 +14,7 @@ module.exports = {
   components: true,
   modules: [
     '@nuxtjs/axios',
+    '@nuxt/http',
     '@nuxtjs/toast',
     '@nuxtjs/auth',
     'nuxt-i18n',

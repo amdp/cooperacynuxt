@@ -87,10 +87,12 @@
                     <br />
                   </small>
                   <br />
-                  <small>
-                    <strong>PARENT COOPERATION: </strong>
-                    {{ cooperation.parent }}
-                  </small>
+                  <nuxt-link :to="'/cooperation/' + cooperation.parent"
+                    ><small>
+                      <strong>PARENT COOPERATION: </strong>
+                      {{ cooperation.parent }}
+                    </small>
+                  </nuxt-link>
                   <br />
                 </b-container>
                 <b-container>

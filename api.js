@@ -543,8 +543,8 @@ app.post('/recoverpassword', async function (req, res, next) {
           pass: process.env.MAILPASSWORD
         }
       })
-      let mailOptions = {
-        from: '"Cooperacy Website" <websitemails@cooperacy.org>',
+      const mailOptions = {
+        from: '"Cooperacy Website - Password Tool" <websitemails@cooperacy.org>',
         to: req.body.email,
         subject: 'Change your Cooperacy password',
         text:
@@ -753,11 +753,11 @@ app.post('/comment', async function (req, res, next) {
   }
   async function notifycomment(id) {
     const [cooperationtitle] = await mypool.execute(
-      'SELECT `cooperation`.`title` from `cooperation` where `cooperation`.`id` = ?', req.body.cooperation)
+      'SELECT `cooperation`.`title` from `cooperation` where `cooperation`.`id` = ?', [req.body.cooperation])
     let notifylist // we create a list of users that currently F-voted the cooperation
     try {
       let query =
-        'SELECT `cooperationvote`.`user`, `cooperationvote`.`cooperation`' +
+        'SELECT `cooperationvote`.`user`, `cooperationvote`.`cooperation`,' +
         ' `cooperationvote`.`condition`, `user`.`name`, `user`.`surname`, `user`.`email` FROM `cooperationvote`' +
         ' LEFT JOIN `user` ON `cooperationvote`.`user` = `user`.`id`' +
         ' WHERE `cooperationvote`.`cooperation` = ? and `cooperationvote`.`condition` = ?'
@@ -778,8 +778,8 @@ app.post('/comment', async function (req, res, next) {
             pass: process.env.MAILPASSWORD
           }
         })
-        let mailOptions = {
-          from: '"Cooperacy Website" <websitemails@cooperacy.org>',
+        const mailOptions = {
+          from: '"Cooperacy Website - Notifications" <websitemails@cooperacy.org>',
           to: notifylist[i].email,
           subject: 'Notification from Cooperacy',
           html: 'Hello, ' + notifylist[i].name + ' ' + notifylist[i].surname + '!<br /><br />' +
@@ -792,7 +792,7 @@ app.post('/comment', async function (req, res, next) {
           if (error) {
             return console.error(error)
           }
-          console.log('Message %s sent: %s', info.messageId, info.response)
+          console.log('Message %s sent: %s', info.messageId, info.response, mailOptions.to)
           res.render('index')
         })
       } catch (err) {
@@ -834,8 +834,8 @@ app.post('/notification', async function (req, res, next) {
           pass: process.env.MAILPASSWORD
         }
       })
-      let mailOptions = {
-        from: '"Cooperacy Website" <websitemails@cooperacy.org>',
+      const mailOptions = {
+        from: '"Cooperacy Website - Tagging" <websitemails@cooperacy.org>',
         to: user.email,
         subject: 'Notification from Cooperacy',
         html: 'Hello, ' + user.name + '<br /><br />' + 'you have a new notification relative to the cooperation ' +
@@ -847,7 +847,7 @@ app.post('/notification', async function (req, res, next) {
         if (error) {
           return console.error(error)
         }
-        console.log('Message %s sent: %s', info.messageId, info.response)
+        console.log('Message %s sent: %s', info.messageId, info.response, mailOptions.to)
         res.render('index')
       })
     }
@@ -982,7 +982,7 @@ app.post('/newuseremail', function (req, res) {
       pass: process.env.MAILPASSWORD
     }
   })
-  let mailOptions = {
+  const mailOptions = {
     from: '"Cooperacy" <cooperacy@cooperacy.org>',
     to: req.body.to,
     subject: req.body.subject,
@@ -992,7 +992,7 @@ app.post('/newuseremail', function (req, res) {
     if (error) {
       return console.error(error)
     }
-    console.log('Message %s sent: %s', info.messageId, info.response)
+    console.log('Message %s sent: %s', info.messageId, info.response, mailOptions.to)
     res.render('index')
   })
 })
@@ -1022,7 +1022,7 @@ app.post('/contactemail', function (req, res) {
   transporter
     .sendMail(mailOptions)
     .then(info => {
-      console.log('Message %s sent: %s', info.messageId, info.response)
+      console.log('Message %s sent: %s', info.messageId, info.response, mailOptions.to)
       res.status(200).json({
         message:
           `Thank you ${req.body.formName} for your message!<br/>` +
@@ -1122,7 +1122,7 @@ app.post('/budgetstep', async function (req, res, next) {
         + '     END;' // (END BEGIN 2)
         + '   END IF;' // (END IF/ELSE)
         + ' END;' // (END BEGIN 1)
-      console.log('HERE AAAA ' + query)
+      console.log('Create event ' + query)
       let param = [req.body.cooperation.id, req.body.cooperation.id, req.body.cooperation.mode, req.body.cooperation.category, req.body.cooperation.title, req.body.cooperation.country, req.body.cooperation.place, req.body.cooperation.brief, req.body.cooperation.content, req.body.cooperation.video, req.body.cooperation.anonymous, req.body.cooperation.parent, req.body.cooperation.author, req.body.cooperation.collect, req.body.cooperation.budget, 'weekpass', req.body.cooperation.professional, req.body.cooperation.hudget, req.body.cooperation.E, req.body.cooperation.T, req.body.cooperation.C, req.body.cooperation.I, req.body.cooperation.F, req.body.cooperation.U, req.body.cooperation.D, req.body.cooperation.created]
       await mypool.query(query, param)
       notifybudgetpass(req.body.cooperation.mode, req.body.cooperation.id)
@@ -1156,8 +1156,8 @@ app.post('/budgetstep', async function (req, res, next) {
             pass: process.env.MAILPASSWORD
           }
         })
-        let mailOptions = {
-          from: '"Cooperacy Website" <websitemails@cooperacy.org>',
+        const mailOptions = {
+          from: '"Cooperacy Website - Budget Steps" <websitemails@cooperacy.org>',
           to: notifylist[i].email,
           subject: 'Notification from Cooperacy',
           html: 'Hello, ' + notifylist[i].name + ' ' + notifylist[i].surname + '!<br /><br />' +
@@ -1182,7 +1182,7 @@ app.post('/budgetstep', async function (req, res, next) {
           if (error) {
             return console.error(error)
           }
-          console.log('Message %s sent: %s', info.messageId, info.response)
+          console.log('Message %s sent: %s', info.messageId, info.response, mailOptions.to)
           res.render('index')
         })
       } catch (err) {
@@ -1194,7 +1194,7 @@ app.post('/budgetstep', async function (req, res, next) {
     let notifylist // we create a list of admins that should deliver the funds
     try {
       let query =
-        'SELECT `user`.`email`, `user`.`name`, `user`.`surname` from `user` WHERE `user`.`admin` = ?'
+        'SELECT `user`.`email`, `user`.`name`, `user`.`surname` from `user` WHERE `user`.`role` = ?'
       let param = [1]
       const [list] = await mypool.execute(query, param)
       notifylist = list
@@ -1212,14 +1212,14 @@ app.post('/budgetstep', async function (req, res, next) {
             pass: process.env.MAILPASSWORD
           }
         })
-        let mailOptions = {
-          from: '"Cooperacy Website" <websitemails@cooperacy.org>',
+        const mailOptions = {
+          from: '"Cooperacy Website Administration" <websitemails@cooperacy.org>',
           to: notifylist[i].email,
           subject: 'Notification from Cooperacy',
           html: 'Hello, ' + notifylist[i].name + ' ' + notifylist[i].surname + '!<br /><br />' +
             'You have a new ADMINISTRATION related notification relative to the cooperation ' +
             req.body.cooperation.title + ': you should deliver the relative funding amount.<br /><br /><br />' +
-            + 'Techical details: ' + JSON.stringify(cooperationtbf) +
+            'Techical details: ' + JSON.stringify(cooperationtbf) +
             ' <br /><br /><br />'
         }
 
@@ -1227,7 +1227,7 @@ app.post('/budgetstep', async function (req, res, next) {
           if (error) {
             return console.error(error)
           }
-          console.log('Message %s sent: %s', info.messageId, info.response)
+          console.log('Message %s sent: %s', info.messageId, info.response, mailOptions.to)
           res.render('index')
         })
       } catch (err) {
@@ -1494,7 +1494,7 @@ app.post('/budgetcheck', async function (req, res, next) {
   for (let i = 0; i < completedcoo.length; i++) {
     try {
       query = 'UPDATE `cooperationregistry` SET `budgetstep` = \'mailsent-awaiting\''
-        + ' WHERE `id` = ? and WHERE `budgetstep` = \'budgetcrossed\''
+        + ' WHERE `id` = ? and `budgetstep` = \'budgetcrossed\''
       param = [completedcoo[i].id]
       mypool.execute(query, param)
       notifycoo(completedcoo[i].cooperationid, completedcoo.title)
@@ -1527,8 +1527,8 @@ app.post('/budgetcheck', async function (req, res, next) {
             pass: process.env.MAILPASSWORD
           }
         })
-        let mailOptions = {
-          from: '"Cooperacy Website" <websitemails@cooperacy.org>',
+        const mailOptions = {
+          from: '"Cooperacy Website - Budget Line Crossing" <websitemails@cooperacy.org>',
           to: notifylist[i].email,
           subject: 'Notification from Cooperacy',
           html: 'Hello, ' + notifylist[i].name + ' ' + notifylist[i].surname + '!<br /><br />' +
@@ -1541,7 +1541,7 @@ app.post('/budgetcheck', async function (req, res, next) {
           if (error) {
             return console.error(error)
           }
-          console.log('Message %s sent: %s', info.messageId, info.response)
+          console.log('Message %s sent: %s', info.messageId, info.response, mailOptions.to)
           res.render('index')
         })
       } catch (err) {
