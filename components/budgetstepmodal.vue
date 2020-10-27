@@ -20,7 +20,11 @@
       </b-form>
       <template slot="modal-footer">
         <b-button size="sm" class="bcare" @click="budgetstep()"> ADD </b-button>
-        <b-button size="sm" class="btransparency" @click="close()">
+        <b-button
+          size="sm"
+          class="btransparency"
+          @click="$bvModal.hide('budgetstepmodal')"
+        >
           CLOSE
         </b-button>
       </template>
@@ -40,15 +44,16 @@ export default {
   },
   methods: {
     async budgetstep() {
+      await this.$store.dispatch('getCooperation', {
+        cooperationid: this.$route.params.id,
+        userid: this.$auth.user.id
+      })
       let done = await this.$store.dispatch('budgetstep', {
         cooperation: this.cooperationprop,
         user: this.$auth.user,
         doc: this.formDoc
       })
       if (done) location.href = process.env.URLHOME + '/cooperation/' + this.cooperationprop.id
-    },
-    close() {
-      location.href = process.env.URLHOME + '/cooperation/' + this.cooperationprop.id
     }
   }
 }

@@ -1104,7 +1104,7 @@ app.post('/budgetstep', async function (req, res, next) {
       // in any case it creates a new registry record and moves 1 budget step forward
       await mypool.query('DROP EVENT IF EXISTS budgetstepcooperation' + req.body.cooperation.id)
       let query = 'CREATE EVENT budgetstepcooperation' + req.body.cooperation.id
-        + ' ON SCHEDULE AT CURRENT_TIMESTAMP + INTERVAL 1 MINUTE DO BEGIN' // (BEGIN 1)
+        + ' ON SCHEDULE AT CURRENT_TIMESTAMP + INTERVAL 1 WEEK DO BEGIN' // (BEGIN 1)
         + '   DECLARE thiscooperation INT; DECLARE ivote INT; DECLARE e0 INT; DECLARE e1 INT;'
         + '   SET thiscooperation = ?; SET ivote = (SELECT `I` from cooperation where id=thiscooperation);'
         + '   IF ivote > 0 THEN SET ivote = ivote;' //if I vote, do nothing
@@ -1123,7 +1123,7 @@ app.post('/budgetstep', async function (req, res, next) {
         + '   END IF;' // (END IF/ELSE)
         + ' END;' // (END BEGIN 1)
       console.log('Create event ' + query)
-      let param = [req.body.cooperation.id, req.body.cooperation.id, req.body.cooperation.mode, req.body.cooperation.category, req.body.cooperation.title, req.body.cooperation.country, req.body.cooperation.place, req.body.cooperation.brief, req.body.cooperation.content, req.body.cooperation.video, req.body.cooperation.anonymous, req.body.cooperation.parent, req.body.cooperation.author, req.body.cooperation.collect, req.body.cooperation.budget, 'weekpass', req.body.cooperation.professional, req.body.cooperation.hudget, req.body.cooperation.E, req.body.cooperation.T, req.body.cooperation.C, req.body.cooperation.I, req.body.cooperation.F, req.body.cooperation.U, req.body.cooperation.D, req.body.cooperation.created]
+      let param = [req.body.cooperation.id, req.body.cooperation.id, req.body.cooperation.mode, req.body.cooperation.category, req.body.cooperation.title, req.body.cooperation.country, req.body.cooperation.place, req.body.cooperation.brief, req.body.cooperation.content, req.body.cooperation.video, req.body.cooperation.anonymous, req.body.cooperation.parent, req.body.cooperation.author, req.body.cooperation.collect, req.body.cooperation.budget, 'passed', req.body.cooperation.professional, req.body.cooperation.hudget, req.body.cooperation.E, req.body.cooperation.T, req.body.cooperation.C, req.body.cooperation.I, req.body.cooperation.F, req.body.cooperation.U, req.body.cooperation.D, req.body.cooperation.created]
       await mypool.query(query, param)
       notifybudgetpass(req.body.cooperation.mode, req.body.cooperation.id)
       if (req.body.cooperation.mode > 101) { fundingstep(req.body.cooperation) }
@@ -1493,7 +1493,7 @@ app.post('/budgetcheck', async function (req, res, next) {
   }
   for (let i = 0; i < completedcoo.length; i++) {
     try {
-      query = 'UPDATE `cooperationregistry` SET `budgetstep` = \'mailsent-awaiting\''
+      query = 'UPDATE `cooperationregistry` SET `budgetstep` = \'budgetcrossed-mailsent\''
         + ' WHERE `id` = ? and `budgetstep` = \'budgetcrossed\''
       param = [completedcoo[i].id]
       mypool.execute(query, param)
