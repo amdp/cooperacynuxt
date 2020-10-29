@@ -778,15 +778,16 @@ app.post('/comment', async function (req, res, next) {
             pass: process.env.MAILPASSWORD
           }
         })
+        console.log(' ' + JSON.stringify(cooperationtitle[0].title))
         const mailOptions = {
-          from: '"Cooperacy Website - Notifications" <websitemails@cooperacy.org>',
+          from: '"Cooperacy - Comment" <websitemails@cooperacy.org>',
           to: notifylist[i].email,
-          subject: 'Notification from Cooperacy',
+          subject: 'New comment in ' + cooperationtitle[0].title,
           html: 'Hello, ' + notifylist[i].name + ' ' + notifylist[i].surname + '!<br /><br />' +
-            'You have a new notification relative to the cooperation "' +
-            cooperationtitle + '" that you are following: there is a new comment. <a href="https://cooperacy.org/cooperation/' +
-            notifylist[i].cooperation + '">Have a look</a> or read the comment here:<br />' +
-            req.body.message + '<br /><br /><br />'
+            'You have a new notification relative to a new comment in the cooperation "' + cooperationtitle[0].title +
+            '" that you are following. <a href="https://cooperacy.org/cooperation/' +
+            notifylist[i].cooperation + '">Have a look at the cooperation</a> or read the comment here:<br />' +
+            req.body.content + '<br /><br /><br />'
         }
         transporter.sendMail(mailOptions, (error, info) => {
           if (error) {
@@ -1727,4 +1728,59 @@ BEGIN
   END IF;
 END ;;
 DELIMITER ;
+
+
+ALTER TABLE `coo`.`cooperation`
+CHANGE COLUMN `O2` `O2` DECIMAL(3,2) GENERATED ALWAYS AS
+(ROUND((
+  (1/(1+exp(5-40*(D/n)))+1/(1+exp(-5+20*((D/n)-(U/n))))+(D/n))/3 +
+  abs(((C/n)-(T/n)))*1/(1+EXP(-1-5*((C/n)-(T/n))))+(1-abs(((C/n)-(T/n))))*(U/n) +
+    ((F/n)+1/(1+EXP(5-10*(T))))/2*1/(1+EXP(-5-20*((n-I)/n*((C/n)-(T/n))))) +
+    GREATEST(LEAST(  ( 1/(1+EXP(-5+20*abs(((C/n)-(T/n)))))*abs(((C/n)-(T/n)))+I*(1-abs(((C/n)-(T/n)))) ) *1/(1+EXP(5-15*(E/n))), 0.9), 0.1) +
+    LEAST(C/POW(ln(50),exp(1)),1) +
+    T/n+((n-I)/n*((C/n)-(T/n)))/2 +
+    E/n
+)/7,2)) STORED ;
+
+-- T	= (T+add+T)/2 = T+add/2 = T/n+(n-I)/n*((C/n)-(T/n))/2
+-- C 	= LEAST(C/POW(ln(50),exp(1)),1)
+-- I 	= GREATEST(LEAST(  ( 1/(1+EXP(-5+20*abs(((C/n)-(T/n)))))*abs(((C/n)-(T/n)))+I*(1-abs(((C/n)-(T/n)))) ) *1/(1+EXP(5-15*(E))), 0.9), 0.1)
+-- F	= (F+1/(1+EXP(5-10*(T))))/2*1/(1+EXP(-5-20*((n-I)/n*((C/n)-(T/n)))))
+-- add 	= (n-I)/n*((C/n)-(T/n))
+-- U 	= abs(((C/n)-(T/n)))*1/(1+EXP(-1-5*((C/n)-(T/n))))+(1-abs(((C/n)-(T/n))))*(U/n)
+-- err 	= ((C/n)-(T/n))
+-- D* 	= (1/(1+exp(5-40*(D/n)))+1/(1+exp(-5+20*((D/n)-(U/n))))+(D/n))/3
+-- Du 	= 1/(1+exp(-5+20*((D/n)-(U/n))))
+-- Dd 	= 1/(1+exp(5-40*(D/n)))
+
+ALTER TABLE `coo`.`cooperation`
+CHANGE COLUMN `O` `O` DECIMAL(3,2) GENERATED ALWAYS AS
+(ROUND(
+  (0.3*( 1/(1+exp(5-40*(D/n))) + 1/(1+exp(-5+20*((D/n)-(U/n)))) + (D/n) )/3
+  +0.3*(
+    abs	( 			LEAST(C/POW(ln(n),exp(1)),1)-(T/n) )*
+    1/(1+EXP(-1-5*( LEAST(C/POW(ln(n),exp(1)),1)-(T/n) )))+
+    (1-abs(			LEAST(C/POW(ln(n),exp(1)),1)-(T/n) )) *(U/n)
+  )
+    +0.3*( T/n+(n-
+      GREATEST(LEAST(  ( 1/(1+EXP(-5+20*abs(((C/n)-(T/n)))))*abs(((C/n)-(T/n)))+I*(1-abs(((C/n)-(T/n)))) ) *1/(1+EXP(5-15*(E/n))), 0.9), 0.1)
+      )/n*
+      (					LEAST(C/POW(ln(n),exp(1)),1)-(T/n) )/2
+  )
+    +0.1*E/n	) *
+    1/( 1+( 1-((F/n)+1/(1+EXP(5-10*(T))))/2 * 1/(1+EXP(-5-20*((n-I)/n*((C/n)-(T/n))))) ) )
+,2)) STORED ;
+
+-- T	= (T+add+T)/2 = T+add/2 = T/n+(n-I)/n*((C/n)-(T/n))/2
+-- C 	= LEAST(C/POW(ln(n),exp(1)),1)
+-- I 	= GREATEST(LEAST(  ( 1/(1+EXP(-5+20*abs(((C/n)-(T/n)))))*abs(((C/n)-(T/n)))+I*(1-abs(((C/n)-(T/n)))) ) *1/(1+EXP(5-15*(E))), 0.9), 0.1)
+-- F	= (F+1/(1+EXP(5-10*(T))))/2*1/(1+EXP(-5-20*((n-I)/n*((C/n)-(T/n)))))
+-- add 	= (n-I)/n*((C/n)-(T/n))
+-- U 	= abs(((C/n)-(T/n)))*1/(1+EXP(-1-5*((C/n)-(T/n))))+(1-abs(((C/n)-(T/n))))*(U/n)
+-- err 	= ((C/n)-(T/n))
+-- D* 	= (1/(1+exp(5-40*(D/n)))+1/(1+exp(-5+20*((D/n)-(U/n))))+(D/n))/3
+-- Du 	= 1/(1+exp(-5+20*((D/n)-(U/n))))
+-- Dd 	= 1/(1+exp(5-40*(D/n)))
+
+
 */
