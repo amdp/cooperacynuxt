@@ -778,7 +778,6 @@ app.post('/comment', async function (req, res, next) {
             pass: process.env.MAILPASSWORD
           }
         })
-        console.log(' ' + JSON.stringify(cooperationtitle[0].title))
         const mailOptions = {
           from: '"Cooperacy - Comment" <websitemails@cooperacy.org>',
           to: notifylist[i].email,
@@ -1074,64 +1073,47 @@ app.post('/budgetstep', async function (req, res, next) {
     function (x) {
       if (x == 'T') return ' '
       if (x == 'Z') return ''
-    }
-  )
-  if (// applies trust/uderstandingvotes rule, moves 1 budget step further, creates a new record in the registry
-    (req.body.cooperation.mode == btrust && req.body.cooperation.T >= req.body.cooperation.E * 0.7)
-    || (req.body.cooperation.mode == bunderstanding && req.body.cooperation.U >= req.body.cooperation.E * 0.7)) {
-    try {
-      let query =
-        'INSERT INTO `cooperationregistry`(`cooperationid`,`mode`,`category`,`title`,`country`,`place`,`brief`,`content`,'
-        + '`video`,`anonymous`,`parent`,`author`,`collect`,`budget`,`budgetstep`,`professional`,`hudget`,'
-        + '`E`, `T`, `C`, `I`,`F`, `U`, `D`,`created`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
-        + 'UPDATE `cooperation` SET `mode` = `mode`+1 where `id`=?;'
-      let param = [req.body.cooperation.id, req.body.cooperation.mode, req.body.cooperation.category, req.body.cooperation.title, req.body.cooperation.country, req.body.cooperation.place, req.body.cooperation.brief, req.body.cooperation.content, req.body.cooperation.video, req.body.cooperation.anonymous, req.body.cooperation.parent, req.body.cooperation.author, req.body.cooperation.collect, req.body.cooperation.budget, 'trust-understanding-pass', req.body.cooperation.professional, req.body.cooperation.hudget, req.body.cooperation.E, req.body.cooperation.T, req.body.cooperation.C, req.body.cooperation.I, req.body.cooperation.F, req.body.cooperation.U, req.body.cooperation.D, req.body.cooperation.created, req.body.cooperation.id]
-      await mypool.execute(query, param)
-      notifybudgetpass('special')
-    } catch (err) {
-      next(err)
-    }
-  } else {// if no trustvote nor understandingvote rule can be applied, it copies the current state in the registry:
-    try {// creates new record in the cooperation registry with the budget step document link
-      let query = 'INSERT INTO `cooperationregistry` (`cooperationid`,`mode`,`category`,`title`,`country`,`place`,`brief`,`content`,`video`,`anonymous`,`parent`,`author`,`collect`,`budget`,`budgetstep`,`professional`,`hudget`,`E`, `T`, `C`, `I`, `F`, `U`, `D`,`created`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
-      let param = [req.body.cooperation.id, req.body.cooperation.mode, req.body.cooperation.category, req.body.cooperation.title, req.body.cooperation.country, req.body.cooperation.place, req.body.cooperation.brief, req.body.cooperation.content, req.body.cooperation.video, req.body.cooperation.anonymous, req.body.cooperation.parent, req.body.cooperation.author, req.body.cooperation.collect, req.body.cooperation.budget, req.body.doc, req.body.cooperation.professional, req.body.cooperation.hudget, req.body.cooperation.E, req.body.cooperation.T, req.body.cooperation.C, req.body.cooperation.I, req.body.cooperation.F, req.body.cooperation.U, req.body.cooperation.D, req.body.cooperation.created]
-      await mypool.execute(query, param)
-    } catch (err) {
-      next(err)
-    }
-    try {// then creates one week deadline event at the end of which if I went down, 
-      // it does nothing, as another doc should be provided
-      // if E went down cooperation remove some of its collected funds so it goes back collecting,  
-      // in any case it creates a new registry record and moves 1 budget step forward
-      await mypool.query('DROP EVENT IF EXISTS budgetstepcooperation' + req.body.cooperation.id)
-      let query = 'CREATE EVENT budgetstepcooperation' + req.body.cooperation.id
-        + ' ON SCHEDULE AT CURRENT_TIMESTAMP + INTERVAL 1 WEEK DO BEGIN' // (BEGIN 1)
-        + '   DECLARE thiscooperation INT; DECLARE ivote INT; DECLARE e0 INT; DECLARE e1 INT;'
-        + '   SET thiscooperation = ?; SET ivote = (SELECT `I` from cooperation where id=thiscooperation);'
-        + '   IF ivote > 0 THEN SET ivote = ivote;' //if I vote, do nothing
-        + '   ELSE BEGIN' //else (BEGIN 2):
-        + '       SET e1 = (SELECT `E` from cooperation where id=thiscooperation);'
-        + '       SET e0 = (SELECT `E` from cooperationregistry where cooperationid=thiscooperation and'
-        + '         id = (SELECT max(id) from cooperationregistry where cooperationid=thiscooperation));'
-        + '       IF e1 < e0 THEN' // first, if E unvoting, then drop some collected money
-        + '         UPDATE `cooperation` SET `collect` = `collect` * e1/e0 where `id`=thiscooperation;'
-        + '       END IF;' // after, go one step forward anyways, because the week passed and no I votes were issued
-        + '       INSERT INTO `cooperationregistry` (`cooperationid`,`mode`,`category`,`title`,`country`,`place`,`brief`,`content`,'
-        + '         `video`,`anonymous`,`parent`,`author`,`collect`,`budget`,`budgetstep`,`professional`,`hudget`,'
-        + '         `E`, `T`, `C`, `I`,`F`, `U`, `D`,`created`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);'
-        + '       UPDATE `cooperation` SET `mode` = `mode`+1  where `id`=thiscooperation;'
-        + '     END;' // (END BEGIN 2)
-        + '   END IF;' // (END IF/ELSE)
-        + ' END;' // (END BEGIN 1)
-      console.log('Create event ' + query)
-      let param = [req.body.cooperation.id, req.body.cooperation.id, req.body.cooperation.mode, req.body.cooperation.category, req.body.cooperation.title, req.body.cooperation.country, req.body.cooperation.place, req.body.cooperation.brief, req.body.cooperation.content, req.body.cooperation.video, req.body.cooperation.anonymous, req.body.cooperation.parent, req.body.cooperation.author, req.body.cooperation.collect, req.body.cooperation.budget, 'passed', req.body.cooperation.professional, req.body.cooperation.hudget, req.body.cooperation.E, req.body.cooperation.T, req.body.cooperation.C, req.body.cooperation.I, req.body.cooperation.F, req.body.cooperation.U, req.body.cooperation.D, req.body.cooperation.created]
-      await mypool.query(query, param)
-      notifybudgetpass(req.body.cooperation.mode, req.body.cooperation.id)
-      if (req.body.cooperation.mode > 101) { fundingstep(req.body.cooperation) }
-    } catch (err) {
-      next(err)
-    }
+    })
+  try {// creates new record in the cooperation registry with the budget step document link
+    let query = 'INSERT INTO `cooperationregistry` (`cooperationid`,`mode`,`category`,`title`,`country`,`place`,`brief`,`content`,`video`,`anonymous`,`parent`,`author`,`collect`,`budget`,`budgetstep`,`professional`,`hudget`,`E`, `T`, `C`, `I`, `F`, `U`, `D`,`created`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
+    let param = [req.body.cooperation.id, req.body.cooperation.mode, req.body.cooperation.category, req.body.cooperation.title, req.body.cooperation.country, req.body.cooperation.place, req.body.cooperation.brief, req.body.cooperation.content, req.body.cooperation.video, req.body.cooperation.anonymous, req.body.cooperation.parent, req.body.cooperation.author, req.body.cooperation.collect, req.body.cooperation.budget, req.body.doc, req.body.cooperation.professional, req.body.cooperation.hudget, req.body.cooperation.E, req.body.cooperation.T, req.body.cooperation.C, req.body.cooperation.I, req.body.cooperation.F, req.body.cooperation.U, req.body.cooperation.D, req.body.cooperation.created]
+    await mypool.execute(query, param)
+  } catch (err) {
+    next(err)
   }
+  try {// then creates one week deadline event at the end of which if I went down, 
+    // it does nothing, as another doc should be provided
+    // if E went down cooperation remove some of its collected funds so it goes back collecting,  
+    // in any case it creates a new registry record and moves 1 budget step forward
+    await mypool.query('DROP EVENT IF EXISTS budgetstepcooperation' + req.body.cooperation.id)
+    let query = 'CREATE EVENT budgetstepcooperation' + req.body.cooperation.id
+      + ' ON SCHEDULE AT CURRENT_TIMESTAMP + INTERVAL 1 WEEK DO BEGIN' // (BEGIN 1)
+      + '   DECLARE thiscooperation INT; DECLARE ivote INT; DECLARE e0 INT; DECLARE e1 INT;'
+      + '   SET thiscooperation = ?; SET ivote = (SELECT `I` from cooperation where id=thiscooperation);'
+      + '   IF ivote > 0 THEN SET ivote = ivote;' //if I vote, do nothing
+      + '   ELSE BEGIN' //else (BEGIN 2):
+      + '       SET e1 = (SELECT `E` from cooperation where id=thiscooperation);'
+      + '       SET e0 = (SELECT `E` from cooperationregistry where cooperationid=thiscooperation and'
+      + '         id = (SELECT max(id) from cooperationregistry where cooperationid=thiscooperation));'
+      + '       IF e1 < e0 THEN' // first, if E unvoting, then drop some collected money
+      + '         UPDATE `cooperation` SET `collect` = `collect` * e1/e0 where `id`=thiscooperation;'
+      + '       END IF;' // after, go one step forward anyways, because the week passed and no I votes were issued
+      + '       INSERT INTO `cooperationregistry` (`cooperationid`,`mode`,`category`,`title`,`country`,`place`,`brief`,`content`,'
+      + '         `video`,`anonymous`,`parent`,`author`,`collect`,`budget`,`budgetstep`,`professional`,`hudget`,'
+      + '         `E`, `T`, `C`, `I`,`F`, `U`, `D`,`created`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);'
+      + '       UPDATE `cooperation` SET `mode` = `mode`+1  where `id`=thiscooperation;'
+      + '     END;' // (END BEGIN 2)
+      + '   END IF;' // (END IF/ELSE)
+      + ' END;' // (END BEGIN 1)
+    console.log('Create event ' + query)
+    let param = [req.body.cooperation.id, req.body.cooperation.id, req.body.cooperation.mode, req.body.cooperation.category, req.body.cooperation.title, req.body.cooperation.country, req.body.cooperation.place, req.body.cooperation.brief, req.body.cooperation.content, req.body.cooperation.video, req.body.cooperation.anonymous, req.body.cooperation.parent, req.body.cooperation.author, req.body.cooperation.collect, req.body.cooperation.budget, 'passed', req.body.cooperation.professional, req.body.cooperation.hudget, req.body.cooperation.E, req.body.cooperation.T, req.body.cooperation.C, req.body.cooperation.I, req.body.cooperation.F, req.body.cooperation.U, req.body.cooperation.D, req.body.cooperation.created]
+    await mypool.query(query, param)
+    notifybudgetpass(req.body.cooperation.mode, req.body.cooperation.id)
+    if (req.body.cooperation.mode > 101) { fundingstep(req.body.cooperation) }
+  } catch (err) {
+    next(err)
+  }
+
   async function notifybudgetpass(special, id) {
     let notifylist // we create a list of users that currently F-voted the cooperation
     try {
@@ -1734,21 +1716,21 @@ ALTER TABLE `coo`.`cooperation`
 CHANGE COLUMN `O2` `O2` DECIMAL(3,2) GENERATED ALWAYS AS
 (ROUND((
   (1/(1+exp(5-40*(D/n)))+1/(1+exp(-5+20*((D/n)-(U/n))))+(D/n))/3 +
-  abs(((C/n)-(T/n)))*1/(1+EXP(-1-5*((C/n)-(T/n))))+(1-abs(((C/n)-(T/n))))*(U/n) +
-    ((F/n)+1/(1+EXP(5-10*(T))))/2*1/(1+EXP(-5-20*((n-I)/n*((C/n)-(T/n))))) +
-    GREATEST(LEAST(  ( 1/(1+EXP(-5+20*abs(((C/n)-(T/n)))))*abs(((C/n)-(T/n)))+I*(1-abs(((C/n)-(T/n)))) ) *1/(1+EXP(5-15*(E/n))), 0.9), 0.1) +
+  abs((C-T)/n)*1/(1+EXP(-1-5*(C-T)/n))+(1-abs((C-T)/n))*(U/n) +
+    ((F/n)+1/(1+EXP(5-10*(T))))/2*1/(1+EXP(-5-20*((n-I)/n*(C-T)/n))) +
+    GREATEST(LEAST(  ( 1/(1+EXP(-5+20*abs((C-T)/n)))*abs((C-T)/n)+I*(1-abs((C-T)/n)) ) *1/(1+EXP(5-15*(E/n))), 0.9), 0.1) +
     LEAST(C/POW(ln(50),exp(1)),1) +
-    T/n+((n-I)/n*((C/n)-(T/n)))/2 +
+    T/n+((n-I)/n*(C-T)/n)/2 +
     E/n
 )/7,2)) STORED ;
 
--- T	= (T+add+T)/2 = T+add/2 = T/n+(n-I)/n*((C/n)-(T/n))/2
+-- T	= (T+add+T)/2 = T+add/2 = T/n+(n-I)/n*(C-T)/n/2
 -- C 	= LEAST(C/POW(ln(50),exp(1)),1)
--- I 	= GREATEST(LEAST(  ( 1/(1+EXP(-5+20*abs(((C/n)-(T/n)))))*abs(((C/n)-(T/n)))+I*(1-abs(((C/n)-(T/n)))) ) *1/(1+EXP(5-15*(E))), 0.9), 0.1)
--- F	= (F+1/(1+EXP(5-10*(T))))/2*1/(1+EXP(-5-20*((n-I)/n*((C/n)-(T/n)))))
--- add 	= (n-I)/n*((C/n)-(T/n))
--- U 	= abs(((C/n)-(T/n)))*1/(1+EXP(-1-5*((C/n)-(T/n))))+(1-abs(((C/n)-(T/n))))*(U/n)
--- err 	= ((C/n)-(T/n))
+-- I 	= GREATEST(LEAST(  ( 1/(1+EXP(-5+20*abs((C-T)/n)))*abs((C-T)/n)+I*(1-abs((C-T)/n)) ) *1/(1+EXP(5-15*(E))), 0.9), 0.1)
+-- F	= (F+1/(1+EXP(5-10*(T))))/2*1/(1+EXP(-5-20*((n-I)/n*(C-T)/n)))
+-- add 	= (n-I)/n*(C-T)/n
+-- U 	= abs((C-T)/n)*1/(1+EXP(-1-5*(C-T)/n))+(1-abs((C-T)/n))*(U/n)
+-- err 	= (C-T)/n
 -- D* 	= (1/(1+exp(5-40*(D/n)))+1/(1+exp(-5+20*((D/n)-(U/n))))+(D/n))/3
 -- Du 	= 1/(1+exp(-5+20*((D/n)-(U/n))))
 -- Dd 	= 1/(1+exp(5-40*(D/n)))
@@ -1763,24 +1745,23 @@ CHANGE COLUMN `O` `O` DECIMAL(3,2) GENERATED ALWAYS AS
     (1-abs(			LEAST(C/POW(ln(n),exp(1)),1)-(T/n) )) *(U/n)
   )
     +0.3*( T/n+(n-
-      GREATEST(LEAST(  ( 1/(1+EXP(-5+20*abs(((C/n)-(T/n)))))*abs(((C/n)-(T/n)))+I*(1-abs(((C/n)-(T/n)))) ) *1/(1+EXP(5-15*(E/n))), 0.9), 0.1)
-      )/n*
+      1/(1+EXP(-5+20*abs((C-T)/n)))*abs((C-T)/n)+(I+C)/(2*n)*(1-abs((C-T)/n))
+      )*
       (					LEAST(C/POW(ln(n),exp(1)),1)-(T/n) )/2
   )
     +0.1*E/n	) *
-    1/( 1+( 1-((F/n)+1/(1+EXP(5-10*(T))))/2 * 1/(1+EXP(-5-20*((n-I)/n*((C/n)-(T/n))))) ) )
+    1/( 1+( 1-((F/n)+1/(1+EXP(5-10*(T))))/2 * 1/(1+EXP(-5-20*((n-I)/n*(C-T)/n))) ) )
 ,2)) STORED ;
 
--- T	= (T+add+T)/2 = T+add/2 = T/n+(n-I)/n*((C/n)-(T/n))/2
--- C 	= LEAST(C/POW(ln(n),exp(1)),1)
--- I 	= GREATEST(LEAST(  ( 1/(1+EXP(-5+20*abs(((C/n)-(T/n)))))*abs(((C/n)-(T/n)))+I*(1-abs(((C/n)-(T/n)))) ) *1/(1+EXP(5-15*(E))), 0.9), 0.1)
--- F	= (F+1/(1+EXP(5-10*(T))))/2*1/(1+EXP(-5-20*((n-I)/n*((C/n)-(T/n)))))
--- add 	= (n-I)/n*((C/n)-(T/n))
--- U 	= abs(((C/n)-(T/n)))*1/(1+EXP(-1-5*((C/n)-(T/n))))+(1-abs(((C/n)-(T/n))))*(U/n)
--- err 	= ((C/n)-(T/n))
+-- T	  = (T+add+T)/2 = T+add/2 = T/n+(n-I)/n*(C-T)/n/2
+-- C 	  = LEAST(C/POW(ln(n),exp(1)),1)
+-- I 	  = 1/(1+EXP(-5+20*abs((C-T)/n)))*abs((C-T)/n)+(I+C)/(2*n)*(1-abs((C-T)/n)))
+-- F	  = (F+1/(1+EXP(5-10*(T))))/2*1/(1+EXP(-5-20*((n-I)/n*(C-T)/n)))
+-- add 	= err*I = (n-I)/n*(C-T)/n
+-- U 	  = abs((C-T)/n)*1/(1+EXP(-1-5*(C-T)/n))+(1-abs((C-T)/n))*(U/n)
+-- err 	= (C-T)/n
 -- D* 	= (1/(1+exp(5-40*(D/n)))+1/(1+exp(-5+20*((D/n)-(U/n))))+(D/n))/3
 -- Du 	= 1/(1+exp(-5+20*((D/n)-(U/n))))
 -- Dd 	= 1/(1+exp(5-40*(D/n)))
-
 
 */

@@ -65,7 +65,11 @@
           </b-thead>
           <b-tbody>
             <b-tr v-for="user in userlist" :key="user.id">
-              <b-td><img :src="userImage(user.id)" width="50px" /></b-td>
+              <b-td
+                ><img
+                  :src="'/assets/image/user/' + user.id + '.png'"
+                  width="50px"
+              /></b-td>
               <b-td>{{ user.id }}</b-td>
               <b-td>{{ user.name }}</b-td>
               <b-td>{{ user.surname }}</b-td>
@@ -111,7 +115,10 @@
           <b-tbody>
             <b-tr v-for="olduser in olduserlist" :key="olduser.id">
               <b-td>
-                <img :src="userImage(olduser.id)" width="50px" />
+                <img
+                  :src="'/assets/image/user/' + olduser.id + '.png'"
+                  width="50px"
+                />
               </b-td>
               <b-td>{{ olduser.id }}</b-td>
               <b-td>{{ olduser.name }}</b-td>

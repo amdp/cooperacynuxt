@@ -7,7 +7,7 @@
           class="needs-valitation"
           autocomplete="on"
         >
-          <b-form-group label-for="loginEmail" label="Email:">
+          <b-form-group label-for="loginEmail" label="Email:" required>
             <b-form-input
               id="loginEmail"
               v-model="loginEmail"
@@ -19,7 +19,7 @@
               autocomplete="current-email"
             ></b-form-input>
           </b-form-group>
-          <b-form-group label-for="loginPassword" label="Password:">
+          <b-form-group label-for="loginPassword" label="Password:" required>
             <b-form-input
               id="loginPassword"
               v-model="loginPassword"
@@ -47,6 +47,7 @@
             </b-button>
           </p>
           <p class="freedom">
+            <!-- fare che se la password è sbagliata ti chiede automaticamente di cambiarla con quella inserita -->
             Want to <b>change</b> password? Just enter your email and a
             <em>new password</em> in the above fields
             <b-button

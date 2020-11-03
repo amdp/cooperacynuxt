@@ -118,35 +118,44 @@
       In order to leverage more collective intelligence, different kinds of vote
       are possible:
     </p>
+    <p class="base equivalence">Voting algorithm</p>
+    <p class="base">
+      The voting algorithm determines the proportional allocation of funds from
+      the money pool. The proportions are calculated with the number of the
+      cooperation value ('O') the idea has ('Oi'), divided by the total (Ot) of
+      all the cooperation values all the ideas have (Oi / Ot ). The cooperation
+      value is the result of the rounded value to two decimals of the following
+      algorithm:<br />
+      (0.3*((1+e^(5-40*(D/n))^-1 + (1+e^(-5+20*((D-U)/n))^-1 +D/n)/3<br />
+      +0.3*(abs(min(C/ln(n)^e-(T/n))*(1+E^(-1-5*(min(C/ln(n)^e,1)-(T/n))))^-1+(1-abs(min(C/ln(n)^e,1)-(T/n)))*(U/n))<br />
+      +0.3*(T/n+(n-(1+e^(-5+20*abs((C-T)/n)))^-1*abs((C-T)/n)+(I+C)/(2*n)*(1-abs((C-T)/n)))*(min(C/ln(n)^e,1)-(T/n))/2)<br />
+      +0.1*E/n)<br />
+      *( 1+(1-((F/n)+(1+EXP(5-10*(T)))^-1)/2
+      *(1+EXP(-5-20*((n-I)/n*(C-T)/n)))^-1) )^-1
+    </p>
     <p class="base equivalence">Equivalence</p>
     <p class="base">
-      It determines the proportional allocation of funds from the money pool.
-      Technical: the proportions are calculated with the number of the
-      equivalence votes the idea has (Ei), divided by the total (Et) of all the
-      equivalence votes all the ideas have (Ei / Et ). If funds for a budget
-      cooperation idea get to more than 50%, the cooperation gets to a boost
-      bonus and its funding allocation will be as quick as if it had 80% of the
-      votes. Equivalence votes in a participated cooperation indicate pre-buy as
-      a client, that is, subscription to a course or pre-purchase to a concert.
-      This vinculates the trustee to the payment of the relative pre-purchase or
-      fee when the cooperation becomes active. The participant can change the
-      vote anytime but not after the cooperation in participation mode reaches
-      the needed fees or its deadline.
+      Equivalence votes answer the question: will this cooperation be useful for
+      everyone? In a participated cooperation equivalence votes indicate pre-buy
+      as a client, that is, subscription to a course or pre-purchase to a
+      concert. This vinculates the trustee to the payment of the relative
+      pre-purchase or fee when the cooperation becomes active. The participant
+      can change the vote anytime but not after the cooperation in participation
+      mode reaches the needed fees or its deadline.
     </p>
     <br />
 
     <p class="base trust">Trust</p>
     <p class="base">
-      Trust votes make the cooperation skip the human resources budget step.
-      Technical: if the cooperation trust votes (Ti) are more than half of the
-      cooperation equivalence votes (Ti > 50% Ei) the human resources budget
-      step is automatically approved.
+      Trust votes answer the question: will this cooperation be realised in
+      practice? Do you trust its realization?
     </p>
     <br />
 
     <p class="base care">Care</p>
     <p class="base">
-      When care-voted, the cooperation gains more visibility. Technical: Ideas
+      This vote answers to the question: do you like this cooperation? When
+      care-voted, the cooperation gains more visibility. Technical: Ideas
       visibility is enhanced by ordering them by Care. This emotional response
       in the future could also be generated thanks to biofeedback sensors.
     </p>
@@ -154,15 +163,13 @@
     <p class="base transparency">Transparency</p>
     <p class="base">
       This is a downvote to declare hidden information, corruption, cheating or
-      spamming. Technical: Transparency-voting triggers a message in which you
-      communicate what others do not see. If a Transparency vote is "unvoted",
-      after 90 days if nothing happens the idea may be split or removed and in
-      case the budget is turned back to the money pool. During this period the
-      participants can better explain to unvoters the cooperation idea
-      development in order to restore transparency. If the idea is unblocked,
-      the count of 90 days is canceled. Transparency voters are never anonymous.
-      Highest transparency-unvoted cooperations may win the joke/trolling prize
-      of the year.
+      spamming. Transparency-voting triggers a message in which you communicate
+      what others do not see. If a Transparency vote is "unvoted", after 90 days
+      if nothing happens the idea may be split or removed and in case the budget
+      is turned back to the money pool. During this period the participants can
+      better explain to unvoters the cooperation idea development in order to
+      restore transparency. If the idea is unblocked, the count of 90 days is
+      canceled. Transparency voters are never anonymous.
     </p>
     <br />
     <p class="base freedom">Freedom</p>
@@ -181,22 +188,15 @@
 
     <p class="base understanding">Understanding</p>
     <p class="base">
-      This vote refers to the idea comprehension or nerditude and automatically
-      approves the Setup phase. Technical: if the cooperation understanding
-      votes are more than the 70% of the top understanding voted cooperation (Ui
-      > U(max)*70%) the Setup budget release step is automatically approved.
+      This vote refers to the question: do you understand this cooperation? Is
+      it clear?
     </p>
     <br />
     <p class="base diversity">Diversity</p>
     <p class="base">
       When a funded cooperation has a strong “bizardry” (diversity-votes), it
-      has more opportunities to be randomly approved. Technical: ideas has a
-      diversity percentage ( Di / Dt ). Every idea, the first day of a season
-      (equinoxes and solstices), is given a random percentage value between 0%
-      and 10%, to which the diversity percentage is added and then randomly
-      multiplied by -1. The idea that has the highest “Bizardry” has a virtual
-      added equivalence-votes percentage of +50% [( Ei + 50% Et ) / Et ].
-      Warning: 10 diversity votes lower the equivalence ones by 1.
+      has a complex opportunity to raise the cooperation level according to the
+      algorithm. Too much diversity is bad if you have very low other votes.
     </p>
     <br /><br />
     <p class="subheading understanding center space margin mt-4">
@@ -326,6 +326,12 @@
         returned to the collection fund unless the idea is rescinded or
         abandoned.<br />
                   <li><em>Co-donation amount indicates the maximum amount you are willing to donate for the realization of the idea, that will be the same for all the co-donators. The system periodically evaluates the lowest of all amounts promised and multiplies for the number of the codonators in order to evaluate if the budget is reached. If not reached, the system evaluates other combination possibilities (all the amounts multiplied by the people who can afford more) able to reach the budget. Once turned into a cooperation, the codonations are billed to your bank account, credit card or any other possibility the Site allows.</em></li>
+                  If funds for a budget
+      cooperation idea get to more than 50%, the cooperation gets to a boost
+      bonus and its funding allocation will be as quick as if it had 80% of the
+      votes. 
+      Highest transparency-unvoted cooperations may win the joke/trolling prize
+      of the year.
       </p> -->
   </b-container>
 </template>
