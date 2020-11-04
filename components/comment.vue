@@ -2,16 +2,28 @@
   <b-container class="m-0 px-2 mt-4 mb-5 fumetto">
     <!-- NEW POST -->
     <b-container class="p-2">Make a question, discuss a topic!</b-container>
-    <vue-tribute :options="options" id="postTribute" class="px-2">
-      <b-container
-        class="newcommentbox p-0 m-0"
-        contenteditable="true"
-        @tribute-replaced="mention()"
-        @click="check()"
-        id="formPost"
-        v-on:keyup.enter="formpost('formPost')"
-      ></b-container>
-    </vue-tribute>
+    <b-row class="m-0 p-0">
+      <b-col cols="10" class="m-0 p-0">
+        <vue-tribute :options="options" id="postTribute" class="px-2">
+          <b-container
+            class="newcommentbox p-0 m-0"
+            contenteditable="true"
+            @tribute-replaced="mention()"
+            @click="check()"
+            id="formPost"
+          ></b-container>
+        </vue-tribute>
+      </b-col>
+      <b-col cols="2" class="m-0 p-0">
+        <b-button
+          size="sm"
+          class="btn bhtrust white btn-block border-0"
+          @click="formpost('formPost')"
+        >
+          POST
+        </b-button>
+      </b-col>
+    </b-row>
 
     <!-- POSTS -->
     <b-row class="m-0 p-0 mt-3" v-for="comment in up" :key="comment.id">
@@ -65,7 +77,7 @@
 
         <!-- POST EDIT/REPLY FORM BOX -->
         <b-row class="p-0 m-0" v-show="formswitch == comment.id">
-          <b-col cols="12">
+          <b-col cols="10">
             <vue-tribute :options="options" id="commentTribute">
               <!-- !!!the mention function should carry the id of the comment !!!-->
               <b-container
@@ -74,12 +86,17 @@
                 @tribute-replaced="mention()"
                 @click="check()"
                 :id="'commentInput' + comment.id"
-                v-on:keyup.enter="commentform(comment, editreplyid)"
               ></b-container>
             </vue-tribute>
-            <b-link @click="edit(comment)" class="hunderstanding">
-              Cancel
-            </b-link>
+          </b-col>
+          <b-col cols="2" class="p-0 m-0">
+            <b-button
+              size="sm"
+              class="btn bhtrust white btn-block border-0"
+              @click="commentform(comment, editreplyid)"
+            >
+              POST
+            </b-button>
           </b-col>
         </b-row>
         <!-- COMMENT -->
@@ -143,7 +160,7 @@
 
             <!-- COMMENT EDIT/REPLY FORM BOX -->
             <b-row class="p-0 m-0" v-show="formswitch == subcomment.id">
-              <b-col cols="12">
+              <b-col cols="10">
                 <vue-tribute :options="options" id="commentTribute">
                   <!-- !!!the mention function should carry the id of the comment !!!-->
                   <b-container
@@ -152,12 +169,17 @@
                     @tribute-replaced="mention()"
                     @click="check()"
                     :id="'commentInput' + subcomment.id"
-                    v-on:keyup.enter="commentform(subcomment, editreplyid)"
                   ></b-container>
                 </vue-tribute>
-                <b-link @click="edit(subcomment)" class="hunderstanding">
-                  Cancel
-                </b-link>
+              </b-col>
+              <b-col cols="2" class="p-0 m-0">
+                <b-button
+                  size="sm"
+                  class="btn bhtrust white btn-block border-0"
+                  @click="commentform(subcomment, editreplyid)"
+                >
+                  POST
+                </b-button>
               </b-col>
             </b-row>
           </b-col>
