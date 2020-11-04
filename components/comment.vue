@@ -4,7 +4,7 @@
     <b-container class="p-2">Make a question, discuss a topic!</b-container>
     <b-row class="m-0 p-0">
       <b-col cols="10" class="m-0 p-0">
-        <vue-tribute :options="options" id="postTribute" class="px-2">
+        <vue-tribute :options="options" id="postTribute" class="p-0 m-0">
           <b-container
             class="newcommentbox p-0 m-0"
             contenteditable="true"
@@ -14,7 +14,7 @@
           ></b-container>
         </vue-tribute>
       </b-col>
-      <b-col cols="2" class="m-0 p-0">
+      <b-col cols="2" class="m-0 px-2">
         <b-button
           size="sm"
           class="btn bhtrust white btn-block border-0"

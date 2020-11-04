@@ -417,8 +417,10 @@ app.post('/login', async function (req, res, next) {
       }
       if (user.paymentdeadline.toJSON().slice(0, 10) >= today) {
         res.status(200).send({ token: { accessToken } })
+        activeuser(user.id)
       } else {
         res.status(401).send('expired')
+        activeuser(user.id, 'set0')
       }
     } else {
       // paypal membership check
@@ -461,27 +463,46 @@ app.post('/login', async function (req, res, next) {
         let list = transaction.data.agreement_transaction_list
         if (list[list.length - 1].status == 'Completed') {
           res.status(200).send({ token: { accessToken } })
+          activeuser(user.id)
         } else if (
           //sometimes the transaction list has a final record of updated payment:
           list[list.length - 1].status == 'Updated' &&
           list[list.length - 2].status == 'Completed'
         ) {
           res.status(200).send({ token: { accessToken } })
+          activeuser(user.id)
         } else if (
           //sometimes the transaction list has a final record of updated payment:
           list[list.length - 1].status == 'Created' &&
           list[list.length - 2].status == 'Completed'
         ) {
           res.status(200).send({ token: { accessToken } })
+          activeuser(user.id)
         }
         else {
           res.status(401).send(
             'expired'
           )
+          activeuser(user.id, 'set0')
         }
       } catch (err) {
         next(err)
       }
+    }
+  }
+  async function activeuser(id, set0) {
+    let activateme = 1
+    if (set0) activateme = 0
+    try {
+      let query =
+        'UPDATE `user` SET `active`=? WHERE `id`=?'
+      let param = [
+        activateme,
+        id
+      ]
+      mypool.execute(query, param)
+    } catch (err) {
+      next(err)
     }
   }
 })
