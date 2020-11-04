@@ -1,7 +1,7 @@
 <template>
   <b-container fluid class="mb-5">
     <div v-if="this.$auth.user.role == 0">
-      <h2 class="col-12 text-center mb-3">COMEMBERS LIST</h2>
+      <h2 class="col-12 text-center mb-3">PARTICIPANTS LIST</h2>
       <div class="mb-3">
         <b-table-simple hover small responsive>
           <b-thead>
@@ -41,7 +41,7 @@
       </div>
     </div>
     <div v-if="this.$auth.user.role == 1">
-      <h2 class="col-12 text-center mb-3">COMEMBERS LIST (ADMIN LIST)</h2>
+      <h2 class="col-12 text-center mb-3">PARTICIPANTS LIST (ADMIN LIST)</h2>
       <div class="mb-3">
         <b-table-simple hover small responsive>
           <b-thead>

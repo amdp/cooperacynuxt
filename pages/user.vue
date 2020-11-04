@@ -29,6 +29,14 @@
         >
           <br />Admin tool: Reset all Voting and Colorbar
         </span>
+        <span
+          class="au"
+          @click="sendwelcome()"
+          v-if="this.$auth.user.role == 1"
+        >
+          <br />Admin tool: Send welcome email
+        </span>
+
         <br /><br />
         <span class="au" @click="$auth.logout()">LOGOUT</span>
       </b-col>
@@ -100,7 +108,17 @@ export default {
   },
   methods: {
     async resetvoting() {
-      await this.$store.dispatch('resetVoting')
+      this.$store.dispatch('resetVoting')
+    },
+    async sendwelcome() {
+      let to = prompt('Please enter the user email...')
+      let message = {
+        to: to,
+        subject: 'User registration confirmation',
+        body: './assets/email/welcome.html'
+      }
+      this.$http.$post(process.env.DBURL + '/newuseremail', message)
+
     },
     async budgetcheck() {
       this.$store.dispatch('budgetcheck')

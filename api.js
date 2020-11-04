@@ -1644,6 +1644,7 @@ app.post('/resetvoting', async function (req, res, next) {
   res.status(200).send('OK')
 })
 
+
 //error function triggered by next
 app.use(function (err, req, res, next) {
   console.log('body: ' + JSON.stringify(req.body))
