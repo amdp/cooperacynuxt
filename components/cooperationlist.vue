@@ -54,15 +54,18 @@
                     v-if="type.name == 'deactivated'"
                   >
                     {{ cooperation.title }}
-                  </span> </nuxt-link
-                ><br />
+                  </span>
+                </nuxt-link>
+                <br />
                 <small class="mb-2 up t12">
                   <i>{{ cooperation.brief }}</i>
                 </small>
-                <p v-if="$route.params.id">
+              </b-col>
+              <b-col cols="12 text-center" v-if="$route.params.id">
+                <p>
                   {{ cooperation.content }}
                 </p>
-                <p v-if="$route.params.id">
+                <p>
                   TAGS:
                   <span v-for="tag in $store.state.tag" :key="tag.id">
                     {{ tag.name }}
@@ -76,8 +79,8 @@
               </b-col>
             </b-row>
             <b-row class="m-0 p-0 w-100 text-center">
-              <b-col cols="12">
-                <b-container v-if="$route.params.id">
+              <b-col cols="12" v-if="$route.params.id">
+                <b-container>
                   <small>
                     <strong>AFTF: </strong
                     >{{ cooperation.anonymous ? 'ON' : 'OFF' }}

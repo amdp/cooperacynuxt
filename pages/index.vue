@@ -1,9 +1,9 @@
 <template>
-  <div class="m-0 p-0">
+  <b-container class="m-0 p-0">
     <home />
     <cooperationlist />
     <entermodal />
-  </div>
+  </b-container>
 </template>
 
 <script>

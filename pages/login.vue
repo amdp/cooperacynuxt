@@ -81,9 +81,9 @@
     <div class="row">
       <div class="col-12 d-flex justify-content-center mt-4">
         <b-button
-          class="btn bhcare white btn-block border-0 mb-3"
+          class="btn bhdiversity white btn-block border-0 mb-3"
           @click="newaccount"
-          >CREATE A NEW SUBSCRIPTION BASED ACCOUNT INSTEAD</b-button
+          >CREATE A NEW ACCOUNT</b-button
         >
       </div>
     </div>

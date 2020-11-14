@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <b-container class="m-0 p-0">
     <!-- <b-link v-b-modal.entermodal class="noline finger"> -->
-    <div class="circle mb-md-4">
+    <b-container class="circle m-0 p-0 mb-4">
       <svg
         xmlns:xlink="http://www.w3.org/1999/xlink"
         width="100%"
@@ -106,12 +106,12 @@
           ENTER THE JOURNEY
         </text>
       </svg>
-    </div>
+    </b-container>
     <!-- </b-link> -->
     <!--END CIRCLE-->
     <!--FADE IN AREA-->
     <!-- Find other people to realize together what you want to do and possibly get funded -->
-    <b-container class="mb-3">
+    <b-container class="m-0 p-0 mb-3">
       <b-form @submit.prevent="cooperationSearch()" class="mt-3 none">
         <b-row class="m-0 p-0">
           <b-col cols="10" class="m-0 p-0">
@@ -140,47 +140,29 @@
         </b-row>
       </b-form>
     </b-container>
-    <div id="homefade" style="opacity: 0">
-      <div class="row mb-4 p-2">
-        <div class="col-lg-4 col-xs-12 subheading text-center">
-          <nuxt-link to="/main/platform" class="noline transparency space"
-            >DISCOVER</nuxt-link
-          >
-        </div>
-        <div class="col-lg-4 col-xs-12 subheading text-center">
-          <nuxt-link to="/login" class="noline equivalence space"
-            >JOIN</nuxt-link
-          >
-        </div>
-        <div class="col-lg-4 col-xs-12 subheading text-center">
-          <nuxt-link to="/main/cooperation" class="noline understanding space"
-            >LEARN</nuxt-link
-          >
-        </div>
-      </div>
-      <p class="base text-center">
-        Cooperacy is an experimental project based on Cooperation Science
-      </p>
-      <p class="base text-center mb-2">
-        We're setting up a
-        <nuxt-link to="/main/platform" class="ae">platform</nuxt-link> in which
-        people can learn how to realize their ideas together, resolve relational
-        conflicts and develop enjoyable cooperations at the
+    <b-container id="homefade" class="o0 m-0 p-0">
+      <p class="t32 text-center my-5">
+        <nuxt-link class="ae" to="/login">Join</nuxt-link> Cooperacy and develop
+        enjoyable cooperations at your
         <nuxt-link to="/main/aboutyou" class="ad">personal</nuxt-link>,
         <nuxt-link to="/main/corporate" class="af">corporate</nuxt-link>
         and
-        <nuxt-link to="/cci" class="au">international</nuxt-link> level.
+        <nuxt-link to="/cci" class="au">international</nuxt-link>
+        level.
       </p>
-      <div class="base text-center">
-        <p class="base text-center mb-3">
-          <nuxt-link class="ae" to="/login">Join</nuxt-link> Cooperacy today, or
-          <nuxt-link class="ai" to="/contact">contact us</nuxt-link> for more
-          information.
-        </p>
-        <br />
-      </div>
-    </div>
-  </div>
+      <b-row class="my-4 p-2">
+        <b-col cols="12" lg="4" class="heading text-center">
+          <nuxt-link to="/main/platform" class="ai space">DISCOVER</nuxt-link>
+        </b-col>
+        <b-col cols="12" lg="4" class="heading text-center">
+          <nuxt-link to="/login" class="ae space">JOIN</nuxt-link>
+        </b-col>
+        <b-col cols="12" lg="4" class="heading text-center">
+          <nuxt-link to="/main/cooperation" class="au space">LEARN</nuxt-link>
+        </b-col> </b-row
+      ><br />
+    </b-container>
+  </b-container>
 </template>
 
 <script>

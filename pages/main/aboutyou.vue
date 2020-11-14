@@ -46,7 +46,7 @@
       >
       all the time because people and institutions agree to share information in
       a
-      <nuxt-link to="/main/cooperation#transparency" class="ae"
+      <nuxt-link to="/main/cooperation#transparency" class="ai"
         >transparent</nuxt-link
       >
       way.<br /><br />

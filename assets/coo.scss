@@ -88,9 +88,8 @@ $frontdark: #fff;
 
 .base {
   text-align: justify;
-  font-size: 18px;
+  font-size: 24px;
   margin-bottom: 10px;
-  line-height: 29px;
 }
 
 body {
@@ -291,122 +290,60 @@ a:hover {
   background-color: $aaagray;
 }
 
-.ae {
-  text-decoration: none;
-  background-image: linear-gradient($equivalence 50%, $back 50%);
-  background-repeat: repeat-x;
-  background-size: 2px 0.2em;
-  background-position: 0 1.35em;
-}
-.at {
-  text-decoration: none;
-  background-image: linear-gradient($trust 50%, $back 50%);
-  background-repeat: repeat-x;
-  background-size: 2px 0.2em;
-  background-position: 0 1.35em;
-}
-.ac {
-  text-decoration: none;
-  background-image: linear-gradient($care 50%, $back 50%);
-  background-repeat: repeat-x;
-  background-size: 2px 0.2em;
-  background-position: 0 1.35em;
-}
-.ai {
-  text-decoration: none;
-  background-image: linear-gradient($transparency 50%, $back 50%);
-  background-repeat: repeat-x;
-  background-size: 2px 0.2em;
-  background-position: 0 1.35em;
-}
-.af {
-  text-decoration: none;
-  background-image: linear-gradient($freedom 50%, $back 50%);
-  background-repeat: repeat-x;
-  background-size: 2px 0.2em;
-  background-position: 0 1.35em;
-}
-.au {
-  text-decoration: none;
-  background-image: linear-gradient($understanding 50%, $back 50%);
-  background-repeat: repeat-x;
-  background-size: 2px 0.2em;
-  background-position: 0 1.35em;
-}
-.ad {
-  text-decoration: none;
-  background-image: linear-gradient($diversity 50%, $back 50%);
-  background-repeat: repeat-x;
-  background-size: 2px 0.2em;
-  background-position: 0 1.35em;
-}
-.ae:hover {
-  text-decoration: none;
+.ae, .ae:hover {
   color: $equivalence;
-  background-image: none;
 }
-.at:hover {
-  text-decoration: none;
+.at, .at:hover {
   color: $trust;
-  background-image: none;
 }
-.ac:hover {
-  text-decoration: none;
+.ac, .ac:hover {
   color: $care;
-  background-image: none;
 }
-.ai:hover {
-  text-decoration: none;
+.ai, .ai:hover {
   color: $transparency;
-  background-image: none;
 }
-.af:hover {
-  text-decoration: none;
+.af, .af:hover {
   color: $freedom;
-  background-image: none;
 }
-.au:hover {
-  text-decoration: none;
+.au, .au:hover {
   color: $understanding;
-  background-image: none;
 }
-.ad:hover {
-  text-decoration: none;
+.ad, .ad:hover {
   color: $diversity;
-  background-image: none;
+}
+
+.gcooperationbox, .ecooperationbox,
+.tcooperationbox, .ccooperationbox,
+.icooperationbox, .fcooperationbox,
+.ucooperationbox, .dcooperationbox{ 
+  border-radius: 20px;
+  border: 3px solid;
+  background-color: $back;
 }
 
 .gcooperationbox {
-  border: 2px solid $graylight;
-  border-radius: 20px;
+  border-color: $graylight;
 }
 .ecooperationbox {
-  border: 2px solid $equivalence;
-  border-radius: 20px;
+  border-color: $equivalence;
 }
 .tcooperationbox {
-  border: 2px solid $trust;
-  border-radius: 20px;
+  border-color: $trust;
 }
 .ccooperationbox {
-  border: 2px solid $care;
-  border-radius: 20px;
+  border-color: $care;
 }
 .icooperationbox {
-  border: 2px solid $transparency;
-  border-radius: 20px;
+  border-color: $transparency;
 }
 .fcooperationbox {
-  border: 2px solid $freedom;
-  border-radius: 20px;
+  border-color: $freedom;
 }
 .ucooperationbox {
-  border: 2px solid $understanding;
-  border-radius: 20px;
+  border-color: $understanding;
 }
 .dcooperationbox {
-  border: 2px solid $diversity;
-  border-radius: 20px;
+  border-color: $diversity;
 }
 
 
@@ -455,6 +392,9 @@ b-form-select .was-validated, .custom-select:valid, .custom-select.is-valid{
   background-color: transparent !important;
 }
 
+.o0{
+  opacity: 0.50;
+}
 .o50{
   opacity: 0.50;
 }
@@ -479,7 +419,7 @@ b-form-select .was-validated, .custom-select:valid, .custom-select.is-valid{
 
 /* navbar */
 .nav-container {
-  background-color: $back;
+  background-color: white;
   height: auto;
 }
 .navbar {
@@ -696,7 +636,8 @@ video {
   font-weight: bold;
 }
 .subheading {
-  font-size: 22px;
+  font-size: 30px;
+  font-weight: 400;
 }
 .space {
   letter-spacing: 2px;
@@ -843,8 +784,7 @@ a.disabled {
 }
 /* FADE IN AREA, ALSO ACTIVADED AT THE END OF ROTATION */
 #homefade {
-  animation: fadeino 3s forwards;
-  animation-delay: 1s;
+  animation: fadeino 2s forwards;
 }
 @keyframes fadeino {
   0% {
