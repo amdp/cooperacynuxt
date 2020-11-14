@@ -44,7 +44,7 @@
           </b-col>
         </b-row>
         <b-row class="m-0 mx-2 p-0">
-          <b-col cols="6" class="m-0 p-0 t10">
+          <b-col cols="6" class="m-0 p-0 t10 aaagray">
             {{ comment.created.replace(/T|:..\.000Z/gm, ' ') }}
             #{{ comment.id }}
           </b-col>
@@ -127,7 +127,7 @@
               </b-col>
             </b-row>
             <b-row class="m-0 mx-2 p-0">
-              <b-col cols="6" class="m-0 p-0 t10">
+              <b-col cols="6" class="m-0 p-0 t10 aaagray">
                 {{ subcomment.created.replace(/T|:..\.000Z/gm, ' ') }}
                 #{{ subcomment.id }}
               </b-col>
