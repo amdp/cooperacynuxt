@@ -114,6 +114,7 @@ body {
 .dark-mode .bianchetto {
   color: $frontdark;
   background-color: #000 !important;
+  overflow-wrap: break-word;
 }
 
 .std{
@@ -749,7 +750,10 @@ a.disabled {
   border: 1px solid $aaagray;
   border-radius: 5px;
   background-color: #fff;
-  min-height: 29px;
+  overflow-wrap: break-word;
+}
+.newcommentbtn{
+  min-height: 31px;
 }
 
 /***********************************************************

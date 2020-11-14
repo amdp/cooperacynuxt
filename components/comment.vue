@@ -6,7 +6,7 @@
       <b-col cols="10" class="m-0 p-0">
         <vue-tribute :options="options" id="postTribute" class="p-0 m-0">
           <b-container
-            class="newcommentbox p-0 m-0"
+            class="newcommentbox p-1 m-0"
             contenteditable="true"
             @tribute-replaced="mention()"
             @click="check()"
@@ -17,7 +17,7 @@
       <b-col cols="2" class="m-0 px-2">
         <b-button
           size="sm"
-          class="btn bhtrust white btn-block border-0"
+          class="btn bhtrust white btn-block border-0 newcommentbtn"
           @click="formpost('formPost')"
         >
           POST
@@ -81,7 +81,7 @@
             <vue-tribute :options="options" id="commentTribute">
               <!-- !!!the mention function should carry the id of the comment !!!-->
               <b-container
-                class="newcommentbox"
+                class="newcommentbox p-1 m-0"
                 contenteditable="true"
                 @tribute-replaced="mention()"
                 @click="check()"
@@ -92,7 +92,7 @@
           <b-col cols="2" class="p-0 m-0">
             <b-button
               size="sm"
-              class="btn bhtrust white btn-block border-0"
+              class="btn bhtrust white btn-block border-0 newcommentbtn"
               @click="commentform(comment, editreplyid)"
             >
               POST
@@ -164,7 +164,7 @@
                 <vue-tribute :options="options" id="commentTribute">
                   <!-- !!!the mention function should carry the id of the comment !!!-->
                   <b-container
-                    class="newcommentbox"
+                    class="newcommentbox p-1 m-0"
                     contenteditable="true"
                     @tribute-replaced="mention()"
                     @click="check()"
@@ -175,7 +175,7 @@
               <b-col cols="2" class="p-0 m-0">
                 <b-button
                   size="sm"
-                  class="btn bhtrust white btn-block border-0"
+                  class="btn bhtrust white btn-block border-0 newcommentbtn"
                   @click="commentform(subcomment, editreplyid)"
                 >
                   POST
