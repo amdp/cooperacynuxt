@@ -3,7 +3,7 @@
     <!-- NEW POST -->
     <b-container class="p-2">Make a question, discuss a topic!</b-container>
     <b-row class="m-0 p-0">
-      <b-col cols="10" class="m-0 p-0">
+      <b-col cols="8" lg="10" class="m-0 p-0">
         <vue-tribute :options="options" id="postTribute" class="p-0 m-0">
           <b-container
             class="newcommentbox p-1 m-0"
@@ -14,7 +14,7 @@
           ></b-container>
         </vue-tribute>
       </b-col>
-      <b-col cols="2" class="m-0 px-2">
+      <b-col cols="4" lg="2" class="m-0 px-2">
         <b-button
           size="sm"
           class="btn bhtrust white btn-block border-0 newcommentbtn"
@@ -27,7 +27,7 @@
 
     <!-- POSTS -->
     <b-row class="m-0 p-0 mt-3" v-for="comment in up" :key="comment.id">
-      <b-col cols="12" lg="7" class="p-0 mx-auto cooperationbox">
+      <b-col cols="12" lg="7" class="p-0 mx-auto">
         <b-row class="m-0 p-0">
           <b-col cols="2" md="1" class="space t10 graylight up text-left p-0">
             <img
@@ -77,7 +77,7 @@
 
         <!-- POST EDIT/REPLY FORM BOX -->
         <b-row class="p-0 m-0" v-show="formswitch == comment.id">
-          <b-col cols="10">
+          <b-col cols="9">
             <vue-tribute :options="options" id="commentTribute">
               <!-- !!!the mention function should carry the id of the comment !!!-->
               <b-container
@@ -89,7 +89,7 @@
               ></b-container>
             </vue-tribute>
           </b-col>
-          <b-col cols="2" class="p-0 m-0">
+          <b-col cols="3" class="p-0 m-0">
             <b-button
               size="sm"
               class="btn bhtrust white btn-block border-0 newcommentbtn"
@@ -160,7 +160,7 @@
 
             <!-- COMMENT EDIT/REPLY FORM BOX -->
             <b-row class="p-0 m-0" v-show="formswitch == subcomment.id">
-              <b-col cols="10">
+              <b-col cols="9">
                 <vue-tribute :options="options" id="commentTribute">
                   <!-- !!!the mention function should carry the id of the comment !!!-->
                   <b-container
@@ -172,7 +172,7 @@
                   ></b-container>
                 </vue-tribute>
               </b-col>
-              <b-col cols="2" class="p-0 m-0">
+              <b-col cols="3" class="p-0 m-0">
                 <b-button
                   size="sm"
                   class="btn bhtrust white btn-block border-0 newcommentbtn"

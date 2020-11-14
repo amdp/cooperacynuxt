@@ -84,6 +84,7 @@ $frontdark: #fff;
   font-family: 'Prompt', sans-serif;
   font-weight: 300;
   color: $front;
+  overflow-wrap: break-word;
 }
 
 .base {
@@ -114,7 +115,6 @@ body {
 .dark-mode .bianchetto {
   color: $frontdark;
   background-color: #000 !important;
-  overflow-wrap: break-word;
 }
 
 .std{
@@ -316,8 +316,7 @@ a:hover {
 .gcooperationbox, .ecooperationbox,
 .tcooperationbox, .ccooperationbox,
 .icooperationbox, .fcooperationbox,
-.ucooperationbox, .dcooperationbox{
-  padding: 2px 2px 2px 2px;
+.ucooperationbox, .dcooperationbox {
   border-radius: 20px;
   border: 3px solid;
   background-color: $back;

@@ -3,7 +3,7 @@
     <b-row class="m-0 p-0 w-100 fixed">
       <navbar />
     </b-row>
-    <b-row fluid class="justify-content-center w-100 m-0 px-1">
+    <b-row fluid class="justify-content-center w-100 m-0 p-0">
       <navbar />
       <b-col cols="12" lg="8" class="p-4 mt-4">
         <nuxt />

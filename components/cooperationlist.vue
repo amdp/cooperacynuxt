@@ -1,14 +1,10 @@
 <template>
-  <b-container
-    fluid
-    class="justify-content-center m-0 p-0"
-    ref="cooperationlistcomponent"
-  >
+  <b-container class="m-0 p-0" ref="cooperationlistcomponent">
     <voteinfomodal />
     <b-container
       v-for="type in cooperationType"
       :key="type.id"
-      class="justify-content-center m-0 p-0"
+      class="m-0 p-0"
       fluid
     >
       <h2
@@ -25,8 +21,7 @@
       <b-container
         v-for="cooperation in cooperationlist[type.name]"
         :key="cooperation.id"
-        :class="'mx-auto mb-3 w-100 ' + cooperationbox(cooperation)"
-        class="m-0 p-0"
+        :class="'m-0 p-0 mb-3 ' + cooperationbox(cooperation)"
       >
         <b-row class="m-0 p-0 w-100 p-0">
           <b-col cols="12" class="m-0 p-0 w-100">
@@ -185,7 +180,7 @@
               </b-col>
             </b-row>
             <!-- VOTEBAR -->
-            <b-row class="m-0 p-2 w-100">
+            <b-row class="m-0 px-2 pb-1 w-100">
               <b-col cols="12" class="m-0 p-0 w-100 text-center">
                 <votebar
                   :voteprop="cooperation"
