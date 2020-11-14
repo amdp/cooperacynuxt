@@ -316,7 +316,8 @@ a:hover {
 .gcooperationbox, .ecooperationbox,
 .tcooperationbox, .ccooperationbox,
 .icooperationbox, .fcooperationbox,
-.ucooperationbox, .dcooperationbox{ 
+.ucooperationbox, .dcooperationbox{
+  padding: 2px 2px 2px 2px;
   border-radius: 20px;
   border: 3px solid;
   background-color: $back;
@@ -394,7 +395,7 @@ b-form-select .was-validated, .custom-select:valid, .custom-select.is-valid{
 }
 
 .o0{
-  opacity: 0.50;
+  opacity: 0.0;
 }
 .o50{
   opacity: 0.50;

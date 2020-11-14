@@ -25,7 +25,7 @@
       <b-container
         v-for="cooperation in cooperationlist[type.name]"
         :key="cooperation.id"
-        :class="'p-1 mx-auto mb-3 w-100 ' + cooperationbox(cooperation)"
+        :class="'mx-auto mb-3 w-100 ' + cooperationbox(cooperation)"
         class="m-0 p-0"
       >
         <b-row class="m-0 p-0 w-100 p-0">
