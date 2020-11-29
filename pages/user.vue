@@ -23,14 +23,14 @@
         <nuxt-link to="/cootool/" class="au"> Cooperation Tool </nuxt-link>
         <br />
         <span
-          class="au"
+          class="au finger"
           @click="resetvoting()"
           v-if="this.$auth.user.role == 1"
         >
           <br />Admin tool: Reset all Voting and Colorbar
         </span>
         <span
-          class="au"
+          class="au finger"
           @click="sendwelcome()"
           v-if="this.$auth.user.role == 1"
         >
@@ -38,7 +38,7 @@
         </span>
 
         <br /><br />
-        <span class="au" @click="$auth.logout()">LOGOUT</span>
+        <span class="au finger" @click="$auth.logout()">LOGOUT</span>
       </b-col>
       <b-col cols="6">
         <div class="container text-right">

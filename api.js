@@ -389,41 +389,61 @@ app.put('/userpaypal', async function (req, res, next) {
 /////// POST ///////
 
 app.post('/login', async function (req, res, next) {
+  // this function temporarily checks everytime a user logs in whether all the other users
+  // should be deactivated
   try {
+    let accessToken
     let query = 'SELECT * FROM `user` WHERE `user`.`email`= ? LIMIT 1'
     let param = [req.body.email]
     const [user] = await mypool.execute(query, param)
-    if (user.length == 0) {
+    if (user.length == 0 || !bcrypt.compareSync(req.body.password, user[0].password)) {
       return res.status(401).send('wrong user/password')
+    } else {
+      if (await expiredcheck(user[0])) {
+        return res.status(402).send('expired')
+      } else {
+        if (user[0].active === 0) { activeuser(user[0].id, 1) }
+        accessToken = jwt.sign({ id: user[0].id }, process.env.JWTSECRET, {
+          expiresIn: '2h'
+        })
+        res.status(200).send({ token: { accessToken } })
+      }
     }
-    logincheck(user[0])
   } catch (err) {
     next(err)
   }
-  async function logincheck(user) {
-    if (!bcrypt.compareSync(req.body.password, user.password)) {
-      return res.status(401).send('wrong user/password')
+  //now we asyncronously remove those with expired membership
+  try {
+    let query = 'SELECT * FROM `user`'
+    const [user] = await mypool.execute(query)
+    for (let i = 0; i < user.length; i++) {
+      if (user[i].active === 0) {
+        console.log('skipping ' + JSON.stringify(user[i].name))
+        continue
+      }
+      if (await expiredcheck(user[i])) {
+        console.log('checked and deactivating: ' + JSON.stringify(user[i]))
+        activeuser(user[i].id, 0)
+      }
     }
-    let accessToken = jwt.sign({ id: user.id }, process.env.JWTSECRET, {
-      expiresIn: '2h'
-    })
-    let today = new Date(Date.now()).toJSON().slice(0, 10)
+  } catch (err) {
+    next(err)
+  }
+
+  async function expiredcheck(user) {
     // bank transfer membership
     if (user.paypalagreementid == 'bank') {
-      if (!user.paymentdeadline) {
-        return res
-          .status(500)
-          .send('expired')
+      if (user.paymentdeadline) {
+        let today = new Date(Date.now()).toJSON().slice(0, 10)
+        if (user.paymentdeadline.toJSON().slice(0, 10) >= today) {
+          return false
+        }
       }
-      if (user.paymentdeadline.toJSON().slice(0, 10) >= today) {
-        res.status(200).send({ token: { accessToken } })
-        activeuser(user.id)
-      } else {
-        res.status(401).send('expired')
-        activeuser(user.id, 'set0')
-      }
+    } else if (!user.paypalagreementid) {
+      return true // user has null membership
     } else {
       // paypal membership check
+      let today = new Date(Date.now()).toJSON().slice(0, 10)
       let today45ago = new Date(Date.now() + -45 * 24 * 3600 * 1000)
         .toJSON()
         .slice(0, 10)
@@ -461,48 +481,39 @@ app.post('/login', async function (req, res, next) {
           }
         })
         let list = transaction.data.agreement_transaction_list
-        if (list[list.length - 1].status == 'Completed') {
-          res.status(200).send({ token: { accessToken } })
-          activeuser(user.id)
-        } else if (
-          //sometimes the transaction list has a final record of updated payment:
-          list[list.length - 1].status == 'Updated' &&
-          list[list.length - 2].status == 'Completed'
-        ) {
-          res.status(200).send({ token: { accessToken } })
-          activeuser(user.id)
-        } else if (
-          //sometimes the transaction list has a final record of updated payment:
-          list[list.length - 1].status == 'Created' &&
-          list[list.length - 2].status == 'Completed'
-        ) {
-          res.status(200).send({ token: { accessToken } })
-          activeuser(user.id)
-        }
-        else {
-          res.status(401).send(
-            'expired'
-          )
-          activeuser(user.id, 'set0')
+        if (list[list.length - 1]) {// if any of these is true, then expiration is false
+          if (list[list.length - 1].status == 'Completed' ||
+            //sometimes the transaction list has a final record of updated payment:
+            (list[list.length - 1].status == 'Updated'
+              && list[list.length - 2].status == 'Completed') ||
+            //sometimes the transaction list has a final record of updated payment:
+            (list[list.length - 1].status == 'Created' &&
+              list[list.length - 2].status == 'Completed')
+          ) {
+            return false
+          }
         }
       } catch (err) {
         next(err)
       }
     }
+    return true
   }
-  async function activeuser(id, set0) {
-    let activateme = 1
-    if (set0) activateme = 0
+
+  async function activeuser(id, set) {
     try {
       let query =
         'UPDATE `user` SET `active`=? WHERE `id`=?'
       let param = [
-        activateme,
+        set,
         id
       ]
       mypool.execute(query, param)
     } catch (err) {
       next(err)
+    }
+    if (set = 0) {
+      console.log('you should send an email to ' + JSON.stringify(id))
     }
   }
 })
