@@ -16,7 +16,7 @@
   "dependencies": {
     "@nuxt/components": "^1.2.5",
     "@nuxt/http": "^0.6.2",
-    "@nuxt/webpack": "^2.14.12",
+    "@nuxt/webpack": "^2.15.3",
     "@nuxtjs/auth": "^4.9.1",
     "@nuxtjs/axios": "^5.12.5",
     "@nuxtjs/color-mode": "^1.1.1",
@@ -36,7 +36,7 @@
     "jwt-decode": "^2.2.0",
     "mysql": "^2.18.1",
     "mysql2": "^2.2.5",
-    "node-sass": "^4.14.1",
+    "node-sass": "^5.0.0",
     "nodemailer": "^6.4.17",
     "nodemon": "^2.0.7",
     "nuxt": "^2.14.12",
@@ -44,7 +44,6 @@
     "sass-loader": "^10.1.1",
     "tributejs": "3.0",
     "typescript": "^3.9.7",
-    "ufo": "^0.6.10",
     "v-tooltip": "^2.1.2",
     "vue-recaptcha": "^1.3.0",
     "vue-slider-component": "^3.2.11",
@@ -54,7 +53,7 @@
     "@nuxtjs/eslint-config": "^2.0.2",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.8.0",
-    "eslint-loader": "^3.0.4",
+    "eslint-loader": "^4.0.2",
     "eslint-plugin-vue": "^6.2.2",
     "vue-eslint-parser": "^7.4.1"
   }
