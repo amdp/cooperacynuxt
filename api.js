@@ -418,7 +418,6 @@ app.post('/login', async function (req, res, next) {
     const [user] = await mypool.execute(query)
     for (let i = 0; i < user.length; i++) {
       if (user[i].active === 0) {
-        console.log('skipping ' + JSON.stringify(user[i].name))
         continue
       }
       if (await expiredcheck(user[i])) {
@@ -546,6 +545,7 @@ app.post('/recoverpassword', async function (req, res, next) {
       let query = 'SELECT * FROM `user` WHERE `user`.`email`= ? LIMIT 1'
       let param = [req.body.email]
       const [user] = await mypool.execute(query, param)
+      console.log('About to start the password recovering for user: ' + JSON.stringify(user[0]))
       recoverpassword(user[0])
     } catch (err) {
       next(err)
@@ -553,9 +553,11 @@ app.post('/recoverpassword', async function (req, res, next) {
   } else if (req.body.token) {
     setuppassword()
   } else {
+    console.log(' ' + JSON.stringify('No mail nor token, exiting.'))
     res.status(500).send('No mail nor token, exiting.')
   }
   async function recoverpassword(user) {
+    console.log('recover password function for user: ' + JSON.stringify(user))
     //this happens when the users want to change their password
     if (user) {
       let token = jwt.sign(
@@ -608,6 +610,7 @@ app.post('/recoverpassword', async function (req, res, next) {
     try {
       jwt.verify(req.body.token, process.env.JWTSECRET)
     } catch (err) {
+      console.log(' ' + JSON.stringify('Auth Token Wrong or Expired'))
       return res.status(401).send(err + ': Auth Token Wrong or Expired')
     }
     var { id, newpassword } = jwt.decode(req.body.token)
@@ -616,6 +619,7 @@ app.post('/recoverpassword', async function (req, res, next) {
       let query = 'UPDATE `user` SET `password`=? WHERE `id`=?'
       let param = [newhashedpassword, id]
       await mypool.execute(query, param)
+      console.log('It ' + JSON.stringify('should be updated...'))
       res.status(200).send('updated')
     } catch (err) {
       next(err)

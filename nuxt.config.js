@@ -6,6 +6,7 @@ import en from './t/en.json'
 import it from './t/it.json'
 module.exports = {
   build: {},
+  telemetry: false,
   plugins: [
     { src: '@plugins/vue-tribute', mode: 'client' },
   ],
