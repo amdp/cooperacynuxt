@@ -575,7 +575,7 @@ app.post('/recoverpassword', async function (req, res, next) {
       let transporter = nodemailer.createTransport({
         host: process.env.SMTP,
         port: process.env.SMTPPORT,
-        secure: process.env.SMTPSECURE,
+        secure: true,
         auth: {
           user: process.env.MAILUSER,
           pass: process.env.MAILPASSWORD
@@ -812,7 +812,7 @@ app.post('/comment', async function (req, res, next) {
         let transporter = nodemailer.createTransport({
           host: process.env.SMTP,
           port: process.env.SMTPPORT,
-          secure: process.env.SMTPSECURE,
+          secure: true,
           auth: {
             user: process.env.MAILUSER,
             pass: process.env.MAILPASSWORD
@@ -868,7 +868,7 @@ app.post('/notification', async function (req, res, next) {
       let transporter = nodemailer.createTransport({
         host: process.env.SMTP,
         port: process.env.SMTPPORT,
-        secure: process.env.SMTPSECURE,
+        secure: true,
         auth: {
           user: process.env.MAILUSER,
           pass: process.env.MAILPASSWORD
@@ -1016,7 +1016,7 @@ app.post('/newuseremail', function (req, res) {
   let transporter = nodemailer.createTransport({
     host: process.env.SMTP,
     port: process.env.SMTPPORT,
-    secure: process.env.SMTPSECURE,
+    secure: true,
     auth: {
       user: process.env.MAILUSER,
       pass: process.env.MAILPASSWORD
@@ -1041,7 +1041,7 @@ app.post('/contactemail', function (req, res) {
   const transporter = nodemailer.createTransport({
     host: process.env.SMTP,
     port: process.env.SMTPPORT,
-    secure: process.env.SMTPSECURE,
+    secure: true,
     auth: {
       user: process.env.MAILUSER,
       pass: process.env.MAILPASSWORD
@@ -1173,7 +1173,7 @@ app.post('/budgetstep', async function (req, res, next) {
         let transporter = nodemailer.createTransport({
           host: process.env.SMTP,
           port: process.env.SMTPPORT,
-          secure: process.env.SMTPSECURE,
+          secure: true,
           auth: {
             user: process.env.MAILUSER,
             pass: process.env.MAILPASSWORD
@@ -1229,7 +1229,7 @@ app.post('/budgetstep', async function (req, res, next) {
         let transporter = nodemailer.createTransport({
           host: process.env.SMTP,
           port: process.env.SMTPPORT,
-          secure: process.env.SMTPSECURE,
+          secure: true,
           auth: {
             user: process.env.MAILUSER,
             pass: process.env.MAILPASSWORD
@@ -1544,7 +1544,7 @@ app.post('/budgetcheck', async function (req, res, next) {
         let transporter = nodemailer.createTransport({
           host: process.env.SMTP,
           port: process.env.SMTPPORT,
-          secure: process.env.SMTPSECURE,
+          secure: true,
           auth: {
             user: process.env.MAILUSER,
             pass: process.env.MAILPASSWORD
