@@ -78,9 +78,9 @@ export const mutations = {
     state.comment = payload
   },
   setFundingvar: (state, payload) => {
-    state.fundingvar.totalE = parseFloat(payload.totalE)
-    state.fundingvar.totaluser = parseFloat(payload.totaluser)
-    state.fundingvar.totalfee = parseFloat(payload.totalfee)
+    state.fundingvar.totalE = payload.totalE
+    state.fundingvar.totaluser = payload.totaluser
+    state.fundingvar.totalfee = payload.totalfee
   },
   setTag: (state, payload) => {
     state.tag = payload
@@ -163,9 +163,7 @@ export const actions = {
     context.commit('setFundingvar', data)
   },
   getCooperation: async function (context, payload) {
-    let { data } = await this.$axios.get(process.env.DBURL + '/cooperation', {
-      params: payload
-    })
+    let { data } = await this.$axios.get(process.env.DBURL + '/cooperation', { params: payload })
     context.commit('setCooperation', data)
   },
   getUserCooperation: async function (context, payload) {

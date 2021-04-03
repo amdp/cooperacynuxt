@@ -317,7 +317,7 @@ export default {
       }, this.updatesec * 1000)
     },
     collected(cooperation) {
-      if (parseFloat(cooperation.E = 0)) return cooperation.collect
+      if (cooperation.E == 0) { return cooperation.collect }
       if (parseFloat(cooperation.budget) < 0) {//if participation mode:
         return cooperation.E * cooperation.collect
       }

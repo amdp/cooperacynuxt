@@ -129,14 +129,14 @@ app.get('/fundingvar', async function (req, res, next) {
     let query = 'SELECT SUM(`E`) as `totalE` FROM `cooperation` WHERE `mode`>=? and `collect`<`budget`'
     param = [funding]
     const [result1] = await mypool.execute(query, param)
-    fundingvar.totalE = result1[0].totalE
+    fundingvar.totalE = parseFloat(result1[0].totalE)
     query = 'SELECT COUNT(`user`.`active`) as `totaluser` from `user` where `user`.`active` = ?'
     param = [1]
     const [result2] = await mypool.execute(query, param)
-    fundingvar.totaluser = result2[0].totaluser
+    fundingvar.totaluser = parseFloat(result2[0].totaluser)
     query = 'SELECT SUM(`user`.`active`*`user`.`fee`) as `totalfee` from `user`'
     const [result3] = await mypool.execute(query)
-    fundingvar.totalfee = result3[0].totalfee
+    fundingvar.totalfee = parseFloat(result3[0].totalfee)
   } catch (err) {
     next(err)
   }
