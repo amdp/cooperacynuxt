@@ -317,13 +317,13 @@ export default {
       }, this.updatesec * 1000)
     },
     collected(cooperation) {
-      if (cooperation.E == 0) { return cooperation.collect }
       if (parseFloat(cooperation.budget) < 0) {//if participation mode:
         return cooperation.E * cooperation.collect
       }
       if (parseFloat(cooperation.collect) < parseFloat(cooperation.budget)) {//if funding mode:
         // here we add to cooperation.collect (the amount collected so far) the increment of every second,
         // times the update seconds interval times the % of the cooperation E-votes over the total of the E-votes
+        if (cooperation.E == 0) { return cooperation.collect } // if E-votes are zero, there is no update to do
         return (
           parseFloat(cooperation.collect) +
           this.incremental *
