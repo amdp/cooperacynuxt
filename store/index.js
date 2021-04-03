@@ -78,9 +78,9 @@ export const mutations = {
     state.comment = payload
   },
   setFundingvar: (state, payload) => {
-    state.fundingvar.totalE = payload.totalE
-    state.fundingvar.totaluser = payload.totaluser
-    state.fundingvar.totalfee = payload.totalfee
+    state.fundingvar.totalE = parseFloat(payload.totalE)
+    state.fundingvar.totaluser = parseFloat(payload.totaluser)
+    state.fundingvar.totalfee = parseFloat(payload.totalfee)
   },
   setTag: (state, payload) => {
     state.tag = payload

@@ -99,6 +99,6 @@ report.*
 
 #cooperation and user images
 /static/assets/image/cooperation/*
-!/static/assets/image/cooperation/0.png´
+!/static/assets/image/cooperation/0.png
 /static/assets/image/user/*
 !/static/assets/image/user/0.png

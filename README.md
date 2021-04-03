@@ -19,19 +19,25 @@ The result is online at https://cooperacy.org. For detailed explanation on how t
 # install dependencies
 $ npm install
 
-# setup .env
-$ cp etc/dumbenv .env //edit the env with all the information needed
+# copy .env and edit the env with all the information needed
+$ cp etc/dumbenv .env 
 
-# serve with hot reload at localhost:3000
+# serve with hot reload at 127.0.0.1:3000 (do not use localhost:3000)
 $ npm run dev
 
-#On a new terminal, start the experimental money pool distributor:
-$ ./pool
+# create at least one country with id 2 into the mysql table "country" and a place with country id 2 in "place"
+# create at least one country with id 1 into the mysql table "country" and a place with country id 1 in "place" as "general" one
+# also add in "cooperation" table a cooperation with id 700 and call it "announcements" or whatever
+# also add in "cooperation" table a cooperation with id 1 and call it "cooperacy" or whatever with:
+# mode 101, category 1, parent 1, author your user id, collected 100, budget 200, professional 0, hudget 1
+
+# create a new user using the login page - do it with BANK TRANSFER
+
+# in the database go to your new user payment deadline and edit it with value "9999-12-31 00:00:00" or whatever date you like after today
+
+# try to login and enjoy
 
 # build for production and launch server
 $ npm run build
 $ npm start
-
-# generate static project
-$ npm run generate
 ```
