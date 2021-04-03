@@ -545,6 +545,10 @@ app.post('/recoverpassword', async function (req, res, next) {
       let query = 'SELECT * FROM `user` WHERE `user`.`email`= ? LIMIT 1'
       let param = [req.body.email]
       const [user] = await mypool.execute(query, param)
+      if (!user[0]) {
+        console.log(' ' + JSON.stringify('Either the mail is wrong, or the token/password expired, or other problem occurred. Exiting.'))
+        res.status(500).send('Either the mail is wrong, or the token/password expired, or other problem occurred. Exiting.')
+      }
       console.log('About to start the password recovering for user: ' + JSON.stringify(user[0]))
       recoverpassword(user[0])
     } catch (err) {
@@ -821,8 +825,8 @@ app.post('/comment', async function (req, res, next) {
           html: 'Hello, ' + notifylist[i].name + ' ' + notifylist[i].surname + '!<br /><br />' +
             'You have a new notification relative to a new comment in the cooperation "' + cooperationtitle[0].title +
             '" that you are following. <a href="https://cooperacy.org/cooperation/' +
-            notifylist[i].cooperation + '">Have a look at the cooperation</a> or read the comment here:<br />' +
-            req.body.content + '<br /><br /><br />'
+            notifylist[i].cooperation + '">Have a look at the cooperation</a> or read the comment here:<br /> ' +
+            req.body.content + ' <br /><br /><br />'
         }
         transporter.sendMail(mailOptions, (error, info) => {
           if (error) {
