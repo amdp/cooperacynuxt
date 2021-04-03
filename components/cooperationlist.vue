@@ -318,10 +318,10 @@ export default {
     },
     collected(cooperation) {
       if (parseFloat(cooperation.budget) < 0) {//if participation mode:
-        return cooperation.E * cooperation.collect
+        return cooperation.E * parseFloat(cooperation.collect)
       }
-      if (cooperation.E == 0) { return cooperation.collect } // if E-votes are zero, there is no update to do
-      if (parseFloat(cooperation.collect) < parseFloat(cooperation.budget)) {//if funding mode:
+      if (cooperation.E == 0) { return parseFloat(cooperation.collect) } // if E-votes are zero, there is no update to do
+      else if (parseFloat(cooperation.collect) < parseFloat(cooperation.budget)) {//if funding mode:
         // here we add to cooperation.collect (the amount collected so far) the increment of every second,
         // times the update seconds interval times the % of the cooperation E-votes over the total of the E-votes
         return (
