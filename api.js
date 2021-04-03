@@ -573,7 +573,7 @@ app.post('/recoverpassword', async function (req, res, next) {
         { expiresIn: '2h' }
       )
       let transporter = nodemailer.createTransport({
-        host: process.env.SMTP,
+        host: 'smtp.gmail.com',
         port: process.env.SMTPPORT,
         secure: true,
         auth: {
@@ -810,7 +810,7 @@ app.post('/comment', async function (req, res, next) {
     for (let i = 0; i < notifylist.length; i++) {
       try {
         let transporter = nodemailer.createTransport({
-          host: process.env.SMTP,
+          host: 'smtp.gmail.com',
           port: process.env.SMTPPORT,
           secure: true,
           auth: {
@@ -866,7 +866,7 @@ app.post('/notification', async function (req, res, next) {
     user = user[0][0]
     try {
       let transporter = nodemailer.createTransport({
-        host: process.env.SMTP,
+        host: 'smtp.gmail.com',
         port: process.env.SMTPPORT,
         secure: true,
         auth: {
@@ -1014,7 +1014,7 @@ app.post('/image', async function (req, res, next) {
 
 app.post('/newuseremail', function (req, res) {
   let transporter = nodemailer.createTransport({
-    host: process.env.SMTP,
+    host: 'smtp.gmail.com',
     port: process.env.SMTPPORT,
     secure: true,
     auth: {
@@ -1039,7 +1039,7 @@ app.post('/newuseremail', function (req, res) {
 
 app.post('/contactemail', function (req, res) {
   const transporter = nodemailer.createTransport({
-    host: process.env.SMTP,
+    host: 'smtp.gmail.com',
     port: process.env.SMTPPORT,
     secure: true,
     auth: {
@@ -1171,7 +1171,7 @@ app.post('/budgetstep', async function (req, res, next) {
     for (let i = 0; i < notifylist.length; i++) {
       try {
         let transporter = nodemailer.createTransport({
-          host: process.env.SMTP,
+          host: 'smtp.gmail.com',
           port: process.env.SMTPPORT,
           secure: true,
           auth: {
@@ -1227,7 +1227,7 @@ app.post('/budgetstep', async function (req, res, next) {
     for (let i = 0; i < notifylist.length; i++) {
       try {
         let transporter = nodemailer.createTransport({
-          host: process.env.SMTP,
+          host: 'smtp.gmail.com',
           port: process.env.SMTPPORT,
           secure: true,
           auth: {
@@ -1542,7 +1542,7 @@ app.post('/budgetcheck', async function (req, res, next) {
     for (let i = 0; i < notifylist.length; i++) {
       try {
         let transporter = nodemailer.createTransport({
-          host: process.env.SMTP,
+          host: 'smtp.gmail.com',
           port: process.env.SMTPPORT,
           secure: true,
           auth: {
