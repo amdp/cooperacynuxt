@@ -20,7 +20,7 @@ The result is online at https://cooperacy.org. For detailed explanation on how t
 $ npm install
 
 # setup .env
-$ cp /etc/dumbenv .env
+$ cp etc/dumbenv .env //edit the env with all the information needed
 
 # serve with hot reload at localhost:3000
 $ npm run dev
