@@ -2,10 +2,12 @@ const pkg = require('./package')
 require('dotenv').config()
 import fs from 'fs'
 import path from 'path'
-import en from './t/en.json'
-import it from './t/it.json'
 module.exports = {
-  build: {},
+  build: {
+    babel: {
+      plugins: [["@babel/plugin-proposal-private-methods", { "loose": true }]],
+    },
+  },
   telemetry: false,
   plugins: [
     { src: '@plugins/vue-tribute', mode: 'client' },
@@ -61,14 +63,15 @@ module.exports = {
     }
   },
   i18n: {
-    locales: ['en', 'it'],
+    lazy: true,
+    langDir: './t',
+    locales: [
+      { code: 'en', iso: 'en-US', file: 'en.json', dir: 'ltr' },
+      { code: 'it', iso: 'it-IT', file: 'it.json', dir: 'ltr' },
+    ],
     defaultLocale: 'en',
     vueI18n: {
       fallbackLocale: 'en',
-      messages: {
-        en: en,
-        it: it,
-      }
     }
   },
   head: {

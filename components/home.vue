@@ -102,9 +102,8 @@
           stroke="#555555"
           textLength="475"
           class="svgtext"
-        >
-          ENTER THE JOURNEY
-        </text>
+          v-html="$t('home.enter')"
+        ></text>
       </svg>
     </b-container>
     <!-- </b-link> -->
@@ -142,23 +141,43 @@
     </b-container>
     <b-container id="homefade" class="o0 m-0 p-0">
       <p class="t32 text-center my-5">
-        <nuxt-link class="ae" to="/login">Join</nuxt-link> Cooperacy and develop
-        enjoyable cooperations at your
-        <nuxt-link to="/main/aboutyou" class="ad">personal</nuxt-link>,
-        <nuxt-link to="/main/corporate" class="af">corporate</nuxt-link>
-        and
-        <nuxt-link to="/cci" class="au">international</nuxt-link>
-        level.
+        <nuxt-link
+          class="ae"
+          to="/login"
+          v-html="$t('home.coojoin')"
+        ></nuxt-link>
+        {{ $t('home.joincoo') }}
+        <nuxt-link
+          to="/main/aboutyou"
+          class="ad"
+          v-html="$t('home.personal')"
+        ></nuxt-link
+        >,
+        <nuxt-link
+          to="/main/corporate"
+          class="af"
+          v-html="$t('home.corporate')"
+        ></nuxt-link>
+        {{ $t('home.and') }}
+        <nuxt-link to="/cci" class="au" v-html="$t('home.international')">
+        </nuxt-link
+        >{{ $t('home.level') }}.
       </p>
       <b-row class="my-4 p-2">
         <b-col cols="12" lg="4" class="heading text-center">
-          <nuxt-link to="/main/platform" class="ai space">DISCOVER</nuxt-link>
+          <nuxt-link to="/main/platform" class="ai space">{{
+            $t('home.discover')
+          }}</nuxt-link>
         </b-col>
         <b-col cols="12" lg="4" class="heading text-center">
-          <nuxt-link to="/login" class="ae space">JOIN</nuxt-link>
+          <nuxt-link to="/login" class="ae space">{{
+            $t('home.join')
+          }}</nuxt-link>
         </b-col>
         <b-col cols="12" lg="4" class="heading text-center">
-          <nuxt-link to="/main/cooperation" class="au space">LEARN</nuxt-link>
+          <nuxt-link to="/main/cooperation" class="au space">{{
+            $t('home.learn')
+          }}</nuxt-link>
         </b-col> </b-row
       ><br />
     </b-container>
@@ -173,6 +192,8 @@ export default {
       formSearch: null,
       dtypo: '',
       dpayoff: '', // TYPO AND PAYOFF DISAPPEAR WHEN HOVERING ON CIRCLE PATHS
+      textE: 'EVERYONE IS IMPORTANT',
+      valueE: 'EQUIVALENCE',
       values: [
         {
           name: 'equivalence',
@@ -236,106 +257,106 @@ export default {
           name: 'equivalenceD',
           display: 'none',
           href: 'main/cooperation#equivalence',
-          matrix1: 'matrix(1 0 0 1 157 360)',
-          matrix2: 'matrix(1 0 0 1 225 440)',
+          matrix1: this.$t('circle.em1'),
+          matrix2: this.$t('circle.em2'),
           style:
             'display:inline;fill:#555555;stroke:#FF8800;stroke-width:6;stroke-miterlimit:10;',
           x1: '150',
           y1: '393',
           x2: '600',
           y2: '393',
-          text: 'EVERYONE IS IMPORTANT',
-          value: 'EQUIVALENCE'
+          value: this.$t('circle.e'),
+          text: this.$t('circle.et')
         },
         {
           name: 'trustD',
           display: 'none',
           href: 'main/cooperation#trust',
-          matrix1: 'matrix(1 0 0 1 278 360)',
-          matrix2: 'matrix(1 0 0 1 208 443)',
+          matrix1: this.$t('circle.tm1'),
+          matrix2: this.$t('circle.tm2'),
           style:
             'display:inline;fill:#555555;stroke:#FFCC00;stroke-width:6;stroke-miterlimit:10;',
           x1: '150',
           y1: '393',
           x2: '600',
           y2: '393',
-          text: 'PEOPLE COUNT ON OTHERS',
-          value: 'TRUST'
+          value: this.$t('circle.t'),
+          text: this.$t('circle.tt')
         },
         {
           name: 'careD',
           display: 'none',
           href: 'main/cooperation#care',
-          matrix1: 'matrix(1 0 0 1 286 360)',
-          matrix2: 'matrix(1 0 0 1 182 443)',
+          matrix1: this.$t('circle.cm1'),
+          matrix2: this.$t('circle.cm2'),
           style:
             'display:inline;fill:#555555;stroke:#88DD33;stroke-width:6;stroke-miterlimit:10;',
           x1: '150',
           y1: '393',
           x2: '600',
           y2: '393',
-          text: 'PEOPLE CARE FOR EACH OTHER',
-          value: 'CARE'
+          value: this.$t('circle.c'),
+          text: this.$t('circle.ct')
         },
         {
           name: 'transparencyD',
           display: 'none',
           href: 'main/cooperation#transparency',
-          matrix1: 'matrix(1 0 0 1 132 360)',
-          matrix2: 'matrix(1 0 0 1 194 443)',
+          matrix1: this.$t('circle.im1'),
+          matrix2: this.$t('circle.im2'),
           style:
             'display:inline;fill:#555555;stroke:#22DDEE;stroke-width:6;stroke-miterlimit:10;',
           x1: '150',
           y1: '393',
           x2: '600',
           y2: '393',
-          text: 'PEOPLE WANT TO BE HONEST',
-          value: 'TRANSPARENCY'
+          value: this.$t('circle.i'),
+          text: this.$t('circle.it')
         },
         {
           name: 'freedomD',
           display: 'none',
           href: 'main/cooperation#freedom',
-          matrix1: 'matrix(1 0 0 1 222 360)',
-          matrix2: 'matrix(1 0 0 1 184 443)',
+          matrix1: this.$t('circle.fm1'),
+          matrix2: this.$t('circle.fm2'),
           style:
             'display:inline;fill:#555555;stroke:#4488EE;stroke-width:6;stroke-miterlimit:10;',
           x1: '150',
           y1: '393',
           x2: '600',
           y2: '393',
-          text: 'PEOPLE FOLLOW THEIR DESIRES',
-          value: 'FREEDOM'
+          value: this.$t('circle.f'),
+          text: this.$t('circle.ft')
         },
         {
           name: 'understandingD',
           display: 'none',
           href: 'main/cooperation#understanding',
-          matrix1: 'matrix(1 0 0 1 118 360)',
-          matrix2: 'matrix(1 0 0 1 116 443)',
+          matrix1: this.$t('circle.um1'),
+          matrix2: this.$t('circle.um2'),
           style:
             'display:inline;fill:#555555;stroke:#AA66DD;stroke-width:6;stroke-miterlimit:10;',
           x1: '150',
           y1: '393',
           x2: '600',
           y2: '393',
-          text: 'PEOPLE TRY TO UNDERSTAND EACH OTHER',
-          value: 'UNDERSTANDING'
+          value: this.$t('circle.u'),
+          text: this.$t('circle.ut')
         },
         {
           name: 'diversityD',
           display: 'none',
           href: 'main/cooperation#diversity',
-          matrix1: 'matrix(1 0 0 1 218 360)',
-          matrix2: 'matrix(1 0 0 1 180 443)',
+          matrix1: this.$t('circle.dm1'),
+          matrix2: this.$t('circle.dm2'),
           style:
             'display:inline;fill:#555555;stroke:#FF77CC;stroke-width:6;stroke-miterlimit:10;',
           x1: '150',
           y1: '393',
           x2: '600',
           y2: '393',
-          text: 'PEOPLE WANT TO BE INCLUDED',
-          value: 'DIVERSITY'
+          value: this.$t('circle.d'),
+          text: this.$t('circle.dt')
         }
       ],
       gradients: [

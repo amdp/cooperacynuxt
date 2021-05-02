@@ -23,8 +23,12 @@
             >
               <g>
                 <text transform="matrix(1 0 0 1 43 110)">
-                  <tspan x="0" y="0" class="logo svgtext">C</tspan>
-                  <tspan x="170" y="0" class="logo svgtext">OPERACY</tspan>
+                  <tspan x="0" y="0" class="logo svgtext">
+                    {{ $t('navbar.c') }}
+                  </tspan>
+                  <tspan x="170" y="0" class="logo svgtext">
+                    {{ $t('navbar.operacy') }}
+                  </tspan>
                 </text>
                 <g>
                   <image
@@ -150,7 +154,7 @@
                   />
                 </g>
                 <text transform="matrix(1 0 0 1 50 170)" class="lets svgtext">
-                  LET’S DO IT TOGETHER
+                  {{ $t('navbar.payoff') }}
                 </text>
               </g>
             </svg>
@@ -163,7 +167,7 @@
                 class="nav-item"
                 :class="{ 'theproject-active': navState == 'theproject' }"
               >
-                THE PROJECT
+                {{ $t('navbar.theproject') }}
               </div>
             </div>
             <div class="nav" @mouseenter="navState = 'corporate'">
@@ -171,7 +175,7 @@
                 class="nav-item"
                 :class="{ 'corporate-active': navState == 'corporate' }"
               >
-                CORPORATE
+                {{ $t('navbar.corporate') }}
               </div>
             </div>
             <div class="nav" @mouseenter="navState = 'science'">
@@ -179,7 +183,7 @@
                 class="nav-item"
                 :class="{ 'science-active': navState == 'science' }"
               >
-                SCIENCE
+                {{ $t('navbar.science') }}
               </div>
             </div>
           </div>
@@ -188,56 +192,58 @@
             id="theproject"
             v-if="navState == 'theproject'"
           >
-            <nuxt-link class="menu-item" to="/main/aboutyou"
-              >ABOUT YOU</nuxt-link
-            >
+            <nuxt-link class="menu-item" to="/main/aboutyou">{{
+              $t('navbar.aboutyou')
+            }}</nuxt-link>
             <nuxt-link class="menu-item" to="/main/aboutus">ABOUT US</nuxt-link>
-            <nuxt-link class="menu-item" to="/main/platform"
-              >THE PLATFORM</nuxt-link
-            >
-            <nuxt-link class="menu-item" to="/main/governance"
-              >GOVERNANCE</nuxt-link
-            >
+            <nuxt-link class="menu-item" to="/main/platform">{{
+              $t('navbar.theplatform')
+            }}</nuxt-link>
+            <nuxt-link class="menu-item" to="/main/governance">{{
+              $t('navbar.governance')
+            }}</nuxt-link>
           </div>
           <div
             class="navbar-links text-center"
             id="corporate"
             v-if="navState == 'corporate'"
           >
-            <nuxt-link class="menu-item" to="/main/corporate"
-              >CORPORATE WORLD</nuxt-link
-            >
-            <nuxt-link class="menu-item" to="/main/overview"
-              >MEASURING COOPERATION</nuxt-link
-            >
-            <nuxt-link class="menu-item" to="/main/coopenspace"
-              >CO-OPEN SPACE</nuxt-link
-            >
-            <nuxt-link class="menu-item" to="/main/cohackathon"
-              >CO-HACKATHON</nuxt-link
-            >
-            <nuxt-link class="menu-item" to="/main/workshops"
-              >WORKSHOPS</nuxt-link
-            >
+            <nuxt-link class="menu-item" to="/main/corporate">{{
+              $t('navbar.corporateworld')
+            }}</nuxt-link>
+            <nuxt-link class="menu-item" to="/main/overview">{{
+              $t('navbar.measuringcooperation')
+            }}</nuxt-link>
+            <nuxt-link class="menu-item" to="/main/coopenspace">{{
+              $t('navbar.co-openspace')
+            }}</nuxt-link>
+            <nuxt-link class="menu-item" to="/main/cohackathon">{{
+              $t('navbar.co-hackathon')
+            }}</nuxt-link>
+            <nuxt-link class="menu-item" to="/main/workshops">{{
+              $t('navbar.workshops')
+            }}</nuxt-link>
           </div>
           <div
             class="navbar-links text-center"
             id="science"
             v-if="navState == 'science'"
           >
-            <nuxt-link class="menu-item" to="/main/cooperation"
-              >COOPERATION</nuxt-link
-            >
-            <nuxt-link class="menu-item" to="/main/integration"
-              >INTEGRATION</nuxt-link
-            >
+            <nuxt-link class="menu-item" to="/main/cooperation">{{
+              $t('navbar.cooperation')
+            }}</nuxt-link>
+            <nuxt-link class="menu-item" to="/main/integration">{{
+              $t('navbar.integration')
+            }}</nuxt-link>
             <nuxt-link class="menu-item" to="/cci">
-              COOPERATION CONTEXT INDEX
+              {{ $t('navbar.cci') }}
             </nuxt-link>
-            <nuxt-link class="menu-item" to="/main/research"
-              >RESEARCH</nuxt-link
-            >
-            <nuxt-link class="menu-item" to="/news">NEWS</nuxt-link>
+            <nuxt-link class="menu-item" to="/main/research">{{
+              $t('navbar.research')
+            }}</nuxt-link>
+            <nuxt-link class="menu-item" to="/news">{{
+              $t('navbar.news')
+            }}</nuxt-link>
           </div>
         </div>
         <div
@@ -250,7 +256,7 @@
               v-if="!this.$auth.loggedIn"
               to="/login"
             >
-              LOGIN
+              {{ $t('navbar.login') }}
             </nuxt-link>
             <nuxt-link to="/user" v-else>
               {{ this.$auth.user.name + ' ' + this.$auth.user.surname }}
@@ -295,7 +301,7 @@
             class="nav-item"
             :class="{ 'theproject-active': navState == 'theproject' }"
           >
-            THE PROJECT
+            {{ $t('navbar.theproject') }}
           </div>
           <div
             class="mt-2 d-flex flex-column"
@@ -303,16 +309,16 @@
             @click="hideNav()"
           >
             <nuxt-link class="mobile-menu-item" to="/main/aboutyou">
-              ABOUT YOU
+              {{ $t('navbar.aboutyou') }}
             </nuxt-link>
-            <nuxt-link class="mobile-menu-item" to="/main/aboutus"
-              >ABOUT US</nuxt-link
-            >
+            <nuxt-link class="mobile-menu-item" to="/main/aboutus">{{
+              $t('navbar.aboutus')
+            }}</nuxt-link>
             <nuxt-link class="mobile-menu-item" to="/main/platform">
-              THE PLATFORM
+              {{ $t('navbar.theplatform') }}
             </nuxt-link>
             <nuxt-link class="mobile-menu-item" to="/main/governance">
-              GOVERNANCE
+              {{ $t('navbar.governance') }}
             </nuxt-link>
           </div>
         </div>
@@ -321,7 +327,7 @@
             class="nav-item"
             :class="{ 'corporate-active': navState == 'corporate' }"
           >
-            CORPORATE
+            {{ $t('navbar.corporate') }}
           </div>
           <div
             class="mt-2 d-flex flex-column"
@@ -329,19 +335,19 @@
             @click="hideNav()"
           >
             <nuxt-link class="mobile-menu-item" to="/main/corporate">
-              CORPORATE WORLD
+              {{ $t('navbar.corporateworld') }}
             </nuxt-link>
             <nuxt-link class="mobile-menu-item" to="/main/overview">
-              MEASURING COOPERATION
+              {{ $t('navbar.measuringcooperation') }}
             </nuxt-link>
             <nuxt-link class="mobile-menu-item" to="/main/coopenspace">
-              CO-OPEN SPACE
+              {{ $t('navbar.co-openspace') }}
             </nuxt-link>
             <nuxt-link class="mobile-menu-item" to="/main/cohackathon">
-              CO-HACKATHON
+              {{ $t('navbar.co-hackathon') }}
             </nuxt-link>
             <nuxt-link class="mobile-menu-item" to="/main/workshops">
-              WORKSHOPS
+              {{ $t('navbar.workshops') }}
             </nuxt-link>
           </div>
         </div>
@@ -350,7 +356,7 @@
             class="nav-item"
             :class="{ 'science-active': navState == 'science' }"
           >
-            SCIENCE
+            {{ $t('navbar.science') }}
           </div>
           <div
             class="mt-2 d-flex flex-column"
@@ -358,23 +364,23 @@
             @click="hideNav()"
           >
             <nuxt-link class="mobile-menu-item" to="/main/cooperation">
-              COOPERATION
+              {{ $t('navbar.cooperation') }}
             </nuxt-link>
             <nuxt-link class="mobile-menu-item" to="/main/integration">
-              INTEGRATION
+              {{ $t('navbar.integration') }}
             </nuxt-link>
             <nuxt-link class="mobile-menu-item" to="/cci">
-              COOPERATION CONTEXT INDEX
+              {{ $t('navbar.cci') }}
             </nuxt-link>
-            <nuxt-link class="mobile-menu-item" to="/main/research"
-              >RESEARCH</nuxt-link
-            >
+            <nuxt-link class="mobile-menu-item" to="/main/research">{{
+              $t('navbar.research')
+            }}</nuxt-link>
             <nuxt-link class="mobile-menu-item" to="/news">NEWS</nuxt-link>
           </div>
         </div>
         <nuxt-link to="/login" v-if="!this.$auth.loggedIn" @click="hideNav()">
           <div class="mobile-nav-box">
-            <p class="nav-item">LOGIN</p>
+            <p class="nav-item">{{ $t('navbar.login') }}</p>
           </div>
         </nuxt-link>
         <nuxt-link to="/user" @click="hideNav()" v-else>

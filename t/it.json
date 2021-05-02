@@ -3,6 +3,83 @@
     "one": "un altro",
     "newplace": "Se non trovi il luogo nell'elenco, sentiti libero di aggiungerne"
   },
+  "navbar": {
+    "c": "C",
+    "operacy": "OPERACY",
+    "payoff": "LET'S DO IT TOGETHER",
+    "theproject": "PROGETTO",
+    "corporate": "AZIENDE",
+    "science": "SCIENZA",
+    "login": "LOGIN",
+    "aboutyou": "RIGUARDA TE",
+    "aboutus": "CHI SIAMO",
+    "theplatform": "LA PIATTAFORMA",
+    "governance": "FORMA DI GOVERNO",
+    "corporateworld": "MONDO AZIENDALE",
+    "measuringcooperation": "MISURARE LA COOPERAZIONE",
+    "co-openspace": "CO-OPEN SPACE",
+    "co-hackathon": "CO-HACKATHON",
+    "workshops": "LABORATORI",
+    "cooperation": "COOPERAZIONE",
+    "integration": "INTEGRAZIONE",
+    "cci": "INDICE DEL CONTESTO DI COOPERAZIONE",
+    "research": "RICERCA",
+    "news": "NOTIZIE"
+  },
+  "home": {
+    "enter": "INIZIA L'AVVENTURA",
+    "coojoin": "Unisciti",
+    "joincoo": " a Cooperacy e crea nuove entusiasmanti cooperazioni a livello",
+    "personal": "personale",
+    "corporate": "aziendale",
+    "international": "internationale",
+    "level": "",
+    "and": "e",
+    "discover": "SCOPRI",
+    "join": "PARTECIPA",
+    "learn": "IMPARA"
+  },
+  "circle": {
+    "e": "EQUIVALENZA",
+    "et": "OGNUNO DI NOI È IMPORTANTE",
+    "em1": "matrix(1 0 0 1 157 360)",
+    "em2": "matrix(1 0 0 1 180 440)",
+    "t": "FIDUCIA",
+    "tt": "CONTIAMO SUGLI ALTRI",
+    "tm1": "matrix(1 0 0 1 250 360)",
+    "tm2": "matrix(1 0 0 1 228 443)",
+    "c": "CURA",
+    "ct": "CI PRENDIAMO CURA TRA DI NOI",
+    "cm1": "matrix(1 0 0 1 282 360)",
+    "cm2": "matrix(1 0 0 1 174 443)",
+    "i": "TRASPARENZA",
+    "it": "VOGLIAMO ESSERE SINCERI",
+    "im1": "matrix(1 0 0 1 150 360)",
+    "im2": "matrix(1 0 0 1 208 443)",
+    "f": "LIBERTÀ",
+    "ft": "SEGUIAMO I NOSTRI DESIDERI",
+    "fm1": "matrix(1 0 0 1 250 360)",
+    "fm2": "matrix(1 0 0 1 195 443)",
+    "u": "COMPRENSIONE",
+    "ut": "CERCHIAMO DI COMPRENDERCI L'UN L'ALTRO",
+    "um1": "matrix(1 0 0 1 122 360)",
+    "um2": "matrix(1 0 0 1 102 443)",
+    "d": "DIVERSITA",
+    "dt": "VOGLIAMO ESSERE INCLUSI",
+    "dm1": "matrix(1 0 0 1 215 360)",
+    "dm2": "matrix(1 0 0 1 203 443)"
+  },
+  "addplace": {
+    "newplace": "Aggiungi un nuovo luogo:",
+    "insert": "Inserisci un luogo dopo aver scelto una nazione:",
+    "add": "AGGIUNGI",
+    "close": "CHIUDI"
+  },
+  "login": {
+    "female": "F - Female",
+    "male": "M - Male",
+    "intersex": "X - Intersex"
+  },
   "cootool": {
     "intro1": "Benvenuto al Cooperacy Cooperation Tool! <br/ > Utilizza pure il ",
     "intro2": "per valutare la cooperazione del tuo gruppo, sia esso un gruppo di amici, i tuoi colleghi a lavoro, la tua famiglia o anche comunità su grande scala. Utilizza invece il form di ricerca se vuoi rivedere un precedente questionario e i suoi risultati.",
@@ -108,16 +185,5 @@
     "conflictrisk": "Rischio di conflitti: ",
     "conflictD": "La diversità del gruppo necessita più comprensione: c'è rischio di conflitti.",
     "conflictDrisk": "Rischio di conflitti: "
-  },
-  "addplace": {
-    "newplace": "Aggiungi un nuovo luogo:",
-    "insert": "Inserisci un luogo dopo aver scelto una nazione:",
-    "add": "AGGIUNGI",
-    "close": "CHIUDI"
-  },
-  "login": {
-    "female": "F - Female",
-    "male": "M - Male",
-    "intersex": "X - Intersex"
   }
 }
