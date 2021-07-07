@@ -442,10 +442,9 @@ app.post('/login', async function (req, res, next) {
       return true // user has null membership
     } else {
       // paypal membership check
-      let today = new Date(Date.now()).toJSON().slice(0, 10)
+      let today = new Date(Date.now()).toJSON()
       let today45ago = new Date(Date.now() + -45 * 24 * 3600 * 1000)
         .toJSON()
-        .slice(0, 10)
       try {
         var response = await axios({
           method: 'post',
@@ -458,7 +457,7 @@ app.post('/login', async function (req, res, next) {
             password: process.env.PAYPALPASSWORD
           },
           data: 'grant_type=client_credentials',
-          url: 'https://api.paypal.com/v1/oauth2/token'
+          url: 'https://api-m.paypal.com/v1/oauth2/token'
         })
       } catch (err) {
         next(err)
@@ -468,26 +467,31 @@ app.post('/login', async function (req, res, next) {
         let transaction = await axios({
           method: 'get',
           url:
-            'https://api.paypal.com/v1/payments/billing-agreements/' +
+            'https://api-m.paypal.com/v1/billing/subscriptions/' +
             user.paypalagreementid +
-            '/transactions?start_date=' +
+            '/transactions?start_time=' +
             today45ago +
-            '&end_date=' +
+            '&end_time=' +
             today,
           headers: {
             Authorization: 'Bearer ' + paypaltoken,
             'Content-Type': 'application/json'
           }
         })
-        let list = transaction.data.agreement_transaction_list
+        let list = transaction.data.transactions
         if (list[list.length - 1]) {// if any of these is true, then expiration is false
-          if (list[list.length - 1].status == 'Completed' ||
-            //sometimes the transaction list has a final record of updated payment:
-            (list[list.length - 1].status == 'Updated'
-              && list[list.length - 2].status == 'Completed') ||
-            //sometimes the transaction list has a final record of updated payment:
-            (list[list.length - 1].status == 'Created' &&
-              list[list.length - 2].status == 'Completed')
+          if ( //case1:
+            (list[list.length - 1].status == 'Completed' || list[list.length - 1].status == 'COMPLETED')
+            || //case2: sometimes the transaction list has a final record of updated payment
+            (
+              (list[list.length - 1].status == 'Updated' || list[list.length - 1].status == 'UPDATED') &&
+              (list[list.length - 2].status == 'Completed' || list[list.length - 2].status == 'COMPLETED')
+            )
+            || //case3: sometimes the transaction list has a final record of updated payment
+            (
+              (list[list.length - 1].status == 'Created' || list[list.length - 1].status == 'CREATED') &&
+              (list[list.length - 2].status == 'Completed' || list[list.length - 2].status == 'COMPLETED')
+            )
           ) {
             return false
           }
