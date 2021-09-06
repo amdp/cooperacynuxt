@@ -20,7 +20,7 @@ module.exports = {
     '@nuxt/http',
     '@nuxtjs/toast',
     '@nuxtjs/auth',
-    'nuxt-i18n',
+    '@nuxtjs/i18n',
     'bootstrap-vue/nuxt',
   ],
   buildModules: [
