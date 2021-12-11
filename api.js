@@ -448,18 +448,21 @@ app.post('/login', async function (req, res, next) {
       try {
         var response = await axios({
           method: 'post',
+          url: 'https://api-m.paypal.com/v1/oauth2/token',
+          data: 'grant_type=client_credentials',
           headers: {
-            'content-type': 'application/json',
-            'Access-Control-Allow-Credentials': true
+            'Accept': 'application/json',
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept-Language': 'en_US',
+            //   'Access-Control-Allow-Credentials': true
           },
           auth: {
             username: process.env.PAYPALID,
             password: process.env.PAYPALPASSWORD
           },
-          data: 'grant_type=client_credentials',
-          url: 'https://api-m.paypal.com/v1/oauth2/token'
         })
       } catch (err) {
+        console.log(' ' + JSON.stringify(response.data))
         next(err)
       }
       try {
