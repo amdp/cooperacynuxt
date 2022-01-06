@@ -53,8 +53,18 @@ export default {
   },
   data() {
     return {
-      voteinfocontent: '<span v-if="voteprop.mode <= 9">YOUR VOTE/FEEDBACK (<span class="underline">INFO</span>): </span>',
-      intervalinfo: null
+      voteinfocontent: '<span v-if="voteprop.mode <= 9">' + this.$t('vote.feedback') + '(<span class="underline">INFO</span>): </span>',
+      intervalinfo: null,
+      condition: [
+        'equivalence',
+        'trust',
+        'care',
+        'transparency',
+        'freedom',
+        'understanding',
+        'diversity'
+      ],
+      cc: ['E', 'T', 'C', 'I', 'F', 'U', 'D'],
     }
   },
   computed: {
@@ -69,7 +79,7 @@ export default {
           uservoted = this.$store.state[this.proptype + 'uservote'].findIndex(
             v =>
               v[this.proptype] == this.voteprop.id &&
-              v.condition == this.$store.state.cc[i]
+              v.condition == this.cc[i]
           )
           //here, if there is no vote in that condition, the result is -1
         } else {
@@ -78,21 +88,21 @@ export default {
         }
         // now, if the uservote is different than -1, it means the user voted for it, so it should be turned ON
         if (uservoted != -1) {
-          votestyle = 'on' + this.$store.state.condition[i]
+          votestyle = 'on' + this.condition[i]
         } else {
           // in case it is -1, we should check if there are ANY OTHER VOTES in that condition, which means others voted for it
-          if (this.voteprop[this.$store.state.cc[i]] != 0) {
-            votestyle = 'they' + this.$store.state.condition[i]
+          if (this.voteprop[this.cc[i]] != 0) {
+            votestyle = 'they' + this.condition[i]
           } else {
             // in case it is -1 and NO OTHER VOTES have been cast, it should be turned OFF
-            votestyle = 'off' + this.$store.state.condition[i]
+            votestyle = 'off' + this.condition[i]
           }
         }
         // applying the right style to vote:
         voteif.push({
           // for all votes:
-          v: this.voteprop[this.$store.state.cc[i]],
-          vlong: this.$store.state.condition[i],
+          v: this.voteprop[this.cc[i]],
+          vlong: this.$t('condition.' + this.condition[i]),
           style: votestyle
         })
       } // now we already have a 7 elements array so we just add json keys as needed:
@@ -100,14 +110,14 @@ export default {
         for (let i = 0; i < 7; i++) {
           ; (voteif[i].class =
             'p-0 rainbowcode b' +
-            this.$store.state.condition[i] +
+            this.condition[i] +
             ' ' +
-            this.$store.state.condition[i]),
+            this.condition[i]),
             (voteif[i].style =
               'width: ' +
-              (this.$auth.user[this.$store.state.cc[i]] / 28) * 100 +
+              (this.$auth.user[this.cc[i]] / 28) * 100 +
               '%'),
-            (voteif[i].userkey = this.$store.state.cc[i])
+            (voteif[i].userkey = this.cc[i])
         }
       }
       if (this.proptype == 'cooperation') {
@@ -116,8 +126,8 @@ export default {
             'vote ' +
             voteif[i].style +
             ' ' +
-            this.$store.state.condition[i]),
-            (voteif[i].cooperationcc = this.$store.state.cc[i])
+            this.condition[i]),
+            (voteif[i].cooperationcc = this.cc[i])
         }
       }
       if (this.proptype == 'comment') {
@@ -126,8 +136,8 @@ export default {
             'vote ' +
             voteif[i].style +
             ' ' +
-            this.$store.state.condition[i]),
-            (voteif[i].commentcc = this.$store.state.cc[i])
+            this.condition[i]),
+            (voteif[i].commentcc = this.cc[i])
         }
       }
       return voteif
@@ -135,39 +145,39 @@ export default {
   },
   methods: {
     voteinfo(proptype, vlong, cc, v) {
-      this.voteinfocontent = vlong + 'votes: ' + v + ' - '
+      this.voteinfocontent = vlong + ': ' + v + ' - '
       if (proptype == 'cooperation') {
         if (cc == 'E') {
-          return this.voteinfocontent += 'USE THIS VOTE TO GIVE POOL MONEY OR BUY THE TICKET FOR THIS COOPERATION'
+          return this.voteinfocontent += this.$t('vote.einfo')
         } else if (cc == 'T') {
-          return this.voteinfocontent += 'USE THIS VOTE IF YOU TRUST THIS COOPERATION (AND TO FASTEN FUNDING)'
+          return this.voteinfocontent += this.$t('vote.tinfo')
         } else if (cc == 'C') {
-          return this.voteinfocontent += 'USE THIS VOTE TO PROMOTE THE VISIBILITY OF THIS COOPERATION'
+          return this.voteinfocontent += this.$t('vote.cinfo')
         } else if (cc == 'I') {
-          return this.voteinfocontent += 'WARNING: USE THIS VOTE TO SIGNAL SERIOUS LACK OF TRANSPARENCY IN THE COOPERATION'
+          return this.voteinfocontent += this.$t('vote.iinfo')
         } else if (cc == 'F') {
-          return this.voteinfocontent += 'USE THIS VOTE TO PARTICIPATE, FOLLOW OR WORK FOR THE COOPERATION'
+          return this.voteinfocontent += this.$t('vote.finfo')
         } else if (cc == 'U') {
-          return this.voteinfocontent += 'USE THIS VOTE IF THE COOPERATION IS EASILY UNDERSTANDABLE (AND TO FASTEN FUNDING)'
+          return this.voteinfocontent += this.$t('vote.uinfo')
         } else if (cc == 'D') {
-          return this.voteinfocontent += 'USE THIS VOTE IF THE COOPERATION IS FUN, BIZARRE, ALTERNATIVE (AND TO RISK BIZARRE FUNDING)'
+          return this.voteinfocontent += this.$t('vote.dinfo')
         }
       }
       if (proptype == 'comment') {
         if (cc == 'E') {
-          return this.voteinfocontent += 'THIS BRINGS BENEFITS FOR EVERYONE'
+          return this.voteinfocontent += this.$t('vote.ceinfo')
         } else if (cc == 'T') {
-          return this.voteinfocontent += 'THIS IS PRACTICAL OR TRUSTABLE'
+          return this.voteinfocontent += this.$t('vote.ctinfo')
         } else if (cc == 'C') {
-          return this.voteinfocontent += 'LIKE THIS'
+          return this.voteinfocontent += this.$t('vote.ccinfo')
         } else if (cc == 'I') {
-          return this.voteinfocontent += 'THIS IS NOT TRANSPARENT'
+          return this.voteinfocontent += this.$t('vote.ciinfo')
         } else if (cc == 'F') {
-          return this.voteinfocontent += 'WANT TO FOLLOW'
+          return this.voteinfocontent += this.$t('vote.cfinfo')
         } else if (cc == 'U') {
-          return this.voteinfocontent += 'THIS IS UNDERSTANDABLE'
+          return this.voteinfocontent += this.$t('vote.cuinfo')
         } else if (cc == 'D') {
-          return this.voteinfocontent += 'THIS IS FUNNY, INNOVATIVE OR BIZARRE'
+          return this.voteinfocontent += this.$t('vote.cdinfo')
         }
       }
     },
@@ -198,7 +208,7 @@ export default {
       // keep the following budgetstep alert for budgetstep phases
       if (cc == 'E' && exists != -1) {
         if (this.voteprop.collect > this.voteprop.budget) {
-          alert('With your unvoting, you release part of the cooperation budget to the Cooperacy general pool. This cooperation will go back collecting, until the full budget is collected again, then start back from the last budget step it is now.')
+          alert(this.$t('vote.unvoting'))
         }
         return this.voteswitch(cc)
       }

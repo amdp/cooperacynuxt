@@ -5,93 +5,107 @@
       src="~/assets/image/page/banners/main/aboutyou.png"
     />
     <p class="base" style="margin-right: auto">
-      You may <span class="diversity">love</span>
-      <nuxt-link to="/main/cooperation" class="ae"
-        >doing things together</nuxt-link
+      {{ $t('aboutyou.1') }}
+      <span v-html="$t('aboutyou.2')"></span>
+      <nuxt-link to="/main/cooperation" class="ae">{{
+        $t('aboutyou.3')
+      }}</nuxt-link
       >.
     </p>
     <br />
 
     <p class="base">
-      You could be one who believes that doing things together is advantageous
-      and useful to bring a real change, but you would like to do it keeping a
-      <nuxt-link to="/main/cooperation#freedom" class="af"
-        >personal space for yourself</nuxt-link
+      {{ $t('aboutyou.4')
+      }}<nuxt-link to="/main/cooperation#freedom" class="af">{{
+        $t('aboutyou.5')
+      }}</nuxt-link
+      >.<br /><br />
+    </p>
+    <p class="base">
+      {{ $t('aboutyou.6')
+      }}<nuxt-link to="/main/platform" class="ae"
+        >{{ $t('aboutyou.7') }}
+      </nuxt-link>
+      <span class="base" v-html="$t('aboutyou.8')"></span>
+      <nuxt-link to="/main/cooperation" class="au">{{
+        $t('aboutyou.9')
+      }}</nuxt-link
+      >.<br /><br />
+      <span class="base" v-html="$t('aboutyou.10')"></span>
+      <nuxt-link to="/main/research" class="au">{{
+        $t('aboutyou.11')
+      }}</nuxt-link>
+      <span class="base" v-html="$t('aboutyou.12')"></span>
+      <nuxt-link to="/main/cooperation#care" class="ac">{{
+        $t('aboutyou.13')
+      }}</nuxt-link
       >.<br /><br />
 
-      Or you may be one of those who believe that
-      <nuxt-link to="/main/platform" class="ae">changing the world</nuxt-link>
-      starts with a new
-      <nuxt-link to="/main/cooperation" class="au">awareness</nuxt-link
+      <span class="base" v-html="$t('aboutyou.14')"></span>
+      <nuxt-link to="/main/governance" class="af">{{
+        $t('aboutyou.15')
+      }}</nuxt-link
+      >.
+      <span class="base" v-html="$t('aboutyou.16')"></span>
+      <nuxt-link to="/main/cooperation#freedom" class="af">{{
+        $t('aboutyou.17')
+      }}</nuxt-link
+      >.
+      <span class="base" v-html="$t('aboutyou.18')"></span>
+      <nuxt-link to="/main/integration" class="ad">{{
+        $t('aboutyou.19')
+      }}</nuxt-link>
+      <span class="base" v-html="$t('aboutyou.20')"></span>.<br /><br />
+      <span class="base" v-html="$t('aboutyou.21')"></span>
+      <nuxt-link to="/main/cooperation#transparency" class="ai">{{
+        $t('aboutyou.22')
+      }}</nuxt-link>
+      <span class="base" v-html="$t('aboutyou.23')"></span>
+      <nuxt-link to="/main/cooperation#transparency" class="ai">{{
+        $t('aboutyou.24')
+      }}</nuxt-link
+      ><span class="base">{{ $t('aboutyou.25') }}</span
       >.<br /><br />
-
-      For example, you may believe in
-      <nuxt-link to="/main/research" class="au">science</nuxt-link> and
-      technology but want them to be respectful of the people’s
-      <nuxt-link to="/main/cooperation#care" class="ac">feelings</nuxt-link
-      >.<br /><br />
-
-      Maybe you don’t want to be constantly influenced in your
-      <nuxt-link to="/main/governance" class="af">decisions</nuxt-link>. You
-      want to follow your true desires, making your abilities meet your
-      professional
-      <nuxt-link to="/main/cooperation#freedom" class="af">life</nuxt-link>. You
-      probalby dream about a social system that
-      <nuxt-link to="/main/integration" class="ad">integrates</nuxt-link> the
-      different personalities of everyone in a creative and balanced way.<br /><br />
-
-      You could be looking for an open world, where you’re not afraid to be
-      <nuxt-link to="/main/cooperation#transparency" class="ai"
-        >honest</nuxt-link
-      >
-      all the time because people and institutions agree to share information in
-      a
-      <nuxt-link to="/main/cooperation#transparency" class="ai"
-        >transparent</nuxt-link
-      >
-      way.<br /><br />
     </p>
 
-    <p class="base diversity">Or maybe not.</p>
+    <p class="base" v-html="$t('aboutyou.26')"></p>
     <br />
 
     <p class="base">
-      Maybe you feel at one with the
-      <nuxt-link to="/main/cooperation#care" class="ac">planet</nuxt-link>, and
-      think it’s more important to give back all the care and nourishment we
-      received so far. You value
-      <nuxt-link to="/main/cooperation#diversity" class="ad">beauty</nuxt-link>
-      and
-      <nuxt-link to="/main/cooperation#equivalence" class="ae"
-        >happiness</nuxt-link
-      >
-      as fundamental for everyone and everything.<br /><br />
-
-      Another possibility, instead, is that you are concerned about wars and
-      hunger and see them as an effect of the way wealth is
-      <nuxt-link to="/main/platform" class="ae">distributed</nuxt-link>. So you
-      would like an economy based not on numbers, productivity and surplus only,
-      but also on
-      <nuxt-link to="/main/cooperation#care" class="ac">caring</nuxt-link>,
-      sustainability, real assets, traditional shops and activities coordinated
-      by “multilocal” companies. You may be wanting safe and fair water access,
-      healthy food, recyclable materials and traditional processes instead of
-      harmful excessive
-      <nuxt-link to="/main/cooperation#diversity" class="ad"
-        >standardizations.</nuxt-link
-      ><br /><br />
-
-      Or maybe, instead, you’ve just been looking for a way to make your
+      <span class="base" v-html="$t('aboutyou.27')"></span>
+      <nuxt-link to="/main/cooperation#care" class="ac">{{
+        $t('aboutyou.28')
+      }}</nuxt-link>
+      <span class="base" v-html="$t('aboutyou.29')"></span>
+      <nuxt-link to="/main/cooperation#diversity" class="ad">{{
+        $t('aboutyou.30')
+      }}</nuxt-link>
+      <span class="base" v-html="$t('aboutyou.31')"></span>
+      <nuxt-link to="/main/cooperation#equivalence" class="ae">{{
+        $t('aboutyou.32')
+      }}</nuxt-link>
+      <span class="base" v-html="$t('aboutyou.33')"></span>.<br /><br />
+      <span class="base" v-html="$t('aboutyou.34')"></span>
+      <nuxt-link to="/main/platform" class="ae">{{
+        $t('aboutyou.35')
+      }}</nuxt-link
+      ><span class="base" v-html="$t('aboutyou.36')"></span>
+      <nuxt-link to="/main/cooperation#care" class="ac">{{
+        $t('aboutyou.37')
+      }}</nuxt-link
+      ><span class="base" v-html="$t('aboutyou.38')"></span>
+      <nuxt-link to="/main/cooperation#diversity" class="ad">{{
+        $t('aboutyou.39')
+      }}</nuxt-link
+      >.<br /><br />
+      <span class="base" v-html="$t('aboutyou.40')"></span>
       <nuxt-link to="/main/participate" class="ae"
-        >daily little effort</nuxt-link
-      >
-      valuable to bring the changes you wish for.<br /><br />
-
-      All these are different beliefs, but together, they can create a wealthy
-      and enjoyable social ecosystem. Your belief becomes even more crucial when
-      seen together with the other ones.<br /><br />
-      <nuxt-link to="/login" class="ae">Join</nuxt-link> Cooperacy. Start your
-      personal journey into a World of Cooperation.
+        >{{ $t('aboutyou.41') }}
+      </nuxt-link>
+      <span class="base" v-html="$t('aboutyou.42')"></span><br /><br />
+      <span class="base" v-html="$t('aboutyou.43')"></span><br /><br />
+      <nuxt-link to="/login" class="ae">{{ $t('aboutyou.44') }}</nuxt-link>
+      <span class="base" v-html="$t('aboutyou.45')"></span>
     </p>
     <br />
   </b-container>

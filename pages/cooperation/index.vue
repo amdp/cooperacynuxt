@@ -69,7 +69,7 @@
     <b-container class="m-0 mb-5 p-0">
       <b-row class="m-0 p-0">
         <b-col
-          v-for="cc in this.$store.state.condition"
+          v-for="cc in this.condition"
           :key="cc"
           :class="'b' + cc + ' m-1 p-0 vote col'"
           @click="filtercooperation(cc)"
@@ -103,6 +103,16 @@ export default {
       cooperationID: null,
       editing: false,
       filterinfo: null,
+      condition: [
+        'equivalence',
+        'trust',
+        'care',
+        'transparency',
+        'freedom',
+        'understanding',
+        'diversity'
+      ],
+      cc: ['E', 'T', 'C', 'I', 'F', 'U', 'D'],
     }
   },
   computed: {

@@ -1,7 +1,26 @@
 {
+  "condition": {
+    "equivalence": "equivalence",
+    "trust": "trust",
+    "care": "care",
+    "transparency": "transparency",
+    "freedom": "freedom",
+    "understanding": "understanding",
+    "diversity": "diversity"
+  },
+  "cc": {
+    "E": "E",
+    "T": "T",
+    "C": "C",
+    "I": "I",
+    "F": "F",
+    "U": "U",
+    "D": "D"
+  },
   "main": {
     "one": "one",
-    "newplace": "If you do not find your place, please feel free to add a new"
+    "newplace": "If you do not find your place, please feel free to add a new",
+    "dot": "."
   },
   "navbar": {
     "c": "C",
@@ -69,6 +88,46 @@
     "dm1": "matrix(1 0 0 1 218 360)",
     "dm2": "matrix(1 0 0 1 180 443)"
   },
+  "cooperations": {
+    "cooperations": "cooperations",
+    "deactivated": "deactivated",
+    "recent": "recent",
+    "authored": "(YOU AUTHORED OR FOLLOW)",
+    "add": "add",
+    "or": " or ",
+    "remove": "remove",
+    "atag": " a tag",
+    "fee": "FEE",
+    "parent": "PARENT COOPERATION",
+    "of": "of",
+    "collected": "collected",
+    "professionals": "professionals needed",
+    "deactivate": "Deactivate",
+    "reactivate": "Reactivate",
+    "budgetstep": "Upload Budget Step Document",
+    "copy": "Copy",
+    "arprofessionals": "Add/Remove professionals",
+    "edit": "Edit",
+    "morey": "More..."
+  },
+  "vote": {
+    "feedback": "YOUR VOTE/FEEDBACK",
+    "einfo": "USE THIS VOTE TO GIVE POOL MONEY OR BUY THE TICKET FOR THIS COOPERATION",
+    "tinfo": "USE THIS VOTE IF YOU TRUST THIS COOPERATION (AND TO FASTEN FUNDING)",
+    "cinfo": "USE THIS VOTE TO PROMOTE THE VISIBILITY OF THIS COOPERATION",
+    "iinfo": "WARNING: USE THIS VOTE TO SIGNAL SERIOUS LACK OF TRANSPARENCY IN THE COOPERATION",
+    "finfo": "USE THIS VOTE TO PARTICIPATE, FOLLOW OR WORK FOR THE COOPERATION",
+    "uinfo": "USE THIS VOTE IF THE COOPERATION IS EASILY UNDERSTANDABLE (AND TO FASTEN FUNDING)",
+    "dinfo": "USE THIS VOTE IF THE COOPERATION IS FUN, BIZARRE, ALTERNATIVE (AND TO RISK BIZARRE FUNDING)",
+    "ceinfo": "THIS BRINGS BENEFITS FOR EVERYONE",
+    "ctinfo": "THIS IS PRACTICAL OR TRUSTABLE",
+    "ccinfo": "LIKE THIS",
+    "ciinfo": "THIS IS NOT TRANSPARENT",
+    "cfinfo": "WANT TO FOLLOW",
+    "cuinfo": "THIS IS UNDERSTANDABLE",
+    "cdinfo": "THIS IS FUNNY, INNOVATIVE OR BIZARRE",
+    "unvoting": "With your unvoting, you release part of the cooperation budget to the Cooperacy general pool. This cooperation will go back collecting, until the full budget is collected again, then start back from the last budget step it is now."
+  },
   "addplace": {
     "newplace": "Add a new place:",
     "insert": "Insert a place name after choosing a country",
@@ -79,6 +138,53 @@
     "female": "F - Female",
     "male": "M - Male",
     "intersex": "X - Intersex"
+  },
+  "aboutyou": {
+    "1": "You may ",
+    "2": "love doing things ",
+    "3": "together",
+    "4": "You could be one who believes that doing things together is advantageous and useful to bring a real change, but you would like to do it keeping a ",
+    "5": "personal space for yourself",
+    "6": "Or you may be one of those who believe that ",
+    "7": "changing the world ",
+    "8": "starts with a new ",
+    "9": "awareness",
+    "10": "For example, you may believe in ",
+    "11": "science ",
+    "12": "and technology but want them to be respectful of the people’s ",
+    "13": "feelings",
+    "14": "Maybe you don’t want to be constantly influenced in your ",
+    "15": "decisions",
+    "16": "You want to follow your true desires, making your abilities meet your professional ",
+    "17": "life",
+    "18": "You probalby dream about a social system that ",
+    "19": "integrates",
+    "20": "the different personalities of everyone in a creative and balanced way",
+    "21": "You could be looking for an open world, where you’re not afraid to be ",
+    "22": "honest ",
+    "23": "all the time because people and institutions agree to share information in a ",
+    "24": "transparent",
+    "25": " way",
+    "26": "Or maybe not.",
+    "27": "Maybe you feel at one with the ",
+    "28": "planet",
+    "29": ", and think it’s more important to give back all the care and nourishment we received so far. You value ",
+    "30": "beauty",
+    "31": "and",
+    "32": "happiness ",
+    "33": "as fundamental for everyone and everything",
+    "34": "Another possibility, instead, is that you are concerned about wars and hunger and see them as an effect of the way wealth is ",
+    "35": "distributed",
+    "36": ". So you would like an economy based not on numbers, productivity and surplus only, but also on ",
+    "37": "caring",
+    "38": ", sustainability, real assets, traditional shops and activities coordinated by “multilocal” companies. You may be wanting safe and fair water access, healthy food, recyclable materials and traditional processes instead of harmful excessive",
+    "39": "standardizations",
+    "40": "Or maybe, instead, you’ve just been looking for a way to make your",
+    "41": "daily little effort",
+    "42": "valuable to bring the changes you wish for.",
+    "43": "All these are different beliefs, but together, they can create a wealthy and enjoyable social ecosystem. Your belief becomes even more crucial when seen together with the other ones.",
+    "44": "Join",
+    "45": " Cooperacy. Start your personal journey into a World of Cooperation. "
   },
   "cootool": {
     "intro1": "Welcome to the Cooperacy Cooperation Tool! <br/ > Please use the ",
@@ -185,5 +291,11 @@
     "conflictrisk": "Conflict risk: ",
     "conflictD": "Your diversity level needs more understanding: you may risk conflicts.",
     "conflictDrisk": "Conflict risk: "
+  },
+  "foot": {
+    "donate": "DONATE",
+    "join": "JOIN",
+    "contact": "CONTACT",
+    "desc": "© COOPERACY RESEARCH ASSOCIATION 2015-2030 - VIA DELLA MOSCOVA,39 - 20121 MILAN ITALY EU - FISCAL CODE 97725540153 -"
   }
 }

@@ -20,16 +20,6 @@ export const state = () => ({
   CCI2017: [],
   CCI2016: [],
   CCI2015: [],
-  condition: [
-    'equivalence',
-    'trust',
-    'care',
-    'transparency',
-    'freedom',
-    'understanding',
-    'diversity'
-  ],
-  cc: ['E', 'T', 'C', 'I', 'F', 'U', 'D'],
   category: [
     { id: 1, name: 'Wealth', desc: 'A generic term to indicate all the activities that may generate wealth for the cooperation participants and for Cooperacy as a whole' },
     { id: 2, name: 'Coordination', desc: 'A governative cooperation, available only to admins or after a voting has been issued to create one' },

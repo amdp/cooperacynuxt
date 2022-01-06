@@ -11,11 +11,16 @@
         v-if="cooperationlist[type.name].length > 0"
         class="text-center mb-3 up"
       >
-        <span class="hb" v-if="$route.path == '/'">RECENT</span>
-        <span class="hb" v-if="!$route.params.id">{{ type.name }}</span>
+        <span class="hb" v-if="$route.path == '/'">{{
+          $t('cooperations.recent')
+        }}</span>
+        <span class="hb" v-if="!$route.params.id">{{
+          type.name == 'cooperations'
+            ? $t('cooperations.cooperations')
+            : $t('cooperations.deactivated')
+        }}</span>
         <span class="hb" v-if="$route.path == '/user'"
-          ><br />
-          (YOU AUTHORED OR FOLLOW)
+          ><br />{{ $t('cooperations.authored') }}
         </span>
       </h2>
       <b-container
@@ -66,9 +71,15 @@
                     {{ tag.name }}
                   </span>
                   <span>
-                    - <b-link v-b-modal.addtagmodal class="ac">Add</b-link> or
-                    <b-link v-b-modal.removetagmodal class="au">remove</b-link>
-                    a tag
+                    -
+                    <b-link v-b-modal.addtagmodal class="ac">{{
+                      $t('cooperations.add')
+                    }}</b-link>
+                    {{ $t('cooperations.or') }}
+                    <b-link v-b-modal.removetagmodal class="au">{{
+                      $t('cooperations.remove')
+                    }}</b-link>
+                    {{ $t('cooperations.atag') }}
                   </span>
                 </p>
               </b-col>
@@ -81,13 +92,14 @@
                     >{{ cooperation.anonymous ? 'ON' : 'OFF' }}
                   </small>
                   <small v-if="cooperation.mode == 20">
-                    <strong>FEE: </strong> {{ Math.round(cooperation.budget) }}
+                    <strong>{{ $t('cooperations.fee') }}: </strong>
+                    {{ Math.round(cooperation.budget) }}
                     <br />
                   </small>
                   <br />
                   <nuxt-link :to="'/cooperation/' + cooperation.parent"
                     ><small>
-                      <strong>PARENT COOPERATION: </strong>
+                      <strong>{{ $t('cooperations.parent') }}: </strong>
                       {{ cooperation.parent }}
                     </small>
                   </nuxt-link>
@@ -95,7 +107,7 @@
                 </b-container>
                 <b-container>
                   <small>
-                    {{ category(cooperation.category) }} related cooperation
+                    {{ category(cooperation.category) }}
                     {{ mode(cooperation.mode) }} -
                     {{ location(cooperation.place) }}
                   </small>
@@ -134,16 +146,18 @@
                   ></b-progress-bar>
                 </b-progress>
                 <span v-if="cooperation.mode > 0 && cooperation.budget > 0">
-                  BUDGET: €{{ collected(cooperation).toFixed(7) }} of €{{
+                  BUDGET: €{{ collected(cooperation).toFixed(7) }}
+                  {{ $t('cooperations.of') }} €{{
                     Math.round(cooperation.budget)
                   }}
-                  collected
+                  {{ $t('cooperations.collected') }}
                 </span>
                 <span v-if="cooperation.mode == 20">
-                  BUDGET: €{{ collected(cooperation).toFixed(0) }} of €{{
+                  BUDGET: €{{ collected(cooperation).toFixed(0) }}
+                  {{ $t('cooperations.of') }} €{{
                     Math.round(cooperation.budget * -1)
                   }}
-                  collected
+                  {{ $t('cooperations.collected') }}
                 </span>
               </b-col>
             </b-row>
@@ -174,8 +188,9 @@
                   ></b-progress-bar>
                 </b-progress>
                 <span v-if="cooperation.hudget != 0 && cooperation.mode > 0"
-                  >HUDGET: {{ cooperation.professional }} of
-                  {{ cooperation.hudget }} professionals needed</span
+                  >HUDGET: {{ cooperation.professional }}
+                  {{ $t('cooperations.of') }} {{ cooperation.hudget }}
+                  {{ $t('cooperations.professionals') }}</span
                 >
               </b-col>
             </b-row>
@@ -198,13 +213,15 @@
                 >
                   <b-col cols="12" class="m-0 p-0 text-center">
                     <span v-if="cooperation.mode > 0 && $auth.user.role == 1">
-                      <b-link class="ae" @click="dereactivate(cooperation)"
-                        >Deactivate</b-link
+                      <b-link class="ae" @click="dereactivate(cooperation)">{{
+                        $t('cooperations.deactivate')
+                      }}</b-link
                       >&nbsp;
                     </span>
                     <span v-if="cooperation.mode < 0 && $auth.user.role == 1"
-                      ><b-link class="ae" @click="dereactivate(cooperation)"
-                        >Reactivate</b-link
+                      ><b-link class="ae" @click="dereactivate(cooperation)">{{
+                        $t('cooperations.reactivate')
+                      }}</b-link
                       >&nbsp;
                     </span>
                     <span
@@ -214,21 +231,15 @@
                         (improfessional() || $auth.user.role == 1)
                       "
                     >
-                      <b-link v-b-modal.budgetstepmodal class="at"
-                        >Upload Budget Step Document</b-link
+                      <b-link v-b-modal.budgetstepmodal class="at">{{
+                        $t('cooperations.budgetstep')
+                      }}</b-link
                       >&nbsp;
                     </span>
                     <span
-                      ><b-link class="ai" @click="copy()">Copy</b-link>&nbsp;
-                    </span>
-                    <span
-                      v-if="
-                        (cooperation.mode > 0 && improfessional()) ||
-                        $auth.user.role == 1
-                      "
-                    >
-                      <b-link v-b-modal.professionalmodal class="af"
-                        >Add/Remove professionals</b-link
+                      ><b-link class="ai" @click="copy()">{{
+                        $t('cooperations.copy')
+                      }}</b-link
                       >&nbsp;
                     </span>
                     <span
@@ -237,7 +248,21 @@
                         $auth.user.role == 1
                       "
                     >
-                      <b-link class="au" @click="edit()">Edit</b-link>&nbsp;
+                      <b-link v-b-modal.professionalmodal class="af">{{
+                        $t('cooperations.arprofessionals')
+                      }}</b-link
+                      >&nbsp;
+                    </span>
+                    <span
+                      v-if="
+                        (cooperation.mode > 0 && improfessional()) ||
+                        $auth.user.role == 1
+                      "
+                    >
+                      <b-link class="au" @click="edit()">{{
+                        $t('cooperations.edit')
+                      }}</b-link
+                      >&nbsp;
                     </span>
                   </b-col>
                 </b-row>
@@ -262,7 +287,7 @@
       </b-container>
     </b-container>
     <p class="text-center none" @click="more($store.state.cooperation.length)">
-      More...
+      {{ $t('cooperations.morey') }}
     </p>
   </b-container>
 </template>
