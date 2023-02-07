@@ -20,7 +20,7 @@
         <br />
         <nuxt-link to="/userlist" class="ac"> MEMBERS LIST </nuxt-link>
         <br />
-        <nuxt-link to="/cootool/" class="au"> Cooperation Tool </nuxt-link>
+        <nuxt-link to="/cootool/" class="au"> COOPERATION TOOL </nuxt-link>
         <br />
         <span
           class="au finger"

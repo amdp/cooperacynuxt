@@ -281,7 +281,7 @@ export default {
       formNickname: this.$auth.user.nickname,
       formSexidentity: this.$auth.user.sexidentity,
       formBirthsex: this.$auth.user.birthsex,
-      formBirthdate: this.$auth.user.birthdate.substring(0, 16),
+      formBirthdate: this.$auth.user.birthdate ? this.$auth.user.birthdate.substring(0, 16) : null,
       formBirthcountry: this.$auth.user.birthcountry,
       formBirthplace: this.$auth.user.birthplace,
       formNationality: this.$auth.user.nationality,
