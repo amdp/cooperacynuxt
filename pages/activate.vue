@@ -6,14 +6,8 @@
         <p>
           If you are a new member or if your membership has expired, you can
           activate your membership using this page forms.<br />
-          You can activate your membership with a bank transfer or make a
-          <span class="diversity">gift</span>
-          to a friend with a
-          <nuxt-link to="/activate#bank" class="ac"
-            >Bank Transfer Activation</nuxt-link
-          >. <br /><br />
           <span class="base up freedom">PAYPAL</span><br />
-          For Paypal Renewal, please fill in your email and password:
+          Currently Paypal is the only secure payment we can provide. For Paypal Renewal, please fill in your email and password:
         </p>
         <b-form
           @submit.prevent="renewal()"
@@ -59,47 +53,7 @@
           <nuxt-link class="ac" to="/contact">contact us</nuxt-link>.
         </p>
         <br />
-        <p id="bank" name="bank" class="freedom base up">
-          BANK TRANSFER ACTIVATION
-        </p>
-        <p>
-          If you want to activate your membership or a friend membership through
-          a bank transfer, please fill in the relative email in the following
-          input box:
-        </p>
-        <b-form-group
-          label-for="bankEmailInput"
-          label="Email:"
-          description="Insert your email or that of the person you want to donate a membership to"
-        >
-          <b-form-input
-            id="bankEmailInput"
-            v-model="formBankEmail"
-            size="sm"
-            type="email"
-            placeholder="Your email"
-            class="form-control"
-            required
-          ></b-form-input>
-        </b-form-group>
-        <p>
-          then send a bank transfer to Cooperacy - IBAN
-          IT61D0623001623000043225634 BIC/SWIFT CRPPIT2P277 - Filiale AG 23
-          00277 - Cariparma, via della Moscova 53 Milano 20121 using the
-          following code:
-        </p>
-        <p class="understanding text-center">
-          {{ bankCode }}
-        </p>
-        <p>
-          <span class="understanding">
-            <strong> VERY IMPORTANT NOTE:<br /> </strong>
-          </span>
-          Bank transfers without code will be processed as donations to
-          Cooperacy, so do not forget to insert the resulting code in the bank
-          transfer.
-        </p>
-        <br /><br />
+        <br />
       </b-col>
     </b-row>
   </b-container>

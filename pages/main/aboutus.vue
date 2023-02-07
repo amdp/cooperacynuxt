@@ -138,14 +138,8 @@
       <p class="subheading transparency center space">FINANCE</p>
       <br />
       <p class="base">
-        We like so much transparency that we want everyone to be able to know
-        our bank account balance and inspect our paypal account. We have nothing
+        We like so much transparency that we want everyone to be able to inspect our paypal account. We have nothing
         to hide.<br />
-        <span class="transparency up">Bank account:</span>
-        our bank information is: IBAN IT 61 D0623001623000043225634 BIC/SWIFT
-        CRPPIT2P277 - Filiale AG 23 00277 - Cariparma, via della Moscova 53
-        Milano 20121 and the current bank balance is around 800 euros, updated:
-        16 November 2020<br />
         <span class="transparency up">Paypal:</span>
         you can access our account from the standard paypal login with
         COOPERATION + password cooperation2016

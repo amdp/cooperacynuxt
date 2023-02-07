@@ -127,13 +127,10 @@
                 required
               >
                 <b-form-select-option v-html="$t('login.female')" value="F">
-                  F - Female
                 </b-form-select-option>
                 <b-form-select-option v-html="$t('login.male')" value="M">
-                  M - Male
                 </b-form-select-option>
                 <b-form-select-option v-html="$t('login.intersex')" value="X">
-                  X - Intersex
                 </b-form-select-option>
               </b-form-select>
             </b-form-group>
@@ -149,13 +146,10 @@
                 required
               >
                 <b-form-select-option v-html="$t('login.female')" value="F">
-                  F - Female
                 </b-form-select-option>
                 <b-form-select-option v-html="$t('login.male')" value="M">
-                  M - Male
                 </b-form-select-option>
                 <b-form-select-option v-html="$t('login.intersex')" value="X">
-                  X - Intersex
                 </b-form-select-option>
               </b-form-select>
             </b-form-group>

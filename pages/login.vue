@@ -42,7 +42,7 @@
                 class="m-1 btransparent"
               ></b-spinner>
               <span v-if="logging" class="btransparent"
-                >Checking your paypal/bank membership..</span
+                >Checking your membership..</span
               >
             </b-button>
           </p>
@@ -68,7 +68,7 @@
         >
       </div>
     </b-row> -->
-    <b-row>
+    <!-- <b-row>
       <b-container class="justify-content-center">
         <p class="base up text-center">
           Want to make a <span class="diversity">gift</span>? Please use a
@@ -77,7 +77,7 @@
           </nuxt-link>
         </p>
       </b-container>
-    </b-row>
+    </b-row> -->
     <div class="row">
       <div class="col-12 d-flex justify-content-center mt-4">
         <b-button
@@ -182,13 +182,10 @@
               required
             >
               <b-form-select-option v-html="$t('login.female')" value="F">
-                F - Female
               </b-form-select-option>
               <b-form-select-option v-html="$t('login.male')" value="M">
-                M - Male
               </b-form-select-option>
               <b-form-select-option v-html="$t('login.intersex')" value="X">
-                X - Intersex
               </b-form-select-option>
             </b-form-select>
           </b-form-group>
@@ -204,13 +201,10 @@
               required
             >
               <b-form-select-option v-html="$t('login.female')" value="F">
-                F - Female
               </b-form-select-option>
               <b-form-select-option v-html="$t('login.male')" value="M">
-                M - Male
               </b-form-select-option>
               <b-form-select-option v-html="$t('login.intersex')" value="X">
-                X - Intersex
               </b-form-select-option>
             </b-form-select>
           </b-form-group>
@@ -299,11 +293,11 @@
               size="sm"
             ></b-form-input>
           </b-form-group>
-          <b-button
+          <!-- <b-button
             type="submit"
             class="btn bhcare btn-block mt-3 white border-0"
             >JOIN WITH BANK TRANSFER</b-button
-          ><br />
+          ><br /> -->
           <p
             class="btn bhcare white btn-block border-0 mb-4"
             @click="loadpaypal"

@@ -10,15 +10,15 @@
           v-if="this.$auth.user.id"
           :src="'/assets/image/user/' + this.$auth.user.id + '.png'"
         /><br />
-        <nuxt-link to="/useredit" class="ad"> Edit your information </nuxt-link>
+        <nuxt-link to="/useredit" class="ad"> EDIT YOUR INFORMATION </nuxt-link>
         <br />
         <nuxt-link to="/cooperation/form" class="ac">
-          Add a new Cooperation
+          NEW COOPERATION
         </nuxt-link>
         <br />
-        <nuxt-link to="/cooperation" class="af">Cooperation search </nuxt-link>
+        <nuxt-link to="/cooperation" class="af">COOPERATION SEARCH </nuxt-link>
         <br />
-        <nuxt-link to="/userlist" class="ac"> Members List </nuxt-link>
+        <nuxt-link to="/userlist" class="ac"> MEMBERS LIST </nuxt-link>
         <br />
         <nuxt-link to="/cootool/" class="au"> Cooperation Tool </nuxt-link>
         <br />

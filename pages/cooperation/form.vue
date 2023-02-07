@@ -282,18 +282,28 @@ export default {
     }
     if (!store.state.edit.id) {//will retrieve only funded cooperations to limit the author
       await store.dispatch('getCooperation', {
-        limitauth: 1, //change this and next limitnum to set author limit
+        limitauth: 1, //change this and next limitauth to set FUNDED author limit
         author: store.state.auth.user.id,
       })
     }
   },
   data() {
     return {
-      limitauth: 1, //change this and previous limitnum to set author limit
+      limitauth: 1, //change this and previous limitauth to set FUNDED author limit
       terms: false,
       editing: false,
       country: this.$store.state.country,
-      category: this.$store.state.category,
+      category: [
+        { id: 1, name: 'Wealth', desc: 'A generic term to indicate all the activities that may generate wealth for the cooperation participants and for Cooperacy as a whole' },
+        { id: 2, name: 'Coordination', desc: 'A governative cooperation, available only to admins or after a voting has been issued to create one' },
+        { id: 3, name: 'Ecosystem', desc: 'A green border will surround all ecosystem-caring projects!' },
+        { id: 4, name: 'Informative', desc: 'A governative cooperation, for informative support, available only to admins or after a voting has been issued to create one' },
+        { id: 5, name: 'Location', desc: 'A governative cooperation, available to everyone who wants to represent a location like a city or similar' },
+        { id: 6, name: 'Science', desc: 'A cooperation related to Research, Science, Health that may be subject to scientific verification' },
+        { id: 7, name: 'Creativity', desc: 'A cooperation related to Art, Music, Games, Fun, Sports, Entertainment and the like' },
+        { id: -1, name: 'Evaluation Mode', desc: 'A cooperation just to experiment evaluations with the seven dimensions, available also to non-coo-members' },
+        { id: -4, name: 'Voting Mode', desc: 'A governative cooperation, available to everyone to issue a voting evaluation. Remember to choose the right "parent" above if you want your vote to be relative to a specific cooperation' }
+      ],
       totallabel: 0,
       formAnonymous: this.$store.state.edit.id &&
         this.$store.state.cooperation[0].anonymous == 1 ? 1 : 0,

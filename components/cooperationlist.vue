@@ -107,7 +107,7 @@
                 </b-container>
                 <b-container>
                   <small>
-                    {{ category(cooperation.category) }}
+                    {{ categoryid(cooperation.category) }}
                     {{ mode(cooperation.mode) }} -
                     {{ location(cooperation.place) }}
                   </small>
@@ -306,6 +306,17 @@ export default {
       incremental: -1,
       updatesec: 1, //sets how frequently the collected budget is updated
       interval: null,
+      category: [
+        { id: 1, name: 'Wealth', desc: 'A generic term to indicate all the activities that may generate wealth for the cooperation participants and for Cooperacy as a whole' },
+        { id: 2, name: 'Coordination', desc: 'A governative cooperation, available only to admins or after a voting has been issued to create one' },
+        { id: 3, name: 'Ecosystem', desc: 'A green border will surround all ecosystem-caring projects!' },
+        { id: 4, name: 'Informative', desc: 'A governative cooperation, for informative support, available only to admins or after a voting has been issued to create one' },
+        { id: 5, name: 'Location', desc: 'A governative cooperation, available to everyone who wants to represent a location like a city or similar' },
+        { id: 6, name: 'Science', desc: 'A cooperation related to Research, Science, Health that may be subject to scientific verification' },
+        { id: 7, name: 'Creativity', desc: 'A cooperation related to Art, Music, Games, Fun, Sports, Entertainment and the like' },
+        { id: -1, name: 'Evaluation Mode', desc: 'A cooperation just to experiment evaluations with the seven dimensions, available also to non-coo-members' },
+        { id: -4, name: 'Voting Mode', desc: 'A governative cooperation, available to everyone to issue a voting evaluation. Remember to choose the right "parent" above if you want your vote to be relative to a specific cooperation' }
+      ],
     }
   },
   computed: {
@@ -417,8 +428,8 @@ export default {
       modeinfo += this.$store.state.mode.find((mode) => mode.id == Math.abs(id)).name + ' mode'
       return modeinfo
     },
-    category(id) {
-      return this.$store.state.category.find((category) => category.id == id)
+    categoryid(id) {
+      return this.category.find((category) => category.id == id)
         .name
     },
     location(id) {

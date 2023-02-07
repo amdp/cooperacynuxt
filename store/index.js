@@ -2,11 +2,6 @@ export const state = () => ({
   cooperation: [],
   comment: [],
   vote: [],
-  fundingvar: {
-    totalE: null,
-    totaluser: null,
-    totalfee: null,
-  },
   userlist: [],
   cooperationuservote: [],
   commentuservote: [],
@@ -20,17 +15,11 @@ export const state = () => ({
   CCI2017: [],
   CCI2016: [],
   CCI2015: [],
-  category: [
-    { id: 1, name: 'Wealth', desc: 'A generic term to indicate all the activities that may generate wealth for the cooperation participants and for Cooperacy as a whole' },
-    { id: 2, name: 'Coordination', desc: 'A governative cooperation, available only to admins or after a voting has been issued to create one' },
-    { id: 3, name: 'Ecosystem', desc: 'A green border will surround all ecosystem-caring projects!' },
-    { id: 4, name: 'Informative', desc: 'A governative cooperation, for informative support, available only to admins or after a voting has been issued to create one' },
-    { id: 5, name: 'Location', desc: 'A governative cooperation, available to everyone who wants to represent a location like a city or similar' },
-    { id: 6, name: 'Science', desc: 'A cooperation related to Research, Science, Health that may be subject to scientific verification' },
-    { id: 7, name: 'Creativity', desc: 'A cooperation related to Art, Music, Games, Fun, Sports, Entertainment and the like' },
-    { id: -1, name: 'Evaluation Mode', desc: 'A cooperation just to experiment evaluations with the seven dimensions, available also to non-coo-members' },
-    { id: -4, name: 'Voting Mode', desc: 'A governative cooperation, available to everyone to issue a voting evaluation. Remember to choose the right "parent" above if you want your vote to be relative to a specific cooperation' }
-  ],
+  fundingvar: {
+    totalE: null,
+    totaluser: null,
+    totalfee: null,
+  },
   role: [
     { id: 0, name: 'user' },
     { id: 1, name: 'admin' },
@@ -67,11 +56,6 @@ export const mutations = {
   setComment: (state, payload) => {
     state.comment = payload
   },
-  setFundingvar: (state, payload) => {
-    state.fundingvar.totalE = payload.totalE
-    state.fundingvar.totaluser = payload.totaluser
-    state.fundingvar.totalfee = payload.totalfee
-  },
   setTag: (state, payload) => {
     state.tag = payload
   },
@@ -103,8 +87,9 @@ export const mutations = {
     state[payload.proptype + 'uservote'] = payload.body
   },
   setUserBar: (state, payload) => {
-    for (let j = 0; j < state.cc.length; j++) {
-      state.auth.user[state.cc[j]] = payload[state.cc[j]]
+    let cc = ['E', 'T', 'C', 'I', 'F', 'U', 'D']
+    for (let j = 0; j < cc.length; j++) {
+      state.auth.user[cc[j]] = payload[cc[j]]
     }
   },
   commentUpdate: (state, payload) => {
@@ -114,6 +99,11 @@ export const mutations = {
     } else {
       state.comment.splice(old, 1, payload)
     }
+  },
+  setFundingvar: (state, payload) => {
+    state.fundingvar.totalE = payload.totalE
+    state.fundingvar.totaluser = payload.totaluser
+    state.fundingvar.totalfee = payload.totalfee
   },
   setVoteUpdate: (state, payload) => {
     //updates the voted proptype (cooperation or comment) state and uservote table
